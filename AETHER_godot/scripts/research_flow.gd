@@ -207,7 +207,8 @@ func _render_topic(r: Dictionary) -> void:
 			c.add_child(UI.label(L.t(part[1]), 17, UI.GOLD, true))
 			c.add_child(UI.label(str(m.get(part[0], "")), 17, UI.TEXT))
 			_body.add_child(UI.card_root(c))
-		_body.add_child(UI.label(L.t("AI-összefoglaló a lenti forrásokból."), 14, UI.MUTE))
+	# A források: AI-összefoglaló mellett egy gomb mögött, egymás alatt; anélkül láthatóan.
+	var src := UI.vbox(8)
 	var w: Variant = r.get("wiki")
 	if typeof(w) == TYPE_DICTIONARY:
 		if typeof(m) != TYPE_DICTIONARY:
@@ -219,16 +220,26 @@ func _render_topic(r: Dictionary) -> void:
 		var wurl := str(w.get("link", ""))
 		var w_fn := func() -> void: OS.shell_open(wurl)
 		wb.pressed.connect(w_fn)
-		_body.add_child(wb)
+		src.add_child(wb)
 	var papers: Array = r.get("cikkek", [])
 	if not papers.is_empty():
-		_body.add_child(UI.label(L.t("Tudományos összefoglaló cikkek"), 16, UI.CYAN, true))
+		src.add_child(UI.label(L.t("Tudományos összefoglaló cikkek"), 16, UI.CYAN, true))
 		for p in papers:
-			var pb := UI.button("%s (%s)" % [str(p.get("cim", "")), str(p.get("ev", ""))])
+			var ev := str(p.get("ev", ""))
+			if ev.is_valid_float():
+				ev = str(int(float(ev)))   # 2023.0 -> 2023
+			var pb := UI.button("%s (%s)" % [str(p.get("cim", "")), ev] if ev != "" else str(p.get("cim", "")))
 			var purl := str(p.get("link", ""))
 			var p_fn := func() -> void: OS.shell_open(purl)
 			pb.pressed.connect(p_fn)
-			_body.add_child(pb)
+			src.add_child(pb)
+	if typeof(m) == TYPE_DICTIONARY and src.get_child_count() > 0:
+		src.visible = false
+		var sb := UI.button(L.t("AI-összefoglaló forrásai"))
+		var src_fn := func() -> void: src.visible = not src.visible
+		sb.pressed.connect(src_fn)
+		_body.add_child(sb)
+	_body.add_child(src)
 	if typeof(w) != TYPE_DICTIONARY and papers.is_empty():
 		_body.add_child(UI.label(L.t("Most nem sikerült forrást letölteni. Van internet?"), 17, UI.EMBER))
 	if str(r.get("megjegyzes", "")) != "":

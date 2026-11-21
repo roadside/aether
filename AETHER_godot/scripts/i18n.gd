@@ -238,7 +238,7 @@ const EN := {
 	"%s, %s és még %d ország": "%s, %s and %d more countries",
 	", köztük %s": ", including %s",
 	"A részletek a megnyílt ablakban.": "Details are in the window that opened.",
-	"AI-összefoglaló a lenti forrásokból.": "AI summary of the sources below.",
+	"AI-összefoglaló forrásai": "Sources of the AI summary",
 	"Az AI elolvassa a Wikipédia-cikket és néhány tudományos összefoglalót, és érthetően elmondja, mi ez. Ez fél–két percig is tarthat…": "The AI reads the Wikipedia article and a few scientific reviews, and explains in plain words what this is. This can take half a minute to two minutes…",
 	"A számokat a játék a forrásban ellenőrizte.": "The game checked the numbers in the source.",
 	"Az összefoglaló nem készült el. Lent a forrás.": "No summary this time. The source is below.",
