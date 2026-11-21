@@ -43,6 +43,7 @@ var station := {"ai_mag": 0, "archivum": 0, "uveghaz": 0}
 var building := {}                   # {"modul": "ai_mag", "kesz": 2028} amíg épül
 var research_this_year := 0
 var done: Array = []                 # tudásfa: a kutatott témák azonosítói
+var stars: Dictionary = {}           # tudásfa: téma -> 1–3 csillag (a legjobb kutatás ereje)
 var era := 1                         # korszak (1–4), csak nő
 var levers: Dictionary = {}          # jóváhagyott tervkarok: kar -> javaslat (a kutatásokból)
 var save_file := "aether_jatek.json"  # az önteszt külön fájlt használ
@@ -75,12 +76,20 @@ func load_game() -> void:
 	era = clampi(int(d.get("korszak", 1)), 1, Knowledge.ERAS.size())
 	var lv: Variant = d.get("karok", {})
 	levers = lv if typeof(lv) == TYPE_DICTIONARY else {}
+	var cs: Variant = d.get("csillagok", {})
+	stars = {}
+	if typeof(cs) == TYPE_DICTIONARY:
+		for k in cs:
+			stars[str(k)] = clampi(int(cs[k]), 1, 3)
+	for id in done:   # régi mentés: a kutatott téma legalább 1 csillag
+		if not stars.has(str(id)):
+			stars[str(id)] = 1
 
 
 func save() -> void:
 	Bridge.write_json(save_path(), {"ev": year, "penz": money, "bizalom": trust, "idovonal": timeline,
 		"modell": model, "allomas": station, "epul": building, "kutatas_ev": research_this_year,
-		"tudas": done, "korszak": era, "karok": levers})
+		"tudas": done, "korszak": era, "karok": levers, "csillagok": stars})
 
 
 func new_game() -> void:
@@ -93,6 +102,7 @@ func new_game() -> void:
 	building = {}
 	research_this_year = 0
 	done = []
+	stars = {}
 	era = 1
 	levers = {}
 	running = false
@@ -320,10 +330,16 @@ func reward_results(n: int) -> void:
 
 # --- tudásfa és korszakok (játékszabály) -----------------------------------
 ## Egy téma akkor kutatott, ha a kutatás legalább egy ellenőrzött számot talált róla.
-func mark_researched(id: String) -> void:
-	if id == "" or id in done:
+## A témát kutatottnak jelöli; a csillag a legjobb eddigi eredmény marad.
+func mark_researched(id: String, n_stars: int = 1) -> void:
+	if id == "":
 		return
-	done.append(id)
+	var old := int(stars.get(id, 0))
+	if id in done and n_stars <= old:
+		return
+	if not (id in done):
+		done.append(id)
+	stars[id] = clampi(maxi(old, n_stars), 1, 3)
 	save()
 	changed.emit()
 	check_era()

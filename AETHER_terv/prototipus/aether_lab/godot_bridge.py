@@ -52,6 +52,28 @@ PARAM_NEV = {
     "sai_kenyszer_w_m2_per_tg": "Mennyire hűt a légkörbe juttatott kén",
     "aeroszol_erf_w_m2": "Mennyire hűt vagy melegít a légszennyezés",
     "tcre_c_per_1000gtco2": "Mennyit melegít 1000 milliárd tonna CO2",
+    "kibocsatas_csokkentes_pct": "Mennyivel csökkenti a kibocsátást",
+    "kibocsatas_potencial_gtco2e_ev": "Mennyi kibocsátást spórolhat meg évente a világon",
+    "hatasfok_pct": "Milyen hatásfokú",
+    "energiasuruseg_wh_kg": "Mennyi energiát tárol kilogrammonként",
+    "valtozas_pct_per_c": "Mennyit változik 1 fok melegedéstől",
+    "tengerszint_cm": "Mennyit emelkedik a tengerszint",
+    "jegveszteseg_gt_ev": "Mennyi jég olvad el évente",
+    "klimaerzekenyseg_c": "Mennyit melegszik a Föld, ha kétszer annyi a CO2",
+    "kockazat_csokkentes_pct": "Mennyivel csökkenti a kockázatot",
+    "lehules_c": "Mennyivel hűti a környezetét",
+    "elkerult_melegedes_c": "Mennyi melegedést előzött meg",
+    "sugarzasi_kenyszer_w_m2": "Mennyire melegít vagy hűt",
+    "visszacsatolas_w_m2_c": "Mennyire erősíti a melegedést",
+    "valtozas_pct": "Mennyit változik",
+    "csokkenes_pct": "Mennyit csökken",
+    "reszarany_pct": "Mekkora része",
+    "szen_gtc": "Mennyi szénről van szó",
+    "terulet_mha_ev": "Mekkora terület évente",
+    "ph_valtozas": "Mennyit változik a pH",
+    "megkotes_mmol_g": "Mennyi gázt köt meg grammonként",
+    "energia_nyereseg": "Mennyi energiát nyer a befektetetthez képest",
+    "egyeb": "Fontos szám a cikkekből",
 }
 
 
@@ -71,12 +93,35 @@ PARAM_NEV_EN = {
     "sai_kenyszer_w_m2_per_tg": "How much sulphur put into the atmosphere cools",
     "aeroszol_erf_w_m2": "How much air pollution cools or warms",
     "tcre_c_per_1000gtco2": "How much 1000 billion tonnes of CO2 warms",
+    "kibocsatas_csokkentes_pct": "How much it cuts emissions",
+    "kibocsatas_potencial_gtco2e_ev": "How much emissions it could save worldwide each year",
+    "hatasfok_pct": "How efficient it is",
+    "energiasuruseg_wh_kg": "How much energy it stores per kilogram",
+    "valtozas_pct_per_c": "How much it changes per degree of warming",
+    "tengerszint_cm": "How much the sea level rises",
+    "jegveszteseg_gt_ev": "How much ice melts each year",
+    "klimaerzekenyseg_c": "How much the Earth warms if CO2 doubles",
+    "kockazat_csokkentes_pct": "How much it reduces the risk",
+    "lehules_c": "How much it cools its surroundings",
+    "elkerult_melegedes_c": "How much warming it prevented",
+    "sugarzasi_kenyszer_w_m2": "How much it warms or cools",
+    "visszacsatolas_w_m2_c": "How much it amplifies warming",
+    "valtozas_pct": "How much it changes",
+    "csokkenes_pct": "How much it declines",
+    "reszarany_pct": "What share",
+    "szen_gtc": "How much carbon is involved",
+    "terulet_mha_ev": "How much area each year",
+    "ph_valtozas": "How much the pH changes",
+    "megkotes_mmol_g": "How much gas it binds per gram",
+    "energia_nyereseg": "How much energy it gains compared with what goes in",
+    "egyeb": "A key number from the papers",
 }
 
 # Mértékegységek angolul (a belső kód magyar marad)
-EGYSEG_EN = {"GtCO2/év": "GtCO2/yr", "W/m²/(Tg SO2/év)": "W/m²/(Tg SO2/yr)"}
+EGYSEG_EN = {"GtCO2/év": "GtCO2/yr", "GtCO2e/év": "GtCO2e/yr", "Gt/év": "Gt/yr", "Gt C": "GtC", "Mha/év": "Mha/yr", "W/m²/(Tg SO2/év)": "W/m²/(Tg SO2/yr)"}
 # A kártyán megjelenő magyar mértékegység: rövidítés helyett köznapi szavak
-EGYSEG_HU = {"GtCO2/év": "milliárd tonna CO2/év"}
+EGYSEG_HU = {"GtCO2/év": "milliárd tonna CO2/év", "GtCO2e/év": "milliárd tonna CO2-egyenérték/év",
+             "Gt C": "milliárd tonna szén", "Mha/év": "millió hektár/év"}
 
 
 def is_en(lang: str) -> bool:
@@ -109,6 +154,51 @@ def jelentes(param: str, ertek: float, egyseg: str, lang: str = "hu") -> str:
         return f"Kb. {v}%-kal kevesebb víz kell ugyanahhoz."
     if param == "tcre_c_per_1000gtco2":
         return f"Minden 1000 milliárd tonna kibocsátott CO2 kb. {v} fokkal melegíti a Földet."
+    if param == "kibocsatas_csokkentes_pct":
+        return f"A cikkek szerint kb. {v}%-kal kisebb a kibocsátás (vagy az energiaigény)."
+    if param == "kibocsatas_potencial_gtco2e_ev":
+        pct = ertek / cl.E_CO2_NOW * 100
+        return f"Évente kb. {v} milliárd tonna kibocsátást spórolhat meg. Ez a mai CO2-kibocsátás kb. {pct:.0f}%-a."
+    if param == "hatasfok_pct":
+        return f"A hatásfok kb. {v}%: ennyi hasznosul a befektetett energiából."
+    if param == "energiasuruseg_wh_kg":
+        return f"Kilogrammonként kb. {v} wattóra energiát tárol."
+    if param == "valtozas_pct_per_c":
+        return f"Minden további fok melegedéssel kb. {v}%-kal változik."
+    if param == "tengerszint_cm":
+        return f"A tengerszint kb. {v} centiméterrel emelkedik."
+    if param == "jegveszteseg_gt_ev":
+        return f"Évente kb. {v} milliárd tonna jég olvad el."
+    if param == "klimaerzekenyseg_c":
+        return f"Ha kétszer annyi CO2 lenne a levegőben, a Föld idővel kb. {v} fokkal melegedne."
+    if param == "kockazat_csokkentes_pct":
+        return f"A kockázat (kár vagy halálozás) kb. {v}%-kal csökken."
+    if param == "lehules_c":
+        return f"A környezetét kb. {v} fokkal hűti."
+    if param == "elkerult_melegedes_c":
+        return f"Kb. {v} fokkal kisebb a melegedés, mint nélküle lett volna."
+    if param == "sugarzasi_kenyszer_w_m2":
+        return f"Kb. {v} W/m² a hatása (pozitív: melegít, negatív: hűt). Összehasonlításul: a mai CO2 kb. 2 W/m²-rel melegít."
+    if param == "visszacsatolas_w_m2_c":
+        return f"Minden fok melegedés kb. {v} W/m²-rel változtatja a Föld hőmérlegét (pozitív: erősít, negatív: fékez)."
+    if param == "valtozas_pct":
+        return f"A cikkek szerint kb. {v}%-kal változik."
+    if param == "csokkenes_pct":
+        return f"A cikkek szerint kb. {v}%-kal csökken."
+    if param == "reszarany_pct":
+        return f"A cikkek szerint kb. {v}%."
+    if param == "szen_gtc":
+        co2 = hu(ertek * 44 / 12, 0)
+        return f"Kb. {v} milliárd tonna szén. Ez kb. {co2} milliárd tonna CO2."
+    if param == "terulet_mha_ev":
+        hu_x = f"{ertek / 9.3 * 100:.0f}"   # Magyarország kb. 9,3 millió hektár
+        return f"Évente kb. {v} millió hektár. Ez Magyarország területének kb. {hu_x}%-a."
+    if param == "ph_valtozas":
+        return f"A pH változása kb. {v}. Már 0,1 csökkenés is kb. 26%-kal savasabb vizet jelent."
+    if param == "megkotes_mmol_g":
+        return f"Grammonként kb. {v} millimol gázt köt meg."
+    if param == "energia_nyereseg":
+        return f"A kinyert és a befektetett energia aránya kb. {v}."
     if param == "sai_kenyszer_w_m2_per_tg":
         return (f"Évi 1 millió tonna kén-dioxid kb. {v} W/m²-rel csökkentené a napfény melegítő hatását. "
                 "Ha leállítják, a melegedés gyorsan visszatér.")
@@ -132,6 +222,51 @@ def _jelentes_en(param: str, ertek: float, egyseg: str) -> str:
         return f"About {v}% less water is needed for the same result."
     if param == "tcre_c_per_1000gtco2":
         return f"Every 1000 billion tonnes of CO2 emitted warms the Earth by about {v} degrees."
+    if param == "kibocsatas_csokkentes_pct":
+        return f"According to the papers, emissions (or energy use) are about {v}% lower."
+    if param == "kibocsatas_potencial_gtco2e_ev":
+        pct = ertek / cl.E_CO2_NOW * 100
+        return f"It could save about {v} billion tonnes of emissions a year, about {pct:.0f}% of today's CO2 emissions."
+    if param == "hatasfok_pct":
+        return f"The efficiency is about {v}%: this share of the energy put in is used."
+    if param == "energiasuruseg_wh_kg":
+        return f"It stores about {v} watt-hours of energy per kilogram."
+    if param == "valtozas_pct_per_c":
+        return f"It changes by about {v}% with every extra degree of warming."
+    if param == "tengerszint_cm":
+        return f"The sea level rises by about {v} centimetres."
+    if param == "jegveszteseg_gt_ev":
+        return f"About {v} billion tonnes of ice melt each year."
+    if param == "klimaerzekenyseg_c":
+        return f"If CO2 in the air doubled, the Earth would eventually warm by about {v} degrees."
+    if param == "kockazat_csokkentes_pct":
+        return f"The risk (damage or deaths) falls by about {v}%."
+    if param == "lehules_c":
+        return f"It cools its surroundings by about {v} degrees."
+    if param == "elkerult_melegedes_c":
+        return f"Warming is about {v} degrees less than it would have been."
+    if param == "sugarzasi_kenyszer_w_m2":
+        return f"Its effect is about {v} W/m² (positive warms, negative cools). For comparison, today's CO2 warms by about 2 W/m²."
+    if param == "visszacsatolas_w_m2_c":
+        return f"Each degree of warming changes Earth's heat balance by about {v} W/m² (positive amplifies, negative slows)."
+    if param == "valtozas_pct":
+        return f"According to the papers, it changes by about {v}%."
+    if param == "csokkenes_pct":
+        return f"According to the papers, it declines by about {v}%."
+    if param == "reszarany_pct":
+        return f"According to the papers, about {v}%."
+    if param == "szen_gtc":
+        co2 = f'{ertek * 44 / 12:.0f}'
+        return f"About {v} billion tonnes of carbon. That is about {co2} billion tonnes of CO2."
+    if param == "terulet_mha_ev":
+        hu_x = f'{ertek / 9.3 * 100:.0f}'   # Magyarország kb. 9,3 millió hektár
+        return f"About {v} million hectares a year. That is about {hu_x}% of the area of Hungary."
+    if param == "ph_valtozas":
+        return f"The pH changes by about {v}. A fall of just 0.1 already means about 26% more acidic water."
+    if param == "megkotes_mmol_g":
+        return f"It binds about {v} millimoles of gas per gram."
+    if param == "energia_nyereseg":
+        return f"The ratio of energy out to energy in is about {v}."
     if param == "sai_kenyszer_w_m2_per_tg":
         return (f"1 million tonnes of sulphur dioxide a year would reduce the warming effect of sunlight by about {v} W/m². "
                 "If it stops, warming returns quickly.")

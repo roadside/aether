@@ -12,7 +12,7 @@ const Bridge := preload("res://scripts/lab_bridge.gd")
 
 ## A kérdések a tudásfa témái (knowledge.gd): korszakonként nyílnak meg.
 const Knowledge := preload("res://scripts/knowledge.gd")
-const QUESTIONS := Knowledge.TOPICS
+const Missions := preload("res://scripts/missions.gd")
 
 ## A választható AI-k. "kulcs": melyik környezeti változóba kerül a játékban
 ## megadott kulcs (csak a futás idejére, sehova nem mentjük), "link": hol lehet kulcsot kérni.
@@ -89,25 +89,29 @@ func _close() -> void:
 
 
 # --- 1. Mit kutassunk? -----------------------------------------------------
+## Sok téma van, ezért korszakonként és tudományterületenként csoportosítjuk (a csoport
+## kattintásra nyílik), és felül kereső van. A keresés csak a nyitott korszakokban keres.
+var _filter := ""
+var _open_fields := {}        # "korszak:terület" -> true, ha nyitva
+var _list: VBoxContainer
+
+
 func show_questions() -> void:
 	_topic_q = {}
 	_header(L.t("Mit kutassunk?"), 1, L.t("Válassz kérdést. A válasz valódi tudományos cikkekből jön."))
-	var era: int = campaign.era if campaign != null else Knowledge.ERAS.size()
-	var done: Array = campaign.done if campaign != null else []
-	for e in range(1, Knowledge.ERAS.size() + 1):
-		if e > era + 1:   # a távolabbi korszakok csak egy sorban
-			_body.add_child(UI.label(Knowledge.era_name(e) + " · " + L.t("zárva"), 16, UI.MUTE, true))
-			continue
-		var head := UI.label(Knowledge.era_name(e) + ("" if e <= era else " · " + L.t("zárva")), 20,
-			UI.GOLD if e <= era else UI.MUTE, true)
-		_body.add_child(head)
-		_body.add_child(UI.label(L.t(Knowledge.ERAS[e - 1]["tema"]), 15, UI.SOFT))
-		if e > era:   # a következő korszak: mi kell a megnyitásához
-			for cond in campaign.era_conditions(e):
-				_body.add_child(UI.label(("✓ " if cond[1] else "○ ") + str(cond[0]), 15, UI.GREEN if cond[1] else UI.TEXT))
-			continue
-		for q in Knowledge.topics_of(e):
-			_body.add_child(_question_card(q, q["id"] in done))
+	var search := LineEdit.new()
+	search.placeholder_text = L.t("Keresés a témák között, pl. jég, akkumulátor, metán")
+	search.text = _filter
+	search.clear_button_enabled = true
+	search.add_theme_font_size_override("font_size", 17)
+	var on_search := func(t: String) -> void:
+		_filter = t
+		_fill_questions()
+	search.text_changed.connect(on_search)
+	_body.add_child(search)
+	_list = UI.vbox(12)
+	_body.add_child(_list)
+	_fill_questions()
 	# saját kérdés: haladóknak, alapból rejtve
 	var more := UI.button(L.t("Saját kérdést írok (haladó)"))
 	var box := UI.hbox(8)
@@ -129,15 +133,80 @@ func show_questions() -> void:
 	_body.add_child(box)
 
 
-## Egy kutatható téma kártyája: kérdés, egy mondat, mit ad, és két gomb.
+func _matches(q: Dictionary, f: String) -> bool:
+	if f == "":
+		return true
+	var hay := (Knowledge.text(q, "cim") + " " + Knowledge.text(q, "magyarazat") + " "
+		+ Knowledge.field_name(str(q.get("terulet", "")))).to_lower()
+	for w in f.split(" ", false):
+		if not hay.contains(w):
+			return false
+	return true
+
+
+func _fill_questions() -> void:
+	UI.clear(_list)
+	var era: int = campaign.era if campaign != null else Knowledge.ERAS.size()
+	var done: Array = campaign.done if campaign != null else []
+	var f := _filter.strip_edges().to_lower()
+	var found := 0
+	for e in range(1, Knowledge.ERAS.size() + 1):
+		if f != "" and e > era:
+			continue
+		if e > era + 1:   # a távolabbi korszakok csak egy sorban
+			_list.add_child(UI.label(Knowledge.era_name(e) + " · " + L.t("zárva"), 16, UI.MUTE, true))
+			continue
+		var all: Array = Knowledge.topics_of(e)
+		var n_done := all.filter(func(t: Dictionary) -> bool: return t["id"] in done).size()
+		var head_text := Knowledge.era_name(e) + (" · %d/%d" % [n_done, all.size()] if e <= era else " · " + L.t("zárva"))
+		_list.add_child(UI.label(head_text, 20, UI.GOLD if e <= era else UI.MUTE, true))
+		if f == "":
+			_list.add_child(UI.label(L.t(Knowledge.ERAS[e - 1]["tema"]), 15, UI.SOFT))
+		if e > era:   # a következő korszak: mi kell a megnyitásához
+			for cond in campaign.era_conditions(e):
+				_list.add_child(UI.label(("✓ " if cond[1] else "○ ") + str(cond[0]), 15, UI.GREEN if cond[1] else UI.TEXT))
+			continue
+		for code in Knowledge.field_codes():
+			var qs: Array = all.filter(func(t: Dictionary) -> bool: return str(t.get("terulet", "")) == code and _matches(t, f))
+			if qs.is_empty():
+				continue
+			found += qs.size()
+			var key := "%d:%s" % [e, code]
+			var is_open: bool = f != "" or _open_fields.has(key)
+			var k_done := qs.filter(func(t: Dictionary) -> bool: return t["id"] in done).size()
+			var hb := UI.button(("▾  " if is_open else "▸  ") + Knowledge.field_name(code) + "   %d/%d" % [k_done, qs.size()])
+			hb.alignment = HORIZONTAL_ALIGNMENT_LEFT
+			hb.pressed.connect(_toggle_field.bind(key))
+			_list.add_child(hb)
+			if is_open:
+				for q in qs:
+					_list.add_child(_question_card(q, q["id"] in done))
+	if f != "" and found == 0:
+		_list.add_child(UI.label(L.t("Nincs ilyen téma a nyitott korszakokban."), 16, UI.SOFT))
+
+
+func _toggle_field(key: String) -> void:
+	if _open_fields.has(key):
+		_open_fields.erase(key)
+	else:
+		_open_fields[key] = true
+	_fill_questions()
+
+
+## Egy kutatható téma kártyája: kérdés, egy mondat, csillagok vagy mit ad, és két gomb.
 func _question_card(q: Dictionary, is_done: bool) -> Control:
 	var c := UI.card(UI.GREEN if is_done else UI.CYAN)
-	c.add_child(UI.label(L.t(q["cim"]), 19, UI.TEXT, true))
-	c.add_child(UI.label(L.t(q["magyarazat"]), 16, UI.SOFT))
+	c.add_child(UI.label(Knowledge.text(q, "cim"), 19, UI.TEXT, true))
+	c.add_child(UI.label(Knowledge.text(q, "magyarazat"), 16, UI.SOFT))
+	var gives := Knowledge.text(q, "nyit")
 	if is_done:
-		c.add_child(UI.label(L.t("✓ Kutatva. ") + L.t(q["nyit"]), 15, UI.GREEN))
-	else:
-		c.add_child(UI.label(L.t("Ad: ") + L.t(q["nyit"]), 15, UI.GOLD))
+		var n: int = int(campaign.stars.get(q["id"], 1)) if campaign != null else 1
+		var l := UI.label(L.t("✓ Kutatva ") + Missions.star_text(n) + ("  " + gives if gives != "" else ""), 15, UI.GREEN)
+		l.mouse_filter = Control.MOUSE_FILTER_PASS
+		l.tooltip_text = star_rule()
+		c.add_child(l)
+	elif gives != "":
+		c.add_child(UI.label(L.t("Ad: ") + gives, 15, UI.GOLD))
 	var row := UI.hbox(12)
 	row.alignment = BoxContainer.ALIGNMENT_END
 	var info := UI.button(L.t("Mi ez, és mire jó?"))
@@ -148,6 +217,11 @@ func _question_card(q: Dictionary, is_done: bool) -> Control:
 	row.add_child(b)
 	c.add_child(row)
 	return UI.card_root(c)
+
+
+## A csillagok szabálya (játékszabály), a csillagok fölé húzott egérnél.
+static func star_rule() -> String:
+	return L.t("Játékszabály: ★ ellenőrzött szám, ★★ legalább 2 cikk egyezik, ★★★ legalább 3 cikk, köztük összefoglaló elemzés.")
 
 
 # --- „Mi ez, és mire jó?” ---------------------------------------------------
@@ -181,7 +255,7 @@ func _show_topic(q: Dictionary) -> void:
 			if ai != _topic_ai and _topic_ai != "none":
 				_run_topic("ai")
 			return
-	_header(L.t(q["cim"]), 0, "")
+	_header(Knowledge.text(q, "cim"), 0, "")
 	_body.add_child(UI.label(L.t("Egy pillanat, töltöm a forrásokat…"), 17, UI.SOFT))
 	_run_topic("gyors")
 
@@ -191,13 +265,13 @@ func _run_topic(phase: String) -> void:
 	var ai := "none" if phase == "gyors" else _topic_ai
 	_topic_out = _topic_path(_topic_q, ai)
 	if not bridge.run("tema", ["tema", "--wiki", str(_topic_q["wiki"]), "--wiki-en", str(_topic_q["wiki_en"]),
-			"--kereses", str(_topic_q["attekintes"]), "--cim", L.t(str(_topic_q["cim"])), "--ki", _topic_out, "--ai", ai, "--nyelv", L.lang]):
+			"--kereses", str(_topic_q["attekintes"]), "--cim", Knowledge.text(_topic_q, "cim"), "--ki", _topic_out, "--ai", ai, "--nyelv", L.lang]):
 		if phase == "gyors":
 			_show_busy()
 
 
 func _render_topic(r: Dictionary) -> void:
-	_header(L.t(_topic_q["cim"]), 0, "")
+	_header(Knowledge.text(_topic_q, "cim"), 0, "")
 	var m: Variant = r.get("magyarazat")
 	if typeof(m) == TYPE_DICTIONARY:
 		for part in [["mire_jo", "Mire jó?"], ["hatranyok", "Mi a gond vele?"], ["mennyire_bizonyitott", "Mennyire bizonyított?"]]:
@@ -281,7 +355,7 @@ func _show_busy() -> void:
 
 # --- 2. Ki kutasson? -------------------------------------------------------
 func _show_ai_choice() -> void:
-	_header(L.t("Ki kutasson?"), 2, L.t("Kérdés: ") + L.t(str(_question["cim"])))
+	_header(L.t("Ki kutasson?"), 2, L.t("Kérdés: ") + Knowledge.text(_question, "cim"))
 	# Miért kell AI? Két rövid mondat, „Részletek” nélkül.
 	var why := UI.card(UI.GOLD)
 	why.add_child(UI.label(L.t("Miért kell AI?"), 17, UI.GOLD, true))
@@ -452,7 +526,7 @@ func _start_research() -> void:
 		_body.add_child(l)
 	_short_label = UI.label("", 17, UI.SOFT)
 	_body.add_child(_short_label)
-	if bridge.run("kutat", ["godot-kutat", L.t(str(_question["cim"])), "--ai", _ai, "--mappa", _folder, "--nyelv", L.lang,
+	if bridge.run("kutat", ["godot-kutat", Knowledge.text(_question, "cim"), "--ai", _ai, "--mappa", _folder, "--nyelv", L.lang,
 			"--kereses", str(_question.get("kereses", "")), "--parameterek", str(_question.get("parameterek", "")),
 			"--orszag", L.country(), "--cikkek", str(campaign.papers_per_research() if campaign != null else 12)]):
 		_poll.start()
@@ -551,9 +625,17 @@ func _show_results() -> void:
 	for j in props:
 		_body.add_child(_proposal_card(j, pub))
 	var tid := str(_question.get("id", ""))
-	if not props.is_empty() and campaign != null and tid != "" and not (tid in campaign.done):
-		campaign.mark_researched(tid)   # tudásfa: ellenőrzött szám van, a téma kutatott
-		_body.add_child(UI.label(L.t("Új tudás a tudásfán: ") + L.t(str(_question["cim"])), 17, UI.GREEN, true))
+	var n_stars := Knowledge.stars_for(props)
+	if n_stars > 0 and campaign != null and tid != "":
+		var was_done: bool = tid in campaign.done
+		var old := int(campaign.stars.get(tid, 0))
+		campaign.mark_researched(tid, n_stars)   # tudásfa: ellenőrzött szám van, a téma kutatott
+		if not was_done or n_stars > old:
+			var msg := L.t("Új tudás a tudásfán: ") if not was_done else L.t("Erősebb tudás a tudásfán: ")
+			var l := UI.label(msg + Missions.star_text(n_stars) + "  " + Knowledge.text(_question, "cim"), 17, UI.GREEN, true)
+			l.mouse_filter = Control.MOUSE_FILTER_PASS
+			l.tooltip_text = star_rule()
+			_body.add_child(l)
 	if props.is_empty():
 		var why := L.t("AI nélkül csak cikklista készül, számok nem.") if _ai == "none" \
 			else L.t("Nem találtunk ellenőrizhető számot. Ez is eredmény.")

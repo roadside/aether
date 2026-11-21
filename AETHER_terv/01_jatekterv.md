@@ -121,11 +121,13 @@ A napsugár-módosítás (sztratoszférikus aeroszol) a IV. korszakban *kutathat
 
 ### 7.1 Ami már működik (2026-11-21)
 
-Négy korszak, 13 valódi kutatási témával (játékszabály, `knowledge.gd`). Egy téma akkor kutatott, ha a kutatás legalább egy ellenőrzött számot talált róla. A korszakok:
-- **I. Felismerés** (kezdő): mennyit melegít a CO2; mennyit csökken a termés melegedéskor; aszálytűrő kukorica.
-- **II. Mérséklés** (2 kutatott téma az I.-ből): rizsföldek metánja; gázipari metánszivárgás; csepegtető öntözés. Megnyílik a metán a tervben.
-- **III. Átalakulás** (2 téma a II.-ből, bevezetett terv, bizalom ≥ 50%): bioszén, kőzetmállasztás, CO2-szűrés a levegőből, növényi energia CO2-tárolással. Ezek a tervbe tehetők.
-- **IV. Helyreállítás** (2 téma a III.-ból, és a modellben 5 év alatt csökken a nettó CO2-kibocsátás): erdősítés, talaj szene, és a magaslégköri kén (csak megértésre, nem vezethető be).
+Négy korszak, 104 valódi kutatási témával, tíz tudományterületen: fizika, kémia, anyagtudomány, csillagászat és űrkutatás, földtudomány, biológia, energia, közlekedés és épületek, mezőgazdaság és élelem, egészség és alkalmazkodás. A témák listája egyetlen helyen van (`prototipus/tools/temak.py`), ebből készül a játék katalógusa (`AETHER_godot/assets/temak_katalogus.json`). A `tools/temak_ellenorzes.py` megnézi, hogy minden témához van-e elég áttekintő cikk, és van-e a cikkekben a téma mértékegységével szám. Egy téma akkor kutatott, ha a kutatás legalább egy ellenőrzött számot talált róla. A korszakok:
+- **I. Felismerés** (27 téma, kezdő): mennyit melegít a CO2, klímaérzékenység, jégtakarók, tengerszint, óceán, aszály, élővilág, hőség és egészség.
+- **II. Mérséklés** (30 téma; 2 kutatott téma kell az I.-ből): metán (rizs, gázipar, bányák, szeméttelep, kérődzők), takarékosság (hőszivattyú, szigetelés, LED-lámpa), napelem, szél, földhő, közlekedés, alkalmazkodás (városi fák, hőségriasztás). Megnyílik a metán a tervben.
+- **III. Átalakulás** (29 téma; 2 téma a II.-ből, bevezetett terv, bizalom ≥ 50%): akkumulátorok, hidrogén, zöld acél és cement, atomenergia, energiatárolás, CO2-leválasztás, és a tervbe tehető CO2-kivonás (bioszén, kőzetmállasztás, CO2-szűrés, növényi energia CO2-tárolással).
+- **IV. Helyreállítás** (18 téma; 2 téma a III.-ból, és a modellben 5 év alatt csökken a nettó CO2-kibocsátás): erdők, talaj, lápok, tengerparti és tengeri élőhelyek, ózonréteg, magfúzió, és a kockázatos napfény-visszaverő ötletek (csak megértésre, nem vezethetők be).
+
+A témák a kutatás képernyőjén korszakonként és tudományterületenként csoportosítva jelennek meg, felül kereső van. Csillagok (játékszabály): ★ ellenőrzött szám; ★★ legalább 2 cikk egyezik (közepes bizonyosság); ★★★ legalább 3 cikk, köztük összefoglaló elemzés (magas bizonyosság). A legjobb eredmény marad meg.
 
 A „Saját kérdés (haladó)” a tudásfán kívül marad. A jóváhagyott tervkarok és a kutatott témák a mentésben megmaradnak.
 

@@ -877,7 +877,7 @@ func _selftest() -> void:
 			await get_tree().create_timer(0.5).timeout
 	_open_research()
 	var r = _overlay
-	r._pick_question(ResearchFlow.QUESTIONS[0])
+	r._pick_question(Knowledge.topics()[0])
 	await _wait_tag("ai")
 	print("ONTESZT AI-állapot: ", r._ai_status)
 	await _shot(dir, "2_ki_kutasson.png")
@@ -914,11 +914,19 @@ func _selftest() -> void:
 		_close_overlay()
 		# tudásfa: két I. korszakos téma után a II. korszak nyílik meg
 		campaign.mark_researched("tcre")
-		campaign.mark_researched("termes")
-		print("ONTESZT tudásfa: korszak=", campaign.era, " kutatott=", campaign.done,
-			" III. feltételei=", campaign.era_conditions(3))
+		campaign.mark_researched("termes", 3)
+		print("ONTESZT tudásfa: témák=", Knowledge.topics().size(), " korszak=", campaign.era,
+			" kutatott=", campaign.done, " csillagok=", campaign.stars, " III. feltételei=", campaign.era_conditions(3))
 		_open_research()
+		var rp = _overlay
+		rp._open_fields["1:fizika"] = true
+		rp._open_fields["1:mezogazdasag"] = true
+		rp._fill_questions()
 		await _shot(dir, "8_tudasfa.png")
+		rp._filter = "jég"
+		rp.show_questions()
+		await _shot(dir, "8b_kereses.png")
+		rp._filter = ""
 		_close_overlay()
 		_open_nalunk()
 		for i in 60:   # a mért adatok letöltése
