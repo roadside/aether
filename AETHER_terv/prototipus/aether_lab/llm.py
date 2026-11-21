@@ -89,12 +89,18 @@ class OllamaProvider(Provider):
     # sorrendben (a 8B-s modellek kb. 6 GB videómemóriában is elférnek).
     PREFERRED = ["qwen3:8b", "qwen3:14b", "qwen3:4b", "llama3.1:8b", "gemma3:12b", "gemma3:4b", "mistral"]
 
-    def __init__(self, model: str = None, host: str = None, num_ctx: int = 16384):
+    # Kisebb gépen (pl. 6 GB videómemória) kevesebb, rövidebb absztrakttal dolgozunk,
+    # hogy a modell + kontextus elférjen a GPU-n (különben a CPU-n lassú).
+    max_papers = 8
+    max_abstract_chars = 1500
+
+    def __init__(self, model: str = None, host: str = None, num_ctx: int = None):
         self.host = (host or os.environ.get("OLLAMA_HOST", "http://localhost:11434")).rstrip("/")
         self.model = model or os.environ.get("AETHER_OLLAMA_MODEL") or self._pick_model()
-        # Az alapértelmezett 2–4 ezer tokenes kontextusba nem férne bele 12 absztrakt:
-        # csendben levágná őket, ezért nagyobb ablakot kérünk.
-        self.num_ctx = num_ctx
+        # Az alapértelmezett 2–4 ezer tokenes kontextusba nem férne bele 8 absztrakt:
+        # csendben levágná őket. 8k elég, és 6 GB-on is a GPU-n marad.
+        self.num_ctx = num_ctx or int(os.environ.get("AETHER_OLLAMA_CTX", "8192"))
+        self._think_ok = True
 
     def _pick_model(self) -> str:
         try:
@@ -105,21 +111,34 @@ class OllamaProvider(Provider):
         return pick_model(names, self.PREFERRED) or "qwen3:8b"
 
     def json_call(self, system, user, schema, max_tokens=8000):
+        import urllib.error
         body = {
             "model": self.model,
             "stream": False,
             "format": schema,  # Ollama >= 0.5: JSON-séma szerinti kimenet
-            "options": {"num_predict": max_tokens, "num_ctx": self.num_ctx},
+            "options": {"num_predict": min(max_tokens, self.num_ctx // 2), "num_ctx": self.num_ctx},
             "messages": [{"role": "system", "content": system},
                          {"role": "user", "content": user}],
         }
-        req = urllib.request.Request(self.host + "/api/chat", data=json.dumps(body).encode(),
-                                     headers={"Content-Type": "application/json"})
-        try:
-            with urllib.request.urlopen(req, timeout=600) as r:
-                data = json.loads(r.read())
-        except Exception as e:
-            raise LLMError(f"Nem érem el a helyi Ollama szervert ({self.host}): {e}") from e
+        if self._think_ok:
+            body["think"] = False  # gondolkodó modellnél (qwen3) sokkal gyorsabb, a JSON-hoz nem kell
+        data = None
+        for _ in range(2):
+            req = urllib.request.Request(self.host + "/api/chat", data=json.dumps(body).encode(),
+                                         headers={"Content-Type": "application/json"})
+            try:
+                with urllib.request.urlopen(req, timeout=900) as r:
+                    data = json.loads(r.read())
+                break
+            except urllib.error.HTTPError as e:
+                msg = e.read().decode("utf-8", "replace")
+                if "think" in msg.lower() and "think" in body:
+                    body.pop("think")          # a modell nem ismeri a think kapcsolót
+                    self._think_ok = False
+                    continue
+                raise LLMError(f"Ollama-hiba ({e.code}): {msg[:300]}") from e
+            except Exception as e:
+                raise LLMError(f"Nem érem el a helyi Ollama szervert ({self.host}): {e}") from e
         try:
             return json.loads(data["message"]["content"])
         except (KeyError, json.JSONDecodeError) as e:

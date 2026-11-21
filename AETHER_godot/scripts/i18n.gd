@@ -30,6 +30,21 @@ static func set_lang(l: String) -> void:
 	cfg.save(SETTINGS)
 
 
+## Egyéb beállítások ugyanabban a fájlban (pl. a választott AI).
+static func get_setting(key: String, default: Variant = "") -> Variant:
+	var cfg := ConfigFile.new()
+	if cfg.load(SETTINGS) != OK:
+		return default
+	return cfg.get_value("jatek", key, default)
+
+
+static func set_setting(key: String, value: Variant) -> void:
+	var cfg := ConfigFile.new()
+	cfg.load(SETTINGS)
+	cfg.set_value("jatek", key, value)
+	cfg.save(SETTINGS)
+
+
 static func is_en() -> bool:
 	init()
 	return lang == "en"
@@ -203,4 +218,32 @@ const EN := {
 	"A játék nem hisz vakon az AI-nak: minden számot szó szerint visszakeres a cikkben, és csak azt fogadja el, ami tényleg benne van. Fontos: a ChatGPT Plus, Claude Pro vagy Gemini előfizetés önmagában nem elég, a játékhoz API-kulcs kell. Ez külön, használat szerint fizetendő: egy kutatás a választott AI-tól függően néhány forinttól pár száz forintig terjed. A Geminihez van ingyenes keret, az Ollama pedig teljesen ingyenes.": "The game does not trust the AI blindly: it looks up every number word for word in the paper and only accepts what is really there. Important: a ChatGPT Plus, Claude Pro or Gemini subscription is not enough on its own; the game needs an API key. That is billed separately by usage: one research run costs from a few cents to around a dollar, depending on the AI. Gemini has a free tier, and Ollama is completely free.",
 	"Kulcs létrehozása (megnyílik a böngészőben)": "Create a key (opens in your browser)",
 	"%s API-kulcs (csak amíg a játék fut, nem mentjük el):": "%s API key (only while the game runs, never saved):",
+	# esemény-ablak és téma-magyarázat
+	"%s %d országban": "%s in %d countries",
+	"%s, %s és még %d ország": "%s, %s and %d more countries",
+	", köztük %s": ", including %s",
+	"A részletek a megnyílt ablakban.": "Details are in the window that opened.",
+	"AI-összefoglaló, kizárólag a lenti forrásokból. Az AI is tévedhet, a forrásokban ellenőrizheted.": "AI summary, based only on the sources below. The AI can make mistakes; you can check the sources.",
+	"Az AI elolvassa a Wikipédia-cikket és néhány tudományos összefoglalót, és érthetően elmondja, mi ez. Ez fél–két percig is tarthat…": "The AI reads the Wikipedia article and a few scientific reviews, and explains in plain words what this is. This can take half a minute to two minutes…",
+	"Az AI is tévedhet: a számokat a játék szó szerint visszakereste a forrásban, a szöveget lent ellenőrizheted.": "The AI can make mistakes: the game looked up the numbers word for word in the source, and you can check the text below.",
+	"Az összefoglaló most nem készült el. A hivatalos forrást lent megnyithatod.": "The summary could not be made right now. You can open the official source below.",
+	"Fontos számok": "Key numbers",
+	"Hivatalos forrás megnyitása (eredeti nyelven)": "Open the official source (original language)",
+	"Mennyire bizonyított?": "How well proven is it?",
+	"Mi a gond vele?": "What are the problems?",
+	"Mi ez, és mire jó?": "What is it, and what is it good for?",
+	"Mi ez?": "What is it?",
+	"Mi ez? (Wikipédia)": "What is it? (Wikipedia)",
+	"Mire jó?": "What is it good for?",
+	"Miért fontos, és mi köze a klímához?": "Why does it matter, and what does it have to do with the climate?",
+	"Most nem sikerült forrást letölteni. Van internet?": "No source could be downloaded right now. Are you online?",
+	"Tudományos összefoglaló cikkek": "Scientific review articles",
+	"Vissza a kérdésekhez": "Back to the questions",
+	"Wikipédia: ": "Wikipedia: ",
+	"Ábra a forrásból": "Figure from the source",
+	"Általános AI-magyarázat, számok nélkül.": "General AI explanation, without numbers.",
+	"Érintett országok: ": "Affected countries: ",
+	"Összefoglaló (AI, a forrás alapján)": "Summary (AI, based on the source)",
+	"Összefoglaló (a forrás saját adataiból)": "Summary (from the source's own data)",
+	"Összefoglaló készül a forrásból…": "Making a summary from the source…",
 }

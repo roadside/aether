@@ -31,7 +31,7 @@ from pathlib import Path
 
 from .climate import Scenario, builtin_scenarios, summarize
 from .chart import scenarios_svg
-from . import godot_bridge, world_state
+from . import event_detail, godot_bridge, topic, world_state
 
 
 def _print_summary(sm):
@@ -100,6 +100,8 @@ def main(argv=None):
     r.set_defaults(fn=cmd_research)
     godot_bridge.add_parsers(sub)
     world_state.add_parsers(sub)
+    event_detail.add_parsers(sub)
+    topic.add_parsers(sub)
     args = ap.parse_args(argv)
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")

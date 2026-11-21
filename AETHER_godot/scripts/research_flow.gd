@@ -10,19 +10,29 @@ const UI := preload("res://scripts/ui.gd")
 const L := preload("res://scripts/i18n.gd")
 const Bridge := preload("res://scripts/lab_bridge.gd")
 
+## Előre összeállított kérdések. "kereses": angol keresőkifejezések ("|" választja el),
+## "parameterek": mely modellparaméterekhez keresünk számot, "wiki"/"wiki_en"/"attekintes":
+## a „Mi ez, és mire jó?” magyarázat forrásai (Wikipédia + összefoglaló cikkek).
+const CDR_PARAMS := "cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2"
+const NET_REVIEW := "negative emissions technologies potentials costs side effects"
 const QUESTIONS := [
 	{"cim": "Mennyi CO2-t vonhat ki a levegőből a bioszén?",
 	 "magyarazat": "A bioszén elszenesített növényi hulladék. A talajba keverve hosszú ideig tárolja a szenet.",
-	 "kereses": "biochar carbon dioxide removal potential"},
+	 "kereses": "biochar carbon dioxide removal potential global|biochar soil carbon sequestration meta-analysis|" + NET_REVIEW,
+	 "parameterek": CDR_PARAMS, "wiki": "bioszén", "wiki_en": "biochar", "attekintes": "biochar carbon sequestration review"},
 	{"cim": "Mennyit segít a kőzetmállasztás?",
 	 "magyarazat": "Finomra őrölt kőzetet szórnak a földekre, ami lassan megköti a levegő CO2-jét.",
-	 "kereses": "enhanced rock weathering carbon dioxide removal potential"},
+	 "kereses": "enhanced rock weathering carbon dioxide removal potential|enhanced weathering croplands global potential|" + NET_REVIEW,
+	 "parameterek": CDR_PARAMS, "wiki": "kőzetmállás szén-dioxid", "wiki_en": "enhanced weathering", "attekintes": "enhanced rock weathering review"},
 	{"cim": "Mennyi CO2-t köthet meg az erdősítés?",
 	 "magyarazat": "Új erdők telepítése: a fák növekedés közben szenet építenek be.",
-	 "kereses": "afforestation reforestation carbon dioxide removal potential"},
+	 "kereses": "afforestation reforestation carbon dioxide removal potential global|global tree restoration potential carbon|" + NET_REVIEW,
+	 "parameterek": CDR_PARAMS, "wiki": "erdősítés", "wiki_en": "afforestation", "attekintes": "afforestation carbon sequestration review"},
 	{"cim": "Segítenek-e az aszálytűrő kukoricafajták?",
 	 "magyarazat": "Ez nem hűti a Földet, de megvédheti a termést a forró, száraz években.",
-	 "kereses": "drought tolerant maize yield advantage under drought"},
+	 "kereses": "drought tolerant maize yield advantage under drought|drought tolerant maize varieties yield on-farm trials",
+	 "parameterek": "alkalmazkodas_hozam_elony_pct", "wiki": "kukorica szárazságtűrés", "wiki_en": "drought tolerance maize",
+	 "attekintes": "drought tolerant maize review"},
 ]
 
 ## A választható AI-k. "kulcs": melyik környezeti változóba kerül a játékban
@@ -102,10 +112,15 @@ func show_questions() -> void:
 		var c := UI.card(UI.CYAN)
 		c.add_child(UI.label(L.t(q["cim"]), 19, UI.TEXT, true))
 		c.add_child(UI.label(L.t(q["magyarazat"]), 16, UI.SOFT))
+		var row := UI.hbox(12)
+		row.alignment = BoxContainer.ALIGNMENT_END
+		var info := UI.button(L.t("Mi ez, és mire jó?"))
+		info.pressed.connect(_show_topic.bind(q))
+		row.add_child(info)
 		var b := UI.button(L.t("Ezt kutatom"))
-		b.size_flags_horizontal = Control.SIZE_SHRINK_END
 		b.pressed.connect(_pick_question.bind(q))
-		c.add_child(b)
+		row.add_child(b)
+		c.add_child(row)
 		_body.add_child(UI.card_root(c))
 	# saját kérdés: haladóknak, alapból rejtve
 	var more := UI.button(L.t("Saját kérdést írok (haladó)"))
@@ -126,6 +141,72 @@ func show_questions() -> void:
 	more.pressed.connect(more_fn)
 	_body.add_child(more)
 	_body.add_child(box)
+
+
+# --- „Mi ez, és mire jó?” ---------------------------------------------------
+var _topic_out := ""
+var _topic_q: Dictionary = {}
+
+
+func _show_topic(q: Dictionary) -> void:
+	_topic_q = q
+	_header(L.t(q["cim"]), 0, "")
+	_body.add_child(UI.label(L.t("Az AI elolvassa a Wikipédia-cikket és néhány tudományos összefoglalót, és érthetően elmondja, mi ez. Ez fél–két percig is tarthat…"), 17, UI.SOFT))
+	var ai: String = L.get_setting("ai", "ollama")
+	var dir: String = bridge.work_dir("aether_temak")
+	_topic_out = dir.path_join("%s_%s_%s.json" % [str(q["wiki_en"]).md5_text().left(10), L.lang, ai])
+	var cached: Variant = Bridge.read_json(_topic_out)
+	if typeof(cached) == TYPE_DICTIONARY:
+		_render_topic(cached)
+		return
+	if not bridge.run("tema", ["tema", "--wiki", str(q["wiki"]), "--wiki-en", str(q["wiki_en"]),
+			"--kereses", str(q["attekintes"]), "--ki", _topic_out, "--ai", ai, "--nyelv", L.lang]):
+		_show_busy()
+
+
+func _render_topic(r: Dictionary) -> void:
+	_header(L.t(_topic_q["cim"]), 0, "")
+	var m: Variant = r.get("magyarazat")
+	if typeof(m) == TYPE_DICTIONARY:
+		for part in [["mi_ez", "Mi ez?"], ["mire_jo", "Mire jó?"], ["hatranyok", "Mi a gond vele?"], ["mennyire_bizonyitott", "Mennyire bizonyított?"]]:
+			var c := UI.card(UI.GOLD)
+			c.add_child(UI.label(L.t(part[1]), 17, UI.GOLD, true))
+			c.add_child(UI.label(str(m.get(part[0], "")), 17, UI.TEXT))
+			_body.add_child(UI.card_root(c))
+		_body.add_child(UI.label(L.t("AI-összefoglaló, kizárólag a lenti forrásokból. Az AI is tévedhet, a forrásokban ellenőrizheted."), 14, UI.MUTE))
+	var w: Variant = r.get("wiki")
+	if typeof(w) == TYPE_DICTIONARY:
+		if typeof(m) != TYPE_DICTIONARY:
+			var c := UI.card(UI.GOLD)
+			c.add_child(UI.label(L.t("Mi ez? (Wikipédia)"), 17, UI.GOLD, true))
+			c.add_child(UI.label(str(w.get("bevezeto", "")), 17, UI.TEXT))
+			_body.add_child(UI.card_root(c))
+		var wb := UI.button(L.t("Wikipédia: ") + str(w.get("cim", "")) + " (" + str(w.get("nyelv", "")) + ", CC BY-SA 4.0)")
+		var wurl := str(w.get("link", ""))
+		var w_fn := func() -> void: OS.shell_open(wurl)
+		wb.pressed.connect(w_fn)
+		_body.add_child(wb)
+	var papers: Array = r.get("cikkek", [])
+	if not papers.is_empty():
+		_body.add_child(UI.label(L.t("Tudományos összefoglaló cikkek"), 16, UI.CYAN, true))
+		for p in papers:
+			var pb := UI.button("%s (%s)" % [str(p.get("cim", "")), str(p.get("ev", ""))])
+			var purl := str(p.get("link", ""))
+			var p_fn := func() -> void: OS.shell_open(purl)
+			pb.pressed.connect(p_fn)
+			_body.add_child(pb)
+	if typeof(w) != TYPE_DICTIONARY and papers.is_empty():
+		_body.add_child(UI.label(L.t("Most nem sikerült forrást letölteni. Van internet?"), 17, UI.EMBER))
+	if str(r.get("megjegyzes", "")) != "":
+		_body.add_child(UI.label(str(r["megjegyzes"]), 13, UI.MUTE))
+	var row := UI.hbox(12)
+	var back := UI.button(L.t("Vissza a kérdésekhez"))
+	back.pressed.connect(show_questions)
+	row.add_child(back)
+	var go := UI.button(L.t("Ezt kutatom"), true)
+	go.pressed.connect(_pick_question.bind(_topic_q))
+	row.add_child(go)
+	_body.add_child(row)
 
 
 func _pick_question(q: Dictionary) -> void:
@@ -223,6 +304,7 @@ func _show_ai_choice() -> void:
 
 # --- 3. Kutatás folyamatban -----------------------------------------------
 func _start_research() -> void:
+	L.set_setting("ai", _ai)   # az események összefoglalója is ezt az AI-t használja
 	_folder = str(bridge.work_dir("aether_kutatas")).path_join("kutatas_%d" % Time.get_unix_time_from_system())
 	DirAccess.make_dir_recursive_absolute(_folder)
 	_header(L.t("Kutatás folyamatban"), 3, L.t("Az AI cikkeket olvas, a játék pedig mindent szó szerint ellenőriz. Ez 1–5 percig is tarthat."))
@@ -235,7 +317,7 @@ func _start_research() -> void:
 	_log_label = UI.label("", 14, UI.MUTE)
 	_body.add_child(_log_label)
 	if bridge.run("kutat", ["godot-kutat", L.t(str(_question["cim"])), "--ai", _ai, "--mappa", _folder, "--nyelv", L.lang,
-			"--kereses", str(_question.get("kereses", ""))]):
+			"--kereses", str(_question.get("kereses", "")), "--parameterek", str(_question.get("parameterek", ""))]):
 		_poll.start()
 	else:
 		_show_busy()
@@ -261,6 +343,13 @@ func _on_poll() -> void:
 
 
 func _on_bridge_finished(tag: String, code: int, output: String) -> void:
+	if tag == "tema":
+		var t: Variant = Bridge.read_json(_topic_out)
+		if typeof(t) == TYPE_DICTIONARY:
+			_render_topic(t)
+		else:
+			_show_python_error(code, output)
+		return
 	if tag == "ai":
 		var d: Variant = Bridge.read_json(bridge.work_dir("aether_kutatas").path_join("ai.json"))
 		_ai_status = d if typeof(d) == TYPE_DICTIONARY else {}

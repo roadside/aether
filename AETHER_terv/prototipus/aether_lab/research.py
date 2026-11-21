@@ -30,13 +30,19 @@ def plan_queries(provider: Optional[Provider], question: str) -> Dict:
 
 def extract(provider: Provider, question: str, papers: Dict[str, Paper], params: List[str],
             lang: str = "hu") -> Dict:
+    cap = getattr(provider, "max_abstract_chars", MAX_ABSTRACT_CHARS)
     blocks = []
     for pid, p in papers.items():
         flag = " [PREPRINT, nem lektorált]" if p.peer_reviewed is False else ""
         blocks.append(f"<cikk azonosito=\"{pid}\">\nCím: {p.title}{flag}\nÉv: {p.year}\n"
-                      f"Absztrakt: {p.abstract[:MAX_ABSTRACT_CHARS]}\n</cikk>")
-    wanted = ", ".join(params) if params else "bármely releváns paraméter a listából"
-    user = (f"Kutatási kérdés: {question}\nKeresett paraméterek: {wanted}\n\n"
+                      f"Absztrakt: {p.abstract[:cap]}\n</cikk>")
+    wanted_list = params or [k for k in ev.PARAMETERS if k != "egyeb"]
+    wanted = "\n".join(f"- {k}: {ev.PARAMETERS[k]['leiras']} (egység: {ev.PARAMETERS[k]['unit']})"
+                       for k in wanted_list if k in ev.PARAMETERS)
+    user = (f"Kutatási kérdés: {question}\nKeresett paraméterek (csak ezekhez emelj ki számot, "
+            f"a megadott egységben):\n{wanted}\n"
+            "Ha egy cikk nem erről szól (pl. a kérdés a talajba juttatott bioszénről szól, a cikk pedig "
+            "laboratóriumi gázmegkötő anyagról), abból NE emelj ki számot.\n\n"
             + "\n\n".join(blocks))
     if lang.startswith("en"):
         user += ("\n\nA játékos angolul játszik: az 'osszegzes' és az 'ellentmondasok' mezőt "
@@ -46,18 +52,26 @@ def extract(provider: Provider, question: str, papers: Dict[str, Paper], params:
 
 def run_research(question: str, provider: Optional[Provider], n_papers: int = 12,
                  per_source: int = 6, mailto: str = "", openalex_key: str = "",
-                 s2_key: str = "", use_arxiv: bool = True, log=print, lang: str = "hu") -> Dict:
+                 s2_key: str = "", use_arxiv: bool = True, log=print, lang: str = "hu",
+                 queries: Optional[List[str]] = None, params: Optional[List[str]] = None) -> Dict:
     en = lang.startswith("en")
     m = lambda hu, eng: eng if en else hu  # noqa: E731  (napló a játékos nyelvén)
     log(m("1/4 Kérdés pontosítása...", "1/4 Refining the question..."))
-    plan = plan_queries(provider, question)
+    if queries and params is not None:
+        # előre összeállított kérdés: a keresőkifejezéseket és a paramétereket szakértő adta meg,
+        # így nem kell AI-hívás a tervezéshez (gyorsabb, és nem téved paramétert)
+        plan = {"kutatasi_kerdes_pontositva": question, "angol_keresokifejezesek": list(queries),
+                "keresett_parameterek": [p for p in params if p in ev.PARAMETERS],
+                "megjegyzes": "Előre összeállított kérdés."}
+    else:
+        plan = plan_queries(provider, question)
     queries = plan["angol_keresokifejezesek"][:5]
     log(m(f"    Keresőkifejezések: {queries}", f"    Search terms: {queries}"))
 
     log(m("2/4 Irodalomkeresés (OpenAlex, Semantic Scholar, Crossref, arXiv)...",
           "2/4 Literature search (OpenAlex, Semantic Scholar, Crossref, arXiv)..."))
     ranked = search_all(queries, per_source, mailto, openalex_key, s2_key, use_arxiv, log)
-    chosen = ranked[:n_papers]
+    chosen = ranked[:min(n_papers, getattr(provider, "max_papers", n_papers))]
     papers = {f"P{i+1}": p for i, p in enumerate(chosen)}
     log(m(f"    {len(ranked)} egyedi, nem visszavont cikk; a legjobb {len(papers)} kerül elemzésre.",
           f"    {len(ranked)} unique, non-retracted papers; the best {len(papers)} are analysed."))

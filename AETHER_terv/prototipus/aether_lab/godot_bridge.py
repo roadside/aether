@@ -304,9 +304,14 @@ def cmd_kutat(args, run_research=None, get_provider=None):
     log = StatusLog(folder / "allapot.json", lang)
     try:
         provider = get_provider(args.ai)
-        # AI nélkül nincs kérdéspontosítás, ezért az angol keresőkifejezést használjuk
-        question = args.kerdes if provider is not None else (getattr(args, "kereses", "") or args.kerdes)
+        # Előre összeállított kérdésnél a játék adja a keresőkifejezéseket ("|" választja el)
+        # és a paramétereket; AI nélkül csak a keresőkifejezések számítanak.
+        queries = [q.strip() for q in (getattr(args, "kereses", "") or "").split("|") if q.strip()]
+        params = [p.strip() for p in (getattr(args, "parameterek", "") or "").split(",") if p.strip()]
+        question = args.kerdes if provider is not None else (" ".join(queries[:1]) or args.kerdes)
         pub = run_research(question, provider, n_papers=args.cikkek, per_source=args.forrasonkent,
+                           queries=queries or ([question] if provider is None else None),
+                           params=params or ([] if provider is None else None),
                            mailto=os.environ.get("AETHER_MAILTO", ""),
                            openalex_key=os.environ.get("OPENALEX_API_KEY", ""),
                            s2_key=os.environ.get("S2_API_KEY", ""), log=log, lang=lang)
@@ -385,7 +390,8 @@ def add_parsers(sub):
     k.add_argument("kerdes")
     k.add_argument("--ai", default="none", choices=["claude", "openai", "gemini", "ollama", "none"])
     k.add_argument("--mappa", required=True)
-    k.add_argument("--kereses", default="", help="angol keresőkifejezés AI nélküli módhoz")
+    k.add_argument("--kereses", default="", help="angol keresőkifejezések, '|' jellel elválasztva")
+    k.add_argument("--parameterek", default="", help="a keresett modellparaméterek, vesszővel elválasztva")
     k.add_argument("--cikkek", type=int, default=12)
     k.add_argument("--forrasonkent", type=int, default=6)
     k.add_argument("--nyelv", default="hu", choices=["hu", "en"], help="a játékos nyelve (hu/en)")

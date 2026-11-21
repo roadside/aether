@@ -16,6 +16,7 @@ uniform vec3 sun_dir = vec3(-0.62, -0.38, 0.69);
 uniform float levels = 9.0;            // színszintek csatornánként (poszterizálás)
 uniform float cloud_drift = 0.0;       // felhők elmozdulása (fordulat)
 uniform vec3 atmosphere = vec3(0.39, 0.95, 0.89);
+uniform float zoom = 1.0;              // nagyítás (1 = egész gömb)
 uniform float heat = 0.0;              // melegedés szemléltetése: 0 = ma, 1 = kb. +2 °C a mához képest
 
 const float BAYER[16] = float[16](0.0, 8.0, 2.0, 10.0, 12.0, 4.0, 14.0, 6.0, 3.0, 11.0, 1.0, 9.0, 15.0, 7.0, 13.0, 5.0);
@@ -33,7 +34,13 @@ vec3 posterize(vec3 c, float d) {
 void fragment() {
 	vec2 cell = floor(UV * pixels);
 	vec2 uv = (cell + 0.5) / pixels;
-	vec2 p = (uv * 2.0 - 1.0) / radius;
+	vec2 q = uv * 2.0 - 1.0;
+	if (zoom > 1.001 && dot(q, q) > 0.97) {
+		// nagyításkor kör alakú "nagyító": vékony fénylő perem, kívül átlátszó
+		COLOR = dot(q, q) < 1.0 ? vec4(atmosphere, 0.8) : vec4(0.0);
+		return;
+	}
+	vec2 p = q / (radius * zoom);
 	float r2 = dot(p, p);
 	float d = bayer(cell);
 	vec3 L = normalize(sun_dir);

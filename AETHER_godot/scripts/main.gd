@@ -9,6 +9,7 @@ const Bridge := preload("res://scripts/lab_bridge.gd")
 const Globe := preload("res://scripts/globe.gd")
 const ResearchFlow := preload("res://scripts/research_flow.gd")
 const PlanPanel := preload("res://scripts/plan_panel.gd")
+const EventPanel := preload("res://scripts/event_panel.gd")
 
 const MISSION := [
 	["Nézd meg a mai Földet", "A bal oldali lista és a földgömb pöttyei valódi, friss jelentések. Kattints egyre!"],
@@ -373,9 +374,9 @@ func _pick_events(events: Array, n: int) -> Array:
 func _event_card(e: Dictionary) -> Control:
 	var accent: Color = Globe.EVENT_COLORS.get(str(e.get("kategoria", "")), UI.EDGE)
 	var row := UI.card(accent)
-	var place := str(e.get("orszag", ""))
+	var place := EventPanel.short_place(e)
 	row.add_child(UI.label(L.category(str(e.get("kategoria", ""))) + (" · " + place if place != "" else ""), 14, UI.MUTE, false))
-	var t := UI.label(L.field(e, "cim"), 16, UI.TEXT, true)
+	var t := UI.label(EventPanel.display_title(e), 16, UI.TEXT, true)
 	t.max_lines_visible = 3
 	row.add_child(t)
 	row.add_child(UI.label("%s · %s" % [str(e.get("datum", "")), L.field(e, "forras")], 13, UI.MUTE, false))
@@ -390,10 +391,15 @@ func _event_card(e: Dictionary) -> Control:
 
 
 func _show_event(e: Dictionary) -> void:
-	var where := str(e.get("orszag", ""))
-	var txt := L.t("%s%s (%s): %s. Forrás: %s.") % [L.category(str(e.get("kategoria", ""))), (", " + where) if where != "" else "",
-		str(e.get("datum", "")), L.field(e, "cim"), L.field(e, "forras")]
-	_show_info(txt, str(e.get("link", "")))
+	# Röviden lent, részletesen (összefoglaló, ábrák, forráslink) külön ablakban.
+	var place := EventPanel.short_place(e)
+	_show_info("%s%s (%s). %s" % [EventPanel.display_title(e), (" · " + place) if place != "" else "",
+		str(e.get("datum", "")), L.t("A részletek a megnyílt ablakban.")], "")
+	var p = EventPanel.new()
+	p.bridge = bridge
+	p.event = e
+	p.closed.connect(_close_overlay)
+	_place_overlay(p)
 	_advance(1)
 
 

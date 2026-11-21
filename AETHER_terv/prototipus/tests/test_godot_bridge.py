@@ -174,3 +174,49 @@ class TestCloudProviders(unittest.TestCase):
         st = gb.ai_status(ollama_host="http://127.0.0.1:9", timeout=0.2)
         self.assertEqual(set(st), {"claude", "openai", "gemini", "ollama", "none"})
         self.assertTrue(st["openai"]["elerheto"])
+
+
+class TestFixedQuestion(unittest.TestCase):
+    def test_preset_skips_planner_and_limits_papers(self):
+        from aether_lab import research, literature
+        calls = {"planner": 0, "queries": None}
+
+        class FakeOllama:
+            name, model, max_papers, max_abstract_chars = "ollama", "teszt", 2, 50
+
+            def json_call(self, system, user, schema, max_tokens=0):
+                if "keresőkifejezés" in system:
+                    calls["planner"] += 1
+                self.last_user = user
+                return {"allitasok": [], "osszegzes": "", "ellentmondasok": ""}
+
+        def fake_search(queries, *a, **k):
+            calls["queries"] = queries
+            return [literature.Paper(title=f"TESZT {i}", abstract="x" * 200, year=2020, doi=f"10.1/{i}", source_id=str(i),
+                                     source="openalex") for i in range(5)]
+        orig, research.search_all = research.search_all, fake_search
+        try:
+            ai = FakeOllama()
+            pub = research.run_research("TESZT kérdés", ai, queries=["q1", "q2"],
+                                        params=["cdr_potencial_gtco2_ev"], log=lambda *_: None)
+        finally:
+            research.search_all = orig
+        self.assertEqual(calls["planner"], 0)
+        self.assertEqual(calls["queries"], ["q1", "q2"])
+        self.assertEqual(len(pub["cikkek"]), 2)
+        self.assertIn("GtCO2/év", ai.last_user)
+        self.assertNotIn("x" * 60, ai.last_user)
+
+
+class TestArxivUrl(unittest.TestCase):
+    def test_spaces_encoded(self):
+        from aether_lab import literature
+        seen = {}
+        orig_get, orig_sleep = literature._get, literature.time.sleep
+        literature._get = lambda url, **k: seen.setdefault("url", url) and b"<feed xmlns='http://www.w3.org/2005/Atom'/>"
+        literature.time.sleep = lambda s: None
+        try:
+            literature.search_arxiv("biochar carbon removal", 3)
+        finally:
+            literature._get, literature.time.sleep = orig_get, orig_sleep
+        self.assertNotIn(" ", seen["url"])

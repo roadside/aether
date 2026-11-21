@@ -194,8 +194,9 @@ def parse_arxiv(xml_bytes: bytes) -> List[Paper]:
 
 
 def search_arxiv(query: str, n: int = 10) -> List[Paper]:
-    terms = " AND ".join(f"all:{urllib.parse.quote(t)}" for t in query.split() if t)
-    url = f"https://export.arxiv.org/api/query?search_query={terms}&max_results={n}&sortBy=relevance"
+    terms = " AND ".join(f"all:{t}" for t in query.split() if t)
+    url = ("https://export.arxiv.org/api/query?"
+           + urllib.parse.urlencode({"search_query": terms, "max_results": n, "sortBy": "relevance"}))
     time.sleep(3)  # arXiv kéri: legfeljebb 1 kérés / 3 mp
     return parse_arxiv(_get(url))
 
@@ -301,17 +302,22 @@ def search_all(queries: List[str], per_source: int = 8, mailto: str = "",
                openalex_key: str = "", s2_key: str = "", use_arxiv: bool = True,
                log=print) -> List[Paper]:
     found: List[Paper] = []
+    off = set()   # forrás, amely "túl sok kérés" (429) hibát adott: a többi kérdésnél kihagyjuk
     for q in queries:
         for name, fn in [
             ("OpenAlex", lambda: search_openalex(q, per_source, mailto, openalex_key)),
             ("Semantic Scholar", lambda: search_semanticscholar(q, per_source, s2_key)),
             ("Crossref", lambda: search_crossref(q, per_source, mailto)),
         ] + ([("arXiv", lambda: search_arxiv(q, per_source))] if use_arxiv else []):
+            if name in off:
+                continue
             try:
                 res = fn()
                 log(f"  [{name}] '{q}': {len(res)} találat")
                 found.extend(res)
             except Exception as e:
                 log(f"  [{name}] '{q}': HIBA ({e}) – kihagyva")
+                if "429" in str(e):
+                    off.add(name)
     merged = merge(found)
     return rank(merged)

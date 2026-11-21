@@ -10,9 +10,13 @@ signal event_clicked(event: Dictionary)
 
 const SHADER := preload("res://shaders/globe.gdshader")
 
-@export var pixels := 360.0          # a gömb "játékpixel"-felbontása
+@export var pixels := 540.0          # a gömb "játékpixel"-felbontása (nagyobb = élesebb)
 @export var radius_ratio := 0.86     # egyezzen a shader `radius` értékével
-@export var tilt := 0.35
+@export var tilt := 0.35             # a nézet szélessége (radián): + észak felé, - dél felé
+const TILT_MAX := 1.45               # kb. 83 fok: a sarkok is jól láthatók
+const ZOOM_MIN := 1.0
+const ZOOM_MAX := 3.0
+var zoom := 1.0                      # görgővel nagyítható ("nagyító" kör a gömb helyén)
 @export var spin_speed := 0.0        # magától nem forog (egérrel forgatható); díszforgáshoz pl. 0.006
 @export var real_sun := true         # a Nap valódi helyzete a pontos idő alapján
 @export var cloud_speed := 0.0015
@@ -103,6 +107,8 @@ func _process(delta: float) -> void:
 		spin += spin_speed * delta
 	cloud_drift += cloud_speed * delta
 	_mat.set_shader_parameter("spin", spin)
+	_mat.set_shader_parameter("tilt", tilt)
+	_mat.set_shader_parameter("zoom", zoom)
 	if real_sun:
 		_sun_timer -= delta
 		if _sun_timer <= 0.0:
@@ -126,8 +132,16 @@ func _gui_input(event: InputEvent) -> void:
 				var ev := _event_at(event.position)
 				if not ev.is_empty():
 					event_clicked.emit(ev)
+	elif event is InputEventMouseButton and event.pressed and event.button_index in [MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN]:
+		var f := 1.12 if event.button_index == MOUSE_BUTTON_WHEEL_UP else 1.0 / 1.12
+		zoom = clampf(zoom * f, ZOOM_MIN, ZOOM_MAX)
+		accept_event()
 	elif event is InputEventMouseMotion and dragging:
-		spin -= event.relative.x / (size.x * PI)
+		# vízszintesen: forgatás a tengely körül; függőlegesen: észak-dél billentés.
+		# Nagyításkor lassabban mozog, hogy pontosan lehessen célozni.
+		var k := PI * zoom
+		spin -= event.relative.x / (size.x * k)
+		tilt = clampf(tilt + event.relative.y / (size.y * k) * PI, -TILT_MAX, TILT_MAX)
 
 
 ## Földrajzi pont -> képernyőpont. Visszaad: Vector3(x, y, látható? 1 : 0)
@@ -141,12 +155,14 @@ func project(lat_deg: float, lon_deg: float) -> Vector3:
 	var st := sin(tilt)
 	var ny := y2 * ct + z2 * st
 	var nz := -y2 * st + z2 * ct
-	var r := size.x * 0.5 * radius_ratio
+	var r := size.x * 0.5 * radius_ratio * zoom
 	var px := size.x / pixels                      # egy játékpixel mérete
 	var c := size * 0.5
 	var sx := snappedf(c.x + x * r, px)
 	var sy := snappedf(c.y + ny * r, px)
-	return Vector3(sx, sy, 1.0 if nz > 0.04 else 0.0)
+	# nagyításkor csak a "nagyító" körén belüli pont látszik
+	var in_lens := zoom <= 1.0 or Vector2(sx, sy).distance_to(c) < size.x * 0.5 * 0.985
+	return Vector3(sx, sy, 1.0 if nz > 0.04 and in_lens else 0.0)
 
 
 func _draw() -> void:
