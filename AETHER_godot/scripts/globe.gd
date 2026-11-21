@@ -1,6 +1,9 @@
 extends Control
-## A forgó földgömb: shaderes gömb + a kutatóállomások és szövetségi vonalak rajzolása.
+## A földgömb: shaderes gömb + a kutatóállomások és szövetségi vonalak rajzolása.
 ## A shader és ez a script ugyanazt a vetítést használja, így a jelölők a helyükön maradnak.
+## A Nap a VALÓDI helyén van: a gép órájából (UTC) számoljuk, hol delel éppen
+## (napfordulópont alatti pont), így a nappal és az éjszaka határa, valamint az
+## évszak (sarki éjszaka) a valóságot mutatja, és valós időben halad.
 
 signal station_clicked(station: Dictionary)
 signal event_clicked(event: Dictionary)
@@ -10,7 +13,8 @@ const SHADER := preload("res://shaders/globe.gdshader")
 @export var pixels := 360.0          # a gömb "játékpixel"-felbontása
 @export var radius_ratio := 0.86     # egyezzen a shader `radius` értékével
 @export var tilt := 0.35
-@export var spin_speed := 0.006      # fordulat / másodperc
+@export var spin_speed := 0.0        # magától nem forog (egérrel forgatható); díszforgáshoz pl. 0.006
+@export var real_sun := true         # a Nap valódi helyzete a pontos idő alapján
 @export var cloud_speed := 0.0015
 
 var spin := 0.12
@@ -20,6 +24,9 @@ var stations: Array = []             # [{name, lat, lon, color, me, locked}]
 var links: Array = []                # [[lat1, lon1, lat2, lon2], ...]
 var events: Array = []               # valós események (world_state.py): {cim, kategoria, lat, lon, link, ...}
 var heat := 0.0                      # 0 = ma; 1 = kb. +2 °C a mához képest (csak szemléltetés)
+var sun_lat := 0.0                   # ahol a Nap éppen merőlegesen süt (fok)
+var sun_lon := 0.0
+var _sun_timer := 0.0
 
 const EVENT_COLORS := {
 	"aszaly": Color("#e0a24a"), "ehezes": Color("#f07a4a"), "arviz": Color("#4aa0e0"), "vihar": Color("#9ab8ff"),
@@ -50,6 +57,44 @@ func _ready() -> void:
 	add_child(_rect)
 	# a jelölők a gömb fölé rajzolódnak
 	_rect.show_behind_parent = true
+	# induláskor a játékos helye legyen középen
+	for s in stations:
+		if s.get("me", false):
+			spin = float(s["lon"]) / 360.0
+	_update_sun()
+
+
+## Hol delel most a Nap? Egyszerűsített csillagászati képlet (Astronomical
+## Almanac, alacsony pontosságú napkoordináták; hiba < 0,1 fok, bőven elég).
+static func subsolar_point(unix_utc: float) -> Vector2:
+	var n := unix_utc / 86400.0 - 10957.5           # napok 2000-01-01 12:00 UTC óta
+	var lmean := deg_to_rad(fposmod(280.460 + 0.9856474 * n, 360.0))
+	var g := deg_to_rad(fposmod(357.528 + 0.9856003 * n, 360.0))
+	var lam := lmean + deg_to_rad(1.915) * sin(g) + deg_to_rad(0.020) * sin(2.0 * g)
+	var eps := deg_to_rad(23.439 - 0.0000004 * n)
+	var decl := asin(sin(eps) * sin(lam))
+	var ra := atan2(cos(eps) * sin(lam), cos(lam))
+	var gmst_deg := fposmod(280.46061837 + 360.98564736629 * n, 360.0)
+	var lon := fposmod(rad_to_deg(ra) - gmst_deg + 180.0, 360.0) - 180.0
+	return Vector2(rad_to_deg(decl), lon)
+
+
+func _update_sun() -> void:
+	if not real_sun:
+		return
+	var p := subsolar_point(Time.get_unix_time_from_system())
+	sun_lat = p.x
+	sun_lon = p.y
+
+
+## A Nap iránya a képernyő terében (ugyanaz a vetítés, mint a jelölőknél).
+func _sun_dir() -> Vector3:
+	var lat := deg_to_rad(sun_lat)
+	var o := deg_to_rad(sun_lon) - spin * TAU
+	var x := cos(lat) * sin(o)
+	var y2 := -sin(lat)
+	var z2 := cos(lat) * cos(o)
+	return Vector3(x, y2 * cos(tilt) + z2 * sin(tilt), -y2 * sin(tilt) + z2 * cos(tilt))
 
 
 func _process(delta: float) -> void:
@@ -58,6 +103,12 @@ func _process(delta: float) -> void:
 		spin += spin_speed * delta
 	cloud_drift += cloud_speed * delta
 	_mat.set_shader_parameter("spin", spin)
+	if real_sun:
+		_sun_timer -= delta
+		if _sun_timer <= 0.0:
+			_sun_timer = 10.0
+			_update_sun()
+		_mat.set_shader_parameter("sun_dir", _sun_dir())
 	_mat.set_shader_parameter("cloud_drift", cloud_drift)
 	_mat.set_shader_parameter("heat", heat)
 	queue_redraw()

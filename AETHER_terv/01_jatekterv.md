@@ -205,6 +205,7 @@ Saját stílus, amely a kézzel festett hatású pixelgrafikák műfajába tarto
 
 - **Felbontás:** 400×225 belső felbontás, 4× nagyítás (1600×900), egész számú skálázás.
 - **Paletta („alkonyi parázs és tengerkék”):** éjtinta `#0b0f1a`, mélykék `#141b2d`, tengerkék `#1d4e6b`/`#3a86a8`, moha `#4f7a3a`/`#6fa04a`, homok `#c9a25a`, parázs `#d9532f` (hőstressz), jég `#e8f1f4`, arany kiemelés `#f2c14e`, AETHER-cián `#5ff2e0`.
+- **Valós nappal és éjszaka a földgömbön (2026-11-21):** a Nap a valódi helyén van, a gép órájából számolva (csillagászati képlet, hiba < 0,1°). A nappal–éjszaka határ valós időben halad, az évszak is látszik (sarki éjszaka). A gömb induláskor a játékos helyét mutatja, magától nem forog, egérrel forgatható.
 - **Festőiség pixelben:** rendezett (Bayer) dither a színátmenetekben, puha fényudvarok lépcsőzetes gyűrűkként, peremfények, alkonyi ég. Kevés, de gazdag szín.
 - **Földgömb:** forgó pixelgömb valódi kontinenshatárokkal (Natural Earth), biom-színezéssel, felhőkkel, éjszakai városfényekkel; a hőstressz parázsszínű foltként jelenik meg.
 - **UI:** pixeles betűtípus (a mockupban Pixelify Sans, SIL OFL licenc), keretes panelek, nagy kontraszt.
