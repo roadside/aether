@@ -103,7 +103,7 @@ Forrás: Review of: "Open-Source Remote Sensing Determination of Carbon Emission
 Forrás: Review of: "Open-Source Remote Sensing Determination of Carbon Emissions From Tropical Deforestation Scenarios in Southeast Nigeria" (2024) – https://doi.org/10.32388/y4asbc
 Lektorálva: nem
 --- technikai ---
-Keresés: satellite monitoring global forest loss|remote sensing deforestation carbon emissions|Landsat global forest change
+Keresés: global tree cover loss million hectares per year|tropical primary forest loss Mha satellite|Landsat global forest change annual loss hectares
 Paraméter: terulet_mha_ev
 Áttekintő cikkek keresése: remote sensing deforestation review
 

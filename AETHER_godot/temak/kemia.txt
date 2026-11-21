@@ -63,13 +63,13 @@ Paraméter: metan_csokkentes_pct
 
 === hutokozeg ===
 Korszak: II. (Mérséklés)
-Kérdés: Mennyit számít a hűtők és légkondik gázának cseréje?
+Kérdés: Mennyi melegedést előz meg a hűtőgázok cseréje?
 Röviden: A hűtőgépek egyes gázai, ha kiszöknek, akár ezerszer erősebben melegítenek, mint a CO2.
 Ha kikutatod:
 Mire jó?: A gázcsere csökkenti a klímaváltozás sebességét, mert a régi gázok nagyon melegítik a Földet.
 Mi a gond vele?: A gázcsere költséges, és nem minden eszközön lehet megtenni, különösen régebbi modellek esetén.
 Mennyire bizonyított?: A tudományos bizonyítékok alapján a gázcsere hatékony, de a pontos hatásokat még részletesebben kell tanulmányozni.
-Kérdés angolul: How much does replacing the gas in fridges and air conditioners matter?
+Kérdés angolul: How much warming does replacing cooling gases prevent?
 Röviden angolul: When they leak, some gases in cooling machines warm the Earth up to a thousand times more than CO2.
 Ha kikutatod angolul:
 Mire jó? angolul:
@@ -81,8 +81,8 @@ Forrás: A review of bottom-up and top-down emission estimates of hydrofluorocar
 Forrás: Ozone depletion by hydrofluorocarbons (2015) – https://doi.org/10.1002/2015gl065856
 Lektorálva: nem
 --- technikai ---
-Keresés: hydrofluorocarbon phase-down Kigali amendment avoided warming|HFC emissions mitigation refrigerants|low global warming potential refrigerants
-Paraméter: kibocsatas_potencial_gtco2e_ev
+Keresés: Kigali Amendment avoided warming 2100|hydrofluorocarbon phase-down avoided global warming|HFC emissions scenarios warming contribution
+Paraméter: elkerult_melegedes_c
 Áttekintő cikkek keresése: hydrofluorocarbon phase-down review
 
 === n2o_ipar ===

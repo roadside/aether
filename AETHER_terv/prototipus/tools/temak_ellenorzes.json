@@ -85,11 +85,11 @@
    "id": "atomenergia",
    "korszak": 3,
    "terulet": "fizika",
-   "cim": "Mennyi kibocsátást válthat ki az atomenergia?",
-   "attekintok": 4055,
-   "cikkek": 36,
-   "szammal": 0,
-   "gyenge": true
+   "cim": "Mennyi CO2-vel jár az atomerőművi áram?",
+   "attekintok": 22401,
+   "cikkek": 35,
+   "szammal": 11,
+   "gyenge": false
   },
   {
    "id": "hotarolas",
@@ -165,11 +165,11 @@
    "id": "hutokozeg",
    "korszak": 2,
    "terulet": "kemia",
-   "cim": "Mennyit számít a hűtők és légkondik gázának cseréje?",
+   "cim": "Mennyi melegedést előz meg a hűtőgázok cseréje?",
    "attekintok": 129,
-   "cikkek": 35,
-   "szammal": 1,
-   "gyenge": true
+   "cikkek": 33,
+   "szammal": 7,
+   "gyenge": false
   },
   {
    "id": "n2o_ipar",
@@ -398,8 +398,8 @@
    "cim": "Mennyi erdő tűnik el évente a műholdképek szerint?",
    "attekintok": 2027,
    "cikkek": 36,
-   "szammal": 1,
-   "gyenge": true
+   "szammal": 15,
+   "gyenge": false
   },
   {
    "id": "urbeli_napelem",
@@ -537,9 +537,9 @@
    "terulet": "fold",
    "cim": "Segít-e, ha vassal trágyázzuk a tengert?",
    "attekintok": 927,
-   "cikkek": 21,
-   "szammal": 0,
-   "gyenge": true
+   "cikkek": 33,
+   "szammal": 5,
+   "gyenge": false
   },
   {
    "id": "beporzok",
@@ -685,11 +685,11 @@
    "id": "szelenergia",
    "korszak": 2,
    "terulet": "energia",
-   "cim": "Mennyi kibocsátást válthat ki a szélenergia?",
-   "attekintok": 22120,
-   "cikkek": 36,
-   "szammal": 1,
-   "gyenge": true
+   "cim": "Mennyi CO2-vel jár a szélerőművi áram?",
+   "attekintok": 6958,
+   "cikkek": 35,
+   "szammal": 12,
+   "gyenge": false
   },
   {
    "id": "geotermia",
@@ -725,11 +725,11 @@
    "id": "tengeri_szel",
    "korszak": 3,
    "terulet": "energia",
-   "cim": "Mennyi kibocsátást válthat ki a tengeri szélenergia?",
-   "attekintok": 2017,
-   "cikkek": 36,
-   "szammal": 0,
-   "gyenge": true
+   "cim": "Mennyi CO2-vel jár a tengeri szélerőművi áram?",
+   "attekintok": 1236,
+   "cikkek": 34,
+   "szammal": 12,
+   "gyenge": false
   },
   {
    "id": "vizi_tarolo",
@@ -957,9 +957,9 @@
    "terulet": "mezogazdasag",
    "cim": "Mennyi szenet köt meg a fákkal tarkított szántó és legelő?",
    "attekintok": 2163,
-   "cikkek": 35,
-   "szammal": 0,
-   "gyenge": true
+   "cikkek": 34,
+   "szammal": 18,
+   "gyenge": false
   },
   {
    "id": "hoseg_halal",

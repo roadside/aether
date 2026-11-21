@@ -85,13 +85,13 @@ Paraméter: kibocsatas_csokkentes_pct
 
 === szelenergia ===
 Korszak: II. (Mérséklés)
-Kérdés: Mennyi kibocsátást válthat ki a szélenergia?
+Kérdés: Mennyi CO2-vel jár a szélerőművi áram?
 Röviden: A szélturbinák a szél mozgási energiáját alakítják árammá.
 Ha kikutatod:
 Mire jó?: A szélenergia kibocsátást nem okoz, így környezetvédelmi előnyt jelent, és segíthet a klímaváltozás elleni küzdelemben.
 Mi a gond vele?: A szélenergia termelése nem mindig biztos, mert a szél erősségétől függ, és a berendezések költségei magasak lehetnek.
 Mennyire bizonyított?: A szélenergia potenciálja és előnyei jól bizonyítottak, de a teljes kibocsátási csökkentéshez további kutatások és fejlesztések szükségesek.
-Kérdés angolul: How much emission can wind power replace?
+Kérdés angolul: How much CO2 comes with wind electricity?
 Röviden angolul: Wind turbines turn the energy of moving air into electricity.
 Ha kikutatod angolul:
 Mire jó? angolul:
@@ -103,9 +103,9 @@ Forrás: A Review of Wind Energy and its Potential in Nigeria (2024) – https:/
 Forrás: A WIND ENERGY POTENTIAL, PROGRESS AND CHALLENGES IN BANGLADESH: A REVIEW (2024) – https://doi.org/10.22452/ijrer.vol14no1.2
 Lektorálva: nem
 --- technikai ---
-Keresés: wind power greenhouse gas mitigation potential|onshore wind energy technical potential|wind turbine life cycle emissions
-Paraméter: kibocsatas_potencial_gtco2e_ev
-Áttekintő cikkek keresése: wind energy potential review
+Keresés: wind turbine life cycle greenhouse gas emissions gCO2/kWh|onshore wind life cycle assessment carbon footprint|wind power carbon intensity harmonization
+Paraméter: eletciklus_gco2_kwh
+Áttekintő cikkek keresése: wind power life cycle assessment review
 
 === geotermia ===
 Korszak: II. (Mérséklés)
@@ -183,13 +183,13 @@ Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
 
 === tengeri_szel ===
 Korszak: III. (Átalakulás)
-Kérdés: Mennyi kibocsátást válthat ki a tengeri szélenergia?
+Kérdés: Mennyi CO2-vel jár a tengeri szélerőművi áram?
 Röviden: A tengeren erősebb és egyenletesebb a szél, mint a szárazföldön.
 Ha kikutatod:
 Mire jó?: A tengeri szélenergia kibocsátást vált ki, ami a klímaváltozás ellenére is segíthet a megújuló energiák fejlesztésében.
 Mi a gond vele?: A források nem szólnak a kibocsátás mennyiségéről.
 Mennyire bizonyított?: A források nem szólnak a kibocsátás mennyiségéről.
-Kérdés angolul: How much emission can offshore wind replace?
+Kérdés angolul: How much CO2 comes with offshore wind electricity?
 Röviden angolul: At sea the wind is stronger and steadier than on land.
 Ha kikutatod angolul:
 Mire jó? angolul:
@@ -201,9 +201,9 @@ Forrás: Offshore green hydrogen production from wind energy: Critical review an
 Forrás: The sustainable worldwide offshore wind energy potential: A systematic review (2017) – https://doi.org/10.1063/1.5009948
 Lektorálva: nem
 --- technikai ---
-Keresés: offshore wind technical potential global|floating offshore wind potential|offshore wind greenhouse gas mitigation
-Paraméter: kibocsatas_potencial_gtco2e_ev
-Áttekintő cikkek keresése: offshore wind energy review
+Keresés: offshore wind life cycle assessment gCO2/kWh|offshore wind farm carbon footprint|floating offshore wind life cycle emissions
+Paraméter: eletciklus_gco2_kwh
+Áttekintő cikkek keresése: offshore wind life cycle assessment review
 
 === vizi_tarolo ===
 Korszak: III. (Átalakulás)

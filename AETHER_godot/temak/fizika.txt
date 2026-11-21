@@ -209,13 +209,13 @@ Paraméter: sugarzasi_kenyszer_w_m2
 
 === atomenergia ===
 Korszak: III. (Átalakulás)
-Kérdés: Mennyi kibocsátást válthat ki az atomenergia?
+Kérdés: Mennyi CO2-vel jár az atomerőművi áram?
 Röviden: Az atomerőmű nem éget semmit, de az építésnek és az üzemanyagnak is van kibocsátása.
 Ha kikutatod:
 Mire jó?: Az atomenergia nélkül is lehetséges a klímaváltozás csökkentése, de magasabb költségekkel jár, és ha a jövőben bevezetik, akkor hosszú távon segíthet a klímaváltozás ellen.
 Mi a gond vele?: Az atomenergia bevezetése a nukleáris fegyverek terjedésének kockázatát is növeli, mivel a uránium finomítása és a hulladék feldolgozása lehetővé teszi a nukleáris fegyverek készítését.
 Mennyire bizonyított?: A források szerint az atomenergia kibocsátásának mennyisége és a klímaváltozás csökkentéséhez való hozzájárulása bizonyított, de a technológiai megoldások és a kockázatok nem teljesen egyértelműek.
-Kérdés angolul: How much emission can nuclear power replace?
+Kérdés angolul: How much CO2 comes with nuclear electricity?
 Röviden angolul: A nuclear plant burns nothing, but building it and its fuel cause some emissions.
 Ha kikutatod angolul:
 Mire jó? angolul:
@@ -227,9 +227,9 @@ Forrás: Strategies for mitigation of climate change: a review (2020) – https:
 Forrás: Who are the victims of low-carbon transitions? Towards a political ecology of climate change mitigation (2021) – https://doi.org/10.1016/j.erss.2021.101916
 Lektorálva: nem
 --- technikai ---
-Keresés: nuclear power life cycle greenhouse gas emissions|nuclear energy climate change mitigation potential|small modular reactors decarbonization
-Paraméter: kibocsatas_potencial_gtco2e_ev
-Áttekintő cikkek keresése: nuclear power climate mitigation review
+Keresés: nuclear power life cycle greenhouse gas emissions gCO2/kWh|life cycle assessment nuclear electricity carbon intensity|nuclear power lifecycle emissions harmonization
+Paraméter: eletciklus_gco2_kwh
+Áttekintő cikkek keresése: nuclear power life cycle assessment review
 
 === hotarolas ===
 Korszak: III. (Átalakulás)

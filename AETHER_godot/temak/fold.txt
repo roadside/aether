@@ -299,6 +299,6 @@ Forrás: Efficiency of carbon removal per added iron in ocean iron fertilization
 Forrás: Ocean iron fertilization and international law (2008) – https://doi.org/10.3354/meps07543
 Lektorálva: nem
 --- technikai ---
-Keresés: ocean iron fertilization carbon sequestration experiments|iron fertilization efficiency carbon export
-Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
+Keresés: ocean iron fertilization carbon sequestration potential PgC|iron fertilization model carbon export gigatons|ocean iron fertilization efficiency sequestration estimate
+Paraméter: szen_gtc
 Áttekintő cikkek keresése: ocean iron fertilization review

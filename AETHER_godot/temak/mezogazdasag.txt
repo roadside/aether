@@ -251,6 +251,6 @@ Forrás: Carbon Sequestration Potential through Agroforestry: A Review (2017) �
 Forrás: The role of agroforestry in carbon sequestration and climate adaptation: A review (2025) – https://doi.org/10.33545/2618060x.2025.v8.i2e.2592
 Lektorálva: nem
 --- technikai ---
-Keresés: agroforestry carbon sequestration meta-analysis|silvopasture carbon storage|agroforestry soil organic carbon
-Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
+Keresés: agroforestry carbon sequestration rate Mg C ha-1 yr-1|silvopasture carbon accumulation per hectare|agroforestry soil and biomass carbon meta-analysis
+Paraméter: szenmegkotes_t_ha_ev
 Áttekintő cikkek keresése: agroforestry carbon review
