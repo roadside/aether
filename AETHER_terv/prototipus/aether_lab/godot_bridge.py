@@ -73,6 +73,8 @@ PARAM_NEV = {
     "ph_valtozas": "Mennyit változik a pH",
     "megkotes_mmol_g": "Mennyi gázt köt meg grammonként",
     "energia_nyereseg": "Mennyi energiát nyer a befektetetthez képest",
+    "eletciklus_gco2_kwh": "Mennyi CO2-vel jár egy kilowattóra áram",
+    "szenmegkotes_t_ha_ev": "Mennyi szenet köt meg hektáronként",
     "egyeb": "Fontos szám a cikkekből",
 }
 
@@ -114,14 +116,17 @@ PARAM_NEV_EN = {
     "ph_valtozas": "How much the pH changes",
     "megkotes_mmol_g": "How much gas it binds per gram",
     "energia_nyereseg": "How much energy it gains compared with what goes in",
+    "eletciklus_gco2_kwh": "How much CO2 comes with one kilowatt-hour",
+    "szenmegkotes_t_ha_ev": "How much carbon it stores per hectare",
     "egyeb": "A key number from the papers",
 }
 
 # Mértékegységek angolul (a belső kód magyar marad)
-EGYSEG_EN = {"GtCO2/év": "GtCO2/yr", "GtCO2e/év": "GtCO2e/yr", "Gt/év": "Gt/yr", "Gt C": "GtC", "Mha/év": "Mha/yr", "W/m²/(Tg SO2/év)": "W/m²/(Tg SO2/yr)"}
+EGYSEG_EN = {"GtCO2/év": "GtCO2/yr", "GtCO2e/év": "GtCO2e/yr", "Gt/év": "Gt/yr", "Gt C": "GtC", "Mha/év": "Mha/yr", "t C/ha/év": "t C/ha/yr", "W/m²/(Tg SO2/év)": "W/m²/(Tg SO2/yr)"}
 # A kártyán megjelenő magyar mértékegység: rövidítés helyett köznapi szavak
 EGYSEG_HU = {"GtCO2/év": "milliárd tonna CO2/év", "GtCO2e/év": "milliárd tonna CO2-egyenérték/év",
-             "Gt C": "milliárd tonna szén", "Mha/év": "millió hektár/év"}
+             "Gt C": "milliárd tonna szén", "Mha/év": "millió hektár/év",
+             "gCO2e/kWh": "gramm CO2/kilowattóra", "t C/ha/év": "tonna szén/hektár/év"}
 
 
 def is_en(lang: str) -> bool:
@@ -199,6 +204,10 @@ def jelentes(param: str, ertek: float, egyseg: str, lang: str = "hu") -> str:
         return f"Grammonként kb. {v} millimol gázt köt meg."
     if param == "energia_nyereseg":
         return f"A kinyert és a befektetett energia aránya kb. {v}."
+    if param == "eletciklus_gco2_kwh":
+        return f"Kilowattóránként kb. {v} gramm CO2, az építéstől a bontásig. Összehasonlításul: a szénerőműé kb. 820 gramm (IPCC)."
+    if param == "szenmegkotes_t_ha_ev":
+        return f"Hektáronként évente kb. {v} tonna szenet köt meg."
     if param == "sai_kenyszer_w_m2_per_tg":
         return (f"Évi 1 millió tonna kén-dioxid kb. {v} W/m²-rel csökkentené a napfény melegítő hatását. "
                 "Ha leállítják, a melegedés gyorsan visszatér.")
@@ -267,6 +276,10 @@ def _jelentes_en(param: str, ertek: float, egyseg: str) -> str:
         return f"It binds about {v} millimoles of gas per gram."
     if param == "energia_nyereseg":
         return f"The ratio of energy out to energy in is about {v}."
+    if param == "eletciklus_gco2_kwh":
+        return f"About {v} grams of CO2 per kilowatt-hour, from construction to demolition. For comparison, coal power is about 820 grams (IPCC)."
+    if param == "szenmegkotes_t_ha_ev":
+        return f"It stores about {v} tonnes of carbon per hectare each year."
     if param == "sai_kenyszer_w_m2_per_tg":
         return (f"1 million tonnes of sulphur dioxide a year would reduce the warming effect of sunlight by about {v} W/m². "
                 "If it stops, warming returns quickly.")

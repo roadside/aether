@@ -68,6 +68,10 @@ PARAMETERS: Dict[str, Dict] = {
     "terulet_mha_ev": {"unit": "Mha/év", "range": (0.0, 100.0), "leiras": "Terület változása évente, millió hektárban"},
     "ph_valtozas": {"unit": "pH", "range": (-1.0, 0.5), "leiras": "A pH-érték változása (negatív: savasodás)"},
     "megkotes_mmol_g": {"unit": "mmol/g", "range": (0.0, 30.0), "leiras": "Gázmegkötő képesség: mmol gáz grammonként"},
+    "eletciklus_gco2_kwh": {"unit": "gCO2e/kWh", "range": (0.0, 1500.0),
+        "leiras": "Életciklus-kibocsátás: gramm CO2-egyenérték egy kilowattóra áramra (építéstől a bontásig)"},
+    "szenmegkotes_t_ha_ev": {"unit": "t C/ha/év", "range": (0.0, 50.0),
+        "leiras": "Szénmegkötés hektáronként évente, tonna szénben"},
     "energia_nyereseg": {"unit": "×", "range": (0.0, 1000.0), "leiras": "Energianyereség: a kinyert és a befektetett energia aránya"},
     "egyeb": {"unit": "", "range": (-1e12, 1e12), "leiras": "Egyéb (csak tájékoztató, modellbe nem kerül)"},
 }
@@ -239,6 +243,8 @@ UNIT_PATTERNS: Dict[str, object] = {
     "terulet_mha_ev": r"\bmha\b|million\s+hectares|\bm\s*ha\b|million\s+ha\b",
     "ph_valtozas": r"\bph\b",
     "megkotes_mmol_g": r"mmol",
+    "eletciklus_gco2_kwh": [r"g\s*-?\s*co\s*2|gco2|grams?\s+(of\s+)?co2", r"kwh|kw\s*h|kilowatt"],
+    "szenmegkotes_t_ha_ev": [r"\bt\b|\bmg\b|tonnes?|tons?|\bpg\b", r"\bha\b|hectare"],
     "energia_nyereseg": r"gain|\bq\b|\bmj\b|ratio",
 }
 
