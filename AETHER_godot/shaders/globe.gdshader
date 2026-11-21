@@ -3,7 +3,7 @@
 // (Bayer) dither-rel posztereli, így festett pixelgrafika hatású.
 shader_type canvas_item;
 
-uniform sampler2D albedo_map : source_color, filter_nearest, repeat_enable;  // nappali színek (Natural Earth alapú)
+uniform sampler2D albedo_map : source_color, filter_nearest, repeat_enable;  // nappali színek (NASA Blue Marble, festett pixeles feldolgozás)
 uniform sampler2D data_map : filter_nearest, repeat_enable;                  // R: szárazföld, G: sekély víz
 uniform sampler2D night_map : source_color, filter_nearest, repeat_enable;   // városfények
 uniform sampler2D cloud_map : filter_linear, repeat_enable;                  // felhőzaj
@@ -80,7 +80,7 @@ void fragment() {
 					float band = smoothstep(0.0, 0.6, 1.0 - abs(lat) / 1.2);
 					albedo = mix(albedo, vec3(0.62, 0.50, 0.30), heat * 0.35 * band);
 				}
-			} else if (lum > 0.7 && abs(lat) < 1.05 + heat * 0.25) {
+			} else if (lum > 0.82 && abs(lat) < 1.05 + heat * 0.25) {
 				// a tengeri jég széle a sark felé húzódik
 				albedo = vec3(0.10, 0.27, 0.45);
 			}

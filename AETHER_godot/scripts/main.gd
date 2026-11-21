@@ -96,26 +96,43 @@ func _make_theme() -> Theme:
 	var t := Theme.new()
 	t.default_font = UI.font_body
 	t.default_font_size = 18
-	var panel := StyleBoxFlat.new()
-	panel.bg_color = UI.PANEL_BG
-	panel.border_color = UI.EDGE
-	panel.set_border_width_all(2)
-	panel.set_content_margin_all(16)
+	# festett pixeles keretek (tools/festett_felulet.py), csempézve, hogy élesek maradjanak
+	var panel := _frame("res://assets/ui/panel.png", 12, 18)
 	t.set_stylebox("panel", "PanelContainer", panel)
-	for state in ["normal", "hover", "pressed", "disabled", "focus"]:
-		var b := StyleBoxFlat.new()
-		b.bg_color = Color("#1c2944") if state != "hover" else Color("#26385c")
-		b.border_color = Color("#4a6391") if state != "focus" else UI.GOLD
-		b.set_border_width_all(2)
-		b.set_content_margin_all(10)
+	var imgs := {"normal": "gomb", "disabled": "gomb", "hover": "gomb_folotte", "pressed": "gomb_lenyomva"}
+	for state in imgs:
+		var b := _frame("res://assets/ui/%s.png" % imgs[state], 8, 10)
 		b.content_margin_left = 16
 		b.content_margin_right = 16
 		t.set_stylebox(state, "Button", b)
+	var focus := StyleBoxFlat.new()
+	focus.draw_center = false
+	focus.border_color = UI.GOLD
+	focus.set_border_width_all(2)
+	t.set_stylebox("focus", "Button", focus)
 	t.set_font("font", "Button", UI.font_bold)
 	t.set_font_size("font_size", "Button", 17)
 	t.set_font("font", "CheckBox", UI.font_body)
 	t.set_color("font_color", "Label", UI.TEXT)
 	return t
+
+
+func _frame(path: String, margin: int, content: int) -> StyleBox:
+	var tex: Texture2D = load(path)
+	if tex == null:   # ha a kép hiányzik, egyszerű keret
+		var f := StyleBoxFlat.new()
+		f.bg_color = UI.PANEL_BG
+		f.border_color = UI.EDGE
+		f.set_border_width_all(2)
+		f.set_content_margin_all(content)
+		return f
+	var s := StyleBoxTexture.new()
+	s.texture = tex
+	s.set_texture_margin_all(margin)
+	s.axis_stretch_horizontal = StyleBoxTexture.AXIS_STRETCH_MODE_TILE
+	s.axis_stretch_vertical = StyleBoxTexture.AXIS_STRETCH_MODE_TILE
+	s.set_content_margin_all(content)
+	return s
 
 
 func _panel(pos: Vector2, width: float) -> VBoxContainer:
