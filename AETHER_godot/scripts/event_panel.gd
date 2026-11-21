@@ -190,7 +190,35 @@ func _add_source_button() -> void:
 	var link := str(event.get("link", ""))
 	if link == "":
 		return
-	var b := UI.button(L.t("Hivatalos forrás megnyitása (eredeti nyelven)"))
-	var open_fn := func() -> void: OS.shell_open(link)
-	b.pressed.connect(open_fn)
-	_summary_box.add_child(b)
+	# Ha a link adatfájl (pl. CSV), a fő gomb a forrás honlapját nyitja meg, ne letöltést indítson.
+	var path := link.split("?")[0].to_lower()
+	var is_data := false
+	for ext in [".csv", ".json", ".geojson", ".xml", ".txt", ".zip", ".kml", ".kmz", ".nc"]:
+		if path.ends_with(ext):
+			is_data = true
+	# Műholdkép az esemény napjáról és helyéről (NASA Worldview), ha van koordináta
+	var lat: Variant = event.get("lat")
+	var lon: Variant = event.get("lon")
+	if typeof(lat) in [TYPE_INT, TYPE_FLOAT] and typeof(lon) in [TYPE_INT, TYPE_FLOAT]:
+		var wv := "https://worldview.earthdata.nasa.gov/?v=%.1f,%.1f,%.1f,%.1f&t=%s" % [
+			float(lon) - 8.0, float(lat) - 6.0, float(lon) + 8.0, float(lat) + 6.0, str(event.get("datum", "")).left(10)]
+		var wb := UI.button(L.t("Műholdkép aznapról (NASA Worldview)"))
+		var wv_fn := func() -> void: OS.shell_open(wv)
+		wb.pressed.connect(wv_fn)
+		_summary_box.add_child(wb)
+	if not is_data:
+		var b := UI.button(L.t("Hivatalos forrás megnyitása (eredeti nyelven)"))
+		var open_fn := func() -> void: OS.shell_open(link)
+		b.pressed.connect(open_fn)
+		_summary_box.add_child(b)
+		return
+	var parts := link.split("/")
+	var home := "%s//%s/" % [parts[0], parts[2]] if parts.size() > 2 else link
+	var hb := UI.button(L.t("A forrás honlapja: ") + (parts[2] if parts.size() > 2 else link))
+	var home_fn := func() -> void: OS.shell_open(home)
+	hb.pressed.connect(home_fn)
+	_summary_box.add_child(hb)
+	var db := UI.button(L.t("Nyers adat letöltése (%s-fájl)") % path.get_extension().to_upper())
+	var data_fn := func() -> void: OS.shell_open(link)
+	db.pressed.connect(data_fn)
+	_summary_box.add_child(db)
