@@ -99,6 +99,27 @@ class TestHonesty(unittest.TestCase):
             self.assertEqual(r["osszegzes_tipus"], "forras")
             self.assertIn("66,2° D", r["osszegzes"])
 
+    def test_curated_why_beats_ai(self):
+        ev = {"forras": "NASA EONET", "cim": "Iceberg TESZT", "kategoria": "jeg", "lat": -66.2, "lon": -48.1,
+              "link": "https://example.org/x"}
+        page = lambda url, *a, **k: ("<html><body><p>" + "Iceberg news. " * 40 + "</p></body></html>").encode()  # noqa: E731
+        with tempfile.TemporaryDirectory() as d:
+            r = ed.build(ev, Path(d), page, HallucinatingAI(), "hu", log=lambda *_: None)
+        self.assertNotEqual(r["miert_fontos"], "TESZT")
+        self.assertIn("IPCC", r["miert_fontos"])
+        self.assertTrue(r["miert_fontos"].count("\n") <= 6)
+
+    def test_air_summary_from_title(self):
+        ev = {"forras": "Open-Meteo / Copernicus CAMS (modellbecslés)", "kategoria": "levego", "orszag": "Iran",
+              "cim": "Teherán: szennyezett levegő, PM2,5\u00a0=\u00a069,6\u00a0µg/m³ (a WHO 24 órás határa 15)"}
+        s = ed.plain_summary(ev, [], "hu")
+        self.assertIn("69,6 µg/m³", s)
+        self.assertIn("4,6-szorosa", s)
+        ev["meres"] = {"varos": "Teherán", "varos_en": "Tehran", "pm2_5": 69.6, "pm10": 90.0}
+        en = ed.plain_summary(ev, [], "en")
+        self.assertIn("4.6 times", en)
+        self.assertIn("PM10) 90 µg/m³", en)
+
     def test_unsupported_numbers(self):
         self.assertEqual(ed.unsupported_numbers("12 000 ember, CO₂", "12,000 people"), [])
         self.assertEqual(ed.unsupported_numbers("45 km²", "TESZT"), [45.0])

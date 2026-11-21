@@ -41,7 +41,9 @@ static func label(text: String, fsize: int = 18, color: Color = TEXT, bold: bool
 
 static func heading(text: String, fsize: int = 26) -> Label:
 	var l := label(text, fsize, GOLD, false, false)
-	l.add_theme_font_override("font", font_pixel)
+	# A pixeles betűben az 5 S-nek, a zárójel kapcsosnak látszik: számos címhez olvasható betű kell.
+	var rx := RegEx.create_from_string("[0-9()]")
+	l.add_theme_font_override("font", font_bold if rx.search(text) != null else font_pixel)
 	return l
 
 

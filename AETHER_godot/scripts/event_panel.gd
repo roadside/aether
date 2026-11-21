@@ -84,7 +84,10 @@ func _build() -> void:
 	x.pressed.connect(close_fn)
 	h.add_child(x)
 	_body.add_child(h)
-	_body.add_child(UI.heading(display_title(event, home), 24))
+	var hd := UI.heading(display_title(event, home), 24)
+	hd.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	hd.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_body.add_child(hd)
 	_body.add_child(UI.label("%s · %s" % [str(event.get("datum", "")), L.field(event, "forras")], 15, UI.MUTE))
 	_summary_box = UI.vbox(10)
 	_body.add_child(_summary_box)
@@ -96,7 +99,7 @@ func _request() -> void:
 	_dir = bridge.work_dir("aether_esemenyek").path_join(key.md5_text().left(16))
 	DirAccess.make_dir_recursive_absolute(_dir)
 	var ai: String = L.get_setting("ai", "none")
-	_out = _dir.path_join("reszlet_%s_%s.json" % [L.lang, ai])
+	_out = _dir.path_join("reszlet2_%s_%s.json" % [L.lang, ai])   # 2: bővebb magyarázat, új összefoglaló
 	var cached: Variant = Bridge.read_json(_out)
 	if typeof(cached) == TYPE_DICTIONARY:
 		_show(cached)

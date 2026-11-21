@@ -303,6 +303,15 @@ def _hu(x: float) -> str:
     return f"{x:g}".replace(".", ",")
 
 
+def _meres(r: Dict, city_en: str) -> Dict:
+    """A modell mért értékei az eseményhez (az eseményablak ezekből ír összefoglalót)."""
+    m = {"varos": r["varos"], "varos_en": city_en}
+    for k in ("pm2_5", "pm10", "no2", "uv"):
+        if r.get(k) is not None:
+            m[k] = r[k]
+    return m
+
+
 def air_events(rows: List[Dict]) -> List[Dict]:
     """Csak a küszöb feletti értékekből lesz esemény (WHO-határok)."""
     ev = []
@@ -321,12 +330,14 @@ def air_events(rows: List[Dict]) -> List[Dict]:
                              "levego", r["ido"], country, r["lat"], r["lon"], r["link"], szint="orange" if pm < 5 * WHO_PM25_24H else "red",
                              cim_en=f"{city_en}: polluted air, PM2.5\u00a0=\u00a0{pm:g}\u00a0µg/m³ (WHO 24-hour limit {WHO_PM25_24H:g})",
                              forras_en=CAMS_FORRAS_EN))
+            ev[-1]["meres"] = _meres(r, city_en)
         uv = r.get("uv")
         if uv is not None and uv >= UV_VERY_HIGH:
             ev.append(_event(CAMS_FORRAS,
                              f"{r['varos']}: nagyon erős UV-sugárzás, UV-index\u00a0=\u00a0{_hu(uv)}",
                              "uv", r["ido"], country, r["lat"], r["lon"], r["link"], szint="orange" if uv < 11 else "red",
                              cim_en=f"{city_en}: very strong UV radiation, UV\u00a0index\u00a0=\u00a0{uv:g}", forras_en=CAMS_FORRAS_EN))
+            ev[-1]["meres"] = _meres(r, city_en)
     return ev
 
 

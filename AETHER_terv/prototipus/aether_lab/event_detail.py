@@ -64,8 +64,9 @@ klímajáték játékosának, aki nem szakember. Szabályok:
   forrásszövegben vagy az esemény adataiban. Ha a hely nem derül ki, ne nevezz meg helyet.
 - Az 'osszegzes' 1-2 rövid, hétköznapi mondat a megadott nyelven: mi történik, hol, mekkora a baj.
   Ne sorold fel az országokat: írd, hány ország érintett, és nevezz meg legfeljebb 2-t.
-- A 'miert_fontos' 1-2 rövid, hétköznapi mondat: miért számít ez az embereknek és a természetnek, és
-  hogyan kapcsolódik a klímaváltozáshoz. Ez általános magyarázat: NE írj bele számot. Legyél
+- A 'miert_fontos' 2-5 rövid, hétköznapi mondat: miért számít ez az embereknek és a természetnek, és
+  hogyan kapcsolódik a klímaváltozáshoz. Csak biztos, általánosan elfogadott tudást írj; ha nem tudsz
+  többet, maradj rövid. Ez általános magyarázat: NE írj bele számot. Legyél
   őszinte: ha az esemény nem klímaesemény (pl. földrengés, vulkán), mondd ki; ha a kapcsolat
   bizonytalan (egyetlen esemény nem bizonyítja a klímaváltozást), azt is.
 - A 'fobb_szamok' legfeljebb 3 fontos szám a szövegből (pl. időtartam, terület, érintett emberek).
@@ -73,8 +74,9 @@ klímajáték játékosának, aki nem szakember. Szabályok:
   A 'jelentes' egy rövid magyarázat a megadott nyelven. Ha nincs ilyen szám, adj üres listát."""
 
 
-# AI nélküli "Miért fontos?" kategóriánként. Csak általános, forrással alátámasztott
-# állítások (IPCC AR6 WGI döntéshozói összefoglaló, 2021; WHO), számok nélkül.
+# "Miért fontos?" kategóriánként: bővebb, tagolt magyarázat (legfeljebb kb. 15 sor). Minden állítás a
+# megadott forrásból van (IPCC AR6 WGI döntéshozói összefoglaló, 2021; WHO-tájékoztatók, 2022/2024),
+# ellenőrizve 2026-11-21-én. Ha egy kategóriához van ilyen szöveg, ez jelenik meg, nem az AI-é.
 IPCC_SPM = ("IPCC AR6 WGI, döntéshozói összefoglaló (2021)", "IPCC AR6 WGI, Summary for Policymakers (2021)",
             "https://www.ipcc.ch/report/ar6/wg1/chapter/summary-for-policymakers/")
 WHO_AIR = ("WHO, levegőminőség és egészség", "WHO, ambient air quality and health",
@@ -82,47 +84,36 @@ WHO_AIR = ("WHO, levegőminőség és egészség", "WHO, ambient air quality and
 WHO_UV = ("WHO, ultraibolya sugárzás", "WHO, ultraviolet radiation",
           "https://www.who.int/news-room/fact-sheets/detail/ultraviolet-radiation")
 WHY = {
-    "aszaly": ("Az aszály csökkenti a termést és a vízkészletet. Az IPCC szerint az emberi hatású melegedés egyes "
-               "régiókban hozzájárult a mezőgazdasági aszályok gyakoribbá válásához.",
-               "Drought reduces harvests and water supplies. According to the IPCC, human-caused warming has "
-               "contributed to more agricultural droughts in some regions.", IPCC_SPM),
-    "arviz": ("Az árvíz otthonokat, termést és utakat tesz tönkre. Az IPCC szerint a legtöbb szárazföldi térségben "
-              "gyakoribbak és hevesebbek lettek a nagy esőzések, és ebben fő szerepe van az emberi hatásnak.",
-              "Floods destroy homes, crops and roads. According to the IPCC, heavy rainfall has become more frequent "
-              "and intense over most land areas, mainly because of human influence.", IPCC_SPM),
-    "hoseg": ("A hőség veszélyes az egészségre, főleg az idősekre. Az IPCC szerint a hőhullámok szinte biztosan "
-              "gyakoribbak és erősebbek lettek, főleg az emberi hatás miatt.",
-              "Heat is dangerous to health, especially for older people. According to the IPCC, heatwaves have "
-              "almost certainly become more frequent and intense, mainly because of human influence.", IPCC_SPM),
-    "vihar": ("A trópusi viharok szélvihart, áradást és tengerszint-emelkedést hoznak. Az IPCC szerint az utóbbi "
-              "évtizedekben valószínűleg nőtt a legerősebb viharok aránya.",
-              "Tropical storms bring wind, flooding and storm surges. According to the IPCC, the share of the "
-              "strongest storms has likely increased in recent decades.", IPCC_SPM),
-    "tuz": ("Az erdőtűz élőhelyeket és otthonokat pusztít, a füstje egészségkárosító. Az IPCC szerint egyes "
-            "régiókban gyakoribb lett a tűzveszélyes időjárás.",
-            "Wildfires destroy habitats and homes, and the smoke harms health. According to the IPCC, fire weather "
-            "has become more frequent in some regions.", IPCC_SPM),
-    "jeg": ("A jég fogyása emeli a tengerszintet és változtatja az óceánokat. Jéghegyek természetes módon is "
-            "leválnak, egyetlen eseményből nem lehet a klímára következtetni. Az IPCC szerint a gleccserek "
-            "visszahúzódásának fő oka nagyon valószínűleg az emberi hatás.",
-            "Melting ice raises sea levels and changes the oceans. Icebergs also break off naturally, so one event "
-            "says little about the climate. According to the IPCC, human influence is very likely the main driver "
-            "of glacier retreat.", IPCC_SPM),
-    "foldrenges": ("Ez nem klímaesemény: a földrengést a kéreg mozgása okozza, nem a melegedés. Azért látod, mert "
-                   "a katasztrófák az embereket is sújtják, és a segítséghez erőforrás kell.",
-                   "This is not a climate event: earthquakes come from movements of the Earth's crust, not from "
-                   "warming. You see it because disasters hit people and recovery needs resources.", None),
-    "vulkan": ("Ez nem klímaesemény: a vulkánkitörést a Föld belső folyamatai okozzák. Nagy kitörések rövid időre "
-               "lehűthetik a Földet, de ez nem a klímaváltozás jele.",
-               "This is not a climate event: eruptions are caused by processes inside the Earth. Large eruptions "
-               "can cool the planet briefly, but they are not a sign of climate change.", None),
-    "levego": ("A szennyezett levegő az egyik legnagyobb egészségügyi kockázat: szív- és tüdőbetegségeket okoz. "
-               "Sok forrása (szén, olaj, égetés) a klímát is melegíti.",
-               "Polluted air is one of the biggest health risks: it causes heart and lung disease. Many of its "
-               "sources (coal, oil, burning) also warm the climate.", WHO_AIR),
-    "uv": ("Az erős UV-sugárzás leégést, bőrrákot és szemkárosodást okozhat. Ilyenkor érdemes árnyékban maradni.",
-           "Strong UV radiation can cause sunburn, skin cancer and eye damage. It is wise to stay in the shade.",
-           WHO_UV),
+    'aszaly': ('Az aszály csökkenti a termést, kiszárítja a talajt és fogyasztja a vízkészleteket. A gazdák bevétele csökken, a háziállatoknak kevesebb a takarmány, és a városok ivóvízellátása is veszélybe kerülhet.\nAz IPCC szerint az emberi hatású klímaváltozás egyes régiókban hozzájárult a mezőgazdasági és ökológiai aszályok gyakoribbá válásához, mert a melegebb levegő több vizet párologtat el a talajból (közepes bizonyosság).\nA jövőről: minden további fél fok melegedéssel egyes régiókban jól kimutathatóan gyakoribbak és erősebbek lesznek az aszályok (magas bizonyosság).\nFontos: egyetlen aszályból nem lehet a klímaváltozásra következtetni, csak sok év adatából.',
+        'Drought cuts harvests, dries out soils and depletes water supplies. Farmers lose income, livestock have less fodder, and city drinking water can be at risk.\nAccording to the IPCC, human-caused climate change has contributed to more agricultural and ecological droughts in some regions, because warmer air draws more water from the soil (medium confidence).\nLooking ahead: with every additional half degree of warming, droughts become clearly more frequent and intense in some regions (high confidence).\nNote: a single drought does not prove climate change; only many years of data can show a trend.',
+        IPCC_SPM),
+    'arviz': ('Az árvíz otthonokat, termést, utakat és hidakat tesz tönkre, és szennyezheti az ivóvizet.\nAz IPCC szerint az 1950-es évek óta a szárazföldek nagy részén gyakoribbak és hevesebbek lettek a nagy esőzések (magas bizonyosság), és ennek valószínűleg az emberi hatású klímaváltozás a fő oka.\nMiért? A melegebb levegő több vízgőzt tud tartani: az IPCC szerint a szélsőséges napi csapadék minden 1 °C melegedéssel kb. 7%-kal erősödik.\nA jövőről: nagyon valószínű, hogy további melegedéssel a legtöbb régióban még hevesebbek és gyakoribbak lesznek a nagy esőzések.\nFontos: az árvíz kárát az is meghatározza, hol építkezünk és milyen a gátak, csatornák állapota.',
+        'Floods destroy homes, crops, roads and bridges, and can contaminate drinking water.\nAccording to the IPCC, heavy rainfall has become more frequent and intense over most land areas since the 1950s (high confidence), and human-caused climate change is likely the main driver.\nWhy? Warmer air can hold more water vapour: the IPCC says extreme daily rainfall intensifies by about 7% for each 1 °C of warming.\nLooking ahead: it is very likely that heavy rainfall will become even more intense and frequent in most regions with further warming.\nNote: flood damage also depends on where we build and on the state of dams and drainage.',
+        IPCC_SPM),
+    'hoseg': ('A hőség veszélyes az egészségre, főleg az idősekre, a kisgyerekekre és a szabadban dolgozókra.\nAz IPCC szerint szinte biztos, hogy az 1950-es évek óta a legtöbb szárazföldi térségben gyakoribbak és erősebbek lettek a hőhullámok, és ennek fő oka az emberi hatású klímaváltozás (magas bizonyosság).\nA tengerekben is: a tengeri hőhullámok az 1980-as évek óta nagyjából kétszer olyan gyakoriak lettek.\nA jövőről: minden további fél fok melegedéssel jól kimutathatóan erősebbek és gyakoribbak lesznek a hőhullámok (nagyon valószínű). A ritka, szélsőséges hőségek gyakorisága nő a legnagyobb arányban.',
+        'Heat is dangerous to health, especially for older people, small children and outdoor workers.\nAccording to the IPCC, it is virtually certain that heatwaves have become more frequent and intense over most land areas since the 1950s, and human-caused climate change is the main driver (high confidence).\nAt sea too: marine heatwaves have roughly doubled in frequency since the 1980s.\nLooking ahead: every additional half degree of warming brings clearly more intense and frequent heatwaves (very likely). The rarest extremes increase the most in frequency.',
+        IPCC_SPM),
+    'vihar': ('A trópusi viharok (hurrikán, tájfun, ciklon) pusztító szelet, özönvízszerű esőt és a partokon vihardagályt hoznak. A tengerszint emelkedése miatt a vihardagály egyre magasabbra ér.\nAz IPCC szerint valószínű, hogy az utóbbi négy évtizedben nőtt a nagy erejű (3–5. kategóriájú) viharok aránya, és ez a természetes ingadozással önmagában nem magyarázható (közepes bizonyosság).\nA jövőről: a legerősebb (4–5. kategóriájú) viharok aránya és a legerősebb szelek sebessége a melegedéssel tovább nő (magas bizonyosság).\nFontos: nem feltétlenül lesz több vihar összesen, de a legerősebbek aránya nő.',
+        'Tropical storms (hurricanes, typhoons, cyclones) bring destructive winds, torrential rain and storm surges on coasts. Because of sea-level rise, storm surges reach higher.\nAccording to the IPCC, the share of major (Category 3–5) storms has likely increased over the last four decades, and this cannot be explained by natural variability alone (medium confidence).\nLooking ahead: the share of the strongest (Category 4–5) storms and their peak wind speeds will increase with warming (high confidence).\nNote: there may not be more storms in total, but a larger share of them will be very strong.',
+        IPCC_SPM),
+    'tuz': ('Az erdőtűz élőhelyeket, otthonokat és termést pusztít, a füstje pedig messze elszállva is egészségkárosító. Az égő erdő szén-dioxidot bocsát ki, ami tovább melegíti a klímát.\nAz IPCC szerint az emberi hatás valószínűleg növelte a tűzveszélyes időjárás (forróság, szárazság, szél együtt) esélyét minden lakott kontinens egyes régióiban (közepes bizonyosság).\nA jövőről: 2 °C és afölötti melegedésnél több régióban nő a tűzveszélyes időjárás.\nFontos: a tüzek keletkezését és terjedését az emberi tevékenység és az erdőgazdálkodás is befolyásolja; a klíma a tűzveszélyes időjárást teszi gyakoribbá.',
+        'Wildfires destroy habitats, homes and crops, and the smoke harms health even far away. Burning forests release carbon dioxide, which warms the climate further.\nAccording to the IPCC, human influence has likely increased the chance of fire weather (heat, drought and wind together) in some regions of every inhabited continent (medium confidence).\nLooking ahead: at 2 °C of warming and above, fire weather increases in more regions.\nNote: how fires start and spread also depends on human activity and forest management; climate makes fire weather more common.',
+        IPCC_SPM),
+    'jeg': ('A szárazföldi jég (gleccserek, jégtakarók) olvadása emeli a tengerszintet, a tengeri jég fogyása pedig a sarkvidéki élővilágot és az óceánt változtatja meg.\nAz IPCC szerint a gleccserek 1990-es évek óta tartó visszahúzódásának fő oka nagyon valószínűleg az emberi hatás. Az északi-sarki tengeri jég 2011–2020-ban a legkisebb volt legalább 1850 óta; szeptemberben kb. 40%-kal kevesebb, mint 1979–1988-ban.\nA tengerszint 1901 és 2018 között kb. 20 cm-t emelkedett, és egyre gyorsabban nő: 2006–2018-ban évi kb. 3,7 mm volt.\nFontos: a jéghegyek természetes módon is leválnak; egyetlen jéghegyből nem lehet a klímára következtetni. Az Antarktisz jégvesztésében az emberi hatásra még kevés a bizonyíték.',
+        'Melting land ice (glaciers, ice sheets) raises sea levels, and shrinking sea ice changes Arctic life and the ocean.\nAccording to the IPCC, human influence is very likely the main driver of the global retreat of glaciers since the 1990s. Arctic sea ice in 2011–2020 was at its lowest since at least 1850; in September about 40% less than in 1979–1988.\nSea level rose by about 20 cm between 1901 and 2018, and it is rising faster: about 3.7 mm per year in 2006–2018.\nNote: icebergs also break off naturally; one iceberg says little about the climate. Evidence of human influence on Antarctic ice loss is still limited.',
+        IPCC_SPM),
+    'foldrenges': ('Ez nem klímaesemény: a földrengést a kéreg mozgása okozza, nem a melegedés. Azért látod, mert a katasztrófák az embereket is sújtják, és a segítséghez erőforrás kell.',
+        "This is not a climate event: earthquakes come from movements of the Earth's crust, not from warming. You see it because disasters hit people and recovery needs resources.",
+        None),
+    'vulkan': ('Ez nem klímaesemény: a vulkánkitörést a Föld belső folyamatai okozzák. Nagy kitörések rövid időre lehűthetik a Földet, de ez nem a klímaváltozás jele.',
+        'This is not a climate event: eruptions are caused by processes inside the Earth. Large eruptions can cool the planet briefly, but they are not a sign of climate change.',
+        None),
+    'levego': ('Mit jelent? A PM2,5 a 2,5 mikrométernél kisebb porszemcsék mennyisége a levegőben. Olyan aprók, hogy mélyen a tüdőbe jutnak, és onnan a véráramba is.\nEgészség: a WHO szerint a kültéri légszennyezés 2019-ben a becslések szerint 4,2 millió ember korai halálát okozta. Ezek kb. 68%-a szívbetegség és stroke, 14% krónikus tüdőbetegség, 14% alsó légúti fertőzés, 4% tüdőrák. A korai halálesetek 89%-a alacsony és közepes jövedelmű országokban történt.\nUgyanebben az évben a világ népességének 99%-a olyan helyen élt, ahol a levegő nem felelt meg a WHO irányértékeinek.\nHonnan jön? A WHO szerint főleg a közlekedésből (különösen a dízel járművekből), az áramtermelésből, az iparból, a szilárd tüzelős főzésből és fűtésből, valamint a hulladékégetésből.\nMi köze a klímához? Ezek nagy része fosszilis tüzelőanyag (szén, olaj, gáz) égetése, ami a CO2-kibocsátás fő forrása is. A tisztább áramtermelés, közlekedés és az energiahatékony épületek ezért egyszerre védik az egészséget és a klímát.',
+        "What does it mean? PM2.5 is the amount of dust particles smaller than 2.5 micrometres in the air. They are so small that they get deep into the lungs and from there into the bloodstream.\nHealth: according to WHO, outdoor air pollution caused an estimated 4.2 million premature deaths in 2019. About 68% of these were heart disease and stroke, 14% chronic lung disease, 14% lower respiratory infections and 4% lung cancer. 89% of the premature deaths occurred in low- and middle-income countries.\nIn the same year, 99% of the world's population lived in places where the air did not meet WHO guideline levels.\nWhere does it come from? According to WHO, mainly from transport (especially diesel vehicles), power generation, industry, cooking and heating with solid fuels, and waste burning.\nWhat does it have to do with the climate? Much of this is burning fossil fuels (coal, oil, gas), which is also the main source of CO2 emissions. Cleaner power, transport and energy-efficient buildings therefore protect both health and the climate.",
+        WHO_AIR),
+    'uv': ('Mit jelent? Az UV-index azt mutatja, mennyire károsítja a napsugárzás a bőrt és a szemet: minél magasabb, annál nagyobb a veszély. A WHO szerint már 3-as indextől védekezni kell.\nEgészség: rövid távon leégés és szemgyulladás, hosszú távon bőröregedés, bőrrák (köztük melanóma) és szürkehályog. A WHO szerint 2020-ban világszerte több mint 1,5 millió bőrrákot diagnosztizáltak, és több mint 120 000 haláleset kapcsolódott hozzá. A szürkehályog miatti vakság kb. 10%-a az UV-sugárzásnak tudható be.\nVédekezés: déli órákban árnyék, testet takaró ruha, széles karimájú kalap, UV-szűrős napszemüveg, a szabadon maradó bőrre széles spektrumú naptej. A szolárium növeli a bőrrák kockázatát.\nMi köze a klímához? Kevesebb ózon mellett több UV éri el a felszínt. A WHO szerint a klímaváltozás az ózonon és a felhőzeten keresztül várhatóan hatással lesz a felszíni UV-szintre.\nFontos: kis mennyiségű napfény hasznos is, mert ettől termel a szervezet D-vitamint.',
+        'What does it mean? The UV index shows how much sunlight can damage skin and eyes: the higher it is, the greater the danger. WHO recommends protection from UV index 3 upwards.\nHealth: in the short term sunburn and eye inflammation; in the long term skin ageing, skin cancer (including melanoma) and cataract. According to WHO, over 1.5 million skin cancers were diagnosed worldwide in 2020, and over 120,000 deaths were associated with them. About 10% of blindness from cataract may be due to UV.\nProtection: shade around midday, covering clothes, a wide-brimmed hat, UV-blocking sunglasses and broad-spectrum sunscreen on exposed skin. Sunbeds increase the risk of skin cancer.\nWhat does it have to do with the climate? With less ozone, more UV reaches the ground. WHO says climate change, through ozone and cloud cover, is expected to affect UV levels at the surface.\nNote: a little sunlight is good for you, because the body needs it to make vitamin D.',
+        WHO_UV),
 }
 
 
@@ -299,9 +290,70 @@ def verify_numbers(items: List[Dict], text: str) -> List[Dict]:
     return ok
 
 
+# WHO 2021 levegőminőségi irányelvek, 24 órás értékek (µg/m³)
+WHO_24H = {"pm2_5": 15.0, "pm10": 45.0, "no2": 25.0}
+_TITLE_NUM = {"pm2_5": re.compile(r"PM2[,.]5\s*=\s*([0-9]+(?:[,.][0-9]+)?)"),
+              "uv": re.compile(r"UV[- ]?(?:index|índex)\s*=\s*([0-9]+(?:[,.][0-9]+)?)", re.I)}
+
+
+def _fmt(x: float, en: bool, nd: int = 1) -> str:
+    t = f"{x:.{nd}f}".rstrip("0").rstrip(".")
+    return t if en else t.replace(".", ",")
+
+
+def measurement_summary(event: Dict, lang: str = "hu") -> str:
+    """Levegő- és UV-eseménynél: a modell értéke és a WHO-határ többszöröse, érthetően."""
+    en = lang.startswith("en")
+    kat = event.get("kategoria")
+    if kat not in ("levego", "uv"):
+        return ""
+    m = dict(event.get("meres") or {})
+    title = str(event.get("cim", ""))
+    for k, rx in _TITLE_NUM.items():          # régebbi események: az érték a címből
+        if k not in m:
+            hit = rx.search(title)
+            if hit:
+                m[k] = float(hit.group(1).replace(",", "."))
+    city = m.get("varos_en" if en else "varos") or title.split(":")[0].strip()
+    src = (event.get("forras_en" if en else "forras", "") or event.get("forras", ""))
+    src = src.replace(" (modellbecslés)", "").replace(" (model estimate)", "")
+    if kat == "levego" and "pm2_5" in m:
+        pm = float(m["pm2_5"])
+        x = pm / WHO_24H["pm2_5"]
+        if en:
+            s = (f"In {city}, the model estimates fine particulate matter (PM2.5) at {_fmt(pm, en)} µg/m³. "
+                 f"That is {_fmt(x, en)} times the WHO 24-hour guideline ({WHO_24H['pm2_5']:g} µg/m³).")
+        else:
+            s = (f"{city}: a modell szerint a levegő finompor-tartalma (PM2,5) {_fmt(pm, en)} µg/m³. "
+                 f"Ez a WHO 24 órás irányértékének ({WHO_24H['pm2_5']:g} µg/m³) {_fmt(x, en)}-szorosa.")
+        extra = []
+        for k, hu_n, en_n in (("pm10", "durva por (PM10)", "coarse dust (PM10)"), ("no2", "nitrogén-dioxid", "nitrogen dioxide")):
+            if m.get(k) is not None:
+                v = float(m[k])
+                extra.append(f"{en_n} {_fmt(v, en)} µg/m³ (WHO: {WHO_24H[k]:g})" if en
+                             else f"{hu_n} {_fmt(v, en)} µg/m³ (WHO: {WHO_24H[k]:g})")
+        if extra:
+            s += (" Also: " if en else " Továbbá: ") + "; ".join(extra) + "."
+        s += (f" This is an hourly model estimate ({src}), not a local station measurement, while the WHO value is a "
+              f"24-hour average, so the comparison is indicative." if en else
+              f" Ez a(z) {src} egy órára vonatkozó becslése, nem helyi mérőállomás adata, a WHO-érték pedig 24 órás "
+              f"átlag, ezért az összevetés tájékoztató jellegű.")
+        return s
+    if kat == "uv" and "uv" in m:
+        uv = float(m["uv"])
+        return (f"In {city}, the model estimates a UV index of {_fmt(uv, en)}. WHO recommends sun protection from "
+                f"UV index 3 upwards. Source: {src} (model estimate)." if en else
+                f"{city}: a modell szerint az UV-index {_fmt(uv, en)}. A WHO szerint már 3-as indextől védekezni "
+                f"kell a nap ellen. Forrás: {src} (modellbecslés).")
+    return ""
+
+
 def plain_summary(event: Dict, facts: List[Dict], lang: str = "hu") -> str:
     """AI nélküli, a forrás adataiból összerakott egyszerű összefoglaló."""
     en = lang.startswith("en")
+    ms = measurement_summary(event, lang)
+    if ms:
+        return ms
     countries = [c.strip() for c in str(event.get("orszag", "")).split(",") if c.strip()]
     where = ""
     if len(countries) > 3:
@@ -404,7 +456,8 @@ def build(event: Dict, folder: Path, fetch: Callable[..., bytes], provider=None,
     if not res["osszegzes"]:
         res["osszegzes"] = plain_summary(event, res["tenyek"], lang)
         res["osszegzes_tipus"] = "forras"
-    if not res["miert_fontos"] and event.get("kategoria") in WHY:
+    # Az ellenőrzött, forrásolt magyarázat elsőbbséget kap az AI-szöveggel szemben.
+    if event.get("kategoria") in WHY:
         hu_t, en_t, src = WHY[event["kategoria"]]
         res["miert_fontos"] = en_t if en else hu_t
         if src:
