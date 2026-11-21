@@ -357,8 +357,9 @@
    "terulet": "anyag",
    "cim": "Mennyi CO2-t spórol, ha fából építünk beton helyett?",
    "attekintok": 1656,
-   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=cross-laminated+timber+life+cycle+emissions&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sort=relevance_score",
-   "gyenge": null
+   "cikkek": 36,
+   "szammal": 19,
+   "gyenge": false
   },
   {
    "id": "napaktivitas",
@@ -386,8 +387,9 @@
    "terulet": "ur",
    "cim": "Megtalálják-e a műholdak a nagy metánszivárgásokat?",
    "attekintok": 820,
-   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=satellite+detection+of+methane+super-emitters&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sort=relevance_sco",
-   "gyenge": null
+   "cikkek": 33,
+   "szammal": 17,
+   "gyenge": false
   },
   {
    "id": "muhold_erdo",
@@ -484,8 +486,10 @@
    "korszak": 1,
    "terulet": "fold",
    "cim": "Hevesebbek lesznek-e a nagy esők?",
-   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=extreme+precipitation+climate+change+review&per-page=1&filter=type%3Areview%2Cfrom_publication_date%3A2000-01-01&api_key=REJTETT",
-   "gyenge": null
+   "attekintok": 8832,
+   "cikkek": 35,
+   "szammal": 11,
+   "gyenge": false
   },
   {
    "id": "erdotuz",
@@ -513,8 +517,9 @@
    "terulet": "fold",
    "cim": "Biztonságosan tárolható-e a CO2 a föld alatt?",
    "attekintok": 3993,
-   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=CO2+mineralization+basalt+storage&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sort=relevance_score%3Adesc&ap",
-   "gyenge": null
+   "cikkek": 36,
+   "szammal": 12,
+   "gyenge": false
   },
   {
    "id": "lap",
@@ -542,8 +547,9 @@
    "terulet": "biologia",
    "cim": "Mit okoz a melegedés a beporzó rovaroknak?",
    "attekintok": 6118,
-   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=pollinator+decline+climate+warming&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sort=relevance_score%3Adesc&a",
-   "gyenge": null
+   "cikkek": 33,
+   "szammal": 9,
+   "gyenge": false
   },
   {
    "id": "korall",
@@ -581,8 +587,9 @@
    "terulet": "biologia",
    "cim": "Tényleg csökkenti-e egy tengeri alga a tehenek metánját?",
    "attekintok": 840,
-   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=Asparagopsis+taxiformis+beef+cattle+methane&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sort=relevance_score",
-   "gyenge": null
+   "cikkek": 28,
+   "szammal": 23,
+   "gyenge": false
   },
   {
    "id": "erdo",
@@ -660,8 +667,9 @@
    "terulet": "energia",
    "cim": "Mennyi metán fogható fel a szénbányákban?",
    "attekintok": 814,
-   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=abandoned+coal+mine+methane+emissions&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sort=relevance_score%3Ades",
-   "gyenge": null
+   "cikkek": 33,
+   "szammal": 12,
+   "gyenge": false
   },
   {
    "id": "napelem",
@@ -708,8 +716,10 @@
    "korszak": 3,
    "terulet": "energia",
    "cim": "Mennyi CO2-t zárhat a föld alá a növényi energia?",
-   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=BECCS+review&per-page=1&filter=type%3Areview%2Cfrom_publication_date%3A2000-01-01&api_key=REJTETT (HTTP Error 429: Too Many R",
-   "gyenge": null
+   "attekintok": 344,
+   "cikkek": 34,
+   "szammal": 3,
+   "gyenge": false
   },
   {
    "id": "tengeri_szel",
@@ -737,8 +747,9 @@
    "terulet": "energia",
    "cim": "Mennyit spórolhat a gyárakban a hőszivattyú?",
    "attekintok": 9556,
-   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=industrial+heat+pumps+decarbonization+potential+process+heat&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sor",
-   "gyenge": null
+   "cikkek": 24,
+   "szammal": 9,
+   "gyenge": false
   },
   {
    "id": "biogaz",
@@ -776,8 +787,9 @@
    "terulet": "mernok",
    "cim": "Mennyivel kevesebb CO2-t okoz a villanyautó?",
    "attekintok": 6066,
-   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=battery+electric+vehicle+life+cycle+emissions+compared+to+internal+combustion&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date",
-   "gyenge": null
+   "cikkek": 24,
+   "szammal": 7,
+   "gyenge": false
   },
   {
    "id": "vasut",
@@ -834,8 +846,10 @@
    "korszak": 3,
    "terulet": "mernok",
    "cim": "Mennyit spórol az elektromos teherautó?",
-   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=electric+heavy-duty+trucks+review&per-page=1&filter=type%3Areview%2Cfrom_publication_date%3A2000-01-01&api_key=REJTETT (HTTP ",
-   "gyenge": null
+   "attekintok": 336,
+   "cikkek": 36,
+   "szammal": 17,
+   "gyenge": false
   },
   {
    "id": "hajozas",
@@ -883,8 +897,9 @@
    "terulet": "mezogazdasag",
    "cim": "Mennyi kéjgáz spórolható a műtrágya okosabb használatával?",
    "attekintok": 2607,
-   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=nitrification+inhibitors+N2O+mitigation+meta-analysis&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sort=relev",
-   "gyenge": null
+   "cikkek": 36,
+   "szammal": 32,
+   "gyenge": false
   },
   {
    "id": "tragya",
@@ -931,8 +946,10 @@
    "korszak": 4,
    "terulet": "mezogazdasag",
    "cim": "Mennyi szenet köthet meg újra a talaj?",
-   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=soil+carbon+sequestration+review&per-page=1&filter=type%3Areview%2Cfrom_publication_date%3A2000-01-01&api_key=REJTETT (HTTP E",
-   "gyenge": null
+   "attekintok": 8917,
+   "cikkek": 35,
+   "szammal": 4,
+   "gyenge": false
   },
   {
    "id": "agroerdeszet",
@@ -960,8 +977,9 @@
    "terulet": "egeszseg",
    "cim": "Mennyi munkaidőt visz el a hőség?",
    "attekintok": 7994,
-   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=occupational+heat+exposure+labor+capacity&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sort=relevance_score%3",
-   "gyenge": null
+   "cikkek": 35,
+   "szammal": 17,
+   "gyenge": false
   },
   {
    "id": "legszennyezes",
@@ -989,8 +1007,9 @@
    "terulet": "egeszseg",
    "cim": "Mennyit hűtenek a világos tetők?",
    "attekintok": 1990,
-   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=reflective+roofs+cooling+energy+savings&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sort=relevance_score%3Ad",
-   "gyenge": null
+   "cikkek": 24,
+   "szammal": 7,
+   "gyenge": false
   },
   {
    "id": "zoldteto",
