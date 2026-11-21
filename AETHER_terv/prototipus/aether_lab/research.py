@@ -144,6 +144,8 @@ def run_research(question: str, provider: Optional[Provider], n_papers: int = 12
         raw_extraction = raw   # hibakereséshez: az AI nyers válasza a publikációba kerül
         claims = [ev.Claim(**c) for c in raw.get("allitasok", [])]
         summary, contradictions = raw.get("osszegzes", ""), raw.get("ellentmondasok", "")
+        if not lang.startswith("en"):   # angol szakszó és rövidítés helyett köznapi magyar
+            summary, contradictions = ev.hungarianize(summary), ev.hungarianize(contradictions)
     else:
         log(m("3/4 AI nélküli mód: kivonatolás kihagyva.", "3/4 No-AI mode: extraction skipped."))
 

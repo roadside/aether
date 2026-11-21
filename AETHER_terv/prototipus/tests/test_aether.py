@@ -226,3 +226,14 @@ class TestQuoteSpacing(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestHungarianize(unittest.TestCase):
+    def test_terms_abbreviations_and_decimal_comma(self):
+        from aether_lab.evidence import hungarianize
+        t = hungarianize("BECCS (0.5–5 GtCO2/yr), DACCS és enhanced weathering, biochar 0.5-2")
+        for bad in ("BECCS", "DACCS", "enhanced", "weathering", "biochar", "0.5", "GtCO2"):
+            self.assertNotIn(bad, t)
+        self.assertIn("0,5–5", t)
+        self.assertIn("kőzetmállasztás", t)
+        self.assertEqual(hungarianize("2026. január"), "2026. január")

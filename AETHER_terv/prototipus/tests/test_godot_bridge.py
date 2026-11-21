@@ -30,6 +30,17 @@ class TestJavaslatok(unittest.TestCase):
         self.assertEqual(j[0]["kar"], "cdr:bioszen")
         self.assertEqual(j[0]["kar_ertek"], 1.2)
 
+    def test_plain_hungarian_names_on_card(self):
+        for sub, name in [("daccs", "CO2-szűrés közvetlenül a levegőből"), ("enhanced weathering", "Kőzetpor"),
+                          ("beccs", "Növényi energia")]:
+            j = gb.javaslatok(_pub({"a": _agg("cdr_potencial_gtco2_ev", sub, 1.0)}))
+            self.assertIn(name, j[0]["alkategoria_nev"])
+            self.assertEqual(j[0]["egyseg"], "milliárd tonna CO2/év")
+        j = gb.javaslatok(_pub({"a": _agg("cdr_potencial_gtco2_ev", "BECCS", 1.0)}), lang="en")
+        self.assertEqual(j[0]["egyseg"], "GtCO2/yr")
+        j = gb.javaslatok(_pub({"a": _agg("cdr_koltseg_usd_tco2", "DAC", 300.0, "USD/tCO2")}))
+        self.assertNotIn("DAC", j[0]["alkategoria_nev"])
+
     def test_adaptation_lever(self):
         j = gb.javaslatok(_pub({"a": _agg("alkalmazkodas_hozam_elony_pct", "maize", 25.0, "%")}))
         self.assertEqual(j[0]["kar"], "alkalmazkodas")

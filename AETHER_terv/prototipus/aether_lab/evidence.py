@@ -111,7 +111,11 @@ Csak a megadott absztraktokból dolgozhatsz. Szabályok:
   mindegyikhez külön állítást adj.
 - Ha az absztrakt nem tartalmaz számszerű eredményt az adott paraméterhez, NE találj ki semmit.
 - Ne használd a saját háttértudásodat számokhoz. Ha bizonytalan vagy, hagyd ki.
-- Az 'osszegzes' magyarul, 3-6 mondatban írja le, mit mutatnak a cikkek és mit NEM.
+- Az 'osszegzes' magyarul, 3-5 rövid, hétköznapi mondatban írja le, mit mutatnak a cikkek és mit NEM.
+  Egy nem szakember is értse. Ne használj angol szót és megmagyarázatlan rövidítést; tizedesvesszőt írj (0,5).
+  Szójegyzék: BECCS = növényi energia a CO2 föld alá zárásával; DACCS / DAC = CO2-szűrés közvetlenül a
+  levegőből; enhanced (rock) weathering = kőzetmállasztás (kőpor a földekre); biochar = bioszén;
+  soil carbon sequestration = talaj szénmegkötése; afforestation = erdősítés; GtCO2/év = milliárd tonna CO2 évente.
 - Az 'ellentmondasok' mezőben jelezd, ha a cikkek ellentmondanak egymásnak."""
 
 
@@ -281,3 +285,45 @@ def _confidence(cs: List[Claim]) -> str:
     if n >= 2:   # egyetlen forrás (akár összefoglaló is) csak gyenge bizonyíték
         return "közepes"
     return "alacsony"
+
+
+# ---------------------------------------------------------------------------
+# Magyarítás: az AI szövegében maradt angol szakszavak és rövidítések cseréje
+# ---------------------------------------------------------------------------
+HU_GLOSSARY = [
+    (r"enhanced\s+rock\s+weathering|enhanced\s+weathering|rock\s+weathering", "kőzetmállasztás"),
+    (r"soil\s+carbon\s+sequestration", "talaj szénmegkötése"),
+    (r"soil\s+organic\s+carbon", "talaj szerves szene"),
+    (r"direct\s+air\s+(?:carbon\s+)?capture(?:\s+and\s+storage)?", "CO2-szűrés közvetlenül a levegőből"),
+    (r"bioenergy\s+with\s+carbon\s+capture\s+and\s+storage", "növényi energia a CO2 föld alá zárásával"),
+    (r"carbon\s+capture\s+and\s+storage", "CO2 leválasztása és föld alá zárása"),
+    (r"negative\s+emissions?\s+technolog(?:y|ies)", "CO2-kivonó módszerek"),
+    (r"carbon\s+dioxide\s+removal", "CO2-kivonás"),
+    (r"biochar", "bioszén"),
+    (r"afforestation", "erdősítés"),
+    (r"reforestation", "újraerdősítés"),
+    (r"meta-?analys[ie]s", "metaanalízis"),
+]
+HU_ABBR = [
+    (r"\bBECCS\b", "növényi energia a CO2 föld alá zárásával"),
+    (r"\bDACCS\b|\bDACS\b|\bDAC\b", "CO2-szűrés közvetlenül a levegőből"),
+    (r"\bCCS\b", "CO2 föld alá zárása"),
+    (r"\bNETs?\b", "CO2-kivonó módszerek"),
+    (r"\bCDR\b", "CO2-kivonás"),
+    (r"\bEW\b|\bERW\b", "kőzetmállasztás"),
+    (r"\bSCS\b", "talaj szénmegkötése"),
+    (r"GtCO2\s*/\s*(?:év|yr|year)", "milliárd tonna CO2/év"),
+    (r"\bUSD\s*/\s*t\s*CO2\b", "dollár/tonna CO2"),
+]
+
+
+def hungarianize(text: str) -> str:
+    """A magyar szövegben maradt angol szakszavakat és rövidítéseket köznapi magyarra cseréli,
+    és a tizedespontot tizedesvesszőre."""
+    if not text:
+        return text
+    for pat, hu in HU_GLOSSARY:
+        text = re.sub(pat, hu, text, flags=re.I)
+    for pat, hu in HU_ABBR:
+        text = re.sub(pat, hu, text)
+    return re.sub(r"(?<=\d)\.(?=\d)", ",", text)

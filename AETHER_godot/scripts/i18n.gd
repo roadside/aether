@@ -187,7 +187,6 @@ const EN := {
 	"Nem találtunk ellenőrizhető számot. Ez is eredmény.": "No checkable number found. That is a result too.",
 	"Új kutatás": "New research",
 	"Jóváhagyom, mehet a tervembe": "Approve, add it to my plan",
-	"Gépi összefoglaló, nem lektorált szakvélemény.": "Machine summary, not a peer-reviewed opinion.",
 	"Beteszem a tervembe: ": "Add to my plan: ",
 	"Részletek: honnan tudjuk?": "Details: how do we know?",
 	" és mtsai": " et al.",

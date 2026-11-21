@@ -581,14 +581,14 @@ func _show_results() -> void:
 		ok.pressed.connect(_approve)
 		row.add_child(ok)
 	_body.add_child(row)
-	_body.add_child(UI.label(L.t("Gépi összefoglaló, nem lektorált szakvélemény."), 14, UI.MUTE))
 	results_shown.emit(not _checks.is_empty())
 
 
 func _proposal_card(j: Dictionary, pub: Dictionary) -> Control:
 	var usable: bool = j.get("kar") != null
 	var c := UI.card(UI.CYAN if usable else UI.EDGE)
-	c.add_child(UI.label(str(j["nev"]) + (" – " + str(j["alkategoria"]) if str(j["alkategoria"]) != "" else ""), 17, UI.SOFT))
+	var sub := str(j.get("alkategoria_nev", j.get("alkategoria", "")))   # köznapi név, nem a nyers (angol) alkategória
+	c.add_child(UI.label(str(j["nev"]) + (" – " + sub if sub != "" else ""), 17, UI.SOFT))
 	var big := "%s %s" % [L.num_short(float(j["ertek"]), 2), j["egyseg"]]
 	c.add_child(UI.label(big, 26, UI.CYAN if usable else UI.TEXT, true))
 	c.add_child(UI.label(str(j["jelentes"]), 17, UI.TEXT))

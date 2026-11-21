@@ -31,6 +31,7 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 from . import climate as cl
+from . import evidence as ev
 
 # ---------------------------------------------------------------------------
 # Hétköznapi nyelvű magyarázatok (alacsony tanulási görbe)
@@ -74,6 +75,8 @@ PARAM_NEV_EN = {
 
 # Mértékegységek angolul (a belső kód magyar marad)
 EGYSEG_EN = {"GtCO2/év": "GtCO2/yr", "W/m²/(Tg SO2/év)": "W/m²/(Tg SO2/yr)"}
+# A kártyán megjelenő magyar mértékegység: rövidítés helyett köznapi szavak
+EGYSEG_HU = {"GtCO2/év": "milliárd tonna CO2/év"}
 
 
 def is_en(lang: str) -> bool:
@@ -137,8 +140,10 @@ CDR_KULCSSZAVAK = [
     ("talajszen", ["soil", "talaj"]),
 ]
 
-CDR_NEV = {"bioszen": "Bioszén", "kozetmallasztas": "Kőzetmállasztás", "erdosites": "Erdősítés",
-           "daccs": "Közvetlen levegős kivonás", "beccs": "Bioenergia + szén-tárolás", "talajszen": "Talajszén"}
+# Köznapi magyar nevek (rövidítés és angol szó nélkül)
+CDR_NEV = {"bioszen": "Bioszén a talajba", "kozetmallasztas": "Kőzetpor a földekre (kőzetmállasztás)",
+           "erdosites": "Erdősítés", "daccs": "CO2-szűrés közvetlenül a levegőből",
+           "beccs": "Növényi energia, a CO2 föld alá zárásával", "talajszen": "Több szén a talajban"}
 CDR_NEV_EN = {"bioszen": "Biochar", "kozetmallasztas": "Enhanced rock weathering", "erdosites": "Afforestation",
               "daccs": "Direct air capture", "beccs": "Bioenergy + carbon storage", "talajszen": "Soil carbon"}
 
@@ -161,13 +166,16 @@ def javaslatok(pub: Dict, lang: str = "hu") -> List[Dict]:
     for key, a in pub.get("osszesitett_parameterek", {}).items():
         p, med = a["parameter"], a["sulyozott_median"]
         base = {"kulcs": key, "parameter": p, "alkategoria": a["alkategoria"], "ertek": med,
-                "egyseg": EGYSEG_EN.get(a["egyseg"], a["egyseg"]) if en else a["egyseg"], "tartomany": a["tartomany"], "bizonyossag": a["bizonyossag"],
+                "egyseg": EGYSEG_EN.get(a["egyseg"], a["egyseg"]) if en else EGYSEG_HU.get(a["egyseg"], a["egyseg"]), "tartomany": a["tartomany"], "bizonyossag": a["bizonyossag"],
                 "bizonyossag_szoveg": (BIZONYOSSAG_SZOVEG_EN if en else BIZONYOSSAG_SZOVEG).get(a["bizonyossag"], ""),
                 "forrasok_szama": a["forrasok_szama"], "nev": (PARAM_NEV_EN if en else PARAM_NEV).get(p, p),
                 "jelentes": jelentes(p, med, a["egyseg"], lang), "publikacio": pub.get("azonosito", ""),
-                "kar": None, "kar_ertek": None, "kar_nev": "", "megjegyzes": ""}
+                "kar": None, "kar_ertek": None, "kar_nev": "", "megjegyzes": "",
+                "alkategoria_nev": str(a["alkategoria"]) if en else ev.hungarianize(str(a["alkategoria"]))}
         if p == "cdr_potencial_gtco2_ev":
             m = _cdr_method(a["alkategoria"]) or _cdr_method(question)
+            if m:   # a kártyán a módszer köznapi neve, nem a nyers (angol) alkategória
+                base["alkategoria_nev"] = (CDR_NEV_EN if en else CDR_NEV)[m]
             if m:
                 hi = cl.CDR_LIMITS[m][1]
                 base.update(kar=f"cdr:{m}", kar_ertek=round(min(med, hi), 3), kar_nev=(CDR_NEV_EN if en else CDR_NEV)[m])
