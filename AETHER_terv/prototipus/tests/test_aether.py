@@ -139,6 +139,26 @@ class TestUnitCheck(unittest.TestCase):
         self.assertTrue(unit_in_quote("cdr_koltseg_usd_tco2", "costs of US$90–120 per tonne"))
 
 
+class TestCandidateSentences(unittest.TestCase):
+    def test_only_number_with_unit(self):
+        from aether_lab.research import candidate_sentences
+        a = ("Negative emissions are needed. Potentials are 0.5–2 GtCO 2 yr −1 for biochar. "
+             "Warming is limited to 1.5°C. Costs are US$90 per tCO2.")
+        self.assertEqual(candidate_sentences(a, ["cdr_potencial_gtco2_ev"]),
+                         ["Potentials are 0.5–2 GtCO 2 yr −1 for biochar."])
+
+    def test_no_candidates_skips_ai(self):
+        from aether_lab.research import extract
+        from aether_lab.literature import Paper
+
+        class Boom:
+            def json_call(self, *a, **k):
+                raise AssertionError("nem kellett volna AI-t hívni")
+        p = Paper(source="teszt", source_id="1", title="TESZT", year=2020, abstract="Warming is limited to 1.5°C.")
+        r = extract(Boom(), "TESZT", {"P1": p}, ["cdr_potencial_gtco2_ev"])
+        self.assertEqual(r["allitasok"], [])
+
+
 class TestQuoteSpacing(unittest.TestCase):
     def test_broken_formula_spacing(self):
         from aether_lab.evidence import quote_in

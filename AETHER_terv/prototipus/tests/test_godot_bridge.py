@@ -192,7 +192,7 @@ class TestFixedQuestion(unittest.TestCase):
 
         def fake_search(queries, *a, **k):
             calls["queries"] = queries
-            return [literature.Paper(title=f"TESZT {i}", abstract="x" * 200, year=2020, doi=f"10.1/{i}", source_id=str(i),
+            return [literature.Paper(title=f"TESZT {i}", abstract="x" * 200 + ". Potential is 1 GtCO2 per year.", year=2020, doi=f"10.1/{i}", source_id=str(i),
                                      source="openalex") for i in range(5)]
         orig, research.search_all = research.search_all, fake_search
         try:

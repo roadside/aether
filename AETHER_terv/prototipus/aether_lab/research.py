@@ -28,21 +28,53 @@ def plan_queries(provider: Optional[Provider], question: str) -> Dict:
     return provider.json_call(ev.PLANNER_SYSTEM, f"Kutatási kérdés: {question}", ev.QUERY_PLAN_SCHEMA, 2000)
 
 
+import re as _re
+
+_SENT_SPLIT = _re.compile(r"(?<=[.!?])\s+(?=[A-Z(\[])")
+INTRO_CHARS = 300   # az absztrakt eleje, hogy az AI lássa, miről szól a cikk
+
+
+def candidate_sentences(abstract: str, params: List[str]) -> List[str]:
+    """Az absztrakt azon mondatai, amelyekben szám ÉS a keresett paraméter mértékegysége is szerepel.
+    Csak ezekből lehet ellenőrizhető állítás (az ellenőrző is ezt nézi), ezért az AI csak ezeket kapja:
+    rövidebb a feladat, gyorsabb a helyi modell, és nem vész el egy felsorolás közepén lévő szám."""
+    out = []
+    for s in _SENT_SPLIT.split(" ".join((abstract or "").split())):
+        if ev.numbers_in(s) and any(ev.unit_in_quote(k, s) for k in params if k in ev.UNIT_PATTERNS):
+            out.append(s.strip())
+    return out
+
+
+EXAMPLE = """Példa. Mondat: "Potentials are 0.5–2 GtCO2 yr−1 for biochar and up to 5 GtCO2 yr−1 for soil carbon
+sequestration." Ha a bioszén a téma: parameter=cdr_potencial_gtco2_ev, alkategoria=bioszén, also=0.5,
+felso=2, ertek=2 (az 'ertek' mindig egy szám az idézetből), idézet: "0.5–2 GtCO2 yr−1 for biochar".
+Az 5-ös szám egy másik módszeré (talaj szénmegkötés): azt külön állításként, a saját alkategóriájával add meg."""
+
+
 def extract(provider: Provider, question: str, papers: Dict[str, Paper], params: List[str],
             lang: str = "hu") -> Dict:
-    cap = getattr(provider, "max_abstract_chars", MAX_ABSTRACT_CHARS)
+    wanted_list = [k for k in (params or [k for k in ev.PARAMETERS if k != "egyeb"]) if k in ev.PARAMETERS]
+    intro = min(INTRO_CHARS, getattr(provider, "max_abstract_chars", INTRO_CHARS))
     blocks = []
     for pid, p in papers.items():
+        cands = candidate_sentences(p.abstract, wanted_list)
+        if not cands:
+            continue   # nincs benne szám a keresett mértékegységgel: ellenőrizhető állítás sem lehet
         flag = " [PREPRINT, nem lektorált]" if p.peer_reviewed is False else ""
+        lines = "\n".join(f"  - {s}" for s in cands)
         blocks.append(f"<cikk azonosito=\"{pid}\">\nCím: {p.title}{flag}\nÉv: {p.year}\n"
-                      f"Absztrakt: {p.abstract[:cap]}\n</cikk>")
-    wanted_list = params or [k for k in ev.PARAMETERS if k != "egyeb"]
+                      f"Az absztrakt eleje: {p.abstract[:intro]}…\n"
+                      f"Számot és mértékegységet tartalmazó mondatok (CSAK ezekből idézz, szó szerint):\n{lines}\n</cikk>")
+    if not blocks:
+        return {"allitasok": [], "ellentmondasok": "",
+                "osszegzes": ("The papers found contain no number with the unit we need." if lang.startswith("en")
+                              else "A talált cikkekben nincs a keresett mértékegységű szám.")}
     wanted = "\n".join(f"- {k}: {ev.PARAMETERS[k]['leiras']} (egység: {ev.PARAMETERS[k]['unit']})"
-                       for k in wanted_list if k in ev.PARAMETERS)
+                       for k in wanted_list)
     user = (f"Kutatási kérdés: {question}\nKeresett paraméterek (csak ezekhez emelj ki számot, "
             f"a megadott egységben):\n{wanted}\n"
             "Ha egy cikk nem erről szól (pl. a kérdés a talajba juttatott bioszénről szól, a cikk pedig "
-            "laboratóriumi gázmegkötő anyagról), abból NE emelj ki számot.\n\n"
+            "laboratóriumi gázmegkötő anyagról), abból NE emelj ki számot.\n\n" + EXAMPLE + "\n\n"
             + "\n\n".join(blocks))
     if lang.startswith("en"):
         user += ("\n\nA játékos angolul játszik: az 'osszegzes' és az 'ellentmondasok' mezőt "
