@@ -249,4 +249,15 @@ const EN := {
 	"A játék még dolgozik egy másik feladaton (pl. adatletöltés vagy AI-magyarázat). Próbáld újra pár másodperc múlva.": "The game is still busy with another task (e.g. downloading data or an AI explanation). Try again in a few seconds.",
 	"Egy pillanat, töltöm a forrásokat…": "One moment, loading the sources…",
 	"Az AI a háttérben részletesebb magyarázatot ír; ha kész, itt megjelenik.": "The AI is writing a more detailed explanation in the background; it will appear here when ready.",
+	# gépfelmérés, modell-letöltés
+	" – ezt az Ollama nem használja": " – Ollama does not use this one",
+	"A géped videókártyái: ": "Your graphics cards: ",
+	"Ajánlott helyi modell: %s (%s GB letöltés). ": "Recommended local model: %s (%s GB download). ",
+	"Ez a modell már le van töltve, a játék ezt használja.": "This model is already downloaded; the game uses it.",
+	"Az Ollama telepítése (ollama.com, ingyenes)": "Install Ollama (ollama.com, free)",
+	"Letöltöm: %s (%s GB)": "Download: %s (%s GB)",
+	"Letöltés indul…": "Download starting…",
+	"Letöltés: %d%%": "Downloading: %d%%",
+	"Kész! A modell letöltve, a játék mostantól ezt használja.": "Done! The model is downloaded; the game will use it from now on.",
+	"A letöltés nem sikerült: ": "The download failed: ",
 }

@@ -307,6 +307,8 @@ func _show_ai_choice() -> void:
 		c.add_child(UI.label(L.t(ch["magyarazat"]), 16, UI.SOFT))
 		if id != "none":  # az "AI nélkül" állapota ugyanaz, mint a leírása
 			c.add_child(UI.label(str(st.get("ok", "")), 15, UI.GREEN if st.get("elerheto", false) else UI.MUTE))
+		if id == "ollama":
+			_add_hardware_info(c, st)
 		_body.add_child(UI.card_root(c))
 	_ai = best
 	# API-kulcs megadása: csak erre a futásra kerül a környezetbe, sehova nem mentjük
@@ -331,6 +333,82 @@ func _show_ai_choice() -> void:
 	start.pressed.connect(_start_research)
 	row.add_child(start)
 	_body.add_child(row)
+
+
+## A géped videókártyái és az ajánlott helyi modell (ami teljesen elfér a videómemóriában).
+var _dl_poll: Timer
+var _dl_label: Label
+var _dl_path := ""
+
+
+func _add_hardware_info(c: VBoxContainer, st: Dictionary) -> void:
+	var gep: Dictionary = _ai_status.get("gep", {})
+	var cards: Array = gep.get("kartyak", [])
+	if cards.is_empty() and not gep.has("ajanlas"):
+		return
+	var names := PackedStringArray()
+	for g in cards:
+		var s := str(g.get("nev", ""))
+		if g.get("vram_gb") != null:
+			s += " (%s GB)" % UI.hu(float(g["vram_gb"]), 0)
+		if not g.get("ollama_hasznalja", true):
+			s += L.t(" – ezt az Ollama nem használja")
+		names.append(s)
+	if not names.is_empty():
+		c.add_child(UI.label(L.t("A géped videókártyái: ") + "; ".join(names), 15, UI.SOFT))
+	var rec: Dictionary = gep.get("ajanlas", {})
+	if rec.is_empty():
+		return
+	var model := str(rec.get("modell", ""))
+	c.add_child(UI.label(L.t("Ajánlott helyi modell: %s (%s GB letöltés). ") % [model, UI.hu(float(rec.get("letoltes_gb", 0)), 1)]
+		+ str(rec.get("indoklas", "")), 15, UI.GOLD))
+	var have: Array = st.get("modellek", [])
+	var has_it := false
+	for m in have:
+		if str(m) == model or str(m).begins_with(model + "-"):
+			has_it = true
+	if has_it:
+		c.add_child(UI.label(L.t("Ez a modell már le van töltve, a játék ezt használja."), 15, UI.GREEN))
+		return
+	if not str(st.get("ok", "")).begins_with("Fut") and not str(st.get("ok", "")).begins_with("Running"):
+		var inst := UI.button(L.t("Az Ollama telepítése (ollama.com, ingyenes)"))
+		var inst_fn := func() -> void: OS.shell_open("https://ollama.com/download")
+		inst.pressed.connect(inst_fn)
+		c.add_child(inst)
+		return
+	var dl := UI.button(L.t("Letöltöm: %s (%s GB)") % [model, UI.hu(float(rec.get("letoltes_gb", 0)), 1)])
+	_dl_label = UI.label("", 15, UI.SOFT)
+	var dl_fn := func() -> void:
+		_dl_path = bridge.work_dir("aether_kutatas").path_join("letoltes.json")
+		DirAccess.remove_absolute(_dl_path)
+		if bridge.run("letolt", ["ollama-letolt", model, "--allapot", _dl_path]):
+			dl.disabled = true
+			_dl_label.text = L.t("Letöltés indul…")
+			if _dl_poll == null:
+				_dl_poll = Timer.new()
+				_dl_poll.wait_time = 1.0
+				_dl_poll.timeout.connect(_on_dl_poll)
+				add_child(_dl_poll)
+			_dl_poll.start()
+		else:
+			_dl_label.text = L.t("A játék még dolgozik egy másik feladaton (pl. adatletöltés vagy AI-magyarázat). Próbáld újra pár másodperc múlva.")
+	dl.pressed.connect(dl_fn)
+	c.add_child(dl)
+	c.add_child(_dl_label)
+
+
+func _on_dl_poll() -> void:
+	var st: Variant = Bridge.read_json(_dl_path)
+	if typeof(st) != TYPE_DICTIONARY or _dl_label == null or not is_instance_valid(_dl_label):
+		return
+	if st.get("szazalek") != null:
+		_dl_label.text = L.t("Letöltés: %d%%") % int(st["szazalek"])
+	if st.get("kesz", false):
+		_dl_label.text = L.t("Kész! A modell letöltve, a játék mostantól ezt használja.")
+		_dl_poll.stop()
+	elif str(st.get("allapot", "")) == "hiba":
+		_dl_label.text = L.t("A letöltés nem sikerült: ") + str(st.get("hiba", ""))
+		_dl_poll.stop()
 
 
 # --- 3. Kutatás folyamatban -----------------------------------------------

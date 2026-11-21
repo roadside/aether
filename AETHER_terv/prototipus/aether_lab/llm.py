@@ -108,7 +108,13 @@ class OllamaProvider(Provider):
                 names = [m.get("name", "") for m in json.loads(r.read()).get("models", [])]
         except Exception:
             return "qwen3:8b"
-        return pick_model(names, self.PREFERRED) or "qwen3:8b"
+        # a gépre ajánlott modell (ami teljesen elfér a videómemóriában) kerül előre
+        try:
+            from .hardware import detect
+            rec = [detect()["ajanlas"]["modell"]]
+        except Exception:
+            rec = []
+        return pick_model(names, rec + self.PREFERRED) or "qwen3:8b"
 
     def json_call(self, system, user, schema, max_tokens=8000):
         import urllib.error

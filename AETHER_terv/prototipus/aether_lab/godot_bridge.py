@@ -288,7 +288,14 @@ def ai_status(ollama_host: Optional[str] = None, timeout: float = 1.5, lang: str
 
 
 def cmd_ai(args):
-    _write_json(Path(args.ki), ai_status(lang=getattr(args, "nyelv", "hu")))
+    lang = getattr(args, "nyelv", "hu")
+    st = ai_status(lang=lang)
+    try:
+        from .hardware import detect
+        st["gep"] = detect(lang)     # videókártyák + ajánlott helyi modell
+    except Exception as e:
+        st["gep"] = {"hiba": str(e)}
+    _write_json(Path(args.ki), st)
 
 
 def cmd_kutat(args, run_research=None, get_provider=None):
