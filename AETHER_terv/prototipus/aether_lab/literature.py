@@ -14,6 +14,7 @@ cikkeket megjelöljük, és a kutatási motor kizárja őket.
 from __future__ import annotations
 
 import json
+import os
 import re
 import time
 import urllib.parse
@@ -140,6 +141,8 @@ def search_openalex(query: str, n: int = 10, mailto: str = "", api_key: str = ""
         "filter": flt,
         "sort": "relevance_score:desc",
     }
+    mailto = mailto or os.environ.get("AETHER_MAILTO", "")
+    api_key = api_key or os.environ.get("OPENALEX_API_KEY", "")   # saját kulcs: nagyobb napi keret
     if mailto:
         params["mailto"] = mailto
     if api_key:
