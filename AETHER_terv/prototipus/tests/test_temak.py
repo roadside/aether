@@ -31,9 +31,23 @@ def test_params_are_researchable():
             assert gb.jelentes(p, 1.0, ev.PARAMETERS[p]["unit"]) != ""
 
 
-def test_generated_json_in_sync():
-    data = json.loads(temak.OUT.read_text(encoding="utf-8"))
-    assert data == temak.catalog(), "futtasd: python tools/temak.py"
+def test_txt_round_trip():
+    """A fájlba írás és visszaolvasás nem veszít adatot."""
+    from aether_lab import temak_txt as tt
+    for code in tt.TERULETEK:
+        ts = [t for t in temak.TEMAK if t["terulet"] == code]
+        assert tt.parse(tt.format_file(code, ts), code) == ts
+
+
+def test_txt_continuation_and_sources():
+    from aether_lab import temak_txt as tt
+    text = ("\ufeff# megjegyzés\n=== proba ===\nKorszak: II.\nKérdés: Első sor\nfolytatás?\n"
+            "Kérdés angolul: Q?\nForrás: Cikk (2024) – https://doi.org/10.1/x\nForrás: Wiki – https://w.org/a\n"
+            "Lektorálva: igen\n--- technikai ---\nParaméter: hatasfok_pct\n")
+    t = tt.parse(text, "fizika")[0]
+    assert t["korszak"] == 2 and t["cim"] == "Első sor folytatás?" and t["cim_en"] == "Q?"
+    assert t["lektoralva"] is True and t["parameterek"] == "hatasfok_pct"
+    assert tt.source_link(t["forras"][0]) == {"cim": "Cikk (2024)", "link": "https://doi.org/10.1/x"}
 
 
 def test_existing_topic_ids_kept():

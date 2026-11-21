@@ -1,0 +1,294 @@
+# AETHER kutatási témák · Földtudomány
+#
+# Lektorálás: a "Kérdés", "Röviden", "Ad a játékban", "Mire jó?", "Mi a gond vele?" és
+# "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
+# Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
+# A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet).
+# A "technikai" vonal alatti sorokkal keres a kutatás: csak akkor módosítsd, ha biztos vagy benne.
+# Új téma: másolj le egy blokkot, és adj neki új, ékezet nélküli azonosítót (=== uj_tema ===).
+# A játék induláskor olvassa ezt a fájlt: mentés után indítsd újra a játékot.
+
+# ----- I. korszak: Felismerés -----
+
+=== tengerszint ===
+Korszak: I. (Felismerés)
+Kérdés: Mennyit emelkedik a tenger 2100-ig?
+Röviden: Az olvadó jég és a melegedő, táguló víz megemeli a tenger szintjét.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much will the sea rise by 2100?
+Röviden angolul: Melting ice and warming, expanding water raise the sea level.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: global mean sea level rise projections 2100|sea level rise projections ice sheet contribution|sea level rise observations acceleration
+Paraméter: tengerszint_cm
+Wikipédia: tengerszint-emelkedés
+Wikipédia angolul: sea level rise
+Áttekintő cikkek keresése: sea level rise projections review
+
+=== gronland ===
+Korszak: I. (Felismerés)
+Kérdés: Milyen gyorsan olvad Grönland jege?
+Röviden: Grönland jégtakarója évről évre veszít a tömegéből, és ez emeli a tengert.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How fast is Greenland's ice melting?
+Röviden angolul: Greenland's ice sheet loses mass year after year, raising the sea.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: Greenland ice sheet mass loss rate|Greenland ice sheet mass balance|Greenland surface melt runoff
+Paraméter: jegveszteseg_gt_ev
+Wikipédia: grönlandi jégtakaró
+Wikipédia angolul: Greenland ice sheet
+Áttekintő cikkek keresése: Greenland ice sheet mass balance review
+
+=== antarktisz ===
+Korszak: I. (Felismerés)
+Kérdés: Mennyi jeget veszít az Antarktisz?
+Röviden: A déli jégtakaró a legnagyobb jégtömeg a Földön. Ha nagy része elolvadna, méterekkel emelné a tengert.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much ice is Antarctica losing?
+Röviden angolul: The southern ice sheet is the largest mass of ice on Earth. If much of it melted, the sea would rise by metres.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: Antarctic ice sheet mass balance|Antarctic ice sheet mass loss acceleration|West Antarctic ice sheet instability
+Paraméter: jegveszteseg_gt_ev
+Wikipédia: antarktiszi jégtakaró
+Wikipédia angolul: Antarctic ice sheet
+Áttekintő cikkek keresése: Antarctic ice sheet mass balance review
+
+=== gleccser ===
+Korszak: I. (Felismerés)
+Kérdés: Mennyit olvadnak a hegyi gleccserek?
+Röviden: Az Alpok és a Himalája gleccserei nyáron sok folyó vizét adják.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much are mountain glaciers melting?
+Röviden angolul: Glaciers in the Alps and the Himalayas feed many rivers in summer.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: global glacier mass loss|glacier mass change worldwide|mountain glacier retreat projections
+Paraméter: jegveszteseg_gt_ev
+Wikipédia: gleccser visszahúzódás
+Wikipédia angolul: retreat of glaciers since 1850
+Áttekintő cikkek keresése: glacier mass loss review
+
+=== permafroszt ===
+Korszak: I. (Felismerés)
+Kérdés: Mennyi szenet enged ki a felolvadó fagyott talaj?
+Röviden: Az északi fagyott talajban több szén van, mint a levegőben. Olvadáskor egy része kiszabadul.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much carbon does thawing frozen ground release?
+Röviden angolul: The frozen northern ground holds more carbon than the air. When it thaws, part of it escapes.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: permafrost carbon feedback emissions|permafrost thaw carbon release projections|permafrost carbon climate feedback
+Paraméter: szen_gtc
+Wikipédia: permafroszt
+Wikipédia angolul: permafrost carbon cycle
+Áttekintő cikkek keresése: permafrost carbon feedback review
+
+=== aszaly ===
+Korszak: I. (Felismerés)
+Kérdés: Gyakoribb lesz-e az aszály?
+Röviden: A melegebb levegő több vizet párologtat el a talajból és a növényekből.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: Will droughts become more frequent?
+Röviden angolul: Warmer air draws more water out of soil and plants.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: drought frequency increase climate change|soil moisture drought projections warming|agricultural drought attribution
+Paraméter: valtozas_pct
+Wikipédia: aszály
+Wikipédia angolul: drought
+Áttekintő cikkek keresése: drought climate change review
+
+=== felhoszakadas ===
+Korszak: I. (Felismerés)
+Kérdés: Hevesebbek lesznek-e a nagy esők?
+Röviden: A meleg levegő több vizet tart, ezért a felhőszakadások erősebbek lehetnek.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: Will heavy rain get heavier?
+Röviden angolul: Warm air holds more water, so downpours can be stronger.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: extreme precipitation intensification per degree warming|heavy rainfall scaling with temperature|observed increase extreme precipitation
+Paraméter: valtozas_pct_per_c
+Wikipédia: szélsőséges időjárás csapadék
+Wikipédia angolul: extreme weather
+Áttekintő cikkek keresése: extreme precipitation climate change review
+
+=== erdotuz ===
+Korszak: I. (Felismerés)
+Kérdés: Több erdőtűz lesz-e a melegedéssel?
+Röviden: A forró, száraz nyarakon könnyebben és nagyobb területen ég az erdő.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: Will warming bring more wildfires?
+Röviden angolul: In hot, dry summers forests catch fire more easily and burn over larger areas.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: climate change wildfire burned area increase|fire weather climate change attribution|wildfire carbon emissions trend
+Paraméter: valtozas_pct
+Wikipédia: erdőtűz
+Wikipédia angolul: wildfire
+Áttekintő cikkek keresése: wildfire climate change review
+
+# ----- III. korszak: Átalakulás -----
+
+=== kozet ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyit segít a kőzetmállasztás?
+Röviden: Finomra őrölt kőzetet szórnak a földekre, ami lassan megköti a levegő CO2-jét.
+Ad a játékban: Kőzetpor a földekre a tervedben.
+Mire jó?: Szén-dioxidot von ki a levegőből, és hosszú időre ásványokban tárolja, így lassíthatja a melegedést.
+Mi a gond vele?: Drága lehet a kőzet őrlése és szétszórása, és a kőzetből káros fémek juthatnak a környezetbe.
+Mennyire bizonyított?: Részben bizonyított: a laborkísérletek ígéretesek, de a valódi körülmények között még vizsgálják, mennyire működik.
+Kérdés angolul: How much does rock weathering help?
+Röviden angolul: Finely ground rock is spread on fields, where it slowly binds CO2 from the air.
+Ad a játékban angolul: Rock dust on fields in your plan.
+Mire jó? angolul: It removes carbon dioxide from the air and stores it in minerals for a long time, which can slow warming.
+Mi a gond vele? angolul: Crushing and spreading rock can be expensive, and harmful metals from the rock can get into the environment.
+Mennyire bizonyított? angolul: Partly proven: lab experiments look promising, but real-world results are still being studied.
+Forrás: Wikipédia: Enhanced weathering (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Enhanced_weathering
+Forrás: CO₂ sequestration and soil improvement in enhanced rock weathering: A review from an experimental perspective (2024) – https://doi.org/10.1002/ghg.2313
+Forrás: Review and syntheses: Ocean alkalinity enhancement and carbon dioxide removal through marine enhanced rock weathering using olivine (2025) – https://doi.org/10.5194/bg-22-355-2025
+Forrás: Reviews and syntheses: Carbon vs. cation based MRV of Enhanced Rock Weathering and the issue of soil organic carbon (2026) – https://doi.org/10.5194/bg-23-53-2026
+Lektorálva: nem
+--- technikai ---
+Keresés: enhanced rock weathering carbon dioxide removal potential|enhanced weathering croplands global potential|negative emissions technologies potentials costs side effects
+Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
+Wikipédia: kőzetmállás szén-dioxid
+Wikipédia angolul: enhanced weathering
+Áttekintő cikkek keresése: enhanced rock weathering review
+
+=== co2_tarolas ===
+Korszak: III. (Átalakulás)
+Kérdés: Biztonságosan tárolható-e a CO2 a föld alatt?
+Röviden: A kiválasztott CO2-t mély kőzetrétegekbe sajtolják. Mennyi szivároghat vissza?
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: Can CO2 be stored safely underground?
+Röviden angolul: Captured CO2 is pumped into deep rock layers. How much could leak back?
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: geological CO2 storage leakage risk|CO2 storage capacity saline aquifers|CO2 mineralization basalt storage
+Paraméter: reszarany_pct
+Wikipédia: szén-dioxid tárolás föld alatt
+Wikipédia angolul: carbon sequestration
+Áttekintő cikkek keresése: geological carbon storage review
+
+# ----- IV. korszak: Helyreállítás -----
+
+=== lap ===
+Korszak: IV. (Helyreállítás)
+Kérdés: Mennyi szenet ment meg a lápok újra elárasztása?
+Röviden: A kiszárított láp szenet enged ki. Ha újra vizes lesz, megint tárolja.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much carbon does rewetting peatlands save?
+Röviden angolul: A drained peatland releases carbon. Made wet again, it stores carbon once more.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: peatland rewetting greenhouse gas emissions reduction|peatland restoration carbon|drained peatland emissions
+Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
+Wikipédia: láp
+Wikipédia angolul: peatland
+Áttekintő cikkek keresése: peatland rewetting review
+
+=== vas_tenger ===
+Korszak: IV. (Helyreállítás)
+Kérdés: Segít-e, ha vassal trágyázzuk a tengert?
+Röviden: A vas serkenti a tengeri algák növekedését. Kérdés, mennyi szén süllyed le tartósan.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: Does fertilising the sea with iron help?
+Röviden angolul: Iron boosts the growth of ocean algae. The question is how much carbon sinks for good.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: ocean iron fertilization carbon sequestration experiments|iron fertilization efficiency carbon export
+Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
+Wikipédia: vastrágyázás óceán
+Wikipédia angolul: iron fertilization
+Áttekintő cikkek keresése: ocean iron fertilization review

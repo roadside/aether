@@ -1,0 +1,243 @@
+# AETHER kutatási témák · Közlekedés és épületek
+#
+# Lektorálás: a "Kérdés", "Röviden", "Ad a játékban", "Mire jó?", "Mi a gond vele?" és
+# "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
+# Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
+# A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet).
+# A "technikai" vonal alatti sorokkal keres a kutatás: csak akkor módosítsd, ha biztos vagy benne.
+# Új téma: másolj le egy blokkot, és adj neki új, ékezet nélküli azonosítót (=== uj_tema ===).
+# A játék induláskor olvassa ezt a fájlt: mentés után indítsd újra a játékot.
+
+# ----- II. korszak: Mérséklés -----
+
+=== hoszivattyu ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyit spórol a hőszivattyú a gázkazánhoz képest?
+Röviden: A hőszivattyú a kinti levegő vagy a föld hőjét hozza be a házba, árammal.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much does a heat pump save compared to a gas boiler?
+Röviden angolul: A heat pump brings heat from the outside air or the ground into the house, using electricity.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: heat pump greenhouse gas emissions reduction compared to gas boiler|air source heat pump life cycle emissions|residential heat pump decarbonization
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: hőszivattyú
+Wikipédia angolul: heat pump
+Áttekintő cikkek keresése: heat pump decarbonization review
+
+=== hoszigeteles ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyi fűtést spórol a hőszigetelés?
+Röviden: A jól szigetelt fal, tető és ablak bent tartja a meleget.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much heating does insulation save?
+Röviden angolul: Well-insulated walls, roofs and windows keep the warmth in.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: building envelope retrofit energy savings|thermal insulation retrofit heating energy reduction|deep energy renovation residential buildings
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: hőszigetelés
+Wikipédia angolul: building insulation
+Áttekintő cikkek keresése: building energy retrofit review
+
+=== villanyauto ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyivel kevesebb CO2-t okoz a villanyautó?
+Röviden: Az elektromos autó teljes élete alatt, az akkumulátor gyártásával együtt számolva.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much less CO2 does an electric car cause?
+Röviden angolul: Counted over the electric car's whole life, including making the battery.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: battery electric vehicle life cycle emissions compared to internal combustion|electric vehicle lifecycle greenhouse gas
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: elektromos autó
+Wikipédia angolul: electric car
+Áttekintő cikkek keresése: electric vehicle life cycle assessment review
+
+=== vasut ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyi CO2-t spórol, ha vonattal utazunk autó és repülő helyett?
+Röviden: A vonat sok utast visz egyszerre, és gyakran árammal megy.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much CO2 is saved by taking the train instead of car or plane?
+Röviden angolul: A train carries many passengers at once and often runs on electricity.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: modal shift rail greenhouse gas emissions reduction|high speed rail emissions compared to aviation|rail passenger transport life cycle emissions
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: vasúti közlekedés
+Wikipédia angolul: rail transport
+Áttekintő cikkek keresése: rail transport emissions review
+
+=== kerekpar ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyit segít, ha többen kerékpárral járnak?
+Röviden: A rövid városi utak egy részét kerékpárral is meg lehet tenni.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much does it help if more people cycle?
+Röviden angolul: Many short city trips can be made by bicycle.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: cycling mode shift carbon emissions reduction|active travel climate change mitigation|bicycle commuting emissions savings
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: kerékpáros közlekedés
+Wikipédia angolul: utility cycling
+Áttekintő cikkek keresése: active travel emissions review
+
+=== tavmunka ===
+Korszak: II. (Mérséklés)
+Kérdés: Csökkenti-e a kibocsátást az otthoni munka?
+Röviden: Kevesebb az ingázás, de otthon több a fűtés és az áram.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: Does working from home cut emissions?
+Röviden angolul: There is less commuting, but more heating and electricity at home.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: teleworking energy consumption emissions review|remote work commuting emissions net effect
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: távmunka
+Wikipédia angolul: telecommuting
+Áttekintő cikkek keresése: telework energy review
+
+# ----- III. korszak: Átalakulás -----
+
+=== levegoszures ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyi CO2-t szűrhetnek ki gépek a levegőből?
+Röviden: Nagy ventilátoros gépek kiszűrik a CO2-t, és a föld alá zárják. Sok energiát igényel.
+Ad a játékban: CO2-szűrés a levegőből a tervedben.
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much CO2 can machines filter from the air?
+Röviden angolul: Large fan-driven machines filter out CO2 and store it underground. It takes a lot of energy.
+Ad a játékban angolul: Filtering CO2 from the air in your plan.
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: direct air capture carbon dioxide removal potential cost|direct air carbon capture and storage scale-up|negative emissions technologies potentials costs side effects
+Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
+Wikipédia: szén-dioxid-leválasztás levegőből
+Wikipédia angolul: direct air capture
+Áttekintő cikkek keresése: direct air capture review
+
+=== gyari_co2 ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyi CO2 fogható fel a gyárkéményekben?
+Röviden: Az erőművek és gyárak füstjéből a CO2 kiválasztható, mielőtt a levegőbe jut.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much CO2 can be captured from factory chimneys?
+Röviden angolul: CO2 can be separated from the smoke of power plants and factories before it reaches the air.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: post-combustion carbon capture efficiency|carbon capture and storage industrial capture rate|amine carbon capture energy penalty
+Paraméter: hatasfok_pct
+Wikipédia: szén-dioxid-leválasztás
+Wikipédia angolul: carbon capture and storage
+Áttekintő cikkek keresése: carbon capture and storage review
+
+=== teherauto ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyit spórol az elektromos teherautó?
+Röviden: A teherautók sok gázolajat fogyasztanak. Akkumulátorral hosszabb utakra is képesek.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much does an electric truck save?
+Röviden angolul: Trucks burn a lot of diesel. With batteries they can also make longer trips.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: battery electric heavy-duty truck life cycle emissions|electric trucks emissions reduction|zero emission heavy duty vehicles
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: elektromos teherautó
+Wikipédia angolul: electric truck
+Áttekintő cikkek keresése: electric heavy-duty trucks review
+
+=== hajozas ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyivel csökkenthető a hajózás kibocsátása?
+Röviden: A teherhajók nehézolajat égetnek. Új üzemanyag, lassabb haladás vagy szélvitorla segíthet.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much can shipping emissions be cut?
+Röviden angolul: Cargo ships burn heavy fuel oil. New fuels, slower sailing or wind sails can help.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: shipping decarbonization emissions reduction potential|wind-assisted ship propulsion fuel savings|slow steaming emissions reduction
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: hajózás kibocsátás
+Wikipédia angolul: environmental impact of shipping
+Áttekintő cikkek keresése: shipping decarbonization review

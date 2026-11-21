@@ -7,10 +7,29 @@ extends RefCounted
 
 const L := preload("res://scripts/i18n.gd")
 
-## A témák a katalógusban vannak (egyetlen forrás: AETHER_terv/prototipus/tools/temak.py,
-## onnan generálva). Mezők: id, korszak, terulet, cim/cim_en, magyarazat/magyarazat_en,
-## kereses, parameterek, wiki, wiki_en, attekintes, nyit/nyit_en.
-const CATALOG := "res://assets/temak_katalogus.json"
+## A témák a lektorálható szövegfájlokban vannak: res://temak/<terület>.txt (egyetlen forrás;
+## formátum: AETHER_terv/prototipus/aether_lab/temak_txt.py). Mezők: id, korszak, terulet,
+## cim, magyarazat, nyit, mire_jo, hatranyok, mennyire_bizonyitott (és _en párjuk), forras
+## (lista), lektoralva, kereses, parameterek, wiki, wiki_en, attekintes.
+const TOPIC_DIR := "res://temak"
+const FIELDS := {
+	"fizika": ["Fizika", "Physics"], "kemia": ["Kémia", "Chemistry"], "anyag": ["Anyagtudomány", "Materials science"],
+	"ur": ["Csillagászat és űrkutatás", "Astronomy and space"], "fold": ["Földtudomány", "Earth science"],
+	"biologia": ["Biológia", "Biology"], "energia": ["Energia", "Energy"],
+	"mernok": ["Közlekedés és épületek", "Transport and buildings"],
+	"mezogazdasag": ["Mezőgazdaság és élelem", "Farming and food"],
+	"egeszseg": ["Egészség és alkalmazkodás", "Health and adaptation"],
+}
+## Mezőnév a fájlban -> kulcs (a hosszabb név előbb, pl. "Kérdés angolul" a "Kérdés" előtt).
+const LABELS := [
+	["Mennyire bizonyított? angolul", "mennyire_bizonyitott_en"], ["Áttekintő cikkek keresése", "attekintes"],
+	["Mi a gond vele? angolul", "hatranyok_en"], ["Ad a játékban angolul", "nyit_en"],
+	["Mennyire bizonyított?", "mennyire_bizonyitott"], ["Wikipédia angolul", "wiki_en"],
+	["Mire jó? angolul", "mire_jo_en"], ["Röviden angolul", "magyarazat_en"], ["Kérdés angolul", "cim_en"],
+	["Mi a gond vele?", "hatranyok"], ["Ad a játékban", "nyit"], ["Lektorálva", "lektoralva"],
+	["Wikipédia", "wiki"], ["Paraméter", "parameterek"], ["Mire jó?", "mire_jo"], ["Keresés", "kereses"],
+	["Korszak", "korszak"], ["Röviden", "magyarazat"], ["Kérdés", "cim"], ["Forrás", "forras"],
+]
 
 ## A korszakok. "kell": ennyi kutatott téma kell az ELŐZŐ korszakból a belépéshez.
 ## A további feltételeket (bevezetett terv, bizalom, csökkenő kibocsátás) a campaign.gd nézi.
@@ -25,22 +44,64 @@ const ERAS := [
 const ROMAN := ["I.", "II.", "III.", "IV."]
 
 static var _topics: Array = []
-static var _fields: Dictionary = {}
 
 
 static func _load() -> void:
 	if not _topics.is_empty():
 		return
-	var f := FileAccess.open(CATALOG, FileAccess.READ)
-	if f == null:
-		push_error("Hiányzik a témakatalógus: " + CATALOG)
-		return
-	var d: Variant = JSON.parse_string(f.get_as_text())
-	if typeof(d) != TYPE_DICTIONARY:
-		push_error("Hibás témakatalógus: " + CATALOG)
-		return
-	_topics = d.get("temak", [])
-	_fields = d.get("terulet", {})
+	for code in FIELDS:
+		var path: String = TOPIC_DIR.path_join(code + ".txt")
+		var f := FileAccess.open(path, FileAccess.READ)
+		if f == null:
+			push_error("Hiányzik a témafájl: " + path)
+			continue
+		_topics.append_array(parse(f.get_as_text(), code))
+
+
+## Egy témafájl beolvasása (ugyanaz a szabály, mint a Python temak_txt.parse).
+static func parse(text: String, code: String) -> Array:
+	var out: Array = []
+	var cur: Dictionary = {}
+	var last := ""
+	for raw in text.split("\n"):
+		var line := raw.strip_edges().trim_prefix("\ufeff")
+		if line == "" or line.begins_with("#"):
+			continue
+		if line.begins_with("===") and line.ends_with("===") and line.length() > 6:
+			cur = {"id": line.trim_prefix("===").trim_suffix("===").strip_edges(), "terulet": code, "forras": []}
+			for pair in LABELS:
+				if pair[1] != "forras":
+					cur[pair[1]] = ""
+			out.append(cur)
+			last = ""
+			continue
+		if cur.is_empty() or line.begins_with("---"):
+			continue
+		var hit := false
+		for pair in LABELS:
+			if line.begins_with(str(pair[0]) + ":"):
+				var val := line.substr(str(pair[0]).length() + 1).strip_edges()
+				last = str(pair[1])
+				if last == "forras":
+					if val != "":
+						(cur["forras"] as Array).append(val)
+				else:
+					cur[last] = val
+				hit = true
+				break
+		if not hit and last != "":   # folytatósor
+			if last == "forras":
+				var fs: Array = cur["forras"]
+				if not fs.is_empty():
+					fs[fs.size() - 1] = str(fs[fs.size() - 1]) + " " + line
+			else:
+				cur[last] = (str(cur[last]) + " " + line).strip_edges()
+	for t in out:
+		var e := str(t["korszak"]).get_slice(" ", 0).trim_suffix(".").to_upper()
+		var idx := ["I", "II", "III", "IV"].find(e)
+		t["korszak"] = idx + 1 if idx >= 0 else int(e)
+		t["lektoralva"] = str(t["lektoralva"]).to_lower() in ["igen", "i", "yes", "x"]
+	return out
 
 
 static func topics() -> Array:
@@ -80,17 +141,38 @@ static func text(q: Dictionary, key: String) -> String:
 
 ## A tudományterület neve (pl. "fizika" -> "Fizika").
 static func field_name(code: String) -> String:
-	_load()
-	var f: Variant = _fields.get(code, {})
-	if typeof(f) != TYPE_DICTIONARY or (f as Dictionary).is_empty():
+	if not FIELDS.has(code):
 		return code
-	return L.field(f, "nev")
+	return str(FIELDS[code][1 if L.is_en() else 0])
 
 
-## A területek a katalógus sorrendjében.
+## A területek a megjelenítés sorrendjében.
 static func field_codes() -> Array:
-	_load()
-	return _fields.keys()
+	return FIELDS.keys()
+
+
+## Van-e kész (beépített) magyarázat a választott nyelven.
+static func has_explanation(q: Dictionary) -> bool:
+	return text_raw(q, "mire_jo") != ""
+
+
+## Mint a text(), de fordítás nélkül, és angolul nincs visszaesés a magyarra.
+static func text_raw(q: Dictionary, key: String) -> String:
+	return str(q.get(key + "_en" if L.is_en() else key, ""))
+
+
+## A források: [{"cim": ..., "link": ...}] ("Cím (2024) – https://..." sorokból).
+static func sources(q: Dictionary) -> Array:
+	var out: Array = []
+	for s in q.get("forras", []):
+		var line := str(s)
+		var at := line.find("http")
+		if at < 0:
+			out.append({"cim": line, "link": ""})
+		else:
+			out.append({"cim": line.substr(0, at).strip_edges().trim_suffix("–").trim_suffix("-").strip_edges(),
+				"link": line.substr(at).get_slice(" ", 0)})
+	return out
 
 
 ## Csillagok egy kutatás eredményéből (játékszabály):

@@ -1,0 +1,153 @@
+# AETHER kutatási témák · Csillagászat és űrkutatás
+#
+# Lektorálás: a "Kérdés", "Röviden", "Ad a játékban", "Mire jó?", "Mi a gond vele?" és
+# "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
+# Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
+# A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet).
+# A "technikai" vonal alatti sorokkal keres a kutatás: csak akkor módosítsd, ha biztos vagy benne.
+# Új téma: másolj le egy blokkot, és adj neki új, ékezet nélküli azonosítót (=== uj_tema ===).
+# A játék induláskor olvassa ezt a fájlt: mentés után indítsd újra a játékot.
+
+# ----- I. korszak: Felismerés -----
+
+=== napaktivitas ===
+Korszak: I. (Felismerés)
+Kérdés: Okozhatja-e a Nap a mai melegedést?
+Röviden: A Nap fénye kicsit ingadozik. A mérések megmutatják, mennyit számít ez.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: Could the Sun be causing today's warming?
+Röviden angolul: The Sun's output varies a little. Measurements show how much that matters.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: solar irradiance variability contribution to global warming|total solar irradiance trend climate|solar forcing twentieth century temperature
+Paraméter: sugarzasi_kenyszer_w_m2
+Wikipédia: naptevékenység éghajlat
+Wikipédia angolul: solar activity and climate
+Áttekintő cikkek keresése: solar influence on climate review
+
+=== kozmikus ===
+Korszak: I. (Felismerés)
+Kérdés: Befolyásolják-e a kozmikus sugarak a felhőket?
+Röviden: Egy régi ötlet szerint a világűrből jövő sugárzás felhőket kelt. Mit mutatnak a mérések?
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: Do cosmic rays affect clouds?
+Röviden angolul: An old idea says radiation from space creates clouds. What do measurements show?
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: cosmic rays cloud formation climate|galactic cosmic rays cloud condensation nuclei|CLOUD experiment ion-induced nucleation
+Paraméter: valtozas_pct
+Wikipédia: kozmikus sugárzás felhő
+Wikipédia angolul: cosmic ray
+Áttekintő cikkek keresése: cosmic rays clouds climate review
+
+=== metan_muhold ===
+Korszak: I. (Felismerés)
+Kérdés: Megtalálják-e a műholdak a nagy metánszivárgásokat?
+Röviden: Az űrből mért adatokkal kiderül, hol szökik a legtöbb metán a levegőbe.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: Can satellites find large methane leaks?
+Röviden angolul: Data measured from space reveal where the most methane escapes into the air.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: satellite detection of methane super-emitters|TROPOMI methane emissions point sources|satellite methane plume detection oil and gas
+Paraméter: reszarany_pct
+Wikipédia: metán műhold
+Wikipédia angolul: atmospheric methane
+Áttekintő cikkek keresése: satellite methane observations review
+
+=== muhold_erdo ===
+Korszak: I. (Felismerés)
+Kérdés: Mennyi erdő tűnik el évente a műholdképek szerint?
+Röviden: Az űrfelvételekből évről évre látszik, hol vágják ki vagy égetik fel az erdőt.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much forest disappears each year, according to satellites?
+Röviden angolul: Satellite images show year by year where forests are cut or burned.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: satellite monitoring global forest loss|remote sensing deforestation carbon emissions|Landsat global forest change
+Paraméter: terulet_mha_ev
+Wikipédia: erdőirtás
+Wikipédia angolul: deforestation
+Áttekintő cikkek keresése: remote sensing deforestation review
+
+# ----- III. korszak: Átalakulás -----
+
+=== urbeli_napelem ===
+Korszak: III. (Átalakulás)
+Kérdés: Küldhetnek-e áramot a Földre napelemek a világűrből?
+Röviden: Az űrben mindig süt a Nap. Az áramot rádióhullámokkal sugároznák le a Földre.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: Could solar panels in space send power to Earth?
+Röviden angolul: In space the Sun always shines. The power would be beamed down to Earth by radio waves.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: space-based solar power feasibility|space solar power wireless power transmission efficiency
+Paraméter: hatasfok_pct
+Wikipédia: űrbeli napenergia
+Wikipédia angolul: space-based solar power
+Áttekintő cikkek keresése: space-based solar power review
+
+# ----- IV. korszak: Helyreállítás -----
+
+=== urbeli_arnyekolo ===
+Korszak: IV. (Helyreállítás)
+Kérdés: Hűthetné-e a Földet egy árnyékoló a világűrben?
+Röviden: Egy óriási árnyékoló a Nap és a Föld között kevesebb napfényt engedne át.
+Ad a játékban: Csak megérted: a játékban nem vezethető be.
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: Could a sunshade in space cool the Earth?
+Röviden angolul: A giant shade between the Sun and the Earth would let less sunlight through.
+Ad a játékban angolul: Understanding only: it cannot be deployed in the game.
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: space sunshade solar radiation management Lagrange point|space-based geoengineering sunshade
+Paraméter: sugarzasi_kenyszer_w_m2
+Wikipédia: űrbeli napernyő
+Wikipédia angolul: space sunshade
+Áttekintő cikkek keresése: space-based solar geoengineering review

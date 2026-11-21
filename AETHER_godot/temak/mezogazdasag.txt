@@ -1,0 +1,245 @@
+# AETHER kutatási témák · Mezőgazdaság és élelem
+#
+# Lektorálás: a "Kérdés", "Röviden", "Ad a játékban", "Mire jó?", "Mi a gond vele?" és
+# "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
+# Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
+# A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet).
+# A "technikai" vonal alatti sorokkal keres a kutatás: csak akkor módosítsd, ha biztos vagy benne.
+# Új téma: másolj le egy blokkot, és adj neki új, ékezet nélküli azonosítót (=== uj_tema ===).
+# A játék induláskor olvassa ezt a fájlt: mentés után indítsd újra a játékot.
+
+# ----- I. korszak: Felismerés -----
+
+=== termes ===
+Korszak: I. (Felismerés)
+Kérdés: Mennyit csökken a termés, ha melegszik a Föld?
+Röviden: A búza, a kukorica és a rizs érzékeny a hőségre. Mennyit veszít egy fok melegedéstől?
+Ad a játékban: Megérted, miért kell alkalmazkodni is.
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much do harvests fall as the Earth warms?
+Röviden angolul: Wheat, maize and rice are sensitive to heat. How much do they lose per degree of warming?
+Ad a játékban angolul: You understand why we must adapt too.
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: crop yield change per degree of warming meta-analysis|temperature increase reduces global yields of major crops|maize wheat rice yield sensitivity to temperature
+Paraméter: hozam_valtozas_pct_per_c
+Wikipédia: éghajlatváltozás mezőgazdaság
+Wikipédia angolul: effects of climate change on agriculture
+Áttekintő cikkek keresése: climate change crop yield review
+
+=== kukorica ===
+Korszak: I. (Felismerés)
+Kérdés: Segítenek-e az aszálytűrő kukoricafajták?
+Röviden: Ez nem hűti a Földet, de megvédheti a termést a forró, száraz években.
+Ad a játékban: Aszálytűrő fajták a tervedben.
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: Do drought-tolerant maize varieties help?
+Röviden angolul: This does not cool the Earth, but it can protect harvests in hot, dry years.
+Ad a játékban angolul: Drought-tolerant varieties in your plan.
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: drought tolerant maize yield advantage under drought|drought tolerant maize varieties yield on-farm trials
+Paraméter: alkalmazkodas_hozam_elony_pct
+Wikipédia: kukorica szárazságtűrés
+Wikipédia angolul: drought tolerance maize
+Áttekintő cikkek keresése: drought tolerant maize review
+
+# ----- II. korszak: Mérséklés -----
+
+=== metan_rizs ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyi metán spórolható meg a rizsföldeken?
+Röviden: Az elárasztott rizsföld metánt enged a levegőbe. Ha időnként lecsapolják, kevesebbet.
+Ad a játékban: Megérted, hol lehet gyorsan metánt spórolni.
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much methane can rice fields save?
+Röviden angolul: Flooded rice fields release methane. Draining them from time to time releases less.
+Ad a játékban angolul: You understand where methane can be cut quickly.
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: alternate wetting and drying rice methane emission reduction meta-analysis|rice paddy methane mitigation practices
+Paraméter: metan_csokkentes_pct
+Wikipédia: rizs metán
+Wikipédia angolul: alternate wetting and drying
+Áttekintő cikkek keresése: rice paddy methane mitigation review
+
+=== mutragya ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyi kéjgáz spórolható a műtrágya okosabb használatával?
+Röviden: A túl sok nitrogénműtrágyából a talajban dinitrogén-oxid lesz, ami erős üvegházgáz.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much laughing gas can smarter fertiliser use save?
+Röviden angolul: Too much nitrogen fertiliser turns into nitrous oxide in soil, a strong greenhouse gas.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: nitrogen fertilizer nitrous oxide emissions reduction|nitrification inhibitors N2O mitigation meta-analysis|nitrogen use efficiency nitrous oxide
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: műtrágya
+Wikipédia angolul: fertilizer
+Áttekintő cikkek keresése: agricultural nitrous oxide mitigation review
+
+=== tragya ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyi metán spórolható a trágya kezelésével?
+Röviden: A trágyatárolókból metán és kéjgáz száll fel. Lefedve vagy erjesztve kevesebb.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much methane can manure management save?
+Röviden angolul: Manure stores release methane and laughing gas. Covered or digested, they release less.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: manure management methane emissions mitigation|anaerobic digestion manure methane reduction|slurry storage methane mitigation
+Paraméter: metan_csokkentes_pct
+Wikipédia: trágya
+Wikipédia angolul: manure management
+Áttekintő cikkek keresése: manure greenhouse gas mitigation review
+
+=== pazarlas ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyi kibocsátás jön a kidobott ételből?
+Röviden: Az élelmiszer egy része a földtől az asztalig elvész, vagy a szemétbe kerül.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much emission comes from wasted food?
+Röviden angolul: Part of our food is lost between field and table, or thrown away.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: food loss and waste greenhouse gas emissions|food waste reduction emissions mitigation potential
+Paraméter: kibocsatas_potencial_gtco2e_ev
+Wikipédia: élelmiszer-pazarlás
+Wikipédia angolul: food loss and waste
+Áttekintő cikkek keresése: food waste greenhouse gas review
+
+=== etrend ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyit számít, ha kevesebb húst eszünk?
+Röviden: A hús, főleg a marhahús előállítása sok földet és sok kibocsátást igényel.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much does eating less meat matter?
+Röviden angolul: Producing meat, especially beef, takes a lot of land and causes a lot of emissions.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: dietary change greenhouse gas emissions reduction plant-based|shift to plant-based diets mitigation potential|diet greenhouse gas emissions meta-analysis
+Paraméter: kibocsatas_potencial_gtco2e_ev
+Wikipédia: növényi étrend
+Wikipédia angolul: environmental impact of meat production
+Áttekintő cikkek keresése: dietary change climate mitigation review
+
+=== ontozes ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyi vizet takarít meg a csepegtető öntözés?
+Röviden: A csepegtető cső a vizet egyenesen a növény gyökeréhez juttatja.
+Ad a játékban: Megérted, hogyan védhető a víz aszályban.
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much water does drip irrigation save?
+Röviden angolul: A drip line delivers water straight to the plant's roots.
+Ad a játékban angolul: You understand how to protect water in a drought.
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: drip irrigation water saving compared to flood irrigation meta-analysis|drip irrigation water use efficiency yield
+Paraméter: viztakarekossag_pct
+Wikipédia: csepegtető öntözés
+Wikipédia angolul: drip irrigation
+Áttekintő cikkek keresése: drip irrigation water saving review
+
+# ----- IV. korszak: Helyreállítás -----
+
+=== talaj ===
+Korszak: IV. (Helyreállítás)
+Kérdés: Mennyi szenet köthet meg újra a talaj?
+Röviden: Takarónövényekkel és kíméletes műveléssel a talaj több szenet tarthat meg.
+Ad a játékban: Több szén a talajban a tervedben.
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much carbon can soil store again?
+Röviden angolul: With cover crops and gentle tillage, soil can hold more carbon.
+Ad a játékban angolul: More carbon in soil in your plan.
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: soil carbon sequestration global potential croplands|soil organic carbon sequestration practices meta-analysis|negative emissions technologies potentials costs side effects
+Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
+Wikipédia: talaj szerves szén
+Wikipédia angolul: soil carbon
+Áttekintő cikkek keresése: soil carbon sequestration review
+
+=== agroerdeszet ===
+Korszak: IV. (Helyreállítás)
+Kérdés: Mennyi szenet köt meg a fákkal tarkított szántó és legelő?
+Röviden: Fák a szántók és legelők között: árnyék, szén és termés egyszerre.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much carbon do fields and pastures with trees store?
+Röviden angolul: Trees among fields and pastures: shade, carbon and harvest at once.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: agroforestry carbon sequestration meta-analysis|silvopasture carbon storage|agroforestry soil organic carbon
+Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
+Wikipédia: agrárerdészet
+Wikipédia angolul: agroforestry
+Áttekintő cikkek keresése: agroforestry carbon review

@@ -226,7 +226,7 @@ static func star_rule() -> String:
 
 # --- „Mi ez, és mire jó?” ---------------------------------------------------
 ## Gyorsítás, három szinten:
-##  1. a beépített kérdések magyarázata a játékkal együtt jön (res://assets/temak) – azonnali,
+##  1. a témafájlban (res://temak/*.txt) lévő, lektorálható magyarázat – azonnali,
 ##  2. különben előbb AI nélkül (Wikipédia, 1–2 mp) jelenik meg valami,
 ##  3. az AI közben a háttérben dolgozik, és ha kész, lecseréli a részletesre.
 ## Ami egyszer elkészült, a gépen megmarad (user://aether_temak).
@@ -243,10 +243,11 @@ func _topic_path(q: Dictionary, ai: String) -> String:
 func _show_topic(q: Dictionary) -> void:
 	_topic_q = q
 	_topic_ai = L.get_setting("ai", "ollama")
-	var key := str(q["wiki_en"]).md5_text().left(10)
-	var bundled: Variant = Bridge.read_json("res://assets/temak/%s_%s.json" % [key, L.lang])
-	if typeof(bundled) == TYPE_DICTIONARY:
-		_render_topic(bundled)
+	if Knowledge.has_explanation(q):   # a témafájlban lévő (lektorálható) magyarázat: azonnali
+		_render_topic({"magyarazat": {"mire_jo": Knowledge.text_raw(q, "mire_jo"),
+			"hatranyok": Knowledge.text_raw(q, "hatranyok"),
+			"mennyire_bizonyitott": Knowledge.text_raw(q, "mennyire_bizonyitott")},
+			"cikkek": Knowledge.sources(q), "tipus": "fajl"})
 		return
 	for ai in [_topic_ai, "none"]:
 		var cached: Variant = Bridge.read_json(_topic_path(q, ai))

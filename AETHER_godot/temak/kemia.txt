@@ -1,0 +1,365 @@
+# AETHER kutatási témák · Kémia
+#
+# Lektorálás: a "Kérdés", "Röviden", "Ad a játékban", "Mire jó?", "Mi a gond vele?" és
+# "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
+# Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
+# A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet).
+# A "technikai" vonal alatti sorokkal keres a kutatás: csak akkor módosítsd, ha biztos vagy benne.
+# Új téma: másolj le egy blokkot, és adj neki új, ékezet nélküli azonosítót (=== uj_tema ===).
+# A játék induláskor olvassa ezt a fájlt: mentés után indítsd újra a játékot.
+
+# ----- I. korszak: Felismerés -----
+
+=== ocean_savasodas ===
+Korszak: I. (Felismerés)
+Kérdés: Mennyire savasodik az óceán?
+Röviden: A tenger elnyeli a CO2 egy részét, és ettől savasabb lesz. Ez árt a kagylóknak és a koralloknak.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How acidic is the ocean becoming?
+Röviden angolul: The sea absorbs part of the CO2 and becomes more acidic. This harms shellfish and corals.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: ocean acidification pH decline observations|ocean acidification impacts marine calcifiers meta-analysis
+Paraméter: ph_valtozas
+Wikipédia: óceánok savasodása
+Wikipédia angolul: ocean acidification
+Áttekintő cikkek keresése: ocean acidification review
+
+# ----- II. korszak: Mérséklés -----
+
+=== hulladek_metan ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyi metán fogható fel a szeméttelepeken?
+Röviden: A lerakott ételmaradék és papír rothadás közben metánt termel.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much methane can landfills capture?
+Röviden angolul: Dumped food waste and paper produce methane as they rot.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: landfill methane emissions mitigation potential|landfill gas capture efficiency|landfill methane oxidation cover
+Paraméter: metan_csokkentes_pct
+Wikipédia: hulladéklerakó gáz
+Wikipédia angolul: landfill gas
+Áttekintő cikkek keresése: landfill methane mitigation review
+
+=== hutokozeg ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyit számít a hűtők és légkondik gázának cseréje?
+Röviden: A hűtőgépek egyes gázai, ha kiszöknek, akár ezerszer erősebben melegítenek, mint a CO2.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much does replacing the gas in fridges and air conditioners matter?
+Röviden angolul: When they leak, some gases in cooling machines warm the Earth up to a thousand times more than CO2.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: hydrofluorocarbon phase-down Kigali amendment avoided warming|HFC emissions mitigation refrigerants|low global warming potential refrigerants
+Paraméter: kibocsatas_potencial_gtco2e_ev
+Wikipédia: hűtőközeg
+Wikipédia angolul: hydrofluorocarbon
+Áttekintő cikkek keresése: hydrofluorocarbon phase-down review
+
+=== n2o_ipar ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyi kéjgáz szűrhető ki a vegyi gyárakban?
+Röviden: A salétromsav és a nejlon alapanyagának gyártása dinitrogén-oxidot (kéjgázt) enged ki, ami erősen melegít.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much laughing gas can chemical plants filter out?
+Röviden angolul: Making nitric acid and a raw material for nylon releases nitrous oxide (laughing gas), which warms strongly.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: nitric acid adipic acid N2O abatement|industrial nitrous oxide emissions reduction|catalytic N2O decomposition nitric acid plants
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: dinitrogén-oxid
+Wikipédia angolul: nitrous oxide
+Áttekintő cikkek keresése: industrial nitrous oxide abatement review
+
+# ----- III. korszak: Átalakulás -----
+
+=== bioszen ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyi CO2-t vonhat ki a levegőből a bioszén?
+Röviden: A bioszén elszenesített növényi hulladék. A talajba keverve hosszú ideig tárolja a szenet.
+Ad a játékban: Bioszén a tervedben.
+Mire jó?: Szenet tárol a talajban, és javíthatja a talaj termékenységét és kémhatását (pH).
+Mi a gond vele?: Túl nagy adagban vagy rossz alapanyagból kárt tehet a talaj élőlényeiben, és megváltoztathatja a talaj víz- és sótartalmát.
+Mennyire bizonyított?: A kutatások szerint segíthet a klímán, de a hatása helyenként eltér, ezért még több vizsgálat kell.
+Kérdés angolul: How much CO2 can biochar remove from the air?
+Röviden angolul: Biochar is charred plant waste. Mixed into soil, it stores carbon for a long time.
+Ad a játékban angolul: Biochar in your plan.
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás: Wikipédia: Biochar (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Biochar
+Forrás: Potential Role of Biochar on Capturing Soil Nutrients, Carbon Sequestration and Managing Environmental Challenges: A Review (2023) – https://doi.org/10.3390/su15032527
+Forrás: Review of the Effects of Biochar Amendment on Soil Properties and Carbon Sequestration (2015) – https://doi.org/10.1061/(asce)hz.2153-5515.0000293
+Forrás: The impacts of biochar on carbon sequestration, soil processes, and microbial communities: a review (2025) – https://doi.org/10.1007/s42773-025-00499-3
+Lektorálva: nem
+--- technikai ---
+Keresés: biochar carbon dioxide removal potential global|biochar soil carbon sequestration meta-analysis|negative emissions technologies potentials costs side effects
+Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
+Wikipédia: bioszén
+Wikipédia angolul: biochar
+Áttekintő cikkek keresése: biochar carbon sequestration review
+
+=== mof ===
+Korszak: III. (Átalakulás)
+Kérdés: Megköthetik-e a CO2-t a lyukacsos, fémtartalmú kristályok?
+Röviden: Ezeknek a kristályoknak apró pórusai vannak, amelyek megkötik a gázokat, akár a levegőből is.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: Can porous metal-containing crystals capture CO2?
+Röviden angolul: These crystals have tiny pores that trap gases, even from the air.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: metal-organic frameworks CO2 capture performance|MOF direct air capture sorbent|metal-organic framework carbon capture humid conditions
+Paraméter: megkotes_mmol_g
+Wikipédia: fémorganikus vázszerkezet
+Wikipédia angolul: metal–organic framework
+Áttekintő cikkek keresése: metal-organic frameworks carbon capture review
+
+=== akku_ujra ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyi fém nyerhető vissza a régi akkumulátorokból?
+Röviden: A lítium, a kobalt és a nikkel újra felhasználható, ha visszanyerik.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much metal can be recovered from old batteries?
+Röviden angolul: Lithium, cobalt and nickel can be used again if they are recovered.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: lithium-ion battery recycling recovery efficiency|hydrometallurgical battery recycling|direct recycling lithium-ion cathode
+Paraméter: hatasfok_pct
+Wikipédia: akkumulátor-újrahasznosítás
+Wikipédia angolul: battery recycling
+Áttekintő cikkek keresése: lithium-ion battery recycling review
+
+=== hidrogen ===
+Korszak: III. (Átalakulás)
+Kérdés: Milyen hatékonyan lesz vízből hidrogén?
+Röviden: Árammal a víz hidrogénre és oxigénre bontható. A hidrogén tiszta üzemanyag lehet.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How efficiently can water be turned into hydrogen?
+Röviden angolul: Electricity can split water into hydrogen and oxygen. Hydrogen can be a clean fuel.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: water electrolysis efficiency PEM alkaline|green hydrogen production electrolyzer efficiency|solid oxide electrolysis efficiency
+Paraméter: hatasfok_pct
+Wikipédia: vízbontás hidrogén
+Wikipédia angolul: electrolysis of water
+Áttekintő cikkek keresése: water electrolysis hydrogen review
+
+=== uzemanyagcella ===
+Korszak: III. (Átalakulás)
+Kérdés: Milyen hatásfokú az üzemanyagcella?
+Röviden: Az üzemanyagcella hidrogénből égés nélkül állít elő áramot, csak víz keletkezik.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How efficient is a fuel cell?
+Röviden angolul: A fuel cell makes electricity from hydrogen without burning; only water is produced.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: fuel cell efficiency review|proton exchange membrane fuel cell efficiency durability|solid oxide fuel cell efficiency
+Paraméter: hatasfok_pct
+Wikipédia: üzemanyagcella
+Wikipédia angolul: fuel cell
+Áttekintő cikkek keresése: fuel cell review
+
+=== zold_ammonia ===
+Korszak: III. (Átalakulás)
+Kérdés: Gyártható-e műtrágya kibocsátás nélkül?
+Röviden: Az ammóniát ma földgázból gyártják. Tiszta hidrogénnel kibocsátás nélkül is lehetne.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: Can fertiliser be made without emissions?
+Röviden angolul: Ammonia is made from natural gas today. With clean hydrogen it could be made without emissions.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: green ammonia production emissions|electrochemical ammonia synthesis decarbonization|renewable ammonia life cycle assessment
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: ammónia
+Wikipédia angolul: green ammonia
+Áttekintő cikkek keresése: green ammonia review
+
+=== szintetikus_kerozin ===
+Korszak: III. (Átalakulás)
+Kérdés: Repülhetünk-e áramból és CO2-ből gyártott üzemanyaggal?
+Röviden: Hidrogénből és a levegő CO2-jéből szintetikus repülőgép-üzemanyag készülhet.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: Can we fly on fuel made from electricity and CO2?
+Röviden angolul: Synthetic jet fuel can be made from hydrogen and CO2 from the air.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: power-to-liquid synthetic kerosene aviation emissions|electrofuels aviation life cycle emissions|sustainable aviation fuel greenhouse gas reduction
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: szintetikus üzemanyag
+Wikipédia angolul: electrofuel
+Áttekintő cikkek keresése: sustainable aviation fuels review
+
+=== muanyag ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyit spórol a műanyag újrahasznosítása?
+Röviden: Az új műanyag kőolajból készül. Az újrahasznosítás ennek egy részét kiválthatja.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much does recycling plastic save?
+Röviden angolul: New plastic is made from oil. Recycling can replace part of it.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: plastic recycling greenhouse gas emissions savings|chemical recycling plastics life cycle assessment|mechanical recycling plastics emissions
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: műanyag újrahasznosítás
+Wikipédia angolul: plastic recycling
+Áttekintő cikkek keresése: plastic recycling life cycle review
+
+# ----- IV. korszak: Helyreállítás -----
+
+=== ocean_lugositas ===
+Korszak: IV. (Helyreállítás)
+Kérdés: Vonhat-e ki több CO2-t a tenger, ha lúgosabbá tesszük?
+Röviden: Ásványi port juttatnak a tengerbe, így a víz több CO2-t nyel el a levegőből.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: Can the sea take up more CO2 if we make it more alkaline?
+Röviden angolul: Mineral powder is added to the sea, so the water absorbs more CO2 from the air.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: ocean alkalinity enhancement carbon dioxide removal potential|ocean alkalinity enhancement side effects|negative emissions technologies potentials costs side effects
+Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
+Wikipédia: óceán lúgosítás
+Wikipédia angolul: ocean alkalinity enhancement
+Áttekintő cikkek keresése: ocean alkalinity enhancement review
+
+=== ozon ===
+Korszak: IV. (Helyreállítás)
+Kérdés: Mennyi melegedést előzött meg az ózonréteg védelme?
+Röviden: A régi hűtőgázok az ózont bontották, és a Földet is melegítették. A betiltásuk mindkettőn segített.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much warming did protecting the ozone layer prevent?
+Röviden angolul: Old refrigerant gases destroyed ozone and also warmed the Earth. Banning them helped both.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: Montreal Protocol avoided global warming|ozone layer recovery climate benefit|CFC phase-out avoided climate change
+Paraméter: elkerult_melegedes_c
+Wikipédia: montreali jegyzőkönyv
+Wikipédia angolul: Montreal Protocol
+Áttekintő cikkek keresése: Montreal Protocol climate benefits review
+
+=== metan_bontas ===
+Korszak: IV. (Helyreállítás)
+Kérdés: Lebontható-e a metán közvetlenül a levegőből?
+Röviden: Kísérleti módszerek a levegőben lévő metánt gyorsabban bontanák le, mint a természet.
+Ad a játékban:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: Can methane be broken down directly in the air?
+Röviden angolul: Experimental methods would break down methane in the air faster than nature does.
+Ad a játékban angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: atmospheric methane removal technologies|methane removal photocatalysis|iron salt aerosol methane oxidation
+Paraméter: metan_csokkentes_pct
+Wikipédia: metán lebomlás légkör
+Wikipédia angolul: atmospheric methane removal
+Áttekintő cikkek keresése: atmospheric methane removal review
