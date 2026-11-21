@@ -104,7 +104,8 @@ void fragment() {
 		}
 		float cv = clamp((c - 0.52) / 0.12, 0.0, 1.0);
 		vec3 cloud_col = vec3(0.9, 0.95, 1.0) * max(0.1, light);
-		col = mix(col, cloud_col, cv > 0.6 ? 1.0 : (cv > 0.3 ? 0.6 : cv));
+		// 4 lépcsős, ditherelt felhőszél: lágyabb, de pixeles marad (nem „papírkivágás”)
+		col = mix(col, cloud_col, min(1.0, floor(cv * 4.0 + d) / 4.0) * 0.92);
 
 		// naplemente-sáv és perem-pára
 		// keskeny, halvány alkonysáv a nappal-éjszaka határán
