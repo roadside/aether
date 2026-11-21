@@ -157,8 +157,15 @@ func _build_left_panel() -> void:
 	v.add_child(UI.heading("Mi történik most?", 24))
 	_world_note = UI.label("Valós jelentések betöltése…", 14, UI.MUTE)
 	v.add_child(_world_note)
+	# A kártyák görgethető, rögzített magasságú dobozban vannak, így a frissítés
+	# gomb mindig a képernyőn marad (az alsó sáv fölött).
+	var scroll := ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(0, 470)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	v.add_child(scroll)
 	_events_box = UI.vbox(8)
-	v.add_child(_events_box)
+	_events_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(_events_box)
 	_refresh_btn = UI.button("Frissítés valós adatokkal")
 	_refresh_btn.pressed.connect(_refresh_world)
 	v.add_child(_refresh_btn)
@@ -301,8 +308,13 @@ func _render_world() -> void:
 			if m.get("elteres_pct") != null:
 				txt += " (%s%%)" % UI.hu(float(m["elteres_pct"]), 0)
 		elif m.get("azonosito") == "levego_varosok":
+			var air_title := str(m.get("magyarazat", ""))
+			if m.get("ertek") != null and m.get("legrosszabb") != null and m.get("legrosszabb_pm2_5") != null:
+				var total := str(m.get("egyseg", "")).replace("/", "").replace("város", "").strip_edges()
+				air_title = "%d/%s városban túl sok a finom por (WHO-határ felett). Legrosszabb: %s, %s µg/m³" % [
+					int(m["ertek"]), total, str(m["legrosszabb"]), UI.hu(float(m["legrosszabb_pm2_5"]), 1)]
 			_events_box.add_child(_event_card({"kategoria": "levego", "kategoria_nev": "Levegőminőség",
-				"cim": str(m.get("magyarazat", "")), "datum": str(m.get("datum", "")).left(10),
+				"cim": air_title, "datum": str(m.get("datum", "")).left(10),
 				"forras": str(m.get("forras", "")), "link": str(m.get("link", "")), "orszag": ""}))
 		if key != "":
 			var l: Label = _stats[key]
