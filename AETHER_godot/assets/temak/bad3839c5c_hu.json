@@ -27,10 +27,10 @@
   }
  ],
  "magyarazat": {
-  "mi_ez": "A bioszén egy szénból álló, könnyű, fekete anyag, amit biomassza (pl. növényi hulladék) pirólízisén készül, és a talajba való alkalmazásra készül. A bioszén nem élő, de a talajban megjelenve élő szervezetekkel érintkezve élővé válhat.",
-  "mire_jo": "A bioszén segít a talajban megőrizni a szénat, növelni a talaj termékenységét, csökkenteni a növényi hulladék kibocsátását, és a talaj pH-értékét javítani. Egyes esetekben segíthet a talaj vízálló képességének növelésében is.",
-  "hatranyok": "Ha túl sokat alkalmaznak, vagy rossz anyagból készül, a bioszén károsíthatja a talaj mikrobáit, csökkentheti a talajban lévő vízmennyiséget, és módosíthatja a talaj pH-értékét. Egyes esetekben a talaj sótartalma is nőhet.",
-  "mennyire_bizonyitott": "A tudományos kutatások szerint a bioszén használata bizonyítottan segíthet a klímavédelemben, de van olyan eset, amikor a hatások nem teljesen ismertek. A bioszén hatásának pontos értékelése további vizsgálatokra szorul."
+  "mi_ez": "A bioszén könnyű, fekete, szénben gazdag anyag. Növényi hulladékból készül hevítéssel, oxigén nélkül (ezt hívják pirolízisnek), és a talajba keverik.",
+  "mire_jo": "Szenet tárol a talajban, és javíthatja a talaj termékenységét és kémhatását (pH).",
+  "hatranyok": "Túl nagy adagban vagy rossz alapanyagból kárt tehet a talaj élőlényeiben, és megváltoztathatja a talaj víz- és sótartalmát.",
+  "mennyire_bizonyitott": "A kutatások szerint segíthet a klímán, de a hatása helyenként eltér, ezért még több vizsgálat kell."
  },
  "tipus": "ai",
  "megjegyzes": ""

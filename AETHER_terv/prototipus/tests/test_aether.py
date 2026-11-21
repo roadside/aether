@@ -131,6 +131,14 @@ class TestEvidence(unittest.TestCase):
         self.assertIn("A(z) érték (3.0) nem szerepel az idézetben.", c.indokok)
 
 
+class TestUnitCheck(unittest.TestCase):
+    def test_target_temperature_is_not_cdr_potential(self):
+        from aether_lab.evidence import unit_in_quote
+        self.assertFalse(unit_in_quote("cdr_potencial_gtco2_ev", "limit warming to 1.5°C"))
+        self.assertTrue(unit_in_quote("cdr_potencial_gtco2_ev", "0.5–2 GtCO 2 yr −1 for biochar"))
+        self.assertTrue(unit_in_quote("cdr_koltseg_usd_tco2", "costs of US$90–120 per tonne"))
+
+
 class TestQuoteSpacing(unittest.TestCase):
     def test_broken_formula_spacing(self):
         from aether_lab.evidence import quote_in

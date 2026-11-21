@@ -27,10 +27,10 @@
   }
  ],
  "magyarazat": {
-  "mi_ez": "Enhanced weathering is a method to remove carbon dioxide from the air by using finely crushed rocks like basalt. These rocks react with water and air to form solid minerals that store carbon long-term.",
-  "mire_jo": "This method helps reduce atmospheric CO2, which can slow global warming, and also helps neutralize ocean acidification by increasing ocean alkalinity.",
-  "hatranyok": "It can be expensive to crush and spread the rocks, and there are risks of releasing harmful metals into the environment. Also, it works best in certain soil and rock types.",
-  "mennyire_bizonyitott": "There is some scientific support for enhanced weathering, but more research is needed, especially for large-scale ocean use. Lab experiments show promise, but real-world results are still being studied."
+  "mi_ez": "Enhanced weathering means spreading finely crushed rock, such as basalt, on fields or in the sea. The rock reacts with water and air and locks away carbon dioxide.",
+  "mire_jo": "It removes carbon dioxide from the air and stores it in minerals for a long time, which can slow warming.",
+  "hatranyok": "Crushing and spreading rock can be expensive, and harmful metals from the rock can get into the environment.",
+  "mennyire_bizonyitott": "Partly proven: lab experiments look promising, but real-world results are still being studied."
  },
  "tipus": "ai",
  "megjegyzes": ""

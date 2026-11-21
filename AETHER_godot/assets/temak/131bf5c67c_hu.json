@@ -27,10 +27,10 @@
   }
  ],
  "magyarazat": {
-  "mi_ez": "Erdősítés az erdők kialakítása, azaz fafajták növekedése egy olyan területen, ahol korábban nem volt erdő. Ez segíthet a klímaváltozás ellen, mert a fák elnyelnek szén-dioxidot.",
-  "mire_jo": "A fák növekedése csökkentheti a levegő szén-dioxid-tartalmát, megvédheti a talajt a lemosással szemben, és segíthet az állatok élőhelyének megőrzésében.",
-  "hatranyok": "A fák növekedése nem mindig segít az állatvilágban, mert a terület szétszórtabbá válhat. Ezenkívül, a fák növekedése néha károsíthatja a természetes szénképződést, például a szavannákat vagy a tundrát.",
-  "mennyire_bizonyitott": "A tudományos tanulmányok szerint az erdősítés segíthet a klímaváltozás ellen, de vannak kritikák is, mivel a fák növekedése nem mindig hatékony, és más természeti területek is fontosak a klímaváltozás elleni küzdelemben."
+  "mi_ez": "Az erdősítés fák ültetése olyan helyen, ahol korábban nem volt erdő, például régi szántókon.",
+  "mire_jo": "A fák szén-dioxidot vonnak ki a levegőből. Emellett védik a talajt a lemosódástól, és élőhelyet adnak az állatoknak.",
+  "hatranyok": "Rossz helyre ültetve kárt is okozhat: szétszabdalhatja az élőhelyeket, és van, ahol jobb, ha megmarad a gyep vagy a szavanna.",
+  "mennyire_bizonyitott": "Jól bizonyított, hogy segíthet a klímán, de a haszna nagyon függ attól, hol és hogyan ültetik a fákat."
  },
  "tipus": "ai",
  "megjegyzes": ""

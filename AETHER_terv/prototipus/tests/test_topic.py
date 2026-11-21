@@ -51,5 +51,12 @@ class TestTopic(unittest.TestCase):
         self.assertTrue(r["wiki"]["bevezeto"].startswith("TESZT intro"))
 
 
+class TestTitleAllWords(unittest.TestCase):
+    def test_barley_is_not_maize(self):
+        from aether_lab.topic import title_matches
+        self.assertFalse(title_matches("Drought tolerance in barley", "drought tolerance maize"))
+        self.assertTrue(title_matches("Biochar", "biochar"))
+
+
 if __name__ == "__main__":
     unittest.main()

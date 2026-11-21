@@ -27,10 +27,10 @@
   }
  ],
  "magyarazat": {
-  "mi_ez": "A kőzetmállás szén-dioxid egy technológia, amely segítségével a talajra vagy tengerre szórják a finoman összetört kőzeteket, például a bazaltot, hogy gyorsabban elszívják a levegőből a szén-dioxidot.",
-  "mire_jo": "Ez a technológia segíthet a klímaváltozás ellen, mert a szén-dioxidot kiszedi a levegőből, és hosszú időre elhelyezheti a talajban vagy a tengerben, így csökkentheti a globális felmelegedést.",
-  "hatranyok": "A technológia még nem teljesen bizonyított, mert a laboratóriumi eredmények és a valóság között nagy különbség lehet. Továbbá, a szén-dioxid kiszedése során kiszivároghatnak a talajba a nehézfémek, amelyek károsak lehetnek az emberi egészségre és a talajra.",
-  "mennyire_bizonyitott": "A tudományos ismeretek szerint a kőzetmállás szén-dioxid részben bizonyított, de még nem teljesen biztos, mert a valós körülmények között nem minden összefüggés működik ugyanúgy, mint a laboratóriumban."
+  "mi_ez": "A gyorsított kőzetmállás során finomra őrölt kőzetet, például bazaltot szórnak a földekre vagy a tengerbe. A kőzet a vízzel és a levegővel reagálva szén-dioxidot köt meg.",
+  "mire_jo": "Szén-dioxidot von ki a levegőből, és hosszú időre ásványokban tárolja, így lassíthatja a melegedést.",
+  "hatranyok": "Drága lehet a kőzet őrlése és szétszórása, és a kőzetből káros fémek juthatnak a környezetbe.",
+  "mennyire_bizonyitott": "Részben bizonyított: a laborkísérletek ígéretesek, de a valódi körülmények között még vizsgálják, mennyire működik."
  },
  "tipus": "ai",
  "megjegyzes": ""

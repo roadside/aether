@@ -317,10 +317,10 @@ def plain_summary(event: Dict, facts: List[Dict], lang: str = "hu") -> str:
         if not en:
             ns, ew = ("É" if lat >= 0 else "D"), ("K" if lon >= 0 else "Ny")
         if en:
-            s += f" Location: {abs(lat):.1f}° {ns}, {abs(lon):.1f}° {ew}."
+            s = f"Location according to {src}: {abs(lat):.1f}° {ns}, {abs(lon):.1f}° {ew}."
         else:
             a, b = f"{abs(lat):.1f}".replace(".", ","), f"{abs(lon):.1f}".replace(".", ",")
-            s += f" Helye: {a}° {ns}, {b}° {ew}."
+            s = f"A(z) {src} szerint az esemény helye: {a}° {ns}, {b}° {ew}."
     sev = next((x["ertek"] for x in facts if x["nev"].startswith(("Súlyosság", "Severity"))), "")
     dur = next((x["ertek"] for x in facts if x["nev"] in ("Időtartam", "Duration")), "")
     if dur:

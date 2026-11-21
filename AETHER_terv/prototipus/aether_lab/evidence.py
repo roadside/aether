@@ -102,6 +102,11 @@ EXTRACTOR_SYSTEM = """Te az AETHER kutatóállomás tudományos asszisztense vag
 Csak a megadott absztraktokból dolgozhatsz. Szabályok:
 - Minden állításhoz adj SZÓ SZERINTI idézetet az absztraktból (pontosan másolva, karakterre).
 - Az 'ertek' (és ha van, 'also'/'felso') számnak szerepelnie kell az idézetben.
+- Az idézetben a szám MÉRTÉKEGYSÉGE is szerepeljen, és egyezzen a paraméterével (pl. GtCO2/év).
+  Egy célérték (pl. "1.5°C") vagy más mennyiség (pl. talaj széntartalma %-ban) nem CDR-potenciál.
+- A szám arra a módszerre vonatkozzon, amelyet az 'alkategoria' megnevez, és ez a módszer
+  szerepeljen az idézetben (pl. "for biochar"). Ha egy mondat több módszer számát sorolja fel,
+  mindegyikhez külön állítást adj.
 - Ha az absztrakt nem tartalmaz számszerű eredményt az adott paraméterhez, NE találj ki semmit.
 - Ne használd a saját háttértudásodat számokhoz. Ha bizonytalan vagy, hagyd ki.
 - Az 'osszegzes' magyarul, 3-6 mondatban írja le, mit mutatnak a cikkek és mit NEM.
@@ -165,6 +170,25 @@ def quote_in(quote: str, text: str) -> bool:
     return q in t or "".join(q.split()) in "".join(t.split())
 
 
+# Az idézetben a paraméter mértékegységének nyoma (kisbetűs, normalizált szövegben).
+UNIT_PATTERNS: Dict[str, str] = {
+    "cdr_potencial_gtco2_ev": r"g\s*t\s*-?\s*co|gtc|pg\s*c|gigaton|billion\s+(metric\s+)?tonnes|bn\s*t",
+    "cdr_koltseg_usd_tco2": r"\$|usd|dollar|€|eur",
+    "metan_csokkentes_pct": r"%|percent|per\s*cent",
+    "hozam_valtozas_pct_per_c": r"%|percent|per\s*cent",
+    "alkalmazkodas_hozam_elony_pct": r"%|percent|per\s*cent",
+    "viztakarekossag_pct": r"%|percent|per\s*cent",
+    "sai_kenyszer_w_m2_per_tg": r"w\s*m|w/m",
+    "aeroszol_erf_w_m2": r"w\s*m|w/m",
+    "tcre_c_per_1000gtco2": r"°\s*c|\bk\b|kelvin|degree",
+}
+
+
+def unit_in_quote(param: str, quote: str) -> bool:
+    pat = UNIT_PATTERNS.get(param)
+    return True if pat is None else re.search(pat, _norm_text(quote)) is not None
+
+
 def verify(claims: List[Claim], papers: Dict[str, Paper]) -> List[Claim]:
     for c in claims:
         c.indokok = []
@@ -183,6 +207,8 @@ def verify(claims: List[Claim], papers: Dict[str, Paper]) -> List[Claim]:
             if v is not None and not _num_present(v, nums):
                 c.indokok.append(f"A(z) {label} ({v}) nem szerepel az idézetben.")
         spec = PARAMETERS.get(c.parameter)
+        if spec is not None and not unit_in_quote(c.parameter, c.szo_szerinti_idezet):
+            c.indokok.append(f"Az idézetben nincs a paraméter mértékegysége ({spec['unit']}).")
         if spec is None:
             c.indokok.append("Ismeretlen paraméter.")
         else:
@@ -223,6 +249,6 @@ def _confidence(cs: List[Claim]) -> str:
     strong = any(c.vizsgalat_tipusa in ("meta-analizis", "szisztematikus-attekintes") and not c.preprint for c in cs)
     if n >= 3 and strong:
         return "magas"
-    if n >= 2 or strong:
+    if n >= 2:   # egyetlen forrás (akár összefoglaló is) csak gyenge bizonyíték
         return "közepes"
     return "alacsony"

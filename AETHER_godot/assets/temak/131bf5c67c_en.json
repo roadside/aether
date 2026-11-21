@@ -27,10 +27,10 @@
   }
  ],
  "magyarazat": {
-  "mi_ez": "Afforestation is planting trees in areas where there were no trees before, like old farms or empty land. It helps make new forests.",
-  "mire_jo": "Trees can catch carbon from the air, which helps fight climate change. They also stop soil from washing away, bring more rain, and give homes to animals.",
-  "hatranyok": "Planting trees can sometimes harm other wildlife by splitting their habitats. Also, not all tree areas are good for carbon storage, and some areas are better left as grasslands.",
-  "mennyire_bizonyitott": "There is strong science showing that planting trees can help the climate, but some studies say it's not the only way to reduce carbon. The benefits depend on where and how trees are planted."
+  "mi_ez": "Afforestation means planting trees where there was no forest before, such as on old farmland.",
+  "mire_jo": "Trees take carbon dioxide out of the air. They also protect soil from washing away and give animals a home.",
+  "hatranyok": "Planted in the wrong place it can do harm: it can split up habitats, and some areas are better left as grassland.",
+  "mennyire_bizonyitott": "There is strong evidence that it can help the climate, but the benefit depends a lot on where and how the trees are planted."
  },
  "tipus": "ai",
  "megjegyzes": ""

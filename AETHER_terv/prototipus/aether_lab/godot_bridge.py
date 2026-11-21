@@ -37,7 +37,7 @@ from . import climate as cl
 # ---------------------------------------------------------------------------
 BIZONYOSSAG_SZOVEG = {
     "magas": "Erős bizonyíték: több forrás, köztük összefoglaló (meta-)elemzés.",
-    "közepes": "Közepes bizonyíték: legalább két forrás vagy egy összefoglaló elemzés.",
+    "közepes": "Közepes bizonyíték: legalább két forrás.",
     "alacsony": "Gyenge bizonyíték: csak egy forrás. Érdemes tovább kutatni.",
 }
 
@@ -56,7 +56,7 @@ PARAM_NEV = {
 
 BIZONYOSSAG_SZOVEG_EN = {
     "magas": "Strong evidence: several sources, including a review (meta-)analysis.",
-    "közepes": "Medium evidence: at least two sources or one review analysis.",
+    "közepes": "Medium evidence: at least two sources.",
     "alacsony": "Weak evidence: only one source. Worth researching further.",
 }
 

@@ -65,10 +65,11 @@ def _stem(w: str) -> str:
 
 
 def title_matches(title: str, term: str) -> bool:
-    """A cikk címe tényleg a keresett témáról szól? (a keresőszó első szavának töve a címben)"""
-    first = (term.split() or [""])[0]
-    t = [_stem(x) for x in title.replace("-", " ").split()]
-    return bool(first) and _stem(first) in t
+    """A cikk címe tényleg a keresett témáról szól? A keresőszó minden érdemi (4+ betűs)
+    szavának töve szerepeljen a címben ("drought tolerance maize" ≠ "Drought tolerance in barley")."""
+    words = [w for w in term.replace("-", " ").split() if len(w) >= 4] or term.split()[:1]
+    t = [_stem(x) for x in title.replace("-", " ").replace("(", " ").replace(")", " ").split()]
+    return bool(words) and all(_stem(w) in t for w in words)
 
 
 def wiki_article(fetch: Callable[..., bytes], lang: str, term: str) -> Optional[Dict]:
@@ -116,6 +117,8 @@ def build(wiki_term: str, wiki_term_en: str, review_query: str, fetch: Callable[
         for i, c in enumerate(res["cikkek"], 1):
             parts.append(f"<cikk {i}: {c['cim']} ({c['ev']})>\n{c['absztrakt']}\n</cikk>")
         user = f"Nyelv: {'English' if en else 'magyar'}\nTéma: {wiki_term_en if en else wiki_term}\n\n" + "\n\n".join(parts)
+        if en:   # a rendszerprompt magyar, ezért a kis modellek hajlamosak magyarul válaszolni
+            user += "\n\nIMPORTANT: write all four fields in ENGLISH."
         try:
             res["magyarazat"] = provider.json_call(TOPIC_SYSTEM, user, TOPIC_SCHEMA, 1500)
             res["tipus"] = "ai"
