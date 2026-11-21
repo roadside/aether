@@ -4,7 +4,7 @@ A Godot külön folyamatként indítja ezeket a parancsokat, és fájlokon keres
 kommunikál velük (egyszerű, platformfüggetlen, nincs szükség hálózati portra):
 
   python -m aether_lab godot-ai --ki ai.json
-      Mely AI-szolgáltatók érhetők el ezen a gépen (Claude-kulcs, Ollama).
+      Mely AI-szolgáltatók érhetők el ezen a gépen (Claude, OpenAI, Gemini kulcs; Ollama).
 
   python -m aether_lab godot-kutat "kérdés" --ai claude --mappa <dir>
       Kutatás. Futás közben a <dir>/allapot.json fájlt folyamatosan frissíti
@@ -251,11 +251,25 @@ def ai_status(ollama_host: Optional[str] = None, timeout: float = 1.5, lang: str
         if os.environ.get("ANTHROPIC_API_KEY"):
             res["claude"] = {"elerheto": True, "ok": "API key found." if en else "API-kulcs megtalálva."}
         else:
-            res["claude"]["ok"] = ("No API key. Set the ANTHROPIC_API_KEY environment variable." if en else
-                                   "Nincs API-kulcs. Add meg a játékban, vagy állítsd be az ANTHROPIC_API_KEY változót.")
+            res["claude"]["ok"] = ("No API key yet. A Claude Pro subscription is not enough: you need an API key "
+                                   "(console.anthropic.com)." if en else
+                                   "Még nincs API-kulcs. A Claude Pro előfizetés nem elég: API-kulcs kell "
+                                   "(console.anthropic.com).")
     except ImportError:
         res["claude"]["ok"] = ("The anthropic package is missing: pip install anthropic" if en
                                else "Hiányzik az anthropic csomag: pip install anthropic")
+    # OpenAI (ChatGPT) és Gemini: csak a kulcs meglétét nézzük (nem küldünk kérést)
+    plus = (" A ChatGPT Plus előfizetés nem elég: API-kulcs kell (platform.openai.com)." if not en else
+            " A ChatGPT Plus subscription is not enough: you need an API key (platform.openai.com).")
+    if os.environ.get("OPENAI_API_KEY"):
+        res["openai"] = {"elerheto": True, "ok": "API key found." if en else "API-kulcs megtalálva."}
+    else:
+        res["openai"] = {"elerheto": False, "ok": ("No API key yet." if en else "Még nincs API-kulcs.") + plus}
+    if os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY"):
+        res["gemini"] = {"elerheto": True, "ok": "API key found." if en else "API-kulcs megtalálva."}
+    else:
+        res["gemini"] = {"elerheto": False, "ok": "No API key yet. Google AI Studio gives one for free (with limits)."
+                         if en else "Még nincs API-kulcs. A Google AI Studio ingyen ad egyet (korlátozott kerettel)."}
     host = (ollama_host or os.environ.get("OLLAMA_HOST", "http://localhost:11434")).rstrip("/")
     try:
         with urllib.request.urlopen(host + "/api/tags", timeout=timeout) as r:
@@ -369,7 +383,7 @@ def add_parsers(sub):
     a.add_argument("--nyelv", default="hu", choices=["hu", "en"]); a.set_defaults(fn=cmd_ai)
     k = sub.add_parser("godot-kutat")
     k.add_argument("kerdes")
-    k.add_argument("--ai", default="none", choices=["claude", "ollama", "none"])
+    k.add_argument("--ai", default="none", choices=["claude", "openai", "gemini", "ollama", "none"])
     k.add_argument("--mappa", required=True)
     k.add_argument("--kereses", default="", help="angol keresőkifejezés AI nélküli módhoz")
     k.add_argument("--cikkek", type=int, default=12)

@@ -25,9 +25,16 @@ const QUESTIONS := [
 	 "kereses": "drought tolerant maize yield advantage under drought"},
 ]
 
+## A választható AI-k. "kulcs": melyik környezeti változóba kerül a játékban
+## megadott kulcs (csak a futás idejére, sehova nem mentjük), "link": hol lehet kulcsot kérni.
 const AI_CHOICES := [
-	{"id": "claude", "cim": "Claude (saját előfizetés)", "magyarazat": "A legalaposabb. Kell hozzá egy Anthropic API-kulcs."},
-	{"id": "ollama", "cim": "Helyi AI a gépeden (Ollama)", "magyarazat": "Ingyenes és internet nélkül is gondolkodik, de lassabb."},
+	{"id": "claude", "cim": "Claude (Anthropic)", "magyarazat": "Nagyon alapos. Anthropic API-kulcs kell hozzá (használat szerint fizetős).",
+	 "kulcs": "ANTHROPIC_API_KEY", "minta": "sk-ant-…", "link": "https://console.anthropic.com/settings/keys"},
+	{"id": "openai", "cim": "ChatGPT (OpenAI)", "magyarazat": "Alapos. OpenAI API-kulcs kell hozzá (használat szerint fizetős).",
+	 "kulcs": "OPENAI_API_KEY", "minta": "sk-…", "link": "https://platform.openai.com/api-keys"},
+	{"id": "gemini", "cim": "Gemini (Google)", "magyarazat": "Alapos. Google API-kulcs kell hozzá, ingyenes kerettel is kipróbálható.",
+	 "kulcs": "GEMINI_API_KEY", "minta": "AIza…", "link": "https://aistudio.google.com/apikey"},
+	{"id": "ollama", "cim": "Helyi AI a gépeden (Ollama)", "magyarazat": "Ingyenes, és internet nélkül is gondolkodik, de lassabb és kevésbé alapos."},
 	{"id": "none", "cim": "AI nélkül: csak cikkeket keresek", "magyarazat": "Mindig működik. Megmutatja a cikkeket, de számokat nem emel ki."},
 ]
 
@@ -139,13 +146,29 @@ func _show_busy() -> void:
 # --- 2. Ki kutasson? -------------------------------------------------------
 func _show_ai_choice() -> void:
 	_header(L.t("Ki kutasson?"), 2, L.t("Kérdés: ") + L.t(str(_question["cim"])))
+	# Miért kell AI? Egy mondat mindig látszik, a többi a Részletek mögött.
+	var why := UI.card(UI.GOLD)
+	why.add_child(UI.label(L.t("Miért kell AI?"), 17, UI.GOLD, true))
+	why.add_child(UI.label(L.t("Az AI a te kutatód: elolvassa a valódi tudományos cikkeket, és kiemeli belőlük a fontos számokat. Ettől lesz a terved igazi tudományon alapuló."), 16, UI.SOFT))
+	var why_more := UI.label(L.t("A játék nem hisz vakon az AI-nak: minden számot szó szerint visszakeres a cikkben, és csak azt fogadja el, ami tényleg benne van. Fontos: a ChatGPT Plus, Claude Pro vagy Gemini előfizetés önmagában nem elég, a játékhoz API-kulcs kell. Ez külön, használat szerint fizetendő: egy kutatás a választott AI-tól függően néhány forinttól pár száz forintig terjed. A Geminihez van ingyenes keret, az Ollama pedig teljesen ingyenes."), 15, UI.MUTE)
+	why_more.visible = false
+	var why_btn := UI.button(L.t("Részletek"))
+	var why_fn := func() -> void: why_more.visible = not why_more.visible
+	why_btn.pressed.connect(why_fn)
+	why.add_child(why_btn)
+	why.add_child(why_more)
+	_body.add_child(UI.card_root(why))
 	var best := "none"
-	if _ai_status.get("ollama", {}).get("elerheto", false):
-		best = "ollama"
-	if _ai_status.get("claude", {}).get("elerheto", false):
-		best = "claude"
+	for id in ["ollama", "gemini", "openai", "claude"]:   # a legalaposabb elérhető
+		if _ai_status.get(id, {}).get("elerheto", false):
+			best = id
 	var group := ButtonGroup.new()
 	var key_box := UI.vbox(6)
+	var key_label := UI.label("", 16, UI.SOFT)
+	var key := LineEdit.new()
+	key.secret = true
+	var key_link := UI.button(L.t("Kulcs létrehozása (megnyílik a böngészőben)"))
+	var key_state := {"env": "", "link": ""}
 	for ch in AI_CHOICES:
 		var id: String = ch["id"]
 		var st: Dictionary = _ai_status.get(id, {})
@@ -156,11 +179,17 @@ func _show_ai_choice() -> void:
 		rb.add_theme_font_override("font", UI.font_bold)
 		rb.add_theme_font_size_override("font_size", 18)
 		rb.button_pressed = id == best
-		var need_key: bool = id == "claude" and not _ai_status.get("claude", {}).get("elerheto", false)
+		var need_key: bool = ch.has("kulcs") and not st.get("elerheto", false)
 		var pick_fn := func(on: bool) -> void:
 			if on:
 				_ai = id
 				key_box.visible = need_key
+				if need_key:
+					key_state["env"] = ch["kulcs"]
+					key_state["link"] = ch["link"]
+					key_label.text = L.t("%s API-kulcs (csak amíg a játék fut, nem mentjük el):") % L.t(ch["cim"])
+					key.placeholder_text = ch["minta"]
+					key.text = OS.get_environment(ch["kulcs"])
 		rb.toggled.connect(pick_fn)
 		c.add_child(rb)
 		c.add_child(UI.label(L.t(ch["magyarazat"]), 16, UI.SOFT))
@@ -168,16 +197,19 @@ func _show_ai_choice() -> void:
 			c.add_child(UI.label(str(st.get("ok", "")), 15, UI.GREEN if st.get("elerheto", false) else UI.MUTE))
 		_body.add_child(UI.card_root(c))
 	_ai = best
+	# API-kulcs megadása: csak erre a futásra kerül a környezetbe, sehova nem mentjük
 	key_box.visible = false
-	# API-kulcs megadása: csak erre a futásra, sehova nem mentjük
-	key_box.visible = false
-	key_box.add_child(UI.label(L.t("Anthropic API-kulcs (csak amíg a játék fut, nem mentjük el):"), 16, UI.SOFT))
-	var key := LineEdit.new()
-	key.secret = true
-	key.placeholder_text = "sk-ant-…"
-	var key_fn := func(t: String) -> void: OS.set_environment("ANTHROPIC_API_KEY", t.strip_edges())
+	key_box.add_child(key_label)
+	var key_fn := func(t: String) -> void:
+		if key_state["env"] != "":
+			OS.set_environment(key_state["env"], t.strip_edges())
 	key.text_changed.connect(key_fn)
 	key_box.add_child(key)
+	var link_fn := func() -> void:
+		if key_state["link"] != "":
+			OS.shell_open(key_state["link"])
+	key_link.pressed.connect(link_fn)
+	key_box.add_child(key_link)
 	_body.add_child(key_box)
 	var row := UI.hbox(12)
 	var back := UI.button(L.t("Vissza"))

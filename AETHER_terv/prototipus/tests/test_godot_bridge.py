@@ -112,3 +112,65 @@ class TestOllamaModelChoice(unittest.TestCase):
         self.assertEqual(pick_model(["llama3.1:8b", "qwen3:8b"], pref), "qwen3:8b")
         self.assertEqual(pick_model(["phi4:latest"], pref), "phi4:latest")
         self.assertEqual(pick_model([], pref), "")
+
+
+class TestCloudProviders(unittest.TestCase):
+    """OpenAI és Gemini: a kérés formája és a válasz feldolgozása, hálózat nélkül."""
+
+    def setUp(self):
+        import os
+        self._env = dict(os.environ)
+        os.environ["OPENAI_API_KEY"] = "TESZT-kulcs"
+        os.environ["GEMINI_API_KEY"] = "TESZT-kulcs"
+
+    def tearDown(self):
+        import os
+        os.environ.clear()
+        os.environ.update(self._env)
+
+    def test_openai(self):
+        from aether_lab import llm
+        seen = {}
+
+        def fake(url, body, headers, timeout=600):
+            seen.update(url=url, body=body, headers=headers)
+            return {"choices": [{"finish_reason": "stop", "message": {"content": '{"a": 1}'}}]}
+        orig, llm._post_json = llm._post_json, fake
+        try:
+            out = llm.get_provider("openai").json_call("rendszer", "kérdés", {"type": "object"}, 100)
+        finally:
+            llm._post_json = orig
+        self.assertEqual(out, {"a": 1})
+        self.assertTrue(seen["url"].endswith("/chat/completions"))
+        self.assertEqual(seen["body"]["response_format"]["json_schema"]["strict"], True)
+        self.assertEqual(seen["headers"]["Authorization"], "Bearer TESZT-kulcs")
+
+    def test_gemini_with_schema_fallback(self):
+        from aether_lab import llm
+        calls = []
+
+        def fake(url, body, headers, timeout=600):
+            calls.append(body)
+            if len(calls) == 1:
+                raise llm.LLMError("API-hiba (400): schema")
+            return {"candidates": [{"finishReason": "STOP", "content": {"parts": [{"text": '```json\n{"b": 2}\n```'}]}}]}
+        orig, llm._post_json = llm._post_json, fake
+        try:
+            out = llm.get_provider("gemini").json_call("rendszer", "kérdés", {"type": "object"}, 100)
+        finally:
+            llm._post_json = orig
+        self.assertEqual(out, {"b": 2})
+        self.assertIn("responseJsonSchema", calls[0]["generationConfig"])
+        self.assertNotIn("responseJsonSchema", calls[1]["generationConfig"])
+
+    def test_missing_key(self):
+        import os
+        from aether_lab import llm
+        del os.environ["OPENAI_API_KEY"]
+        with self.assertRaises(llm.LLMError):
+            llm.get_provider("openai")
+
+    def test_status_lists_all(self):
+        st = gb.ai_status(ollama_host="http://127.0.0.1:9", timeout=0.2)
+        self.assertEqual(set(st), {"claude", "openai", "gemini", "ollama", "none"})
+        self.assertTrue(st["openai"]["elerheto"])

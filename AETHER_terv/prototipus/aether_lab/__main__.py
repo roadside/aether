@@ -92,7 +92,7 @@ def main(argv=None):
     m = sub.add_parser("modell"); m.add_argument("fajl"); m.set_defaults(fn=cmd_model)
     r = sub.add_parser("kutat")
     r.add_argument("kerdes")
-    r.add_argument("--ai", default="claude", choices=["claude", "ollama", "none"])
+    r.add_argument("--ai", default="claude", choices=["claude", "openai", "gemini", "ollama", "none"])
     r.add_argument("--cikkek", type=int, default=12)
     r.add_argument("--forrasonkent", type=int, default=6)
     r.add_argument("--arxiv-nelkul", action="store_true")

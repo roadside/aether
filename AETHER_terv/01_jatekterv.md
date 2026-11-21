@@ -234,7 +234,8 @@ Indoklás: a játék 2D, pixeles, és asztali offline működést kér; a Godot 
 - **BYOK (saját kulcs):** a játékos a saját AI-előfizetését köti be. A kulcs csak a játékos gépén, az operációs rendszer kulcstárában van, a játékszerver soha nem látja.
 - **Átlátható költség:** kutatás előtt becsült tokenszám és ár; napi/havi plafon.
 - **Ingyenes út:** helyi modell (Ollama), lassabban.
-- **Bármelyik AI:** a prototípus Claude-ot és helyi modelleket támogat; a szolgáltató-felület bővíthető.
+- **Bármelyik AI (2026-11-21, Zoltán döntése):** a játékos választ: Claude (Anthropic), ChatGPT (OpenAI), Gemini (Google), helyi Ollama, vagy AI nélküli mód. A játék a választás előtt egy mondatban elmondja, **miért kell az AI**: ő a játékos kutatója, valódi cikkeket olvas; ettől lesz a játék igazi.
+- **Őszinte tájékoztatás:** a ChatGPT Plus / Claude Pro / Gemini előfizetés önmagában nem elég, API-kulcs kell (külön, használat szerint fizetendő). A Geminihez van ingyenes keret, az Ollama teljesen ingyenes. A kulcs a prototípusban csak a futás idejére kerül a memóriába, sehova nem mentjük.
 
 ## 17. Etika és biztonság
 
