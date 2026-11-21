@@ -136,7 +136,7 @@ const EN := {
 	"A játék még letölti a valós adatokat. Próbáld újra pár másodperc múlva.": "The game is still downloading real data. Try again in a few seconds.",
 	"Újra": "Try again",
 	"Kérdés: ": "Question: ",
-	"   (ajánlott)": "   (recommended)",
+	" (ajánlott)": " (recommended)",
 	"Anthropic API-kulcs (csak amíg a játék fut, nem mentjük el):": "Anthropic API key (only while the game runs, never saved):",
 	"Vissza": "Back",
 	"Indulhat a kutatás": "Start the research",

@@ -298,6 +298,11 @@ def parse_open_meteo_soil(data, cities=CITIES) -> List[Dict]:
     return out
 
 
+def _hu(x: float) -> str:
+    """Szám magyar tizedesvesszővel (a magyar címekhez)."""
+    return f"{x:g}".replace(".", ",")
+
+
 def air_events(rows: List[Dict]) -> List[Dict]:
     """Csak a küszöb feletti értékekből lesz esemény (WHO-határok)."""
     ev = []
@@ -312,16 +317,16 @@ def air_events(rows: List[Dict]) -> List[Dict]:
         pm = r.get("pm2_5")
         if pm is not None and pm >= 3 * WHO_PM25_24H:
             ev.append(_event(CAMS_FORRAS,
-                             f"{r['varos']}: szennyezett levegő, PM2,5 = {pm:g} µg/m³ (a WHO 24 órás határa {WHO_PM25_24H:g})",
+                             f"{r['varos']}: szennyezett levegő, PM2,5\u00a0=\u00a0{_hu(pm)}\u00a0µg/m³ (a WHO 24 órás határa {WHO_PM25_24H:g})",
                              "levego", r["ido"], country, r["lat"], r["lon"], r["link"], szint="orange" if pm < 5 * WHO_PM25_24H else "red",
-                             cim_en=f"{city_en}: polluted air, PM2.5 = {pm:g} µg/m³ (WHO 24-hour limit {WHO_PM25_24H:g})",
+                             cim_en=f"{city_en}: polluted air, PM2.5\u00a0=\u00a0{pm:g}\u00a0µg/m³ (WHO 24-hour limit {WHO_PM25_24H:g})",
                              forras_en=CAMS_FORRAS_EN))
         uv = r.get("uv")
         if uv is not None and uv >= UV_VERY_HIGH:
             ev.append(_event(CAMS_FORRAS,
-                             f"{r['varos']}: nagyon erős UV-sugárzás, UV-index = {uv:g}",
+                             f"{r['varos']}: nagyon erős UV-sugárzás, UV-index\u00a0=\u00a0{_hu(uv)}",
                              "uv", r["ido"], country, r["lat"], r["lon"], r["link"], szint="orange" if uv < 11 else "red",
-                             cim_en=f"{city_en}: very strong UV radiation, UV index = {uv:g}", forras_en=CAMS_FORRAS_EN))
+                             cim_en=f"{city_en}: very strong UV radiation, UV\u00a0index\u00a0=\u00a0{uv:g}", forras_en=CAMS_FORRAS_EN))
     return ev
 
 
@@ -337,7 +342,7 @@ def air_summary(rows: List[Dict]) -> Optional[Dict]:
             "legrosszabb_pm2_5": worst["pm2_5"], "cim_en": f"Air quality in {len(CITIES)} large cities",
             "egyseg_en": f"/ {len(pm)} cities",
             "magyarazat": (f"{over} városban több a finom por (PM2,5), mint a WHO 24 órás határa ({WHO_PM25_24H:g} µg/m³). "
-                           f"Most a legrosszabb: {worst['varos']}, {worst['pm2_5']:g} µg/m³. Modellbecslés, nem mérőállomás."),
+                           f"Most a legrosszabb: {worst['varos']}, {_hu(worst['pm2_5'])} µg/m³. Modellbecslés, nem mérőállomás."),
             "magyarazat_en": (f"In {over} cities there is more fine dust (PM2.5) than the WHO 24-hour limit "
                               f"({WHO_PM25_24H:g} µg/m³). Worst right now: "
                               f"{worst.get('varos_en') or CITY_EN.get(worst['varos'], worst['varos'])}, {worst['pm2_5']:g} µg/m³. "

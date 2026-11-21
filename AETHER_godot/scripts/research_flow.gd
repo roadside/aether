@@ -152,7 +152,7 @@ func _show_ai_choice() -> void:
 		var c := UI.card(UI.GREEN if st.get("elerheto", false) else UI.EDGE)
 		var rb := CheckBox.new()
 		rb.button_group = group
-		rb.text = L.t(ch["cim"]) + (L.t("   (ajánlott)") if id == best else "")
+		rb.text = L.t(ch["cim"]) + (L.t(" (ajánlott)") if id == best else "")
 		rb.add_theme_font_override("font", UI.font_bold)
 		rb.add_theme_font_size_override("font_size", 18)
 		rb.button_pressed = id == best
@@ -164,7 +164,8 @@ func _show_ai_choice() -> void:
 		rb.toggled.connect(pick_fn)
 		c.add_child(rb)
 		c.add_child(UI.label(L.t(ch["magyarazat"]), 16, UI.SOFT))
-		c.add_child(UI.label(str(st.get("ok", "")), 15, UI.GREEN if st.get("elerheto", false) else UI.MUTE))
+		if id != "none":  # az "AI nélkül" állapota ugyanaz, mint a leírása
+			c.add_child(UI.label(str(st.get("ok", "")), 15, UI.GREEN if st.get("elerheto", false) else UI.MUTE))
 		_body.add_child(UI.card_root(c))
 	_ai = best
 	key_box.visible = false
