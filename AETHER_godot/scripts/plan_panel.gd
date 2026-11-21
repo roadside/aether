@@ -26,6 +26,7 @@ var _result_box: VBoxContainer
 var _chart                 # chart.gd példány
 var _run_btn: Button
 var _out_path := ""
+var _scroll: ScrollContainer
 
 
 func _ready() -> void:
@@ -37,12 +38,12 @@ func _ready() -> void:
 	sb.shadow_size = 28
 	sb.set_content_margin_all(24)
 	add_theme_stylebox_override("panel", sb)
-	var scroll := ScrollContainer.new()
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	add_child(scroll)
+	_scroll = ScrollContainer.new()
+	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	add_child(_scroll)
 	_body = UI.vbox(14)
 	_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(_body)
+	_scroll.add_child(_body)
 	bridge.finished.connect(_on_bridge_finished)
 	rebuild()
 
@@ -236,6 +237,15 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 	_chart.now_year = campaign.year
 	_chart.year = campaign.year
 	_add_chart(res)
+	_show_control.call_deferred(adopt)
+
+
+## Odagörget, hogy a gomb (pl. Bevezetem) kisebb képernyőn is görgetés nélkül látsszon.
+func _show_control(c: Control) -> void:
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if is_instance_valid(c) and _scroll != null:
+		_scroll.ensure_control_visible(c)
 
 
 ## A grafikon a döntés (Bevezetem) alatt van, így a gomb görgetés nélkül is látszik.

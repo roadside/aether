@@ -359,6 +359,7 @@ const EN := {
 	"AI-mag": "AI core",
 	"Archívum": "Archive",
 	"Üvegház": "Greenhouse",
+	"épül": "under construction",
 	"[Hazai] ": "[Your country] ",
 	"Hazai intézmény: %s": "Institution in your country: %s",
 	"A forrás honlapja: ": "Source website: ",

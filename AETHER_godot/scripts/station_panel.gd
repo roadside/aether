@@ -9,7 +9,7 @@ const UI := preload("res://scripts/ui.gd")
 const L := preload("res://scripts/i18n.gd")
 const Campaign := preload("res://scripts/campaign.gd")
 
-const SCALE := 4
+const SCALE := 3
 ## A modulok helye a háttérképen (pixelben, nagyítás előtt).
 const POS := {"ai_mag": Vector2(22, 32), "archivum": Vector2(72, 32), "uveghaz": Vector2(122, 32)}
 const ORDER := ["ai_mag", "archivum", "uveghaz"]
@@ -124,10 +124,11 @@ func _card(mod: String) -> Control:
 	var lvl := int(campaign.station[mod])
 	var c := UI.card(UI.CYAN)
 	c.custom_minimum_size = Vector2(270, 0)
-	c.add_child(UI.label(L.t(Campaign.MODULES[mod]["nev"]) + " · " + _level_text(lvl), 18, UI.TEXT, true))
+	var is_building: bool = not campaign.building.is_empty() and str(campaign.building["modul"]) == mod
+	var title := L.t(Campaign.MODULES[mod]["nev"]) + " · " + (L.t("épül") if is_building else _level_text(lvl))
+	c.add_child(UI.label(title, 18, UI.TEXT, true))
 	c.add_child(UI.label(_why(mod), 14, UI.SOFT))
 	c.add_child(UI.label(L.t("Most: ") + _effect(mod, lvl), 15, UI.TEXT))
-	var is_building: bool = not campaign.building.is_empty() and str(campaign.building["modul"]) == mod
 	if is_building:
 		c.add_child(UI.label(L.t("Épül, kész: %d.") % int(campaign.building["kesz"]), 16, UI.GOLD, true))
 	elif lvl < Campaign.MAX_LEVEL:
