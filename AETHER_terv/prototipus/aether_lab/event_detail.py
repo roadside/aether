@@ -410,14 +410,18 @@ def plain_summary(event: Dict, facts: List[Dict], lang: str = "hu", home: str = 
         if mine in raw:
             i = raw.index(mine)
             countries.insert(0, countries.pop(i))
-    where = ""
-    if len(countries) > 3:
-        where = (f" in {len(countries)} countries, including {', '.join(countries[:3])}" if en
-                 else f" {len(countries)} országban, például: {', '.join(countries[:3])}")
-    elif countries:
-        where = (" in " if en else ": ") + ", ".join(countries)
     src = event.get("forras", "")
-    s = (f"{src} reports{where}." if en else f"A(z) {src} jelentése{where}.")
+    if en:
+        if len(countries) > 3:
+            s = f"{src} reports {len(countries)} affected countries, including {', '.join(countries[:3])}."
+        else:
+            s = f"{src} reports" + (" in " + ", ".join(countries) if countries else "") + "."
+    elif len(countries) > 3:
+        s = f"{src} szerint {len(countries)} ország érintett, például: {', '.join(countries[:3])}."
+    elif countries:
+        s = f"{src} szerint érintett: {', '.join(countries)}."
+    else:
+        s = f"Forrás: {src}."
     lat, lon = event.get("lat"), event.get("lon")
     if not countries and isinstance(lat, (int, float)) and isinstance(lon, (int, float)):
         ns, ew = ("N" if lat >= 0 else "S"), ("E" if lon >= 0 else "W")
@@ -427,7 +431,7 @@ def plain_summary(event: Dict, facts: List[Dict], lang: str = "hu", home: str = 
             s = f"Location according to {src}: {abs(lat):.1f}° {ns}, {abs(lon):.1f}° {ew}."
         else:
             a, b = f"{abs(lat):.1f}".replace(".", ","), f"{abs(lon):.1f}".replace(".", ",")
-            s = f"A(z) {src} szerint az esemény helye: {a}° {ns}, {b}° {ew}."
+            s = f"{src} szerint az esemény helye: {a}° {ns}, {b}° {ew}."
     sev = next((x["ertek"] for x in facts if x["nev"].startswith(("Súlyosság", "Severity"))), "")
     dur = next((x["ertek"] for x in facts if x["nev"] in ("Időtartam", "Duration")), "")
     if dur:

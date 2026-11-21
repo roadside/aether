@@ -72,7 +72,7 @@ class TestBuild(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             r = ed.build(EVENT, Path(d), fake_fetch, None, "en", log=lambda *_: None)
             self.assertEqual(r["osszegzes_tipus"], "forras")
-            self.assertIn("4 countries", r["osszegzes"])
+            self.assertIn("4 affected countries", r["osszegzes"])
             self.assertIn("Medium impact", r["osszegzes"])
 
 
