@@ -107,6 +107,7 @@ func _close() -> void:
 
 # --- 1. Mit kutassunk? -----------------------------------------------------
 func show_questions() -> void:
+	_topic_q = {}
 	_header(L.t("Mit kutassunk?"), 1, L.t("Válassz egy kérdést. A játék valódi, megjelent tudományos cikkekben keres rá választ."))
 	for q in QUESTIONS:
 		var c := UI.card(UI.CYAN)
@@ -144,24 +145,49 @@ func show_questions() -> void:
 
 
 # --- „Mi ez, és mire jó?” ---------------------------------------------------
+## Gyorsítás, három szinten:
+##  1. a beépített kérdések magyarázata a játékkal együtt jön (res://assets/temak) – azonnali,
+##  2. különben előbb AI nélkül (Wikipédia, 1–2 mp) jelenik meg valami,
+##  3. az AI közben a háttérben dolgozik, és ha kész, lecseréli a részletesre.
+## Ami egyszer elkészült, a gépen megmarad (user://aether_temak).
 var _topic_out := ""
 var _topic_q: Dictionary = {}
+var _topic_ai := "none"
+var _topic_phase := ""           # "gyors" (AI nélkül) vagy "ai"
+
+
+func _topic_path(q: Dictionary, ai: String) -> String:
+	return bridge.work_dir("aether_temak").path_join("%s_%s_%s.json" % [str(q["wiki_en"]).md5_text().left(10), L.lang, ai])
 
 
 func _show_topic(q: Dictionary) -> void:
 	_topic_q = q
-	_header(L.t(q["cim"]), 0, "")
-	_body.add_child(UI.label(L.t("Az AI elolvassa a Wikipédia-cikket és néhány tudományos összefoglalót, és érthetően elmondja, mi ez. Ez fél–két percig is tarthat…"), 17, UI.SOFT))
-	var ai: String = L.get_setting("ai", "ollama")
-	var dir: String = bridge.work_dir("aether_temak")
-	_topic_out = dir.path_join("%s_%s_%s.json" % [str(q["wiki_en"]).md5_text().left(10), L.lang, ai])
-	var cached: Variant = Bridge.read_json(_topic_out)
-	if typeof(cached) == TYPE_DICTIONARY:
-		_render_topic(cached)
+	_topic_ai = L.get_setting("ai", "ollama")
+	var key := str(q["wiki_en"]).md5_text().left(10)
+	var bundled: Variant = Bridge.read_json("res://assets/temak/%s_%s.json" % [key, L.lang])
+	if typeof(bundled) == TYPE_DICTIONARY:
+		_render_topic(bundled)
 		return
-	if not bridge.run("tema", ["tema", "--wiki", str(q["wiki"]), "--wiki-en", str(q["wiki_en"]),
-			"--kereses", str(q["attekintes"]), "--ki", _topic_out, "--ai", ai, "--nyelv", L.lang]):
-		_show_busy()
+	for ai in [_topic_ai, "none"]:
+		var cached: Variant = Bridge.read_json(_topic_path(q, ai))
+		if typeof(cached) == TYPE_DICTIONARY:
+			_render_topic(cached)
+			if ai != _topic_ai and _topic_ai != "none":
+				_run_topic("ai")
+			return
+	_header(L.t(q["cim"]), 0, "")
+	_body.add_child(UI.label(L.t("Egy pillanat, töltöm a forrásokat…"), 17, UI.SOFT))
+	_run_topic("gyors")
+
+
+func _run_topic(phase: String) -> void:
+	_topic_phase = phase
+	var ai := "none" if phase == "gyors" else _topic_ai
+	_topic_out = _topic_path(_topic_q, ai)
+	if not bridge.run("tema", ["tema", "--wiki", str(_topic_q["wiki"]), "--wiki-en", str(_topic_q["wiki_en"]),
+			"--kereses", str(_topic_q["attekintes"]), "--ki", _topic_out, "--ai", ai, "--nyelv", L.lang]):
+		if phase == "gyors":
+			_show_busy()
 
 
 func _render_topic(r: Dictionary) -> void:
@@ -199,6 +225,8 @@ func _render_topic(r: Dictionary) -> void:
 		_body.add_child(UI.label(L.t("Most nem sikerült forrást letölteni. Van internet?"), 17, UI.EMBER))
 	if str(r.get("megjegyzes", "")) != "":
 		_body.add_child(UI.label(str(r["megjegyzes"]), 13, UI.MUTE))
+	if typeof(m) != TYPE_DICTIONARY and _topic_ai != "none" and bridge.is_busy():
+		_body.add_child(UI.label(L.t("Az AI a háttérben részletesebb magyarázatot ír; ha kész, itt megjelenik."), 15, UI.GOLD))
 	var row := UI.hbox(12)
 	var back := UI.button(L.t("Vissza a kérdésekhez"))
 	back.pressed.connect(show_questions)
@@ -210,6 +238,7 @@ func _render_topic(r: Dictionary) -> void:
 
 
 func _pick_question(q: Dictionary) -> void:
+	_topic_q = {}
 	_question = q
 	_header(L.t("Ki kutasson?"), 2, L.t("Megnézem, milyen AI érhető el a gépeden…"))
 	var path: String = bridge.work_dir("aether_kutatas").path_join("ai.json")
@@ -218,7 +247,7 @@ func _pick_question(q: Dictionary) -> void:
 
 
 func _show_busy() -> void:
-	_header(L.t("Egy pillanat…"), 0, L.t("A játék még letölti a valós adatokat. Próbáld újra pár másodperc múlva."))
+	_header(L.t("Egy pillanat…"), 0, L.t("A játék még dolgozik egy másik feladaton (pl. adatletöltés vagy AI-magyarázat). Próbáld újra pár másodperc múlva."))
 	var back := UI.button(L.t("Újra"))
 	back.pressed.connect(show_questions)
 	_body.add_child(back)
@@ -345,9 +374,14 @@ func _on_poll() -> void:
 func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 	if tag == "tema":
 		var t: Variant = Bridge.read_json(_topic_out)
+		var still_here := not _topic_q.is_empty()
 		if typeof(t) == TYPE_DICTIONARY:
-			_render_topic(t)
-		else:
+			var was_quick := _topic_phase == "gyors"
+			if was_quick and _topic_ai != "none":
+				_run_topic("ai")    # a részletes AI-magyarázat a háttérben
+			if still_here and (was_quick or t.get("tipus") == "ai"):
+				_render_topic(t)
+		elif _topic_phase == "gyors":
 			_show_python_error(code, output)
 		return
 	if tag == "ai":

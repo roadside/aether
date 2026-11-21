@@ -246,4 +246,7 @@ const EN := {
 	"Összefoglaló (AI, a forrás alapján)": "Summary (AI, based on the source)",
 	"Összefoglaló (a forrás saját adataiból)": "Summary (from the source's own data)",
 	"Összefoglaló készül a forrásból…": "Making a summary from the source…",
+	"A játék még dolgozik egy másik feladaton (pl. adatletöltés vagy AI-magyarázat). Próbáld újra pár másodperc múlva.": "The game is still busy with another task (e.g. downloading data or an AI explanation). Try again in a few seconds.",
+	"Egy pillanat, töltöm a forrásokat…": "One moment, loading the sources…",
+	"Az AI a háttérben részletesebb magyarázatot ír; ha kész, itt megjelenik.": "The AI is writing a more detailed explanation in the background; it will appear here when ready.",
 }
