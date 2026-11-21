@@ -161,6 +161,23 @@ class TestCandidateSentences(unittest.TestCase):
         self.assertEqual(r["allitasok"], [])
 
 
+class TestAdaptationQuote(unittest.TestCase):
+    def test_loss_and_adoption_share_rejected(self):
+        from aether_lab.evidence import quote_fits
+        p = "alkalmazkodas_hozam_elony_pct"
+        self.assertTrue(quote_fits(p, "9 to 26% more grain yields than the best commercial hybrid"))
+        self.assertFalse(quote_fits(p, "yield losses of 10–25 %"))
+        self.assertFalse(quote_fits(p, "30% of the sampled households were growing DT maize"))
+
+    def test_same_plan_without_adaptation(self):
+        from aether_lab.godot_bridge import model_series
+        o = model_series({"nev": "t", "cdr": {}, "co2_cel_ev": 2050, "co2_cel_ertek": 0.0,
+                          "alkalmazkodas_hozam_kompenzacio_pct": 10.0})
+        a, b = o["osszegzes"]["kozep"], o["alkalmazkodas_nelkul_osszegzes"]["kozep"]
+        self.assertEqual(a["T2100"], b["T2100"])
+        self.assertGreater(a["kukorica_hozam_2050_pct"], b["kukorica_hozam_2050_pct"])
+
+
 class TestQuoteSpacing(unittest.TestCase):
     def test_broken_formula_spacing(self):
         from aether_lab.evidence import quote_in

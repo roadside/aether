@@ -68,7 +68,8 @@ static func evaluate(m: Dictionary, res: Dictionary) -> Dictionary:
 	if m["id"] == "alkalmazkodas":
 		if float(plan.get("alkalmazkodas_hozam_kompenzacio_pct", 0.0)) <= 0.0:
 			return {"csillag": 0, "szoveg": L.t("Még nincs aszálytűrő kukorica a tervedben. Kutasd ki előbb!")}
-		var b: Dictionary = res["alapeset_osszegzes"]["kozep"]
+		# összevetés ugyanazzal a tervvel, alkalmazkodás nélkül (nem az alapesettel)
+		var b: Dictionary = res.get("alkalmazkodas_nelkul_osszegzes", res["alapeset_osszegzes"])["kozep"]
 		var s := L.t("Kukoricatermés-változás 2050-ben: %s%% helyett %s%%. Hőmérséklet 2100-ban: +%s °C, ugyanannyi.") % [
 			UI.hu(float(b["kukorica_hozam_2050_pct"]), 1), UI.hu(float(k["kukorica_hozam_2050_pct"]), 1), UI.hu(float(k["T2100"]), 1)]
 		return {"csillag": 1, "szoveg": s}

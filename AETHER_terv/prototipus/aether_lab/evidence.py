@@ -104,6 +104,8 @@ Csak a megadott absztraktokból dolgozhatsz. Szabályok:
 - Az 'ertek' (és ha van, 'also'/'felso') számnak szerepelnie kell az idézetben.
 - Az idézetben a szám MÉRTÉKEGYSÉGE is szerepeljen, és egyezzen a paraméterével (pl. GtCO2/év).
   Egy célérték (pl. "1.5°C") vagy más mennyiség (pl. talaj széntartalma %-ban) nem CDR-potenciál.
+- Az alkalmazkodási hozamelőny (alkalmazkodas_hozam_elony_pct) a jobb fajta TERMÉSTÖBBLETE a hagyományoshoz
+  képest. Nem az: termésveszteség, a fajtát termesztő gazdák vagy terület aránya.
 - A szám arra a módszerre vonatkozzon, amelyet az 'alkategoria' megnevez, és ez a módszer
   szerepeljen az idézetben (pl. "for biochar"). Ha egy mondat több módszer számát sorolja fel,
   mindegyikhez külön állítást adj.
@@ -186,6 +188,25 @@ UNIT_PATTERNS: Dict[str, object] = {
 }
 
 
+# Az idézet tényleg a paraméter mennyiségéről szól-e (nem csak az egység stimmel).
+# (kötelező minta, tiltott minta) – pl. az aszálytűrő fajta előnye termésNÖVEKEDÉS,
+# nem veszteség és nem az elterjedtség aránya ("30% of households").
+QUOTE_RULES: Dict[str, tuple] = {
+    "alkalmazkodas_hozam_elony_pct": (
+        r"increas|higher|more|greater|advantage|gain|outyield|out-yield|improv|boost|benefit|superior",
+        r"household|farmers\s+(were|are)|adoption\s+(rate|share|level)|share\s+of|area\s+(under|planted)|"
+        r"\bloss(es)?\b|decreas|declin|reduc"),
+}
+
+
+def quote_fits(param: str, quote: str) -> bool:
+    rule = QUOTE_RULES.get(param)
+    if rule is None:
+        return True
+    q = _norm_text(quote)
+    return re.search(rule[0], q) is not None and re.search(rule[1], q) is None
+
+
 def unit_in_quote(param: str, quote: str) -> bool:
     """Minden megadott mintának illeszkednie kell (pl. CO2-egység ÉS évenként)."""
     pats = UNIT_PATTERNS.get(param)
@@ -215,6 +236,8 @@ def verify(claims: List[Claim], papers: Dict[str, Paper]) -> List[Claim]:
         spec = PARAMETERS.get(c.parameter)
         if spec is not None and not unit_in_quote(c.parameter, c.szo_szerinti_idezet):
             c.indokok.append(f"Az idézetben nincs a paraméter mértékegysége ({spec['unit']}).")
+        elif spec is not None and not quote_fits(c.parameter, c.szo_szerinti_idezet):
+            c.indokok.append("Az idézet nem a keresett mennyiségről szól (pl. veszteség vagy elterjedtség).")
         if spec is None:
             c.indokok.append("Ismeretlen paraméter.")
         else:

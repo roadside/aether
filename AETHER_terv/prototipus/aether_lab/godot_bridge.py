@@ -370,6 +370,11 @@ def model_series(data: Dict, lang: str = "hu") -> Dict:
     base = cl.Scenario(nev="Alapeset")
     out = {"nev": s.nev, "evek": list(range(cl.START_YEAR, cl.END_YEAR + 1)), "terv": {}, "alapeset": {},
            "osszegzes": cl.summarize(s)["eredmenyek"], "alapeset_osszegzes": cl.summarize(base)["eredmenyek"]}
+    if s.alkalmazkodas_hozam_kompenzacio_pct > 0:
+        # ugyanez a terv alkalmazkodás nélkül: így látszik, mennyit tesz hozzá maga az alkalmazkodás
+        import dataclasses
+        no_ad = dataclasses.replace(s, alkalmazkodas_hozam_kompenzacio_pct=0.0)
+        out["alkalmazkodas_nelkul_osszegzes"] = cl.summarize(no_ad)["eredmenyek"]
     for e in cl.ENSEMBLE:
         r = cl.run(s, e)
         b = cl.run(base, e)
