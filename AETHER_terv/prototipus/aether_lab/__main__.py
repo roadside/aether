@@ -31,7 +31,7 @@ from pathlib import Path
 
 from .climate import Scenario, builtin_scenarios, summarize
 from .chart import scenarios_svg
-from . import event_detail, godot_bridge, hardware, topic, world_state
+from . import event_detail, godot_bridge, hardware, nalunk, topic, world_state
 
 
 def _print_summary(sm):
@@ -103,6 +103,7 @@ def main(argv=None):
     event_detail.add_parsers(sub)
     topic.add_parsers(sub)
     hardware.add_parsers(sub)
+    nalunk.add_parsers(sub)
     args = ap.parse_args(argv)
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")

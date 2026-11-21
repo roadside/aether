@@ -1,0 +1,2644 @@
+{
+ "meta": {
+  "forras": "IPCC AR6 Interaktív Atlasz, CMIP6 regionális átlagok (Iturbide et al. 2021, https://github.com/IPCC-WG1/Atlas, CC BY 4.0)",
+  "modszer": "mintázat-skálázás: 20 éves mozgóátlag, regionális anomália / globális anomália (1850–1900-hoz), historical + SSP2-4.5 és SSP5-8.5; modellmedián, 17–83% sáv",
+  "egyseg": "homerseklet: °C regionális / °C globális; csapadek_pct: % / °C globális",
+  "modellek": [
+   "ACCESS-CM2",
+   "ACCESS-ESM1-5",
+   "BCC-CSM2-MR",
+   "CAMS-CSM1-0",
+   "CESM2",
+   "CESM2-WACCM",
+   "CMCC-CM2-SR5",
+   "CNRM-CM6-1",
+   "CNRM-CM6-1-HR",
+   "CNRM-ESM2-1",
+   "CanESM5",
+   "EC-Earth3",
+   "EC-Earth3-Veg",
+   "EC-Earth3-Veg-LR",
+   "FGOALS-g3",
+   "GFDL-CM4",
+   "GFDL-ESM4",
+   "HadGEM3-GC31-LL",
+   "IITM-ESM",
+   "INM-CM4-8",
+   "INM-CM5-0",
+   "IPSL-CM6A-LR",
+   "KACE-1-0-G",
+   "KIOST-ESM",
+   "MIROC-ES2L",
+   "MIROC6",
+   "MPI-ESM1-2-HR",
+   "MPI-ESM1-2-LR",
+   "MRI-ESM2-0",
+   "NESM3",
+   "NorESM2-LM",
+   "NorESM2-MM",
+   "TaiESM1",
+   "UKESM1-0-LL"
+  ]
+ },
+ "regiok": {
+  "GIC": {
+   "homerseklet_JJA": {
+    "median": 1.302,
+    "also": 1.193,
+    "felso": 1.589,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.823,
+    "also": 1.298,
+    "felso": 2.175,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.641,
+    "also": 1.32,
+    "felso": 1.812,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 7.287,
+    "also": 5.984,
+    "felso": 10.033,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 6.878,
+    "also": 1.788,
+    "felso": 10.996,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 7.527,
+    "also": 3.645,
+    "felso": 9.871,
+    "n": 34
+   }
+  },
+  "NWN": {
+   "homerseklet_JJA": {
+    "median": 1.39,
+    "also": 1.132,
+    "felso": 1.613,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 2.301,
+    "also": 1.916,
+    "felso": 2.66,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.753,
+    "also": 1.55,
+    "felso": 1.963,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 3.293,
+    "also": 1.477,
+    "felso": 6.11,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 5.944,
+    "also": 4.496,
+    "felso": 7.62,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 5.922,
+    "also": 4.259,
+    "felso": 6.707,
+    "n": 34
+   }
+  },
+  "NEN": {
+   "homerseklet_JJA": {
+    "median": 1.475,
+    "also": 1.226,
+    "felso": 1.775,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 2.904,
+    "also": 2.557,
+    "felso": 3.208,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 2.062,
+    "also": 1.838,
+    "felso": 2.313,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 3.142,
+    "also": 1.194,
+    "felso": 5.07,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 10.805,
+    "also": 9.862,
+    "felso": 12.323,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 6.137,
+    "also": 4.917,
+    "felso": 7.775,
+    "n": 34
+   }
+  },
+  "WNA": {
+   "homerseklet_JJA": {
+    "median": 1.489,
+    "also": 1.267,
+    "felso": 1.7,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.289,
+    "also": 1.052,
+    "felso": 1.466,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.324,
+    "also": 1.21,
+    "felso": 1.434,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -1.281,
+    "also": -4.915,
+    "felso": 2.004,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 3.839,
+    "also": 2.829,
+    "felso": 6.452,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 1.835,
+    "also": 0.248,
+    "felso": 3.624,
+    "n": 34
+   }
+  },
+  "CNA": {
+   "homerseklet_JJA": {
+    "median": 1.428,
+    "also": 1.048,
+    "felso": 1.645,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.293,
+    "also": 0.926,
+    "felso": 1.55,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.308,
+    "also": 1.158,
+    "felso": 1.438,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -1.671,
+    "also": -5.16,
+    "felso": 2.331,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 3.459,
+    "also": 1.779,
+    "felso": 4.68,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 1.53,
+    "also": -0.95,
+    "felso": 3.375,
+    "n": 34
+   }
+  },
+  "ENA": {
+   "homerseklet_JJA": {
+    "median": 1.335,
+    "also": 1.181,
+    "felso": 1.509,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.525,
+    "also": 1.263,
+    "felso": 1.723,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.34,
+    "also": 1.238,
+    "felso": 1.501,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -0.415,
+    "also": -1.667,
+    "felso": 1.278,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 5.114,
+    "also": 4.043,
+    "felso": 6.47,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 2.742,
+    "also": 1.612,
+    "felso": 3.428,
+    "n": 34
+   }
+  },
+  "NCA": {
+   "homerseklet_JJA": {
+    "median": 1.165,
+    "also": 1.017,
+    "felso": 1.347,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.035,
+    "also": 0.945,
+    "felso": 1.247,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.155,
+    "also": 1.054,
+    "felso": 1.287,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -3.042,
+    "also": -5.33,
+    "felso": -0.76,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": -5.342,
+    "also": -9.32,
+    "felso": -1.434,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": -2.302,
+    "also": -5.119,
+    "felso": -0.508,
+    "n": 34
+   }
+  },
+  "SCA": {
+   "homerseklet_JJA": {
+    "median": 1.082,
+    "also": 0.989,
+    "felso": 1.304,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.951,
+    "also": 0.89,
+    "felso": 1.096,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.028,
+    "also": 0.967,
+    "felso": 1.161,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -5.452,
+    "also": -9.329,
+    "felso": -2.141,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": -2.445,
+    "also": -6.355,
+    "felso": -0.856,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": -3.466,
+    "also": -6.176,
+    "felso": -0.649,
+    "n": 34
+   }
+  },
+  "CAR": {
+   "homerseklet_JJA": {
+    "median": 0.942,
+    "also": 0.831,
+    "felso": 1.097,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.861,
+    "also": 0.819,
+    "felso": 0.95,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 0.893,
+    "also": 0.827,
+    "felso": 0.993,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -8.403,
+    "also": -10.553,
+    "felso": -6.186,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 1.586,
+    "also": -3.569,
+    "felso": 4.485,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": -3.024,
+    "also": -4.673,
+    "felso": -1.047,
+    "n": 34
+   }
+  },
+  "NWS": {
+   "homerseklet_JJA": {
+    "median": 1.132,
+    "also": 1.009,
+    "felso": 1.235,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.049,
+    "also": 0.944,
+    "felso": 1.218,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.107,
+    "also": 0.993,
+    "felso": 1.245,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -0.492,
+    "also": -3.608,
+    "felso": 2.068,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 2.738,
+    "also": -0.745,
+    "felso": 5.075,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 1.206,
+    "also": -2.212,
+    "felso": 2.959,
+    "n": 34
+   }
+  },
+  "NSA": {
+   "homerseklet_JJA": {
+    "median": 1.153,
+    "also": 0.991,
+    "felso": 1.311,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.115,
+    "also": 1.008,
+    "felso": 1.354,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.175,
+    "also": 1.022,
+    "felso": 1.342,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -2.437,
+    "also": -5.374,
+    "felso": -0.005,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": -1.87,
+    "also": -7.997,
+    "felso": 2.087,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": -2.846,
+    "also": -5.777,
+    "felso": -0.866,
+    "n": 34
+   }
+  },
+  "NES": {
+   "homerseklet_JJA": {
+    "median": 1.09,
+    "also": 1.012,
+    "felso": 1.258,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.99,
+    "also": 0.876,
+    "felso": 1.146,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.085,
+    "also": 0.99,
+    "felso": 1.19,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -7.635,
+    "also": -12.904,
+    "felso": -2.488,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 2.478,
+    "also": -1.12,
+    "felso": 4.695,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": -0.459,
+    "also": -3.579,
+    "felso": 1.434,
+    "n": 34
+   }
+  },
+  "SAM": {
+   "homerseklet_JJA": {
+    "median": 1.313,
+    "also": 1.156,
+    "felso": 1.613,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.128,
+    "also": 0.93,
+    "felso": 1.278,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.314,
+    "also": 1.132,
+    "felso": 1.493,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -6.194,
+    "also": -12.043,
+    "felso": -0.424,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 0.023,
+    "also": -2.942,
+    "felso": 3.782,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": -1.713,
+    "also": -4.439,
+    "felso": 1.396,
+    "n": 34
+   }
+  },
+  "SWS": {
+   "homerseklet_JJA": {
+    "median": 1.066,
+    "also": 0.956,
+    "felso": 1.129,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.152,
+    "also": 1.066,
+    "felso": 1.232,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.097,
+    "also": 1.018,
+    "felso": 1.135,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -2.972,
+    "also": -4.157,
+    "felso": -1.576,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": -3.984,
+    "also": -7.317,
+    "felso": -1.772,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": -3.778,
+    "also": -6.565,
+    "felso": -2.18,
+    "n": 34
+   }
+  },
+  "SES": {
+   "homerseklet_JJA": {
+    "median": 0.907,
+    "also": 0.781,
+    "felso": 1.212,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.01,
+    "also": 0.906,
+    "felso": 1.096,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 0.995,
+    "also": 0.873,
+    "felso": 1.124,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -0.224,
+    "also": -5.478,
+    "felso": 1.493,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 2.033,
+    "also": 0.287,
+    "felso": 3.248,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 1.665,
+    "also": -0.723,
+    "felso": 2.917,
+    "n": 34
+   }
+  },
+  "SSA": {
+   "homerseklet_JJA": {
+    "median": 0.743,
+    "also": 0.662,
+    "felso": 0.883,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.866,
+    "also": 0.776,
+    "felso": 0.967,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 0.778,
+    "also": 0.661,
+    "felso": 0.847,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 1.384,
+    "also": 0.039,
+    "felso": 2.85,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": -2.989,
+    "also": -5.78,
+    "felso": -0.863,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": -0.797,
+    "also": -2.328,
+    "felso": 0.405,
+    "n": 34
+   }
+  },
+  "NEU": {
+   "homerseklet_JJA": {
+    "median": 1.234,
+    "also": 1.038,
+    "felso": 1.462,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.694,
+    "also": 1.409,
+    "felso": 2.072,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.399,
+    "also": 1.121,
+    "felso": 1.712,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 0.564,
+    "also": -3.127,
+    "felso": 4.239,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 6.418,
+    "also": 4.889,
+    "felso": 8.349,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 3.698,
+    "also": 2.098,
+    "felso": 5.47,
+    "n": 34
+   }
+  },
+  "WCE": {
+   "homerseklet_JJA": {
+    "median": 1.348,
+    "also": 1.138,
+    "felso": 1.697,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.465,
+    "also": 1.289,
+    "felso": 1.686,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.315,
+    "also": 1.145,
+    "felso": 1.424,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -4.189,
+    "also": -7.3,
+    "felso": 0.801,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 5.14,
+    "also": 3.277,
+    "felso": 6.447,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 1.274,
+    "also": -0.313,
+    "felso": 3.639,
+    "n": 34
+   }
+  },
+  "EEU": {
+   "homerseklet_JJA": {
+    "median": 1.435,
+    "also": 1.29,
+    "felso": 1.673,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.966,
+    "also": 1.793,
+    "felso": 2.234,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.606,
+    "also": 1.429,
+    "felso": 1.775,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -1.668,
+    "also": -5.135,
+    "felso": 2.195,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 8.025,
+    "also": 5.554,
+    "felso": 10.247,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 3.25,
+    "also": 1.941,
+    "felso": 5.941,
+    "n": 34
+   }
+  },
+  "MED": {
+   "homerseklet_JJA": {
+    "median": 1.436,
+    "also": 1.349,
+    "felso": 1.675,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.026,
+    "also": 0.931,
+    "felso": 1.123,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.219,
+    "also": 1.108,
+    "felso": 1.349,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -7.957,
+    "also": -10.94,
+    "felso": -3.524,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": -3.088,
+    "also": -5.172,
+    "felso": -0.443,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": -4.851,
+    "also": -6.018,
+    "felso": -2.652,
+    "n": 34
+   }
+  },
+  "SAH": {
+   "homerseklet_JJA": {
+    "median": 1.503,
+    "also": 1.365,
+    "felso": 1.635,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.238,
+    "also": 1.106,
+    "felso": 1.389,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.377,
+    "also": 1.263,
+    "felso": 1.553,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 9.214,
+    "also": 2.858,
+    "felso": 32.101,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": -9.261,
+    "also": -15.82,
+    "felso": -2.388,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 5.96,
+    "also": 0.81,
+    "felso": 24.229,
+    "n": 34
+   }
+  },
+  "WAF": {
+   "homerseklet_JJA": {
+    "median": 1.035,
+    "also": 0.868,
+    "felso": 1.182,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.144,
+    "also": 0.944,
+    "felso": 1.321,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.091,
+    "also": 0.94,
+    "felso": 1.288,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 1.997,
+    "also": -1.749,
+    "felso": 4.844,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 0.761,
+    "also": -11.876,
+    "felso": 6.068,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 2.938,
+    "also": -1.605,
+    "felso": 5.352,
+    "n": 34
+   }
+  },
+  "CAF": {
+   "homerseklet_JJA": {
+    "median": 1.092,
+    "also": 0.777,
+    "felso": 1.212,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.06,
+    "also": 0.701,
+    "felso": 1.195,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.065,
+    "also": 0.792,
+    "felso": 1.194,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 3.04,
+    "also": 1.149,
+    "felso": 6.056,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 5.343,
+    "also": 1.508,
+    "felso": 11.603,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 3.622,
+    "also": 1.495,
+    "felso": 6.153,
+    "n": 34
+   }
+  },
+  "NEAF": {
+   "homerseklet_JJA": {
+    "median": 1.044,
+    "also": 0.902,
+    "felso": 1.226,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.099,
+    "also": 0.972,
+    "felso": 1.181,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.064,
+    "also": 0.945,
+    "felso": 1.204,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 3.051,
+    "also": -1.045,
+    "felso": 7.012,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 15.787,
+    "also": 4.468,
+    "felso": 31.456,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 5.551,
+    "also": 1.315,
+    "felso": 8.967,
+    "n": 34
+   }
+  },
+  "SEAF": {
+   "homerseklet_JJA": {
+    "median": 1.072,
+    "also": 0.884,
+    "felso": 1.19,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.954,
+    "also": 0.847,
+    "felso": 1.04,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.026,
+    "also": 0.914,
+    "felso": 1.109,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -2.32,
+    "also": -7.03,
+    "felso": 3.367,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 5.985,
+    "also": 2.377,
+    "felso": 10.273,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 3.437,
+    "also": 0.279,
+    "felso": 5.06,
+    "n": 34
+   }
+  },
+  "WSAF": {
+   "homerseklet_JJA": {
+    "median": 1.259,
+    "also": 1.069,
+    "felso": 1.389,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.189,
+    "also": 1.022,
+    "felso": 1.263,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.259,
+    "also": 1.128,
+    "felso": 1.378,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -10.704,
+    "also": -13.409,
+    "felso": -6.668,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": -0.17,
+    "also": -2.734,
+    "felso": 1.977,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": -1.935,
+    "also": -4.512,
+    "felso": 0.331,
+    "n": 34
+   }
+  },
+  "ESAF": {
+   "homerseklet_JJA": {
+    "median": 1.099,
+    "also": 0.96,
+    "felso": 1.271,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.064,
+    "also": 0.955,
+    "felso": 1.224,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.131,
+    "also": 1.025,
+    "felso": 1.279,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -7.338,
+    "also": -10.076,
+    "felso": -3.821,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 0.305,
+    "also": -1.586,
+    "felso": 2.516,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": -1.235,
+    "also": -3.56,
+    "felso": 0.406,
+    "n": 34
+   }
+  },
+  "MDG": {
+   "homerseklet_JJA": {
+    "median": 0.912,
+    "also": 0.84,
+    "felso": 1.033,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.946,
+    "also": 0.869,
+    "felso": 1.047,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 0.95,
+    "also": 0.879,
+    "felso": 1.054,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -4.326,
+    "also": -7.764,
+    "felso": -2.337,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": -0.185,
+    "also": -2.48,
+    "felso": 3.076,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": -1.381,
+    "also": -3.381,
+    "felso": 1.084,
+    "n": 34
+   }
+  },
+  "RAR": {
+   "homerseklet_JJA": {
+    "median": 1.411,
+    "also": 1.23,
+    "felso": 1.747,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 2.93,
+    "also": 2.57,
+    "felso": 3.44,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 2.247,
+    "also": 2.007,
+    "felso": 2.449,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 4.399,
+    "also": 2.817,
+    "felso": 6.785,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 15.983,
+    "also": 14.298,
+    "felso": 18.532,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 8.823,
+    "also": 7.504,
+    "felso": 10.21,
+    "n": 34
+   }
+  },
+  "WSB": {
+   "homerseklet_JJA": {
+    "median": 1.545,
+    "also": 1.292,
+    "felso": 1.697,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 2.0,
+    "also": 1.772,
+    "felso": 2.262,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.673,
+    "also": 1.495,
+    "felso": 1.807,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -0.663,
+    "also": -3.66,
+    "felso": 4.11,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 11.563,
+    "also": 9.808,
+    "felso": 13.775,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 4.626,
+    "also": 3.273,
+    "felso": 7.739,
+    "n": 34
+   }
+  },
+  "ESB": {
+   "homerseklet_JJA": {
+    "median": 1.455,
+    "also": 1.218,
+    "felso": 1.722,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.837,
+    "also": 1.508,
+    "felso": 2.263,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.612,
+    "also": 1.422,
+    "felso": 1.772,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 2.005,
+    "also": -0.326,
+    "felso": 4.585,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 13.772,
+    "also": 11.043,
+    "felso": 16.752,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 5.041,
+    "also": 3.489,
+    "felso": 7.118,
+    "n": 34
+   }
+  },
+  "RFE": {
+   "homerseklet_JJA": {
+    "median": 1.468,
+    "also": 1.217,
+    "felso": 1.727,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 2.156,
+    "also": 1.789,
+    "felso": 2.706,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.792,
+    "also": 1.459,
+    "felso": 1.998,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 4.276,
+    "also": 2.999,
+    "felso": 6.001,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 9.553,
+    "also": 6.68,
+    "felso": 13.245,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 6.184,
+    "also": 4.976,
+    "felso": 7.48,
+    "n": 34
+   }
+  },
+  "WCA": {
+   "homerseklet_JJA": {
+    "median": 1.516,
+    "also": 1.394,
+    "felso": 1.708,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.357,
+    "also": 1.138,
+    "felso": 1.499,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.428,
+    "also": 1.315,
+    "felso": 1.525,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -1.584,
+    "also": -4.458,
+    "felso": 4.574,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 3.362,
+    "also": -0.455,
+    "felso": 6.374,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 2.2,
+    "also": -1.698,
+    "felso": 4.307,
+    "n": 34
+   }
+  },
+  "ECA": {
+   "homerseklet_JJA": {
+    "median": 1.477,
+    "also": 1.328,
+    "felso": 1.607,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.378,
+    "also": 1.171,
+    "felso": 1.629,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.39,
+    "also": 1.292,
+    "felso": 1.538,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 3.054,
+    "also": -0.551,
+    "felso": 6.799,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 14.257,
+    "also": 9.813,
+    "felso": 18.348,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 6.388,
+    "also": 4.187,
+    "felso": 8.281,
+    "n": 34
+   }
+  },
+  "TIB": {
+   "homerseklet_JJA": {
+    "median": 1.161,
+    "also": 1.041,
+    "felso": 1.333,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.444,
+    "also": 1.222,
+    "felso": 1.689,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.343,
+    "also": 1.149,
+    "felso": 1.558,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 3.562,
+    "also": 0.202,
+    "felso": 6.967,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": -0.156,
+    "also": -4.194,
+    "felso": 3.33,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 3.769,
+    "also": 1.425,
+    "felso": 6.572,
+    "n": 34
+   }
+  },
+  "EAS": {
+   "homerseklet_JJA": {
+    "median": 1.077,
+    "also": 0.95,
+    "felso": 1.203,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.083,
+    "also": 0.948,
+    "felso": 1.254,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.078,
+    "also": 0.97,
+    "felso": 1.203,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 0.775,
+    "also": -0.512,
+    "felso": 2.015,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 0.161,
+    "also": -2.337,
+    "felso": 2.062,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 0.243,
+    "also": -0.628,
+    "felso": 1.364,
+    "n": 34
+   }
+  },
+  "ARP": {
+   "homerseklet_JJA": {
+    "median": 1.448,
+    "also": 1.278,
+    "felso": 1.577,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.284,
+    "also": 1.193,
+    "felso": 1.517,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.388,
+    "also": 1.282,
+    "felso": 1.502,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 21.517,
+    "also": 6.612,
+    "felso": 28.763,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 2.791,
+    "also": -10.389,
+    "felso": 12.179,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 10.545,
+    "also": 1.673,
+    "felso": 16.753,
+    "n": 34
+   }
+  },
+  "SAS": {
+   "homerseklet_JJA": {
+    "median": 0.878,
+    "also": 0.777,
+    "felso": 0.964,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.061,
+    "also": 0.844,
+    "felso": 1.188,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 0.992,
+    "also": 0.85,
+    "felso": 1.074,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 3.148,
+    "also": 1.695,
+    "felso": 5.67,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": -3.35,
+    "also": -8.595,
+    "felso": 2.056,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 3.721,
+    "also": 0.802,
+    "felso": 6.285,
+    "n": 34
+   }
+  },
+  "SEA": {
+   "homerseklet_JJA": {
+    "median": 0.913,
+    "also": 0.856,
+    "felso": 0.987,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.874,
+    "also": 0.801,
+    "felso": 0.912,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 0.904,
+    "also": 0.848,
+    "felso": 0.943,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -0.121,
+    "also": -2.041,
+    "felso": 2.558,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 1.665,
+    "also": 0.428,
+    "felso": 3.068,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 0.56,
+    "also": -0.464,
+    "felso": 2.532,
+    "n": 34
+   }
+  },
+  "NAU": {
+   "homerseklet_JJA": {
+    "median": 1.144,
+    "also": 0.973,
+    "felso": 1.257,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.98,
+    "also": 0.838,
+    "felso": 1.125,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.073,
+    "also": 0.935,
+    "felso": 1.182,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -2.97,
+    "also": -7.035,
+    "felso": 2.543,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 0.833,
+    "also": -3.615,
+    "felso": 4.225,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 0.478,
+    "also": -2.02,
+    "felso": 3.63,
+    "n": 34
+   }
+  },
+  "CAU": {
+   "homerseklet_JJA": {
+    "median": 1.121,
+    "also": 1.014,
+    "felso": 1.269,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.216,
+    "also": 1.084,
+    "felso": 1.308,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.223,
+    "also": 1.054,
+    "felso": 1.286,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -3.474,
+    "also": -6.732,
+    "felso": 1.794,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 0.634,
+    "also": -3.416,
+    "felso": 6.927,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 0.109,
+    "also": -2.7,
+    "felso": 4.037,
+    "n": 34
+   }
+  },
+  "EAU": {
+   "homerseklet_JJA": {
+    "median": 1.018,
+    "also": 0.916,
+    "felso": 1.167,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.013,
+    "also": 0.889,
+    "felso": 1.207,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.034,
+    "also": 0.945,
+    "felso": 1.178,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -5.375,
+    "also": -7.947,
+    "felso": -1.234,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 2.545,
+    "also": -2.28,
+    "felso": 7.115,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": -1.122,
+    "also": -4.283,
+    "felso": 1.653,
+    "n": 34
+   }
+  },
+  "SAU": {
+   "homerseklet_JJA": {
+    "median": 0.812,
+    "also": 0.72,
+    "felso": 0.939,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.006,
+    "also": 0.841,
+    "felso": 1.08,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 0.915,
+    "also": 0.849,
+    "felso": 1.016,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -3.492,
+    "also": -6.39,
+    "felso": -1.372,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": -0.073,
+    "also": -3.519,
+    "felso": 5.734,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": -1.795,
+    "also": -3.718,
+    "felso": 0.844,
+    "n": 34
+   }
+  },
+  "NZ": {
+   "homerseklet_JJA": {
+    "median": 0.818,
+    "also": 0.696,
+    "felso": 0.91,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.898,
+    "also": 0.763,
+    "felso": 1.054,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 0.843,
+    "also": 0.725,
+    "felso": 0.919,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 1.885,
+    "also": -0.841,
+    "felso": 3.682,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 0.463,
+    "also": -1.437,
+    "felso": 3.37,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 0.549,
+    "also": -0.483,
+    "felso": 2.233,
+    "n": 34
+   }
+  },
+  "EAN": {
+   "homerseklet_JJA": {
+    "median": 1.136,
+    "also": 0.927,
+    "felso": 1.333,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.987,
+    "also": 0.859,
+    "felso": 1.294,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.082,
+    "also": 0.907,
+    "felso": 1.308,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 8.166,
+    "also": 6.088,
+    "felso": 10.077,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 7.064,
+    "also": 4.46,
+    "felso": 9.445,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 7.879,
+    "also": 5.627,
+    "felso": 9.859,
+    "n": 34
+   }
+  },
+  "WAN": {
+   "homerseklet_JJA": {
+    "median": 1.284,
+    "also": 1.067,
+    "felso": 1.596,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.854,
+    "also": 0.644,
+    "felso": 1.125,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.086,
+    "also": 0.883,
+    "felso": 1.29,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 7.071,
+    "also": 5.169,
+    "felso": 9.391,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 6.181,
+    "also": 3.702,
+    "felso": 8.717,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 6.852,
+    "also": 4.78,
+    "felso": 9.088,
+    "n": 34
+   }
+  },
+  "ARO": {
+   "homerseklet_JJA": {
+    "median": 1.146,
+    "also": 0.757,
+    "felso": 1.915,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 4.512,
+    "also": 3.617,
+    "felso": 5.338,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 3.189,
+    "also": 2.401,
+    "felso": 3.841,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 5.569,
+    "also": 3.03,
+    "felso": 9.876,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 14.705,
+    "also": 9.345,
+    "felso": 29.109,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 12.467,
+    "also": 7.478,
+    "felso": 18.449,
+    "n": 34
+   }
+  },
+  "NPO": {
+   "homerseklet_JJA": {
+    "median": 1.075,
+    "also": 0.918,
+    "felso": 1.262,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.859,
+    "also": 1.57,
+    "felso": 2.07,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.351,
+    "also": 1.201,
+    "felso": 1.512,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 2.107,
+    "also": -0.094,
+    "felso": 6.174,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 1.719,
+    "also": -2.612,
+    "felso": 5.84,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 2.393,
+    "also": 0.526,
+    "felso": 5.366,
+    "n": 34
+   }
+  },
+  "EPO": {
+   "homerseklet_JJA": {
+    "median": 0.806,
+    "also": 0.764,
+    "felso": 0.889,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.81,
+    "also": 0.778,
+    "felso": 0.89,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 0.813,
+    "also": 0.778,
+    "felso": 0.895,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 2.444,
+    "also": -0.901,
+    "felso": 5.62,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 2.596,
+    "also": 0.048,
+    "felso": 4.664,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 2.873,
+    "also": 1.301,
+    "felso": 4.81,
+    "n": 34
+   }
+  },
+  "SPO": {
+   "homerseklet_JJA": {
+    "median": 0.728,
+    "also": 0.673,
+    "felso": 0.775,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.769,
+    "also": 0.742,
+    "felso": 0.805,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 0.749,
+    "also": 0.714,
+    "felso": 0.783,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -1.305,
+    "also": -5.671,
+    "felso": 2.226,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 1.27,
+    "also": -0.866,
+    "felso": 3.049,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 0.514,
+    "also": -1.084,
+    "felso": 1.967,
+    "n": 34
+   }
+  },
+  "NAO": {
+   "homerseklet_JJA": {
+    "median": 0.977,
+    "also": 0.752,
+    "felso": 1.169,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.84,
+    "also": 0.722,
+    "felso": 1.03,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 0.895,
+    "also": 0.716,
+    "felso": 1.031,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -2.04,
+    "also": -3.719,
+    "felso": -0.061,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 1.974,
+    "also": 0.301,
+    "felso": 3.168,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 0.111,
+    "also": -1.485,
+    "felso": 0.869,
+    "n": 34
+   }
+  },
+  "ARS": {
+   "homerseklet_JJA": {
+    "median": 0.841,
+    "also": 0.752,
+    "felso": 0.903,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.948,
+    "also": 0.869,
+    "felso": 1.018,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 0.904,
+    "also": 0.84,
+    "felso": 0.972,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 8.708,
+    "also": -9.316,
+    "felso": 31.971,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 8.274,
+    "also": -3.949,
+    "felso": 16.974,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 15.534,
+    "also": 3.592,
+    "felso": 25.984,
+    "n": 34
+   }
+  },
+  "BOB": {
+   "homerseklet_JJA": {
+    "median": 0.859,
+    "also": 0.784,
+    "felso": 0.946,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.815,
+    "also": 0.74,
+    "felso": 0.862,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 0.836,
+    "also": 0.783,
+    "felso": 0.897,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 5.497,
+    "also": 0.219,
+    "felso": 14.176,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": -0.349,
+    "also": -5.939,
+    "felso": 5.39,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 3.946,
+    "also": 0.595,
+    "felso": 8.946,
+    "n": 34
+   }
+  },
+  "EIO": {
+   "homerseklet_JJA": {
+    "median": 0.863,
+    "also": 0.793,
+    "felso": 0.926,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.821,
+    "also": 0.746,
+    "felso": 0.864,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 0.836,
+    "also": 0.784,
+    "felso": 0.874,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 6.501,
+    "also": -0.08,
+    "felso": 13.978,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": -0.442,
+    "also": -6.421,
+    "felso": 7.051,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 4.031,
+    "also": 1.518,
+    "felso": 8.489,
+    "n": 34
+   }
+  },
+  "SIO": {
+   "homerseklet_JJA": {
+    "median": 0.729,
+    "also": 0.658,
+    "felso": 0.813,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.789,
+    "also": 0.722,
+    "felso": 0.84,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 0.749,
+    "also": 0.704,
+    "felso": 0.82,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": -4.719,
+    "also": -8.695,
+    "felso": -0.573,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": -1.031,
+    "also": -5.459,
+    "felso": 1.282,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": -1.579,
+    "also": -4.379,
+    "felso": 0.471,
+    "n": 34
+   }
+  },
+  "SOO": {
+   "homerseklet_JJA": {
+    "median": 0.997,
+    "also": 0.696,
+    "felso": 1.139,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 0.677,
+    "also": 0.569,
+    "felso": 0.77,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 0.833,
+    "also": 0.659,
+    "felso": 0.957,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 4.611,
+    "also": 3.602,
+    "felso": 6.323,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 2.11,
+    "also": 1.08,
+    "felso": 3.502,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 3.365,
+    "also": 2.696,
+    "felso": 4.59,
+    "n": 34
+   }
+  },
+  "world": {
+   "homerseklet_JJA": {
+    "median": 1.249,
+    "also": 1.203,
+    "felso": 1.317,
+    "n": 34
+   },
+   "homerseklet_DJF": {
+    "median": 1.382,
+    "also": 1.351,
+    "felso": 1.44,
+    "n": 34
+   },
+   "homerseklet_ev": {
+    "median": 1.304,
+    "also": 1.267,
+    "felso": 1.353,
+    "n": 34
+   },
+   "csapadek_pct_JJA": {
+    "median": 0.714,
+    "also": -0.123,
+    "felso": 2.239,
+    "n": 34
+   },
+   "csapadek_pct_DJF": {
+    "median": 1.919,
+    "also": 1.349,
+    "felso": 3.145,
+    "n": 34
+   },
+   "csapadek_pct_ev": {
+    "median": 1.472,
+    "also": 0.716,
+    "felso": 2.535,
+    "n": 34
+   }
+  }
+ },
+ "orszag_regio": {
+  "AD": "MED",
+  "AE": "ARP",
+  "AF": "WCA",
+  "AG": "CAR",
+  "AI": "CAR",
+  "AL": "MED",
+  "AM": "WCA",
+  "AO": "WSAF",
+  "AQ": "EAN",
+  "AR": "SES",
+  "AT": "WCE",
+  "AU": "SAU",
+  "AW": "CAR",
+  "AX": "NEU",
+  "AZ": "WCA",
+  "BA": "MED",
+  "BB": "CAR",
+  "BD": "SAS",
+  "BE": "WCE",
+  "BF": "WAF",
+  "BG": "MED",
+  "BH": "ARP",
+  "BI": "SEAF",
+  "BJ": "WAF",
+  "BN": "SEA",
+  "BO": "SAM",
+  "BQ": "CAR",
+  "BR": "NES",
+  "BS": "CAR",
+  "BT": "TIB",
+  "BW": "ESAF",
+  "BY": "WCE",
+  "BZ": "SCA",
+  "CA": "ENA",
+  "CD": "CAF",
+  "CF": "CAF",
+  "CG": "CAF",
+  "CH": "WCE",
+  "CI": "WAF",
+  "CL": "SWS",
+  "CM": "CAF",
+  "CN": "EAS",
+  "CO": "NWS",
+  "CR": "SCA",
+  "CU": "CAR",
+  "CW": "CAR",
+  "CY": "MED",
+  "CZ": "WCE",
+  "DE": "WCE",
+  "DJ": "NEAF",
+  "DK": "NEU",
+  "DM": "CAR",
+  "DO": "CAR",
+  "DZ": "MED",
+  "EC": "NWS",
+  "EE": "NEU",
+  "EG": "SAH",
+  "EH": "SAH",
+  "ER": "SAH",
+  "ES": "MED",
+  "ET": "NEAF",
+  "FI": "NEU",
+  "FK": "SSA",
+  "FO": "NEU",
+  "FR": "WCE",
+  "GA": "CAF",
+  "GB": "NEU",
+  "GD": "CAR",
+  "GE": "WCA",
+  "GF": "NSA",
+  "GG": "WCE",
+  "GH": "WAF",
+  "GL": "GIC",
+  "GM": "WAF",
+  "GN": "WAF",
+  "GP": "CAR",
+  "GQ": "CAF",
+  "GR": "MED",
+  "GT": "SCA",
+  "GW": "WAF",
+  "GY": "NSA",
+  "HK": "EAS",
+  "HN": "SCA",
+  "HR": "WCE",
+  "HT": "CAR",
+  "HU": "WCE",
+  "ID": "SEA",
+  "IE": "NEU",
+  "IL": "MED",
+  "IM": "NEU",
+  "IN": "SAS",
+  "IQ": "WCA",
+  "IR": "WCA",
+  "IS": "GIC",
+  "IT": "MED",
+  "JE": "WCE",
+  "JM": "CAR",
+  "JO": "MED",
+  "JP": "EAS",
+  "KE": "SEAF",
+  "KG": "WCA",
+  "KH": "SEA",
+  "KM": "ESAF",
+  "KN": "CAR",
+  "KP": "EAS",
+  "KR": "EAS",
+  "KW": "ARP",
+  "KY": "CAR",
+  "KZ": "WSB",
+  "LA": "SEA",
+  "LB": "MED",
+  "LC": "CAR",
+  "LK": "SAS",
+  "LR": "WAF",
+  "LS": "ESAF",
+  "LT": "WCE",
+  "LV": "WCE",
+  "LY": "MED",
+  "MA": "MED",
+  "MD": "WCE",
+  "ME": "MED",
+  "MG": "MDG",
+  "MK": "MED",
+  "ML": "WAF",
+  "MM": "SAS",
+  "MN": "ESB",
+  "MQ": "CAR",
+  "MR": "SAH",
+  "MS": "CAR",
+  "MT": "MED",
+  "MW": "ESAF",
+  "MX": "NCA",
+  "MY": "SEA",
+  "MZ": "ESAF",
+  "NA": "WSAF",
+  "NE": "WAF",
+  "NG": "WAF",
+  "NI": "SCA",
+  "NL": "NEU",
+  "NO": "NEU",
+  "NP": "TIB",
+  "NZ": "NZ",
+  "OM": "ARP",
+  "PA": "SCA",
+  "PE": "NWS",
+  "PG": "SEA",
+  "PH": "SEA",
+  "PK": "WCA",
+  "PL": "WCE",
+  "PM": "ENA",
+  "PR": "CAR",
+  "PT": "MED",
+  "PW": "SEA",
+  "PY": "SES",
+  "QA": "ARP",
+  "RO": "WCE",
+  "RS": "MED",
+  "RU": "EEU",
+  "RW": "SEAF",
+  "SA": "ARP",
+  "SD": "NEAF",
+  "SE": "NEU",
+  "SI": "WCE",
+  "SJ": "NEU",
+  "SK": "WCE",
+  "SL": "WAF",
+  "SN": "SAH",
+  "SO": "NEAF",
+  "SR": "NSA",
+  "SS": "NEAF",
+  "ST": "WAF",
+  "SV": "SCA",
+  "SY": "MED",
+  "SZ": "ESAF",
+  "TC": "CAR",
+  "TD": "CAF",
+  "TG": "WAF",
+  "TH": "SEA",
+  "TJ": "WCA",
+  "TL": "SEA",
+  "TM": "WCA",
+  "TN": "MED",
+  "TR": "MED",
+  "TT": "NSA",
+  "TW": "EAS",
+  "TZ": "SEAF",
+  "UA": "WCE",
+  "UG": "SEAF",
+  "US": "ENA",
+  "UY": "SES",
+  "UZ": "WCA",
+  "VC": "CAR",
+  "VE": "NSA",
+  "VG": "CAR",
+  "VI": "CAR",
+  "VN": "SEA",
+  "XK": "MED",
+  "YE": "ARP",
+  "YT": "MDG",
+  "ZA": "ESAF",
+  "ZM": "ESAF",
+  "ZW": "ESAF"
+ },
+ "regio_nevek": {
+  "GIC": "Greenland/Iceland",
+  "NWN": "N.W.North-America",
+  "NEN": "N.E.North-America",
+  "WNA": "W.North-America",
+  "CNA": "C.North-America",
+  "ENA": "E.North-America",
+  "NCA": "N.Central-America",
+  "SCA": "S.Central-America",
+  "CAR": "Caribbean",
+  "NWS": "N.W.South-America",
+  "NSA": "N.South-America",
+  "NES": "N.E.South-America",
+  "SAM": "South-American-Monsoon",
+  "SWS": "S.W.South-America",
+  "SES": "S.E.South-America",
+  "SSA": "S.South-America",
+  "NEU": "N.Europe",
+  "WCE": "West&Central-Europe",
+  "EEU": "E.Europe",
+  "MED": "Mediterranean",
+  "SAH": "Sahara",
+  "WAF": "Western-Africa",
+  "CAF": "Central-Africa",
+  "NEAF": "N.Eastern-Africa",
+  "SEAF": "S.Eastern-Africa",
+  "WSAF": "W.Southern-Africa",
+  "ESAF": "E.Southern-Africa",
+  "MDG": "Madagascar",
+  "RAR": "Russian-Arctic",
+  "WSB": "W.Siberia",
+  "ESB": "E.Siberia",
+  "RFE": "Russian-Far-East",
+  "WCA": "W.C.Asia",
+  "ECA": "E.C.Asia",
+  "TIB": "Tibetan-Plateau",
+  "EAS": "E.Asia",
+  "ARP": "Arabian-Peninsula",
+  "SAS": "S.Asia",
+  "SEA": "S.E.Asia",
+  "NAU": "N.Australia",
+  "CAU": "C.Australia",
+  "EAU": "E.Australia",
+  "SAU": "S.Australia",
+  "NZ": "New-Zealand",
+  "EAN": "E.Antarctica",
+  "WAN": "W.Antarctica"
+ },
+ "gmst_megfigyelt": {
+  "forras": "Forster et al. 2025, Indicators of Global Climate Change 2024/2025 (ESSD), https://github.com/ClimateIndicator/data, CC BY 4.0; 1850–1900-hoz képest, °C",
+  "evek": {
+   "1850": -0.046,
+   "1851": 0.041,
+   "1852": 0.099,
+   "1853": 0.054,
+   "1854": 0.049,
+   "1855": 0.076,
+   "1856": -0.021,
+   "1857": -0.114,
+   "1858": -0.049,
+   "1859": 0.051,
+   "1860": -0.059,
+   "1861": -0.116,
+   "1862": -0.184,
+   "1863": -0.039,
+   "1864": -0.074,
+   "1865": 0.034,
+   "1866": 0.014,
+   "1867": -0.011,
+   "1868": 0.059,
+   "1869": 0.066,
+   "1870": 0.026,
+   "1871": -0.004,
+   "1872": 0.034,
+   "1873": 0.016,
+   "1874": -0.056,
+   "1875": -0.006,
+   "1876": -0.041,
+   "1877": 0.306,
+   "1878": 0.364,
+   "1879": 0.084,
+   "1880": 0.039,
+   "1881": 0.134,
+   "1882": 0.061,
+   "1883": 0.016,
+   "1884": -0.116,
+   "1885": -0.109,
+   "1886": -0.101,
+   "1887": -0.159,
+   "1888": 0.006,
+   "1889": 0.124,
+   "1890": -0.154,
+   "1891": -0.044,
+   "1892": -0.131,
+   "1893": -0.134,
+   "1894": -0.136,
+   "1895": -0.059,
+   "1896": 0.084,
+   "1897": 0.094,
+   "1898": -0.106,
+   "1899": 0.029,
+   "1900": 0.121,
+   "1901": 0.071,
+   "1902": -0.069,
+   "1903": -0.191,
+   "1904": -0.251,
+   "1905": -0.074,
+   "1906": 0.026,
+   "1907": -0.154,
+   "1908": -0.191,
+   "1909": -0.219,
+   "1910": -0.186,
+   "1911": -0.206,
+   "1912": -0.129,
+   "1913": -0.119,
+   "1914": 0.076,
+   "1915": 0.131,
+   "1916": -0.089,
+   "1917": -0.209,
+   "1918": -0.081,
+   "1919": -0.001,
+   "1920": 0.036,
+   "1921": 0.076,
+   "1922": -0.009,
+   "1923": 0.014,
+   "1924": 0.014,
+   "1925": 0.054,
+   "1926": 0.186,
+   "1927": 0.084,
+   "1928": 0.089,
+   "1929": -0.071,
+   "1930": 0.151,
+   "1931": 0.199,
+   "1932": 0.151,
+   "1933": -0.001,
+   "1934": 0.146,
+   "1935": 0.111,
+   "1936": 0.151,
+   "1937": 0.301,
+   "1938": 0.291,
+   "1939": 0.284,
+   "1940": 0.391,
+   "1941": 0.351,
+   "1942": 0.299,
+   "1943": 0.336,
+   "1944": 0.464,
+   "1945": 0.346,
+   "1946": 0.191,
+   "1947": 0.241,
+   "1948": 0.179,
+   "1949": 0.161,
+   "1950": 0.086,
+   "1951": 0.231,
+   "1952": 0.319,
+   "1953": 0.386,
+   "1954": 0.181,
+   "1955": 0.124,
+   "1956": 0.066,
+   "1957": 0.294,
+   "1958": 0.309,
+   "1959": 0.289,
+   "1960": 0.226,
+   "1961": 0.311,
+   "1962": 0.266,
+   "1963": 0.299,
+   "1964": 0.039,
+   "1965": 0.141,
+   "1966": 0.194,
+   "1967": 0.224,
+   "1968": 0.169,
+   "1969": 0.309,
+   "1970": 0.264,
+   "1971": 0.149,
+   "1972": 0.261,
+   "1973": 0.399,
+   "1974": 0.169,
+   "1975": 0.229,
+   "1976": 0.141,
+   "1977": 0.449,
+   "1978": 0.336,
+   "1979": 0.421,
+   "1980": 0.536,
+   "1981": 0.584,
+   "1982": 0.381,
+   "1983": 0.564,
+   "1984": 0.394,
+   "1985": 0.381,
+   "1986": 0.444,
+   "1987": 0.569,
+   "1988": 0.619,
+   "1989": 0.501,
+   "1990": 0.689,
+   "1991": 0.666,
+   "1992": 0.466,
+   "1993": 0.509,
+   "1994": 0.569,
+   "1995": 0.721,
+   "1996": 0.604,
+   "1997": 0.749,
+   "1998": 0.894,
+   "1999": 0.651,
+   "2000": 0.654,
+   "2001": 0.804,
+   "2002": 0.879,
+   "2003": 0.871,
+   "2004": 0.799,
+   "2005": 0.946,
+   "2006": 0.901,
+   "2007": 0.911,
+   "2008": 0.786,
+   "2009": 0.919,
+   "2010": 0.989,
+   "2011": 0.866,
+   "2012": 0.899,
+   "2013": 0.929,
+   "2014": 0.994,
+   "2015": 1.144,
+   "2016": 1.261,
+   "2017": 1.166,
+   "2018": 1.094,
+   "2019": 1.214,
+   "2020": 1.249,
+   "2021": 1.096,
+   "2022": 1.139,
+   "2023": 1.439,
+   "2024": 1.511,
+   "2025": 1.391
+  }
+ }
+}
