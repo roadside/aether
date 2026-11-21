@@ -49,8 +49,12 @@ func _ready() -> void:
 
 
 func add_levers(new_levers: Array) -> void:
-	for j in new_levers:
-		levers[str(j["kar"])] = j
+	if campaign != null:   # a mentésbe is (a karok a játék újraindítása után is megmaradnak)
+		campaign.add_levers(new_levers)
+		levers = campaign.levers
+	else:
+		for j in new_levers:
+			levers[str(j["kar"])] = j
 	if is_inside_tree():
 		rebuild()
 
@@ -88,6 +92,8 @@ func _slider_row(question: String, help: String, mn: float, mx: float, step: flo
 
 
 func rebuild() -> void:
+	if campaign != null:
+		levers = campaign.levers
 	UI.clear(_body)
 	_lever_sliders.clear()
 	var h := UI.hbox(12)
@@ -121,10 +127,14 @@ func rebuild() -> void:
 		_co2.value = int(mission["co2_ev"])
 		_co2.editable = false
 		_co2.tooltip_text = L.t("Ebben a küldetésben rögzített.")
+	var ch4_locked: bool = campaign != null and campaign.era < 2   # tudásfa: a Mérséklés korszakában nyílik meg
 	_ch4 = _slider_row(L.t("Mennyivel csökkentsük a metánt 2030-ig?"),
-		L.t("Gyorsan hat: csökkentése pár évtized alatt lassítja a melegedést."),
+		L.t("A II. Mérséklés korszakban nyílik meg. Kutass ki 2 témát az I. korszakból!") if ch4_locked
+		else L.t("Gyorsan hat: csökkentése pár évtized alatt lassítja a melegedést."),
 		0, 45, 5, float(cur.get("metan_csokkentes_pct", 0.0)), pct_fmt,
 		L.t("UNEP/CCAC Global Methane Assessment (2021): 45% elérhető 2030-ig"))
+	if ch4_locked:
+		_ch4.editable = false
 
 	var keys := levers.keys()
 	keys.sort()

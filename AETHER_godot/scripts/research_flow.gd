@@ -10,30 +10,9 @@ const UI := preload("res://scripts/ui.gd")
 const L := preload("res://scripts/i18n.gd")
 const Bridge := preload("res://scripts/lab_bridge.gd")
 
-## Előre összeállított kérdések. "kereses": angol keresőkifejezések ("|" választja el),
-## "parameterek": mely modellparaméterekhez keresünk számot, "wiki"/"wiki_en"/"attekintes":
-## a „Mi ez, és mire jó?” magyarázat forrásai (Wikipédia + összefoglaló cikkek).
-const CDR_PARAMS := "cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2"
-const NET_REVIEW := "negative emissions technologies potentials costs side effects"
-const QUESTIONS := [
-	{"cim": "Mennyi CO2-t vonhat ki a levegőből a bioszén?",
-	 "magyarazat": "A bioszén elszenesített növényi hulladék. A talajba keverve hosszú ideig tárolja a szenet.",
-	 "kereses": "biochar carbon dioxide removal potential global|biochar soil carbon sequestration meta-analysis|" + NET_REVIEW,
-	 "parameterek": CDR_PARAMS, "wiki": "bioszén", "wiki_en": "biochar", "attekintes": "biochar carbon sequestration review"},
-	{"cim": "Mennyit segít a kőzetmállasztás?",
-	 "magyarazat": "Finomra őrölt kőzetet szórnak a földekre, ami lassan megköti a levegő CO2-jét.",
-	 "kereses": "enhanced rock weathering carbon dioxide removal potential|enhanced weathering croplands global potential|" + NET_REVIEW,
-	 "parameterek": CDR_PARAMS, "wiki": "kőzetmállás szén-dioxid", "wiki_en": "enhanced weathering", "attekintes": "enhanced rock weathering review"},
-	{"cim": "Mennyi CO2-t köthet meg az erdősítés?",
-	 "magyarazat": "Új erdők telepítése: a fák növekedés közben szenet építenek be.",
-	 "kereses": "afforestation reforestation carbon dioxide removal potential global|global tree restoration potential carbon|" + NET_REVIEW,
-	 "parameterek": CDR_PARAMS, "wiki": "erdősítés", "wiki_en": "afforestation", "attekintes": "afforestation carbon sequestration review"},
-	{"cim": "Segítenek-e az aszálytűrő kukoricafajták?",
-	 "magyarazat": "Ez nem hűti a Földet, de megvédheti a termést a forró, száraz években.",
-	 "kereses": "drought tolerant maize yield advantage under drought|drought tolerant maize varieties yield on-farm trials",
-	 "parameterek": "alkalmazkodas_hozam_elony_pct", "wiki": "kukorica szárazságtűrés", "wiki_en": "drought tolerance maize",
-	 "attekintes": "drought tolerant maize review"},
-]
+## A kérdések a tudásfa témái (knowledge.gd): korszakonként nyílnak meg.
+const Knowledge := preload("res://scripts/knowledge.gd")
+const QUESTIONS := Knowledge.TOPICS
 
 ## A választható AI-k. "kulcs": melyik környezeti változóba kerül a játékban
 ## megadott kulcs (csak a futás idejére, sehova nem mentjük), "link": hol lehet kulcsot kérni.
@@ -59,7 +38,6 @@ var _poll: Timer
 var _result: Dictionary = {}
 var _checks: Array = []     # [[CheckBox, javaslat], ...]
 var _step_rows: Array = []
-var _log_label: Label
 var _short_label: Label
 var _dots := 0
 var _title_label: Label        # a fejléc címe (kutatás közben pontok futnak utána)
@@ -117,20 +95,22 @@ func _close() -> void:
 func show_questions() -> void:
 	_topic_q = {}
 	_header(L.t("Mit kutassunk?"), 1, L.t("Válassz kérdést. A válasz valódi tudományos cikkekből jön."))
-	for q in QUESTIONS:
-		var c := UI.card(UI.CYAN)
-		c.add_child(UI.label(L.t(q["cim"]), 19, UI.TEXT, true))
-		c.add_child(UI.label(L.t(q["magyarazat"]), 16, UI.SOFT))
-		var row := UI.hbox(12)
-		row.alignment = BoxContainer.ALIGNMENT_END
-		var info := UI.button(L.t("Mi ez, és mire jó?"))
-		info.pressed.connect(_show_topic.bind(q))
-		row.add_child(info)
-		var b := UI.button(L.t("Ezt kutatom"))
-		b.pressed.connect(_pick_question.bind(q))
-		row.add_child(b)
-		c.add_child(row)
-		_body.add_child(UI.card_root(c))
+	var era: int = campaign.era if campaign != null else Knowledge.ERAS.size()
+	var done: Array = campaign.done if campaign != null else []
+	for e in range(1, Knowledge.ERAS.size() + 1):
+		if e > era + 1:   # a távolabbi korszakok csak egy sorban
+			_body.add_child(UI.label(Knowledge.era_name(e) + " · " + L.t("zárva"), 16, UI.MUTE, true))
+			continue
+		var head := UI.label(Knowledge.era_name(e) + ("" if e <= era else " · " + L.t("zárva")), 20,
+			UI.GOLD if e <= era else UI.MUTE, true)
+		_body.add_child(head)
+		_body.add_child(UI.label(L.t(Knowledge.ERAS[e - 1]["tema"]), 15, UI.SOFT))
+		if e > era:   # a következő korszak: mi kell a megnyitásához
+			for cond in campaign.era_conditions(e):
+				_body.add_child(UI.label(("✓ " if cond[1] else "○ ") + str(cond[0]), 15, UI.GREEN if cond[1] else UI.TEXT))
+			continue
+		for q in Knowledge.topics_of(e):
+			_body.add_child(_question_card(q, q["id"] in done))
 	# saját kérdés: haladóknak, alapból rejtve
 	var more := UI.button(L.t("Saját kérdést írok (haladó)"))
 	var box := UI.hbox(8)
@@ -150,6 +130,27 @@ func show_questions() -> void:
 	more.pressed.connect(more_fn)
 	_body.add_child(more)
 	_body.add_child(box)
+
+
+## Egy kutatható téma kártyája: kérdés, egy mondat, mit ad, és két gomb.
+func _question_card(q: Dictionary, is_done: bool) -> Control:
+	var c := UI.card(UI.GREEN if is_done else UI.CYAN)
+	c.add_child(UI.label(L.t(q["cim"]), 19, UI.TEXT, true))
+	c.add_child(UI.label(L.t(q["magyarazat"]), 16, UI.SOFT))
+	if is_done:
+		c.add_child(UI.label(L.t("✓ Kutatva. ") + L.t(q["nyit"]), 15, UI.GREEN))
+	else:
+		c.add_child(UI.label(L.t("Ad: ") + L.t(q["nyit"]), 15, UI.GOLD))
+	var row := UI.hbox(12)
+	row.alignment = BoxContainer.ALIGNMENT_END
+	var info := UI.button(L.t("Mi ez, és mire jó?"))
+	info.pressed.connect(_show_topic.bind(q))
+	row.add_child(info)
+	var b := UI.button(L.t("Újra kutatom") if is_done else L.t("Ezt kutatom"))
+	b.pressed.connect(_pick_question.bind(q))
+	row.add_child(b)
+	c.add_child(row)
+	return UI.card_root(c)
 
 
 # --- „Mi ez, és mire jó?” ---------------------------------------------------
@@ -281,17 +282,11 @@ func _show_busy() -> void:
 # --- 2. Ki kutasson? -------------------------------------------------------
 func _show_ai_choice() -> void:
 	_header(L.t("Ki kutasson?"), 2, L.t("Kérdés: ") + L.t(str(_question["cim"])))
-	# Miért kell AI? Egy mondat mindig látszik, a többi a Részletek mögött.
+	# Miért kell AI? Két rövid mondat, „Részletek” nélkül.
 	var why := UI.card(UI.GOLD)
 	why.add_child(UI.label(L.t("Miért kell AI?"), 17, UI.GOLD, true))
 	why.add_child(UI.label(L.t("Az AI a kutatód: cikkeket olvas és számokat keres. A játék mindet ellenőrzi."), 16, UI.SOFT))
-	var why_more := UI.label(L.t("A játék nem hisz vakon az AI-nak: minden számot szó szerint visszakeres a cikkben, és csak azt fogadja el, ami tényleg benne van. Fontos: a ChatGPT Plus, Claude Pro vagy Gemini előfizetés önmagában nem elég, a játékhoz API-kulcs kell. Ez külön, használat szerint fizetendő: egy kutatás a választott AI-tól függően néhány forinttól pár száz forintig terjed. A Geminihez van ingyenes keret, az Ollama pedig teljesen ingyenes."), 15, UI.MUTE)
-	why_more.visible = false
-	var why_btn := UI.button(L.t("Részletek"))
-	var why_fn := func() -> void: why_more.visible = not why_more.visible
-	why_btn.pressed.connect(why_fn)
-	why.add_child(why_btn)
-	why.add_child(why_more)
+	why.add_child(UI.label(L.t("A ChatGPT, Claude vagy Gemini előfizetés nem elég, API-kulcs kell. Az Ollama ingyenes."), 15, UI.MUTE))
 	_body.add_child(UI.card_root(why))
 	var best := "none"
 	for id in ["ollama", "gemini", "openai", "claude"]:   # a legalaposabb elérhető
@@ -457,14 +452,6 @@ func _start_research() -> void:
 		_body.add_child(l)
 	_short_label = UI.label("", 17, UI.SOFT)
 	_body.add_child(_short_label)
-	# A technikai napló (keresőszavak, adatbázisok találatai) csak a Részletek mögött.
-	_log_label = UI.label("", 13, UI.MUTE)
-	_log_label.visible = false
-	var log_btn := UI.button(L.t("Részletek"))
-	var log_fn := func() -> void: _log_label.visible = not _log_label.visible
-	log_btn.pressed.connect(log_fn)
-	_body.add_child(log_btn)
-	_body.add_child(_log_label)
 	if bridge.run("kutat", ["godot-kutat", L.t(str(_question["cim"])), "--ai", _ai, "--mappa", _folder, "--nyelv", L.lang,
 			"--kereses", str(_question.get("kereses", "")), "--parameterek", str(_question.get("parameterek", "")),
 			"--orszag", L.country(), "--cikkek", str(campaign.papers_per_research() if campaign != null else 12)]):
@@ -491,8 +478,6 @@ func _on_poll() -> void:
 		elif i + 1 == step:
 			l.text = "●  " + n
 			l.add_theme_color_override("font_color", UI.GOLD)
-	var lines: Array = st.get("naplo", [])
-	_log_label.text = "\n".join(PackedStringArray(lines.slice(max(0, lines.size() - 12))))
 	_short_label.text = str(st.get("rovid", ""))
 
 
@@ -538,13 +523,6 @@ func _show_python_error(code: int, output: String) -> void:
 	if code == -1 or code == 9009:
 		hint = L.t("Nem találom a Pythont. Telepítsd a python.org oldalról (3.10 vagy újabb), majd indítsd újra a játékot.")
 	_body.add_child(UI.label(hint, 18, UI.TEXT))
-	var det := UI.label(output.right(1200), 14, UI.MUTE)
-	det.visible = false
-	var more := UI.button(L.t("Részletek"))
-	var det_fn := func() -> void: det.visible = not det.visible
-	more.pressed.connect(det_fn)
-	_body.add_child(more)
-	_body.add_child(det)
 	var back := UI.button(L.t("Újra"))
 	back.pressed.connect(show_questions)
 	_body.add_child(back)
@@ -572,6 +550,10 @@ func _show_results() -> void:
 	var props: Array = _result["javaslatok"]
 	for j in props:
 		_body.add_child(_proposal_card(j, pub))
+	var tid := str(_question.get("id", ""))
+	if not props.is_empty() and campaign != null and tid != "" and not (tid in campaign.done):
+		campaign.mark_researched(tid)   # tudásfa: ellenőrzött szám van, a téma kutatott
+		_body.add_child(UI.label(L.t("Új tudás a tudásfán: ") + L.t(str(_question["cim"])), 17, UI.GREEN, true))
 	if props.is_empty():
 		var why := L.t("AI nélkül csak cikklista készül, számok nem.") if _ai == "none" \
 			else L.t("Nem találtunk ellenőrizhető számot. Ez is eredmény.")

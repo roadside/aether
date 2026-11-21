@@ -119,6 +119,16 @@ A **Számítás** szándékosan kötődik a valódi AI-költséghez: a játék e
 
 A napsugár-módosítás (sztratoszférikus aeroszol) a IV. korszakban *kutatható*, de bevezetése szerver-szintű szavazást igényel, és a modell kötelezően mutatja a leállítási kockázatot. A játék **nem** ad valós telepítési útmutatót semmilyen geomérnöki beavatkozáshoz.
 
+### 7.1 Ami már működik (2026-11-21)
+
+Négy korszak, 13 valódi kutatási témával (játékszabály, `knowledge.gd`). Egy téma akkor kutatott, ha a kutatás legalább egy ellenőrzött számot talált róla. A korszakok:
+- **I. Felismerés** (kezdő): mennyit melegít a CO2; mennyit csökken a termés melegedéskor; aszálytűrő kukorica.
+- **II. Mérséklés** (2 kutatott téma az I.-ből): rizsföldek metánja; gázipari metánszivárgás; csepegtető öntözés. Megnyílik a metán a tervben.
+- **III. Átalakulás** (2 téma a II.-ből, bevezetett terv, bizalom ≥ 50%): bioszén, kőzetmállasztás, CO2-szűrés a levegőből, növényi energia CO2-tárolással. Ezek a tervbe tehetők.
+- **IV. Helyreállítás** (2 téma a III.-ból, és a modellben 5 év alatt csökken a nettó CO2-kibocsátás): erdősítés, talaj szene, és a magaslégköri kén (csak megértésre, nem vezethető be).
+
+A „Saját kérdés (haladó)” a tudásfán kívül marad. A jóváhagyott tervkarok és a kutatott témák a mentésben megmaradnak.
+
 ## 8. Tudásfa
 
 - A csomópontok **témák** (pl. „Rizsföldek metánja”, „Kőzetmállasztás”), nem kitalált technológiák.

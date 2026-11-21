@@ -12,6 +12,7 @@ const PlanPanel := preload("res://scripts/plan_panel.gd")
 const EventPanel := preload("res://scripts/event_panel.gd")
 const Missions := preload("res://scripts/missions.gd")
 const Campaign := preload("res://scripts/campaign.gd")
+const Knowledge := preload("res://scripts/knowledge.gd")
 const StationPanel := preload("res://scripts/station_panel.gd")
 
 const MISSION := [
@@ -74,6 +75,7 @@ func _ready() -> void:
 	campaign.year_passed.connect(_on_year_passed)
 	campaign.changed.connect(_update_stats)
 	campaign.game_over.connect(_on_game_over)
+	campaign.era_reached.connect(_on_era_reached)
 
 	globe = Globe.new()
 	globe.position = Vector2(440, 74)
@@ -227,6 +229,9 @@ func _build_top_bar() -> void:
 	logo.add_theme_font_override("font", UI.font_pixel)
 	h.add_child(logo)
 	_stat(h, "ev", L.t("Év"), str(campaign.year), UI.TEXT)
+	_stat(h, "korszak", L.t("Korszak"), Knowledge.era_name(campaign.era), UI.GOLD)
+	(_stats["korszak"] as Label).mouse_filter = Control.MOUSE_FILTER_PASS
+	(_stats["korszak"] as Label).tooltip_text = L.t("Tudásfa (játékszabály): a kutatott témák új korszakot, új témákat és új tervlehetőségeket nyitnak. Kutatás gomb.")
 	_stat(h, "penz", L.t("Pénz"), str(campaign.money), UI.GOLD)
 	_stat(h, "bizalom", L.t("Bizalom"), "%d%%" % campaign.trust, UI.GREEN)
 	for k in ["penz", "bizalom"]:
@@ -693,6 +698,7 @@ func _update_stats() -> void:
 	if _stats.is_empty():
 		return
 	(_stats["ev"] as Label).text = str(campaign.year)
+	(_stats["korszak"] as Label).text = Knowledge.era_name(campaign.era)
 	(_stats["penz"] as Label).text = str(campaign.money)
 	(_stats["bizalom"] as Label).text = "%d%%" % campaign.trust
 	var t: float = campaign.temp_now()
@@ -719,6 +725,13 @@ func _on_year_passed(y: int, note: String) -> void:
 	if _year_row.visible:
 		_year_slider.value = y
 	_show_info(note, "")
+
+
+func _on_era_reached(e: int) -> void:
+	_update_stats()
+	_show_info(L.t("Új korszak: %s! %s") % [Knowledge.era_name(e), L.t(Knowledge.ERAS[e - 1]["tema"])], "")
+	if is_instance_valid(_plan) and _plan.is_inside_tree():
+		_plan.rebuild()
 
 
 func _on_game_over() -> void:
@@ -842,6 +855,14 @@ func _selftest() -> void:
 		print("ONTESZT építés 2: ", campaign.build("uveghaz"))
 		_open_station()
 		await _shot(dir, "7_allomas.png")
+		_close_overlay()
+		# tudásfa: két I. korszakos téma után a II. korszak nyílik meg
+		campaign.mark_researched("tcre")
+		campaign.mark_researched("termes")
+		print("ONTESZT tudásfa: korszak=", campaign.era, " kutatott=", campaign.done,
+			" III. feltételei=", campaign.era_conditions(3))
+		_open_research()
+		await _shot(dir, "8_tudasfa.png")
 		_close_overlay()
 	_close_overlay()
 	for e in world.get("esemenyek", []):

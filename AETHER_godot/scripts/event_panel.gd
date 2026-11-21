@@ -177,23 +177,6 @@ func _show(r: Dictionary) -> void:
 		var cap := str(im.get("alt", ""))
 		_summary_box.add_child(UI.label((cap + " · " if cap != "" else "") + L.t("Ábra a forrásból"), 13, UI.MUTE))
 
-	# A forrás tényei és a teljes országlista a Részletek mögött
-	var facts: Array = r.get("tenyek", [])
-	var det := UI.vbox(6)
-	det.visible = false
-	for f in facts:
-		det.add_child(UI.label("%s: %s" % [str(f.get("nev", "")), str(f.get("ertek", ""))], 15, UI.SOFT))
-	var cs := display_countries(event)
-	if cs.size() > 3 and not facts.any(func(f): return str(f.get("nev", "")).begins_with("Érintett") or str(f.get("nev", "")).begins_with("Affected")):
-		det.add_child(UI.label(L.t("Érintett országok: ") + ", ".join(cs), 15, UI.SOFT))
-	if str(r.get("megjegyzes", "")) != "":
-		det.add_child(UI.label(str(r["megjegyzes"]), 13, UI.MUTE))
-	if det.get_child_count() > 0:
-		var more := UI.button(L.t("Részletek"))
-		var more_fn := func() -> void: det.visible = not det.visible
-		more.pressed.connect(more_fn)
-		_summary_box.add_child(more)
-		_summary_box.add_child(det)
 	_add_source_button()
 
 

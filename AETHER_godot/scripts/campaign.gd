@@ -8,9 +8,11 @@ extends Node
 signal year_passed(year: int, note: String)
 signal changed
 signal game_over
+signal era_reached(era: int)
 
 const L := preload("res://scripts/i18n.gd")
 const Bridge := preload("res://scripts/lab_bridge.gd")
+const Knowledge := preload("res://scripts/knowledge.gd")
 
 const START_YEAR := 2026
 const END_YEAR := 2100
@@ -40,6 +42,9 @@ var blocked := false                 # nyitott ablak alatt az idő áll
 var station := {"ai_mag": 0, "archivum": 0, "uveghaz": 0}
 var building := {}                   # {"modul": "ai_mag", "kesz": 2028} amíg épül
 var research_this_year := 0
+var done: Array = []                 # tudásfa: a kutatott témák azonosítói
+var era := 1                         # korszak (1–4), csak nő
+var levers: Dictionary = {}          # jóváhagyott tervkarok: kar -> javaslat (a kutatásokból)
 var save_file := "aether_jatek.json"  # az önteszt külön fájlt használ
 var _acc := 0.0
 
@@ -65,11 +70,17 @@ func load_game() -> void:
 	var b: Variant = d.get("epul", {})
 	building = b if typeof(b) == TYPE_DICTIONARY else {}
 	research_this_year = int(d.get("kutatas_ev", 0))
+	var dn: Variant = d.get("tudas", [])
+	done = dn if typeof(dn) == TYPE_ARRAY else []
+	era = clampi(int(d.get("korszak", 1)), 1, Knowledge.ERAS.size())
+	var lv: Variant = d.get("karok", {})
+	levers = lv if typeof(lv) == TYPE_DICTIONARY else {}
 
 
 func save() -> void:
 	Bridge.write_json(save_path(), {"ev": year, "penz": money, "bizalom": trust, "idovonal": timeline,
-		"modell": model, "allomas": station, "epul": building, "kutatas_ev": research_this_year})
+		"modell": model, "allomas": station, "epul": building, "kutatas_ev": research_this_year,
+		"tudas": done, "korszak": era, "karok": levers})
 
 
 func new_game() -> void:
@@ -81,6 +92,9 @@ func new_game() -> void:
 	station = {"ai_mag": 0, "archivum": 0, "uveghaz": 0}
 	building = {}
 	research_this_year = 0
+	done = []
+	era = 1
+	levers = {}
 	running = false
 	_acc = 0.0
 	save()
@@ -126,6 +140,7 @@ func advance() -> void:
 		note += " " + L.t("Elkészült: %s, %d. szint.") % [L.t(MODULES[mod]["nev"]), station[mod]]
 	save()
 	year_passed.emit(year, note)
+	check_era()
 	changed.emit()
 	if year >= END_YEAR:
 		running = false
@@ -273,6 +288,7 @@ func adopt(sc: Dictionary, res: Dictionary) -> String:
 	model = res
 	save()
 	changed.emit()
+	check_era()
 	return note
 
 
@@ -300,3 +316,65 @@ func reward_results(n: int) -> void:
 	trust = mini(100, trust + n * TRUST_PER_RESULT)
 	save()
 	changed.emit()
+
+
+# --- tudásfa és korszakok (játékszabály) -----------------------------------
+## Egy téma akkor kutatott, ha a kutatás legalább egy ellenőrzött számot talált róla.
+func mark_researched(id: String) -> void:
+	if id == "" or id in done:
+		return
+	done.append(id)
+	save()
+	changed.emit()
+	check_era()
+
+
+func add_levers(new_levers: Array) -> void:
+	for j in new_levers:
+		levers[str(j["kar"])] = j
+	save()
+
+
+## Ha a modell szerint a nettó CO2-kibocsátás 5 év alatt érezhetően csökkent (vagy már közel nulla).
+func co2_falling() -> bool:
+	var now := series_at("netto_co2", year)
+	var before := series_at("netto_co2", year - 5)
+	if is_nan(now) or is_nan(before):
+		return false
+	return now < before - 0.5 or now <= 1.0
+
+
+## A target korszak belépési feltételei: [[rövid szöveg, teljesül-e], ...].
+func era_conditions(target: int) -> Array:
+	var out: Array = []
+	if target < 2 or target > Knowledge.ERAS.size():
+		return out
+	var e: Dictionary = Knowledge.ERAS[target - 1]
+	var need := int(e.get("kell", 0))
+	var have := mini(need, Knowledge.count_done(done, target - 1))
+	out.append([L.t("Kutatott téma a(z) %s korszakból: %d/%d") % [Knowledge.era_name(target - 1), have, need], have >= need])
+	if bool(e.get("terv", false)):
+		out.append([L.t("Bevezetett terv"), not timeline.is_empty()])
+	if e.has("bizalom"):
+		out.append([L.t("Bizalom legalább %d%%") % int(e["bizalom"]), trust >= int(e["bizalom"])])
+	if bool(e.get("csokkeno_co2", false)):
+		out.append([L.t("Csökkenő CO2-kibocsátás a modellben (5 év alatt)"), co2_falling()])
+	return out
+
+
+static func _all_met(conds: Array) -> bool:
+	for c in conds:
+		if not bool(c[1]):
+			return false
+	return true
+
+
+## Ha teljesül a következő korszak minden feltétele, belép (akár több lépést is).
+func check_era() -> void:
+	var start := era
+	while era < Knowledge.ERAS.size() and _all_met(era_conditions(era + 1)):
+		era += 1
+	if era != start:
+		save()
+		changed.emit()
+		era_reached.emit(era)

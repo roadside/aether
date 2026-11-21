@@ -107,6 +107,11 @@ def jelentes(param: str, ertek: float, egyseg: str, lang: str = "hu") -> str:
         return f"Minden további fok melegedés kb. {v}%-kal változtatja a termést."
     if param == "viztakarekossag_pct":
         return f"Kb. {v}%-kal kevesebb víz kell ugyanahhoz."
+    if param == "tcre_c_per_1000gtco2":
+        return f"Minden 1000 milliárd tonna kibocsátott CO2 kb. {v} fokkal melegíti a Földet."
+    if param == "sai_kenyszer_w_m2_per_tg":
+        return (f"Évi 1 millió tonna kén-dioxid kb. {v} W/m²-rel csökkentené a napfény melegítő hatását. "
+                "Ha leállítják, a melegedés gyorsan visszatér.")
     return f"A cikkek szerint az érték kb. {v} {egyseg}."
 
 
@@ -125,6 +130,11 @@ def _jelentes_en(param: str, ertek: float, egyseg: str) -> str:
         return f"Every extra degree of warming changes harvests by about {v}%."
     if param == "viztakarekossag_pct":
         return f"About {v}% less water is needed for the same result."
+    if param == "tcre_c_per_1000gtco2":
+        return f"Every 1000 billion tonnes of CO2 emitted warms the Earth by about {v} degrees."
+    if param == "sai_kenyszer_w_m2_per_tg":
+        return (f"1 million tonnes of sulphur dioxide a year would reduce the warming effect of sunlight by about {v} W/m². "
+                "If it stops, warming returns quickly.")
     return f"According to the papers, the value is about {v} {EGYSEG_EN.get(egyseg, egyseg)}."
 
 
@@ -136,7 +146,7 @@ CDR_KULCSSZAVAK = [
     ("kozetmallasztas", ["weathering", "mállasztás", "mallasztas", "basalt", "bazalt", "olivine"]),
     ("erdosites", ["afforest", "reforest", "forest", "erdő", "erdo", "tree"]),
     ("daccs", ["direct air", "dac", "levegőből"]),
-    ("beccs", ["beccs", "bioenergy"]),
+    ("beccs", ["beccs", "bioenergy", "növényi energia"]),
     ("talajszen", ["soil", "talaj"]),
 ]
 
