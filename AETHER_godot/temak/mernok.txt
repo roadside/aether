@@ -16,16 +16,19 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyit spórol a hőszivattyú a gázkazánhoz képest?
 Röviden: A hőszivattyú a kinti levegő vagy a föld hőjét hozza be a házba, árammal.
 Ha kikutatod:
-Mire jó?:
-Mi a gond vele?:
-Mennyire bizonyított?:
+Mire jó?: A hőszivattyú sokkal hatékonyabb, mert kevesebb energiát használ ugyanazon hőt készíteni. Ez azt jelenti, hogy kevesebb környezetszennyezés keletkezik, és kevesebb pénzt kell fizetni a fűtésre.
+Mi a gond vele?: A hőszivattyúk kevésbé hatékonyak hideg időben, és nagyobb beruházási költséggel járnak. A gázkazánok viszont nem olyan hatékonyak, és a gáz fogyasztása környezetszennyezést okoz.
+Mennyire bizonyított?: A hőszivattyúk hatékonyságával kapcsolatban már sok kutatás zajlott, és a legtöbb tanulmány szerint a hőszivattyúk többet spórolnak, de a pontos számok attól függnek, hogy milyen típusú hőszivattyúról és milyen energiával van szó.
 Kérdés angolul: How much does a heat pump save compared to a gas boiler?
 Röviden angolul: A heat pump brings heat from the outside air or the ground into the house, using electricity.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
-Forrás:
+Forrás: Review of the Role of Heat Pumps in Decarbonization of the Building Sector (2025) – https://doi.org/10.3390/en18133255
+Forrás: Energy efficiency and decarbonization in the paper industry: A review of drying technology and high-temperature heat pumps (2026) – https://doi.org/10.1016/j.seta.2026.105095
+Forrás: A Review on Performance Optimization and Relevant Application Research of Heat Pump Technologies for Energy System Decarbonization (2026) – https://doi.org/10.3390/machines14080862
+Forrás: Decarbonizing Industrial Heat with Heat Pumps (2025) – https://doi.org/10.55938/aeai.v1i2.214
 Lektorálva: nem
 --- technikai ---
 Keresés: heat pump greenhouse gas emissions reduction compared to gas boiler|air source heat pump life cycle emissions|residential heat pump decarbonization
@@ -37,16 +40,19 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyi fűtést spórol a hőszigetelés?
 Röviden: A jól szigetelt fal, tető és ablak bent tartja a meleget.
 Ha kikutatod:
-Mire jó?:
-Mi a gond vele?:
-Mennyire bizonyított?:
+Mire jó?: A hőszigetelés segít megtakarítani a fűtési költségeket, mert kevesebb energiát kell használni a melegítéshez.
+Mi a gond vele?: A hőszigetelés nem mindig hatékony, ha nem megfelelően van elkészítve, és a költség is jelentős lehet.
+Mennyire bizonyított?: A források szerint a hőszigetelés hatékony, de az optimális mérték és technika a legjobb eredményhez szükséges.
 Kérdés angolul: How much heating does insulation save?
 Röviden angolul: Well-insulated walls, roofs and windows keep the warmth in.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
-Forrás:
+Forrás: Introductory Review of Energy Efficiency in Buildings Retrofits (2021) – https://doi.org/10.3390/en14238100
+Forrás: Review of data-driven energy modelling techniques for building retrofit (2021) – https://doi.org/10.1016/j.rser.2021.110990
+Forrás: Energy Retrofit in European Building Portfolios: A Review of Five Key Aspects (2020) – https://doi.org/10.3390/su12187465
+Forrás: Climate adaptation of existing buildings: A critical review on planning energy retrofit strategies for future climate (2024) – https://doi.org/10.1016/j.rser.2024.114476
 Lektorálva: nem
 --- technikai ---
 Keresés: building envelope retrofit energy savings|thermal insulation retrofit heating energy reduction|deep energy renovation residential buildings
@@ -58,16 +64,19 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyivel kevesebb CO2-t okoz a villanyautó?
 Röviden: Az elektromos autó teljes élete alatt, az akkumulátor gyártásával együtt számolva.
 Ha kikutatod:
-Mire jó?:
-Mi a gond vele?:
-Mennyire bizonyított?:
+Mire jó?: A villanyautók kevesebb CO2-t bocsátnak ki, így segítenek a klímaváltozás ellen, de fontos tudni, hogy a gyártásuk is környezeti hatással lehet.
+Mi a gond vele?: A villanyautók gyártása nagyobb anyagfogyasztást és környezeti terhelést okozhat, különösen a bateriák gyártása. A villanyok forrása is befolyásolja a CO2-kibocsátást.
+Mennyire bizonyított?: A tudományos vizsgálatok bizonyítják, hogy a villanyautók általában kevesebb CO2-t bocsátanak ki, de a pontos mennyiség függ a gyártási folyamatoktól és a villanyforrásoktól.
 Kérdés angolul: How much less CO2 does an electric car cause?
 Röviden angolul: Counted over the electric car's whole life, including making the battery.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
-Forrás:
+Forrás: Environmental Impacts of Internal Combustion Engine vs Electric Vehicle: Life-Cycle Assessment Review (2025) – https://doi.org/10.14716/ijtech.v16i3.7347
+Forrás: Literature Review - Electric Vehicles Life Cycle Assessment (2020) – https://doi.org/10.1109/elektro49696.2020.9130289
+Forrás: Life Cycle Cost Assessment of Electric Vehicles: A Review and Bibliometric Analysis (2020) – https://doi.org/10.3390/su12062387
+Forrás: A Review of Life Cycle Assessment Studies of Electric Vehicles with a Focus on Resource Use (2020) – https://doi.org/10.3390/resources9030032
 Lektorálva: nem
 --- technikai ---
 Keresés: battery electric vehicle life cycle emissions compared to internal combustion|electric vehicle lifecycle greenhouse gas
@@ -79,16 +88,19 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyi CO2-t spórol, ha vonattal utazunk autó és repülő helyett?
 Röviden: A vonat sok utast visz egyszerre, és gyakran árammal megy.
 Ha kikutatod:
-Mire jó?:
-Mi a gond vele?:
-Mennyire bizonyított?:
+Mire jó?: A vonatok kisebb CO2-kibocsátást okoznak, mint a repülőgépek és autók, így segítenek a klímaváltozás elleni küzdelemben.
+Mi a gond vele?: A vonatok kibocsátják a részecskéket is, amelyek károsak lehetnek a egészségre, de ezekről kevés a tudásunk.
+Mennyire bizonyított?: A vonatok CO2-kibocsátásáról részletesen van tudás, de a részecskék hatásairól még nem teljesen tisztázottak.
 Kérdés angolul: How much CO2 is saved by taking the train instead of car or plane?
 Röviden angolul: A train carries many passengers at once and often runs on electricity.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
-Forrás:
+Forrás: Particle Emissions from Rail Vehicles: A Review (2012) – https://doi.org/10.4203/ccp.98.173
+Forrás: Particle Emissions From Rail Traffic: A Literature Review (2013) – https://doi.org/10.1080/10643389.2012.685348
+Forrás: Particle emission from rail vehicles : A literature review (2012) – https://kth.diva-portal.org/smash/get/diva2:482389/FULLTEXT01
+Forrás: Modal Shift to Rail Transport as a Mitigation Measure to Decarbonize the Transport Sector: Review of Barriers and Opportunities (2024) – https://doi.org/10.1051/e3sconf/202458512001
 Lektorálva: nem
 --- technikai ---
 Keresés: modal shift rail greenhouse gas emissions reduction|high speed rail emissions compared to aviation|rail passenger transport life cycle emissions
@@ -100,16 +112,19 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyit segít, ha többen kerékpárral járnak?
 Röviden: A rövid városi utak egy részét kerékpárral is meg lehet tenni.
 Ha kikutatod:
-Mire jó?:
-Mi a gond vele?:
-Mennyire bizonyított?:
+Mire jó?: Több kerékpáros közlekedés csökkentheti a környezeti károsanyagokat, javíthatja a közlekedés minőségét, és segíthet az egészség megőrzésében.
+Mi a gond vele?: A kutatások bizonyossága korlátozott, mivel sokan kísérleti körülmények alatt végzették, és nem minden területen van elég adat.
+Mennyire bizonyított?: A tudományos bizonyítékok alacsony bizonyossággal bírnak, de a főbb előnyök jól megerősítettek.
 Kérdés angolul: How much does it help if more people cycle?
 Röviden angolul: Many short city trips can be made by bicycle.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
-Forrás:
+Forrás: The co-benefits of active travel interventions beyond physical activity: a systematic review (2024) – https://doi.org/10.1016/s2542-5196(24)00201-8
+Forrás: Neighbourhood Accessibility and Active Travel (2012) – https://doi.org/10.1080/02697459.2012.661636
+Forrás: What Are the Health Benefits of Active Travel? A Systematic Review of Trials and Cohort Studies (2013) – https://doi.org/10.1371/journal.pone.0069912
+Forrás: A Cost Benefit Analysis of an Active Travel Intervention with Health and Carbon Emission Reduction Benefits (2018) – https://doi.org/10.3390/ijerph15050962
 Lektorálva: nem
 --- technikai ---
 Keresés: cycling mode shift carbon emissions reduction|active travel climate change mitigation|bicycle commuting emissions savings
@@ -121,16 +136,19 @@ Korszak: II. (Mérséklés)
 Kérdés: Csökkenti-e a kibocsátást az otthoni munka?
 Röviden: Kevesebb az ingázás, de otthon több a fűtés és az áram.
 Ha kikutatod:
-Mire jó?:
-Mi a gond vele?:
-Mennyire bizonyított?:
+Mire jó?: Az otthoni munka csökkentheti a közlekedési energiafogyasztást, így segíthet a klímaváltozás ellen.
+Mi a gond vele?: Nem minden esetben csökken az energiafogyasztás, mert például otthoni készülékek használata is hozzájárulhat a fogyasztáshoz.
+Mennyire bizonyított?: A tudományos bizonyítékok szerint az otthoni munka többnyire csökkenti az energiára szoruló utazást, de a teljes kép megbízhatóan nem ismert.
 Kérdés angolul: Does working from home cut emissions?
 Röviden angolul: There is less commuting, but more heating and electricity at home.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
-Forrás:
+Forrás: A systematic review of the energy and climate impacts of teleworking (2020) – https://doi.org/10.1088/1748-9326/ab8a84
+Forrás: Does Telework Really Save Energy (2015) – https://openalex.org/W2191952474
+Forrás: Who is Teleworking and Where from? Exploring the Main Determinants of Telework in Europe (2020) – https://doi.org/10.3390/su12218797
+Forrás: Teleworking in the Context of the Covid-19 Crisis (2020) – https://doi.org/10.3390/su12093662
 Lektorálva: nem
 --- technikai ---
 Keresés: teleworking energy consumption emissions review|remote work commuting emissions net effect
@@ -144,16 +162,19 @@ Korszak: III. (Átalakulás)
 Kérdés: Mennyi CO2-t szűrhetnek ki gépek a levegőből?
 Röviden: Nagy ventilátoros gépek kiszűrik a CO2-t, és a föld alá zárják. Sok energiát igényel.
 Ha kikutatod: CO2-szűrés a levegőből a tervedben.
-Mire jó?:
-Mi a gond vele?:
-Mennyire bizonyított?:
+Mire jó?: Ezek a gépek segíthetnek csökkenteni a levegőben lévő CO2 mennyiségét, így csökkenthetik a globális felmelegedést.
+Mi a gond vele?: A technológia energiaigényes, és még nem hatékonyan működik nagy méretekben.
+Mennyire bizonyított?: A tudományos kutatások szerint a technológia előrehaladott állapotban van, de még nem teljesen bizonyított a nagy skálájú alkalmazásokban.
 Kérdés angolul: How much CO2 can machines filter from the air?
 Röviden angolul: Large fan-driven machines filter out CO2 and store it underground. It takes a lot of energy.
 Ha kikutatod angolul: Filtering CO2 from the air in your plan.
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
-Forrás:
+Forrás: A review on progress made in direct air capture of CO 2 (2022) – https://doi.org/10.1016/j.eti.2022.102991
+Forrás: A comprehensive review on regeneration strategies for direct air capture (2023) – https://doi.org/10.1016/j.jcou.2023.102587
+Forrás: A review of direct air capture (DAC): scaling up commercial technologies and innovating for the future (2021) – https://doi.org/10.1088/2516-1083/abf1ce
+Forrás: A comparative review of performance of nanomaterials for Direct Air Capture (2021) – https://doi.org/10.1016/j.egyr.2021.06.002
 Lektorálva: nem
 --- technikai ---
 Keresés: direct air capture carbon dioxide removal potential cost|direct air carbon capture and storage scale-up|negative emissions technologies potentials costs side effects
@@ -165,16 +186,19 @@ Korszak: III. (Átalakulás)
 Kérdés: Mennyi CO2 fogható fel a gyárkéményekben?
 Röviden: Az erőművek és gyárak füstjéből a CO2 kiválasztható, mielőtt a levegőbe jut.
 Ha kikutatod:
-Mire jó?:
-Mi a gond vele?:
-Mennyire bizonyított?:
+Mire jó?: A CO₂ elnyelése és tárolása segíthet csökkenteni a klímaváltozás mértékét, mivel a szén-dioxid kibocsátását csökkenti, így kevesebb melegedést okoz.
+Mi a gond vele?: A jelenlegi technológiák nem tudják elnyelni elegendő CO₂-t, és a feldolgozás energiaigényes, ami gazdasági és környezeti kockázatot okozhat.
+Mennyire bizonyított?: A tudományos alapok szerint a CO₂ elnyelése és tárolása jelenleg még nem elég hatékony, de a kutatások gyorsan fejlődnek, így a jövőben lehetnek hatékonyabb megoldások.
 Kérdés angolul: How much CO2 can be captured from factory chimneys?
 Röviden angolul: CO2 can be separated from the smoke of power plants and factories before it reaches the air.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
-Forrás:
+Forrás: Recent advances in carbon capture storage and utilisation technologies: a review (2020) – https://doi.org/10.1007/s10311-020-01133-3
+Forrás: Significant aspects of carbon capture and storage – A review (2018) – https://doi.org/10.1016/j.petlm.2018.12.007
+Forrás: Carbon capture utilization and storage in review: Sociotechnical implications for a carbon reliant world (2023) – https://doi.org/10.1016/j.rser.2023.113215
+Forrás: Technical and Economic Aspects of Carbon Capture an Storage — A Review (2007) – https://doi.org/10.1260/014459807783528883
 Lektorálva: nem
 --- technikai ---
 Keresés: post-combustion carbon capture efficiency|carbon capture and storage industrial capture rate|amine carbon capture energy penalty
@@ -186,16 +210,19 @@ Korszak: III. (Átalakulás)
 Kérdés: Mennyit spórol az elektromos teherautó?
 Röviden: A teherautók sok gázolajat fogyasztanak. Akkumulátorral hosszabb utakra is képesek.
 Ha kikutatod:
-Mire jó?:
-Mi a gond vele?:
-Mennyire bizonyított?:
+Mire jó?: Az elektromos teherautók spórolhatnak energiát és csökkenthetik a káros anyagok kibocsátását, így segítenek a klímaváltozás ellen.
+Mi a gond vele?: Az elektromos teherautók költségei még magasak lehetnek, és a jelenlegi technológiák korlátozottak a teljesítmény és a távolság tekintetében.
+Mennyire bizonyított?: A tudományos tanulmányok szerint az elektromos teherautók hatékonyabbak, de a teljes költség és a környezeti hatások pontos számítása továbbra is folyamatban van.
 Kérdés angolul: How much does an electric truck save?
 Röviden angolul: Trucks burn a lot of diesel. With batteries they can also make longer trips.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
-Forrás:
+Forrás: Pantograph Charging for Electric Vehicles: A Comprehensive Review: Enabling efficient and high-power fast charging for buses, trucks, and heavy-duty electric vehicles. (2026) – https://doi.org/10.1109/mele.2026.3659821
+Forrás: Technology, Sustainability, and Marketing of Battery Electric and Hydrogen Fuel Cell Medium-Duty and Heavy-Duty Trucks and Buses in 2020-2040 (2020) – https://doi.org/10.7922/g2h993fj
+Forrás: Electric Powertrain Topology Analysis and Design for Heavy-Duty Trucks (2020) – https://doi.org/10.3390/en13102434
+Forrás: Technical and Business Aspects of Battery Electric Trucks—A Systematic Review (2022) – https://doi.org/10.3390/futuretransp2020021
 Lektorálva: nem
 --- technikai ---
 Keresés: battery electric heavy-duty truck life cycle emissions|electric trucks emissions reduction|zero emission heavy duty vehicles
@@ -207,16 +234,19 @@ Korszak: III. (Átalakulás)
 Kérdés: Mennyivel csökkenthető a hajózás kibocsátása?
 Röviden: A teherhajók nehézolajat égetnek. Új üzemanyag, lassabb haladás vagy szélvitorla segíthet.
 Ha kikutatod:
-Mire jó?:
-Mi a gond vele?:
-Mennyire bizonyított?:
+Mire jó?: A kibocsátás csökkentése segíthet a globális felmelegedés csökkentésében, és környezetvédelmi célok elérésében.
+Mi a gond vele?: A kibocsátás csökkentése nehézzé teszi a gazdasági és technológiai fejlődést, és a fejlett országok és fejlett országok közötti egyenlőtlen megoszlást okozhat.
+Mennyire bizonyított?: A tudományos bizonyítékok alapján a kibocsátás csökkentése valóban lehetséges, de teljes kibocsátásmentesség időben nem érhető el.
 Kérdés angolul: How much can shipping emissions be cut?
 Röviden angolul: Cargo ships burn heavy fuel oil. New fuels, slower sailing or wind sails can help.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
-Forrás:
+Forrás: A review of law and policy on decarbonization of shipping (2022) – https://doi.org/10.3389/fmars.2022.1076352
+Forrás: Decarbonization in Shipping Industry: A Review of Research, Technology Development, and Innovation Proposals (2021) – https://doi.org/10.3390/jmse9040415
+Forrás: Evaluating the Costs of Decarbonizing the Shipping Industry: A Review of the Literature (2022) – https://doi.org/10.3390/jmse10070946
+Forrás: Implementation Theory Review for Insights into Shipping and Port Decarbonization (2026) – https://doi.org/10.3390/su18031474
 Lektorálva: nem
 --- technikai ---
 Keresés: shipping decarbonization emissions reduction potential|wind-assisted ship propulsion fuel savings|slow steaming emissions reduction

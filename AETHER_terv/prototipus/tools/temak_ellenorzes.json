@@ -1,0 +1,1026 @@
+{
+ "datum": "2026-11-21",
+ "temak": [
+  {
+   "id": "tcre",
+   "korszak": 1,
+   "terulet": "fizika",
+   "cim": "Mennyit melegít a kibocsátott CO2?",
+   "attekintok": 783,
+   "cikkek": 34,
+   "szammal": 22,
+   "gyenge": false
+  },
+  {
+   "id": "klimaerzekenyseg",
+   "korszak": 1,
+   "terulet": "fizika",
+   "cim": "Mennyit melegszik a Föld, ha kétszer annyi lesz a CO2?",
+   "attekintok": 5075,
+   "cikkek": 29,
+   "szammal": 17,
+   "gyenge": false
+  },
+  {
+   "id": "aeroszol",
+   "korszak": 1,
+   "terulet": "fizika",
+   "cim": "Mennyit hűt a levegő szennyezése?",
+   "attekintok": 872,
+   "cikkek": 35,
+   "szammal": 18,
+   "gyenge": false
+  },
+  {
+   "id": "felhok",
+   "korszak": 1,
+   "terulet": "fizika",
+   "cim": "Erősítik vagy fékezik a felhők a melegedést?",
+   "attekintok": 16057,
+   "cikkek": 35,
+   "szammal": 4,
+   "gyenge": false
+  },
+  {
+   "id": "ocean_ho",
+   "korszak": 1,
+   "terulet": "fizika",
+   "cim": "A melegedés hőjének mekkora részét nyeli el az óceán?",
+   "attekintok": 7639,
+   "cikkek": 36,
+   "szammal": 14,
+   "gyenge": false
+  },
+  {
+   "id": "amoc",
+   "korszak": 1,
+   "terulet": "fizika",
+   "cim": "Lassul-e a Golf-áramlat rendszere?",
+   "attekintok": 195,
+   "cikkek": 36,
+   "szammal": 6,
+   "gyenge": false
+  },
+  {
+   "id": "led",
+   "korszak": 2,
+   "terulet": "fizika",
+   "cim": "Mennyi áramot spórol a LED-lámpa?",
+   "attekintok": 5228,
+   "cikkek": 36,
+   "szammal": 18,
+   "gyenge": false
+  },
+  {
+   "id": "kondenzcsik",
+   "korszak": 2,
+   "terulet": "fizika",
+   "cim": "Mennyit melegítenek a repülők kondenzcsíkjai?",
+   "attekintok": 25,
+   "cikkek": 36,
+   "szammal": 4,
+   "gyenge": false
+  },
+  {
+   "id": "atomenergia",
+   "korszak": 3,
+   "terulet": "fizika",
+   "cim": "Mennyi kibocsátást válthat ki az atomenergia?",
+   "attekintok": 4055,
+   "cikkek": 36,
+   "szammal": 0,
+   "gyenge": true
+  },
+  {
+   "id": "hotarolas",
+   "korszak": 3,
+   "terulet": "fizika",
+   "cim": "Eltehető-e a napenergia hőként, sóban vagy kőben?",
+   "attekintok": 46444,
+   "cikkek": 36,
+   "szammal": 16,
+   "gyenge": false
+  },
+  {
+   "id": "fuzio",
+   "korszak": 4,
+   "terulet": "fizika",
+   "cim": "Mennyi energiát nyernek ma a magfúziós kísérletek?",
+   "attekintok": 79250,
+   "cikkek": 36,
+   "szammal": 17,
+   "gyenge": false
+  },
+  {
+   "id": "napernyo",
+   "korszak": 4,
+   "terulet": "fizika",
+   "cim": "Mennyire hűtene a kén a magaslégkörben?",
+   "attekintok": 132,
+   "cikkek": 33,
+   "szammal": 3,
+   "gyenge": false
+  },
+  {
+   "id": "felho_fenyesites",
+   "korszak": 4,
+   "terulet": "fizika",
+   "cim": "Hűthetik-e a Földet a fényesebbé tett tengeri felhők?",
+   "attekintok": 59,
+   "cikkek": 21,
+   "szammal": 3,
+   "gyenge": false
+  },
+  {
+   "id": "cirrus",
+   "korszak": 4,
+   "terulet": "fizika",
+   "cim": "Hűtene-e a magas jégfelhők ritkítása?",
+   "attekintok": 61,
+   "cikkek": 20,
+   "szammal": 10,
+   "gyenge": false
+  },
+  {
+   "id": "ocean_savasodas",
+   "korszak": 1,
+   "terulet": "kemia",
+   "cim": "Mennyire savasodik az óceán?",
+   "attekintok": 3997,
+   "cikkek": 24,
+   "szammal": 14,
+   "gyenge": false
+  },
+  {
+   "id": "hulladek_metan",
+   "korszak": 2,
+   "terulet": "kemia",
+   "cim": "Mennyi metán fogható fel a szeméttelepeken?",
+   "attekintok": 1702,
+   "cikkek": 36,
+   "szammal": 22,
+   "gyenge": false
+  },
+  {
+   "id": "hutokozeg",
+   "korszak": 2,
+   "terulet": "kemia",
+   "cim": "Mennyit számít a hűtők és légkondik gázának cseréje?",
+   "attekintok": 129,
+   "cikkek": 35,
+   "szammal": 1,
+   "gyenge": true
+  },
+  {
+   "id": "n2o_ipar",
+   "korszak": 2,
+   "terulet": "kemia",
+   "cim": "Mennyi kéjgáz szűrhető ki a vegyi gyárakban?",
+   "attekintok": 370,
+   "cikkek": 35,
+   "szammal": 14,
+   "gyenge": false
+  },
+  {
+   "id": "bioszen",
+   "korszak": 3,
+   "terulet": "kemia",
+   "cim": "Mennyi CO2-t vonhat ki a levegőből a bioszén?",
+   "attekintok": 2617,
+   "cikkek": 36,
+   "szammal": 6,
+   "gyenge": false
+  },
+  {
+   "id": "mof",
+   "korszak": 3,
+   "terulet": "kemia",
+   "cim": "Megköthetik-e a CO2-t a lyukacsos, fémtartalmú kristályok?",
+   "attekintok": 19394,
+   "cikkek": 36,
+   "szammal": 8,
+   "gyenge": false
+  },
+  {
+   "id": "akku_ujra",
+   "korszak": 3,
+   "terulet": "kemia",
+   "cim": "Mennyi fém nyerhető vissza a régi akkumulátorokból?",
+   "attekintok": 3758,
+   "cikkek": 36,
+   "szammal": 11,
+   "gyenge": false
+  },
+  {
+   "id": "hidrogen",
+   "korszak": 3,
+   "terulet": "kemia",
+   "cim": "Milyen hatékonyan lesz vízből hidrogén?",
+   "attekintok": 5531,
+   "cikkek": 36,
+   "szammal": 15,
+   "gyenge": false
+  },
+  {
+   "id": "uzemanyagcella",
+   "korszak": 3,
+   "terulet": "kemia",
+   "cim": "Milyen hatásfokú az üzemanyagcella?",
+   "attekintok": 86500,
+   "cikkek": 36,
+   "szammal": 6,
+   "gyenge": false
+  },
+  {
+   "id": "zold_ammonia",
+   "korszak": 3,
+   "terulet": "kemia",
+   "cim": "Gyártható-e műtrágya kibocsátás nélkül?",
+   "attekintok": 21671,
+   "cikkek": 35,
+   "szammal": 17,
+   "gyenge": false
+  },
+  {
+   "id": "szintetikus_kerozin",
+   "korszak": 3,
+   "terulet": "kemia",
+   "cim": "Repülhetünk-e áramból és CO2-ből gyártott üzemanyaggal?",
+   "attekintok": 1825,
+   "cikkek": 35,
+   "szammal": 18,
+   "gyenge": false
+  },
+  {
+   "id": "muanyag",
+   "korszak": 3,
+   "terulet": "kemia",
+   "cim": "Mennyit spórol a műanyag újrahasznosítása?",
+   "attekintok": 10161,
+   "cikkek": 35,
+   "szammal": 9,
+   "gyenge": false
+  },
+  {
+   "id": "ocean_lugositas",
+   "korszak": 4,
+   "terulet": "kemia",
+   "cim": "Vonhat-e ki több CO2-t a tenger, ha lúgosabbá tesszük?",
+   "attekintok": 4330,
+   "cikkek": 34,
+   "szammal": 4,
+   "gyenge": false
+  },
+  {
+   "id": "ozon",
+   "korszak": 4,
+   "terulet": "kemia",
+   "cim": "Mennyi melegedést előzött meg az ózonréteg védelme?",
+   "attekintok": 1168,
+   "cikkek": 35,
+   "szammal": 8,
+   "gyenge": false
+  },
+  {
+   "id": "metan_bontas",
+   "korszak": 4,
+   "terulet": "kemia",
+   "cim": "Lebontható-e a metán közvetlenül a levegőből?",
+   "attekintok": 3586,
+   "cikkek": 32,
+   "szammal": 9,
+   "gyenge": false
+  },
+  {
+   "id": "perovszkit",
+   "korszak": 3,
+   "terulet": "anyag",
+   "cim": "Lehet-e jobb napelemet gyártani perovszkitból?",
+   "attekintok": 5216,
+   "cikkek": 36,
+   "szammal": 24,
+   "gyenge": false
+  },
+  {
+   "id": "litium_akku",
+   "korszak": 3,
+   "terulet": "anyag",
+   "cim": "Mennyi energiát tárolnak a mai akkumulátorok?",
+   "attekintok": 10024,
+   "cikkek": 33,
+   "szammal": 3,
+   "gyenge": false
+  },
+  {
+   "id": "szilard_akku",
+   "korszak": 3,
+   "terulet": "anyag",
+   "cim": "Jobb lesz-e a szilárd elektrolitos akkumulátor?",
+   "attekintok": 18060,
+   "cikkek": 36,
+   "szammal": 5,
+   "gyenge": false
+  },
+  {
+   "id": "natrium_akku",
+   "korszak": 3,
+   "terulet": "anyag",
+   "cim": "Kiválthatja-e a nátrium a lítiumot az akkumulátorban?",
+   "attekintok": 9568,
+   "cikkek": 36,
+   "szammal": 3,
+   "gyenge": false
+  },
+  {
+   "id": "zold_acel",
+   "korszak": 3,
+   "terulet": "anyag",
+   "cim": "Gyártható-e acél szén helyett hidrogénnel?",
+   "attekintok": 975,
+   "cikkek": 35,
+   "szammal": 21,
+   "gyenge": false
+  },
+  {
+   "id": "cement",
+   "korszak": 3,
+   "terulet": "anyag",
+   "cim": "Mennyivel csökkenthető a cementgyártás kibocsátása?",
+   "attekintok": 635,
+   "cikkek": 36,
+   "szammal": 28,
+   "gyenge": false
+  },
+  {
+   "id": "fa_epulet",
+   "korszak": 3,
+   "terulet": "anyag",
+   "cim": "Mennyi CO2-t spórol, ha fából építünk beton helyett?",
+   "attekintok": 1656,
+   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=cross-laminated+timber+life+cycle+emissions&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sort=relevance_score",
+   "gyenge": null
+  },
+  {
+   "id": "napaktivitas",
+   "korszak": 1,
+   "terulet": "ur",
+   "cim": "Okozhatja-e a Nap a mai melegedést?",
+   "attekintok": 12973,
+   "cikkek": 33,
+   "szammal": 10,
+   "gyenge": false
+  },
+  {
+   "id": "kozmikus",
+   "korszak": 1,
+   "terulet": "ur",
+   "cim": "Befolyásolják-e a kozmikus sugarak a felhőket?",
+   "attekintok": 151,
+   "cikkek": 35,
+   "szammal": 8,
+   "gyenge": false
+  },
+  {
+   "id": "metan_muhold",
+   "korszak": 1,
+   "terulet": "ur",
+   "cim": "Megtalálják-e a műholdak a nagy metánszivárgásokat?",
+   "attekintok": 820,
+   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=satellite+detection+of+methane+super-emitters&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sort=relevance_sco",
+   "gyenge": null
+  },
+  {
+   "id": "muhold_erdo",
+   "korszak": 1,
+   "terulet": "ur",
+   "cim": "Mennyi erdő tűnik el évente a műholdképek szerint?",
+   "attekintok": 2027,
+   "cikkek": 36,
+   "szammal": 1,
+   "gyenge": true
+  },
+  {
+   "id": "urbeli_napelem",
+   "korszak": 3,
+   "terulet": "ur",
+   "cim": "Küldhetnek-e áramot a Földre napelemek a világűrből?",
+   "attekintok": 14925,
+   "cikkek": 24,
+   "szammal": 6,
+   "gyenge": false
+  },
+  {
+   "id": "urbeli_arnyekolo",
+   "korszak": 4,
+   "terulet": "ur",
+   "cim": "Hűthetné-e a Földet egy árnyékoló a világűrben?",
+   "attekintok": 155,
+   "cikkek": 18,
+   "szammal": 2,
+   "gyenge": false
+  },
+  {
+   "id": "tengerszint",
+   "korszak": 1,
+   "terulet": "fold",
+   "cim": "Mennyit emelkedik a tenger 2100-ig?",
+   "attekintok": 3836,
+   "cikkek": 36,
+   "szammal": 15,
+   "gyenge": false
+  },
+  {
+   "id": "gronland",
+   "korszak": 1,
+   "terulet": "fold",
+   "cim": "Milyen gyorsan olvad Grönland jege?",
+   "attekintok": 257,
+   "cikkek": 35,
+   "szammal": 11,
+   "gyenge": false
+  },
+  {
+   "id": "antarktisz",
+   "korszak": 1,
+   "terulet": "fold",
+   "cim": "Mennyi jeget veszít az Antarktisz?",
+   "attekintok": 339,
+   "cikkek": 35,
+   "szammal": 12,
+   "gyenge": false
+  },
+  {
+   "id": "gleccser",
+   "korszak": 1,
+   "terulet": "fold",
+   "cim": "Mennyit olvadnak a hegyi gleccserek?",
+   "attekintok": 1055,
+   "cikkek": 35,
+   "szammal": 5,
+   "gyenge": false
+  },
+  {
+   "id": "permafroszt",
+   "korszak": 1,
+   "terulet": "fold",
+   "cim": "Mennyi szenet enged ki a felolvadó fagyott talaj?",
+   "attekintok": 627,
+   "cikkek": 31,
+   "szammal": 15,
+   "gyenge": false
+  },
+  {
+   "id": "aszaly",
+   "korszak": 1,
+   "terulet": "fold",
+   "cim": "Gyakoribb lesz-e az aszály?",
+   "attekintok": 19867,
+   "cikkek": 36,
+   "szammal": 16,
+   "gyenge": false
+  },
+  {
+   "id": "felhoszakadas",
+   "korszak": 1,
+   "terulet": "fold",
+   "cim": "Hevesebbek lesznek-e a nagy esők?",
+   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=extreme+precipitation+climate+change+review&per-page=1&filter=type%3Areview%2Cfrom_publication_date%3A2000-01-01&api_key=REJTETT",
+   "gyenge": null
+  },
+  {
+   "id": "erdotuz",
+   "korszak": 1,
+   "terulet": "fold",
+   "cim": "Több erdőtűz lesz-e a melegedéssel?",
+   "attekintok": 3804,
+   "cikkek": 36,
+   "szammal": 15,
+   "gyenge": false
+  },
+  {
+   "id": "kozet",
+   "korszak": 3,
+   "terulet": "fold",
+   "cim": "Mennyit segít a kőzetmállasztás?",
+   "attekintok": 3245,
+   "cikkek": 35,
+   "szammal": 11,
+   "gyenge": false
+  },
+  {
+   "id": "co2_tarolas",
+   "korszak": 3,
+   "terulet": "fold",
+   "cim": "Biztonságosan tárolható-e a CO2 a föld alatt?",
+   "attekintok": 3993,
+   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=CO2+mineralization+basalt+storage&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sort=relevance_score%3Adesc&ap",
+   "gyenge": null
+  },
+  {
+   "id": "lap",
+   "korszak": 4,
+   "terulet": "fold",
+   "cim": "Mennyi szenet ment meg a lápok újra elárasztása?",
+   "attekintok": 156,
+   "cikkek": 34,
+   "szammal": 5,
+   "gyenge": false
+  },
+  {
+   "id": "vas_tenger",
+   "korszak": 4,
+   "terulet": "fold",
+   "cim": "Segít-e, ha vassal trágyázzuk a tengert?",
+   "attekintok": 927,
+   "cikkek": 21,
+   "szammal": 0,
+   "gyenge": true
+  },
+  {
+   "id": "beporzok",
+   "korszak": 1,
+   "terulet": "biologia",
+   "cim": "Mit okoz a melegedés a beporzó rovaroknak?",
+   "attekintok": 6118,
+   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=pollinator+decline+climate+warming&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sort=relevance_score%3Adesc&a",
+   "gyenge": null
+  },
+  {
+   "id": "korall",
+   "korszak": 1,
+   "terulet": "biologia",
+   "cim": "Túlélik-e a korallzátonyok a melegedést?",
+   "attekintok": 813,
+   "cikkek": 34,
+   "szammal": 15,
+   "gyenge": false
+  },
+  {
+   "id": "amazonas",
+   "korszak": 1,
+   "terulet": "biologia",
+   "cim": "Közel van-e az Amazonas esőerdő az átbillenéshez?",
+   "attekintok": 535,
+   "cikkek": 34,
+   "szammal": 18,
+   "gyenge": false
+  },
+  {
+   "id": "kerodzok_metan",
+   "korszak": 2,
+   "terulet": "biologia",
+   "cim": "Csökkenthető-e a tehenek metánja takarmánnyal?",
+   "attekintok": 4336,
+   "cikkek": 35,
+   "szammal": 19,
+   "gyenge": false
+  },
+  {
+   "id": "voros_alga",
+   "korszak": 2,
+   "terulet": "biologia",
+   "cim": "Tényleg csökkenti-e egy tengeri alga a tehenek metánját?",
+   "attekintok": 840,
+   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=Asparagopsis+taxiformis+beef+cattle+methane&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sort=relevance_score",
+   "gyenge": null
+  },
+  {
+   "id": "erdo",
+   "korszak": 4,
+   "terulet": "biologia",
+   "cim": "Mennyi CO2-t köthet meg az erdősítés?",
+   "attekintok": 751,
+   "cikkek": 36,
+   "szammal": 2,
+   "gyenge": false
+  },
+  {
+   "id": "erdo_magatol",
+   "korszak": 4,
+   "terulet": "biologia",
+   "cim": "Mennyi szenet köt meg az erdő, ha hagyjuk magától visszanőni?",
+   "attekintok": 5652,
+   "cikkek": 35,
+   "szammal": 2,
+   "gyenge": false
+  },
+  {
+   "id": "mangrove",
+   "korszak": 4,
+   "terulet": "biologia",
+   "cim": "Mennyi szenet tárolnak a mangroveerdők?",
+   "attekintok": 1723,
+   "cikkek": 36,
+   "szammal": 3,
+   "gyenge": false
+  },
+  {
+   "id": "tengerifu",
+   "korszak": 4,
+   "terulet": "biologia",
+   "cim": "Mennyi szenet köt meg a tengerifű?",
+   "attekintok": 727,
+   "cikkek": 35,
+   "szammal": 2,
+   "gyenge": false
+  },
+  {
+   "id": "moszaterdo",
+   "korszak": 4,
+   "terulet": "biologia",
+   "cim": "Megköthet-e szenet a tengeri moszaterdő?",
+   "attekintok": 973,
+   "cikkek": 36,
+   "szammal": 3,
+   "gyenge": false
+  },
+  {
+   "id": "korall_ujra",
+   "korszak": 4,
+   "terulet": "biologia",
+   "cim": "Megmenthetők-e a korallzátonyok ültetéssel?",
+   "attekintok": 1301,
+   "cikkek": 35,
+   "szammal": 14,
+   "gyenge": false
+  },
+  {
+   "id": "metan_gaz",
+   "korszak": 2,
+   "terulet": "energia",
+   "cim": "Mennyi metánszivárgás szüntethető meg a gáziparban?",
+   "attekintok": 4370,
+   "cikkek": 36,
+   "szammal": 23,
+   "gyenge": false
+  },
+  {
+   "id": "metan_szen",
+   "korszak": 2,
+   "terulet": "energia",
+   "cim": "Mennyi metán fogható fel a szénbányákban?",
+   "attekintok": 814,
+   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=abandoned+coal+mine+methane+emissions&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sort=relevance_score%3Ades",
+   "gyenge": null
+  },
+  {
+   "id": "napelem",
+   "korszak": 2,
+   "terulet": "energia",
+   "cim": "Mennyi CO2-t spórol a napelem?",
+   "attekintok": 3276,
+   "cikkek": 36,
+   "szammal": 9,
+   "gyenge": false
+  },
+  {
+   "id": "szelenergia",
+   "korszak": 2,
+   "terulet": "energia",
+   "cim": "Mennyi kibocsátást válthat ki a szélenergia?",
+   "attekintok": 22120,
+   "cikkek": 36,
+   "szammal": 1,
+   "gyenge": true
+  },
+  {
+   "id": "geotermia",
+   "korszak": 2,
+   "terulet": "energia",
+   "cim": "Mennyi fűtést és áramot adhat a föld hője?",
+   "attekintok": 2812,
+   "cikkek": 36,
+   "szammal": 8,
+   "gyenge": false
+  },
+  {
+   "id": "napkollektor",
+   "korszak": 2,
+   "terulet": "energia",
+   "cim": "Mennyi energiát spórol a napkollektor?",
+   "attekintok": 2616,
+   "cikkek": 36,
+   "szammal": 21,
+   "gyenge": false
+  },
+  {
+   "id": "novenyi_energia",
+   "korszak": 3,
+   "terulet": "energia",
+   "cim": "Mennyi CO2-t zárhat a föld alá a növényi energia?",
+   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=BECCS+review&per-page=1&filter=type%3Areview%2Cfrom_publication_date%3A2000-01-01&api_key=REJTETT (HTTP Error 429: Too Many R",
+   "gyenge": null
+  },
+  {
+   "id": "tengeri_szel",
+   "korszak": 3,
+   "terulet": "energia",
+   "cim": "Mennyi kibocsátást válthat ki a tengeri szélenergia?",
+   "attekintok": 2017,
+   "cikkek": 36,
+   "szammal": 0,
+   "gyenge": true
+  },
+  {
+   "id": "vizi_tarolo",
+   "korszak": 3,
+   "terulet": "energia",
+   "cim": "Milyen hatékony az energiatárolás víztározókkal?",
+   "attekintok": 2042,
+   "cikkek": 34,
+   "szammal": 17,
+   "gyenge": false
+  },
+  {
+   "id": "ipari_hoszivattyu",
+   "korszak": 3,
+   "terulet": "energia",
+   "cim": "Mennyit spórolhat a gyárakban a hőszivattyú?",
+   "attekintok": 9556,
+   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=industrial+heat+pumps+decarbonization+potential+process+heat&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sor",
+   "gyenge": null
+  },
+  {
+   "id": "biogaz",
+   "korszak": 3,
+   "terulet": "energia",
+   "cim": "Mennyi kibocsátást spórol a biogáz?",
+   "attekintok": 3598,
+   "cikkek": 36,
+   "szammal": 20,
+   "gyenge": false
+  },
+  {
+   "id": "hoszivattyu",
+   "korszak": 2,
+   "terulet": "mernok",
+   "cim": "Mennyit spórol a hőszivattyú a gázkazánhoz képest?",
+   "attekintok": 648,
+   "cikkek": 35,
+   "szammal": 23,
+   "gyenge": false
+  },
+  {
+   "id": "hoszigeteles",
+   "korszak": 2,
+   "terulet": "mernok",
+   "cim": "Mennyi fűtést spórol a hőszigetelés?",
+   "attekintok": 1403,
+   "cikkek": 36,
+   "szammal": 20,
+   "gyenge": false
+  },
+  {
+   "id": "villanyauto",
+   "korszak": 2,
+   "terulet": "mernok",
+   "cim": "Mennyivel kevesebb CO2-t okoz a villanyautó?",
+   "attekintok": 6066,
+   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=battery+electric+vehicle+life+cycle+emissions+compared+to+internal+combustion&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date",
+   "gyenge": null
+  },
+  {
+   "id": "vasut",
+   "korszak": 2,
+   "terulet": "mernok",
+   "cim": "Mennyi CO2-t spórol, ha vonattal utazunk autó és repülő helyett?",
+   "attekintok": 1228,
+   "cikkek": 36,
+   "szammal": 19,
+   "gyenge": false
+  },
+  {
+   "id": "kerekpar",
+   "korszak": 2,
+   "terulet": "mernok",
+   "cim": "Mennyit segít, ha többen kerékpárral járnak?",
+   "attekintok": 10317,
+   "cikkek": 36,
+   "szammal": 12,
+   "gyenge": false
+  },
+  {
+   "id": "tavmunka",
+   "korszak": 2,
+   "terulet": "mernok",
+   "cim": "Csökkenti-e a kibocsátást az otthoni munka?",
+   "attekintok": 409,
+   "cikkek": 24,
+   "szammal": 10,
+   "gyenge": false
+  },
+  {
+   "id": "levegoszures",
+   "korszak": 3,
+   "terulet": "mernok",
+   "cim": "Mennyi CO2-t szűrhetnek ki gépek a levegőből?",
+   "attekintok": 45499,
+   "cikkek": 36,
+   "szammal": 12,
+   "gyenge": false
+  },
+  {
+   "id": "gyari_co2",
+   "korszak": 3,
+   "terulet": "mernok",
+   "cim": "Mennyi CO2 fogható fel a gyárkéményekben?",
+   "attekintok": 31077,
+   "cikkek": 35,
+   "szammal": 15,
+   "gyenge": false
+  },
+  {
+   "id": "teherauto",
+   "korszak": 3,
+   "terulet": "mernok",
+   "cim": "Mennyit spórol az elektromos teherautó?",
+   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=electric+heavy-duty+trucks+review&per-page=1&filter=type%3Areview%2Cfrom_publication_date%3A2000-01-01&api_key=REJTETT (HTTP ",
+   "gyenge": null
+  },
+  {
+   "id": "hajozas",
+   "korszak": 3,
+   "terulet": "mernok",
+   "cim": "Mennyivel csökkenthető a hajózás kibocsátása?",
+   "attekintok": 434,
+   "cikkek": 36,
+   "szammal": 17,
+   "gyenge": false
+  },
+  {
+   "id": "termes",
+   "korszak": 1,
+   "terulet": "mezogazdasag",
+   "cim": "Mennyit csökken a termés, ha melegszik a Föld?",
+   "attekintok": 23765,
+   "cikkek": 34,
+   "szammal": 19,
+   "gyenge": false
+  },
+  {
+   "id": "kukorica",
+   "korszak": 1,
+   "terulet": "mezogazdasag",
+   "cim": "Segítenek-e az aszálytűrő kukoricafajták?",
+   "attekintok": 6181,
+   "cikkek": 20,
+   "szammal": 9,
+   "gyenge": false
+  },
+  {
+   "id": "metan_rizs",
+   "korszak": 2,
+   "terulet": "mezogazdasag",
+   "cim": "Mennyi metán spórolható meg a rizsföldeken?",
+   "attekintok": 810,
+   "cikkek": 24,
+   "szammal": 17,
+   "gyenge": false
+  },
+  {
+   "id": "mutragya",
+   "korszak": 2,
+   "terulet": "mezogazdasag",
+   "cim": "Mennyi kéjgáz spórolható a műtrágya okosabb használatával?",
+   "attekintok": 2607,
+   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=nitrification+inhibitors+N2O+mitigation+meta-analysis&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sort=relev",
+   "gyenge": null
+  },
+  {
+   "id": "tragya",
+   "korszak": 2,
+   "terulet": "mezogazdasag",
+   "cim": "Mennyi metán spórolható a trágya kezelésével?",
+   "attekintok": 3160,
+   "cikkek": 34,
+   "szammal": 25,
+   "gyenge": false
+  },
+  {
+   "id": "pazarlas",
+   "korszak": 2,
+   "terulet": "mezogazdasag",
+   "cim": "Mennyi kibocsátás jön a kidobott ételből?",
+   "attekintok": 11172,
+   "cikkek": 23,
+   "szammal": 2,
+   "gyenge": false
+  },
+  {
+   "id": "etrend",
+   "korszak": 2,
+   "terulet": "mezogazdasag",
+   "cim": "Mennyit számít, ha kevesebb húst eszünk?",
+   "attekintok": 10158,
+   "cikkek": 36,
+   "szammal": 2,
+   "gyenge": false
+  },
+  {
+   "id": "ontozes",
+   "korszak": 2,
+   "terulet": "mezogazdasag",
+   "cim": "Mennyi vizet takarít meg a csepegtető öntözés?",
+   "attekintok": 431,
+   "cikkek": 24,
+   "szammal": 15,
+   "gyenge": false
+  },
+  {
+   "id": "talaj",
+   "korszak": 4,
+   "terulet": "mezogazdasag",
+   "cim": "Mennyi szenet köthet meg újra a talaj?",
+   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=soil+carbon+sequestration+review&per-page=1&filter=type%3Areview%2Cfrom_publication_date%3A2000-01-01&api_key=REJTETT (HTTP E",
+   "gyenge": null
+  },
+  {
+   "id": "agroerdeszet",
+   "korszak": 4,
+   "terulet": "mezogazdasag",
+   "cim": "Mennyi szenet köt meg a fákkal tarkított szántó és legelő?",
+   "attekintok": 2163,
+   "cikkek": 35,
+   "szammal": 0,
+   "gyenge": true
+  },
+  {
+   "id": "hoseg_halal",
+   "korszak": 1,
+   "terulet": "egeszseg",
+   "cim": "A hőség okozta halálesetek mekkora része jön a melegedésből?",
+   "attekintok": 57468,
+   "cikkek": 36,
+   "szammal": 22,
+   "gyenge": false
+  },
+  {
+   "id": "munkakepesseg",
+   "korszak": 1,
+   "terulet": "egeszseg",
+   "cim": "Mennyi munkaidőt visz el a hőség?",
+   "attekintok": 7994,
+   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=occupational+heat+exposure+labor+capacity&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sort=relevance_score%3",
+   "gyenge": null
+  },
+  {
+   "id": "legszennyezes",
+   "korszak": 1,
+   "terulet": "egeszseg",
+   "cim": "Hány életet ment, ha kevesebb szenet és olajat égetünk?",
+   "attekintok": 23157,
+   "cikkek": 35,
+   "szammal": 17,
+   "gyenge": false
+  },
+  {
+   "id": "varosi_fak",
+   "korszak": 2,
+   "terulet": "egeszseg",
+   "cim": "Mennyivel hűvösebb a fák alatt a város?",
+   "attekintok": 4153,
+   "cikkek": 35,
+   "szammal": 16,
+   "gyenge": false
+  },
+  {
+   "id": "feher_teto",
+   "korszak": 2,
+   "terulet": "egeszseg",
+   "cim": "Mennyit hűtenek a világos tetők?",
+   "attekintok": 1990,
+   "hiba": "Nem sikerült lekérni: https://api.openalex.org/works?search=reflective+roofs+cooling+energy+savings&per-page=12&filter=has_abstract%3Atrue%2Cfrom_publication_date%3A2000-01-01&sort=relevance_score%3Ad",
+   "gyenge": null
+  },
+  {
+   "id": "zoldteto",
+   "korszak": 2,
+   "terulet": "egeszseg",
+   "cim": "Mennyit hűt a zöldtető?",
+   "attekintok": 5146,
+   "cikkek": 24,
+   "szammal": 8,
+   "gyenge": false
+  },
+  {
+   "id": "hoseg_riasztas",
+   "korszak": 2,
+   "terulet": "egeszseg",
+   "cim": "Hány életet ment a hőségriasztás?",
+   "attekintok": 16939,
+   "cikkek": 24,
+   "szammal": 8,
+   "gyenge": false
+  },
+  {
+   "id": "korai_riasztas",
+   "korszak": 2,
+   "terulet": "egeszseg",
+   "cim": "Hány életet ment az árvíz- és viharriasztás?",
+   "attekintok": 24342,
+   "cikkek": 36,
+   "szammal": 4,
+   "gyenge": false
+  }
+ ]
+}
