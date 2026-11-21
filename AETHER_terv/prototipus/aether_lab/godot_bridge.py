@@ -21,6 +21,7 @@ elő, kizárólag ELLENŐRZÖTT állításokból. A játékos hagyja jóvá őke
 from __future__ import annotations
 
 import json
+import re
 import os
 import time
 import traceback
@@ -214,11 +215,12 @@ class StatusLog:
         self.en = is_en(lang)
         self.lines: List[str] = []
         self.step = 0
+        self.rovid = ""
         self._write("fut")
 
     def _write(self, state: str, **extra):
         _write_json(self.path, {"allapot": state, "lepes": self.step, "lepesek": self.LEPESEK_EN if self.en else self.LEPESEK,
-                                "naplo": self.lines[-40:], "ido": time.time(), **extra})
+                                "naplo": self.lines[-40:], "rovid": self.rovid, "ido": time.time(), **extra})
 
     def __call__(self, msg: str):
         print(msg, flush=True)
@@ -228,7 +230,22 @@ class StatusLog:
         if len(s) > 3 and s[0].isdigit() and s[1:3] == "/4":
             self.step = int(s[0])
         self.lines.append(s)
+        short = self._short(s)
+        if short:
+            self.rovid = short
         self._write("fut")
+
+    def _short(self, s: str) -> str:
+        """A játékosnak szóló egyetlen rövid sor (a technikai napló a Részletek mögött van)."""
+        m = re.match(r"(\d+) (?:egyedi|unique).*?(?:legjobb|best) (\d+)", s)
+        if m:
+            return (f"{m.group(1)} papers found, the AI reads the best {m.group(2)}." if self.en else
+                    f"{m.group(1)} cikket találtunk. Az AI most a {m.group(2)} legjobbat olvassa.")
+        m = re.match(r"(\d+)/(\d+) (?:állítás|claims)", s)
+        if m:
+            return (f"{m.group(1)} of {m.group(2)} numbers passed the check." if self.en else
+                    f"{m.group(2)} számból {m.group(1)} ment át az ellenőrzésen.")
+        return ""
 
     def done(self, **extra):
         self._write("kesz", **extra)

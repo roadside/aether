@@ -30,6 +30,8 @@ from .evidence import _norm_text, numbers_in
 MAX_TEXT = 8000          # ennyi karakter megy az AI-nak
 MAX_IMAGES = 4
 MAX_IMAGE_BYTES = 4_000_000
+MIN_IMAGE_BYTES = 8_000  # ennél kisebb kép szinte mindig logó vagy ikon
+MIN_SOURCE_CHARS = 300   # ennél kevesebb érdemi szövegből az AI nem foglal össze (kitalálna)
 IMG_EXT = (".png", ".jpg", ".jpeg", ".webp")
 IMG_SKIP = ("logo", "icon", "flag", "banner", "sprite", "button", "arrow", "spacer", "pixel", "avatar",
             "favicon", "social", "twitter", "facebook", "linkedin", "youtube", "loading", "badge")
@@ -58,14 +60,15 @@ SUMMARY_SYSTEM = """Egy hivatalos katasztrófa- vagy környezeti jelentést fogl
 klímajáték játékosának, aki nem szakember. Szabályok:
 - CSAK a megadott forrásszövegben szereplő tényeket használd. Ne egészítsd ki saját tudással,
   ne becsülj, ne jósolj.
-- Az 'osszegzes' 2-3 rövid, hétköznapi mondat a megadott nyelven: mi történik, hol, mióta,
-  mekkora a baj. Ne sorold fel az összes országot: írd, hogy hány ország érintett, és nevezz meg
-  legfeljebb 3-at.
-- A 'miert_fontos' 2-3 hétköznapi mondat: miért számít ez az embereknek és a természetnek, és
+- Helyet (országot, tengert, várost, régiót) és számot CSAK akkor írj, ha szó szerint szerepel a
+  forrásszövegben vagy az esemény adataiban. Ha a hely nem derül ki, ne nevezz meg helyet.
+- Az 'osszegzes' 1-2 rövid, hétköznapi mondat a megadott nyelven: mi történik, hol, mekkora a baj.
+  Ne sorold fel az országokat: írd, hány ország érintett, és nevezz meg legfeljebb 2-t.
+- A 'miert_fontos' 1-2 rövid, hétköznapi mondat: miért számít ez az embereknek és a természetnek, és
   hogyan kapcsolódik a klímaváltozáshoz. Ez általános magyarázat: NE írj bele számot. Legyél
   őszinte: ha az esemény nem klímaesemény (pl. földrengés, vulkán), mondd ki; ha a kapcsolat
   bizonytalan (egyetlen esemény nem bizonyítja a klímaváltozást), azt is.
-- A 'fobb_szamok' legfeljebb 4 fontos szám a szövegből (pl. időtartam, terület, érintett emberek).
+- A 'fobb_szamok' legfeljebb 3 fontos szám a szövegből (pl. időtartam, terület, érintett emberek).
   Az 'idezet' a forrásszöveg SZÓ SZERINTI részlete (eredeti nyelven), amely a számot tartalmazza.
   A 'jelentes' egy rövid magyarázat a megadott nyelven. Ha nincs ilyen szám, adj üres listát."""
 
@@ -190,6 +193,62 @@ def gdacs_api_url(link: str) -> Optional[str]:
     return None
 
 
+_ARRAYMAPS = re.compile(r"var\s+arraymaps\s*=\s*(\[.*?\])\s*;", re.S)
+_MAP_ITEM = re.compile(r'["\']?title["\']?\s*:\s*["\']([^"\']*)["\'][^}]*?["\']?image["\']?\s*:\s*["\']([^"\']+)["\']', re.S)
+
+
+def gdacs_images(page: str, data: Optional[Dict], base_url: str) -> List[Dict]:
+    """A GDACS saját térképei: az API 'images' mezője és a jelentésoldal 'arraymaps' listája.
+    (A GDACS-oldal <img> elemei logók, ezért azokat nem használjuk.)"""
+    out, seen = [], set()
+
+    def add(url: str, alt: str):
+        url = urllib.parse.urljoin(base_url, url or "")
+        if url.startswith("http") and urllib.parse.urlparse(url).path.lower().endswith(IMG_EXT) and url not in seen:
+            seen.add(url)
+            out.append({"url": url, "alt": " ".join((alt or "").split())[:200]})
+
+    p = data.get("properties", data) if isinstance(data, dict) else {}
+    imgs = p.get("images") if isinstance(p, dict) else None
+    if isinstance(imgs, dict):
+        for k in ("thumbnailmap", "map", "overviewmap"):
+            if isinstance(imgs.get(k), str):
+                add(imgs[k], "")
+    m = _ARRAYMAPS.search(page or "")
+    if m:
+        try:
+            items = [(str(i.get("title", "")), str(i.get("image", ""))) for i in json.loads(m.group(1))
+                     if isinstance(i, dict)]
+        except ValueError:
+            items = _MAP_ITEM.findall(m.group(1))
+        for title, img in items:
+            add(img, title)
+    return out
+
+
+def looks_like_html(page: str) -> bool:
+    head = (page or "")[:2000].lower()
+    return "<html" in head or "<body" in head or "<!doctype html" in head or "<p" in head
+
+
+_GROUPED = re.compile(r"(?<=\d)[ ,.\u00a0\u202f](?=\d{3}(?!\d))")
+
+
+def _num_set(text: str) -> List[float]:
+    """Számok a szövegben; az ezres tagolást (12 000 / 12,000) előbb összevonjuk."""
+    s = _norm_text(re.sub(r"[\u00b2\u00b3\u00b9\u2070-\u209f]", "", text or ""))  # km², CO₂: nem számok
+    prev = None
+    while prev != s:
+        prev, s = s, _GROUPED.sub("", s)
+    return [abs(x) for x in numbers_in(s)]
+
+
+def unsupported_numbers(summary: str, source: str) -> List[float]:
+    """Az összefoglaló olyan számai, amelyek nincsenek a forrásban (= az AI kitalálta)."""
+    have = _num_set(source)
+    return [n for n in _num_set(summary) if n not in have]
+
+
 def _days(a: str, b: str) -> Optional[int]:
     try:
         d1 = _dt.datetime.fromisoformat(a[:19])
@@ -252,6 +311,16 @@ def plain_summary(event: Dict, facts: List[Dict], lang: str = "hu") -> str:
         where = (" in " if en else ": ") + ", ".join(countries)
     src = event.get("forras", "")
     s = (f"{src} reports{where}." if en else f"A(z) {src} jelentése{where}.")
+    lat, lon = event.get("lat"), event.get("lon")
+    if not countries and isinstance(lat, (int, float)) and isinstance(lon, (int, float)):
+        ns, ew = ("N" if lat >= 0 else "S"), ("E" if lon >= 0 else "W")
+        if not en:
+            ns, ew = ("É" if lat >= 0 else "D"), ("K" if lon >= 0 else "Ny")
+        if en:
+            s += f" Location: {abs(lat):.1f}° {ns}, {abs(lon):.1f}° {ew}."
+        else:
+            a, b = f"{abs(lat):.1f}".replace(".", ","), f"{abs(lon):.1f}".replace(".", ",")
+            s += f" Helye: {a}° {ns}, {b}° {ew}."
     sev = next((x["ertek"] for x in facts if x["nev"].startswith(("Súlyosság", "Severity"))), "")
     dur = next((x["ertek"] for x in facts if x["nev"] in ("Időtartam", "Duration")), "")
     if dur:
@@ -272,11 +341,16 @@ def build(event: Dict, folder: Path, fetch: Callable[..., bytes], provider=None,
     if link.startswith("http"):
         try:
             page = fetch(link).decode("utf-8", "replace")
-            text = (text + "\n" + html_text(page)).strip()
+            if looks_like_html(page):
+                text = (text + "\n" + html_text(page)).strip()
+            else:
+                page = ""   # pl. CSV- vagy adatfájl-link: nem összefoglalható szöveg
         except Exception as e:
             res["megjegyzes"] = (f"The source page could not be downloaded: {e}" if en
                                  else f"A forrás oldala nem tölthető le: {e}")
-    api = gdacs_api_url(link) if "gdacs" in link.lower() else None
+    is_gdacs = "gdacs" in link.lower()
+    api = gdacs_api_url(link) if is_gdacs else None
+    data = None
     if api:
         try:
             data = json.loads(fetch(api))
@@ -284,21 +358,18 @@ def build(event: Dict, folder: Path, fetch: Callable[..., bytes], provider=None,
             p = data.get("properties", {}) if isinstance(data, dict) else {}
             extra = " ".join(str(p.get(k, "")) for k in ("name", "description", "htmldescription") if p.get(k))
             text = (html_text(extra) + "\n" + text).strip()
-            for k in ("images", "imagesurl"):
-                v = p.get(k)
-                if isinstance(v, str) and v.startswith("http"):
-                    res.setdefault("_kep_oldalak", []).append(v)
         except Exception as e:
             log(f"GDACS API: {e}")
 
     # képek letöltése a gép gyorsítótárába
     folder.mkdir(parents=True, exist_ok=True)
-    for im in html_images(page, link)[: MAX_IMAGES * 3]:
+    images = gdacs_images(page, data, link) if is_gdacs else html_images(page, link)
+    for im in images[: MAX_IMAGES * 3]:
         if len(res["kepek"]) >= MAX_IMAGES:
             break
         try:
             raw = fetch(im["url"])
-            if len(raw) > MAX_IMAGE_BYTES or len(raw) < 3000:
+            if len(raw) > MAX_IMAGE_BYTES or len(raw) < MIN_IMAGE_BYTES:
                 continue  # túl nagy, vagy túl kicsi (ikon)
             ext = os.path.splitext(urllib.parse.urlparse(im["url"]).path)[1].lower() or ".png"
             name = hashlib.sha1(im["url"].encode()).hexdigest()[:16] + ext
@@ -306,19 +377,27 @@ def build(event: Dict, folder: Path, fetch: Callable[..., bytes], provider=None,
             res["kepek"].append({"fajl": str(folder / name), "url": im["url"], "alt": im["alt"]})
         except Exception as e:
             log(f"kép: {im['url']}: {e}")
-    res.pop("_kep_oldalak", None)
 
     # összefoglaló
-    if provider is not None and len(text) > 40:
+    # Kevés érdemi szövegből az AI csak kitalálna: ilyenkor a forrás saját adatai maradnak.
+    if provider is not None and len(text) >= MIN_SOURCE_CHARS:
         try:
             lang_name = "English" if en else "magyar"
-            user = (f"Nyelv: {lang_name}\nEsemény: {event.get('cim', '')}\nForrás: {res['forras']}\n\n"
-                    f"<forrasszoveg>\n{text[:MAX_TEXT]}\n</forrasszoveg>")
+            known = (f"Esemény: {event.get('cim', '')}\nKategória: {event.get('kategoria', '')}\n"
+                     f"Dátum: {event.get('datum', '')}\nOrszág(ok): {event.get('orszag', '') or '-'}\n"
+                     f"Koordináta: {event.get('lat', '')}, {event.get('lon', '')}\nForrás: {res['forras']}")
+            user = (f"Nyelv: {lang_name}\n{known}\n\n<forrasszoveg>\n{text[:MAX_TEXT]}\n</forrasszoveg>")
             raw = provider.json_call(SUMMARY_SYSTEM, user, SUMMARY_SCHEMA, 2000)
-            res["osszegzes"] = str(raw.get("osszegzes", "")).strip()
-            res["miert_fontos"] = str(raw.get("miert_fontos", "")).strip()
+            summary = str(raw.get("osszegzes", "")).strip()
+            bad = unsupported_numbers(summary, known + "\n" + text[:MAX_TEXT] + "\n" +
+                                      " ".join(f["ertek"] for f in res["tenyek"]))
+            if bad:   # olyan szám, ami nincs a forrásban: az összefoglalót nem mutatjuk
+                log(f"AI-összefoglaló elvetve, forrásban nem szereplő számok: {bad}")
+            else:
+                res["osszegzes"] = summary
+                res["miert_fontos"] = str(raw.get("miert_fontos", "")).strip()
+                res["osszegzes_tipus"] = "ai"
             res["fobb_szamok"] = verify_numbers(raw.get("fobb_szamok", []), text[:MAX_TEXT])
-            res["osszegzes_tipus"] = "ai"
         except Exception as e:
             res["megjegyzes"] = (res["megjegyzes"] + " " + (f"AI summary failed: {e}" if en
                                  else f"Az AI-összefoglaló nem sikerült: {e}")).strip()

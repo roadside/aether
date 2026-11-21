@@ -131,5 +131,14 @@ class TestEvidence(unittest.TestCase):
         self.assertIn("A(z) érték (3.0) nem szerepel az idézetben.", c.indokok)
 
 
+class TestQuoteSpacing(unittest.TestCase):
+    def test_broken_formula_spacing(self):
+        from aether_lab.evidence import quote_in
+        abstract = "potentials of 0.5–2 GtCO 2 yr −1 for biochar"
+        self.assertTrue(quote_in("0.5–2 GtCO2 yr−1 for biochar", abstract))
+        self.assertFalse(quote_in("0.5–3 GtCO2 yr−1 for biochar", abstract))
+        self.assertFalse(quote_in("", abstract))
+
+
 if __name__ == "__main__":
     unittest.main()

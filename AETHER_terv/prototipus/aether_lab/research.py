@@ -78,9 +78,11 @@ def run_research(question: str, provider: Optional[Provider], n_papers: int = 12
 
     claims: List[ev.Claim] = []
     summary, contradictions = "", ""
+    raw_extraction = None
     if provider is not None and papers:
         log(m("3/4 AI-kivonatolás (szó szerinti idézetekkel)...", "3/4 AI extraction (with verbatim quotes)..."))
         raw = extract(provider, plan["kutatasi_kerdes_pontositva"], papers, plan["keresett_parameterek"], lang)
+        raw_extraction = raw   # hibakereséshez: az AI nyers válasza a publikációba kerül
         claims = [ev.Claim(**c) for c in raw.get("allitasok", [])]
         summary, contradictions = raw.get("osszegzes", ""), raw.get("ellentmondasok", "")
     else:
@@ -98,6 +100,7 @@ def run_research(question: str, provider: Optional[Provider], n_papers: int = 12
         "terv": plan,
         "ai": getattr(provider, "name", "none") + (f":{provider.model}" if provider is not None else ""),
         "cikkek": {pid: asdict(p) for pid, p in papers.items()},
+        "ai_nyers_kivonat": raw_extraction,
         "allitasok": [asdict(c) for c in claims],
         "osszesitett_parameterek": agg,
         "ai_osszegzes": summary,

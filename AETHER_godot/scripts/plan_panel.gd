@@ -91,17 +91,17 @@ func rebuild() -> void:
 	x.pressed.connect(close_fn)
 	h.add_child(x)
 	_body.add_child(h)
-	_body.add_child(UI.label(L.t("Állítsd be, mit tegyen a világ. Utána megnézzük, mi lesz a Föld hőmérsékletével 2100-ig."), 17, UI.SOFT))
+	_body.add_child(UI.label(L.t("Állítsd be, mit tegyen a világ, és nézd meg, mi lesz 2100-ig."), 17, UI.SOFT))
 
 	var year_fmt := func(y: float) -> String: return L.t("Soha") if int(y) >= NEVER else str(int(y))
 	var pct_fmt := func(p: float) -> String: return "%d%%" % int(p)
 	var gt_fmt := func(v: float) -> String: return UI.hu(v, 2) + L.t(" mrd t")
 	_co2 = _slider_row(L.t("Mikorra csökkenjen nullára a CO2-kibocsátás?"),
-		L.t("A CO2 a fő oka a melegedésnek. Minél hamarabb nullázzuk, annál kevésbé melegszik a Föld."),
+		L.t("A melegedés fő oka. Minél hamarabb nulla, annál jobb."),
 		2035, NEVER, 5, 2050, year_fmt,
 		L.t("IPCC AR6: a melegedés a kibocsátott CO2 összmennyiségével arányos"))
 	_ch4 = _slider_row(L.t("Mennyivel csökkentsük a metánt 2030-ig?"),
-		L.t("A metán gyorsan hat: ha csökken, pár évtized alatt érezhetően lassul a melegedés."),
+		L.t("Gyorsan hat: csökkentése pár évtized alatt lassítja a melegedést."),
 		0, 45, 5, 0, pct_fmt,
 		L.t("UNEP/CCAC Global Methane Assessment (2021): 45% elérhető 2030-ig"))
 
@@ -123,7 +123,7 @@ func rebuild() -> void:
 	if levers.is_empty():
 		var c := UI.card(UI.EDGE)
 		c.add_child(UI.label(L.t("Zárolva: CO2-kivonás és alkalmazkodás"), 17, UI.MUTE, true))
-		c.add_child(UI.label(L.t("Ezeket előbb ki kell kutatnod. Csak olyan szám kerülhet a tervbe, amit valódi cikkekben ellenőriztünk."), 15, UI.MUTE))
+		c.add_child(UI.label(L.t("Ezeket előbb ki kell kutatnod."), 15, UI.MUTE))
 		_body.add_child(UI.card_root(c))
 
 	_run_btn = UI.button(L.t("Mi lesz a Földdel? (modell futtatása)"), true)
@@ -161,7 +161,7 @@ func _run_model() -> void:
 		_run_btn.disabled = true
 		_run_btn.text = L.t("Számolok…")
 	else:
-		_run_btn.text = L.t("Még dolgozom egy másik feladaton, nyomd meg újra pár másodperc múlva")
+		_run_btn.text = L.t("Egy pillanat, próbáld újra")
 
 
 func _on_bridge_finished(tag: String, code: int, output: String) -> void:
@@ -180,7 +180,7 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 	_chart = Chart.new()
 	_result_box.add_child(_chart)
 	_chart.set_data(res)
-	_result_box.add_child(UI.label(L.t("Ez egy egyszerű oktatási modell: az irányt és a nagyságrendet mutatja, nem pontos jövendölést."), 14, UI.MUTE))
+	_result_box.add_child(UI.label(L.t("Egyszerű oktatási modell: irányt mutat, nem jósol."), 14, UI.MUTE))
 	var see := UI.button(L.t("Megnézem a földgömbön"), true)
 	var see_fn := func() -> void: model_ready.emit(res)
 	see.pressed.connect(see_fn)

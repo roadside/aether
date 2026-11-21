@@ -113,7 +113,7 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 	var r: Variant = Bridge.read_json(_out)
 	if code != 0 or typeof(r) != TYPE_DICTIONARY:
 		UI.clear(_summary_box)
-		_summary_box.add_child(UI.label(L.t("Az összefoglaló most nem készült el. A hivatalos forrást lent megnyithatod."), 17, UI.EMBER))
+		_summary_box.add_child(UI.label(L.t("Az összefoglaló nem készült el. Lent a forrás."), 17, UI.EMBER))
 		print(output)
 		_add_source_button()
 		return
@@ -127,7 +127,7 @@ func _show(r: Dictionary) -> void:
 	c.add_child(UI.label(L.t("Összefoglaló (AI, a forrás alapján)") if ai else L.t("Összefoglaló (a forrás saját adataiból)"), 15, UI.GOLD, true))
 	c.add_child(UI.label(str(r.get("osszegzes", "")), 18, UI.TEXT))
 	if ai:
-		c.add_child(UI.label(L.t("Az AI is tévedhet: a számokat a játék szó szerint visszakereste a forrásban, a szöveget lent ellenőrizheted."), 13, UI.MUTE))
+		c.add_child(UI.label(L.t("A számokat a játék a forrásban ellenőrizte."), 13, UI.MUTE))
 	_summary_box.add_child(UI.card_root(c))
 	if str(r.get("miert_fontos", "")) != "":
 		var w := UI.card(UI.GREEN)
@@ -140,8 +140,6 @@ func _show(r: Dictionary) -> void:
 			var s_fn := func() -> void: OS.shell_open(surl)
 			sb.pressed.connect(s_fn)
 			w.add_child(sb)
-		elif ai:
-			w.add_child(UI.label(L.t("Általános AI-magyarázat, számok nélkül."), 13, UI.MUTE))
 		_summary_box.add_child(UI.card_root(w))
 
 	var nums: Array = r.get("fobb_szamok", [])

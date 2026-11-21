@@ -275,7 +275,7 @@ func _render_mission() -> void:
 		if current:
 			_mission_box.add_child(UI.label(L.t(MISSION[i][1]), 15, UI.SOFT))
 	if mission_step >= MISSION.size():
-		_mission_box.add_child(UI.label(L.t("Kész! Húzd az év-csúszkát lent, és nézd, hogyan változik a Föld. Próbálj ki egy új kutatást vagy egy másik tervet!"), 15, UI.GREEN))
+		_mission_box.add_child(UI.label(L.t("Kész! Húzd az év-csúszkát, és nézd a Földet."), 15, UI.GREEN))
 
 
 func _advance(to_step: int) -> void:
@@ -302,7 +302,7 @@ func _refresh_world() -> void:
 	if bridge.run("vilag", ["vilag", "--ki", _world_path()]):
 		_refresh_btn.disabled = true
 		_refresh_btn.text = L.t("Letöltés folyamatban…")
-		_world_note.text = L.t("Valós jelentések letöltése (GDACS, ReliefWeb, NASA, NOAA, NSIDC)…")
+		_world_note.text = L.t("Valós jelentések letöltése…")
 
 
 func _render_world() -> void:
@@ -317,7 +317,7 @@ func _render_world() -> void:
 	var when := str(world.get("letoltve", "")).replace("T", " ").left(16)
 	_world_note.text = L.t("Valós jelentések, letöltve: %s (UTC). %d/%d forrás elérhető.") % [when, ok, srcs.size()]
 	if events.is_empty():
-		_events_box.add_child(UI.label(L.t("Most nem sikerült valós jelentést letölteni. Van internet? A játék nem pótolja kitalált adattal."), 16, UI.SOFT))
+		_events_box.add_child(UI.label(L.t("Nem sikerült jelentést letölteni. Van internet?"), 16, UI.SOFT))
 	for e in _pick_events(events, 4):
 		_events_box.add_child(_event_card(e))
 	for m in world.get("meresek", []):
@@ -456,7 +456,7 @@ func _on_results_shown(_has_levers: bool) -> void:
 
 func _on_approved(levers: Array) -> void:
 	_plan.add_levers(levers)
-	_show_info(L.t("%d kutatási eredményt beépítettél a tervedbe. Nyomd meg „A terved” gombot!") % levers.size(), "")
+	_show_info(L.t("%d eredmény a tervedben. Nyomd meg „A terved” gombot!") % levers.size(), "")
 	_close_overlay()
 	_advance(3)
 
@@ -508,7 +508,7 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 		world = w
 		_render_world()
 	else:
-		_world_note.text = L.t("A valós adatok letöltése nem sikerült. Telepítve van a Python 3.10+, és van internet?")
+		_world_note.text = L.t("Az adatletöltés nem sikerült. Van Python 3.10+ és internet?")
 		print(output)
 
 

@@ -35,17 +35,17 @@ void fragment() {
 	vec2 cell = floor(UV * pixels);
 	vec2 uv = (cell + 0.5) / pixels;
 	vec2 q = uv * 2.0 - 1.0;
-	if (zoom > 1.001 && dot(q, q) > 0.97) {
-		// nagyításkor kör alakú "nagyító": vékony fénylő perem, kívül átlátszó
-		COLOR = dot(q, q) < 1.0 ? vec4(atmosphere, 0.8) : vec4(0.0);
-		return;
-	}
+	// nagyításkor kör alakú "nagyító": vékony fénylő perem, kívül átlátszó
+	// (a fragment()-ben nem lehet return, ezért elágazás)
+	bool lens = zoom > 1.001 && dot(q, q) > 0.97;
 	vec2 p = q / (radius * zoom);
 	float r2 = dot(p, p);
 	float d = bayer(cell);
 	vec3 L = normalize(sun_dir);
 
-	if (r2 > 1.0) {
+	if (lens) {
+		COLOR = dot(q, q) < 1.0 ? vec4(atmosphere, 0.8) : vec4(0.0);
+	} else if (r2 > 1.0) {
 		// légkör-perem a gömbön kívül
 		float dist = sqrt(r2);
 		float k = 1.0 - (dist - 1.0) / 0.09;

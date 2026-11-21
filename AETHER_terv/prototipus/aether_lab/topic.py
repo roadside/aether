@@ -38,7 +38,7 @@ TOPIC_SYSTEM = """Egy klímajáték játékosának magyarázol el egy témát. A
 lehet fiatal is. Szabályok:
 - CSAK a megadott forrásszövegekből dolgozz (Wikipédia-részlet és tudományos összefoglaló
   cikkek absztraktjai). Ne tegyél hozzá saját tudást, ne találj ki számot.
-- Mind a négy mező 2-3 rövid, hétköznapi mondat a megadott nyelven, szakszavak nélkül
+- Mind a négy mező 1-2 rövid, hétköznapi mondat a megadott nyelven, szakszavak nélkül
   (ha mégis kell egy, magyarázd meg).
 - 'mi_ez': mi ez a dolog. 'mire_jo': miért segíthet a klímán vagy az embereken.
 - 'hatranyok': mi a gond vele, mik a korlátai, kockázatai (a források szerint).

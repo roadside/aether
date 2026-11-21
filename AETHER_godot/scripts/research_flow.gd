@@ -38,14 +38,14 @@ const QUESTIONS := [
 ## A választható AI-k. "kulcs": melyik környezeti változóba kerül a játékban
 ## megadott kulcs (csak a futás idejére, sehova nem mentjük), "link": hol lehet kulcsot kérni.
 const AI_CHOICES := [
-	{"id": "claude", "cim": "Claude (Anthropic)", "magyarazat": "Nagyon alapos. Anthropic API-kulcs kell hozzá (használat szerint fizetős).",
+	{"id": "claude", "cim": "Claude (Anthropic)", "magyarazat": "Nagyon alapos. API-kulcs kell (fizetős).",
 	 "kulcs": "ANTHROPIC_API_KEY", "minta": "sk-ant-…", "link": "https://console.anthropic.com/settings/keys"},
-	{"id": "openai", "cim": "ChatGPT (OpenAI)", "magyarazat": "Alapos. OpenAI API-kulcs kell hozzá (használat szerint fizetős).",
+	{"id": "openai", "cim": "ChatGPT (OpenAI)", "magyarazat": "Alapos. API-kulcs kell (fizetős).",
 	 "kulcs": "OPENAI_API_KEY", "minta": "sk-…", "link": "https://platform.openai.com/api-keys"},
-	{"id": "gemini", "cim": "Gemini (Google)", "magyarazat": "Alapos. Google API-kulcs kell hozzá, ingyenes kerettel is kipróbálható.",
+	{"id": "gemini", "cim": "Gemini (Google)", "magyarazat": "Alapos. API-kulcs kell, van ingyenes keret.",
 	 "kulcs": "GEMINI_API_KEY", "minta": "AIza…", "link": "https://aistudio.google.com/apikey"},
-	{"id": "ollama", "cim": "Helyi AI a gépeden (Ollama)", "magyarazat": "Ingyenes, és internet nélkül is gondolkodik, de lassabb és kevésbé alapos."},
-	{"id": "none", "cim": "AI nélkül: csak cikkeket keresek", "magyarazat": "Mindig működik. Megmutatja a cikkeket, de számokat nem emel ki."},
+	{"id": "ollama", "cim": "Helyi AI a gépeden (Ollama)", "magyarazat": "Ingyenes, de lassabb."},
+	{"id": "none", "cim": "AI nélkül: csak cikkeket keresek", "magyarazat": "Csak cikklista, számok nélkül."},
 ]
 
 var bridge                  # lab_bridge.gd példány (a main.gd adja át)
@@ -59,6 +59,7 @@ var _result: Dictionary = {}
 var _checks: Array = []     # [[CheckBox, javaslat], ...]
 var _step_rows: Array = []
 var _log_label: Label
+var _short_label: Label
 var _dots := 0
 
 
@@ -110,7 +111,7 @@ func _close() -> void:
 # --- 1. Mit kutassunk? -----------------------------------------------------
 func show_questions() -> void:
 	_topic_q = {}
-	_header(L.t("Mit kutassunk?"), 1, L.t("Válassz egy kérdést. A játék valódi, megjelent tudományos cikkekben keres rá választ."))
+	_header(L.t("Mit kutassunk?"), 1, L.t("Válassz kérdést. A válasz valódi tudományos cikkekből jön."))
 	for q in QUESTIONS:
 		var c := UI.card(UI.CYAN)
 		c.add_child(UI.label(L.t(q["cim"]), 19, UI.TEXT, true))
@@ -201,7 +202,7 @@ func _render_topic(r: Dictionary) -> void:
 			c.add_child(UI.label(L.t(part[1]), 17, UI.GOLD, true))
 			c.add_child(UI.label(str(m.get(part[0], "")), 17, UI.TEXT))
 			_body.add_child(UI.card_root(c))
-		_body.add_child(UI.label(L.t("AI-összefoglaló, kizárólag a lenti forrásokból. Az AI is tévedhet, a forrásokban ellenőrizheted."), 14, UI.MUTE))
+		_body.add_child(UI.label(L.t("AI-összefoglaló a lenti forrásokból."), 14, UI.MUTE))
 	var w: Variant = r.get("wiki")
 	if typeof(w) == TYPE_DICTIONARY:
 		if typeof(m) != TYPE_DICTIONARY:
@@ -228,7 +229,7 @@ func _render_topic(r: Dictionary) -> void:
 	if str(r.get("megjegyzes", "")) != "":
 		_body.add_child(UI.label(str(r["megjegyzes"]), 13, UI.MUTE))
 	if typeof(m) != TYPE_DICTIONARY and _topic_ai != "none" and bridge.is_busy():
-		_body.add_child(UI.label(L.t("Az AI a háttérben részletesebb magyarázatot ír; ha kész, itt megjelenik."), 15, UI.GOLD))
+		_body.add_child(UI.label(L.t("Az AI részletesebb magyarázatot ír…"), 15, UI.GOLD))
 	var row := UI.hbox(12)
 	var back := UI.button(L.t("Vissza a kérdésekhez"))
 	back.pressed.connect(show_questions)
@@ -249,7 +250,7 @@ func _pick_question(q: Dictionary) -> void:
 
 
 func _show_busy() -> void:
-	_header(L.t("Egy pillanat…"), 0, L.t("A játék még dolgozik egy másik feladaton (pl. adatletöltés vagy AI-magyarázat). Próbáld újra pár másodperc múlva."))
+	_header(L.t("Egy pillanat…"), 0, L.t("A játék épp mással dolgozik. Próbáld újra pár másodperc múlva."))
 	var back := UI.button(L.t("Újra"))
 	back.pressed.connect(show_questions)
 	_body.add_child(back)
@@ -261,7 +262,7 @@ func _show_ai_choice() -> void:
 	# Miért kell AI? Egy mondat mindig látszik, a többi a Részletek mögött.
 	var why := UI.card(UI.GOLD)
 	why.add_child(UI.label(L.t("Miért kell AI?"), 17, UI.GOLD, true))
-	why.add_child(UI.label(L.t("Az AI a te kutatód: elolvassa a valódi tudományos cikkeket, és kiemeli belőlük a fontos számokat. Ettől lesz a terved igazi tudományon alapuló."), 16, UI.SOFT))
+	why.add_child(UI.label(L.t("Az AI a kutatód: cikkeket olvas és számokat keres. A játék mindet ellenőrzi."), 16, UI.SOFT))
 	var why_more := UI.label(L.t("A játék nem hisz vakon az AI-nak: minden számot szó szerint visszakeres a cikkben, és csak azt fogadja el, ami tényleg benne van. Fontos: a ChatGPT Plus, Claude Pro vagy Gemini előfizetés önmagában nem elég, a játékhoz API-kulcs kell. Ez külön, használat szerint fizetendő: egy kutatás a választott AI-tól függően néhány forinttól pár száz forintig terjed. A Geminihez van ingyenes keret, az Ollama pedig teljesen ingyenes."), 15, UI.MUTE)
 	why_more.visible = false
 	var why_btn := UI.button(L.t("Részletek"))
@@ -305,8 +306,8 @@ func _show_ai_choice() -> void:
 		rb.toggled.connect(pick_fn)
 		c.add_child(rb)
 		c.add_child(UI.label(L.t(ch["magyarazat"]), 16, UI.SOFT))
-		if id != "none":  # az "AI nélkül" állapota ugyanaz, mint a leírása
-			c.add_child(UI.label(str(st.get("ok", "")), 15, UI.GREEN if st.get("elerheto", false) else UI.MUTE))
+		if id != "none" and not st.get("elerheto", false):  # csak ha valami hiányzik
+			c.add_child(UI.label(str(st.get("ok", "")), 15, UI.MUTE))
 		if id == "ollama":
 			_add_hardware_info(c, st)
 		_body.add_child(UI.card_root(c))
@@ -354,22 +355,21 @@ func _add_hardware_info(c: VBoxContainer, st: Dictionary) -> void:
 		if not g.get("ollama_hasznalja", true):
 			s += L.t(" – ezt az Ollama nem használja")
 		names.append(s)
-	if not names.is_empty():
-		c.add_child(UI.label(L.t("A géped videókártyái: ") + "; ".join(names), 15, UI.SOFT))
 	var rec: Dictionary = gep.get("ajanlas", {})
 	if rec.is_empty():
 		return
 	var model := str(rec.get("modell", ""))
-	c.add_child(UI.label(L.t("Ajánlott helyi modell: %s (%s GB letöltés). ") % [model, UI.hu(float(rec.get("letoltes_gb", 0)), 1)]
-		+ str(rec.get("indoklas", "")), 15, UI.GOLD))
 	var have: Array = st.get("modellek", [])
 	var has_it := false
 	for m in have:
 		if str(m) == model or str(m).begins_with(model + "-"):
 			has_it = true
 	if has_it:
-		c.add_child(UI.label(L.t("Ez a modell már le van töltve, a játék ezt használja."), 15, UI.GREEN))
 		return
+	var rec_l := UI.label(L.t("Ajánlott a gépedhez: %s") % model, 15, UI.GOLD)
+	rec_l.tooltip_text = "; ".join(names) + "\n" + str(rec.get("indoklas", ""))
+	rec_l.mouse_filter = Control.MOUSE_FILTER_PASS
+	c.add_child(rec_l)
 	if not str(st.get("ok", "")).begins_with("Fut") and not str(st.get("ok", "")).begins_with("Running"):
 		var inst := UI.button(L.t("Az Ollama telepítése (ollama.com, ingyenes)"))
 		var inst_fn := func() -> void: OS.shell_open("https://ollama.com/download")
@@ -391,7 +391,7 @@ func _add_hardware_info(c: VBoxContainer, st: Dictionary) -> void:
 				add_child(_dl_poll)
 			_dl_poll.start()
 		else:
-			_dl_label.text = L.t("A játék még dolgozik egy másik feladaton (pl. adatletöltés vagy AI-magyarázat). Próbáld újra pár másodperc múlva.")
+			_dl_label.text = L.t("A játék épp mással dolgozik. Próbáld újra pár másodperc múlva.")
 	dl.pressed.connect(dl_fn)
 	c.add_child(dl)
 	c.add_child(_dl_label)
@@ -404,7 +404,7 @@ func _on_dl_poll() -> void:
 	if st.get("szazalek") != null:
 		_dl_label.text = L.t("Letöltés: %d%%") % int(st["szazalek"])
 	if st.get("kesz", false):
-		_dl_label.text = L.t("Kész! A modell letöltve, a játék mostantól ezt használja.")
+		_dl_label.text = L.t("Kész, a játék ezt használja.")
 		_dl_poll.stop()
 	elif str(st.get("allapot", "")) == "hiba":
 		_dl_label.text = L.t("A letöltés nem sikerült: ") + str(st.get("hiba", ""))
@@ -416,14 +416,22 @@ func _start_research() -> void:
 	L.set_setting("ai", _ai)   # az események összefoglalója is ezt az AI-t használja
 	_folder = str(bridge.work_dir("aether_kutatas")).path_join("kutatas_%d" % Time.get_unix_time_from_system())
 	DirAccess.make_dir_recursive_absolute(_folder)
-	_header(L.t("Kutatás folyamatban"), 3, L.t("Az AI cikkeket olvas, a játék pedig mindent szó szerint ellenőriz. Ez 1–5 percig is tarthat."))
+	_header(L.t("Kutatás folyamatban"), 3, L.t("Pár perc."))
 	_step_rows.clear()
 	var names := [L.t("Kérdés pontosítása"), L.t("Cikkek keresése 4 tudományos adatbázisban"), L.t("Fontos számok kiemelése"), L.t("Ellenőrzés: tényleg benne van a cikkben?")]
 	for n in names:
 		var l := UI.label("○  " + n, 18, UI.MUTE)
 		_step_rows.append([l, n])
 		_body.add_child(l)
-	_log_label = UI.label("", 14, UI.MUTE)
+	_short_label = UI.label("", 17, UI.SOFT)
+	_body.add_child(_short_label)
+	# A technikai napló (keresőszavak, adatbázisok találatai) csak a Részletek mögött.
+	_log_label = UI.label("", 13, UI.MUTE)
+	_log_label.visible = false
+	var log_btn := UI.button(L.t("Részletek"))
+	var log_fn := func() -> void: _log_label.visible = not _log_label.visible
+	log_btn.pressed.connect(log_fn)
+	_body.add_child(log_btn)
 	_body.add_child(_log_label)
 	if bridge.run("kutat", ["godot-kutat", L.t(str(_question["cim"])), "--ai", _ai, "--mappa", _folder, "--nyelv", L.lang,
 			"--kereses", str(_question.get("kereses", "")), "--parameterek", str(_question.get("parameterek", ""))]):
@@ -448,7 +456,8 @@ func _on_poll() -> void:
 			l.text = "●  " + n + ".".repeat(_dots)
 			l.add_theme_color_override("font_color", UI.GOLD)
 	var lines: Array = st.get("naplo", [])
-	_log_label.text = "\n".join(PackedStringArray(lines.slice(max(0, lines.size() - 5))))
+	_log_label.text = "\n".join(PackedStringArray(lines.slice(max(0, lines.size() - 12))))
+	_short_label.text = str(st.get("rovid", ""))
 
 
 func _on_bridge_finished(tag: String, code: int, output: String) -> void:
@@ -511,9 +520,9 @@ func _show_results() -> void:
 	_header(L.t("Mit találtunk?"), 4, "")
 	var o: Dictionary = _result["osszefoglalo"]
 	var pub: Dictionary = _result["publikacio"]
-	var s := L.t("%d cikket olvastunk el. ") % int(o["cikkek"])
+	var s := L.t("%d cikk. ") % int(o["cikkek"])
 	if int(o["allitasok"]) > 0:
-		s += L.t("%d számot szó szerint megtaláltunk a cikkekben, %d másikat kidobtunk, mert nem szerepelt bennük pontosan így.") % [int(o["ellenorizve"]), int(o["elutasitva"])]
+		s += L.t("%d szám ellenőrizve, %d elvetve.") % [int(o["ellenorizve"]), int(o["elutasitva"])]
 	_body.add_child(UI.label(s, 18, UI.TEXT))
 	var summary := str(pub.get("ai_osszegzes", ""))
 	if summary != "":
@@ -526,8 +535,8 @@ func _show_results() -> void:
 	for j in props:
 		_body.add_child(_proposal_card(j, pub))
 	if props.is_empty():
-		var why := L.t("AI nélkül csak a cikkeket gyűjtöttük össze. Számokat az AI tud kiemelni belőlük.") if _ai == "none" \
-			else L.t("Ezekben a cikkekben nem találtunk ellenőrizhető számot erre a kérdésre. Ez is eredmény: érdemes másképp kérdezni.")
+		var why := L.t("AI nélkül csak cikklista készül, számok nem.") if _ai == "none" \
+			else L.t("Nem találtunk ellenőrizhető számot. Ez is eredmény.")
 		_body.add_child(UI.label(why, 17, UI.SOFT))
 	_body.add_child(_paper_list(pub))
 	var row := UI.hbox(12)
@@ -539,7 +548,7 @@ func _show_results() -> void:
 		ok.pressed.connect(_approve)
 		row.add_child(ok)
 	_body.add_child(row)
-	_body.add_child(UI.label(L.t("Ez játékon belüli, gépi irodalmi összefoglaló, nem lektorált szakvélemény."), 14, UI.MUTE))
+	_body.add_child(UI.label(L.t("Gépi összefoglaló, nem lektorált szakvélemény."), 14, UI.MUTE))
 	results_shown.emit(not _checks.is_empty())
 
 

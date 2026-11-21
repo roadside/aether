@@ -154,6 +154,17 @@ def _num_present(x: float, nums: List[float]) -> bool:
     return False
 
 
+def quote_in(quote: str, text: str) -> bool:
+    """Szó szerint benne van-e az idézet. A szóközöket nem nézzük, mert az absztraktokban
+    a képletek gyakran szét vannak törve ("GtCO 2 yr −1" = "GtCO2 yr−1"); a betűk és számok
+    sorrendjének viszont pontosan egyeznie kell."""
+    q = _norm_text(quote)
+    if not q:
+        return False
+    t = _norm_text(text)
+    return q in t or "".join(q.split()) in "".join(t.split())
+
+
 def verify(claims: List[Claim], papers: Dict[str, Paper]) -> List[Claim]:
     for c in claims:
         c.indokok = []
@@ -165,7 +176,7 @@ def verify(claims: List[Claim], papers: Dict[str, Paper]) -> List[Claim]:
             c.preprint = p.peer_reviewed is False
             if p.is_retracted:
                 c.indokok.append("A cikket visszavonták.")
-            if _norm_text(c.szo_szerinti_idezet) not in _norm_text(p.abstract):
+            if not quote_in(c.szo_szerinti_idezet, p.abstract):
                 c.indokok.append("Az idézet nem található szó szerint az absztraktban.")
         nums = numbers_in(c.szo_szerinti_idezet)
         for label, v in (("érték", c.ertek), ("alsó", c.also), ("felső", c.felso)):
