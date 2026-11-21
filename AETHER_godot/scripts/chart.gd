@@ -5,6 +5,7 @@ extends Control
 signal year_changed(year: int)
 
 const UI := preload("res://scripts/ui.gd")
+const L := preload("res://scripts/i18n.gd")
 
 var data: Dictionary = {}
 var year := 2050
@@ -98,9 +99,9 @@ func _draw() -> void:
 		draw_circle(_pt(yi, tv), 5.0, UI.GOLD)
 	# jelmagyarázat
 	draw_rect(Rect2(PAD_L + 10, PAD_T + 4, 14, 4), UI.EMBER)
-	draw_string(f, Vector2(PAD_L + 30, PAD_T + 11), "Ha semmi sem változik", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, UI.SOFT)
+	draw_string(f, Vector2(PAD_L + 30, PAD_T + 11), L.t("Ha semmi sem változik"), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, UI.SOFT)
 	draw_rect(Rect2(PAD_L + 10, PAD_T + 22, 14, 4), UI.CYAN)
-	draw_string(f, Vector2(PAD_L + 30, PAD_T + 29), "A te terved (sáv = bizonytalanság)", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, UI.SOFT)
+	draw_string(f, Vector2(PAD_L + 30, PAD_T + 29), L.t("A te terved (sáv = bizonytalanság)"), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, UI.SOFT)
 
 
 func _gui_input(event: InputEvent) -> void:

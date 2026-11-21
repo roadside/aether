@@ -76,6 +76,10 @@ class TestOpenMeteo(unittest.TestCase):
         s = ws.air_summary(rows)
         self.assertEqual((s["ertek"], s["legrosszabb"]), (1, "TESZT-Delhi"))
         self.assertIn("Modellbecslés", s["magyarazat"])
+        # angol változat a játék saját szövegeihez
+        self.assertTrue(all("cim_en" in e and "forras_en" in e for e in ev))
+        self.assertIn("PM2.5", [e for e in ev if e["kategoria"] == "levego"][0]["cim_en"])
+        self.assertIn("Model estimate", s["magyarazat_en"])
 
     def test_single_city_dict(self):
         rows = ws.parse_open_meteo_air(AIR[1], CITIES2[1:])

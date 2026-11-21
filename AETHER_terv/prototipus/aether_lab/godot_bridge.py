@@ -53,13 +53,42 @@ PARAM_NEV = {
 }
 
 
-def hu(x: float, nd: Optional[int] = None) -> str:
-    """Szám magyar tizedesvesszővel."""
-    return (f"{x:.{nd}f}" if nd is not None else f"{x:g}").replace(".", ",")
+BIZONYOSSAG_SZOVEG_EN = {
+    "magas": "Strong evidence: several sources, including a review (meta-)analysis.",
+    "közepes": "Medium evidence: at least two sources or one review analysis.",
+    "alacsony": "Weak evidence: only one source. Worth researching further.",
+}
+
+PARAM_NEV_EN = {
+    "cdr_potencial_gtco2_ev": "How much CO2 it could remove from the air each year",
+    "cdr_koltseg_usd_tco2": "What removing one tonne of CO2 costs",
+    "metan_csokkentes_pct": "How much methane emissions can be cut",
+    "hozam_valtozas_pct_per_c": "How harvests change with 1 degree of warming",
+    "alkalmazkodas_hozam_elony_pct": "How much more harvest it gives in a drought",
+    "viztakarekossag_pct": "How much water it saves",
+    "sai_kenyszer_w_m2_per_tg": "How much sulphur put into the atmosphere cools",
+    "aeroszol_erf_w_m2": "How much air pollution cools or warms",
+    "tcre_c_per_1000gtco2": "How much 1000 billion tonnes of CO2 warms",
+}
+
+# Mértékegységek angolul (a belső kód magyar marad)
+EGYSEG_EN = {"GtCO2/év": "GtCO2/yr", "W/m²/(Tg SO2/év)": "W/m²/(Tg SO2/yr)"}
 
 
-def jelentes(param: str, ertek: float, egyseg: str) -> str:
+def is_en(lang: str) -> bool:
+    return (lang or "hu").lower().startswith("en")
+
+
+def hu(x: float, nd: Optional[int] = None, lang: str = "hu") -> str:
+    """Szám a nyelv tizedesjelével (magyarul vessző, angolul pont)."""
+    s = f"{x:.{nd}f}" if nd is not None else f"{x:g}"
+    return s if is_en(lang) else s.replace(".", ",")
+
+
+def jelentes(param: str, ertek: float, egyseg: str, lang: str = "hu") -> str:
     """Egy mondat arról, mit jelent a szám, szakszavak nélkül."""
+    if is_en(lang):
+        return _jelentes_en(param, ertek, egyseg)
     v = hu(ertek)
     if param == "cdr_potencial_gtco2_ev":
         pct = ertek / cl.E_CO2_NOW * 100
@@ -77,6 +106,24 @@ def jelentes(param: str, ertek: float, egyseg: str) -> str:
     return f"A cikkek szerint az érték kb. {v} {egyseg}."
 
 
+def _jelentes_en(param: str, ertek: float, egyseg: str) -> str:
+    v = f"{ertek:g}"
+    if param == "cdr_potencial_gtco2_ev":
+        pct = ertek / cl.E_CO2_NOW * 100
+        return f"It could remove about {v} billion tonnes of CO2 a year. That is about {pct:.0f}% of today's global emissions."
+    if param == "cdr_koltseg_usd_tco2":
+        return f"Removing one tonne of CO2 would cost about {v} dollars."
+    if param == "metan_csokkentes_pct":
+        return f"Methane emissions in this area can be cut by about {v}%."
+    if param == "alkalmazkodas_hozam_elony_pct":
+        return f"About {v}% more harvest in drought years. It does not cool the Earth, but it protects food."
+    if param == "hozam_valtozas_pct_per_c":
+        return f"Every extra degree of warming changes harvests by about {v}%."
+    if param == "viztakarekossag_pct":
+        return f"About {v}% less water is needed for the same result."
+    return f"According to the papers, the value is about {v} {EGYSEG_EN.get(egyseg, egyseg)}."
+
+
 # ---------------------------------------------------------------------------
 # Ellenőrzött eredményekből a modellbe beépíthető javaslatok
 # ---------------------------------------------------------------------------
@@ -91,6 +138,8 @@ CDR_KULCSSZAVAK = [
 
 CDR_NEV = {"bioszen": "Bioszén", "kozetmallasztas": "Kőzetmállasztás", "erdosites": "Erdősítés",
            "daccs": "Közvetlen levegős kivonás", "beccs": "Bioenergia + szén-tárolás", "talajszen": "Talajszén"}
+CDR_NEV_EN = {"bioszen": "Biochar", "kozetmallasztas": "Enhanced rock weathering", "erdosites": "Afforestation",
+              "daccs": "Direct air capture", "beccs": "Bioenergy + carbon storage", "talajszen": "Soil carbon"}
 
 
 def _cdr_method(text: str) -> Optional[str]:
@@ -101,34 +150,44 @@ def _cdr_method(text: str) -> Optional[str]:
     return None
 
 
-def javaslatok(pub: Dict) -> List[Dict]:
+def javaslatok(pub: Dict, lang: str = "hu") -> List[Dict]:
     """A publikáció összesített (csak ellenőrzött) paramétereiből a modell
-    "karjai" (lever), amelyeket a játékos jóváhagyhat."""
+    "karjai" (lever), amelyeket a játékos jóváhagyhat. A kódok (kar, parameter,
+    bizonyossag) nyelvfüggetlenek, csak a megjelenített szövegek fordítottak."""
+    en = is_en(lang)
     out = []
     question = pub.get("kerdes", "")
     for key, a in pub.get("osszesitett_parameterek", {}).items():
         p, med = a["parameter"], a["sulyozott_median"]
         base = {"kulcs": key, "parameter": p, "alkategoria": a["alkategoria"], "ertek": med,
-                "egyseg": a["egyseg"], "tartomany": a["tartomany"], "bizonyossag": a["bizonyossag"],
-                "bizonyossag_szoveg": BIZONYOSSAG_SZOVEG.get(a["bizonyossag"], ""),
-                "forrasok_szama": a["forrasok_szama"], "nev": PARAM_NEV.get(p, p),
-                "jelentes": jelentes(p, med, a["egyseg"]), "publikacio": pub.get("azonosito", ""),
+                "egyseg": EGYSEG_EN.get(a["egyseg"], a["egyseg"]) if en else a["egyseg"], "tartomany": a["tartomany"], "bizonyossag": a["bizonyossag"],
+                "bizonyossag_szoveg": (BIZONYOSSAG_SZOVEG_EN if en else BIZONYOSSAG_SZOVEG).get(a["bizonyossag"], ""),
+                "forrasok_szama": a["forrasok_szama"], "nev": (PARAM_NEV_EN if en else PARAM_NEV).get(p, p),
+                "jelentes": jelentes(p, med, a["egyseg"], lang), "publikacio": pub.get("azonosito", ""),
                 "kar": None, "kar_ertek": None, "kar_nev": "", "megjegyzes": ""}
         if p == "cdr_potencial_gtco2_ev":
             m = _cdr_method(a["alkategoria"]) or _cdr_method(question)
             if m:
                 hi = cl.CDR_LIMITS[m][1]
-                base.update(kar=f"cdr:{m}", kar_ertek=round(min(med, hi), 3), kar_nev=CDR_NEV[m])
-                if med > hi:
+                base.update(kar=f"cdr:{m}", kar_ertek=round(min(med, hi), 3), kar_nev=(CDR_NEV_EN if en else CDR_NEV)[m])
+                if med > hi and en:
+                    base["megjegyzes"] = (f"The papers' value ({med:g}) is above the sustainable upper limit "
+                                          f"({hi:g}, Fuss et al. 2018), so the game uses {hi:g}.")
+                elif med > hi:
                     base["megjegyzes"] = (f"A cikkek értéke ({med:g}) nagyobb a fenntartható felső határnál "
                                           f"({hi:g}, Fuss et al. 2018), ezért a játék {hi:g}-t használ.")
         elif p == "alkalmazkodas_hozam_elony_pct":
             base.update(kar="alkalmazkodas", kar_ertek=round(min(max(med, 0.0), 100.0), 2),
-                        kar_nev="Alkalmazkodás (aszálytűrő fajták)",
-                        megjegyzes="Közelítés: az aszály alatti hozamelőnyt a melegedés okozta "
+                        kar_nev="Adaptation (drought-tolerant varieties)" if en
+                        else "Alkalmazkodás (aszálytűrő fajták)",
+                        megjegyzes="Approximation: the yield advantage in drought is used to offset "
+                                   "the yield loss caused by warming." if en else
+                                   "Közelítés: az aszály alatti hozamelőnyt a melegedés okozta "
                                    "hozamveszteség ellensúlyozásaként használjuk.")
         if base["kar"] is None:
-            base["megjegyzes"] = base["megjegyzes"] or "Tájékoztató adat: ebben a változatban még nem kerül a modellbe."
+            base["megjegyzes"] = base["megjegyzes"] or (
+                "For information: this version does not put it into the model yet." if en
+                else "Tájékoztató adat: ebben a változatban még nem kerül a modellbe.")
         out.append(base)
     return out
 
@@ -148,20 +207,24 @@ class StatusLog:
     """A kutatás naplóját az allapot.json fájlba írja."""
 
     LEPESEK = ["Kérdés pontosítása", "Cikkek keresése", "Állítások kiemelése", "Ellenőrzés"]
+    LEPESEK_EN = ["Refining the question", "Searching for papers", "Picking out claims", "Checking"]
 
-    def __init__(self, path: Path):
+    def __init__(self, path: Path, lang: str = "hu"):
         self.path = path
+        self.en = is_en(lang)
         self.lines: List[str] = []
         self.step = 0
         self._write("fut")
 
     def _write(self, state: str, **extra):
-        _write_json(self.path, {"allapot": state, "lepes": self.step, "lepesek": self.LEPESEK,
+        _write_json(self.path, {"allapot": state, "lepes": self.step, "lepesek": self.LEPESEK_EN if self.en else self.LEPESEK,
                                 "naplo": self.lines[-40:], "ido": time.time(), **extra})
 
     def __call__(self, msg: str):
         print(msg, flush=True)
         s = msg.strip()
+        if self.en:  # az irodalomkereső naplósorai magyarok
+            s = s.replace(" találat", " results").replace("HIBA", "ERROR").replace("– kihagyva", "– skipped")
         if len(s) > 3 and s[0].isdigit() and s[1:3] == "/4":
             self.step = int(s[0])
         self.lines.append(s)
@@ -178,31 +241,40 @@ class StatusLog:
 # ---------------------------------------------------------------------------
 # Parancsok
 # ---------------------------------------------------------------------------
-def ai_status(ollama_host: Optional[str] = None, timeout: float = 1.5) -> Dict:
+def ai_status(ollama_host: Optional[str] = None, timeout: float = 1.5, lang: str = "hu") -> Dict:
+    en = is_en(lang)
     res = {"claude": {"elerheto": False, "ok": ""}, "ollama": {"elerheto": False, "ok": "", "modellek": []},
-           "none": {"elerheto": True, "ok": "Mindig működik: csak cikkeket keres, AI nélkül."}}
+           "none": {"elerheto": True, "ok": "Always works: only searches for papers, without AI." if en
+                    else "Mindig működik: csak cikkeket keres, AI nélkül."}}
     try:
         import anthropic  # noqa: F401
         if os.environ.get("ANTHROPIC_API_KEY"):
-            res["claude"] = {"elerheto": True, "ok": "API-kulcs megtalálva."}
+            res["claude"] = {"elerheto": True, "ok": "API key found." if en else "API-kulcs megtalálva."}
         else:
-            res["claude"]["ok"] = "Nincs API-kulcs. Add meg a játékban, vagy állítsd be az ANTHROPIC_API_KEY változót."
+            res["claude"]["ok"] = ("No API key. Set the ANTHROPIC_API_KEY environment variable." if en else
+                                   "Nincs API-kulcs. Add meg a játékban, vagy állítsd be az ANTHROPIC_API_KEY változót.")
     except ImportError:
-        res["claude"]["ok"] = "Hiányzik az anthropic csomag: pip install anthropic"
+        res["claude"]["ok"] = ("The anthropic package is missing: pip install anthropic" if en
+                               else "Hiányzik az anthropic csomag: pip install anthropic")
     host = (ollama_host or os.environ.get("OLLAMA_HOST", "http://localhost:11434")).rstrip("/")
     try:
         with urllib.request.urlopen(host + "/api/tags", timeout=timeout) as r:
             models = [m.get("name", "") for m in json.loads(r.read()).get("models", [])]
-        res["ollama"] = {"elerheto": bool(models), "modellek": models,
-                         "ok": "Fut, letöltött modellek: " + ", ".join(models) if models
-                         else "Fut, de nincs letöltött modell (pl. ollama pull qwen3:14b)."}
+        if en:
+            msg = ("Running, downloaded models: " + ", ".join(models) if models
+                   else "Running, but no model downloaded (e.g. ollama pull qwen3:14b).")
+        else:
+            msg = ("Fut, letöltött modellek: " + ", ".join(models) if models
+                   else "Fut, de nincs letöltött modell (pl. ollama pull qwen3:14b).")
+        res["ollama"] = {"elerheto": bool(models), "modellek": models, "ok": msg}
     except Exception:
-        res["ollama"]["ok"] = "Nem fut a gépen (https://ollama.com)."
+        res["ollama"]["ok"] = ("Not running on this computer (https://ollama.com)." if en
+                               else "Nem fut a gépen (https://ollama.com).")
     return res
 
 
 def cmd_ai(args):
-    _write_json(Path(args.ki), ai_status())
+    _write_json(Path(args.ki), ai_status(lang=getattr(args, "nyelv", "hu")))
 
 
 def cmd_kutat(args, run_research=None, get_provider=None):
@@ -213,7 +285,9 @@ def cmd_kutat(args, run_research=None, get_provider=None):
         from .llm import get_provider
     folder = Path(args.mappa)
     folder.mkdir(parents=True, exist_ok=True)
-    log = StatusLog(folder / "allapot.json")
+    lang = getattr(args, "nyelv", "hu")
+    en = is_en(lang)
+    log = StatusLog(folder / "allapot.json", lang)
     try:
         provider = get_provider(args.ai)
         # AI nélkül nincs kérdéspontosítás, ezért az angol keresőkifejezést használjuk
@@ -221,19 +295,19 @@ def cmd_kutat(args, run_research=None, get_provider=None):
         pub = run_research(question, provider, n_papers=args.cikkek, per_source=args.forrasonkent,
                            mailto=os.environ.get("AETHER_MAILTO", ""),
                            openalex_key=os.environ.get("OPENALEX_API_KEY", ""),
-                           s2_key=os.environ.get("S2_API_KEY", ""), log=log)
+                           s2_key=os.environ.get("S2_API_KEY", ""), log=log, lang=lang)
         claims = pub["allitasok"]
         ok = sum(c["statusz"].startswith("ellenorizve") for c in claims)
-        result = {"publikacio": pub, "javaslatok": javaslatok(pub),
+        result = {"publikacio": pub, "javaslatok": javaslatok(pub, lang),
                   "osszefoglalo": {"cikkek": len(pub["cikkek"]), "allitasok": len(claims),
                                    "ellenorizve": ok, "elutasitva": len(claims) - ok}}
         _write_json(folder / "eredmeny.json", result)
         log.done(eredmeny=str(folder / "eredmeny.json"))
     except LLMError as e:
-        log.error(f"AI-hiba: {e}")
+        log.error(f"AI error: {e}" if en else f"AI-hiba: {e}")
     except Exception as e:  # a Godot felé mindig érthető állapotot adunk
         traceback.print_exc()
-        log.error(f"Váratlan hiba: {e}")
+        log.error(f"Unexpected error: {e}" if en else f"Váratlan hiba: {e}")
 
 
 def _scenario_from(data: Dict) -> cl.Scenario:
@@ -244,7 +318,7 @@ def _scenario_from(data: Dict) -> cl.Scenario:
     return cl.Scenario(**data)
 
 
-def model_series(data: Dict) -> Dict:
+def model_series(data: Dict, lang: str = "hu") -> Dict:
     s = _scenario_from(data)
     base = cl.Scenario(nev="Alapeset")
     out = {"nev": s.nev, "evek": list(range(cl.START_YEAR, cl.END_YEAR + 1)), "terv": {}, "alapeset": {},
@@ -257,6 +331,18 @@ def model_series(data: Dict) -> Dict:
     k, kb = out["osszegzes"]["kozep"], out["alapeset_osszegzes"]["kozep"]
     diff = kb["T2100"] - k["T2100"]
     lo, hi = out["osszegzes"]["alacsony"]["T2100"], out["osszegzes"]["magas"]["T2100"]
+    if is_en(lang):
+        f = lambda x: f"{x:.1f}"  # noqa: E731
+        txt = (f"In 2100 the Earth is about {f(k['T2100'])} °C warmer than before the industrial revolution "
+               f"(uncertainty range: {f(lo)}–{f(hi)} °C). ")
+        if diff >= 0.05:
+            txt += f"That is {f(diff)} °C less than if nothing changed."
+        elif diff <= -0.05:
+            txt += f"That is {f(-diff)} °C MORE than if nothing changed."
+        else:
+            txt += "That is practically the same as if nothing changed."
+        out["jelentes"] = txt
+        return out
     txt = (f"2100-ban a Föld kb. {hu(k['T2100'], 1)} °C-kal melegebb, mint az ipari forradalom előtt "
            f"(bizonytalansági sáv: {hu(lo, 1)}–{hu(hi, 1)} °C). ")
     if diff >= 0.05:
@@ -272,14 +358,15 @@ def model_series(data: Dict) -> Dict:
 def cmd_modell(args):
     try:
         data = json.loads(Path(args.be).read_text(encoding="utf-8"))
-        _write_json(Path(args.ki), model_series(data))
+        _write_json(Path(args.ki), model_series(data, getattr(args, "nyelv", "hu")))
     except Exception as e:
         _write_json(Path(args.ki), {"hiba": str(e)})
         raise SystemExit(1)
 
 
 def add_parsers(sub):
-    a = sub.add_parser("godot-ai"); a.add_argument("--ki", required=True); a.set_defaults(fn=cmd_ai)
+    a = sub.add_parser("godot-ai"); a.add_argument("--ki", required=True)
+    a.add_argument("--nyelv", default="hu", choices=["hu", "en"]); a.set_defaults(fn=cmd_ai)
     k = sub.add_parser("godot-kutat")
     k.add_argument("kerdes")
     k.add_argument("--ai", default="none", choices=["claude", "ollama", "none"])
@@ -287,6 +374,8 @@ def add_parsers(sub):
     k.add_argument("--kereses", default="", help="angol keresőkifejezés AI nélküli módhoz")
     k.add_argument("--cikkek", type=int, default=12)
     k.add_argument("--forrasonkent", type=int, default=6)
+    k.add_argument("--nyelv", default="hu", choices=["hu", "en"], help="a játékos nyelve (hu/en)")
     k.set_defaults(fn=cmd_kutat)
     m = sub.add_parser("godot-modell"); m.add_argument("be"); m.add_argument("--ki", required=True)
+    m.add_argument("--nyelv", default="hu", choices=["hu", "en"])
     m.set_defaults(fn=cmd_modell)

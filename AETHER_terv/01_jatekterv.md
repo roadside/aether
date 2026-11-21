@@ -329,7 +329,7 @@ Nem állítjuk, hogy a játék megoldja a klímaváltozást, hogy a játékbeli 
 | M2 – Stratégiai réteg | Építkezés, erőforrások, korszakok, tudásfa, regionális modell | +3–4 hónap |
 | M3 – Közös Föld | Szerver, chat, publikációk, replikáció, szövetségek; nyílt bizonyíték-adatbázis első változata; zárt teszt 50 fővel | +4 hónap |
 | M4 – Offline | Helyi modell, Archívum-cikktár, szinkron | +2 hónap |
-| M5 – Korai hozzáférés | Hangolás, hang, lokalizáció (magyar + angol), tudományos tanácsadói átnézés, kutatói partner, osztálytermi mód | +3 hónap |
+| M5 – Korai hozzáférés | Hangolás, hang, további nyelvek (a magyar és az angol már kész), tudományos tanácsadói átnézés, kutatói partner, osztálytermi mód | +3 hónap |
 
 Erősen ajánlott egy **klímatudós tanácsadó** bevonása M2-től, aki a modell feltevéseit és a paramétertartományokat átnézi.
 
@@ -337,7 +337,7 @@ Erősen ajánlott egy **klímatudós tanácsadó** bevonása M2-től, aki a mode
 
 1. **Időtempó:** valós idejű, szüneteltethető (1 negyedév ≈ 3–5 perc). Vagy inkább körökre osztott legyen?
 2. **Platform:** asztali (Windows/Mac/Linux) elsőként. Kell mobil vagy böngészős változat?
-3. **Nyelv:** magyar és angol felület az elejétől?
+3. **Nyelv:** ~~magyar és angol felület az elejétől?~~ Eldöntve (2026-11-21): magyarul és angolul is játszható. A játék a gép nyelve alapján választ, a felső sávban HU / EN gombbal váltható. Az AI-összefoglaló, a kutatási napló és a modell-eredmény is a választott nyelven készül; a források eredeti címei (többnyire angol) változatlanok maradnak.
 4. **Szervermodell:** saját szerver vagy közösségi (bárki indíthat „közös Földet”)?
 5. **Bevétel:** egyszeri vásárlás + saját AI-előfizetés? Vagy ingyenes, adományból / támogatásból?
 6. **Csapat:** egyedül fejleszted, vagy van csapatod (grafikus, programozó)? Ez dönti el az M1 terjedelmét.

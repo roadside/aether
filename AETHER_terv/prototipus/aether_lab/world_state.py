@@ -43,10 +43,14 @@ RELIEFWEB_APPNAME = os.environ.get("AETHER_RELIEFWEB_APPNAME", "aether-climate-g
 CITED_FACTS = [
     {"azonosito": "melegedes_ember_2024", "cim": "Ember okozta melegedés (2024)", "ertek": 1.36, "egyseg": "°C",
      "magyarazat": "Ennyivel melegebb a Föld az ipari forradalom előttinél, az emberi hatás miatt.",
+     "cim_en": "Human-caused warming (2024)",
+     "magyarazat_en": "This is how much warmer the Earth is than before the industrial revolution, because of human activity.",
      "forras": "Forster et al. 2025, Earth System Science Data (Indicators of Global Climate Change 2024)",
      "link": "https://doi.org/10.5194/essd-17-2641-2025"},
     {"azonosito": "co2_keret_1_5", "cim": "Maradék CO2-keret 1,5 °C-hoz (2025 eleje)", "ertek": 130, "egyseg": "milliárd t",
      "magyarazat": "Ennyi CO2 kibocsátása után 50% eséllyel elérjük az 1,5 °C-ot. A mai ütemben kb. 3 év.",
+     "cim_en": "Remaining CO2 budget for 1.5 °C (start of 2025)", "egyseg_en": "billion t",
+     "magyarazat_en": "After emitting this much CO2 we reach 1.5 °C with a 50% chance. At today's pace, about 3 years.",
      "forras": "Forster et al. 2025, Earth System Science Data",
      "link": "https://doi.org/10.5194/essd-17-2641-2025"},
 ]
@@ -68,6 +72,12 @@ CITIES = [
     ("Mexikóváros", 19.43, -99.13), ("Bogotá", 4.71, -74.07), ("Lima", -12.05, -77.04), ("São Paulo", -23.55, -46.63),
     ("Buenos Aires", -34.60, -58.38), ("Reykjavík", 64.15, -21.94),
 ]
+# A városnevek angolul (ahol eltér a magyartól)
+CITY_EN = {"Moszkva": "Moscow", "Isztambul": "Istanbul", "Kairó": "Cairo", "Teherán": "Tehran", "Karacsi": "Karachi",
+           "Dakka": "Dhaka", "Peking": "Beijing", "Sanghaj": "Shanghai", "Tokió": "Tokyo", "Szöul": "Seoul",
+           "Mexikóváros": "Mexico City"}
+CAMS_FORRAS = "Open-Meteo / Copernicus CAMS (modellbecslés)"
+CAMS_FORRAS_EN = "Open-Meteo / Copernicus CAMS (model estimate)"
 WHO_PM25_24H = 15.0      # µg/m³, WHO 2021 levegőminőségi irányelv, 24 órás érték
 UV_VERY_HIGH = 8.0       # WHO UV-index skála: 8–10 nagyon magas, 11+ extrém
 
@@ -93,10 +103,17 @@ def _http(url: str, data: Optional[bytes] = None, timeout: int = 30, retries: in
     raise ConnectionError(f"{url}: {last}")
 
 
-def _event(forras, cim, kat, datum, orszag, lat, lon, link, szint="", leiras="") -> Dict:
-    return {"forras": forras, "cim": cim.strip(), "kategoria": kat, "kategoria_nev": KATEGORIA_NEV.get(kat, kat),
-            "datum": (datum or "")[:10], "orszag": orszag or "", "lat": lat, "lon": lon, "link": link,
-            "szint": szint, "leiras": (leiras or "").strip()[:300]}
+def _event(forras, cim, kat, datum, orszag, lat, lon, link, szint="", leiras="", cim_en="", forras_en="") -> Dict:
+    """Egy esemény. A forrás eredeti címe (többnyire angol) változatlan marad;
+    a játék által írt címekhez *_en angol változat is tartozik."""
+    e = {"forras": forras, "cim": cim.strip(), "kategoria": kat, "kategoria_nev": KATEGORIA_NEV.get(kat, kat),
+         "datum": (datum or "")[:10], "orszag": orszag or "", "lat": lat, "lon": lon, "link": link,
+         "szint": szint, "leiras": (leiras or "").strip()[:300]}
+    if cim_en:
+        e["cim_en"] = cim_en.strip()
+    if forras_en:
+        e["forras_en"] = forras_en
+    return e
 
 
 # --- GDACS ------------------------------------------------------------------
@@ -116,10 +133,12 @@ def parse_gdacs(data: Dict) -> List[Dict]:
         link = (url.get("report") if isinstance(url, dict) else url) or \
             f"https://www.gdacs.org/report.aspx?eventtype={p.get('eventtype','')}&eventid={p.get('eventid','')}"
         sev = (p.get("severitydata") or {}).get("severitytext", "")
-        out.append(_event("GDACS", p.get("name") or p.get("description") or "GDACS-riasztás",
+        title = p.get("name") or p.get("description") or ""
+        out.append(_event("GDACS", title or "GDACS-riasztás",
                           KATEGORIA.get(p.get("eventtype", ""), "egyeb"), p.get("fromdate", ""), p.get("country", ""),
                           coords[1] if len(coords) > 1 else None, coords[0], link,
-                          szint=str(p.get("alertlevel", "")).lower(), leiras=sev))
+                          szint=str(p.get("alertlevel", "")).lower(), leiras=sev,
+                          cim_en="" if title else "GDACS alert"))
     return out
 
 
@@ -201,6 +220,8 @@ def parse_noaa_co2(text: str) -> Dict:
     return {"azonosito": "co2_ppm", "cim": "CO2 a levegőben (Mauna Loa)", "ertek": round(v, 2), "egyseg": "ppm",
             "datum": f"{y}-{m:02d}", "valtozas_1_ev": round(v - prev[0][2], 2) if prev else None,
             "magyarazat": "Ennyi szén-dioxid-molekula jut egymillió levegőmolekulára. Az ipari forradalom előtt kb. 280 volt.",
+            "cim_en": "CO2 in the air (Mauna Loa)",
+            "magyarazat_en": "This many carbon dioxide molecules per million air molecules. Before the industrial revolution it was about 280.",
             "forras": "NOAA Global Monitoring Laboratory", "link": "https://gml.noaa.gov/ccgg/trends/"}
 
 
@@ -225,6 +246,8 @@ def parse_nsidc(text: str) -> Dict:
             "datum": f"{y}-{m:02d}-{d:02d}", "atlag_1981_2010": round(avg, 2) if avg else None,
             "elteres_pct": round((ext - avg) / avg * 100, 1) if avg else None,
             "magyarazat": "Ekkora területet borít ma tengeri jég az Északi-sarkon, az 1981–2010-es átlaghoz képest.",
+            "cim_en": "Arctic sea ice", "egyseg_en": "million km²",
+            "magyarazat_en": "This is the area covered by sea ice in the Arctic today, compared with the 1981–2010 average.",
             "forras": "NSIDC Sea Ice Index (G02135)", "link": "https://nsidc.org/data/seaice_index"}
 
 
@@ -256,8 +279,8 @@ def parse_open_meteo_air(data, cities=CITIES) -> List[Dict]:
         cur = d.get("current") or {}
         if cur.get("pm2_5") is None and cur.get("uv_index") is None:
             continue
-        out.append({"varos": name, "lat": lat, "lon": lon, "ido": str(cur.get("time", "")),
-                    "pm2_5": cur.get("pm2_5"), "pm10": cur.get("pm10"), "no2": cur.get("nitrogen_dioxide"),
+        out.append({"varos": name, "varos_en": CITY_EN.get(name, name), "lat": lat, "lon": lon,
+                    "ido": str(cur.get("time", "")), "pm2_5": cur.get("pm2_5"), "pm10": cur.get("pm10"), "no2": cur.get("nitrogen_dioxide"),
                     "ozon": cur.get("ozone"), "uv": cur.get("uv_index"), "eu_aqi": cur.get("european_aqi"),
                     "link": city_url("levego", lat, lon)})
     return out
@@ -269,8 +292,8 @@ def parse_open_meteo_soil(data, cities=CITIES) -> List[Dict]:
         cur = d.get("current") or {}
         if cur.get("soil_moisture_0_to_1cm") is None:
             continue
-        out.append({"varos": name, "lat": lat, "lon": lon, "ido": str(cur.get("time", "")),
-                    "talajnedvesseg": cur.get("soil_moisture_0_to_1cm"), "homerseklet": cur.get("temperature_2m"),
+        out.append({"varos": name, "varos_en": CITY_EN.get(name, name), "lat": lat, "lon": lon,
+                    "ido": str(cur.get("time", "")), "talajnedvesseg": cur.get("soil_moisture_0_to_1cm"), "homerseklet": cur.get("temperature_2m"),
                     "link": city_url("talaj", lat, lon)})
     return out
 
@@ -285,16 +308,20 @@ def air_events(rows: List[Dict]) -> List[Dict]:
             country = country_at(r["lat"], r["lon"])
         except Exception:
             pass
+        city_en = r.get("varos_en") or CITY_EN.get(r["varos"], r["varos"])
         pm = r.get("pm2_5")
         if pm is not None and pm >= 3 * WHO_PM25_24H:
-            ev.append(_event("Open-Meteo / Copernicus CAMS (modellbecslés)",
+            ev.append(_event(CAMS_FORRAS,
                              f"{r['varos']}: szennyezett levegő, PM2,5 = {pm:g} µg/m³ (a WHO 24 órás határa {WHO_PM25_24H:g})",
-                             "levego", r["ido"], country, r["lat"], r["lon"], r["link"], szint="orange" if pm < 5 * WHO_PM25_24H else "red"))
+                             "levego", r["ido"], country, r["lat"], r["lon"], r["link"], szint="orange" if pm < 5 * WHO_PM25_24H else "red",
+                             cim_en=f"{city_en}: polluted air, PM2.5 = {pm:g} µg/m³ (WHO 24-hour limit {WHO_PM25_24H:g})",
+                             forras_en=CAMS_FORRAS_EN))
         uv = r.get("uv")
         if uv is not None and uv >= UV_VERY_HIGH:
-            ev.append(_event("Open-Meteo / Copernicus CAMS (modellbecslés)",
+            ev.append(_event(CAMS_FORRAS,
                              f"{r['varos']}: nagyon erős UV-sugárzás, UV-index = {uv:g}",
-                             "uv", r["ido"], country, r["lat"], r["lon"], r["link"], szint="orange" if uv < 11 else "red"))
+                             "uv", r["ido"], country, r["lat"], r["lon"], r["link"], szint="orange" if uv < 11 else "red",
+                             cim_en=f"{city_en}: very strong UV radiation, UV index = {uv:g}", forras_en=CAMS_FORRAS_EN))
     return ev
 
 
@@ -305,9 +332,16 @@ def air_summary(rows: List[Dict]) -> Optional[Dict]:
     worst = max(pm, key=lambda r: r["pm2_5"])
     over = sum(1 for r in pm if r["pm2_5"] > WHO_PM25_24H)
     return {"azonosito": "levego_varosok", "cim": "Levegőminőség 30 nagyvárosban", "ertek": over, "egyseg": f"/ {len(pm)} város",
-            "datum": worst["ido"][:16], "legrosszabb": worst["varos"], "legrosszabb_pm2_5": worst["pm2_5"],
+            "datum": worst["ido"][:16], "legrosszabb": worst["varos"],
+            "legrosszabb_en": worst.get("varos_en") or CITY_EN.get(worst["varos"], worst["varos"]),
+            "legrosszabb_pm2_5": worst["pm2_5"], "cim_en": f"Air quality in {len(CITIES)} large cities",
+            "egyseg_en": f"/ {len(pm)} cities",
             "magyarazat": (f"{over} városban több a finom por (PM2,5), mint a WHO 24 órás határa ({WHO_PM25_24H:g} µg/m³). "
                            f"Most a legrosszabb: {worst['varos']}, {worst['pm2_5']:g} µg/m³. Modellbecslés, nem mérőállomás."),
+            "magyarazat_en": (f"In {over} cities there is more fine dust (PM2.5) than the WHO 24-hour limit "
+                              f"({WHO_PM25_24H:g} µg/m³). Worst right now: "
+                              f"{worst.get('varos_en') or CITY_EN.get(worst['varos'], worst['varos'])}, {worst['pm2_5']:g} µg/m³. "
+                              "Model estimate, not a monitoring station."),
             "forras": "Open-Meteo Air Quality API (Copernicus CAMS)", "link": worst["link"]}
 
 

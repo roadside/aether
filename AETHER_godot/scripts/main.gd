@@ -4,6 +4,7 @@ extends Control
 ## A felületet kódból építi fel, hogy a jelenet-fájl egyszerű maradjon.
 
 const UI := preload("res://scripts/ui.gd")
+const L := preload("res://scripts/i18n.gd")
 const Bridge := preload("res://scripts/lab_bridge.gd")
 const Globe := preload("res://scripts/globe.gd")
 const ResearchFlow := preload("res://scripts/research_flow.gd")
@@ -38,6 +39,7 @@ var _plan                     # plan_panel.gd példány (megmarad a jóváhagyot
 
 
 func _ready() -> void:
+	L.init()
 	UI.load_fonts()
 	theme = _make_theme()
 	var bg := TextureRect.new()
@@ -54,7 +56,7 @@ func _ready() -> void:
 	globe = Globe.new()
 	globe.position = Vector2(440, 74)
 	globe.size = Vector2(720, 720)
-	globe.stations = [{"name": "Te · Budapest", "lat": 47.5, "lon": 19.0, "color": UI.GOLD, "me": true}]
+	globe.stations = [{"name": L.t("Te · Budapest"), "lat": 47.5, "lon": 19.0, "color": UI.GOLD, "me": true}]
 	globe.station_clicked.connect(_on_station)
 	globe.event_clicked.connect(_show_event)
 	add_child(globe)
@@ -123,7 +125,7 @@ func _stat(parent: Control, key: String, caption: String, value: String, color: 
 	if link != "":
 		l.mouse_filter = Control.MOUSE_FILTER_STOP
 		l.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-		l.tooltip_text = "Forrás: Forster és mtsai 2025 (kattints a megnyitáshoz)"
+		l.tooltip_text = L.t("Forrás: Forster és mtsai 2025 (kattints a megnyitáshoz)")
 		var open_fn := func(e: InputEvent) -> void:
 			if e is InputEventMouseButton and e.pressed:
 				OS.shell_open(link)
@@ -145,17 +147,29 @@ func _build_top_bar() -> void:
 	logo.add_theme_font_override("font", UI.font_pixel)
 	h.add_child(logo)
 	var d := Time.get_date_dict_from_system()
-	_stat(h, "ma", "Ma", "%d. %02d. %02d." % [d["year"], d["month"], d["day"]], UI.TEXT)
-	_stat(h, "melegedes", "Ember okozta melegedés (2024)", "+1,36 °C", UI.EMBER, "https://doi.org/10.5194/essd-17-2641-2025")
-	_stat(h, "co2", "CO2 a levegőben", "letöltés…", UI.GOLD)
-	_stat(h, "jeg", "Északi-sarki tengeri jég", "letöltés…", Color("#a9dcea"))
-	_stat(h, "jovo", "A terved szerint", "még nincs terv", UI.CYAN)
+	_stat(h, "ma", L.t("Ma"), ("%d-%02d-%02d" if L.is_en() else "%d. %02d. %02d.") % [d["year"], d["month"], d["day"]], UI.TEXT)
+	_stat(h, "melegedes", L.t("Ember okozta melegedés (2024)"), "+%s °C" % L.num(1.36, 2), UI.EMBER, "https://doi.org/10.5194/essd-17-2641-2025")
+	_stat(h, "co2", L.t("CO2 a levegőben"), L.t("letöltés…"), UI.GOLD)
+	_stat(h, "jeg", L.t("Északi-sarki tengeri jég"), L.t("letöltés…"), Color("#a9dcea"))
+	_stat(h, "jovo", L.t("A terved szerint"), L.t("még nincs terv"), UI.CYAN)
+	var spacer := Control.new()
+	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	h.add_child(spacer)
+	# Nyelvváltó: a másik nyelvre vált, elmenti, és újraépíti a képernyőt.
+	var lang_btn := UI.button("EN" if not L.is_en() else "HU")
+	lang_btn.tooltip_text = "Switch to English" if not L.is_en() else "Váltás magyarra"
+	lang_btn.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var lang_fn := func() -> void:
+		L.set_lang("hu" if L.is_en() else "en")
+		get_tree().reload_current_scene()
+	lang_btn.pressed.connect(lang_fn)
+	h.add_child(lang_btn)
 
 
 func _build_left_panel() -> void:
 	var v := _panel(Vector2(18, 90), 400)
-	v.add_child(UI.heading("Mi történik most?", 24))
-	_world_note = UI.label("Valós jelentések betöltése…", 14, UI.MUTE)
+	v.add_child(UI.heading(L.t("Mi történik most?"), 24))
+	_world_note = UI.label(L.t("Valós jelentések betöltése…"), 14, UI.MUTE)
 	v.add_child(_world_note)
 	# A kártyák görgethető, rögzített magasságú dobozban vannak, így a frissítés
 	# gomb mindig a képernyőn marad (az alsó sáv fölött).
@@ -166,14 +180,14 @@ func _build_left_panel() -> void:
 	_events_box = UI.vbox(8)
 	_events_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(_events_box)
-	_refresh_btn = UI.button("Frissítés valós adatokkal")
+	_refresh_btn = UI.button(L.t("Frissítés valós adatokkal"))
 	_refresh_btn.pressed.connect(_refresh_world)
 	v.add_child(_refresh_btn)
 
 
 func _build_right_panel() -> void:
 	var v := _panel(Vector2(1212, 90), 370)
-	v.add_child(UI.heading("Első küldetés", 24))
+	v.add_child(UI.heading(L.t("Első küldetés"), 24))
 	_mission_box = UI.vbox(8)
 	v.add_child(_mission_box)
 	_render_mission()
@@ -186,27 +200,27 @@ func _build_bottom_bar() -> void:
 	add_child(p)
 	var h := UI.hbox(16)
 	p.add_child(h)
-	var research := UI.button("Kutatás", true)
+	var research := UI.button(L.t("Kutatás"), true)
 	research.custom_minimum_size = Vector2(150, 0)
 	research.pressed.connect(_open_research)
 	h.add_child(research)
-	var plan := UI.button("A terved")
+	var plan := UI.button(L.t("A terved"))
 	plan.custom_minimum_size = Vector2(150, 0)
 	plan.pressed.connect(_open_plan)
 	h.add_child(plan)
 	var info_box := UI.vbox(2)
 	info_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_info = UI.label("Üdv az AETHER-ben! Kezdd a jobb oldali küldetéssel.", 16, UI.SOFT)
+	_info = UI.label(L.t("Üdv az AETHER-ben! Kezdd a jobb oldali küldetéssel."), 16, UI.SOFT)
 	info_box.add_child(_info)
 	_info_link = LinkButton.new()
-	_info_link.text = "Forrás megnyitása"
+	_info_link.text = L.t("Forrás megnyitása")
 	_info_link.add_theme_color_override("font_color", UI.CYAN)
 	_info_link.visible = false
 	_info_link.pressed.connect(_open_info_link)
 	info_box.add_child(_info_link)
 	_year_row = UI.hbox(12)
 	_year_row.visible = false
-	_year_row.add_child(UI.label("Év:", 16, UI.MUTE, false, false))
+	_year_row.add_child(UI.label(L.t("Év:"), 16, UI.MUTE, false, false))
 	_year_slider = HSlider.new()
 	_year_slider.min_value = 2025
 	_year_slider.max_value = 2100
@@ -234,7 +248,7 @@ func _open_info_link() -> void:
 
 
 func _on_station(s: Dictionary) -> void:
-	_show_info("A te kutatóállomásod: " + str(s["name"]), "")
+	_show_info(L.t("A te kutatóállomásod: ") + str(s["name"]), "")
 
 
 # ---------------------------------------------------------------------------
@@ -247,11 +261,11 @@ func _render_mission() -> void:
 		var current := i == mission_step
 		var mark := "✓" if done else ("●" if current else "○")
 		var col: Color = UI.GREEN if done else (UI.GOLD if current else UI.MUTE)
-		_mission_box.add_child(UI.label("%s  %d. %s" % [mark, i + 1, MISSION[i][0]], 18, col, current))
+		_mission_box.add_child(UI.label("%s  %d. %s" % [mark, i + 1, L.t(MISSION[i][0])], 18, col, current))
 		if current:
-			_mission_box.add_child(UI.label(MISSION[i][1], 15, UI.SOFT))
+			_mission_box.add_child(UI.label(L.t(MISSION[i][1]), 15, UI.SOFT))
 	if mission_step >= MISSION.size():
-		_mission_box.add_child(UI.label("Kész! Húzd az év-csúszkát lent, és nézd, hogyan változik a Föld. Próbálj ki egy új kutatást vagy egy másik tervet!", 15, UI.GREEN))
+		_mission_box.add_child(UI.label(L.t("Kész! Húzd az év-csúszkát lent, és nézd, hogyan változik a Föld. Próbálj ki egy új kutatást vagy egy másik tervet!"), 15, UI.GREEN))
 
 
 func _advance(to_step: int) -> void:
@@ -277,8 +291,8 @@ func _load_world_cache() -> void:
 func _refresh_world() -> void:
 	if bridge.run("vilag", ["vilag", "--ki", _world_path()]):
 		_refresh_btn.disabled = true
-		_refresh_btn.text = "Letöltés folyamatban…"
-		_world_note.text = "Valós jelentések letöltése (GDACS, ReliefWeb, NASA, NOAA, NSIDC)…"
+		_refresh_btn.text = L.t("Letöltés folyamatban…")
+		_world_note.text = L.t("Valós jelentések letöltése (GDACS, ReliefWeb, NASA, NOAA, NSIDC)…")
 
 
 func _render_world() -> void:
@@ -291,9 +305,9 @@ func _render_world() -> void:
 		if srcs[k].get("ok", false):
 			ok += 1
 	var when := str(world.get("letoltve", "")).replace("T", " ").left(16)
-	_world_note.text = "Valós jelentések, letöltve: %s (UTC). %d/%d forrás elérhető." % [when, ok, srcs.size()]
+	_world_note.text = L.t("Valós jelentések, letöltve: %s (UTC). %d/%d forrás elérhető.") % [when, ok, srcs.size()]
 	if events.is_empty():
-		_events_box.add_child(UI.label("Most nem sikerült valós jelentést letölteni. Van internet? A játék nem pótolja kitalált adattal.", 16, UI.SOFT))
+		_events_box.add_child(UI.label(L.t("Most nem sikerült valós jelentést letölteni. Van internet? A játék nem pótolja kitalált adattal."), 16, UI.SOFT))
 	for e in _pick_events(events, 4):
 		_events_box.add_child(_event_card(e))
 	for m in world.get("meresek", []):
@@ -304,27 +318,27 @@ func _render_world() -> void:
 			txt = "%s ppm" % UI.hu(float(m["ertek"]), 1)
 		elif m.get("azonosito") == "arktisz_jeg":
 			key = "jeg"
-			txt = "%s millió km²" % UI.hu(float(m["ertek"]), 2)
+			txt = L.t("%s millió km²") % UI.hu(float(m["ertek"]), 2)
 			if m.get("elteres_pct") != null:
 				txt += " (%s%%)" % UI.hu(float(m["elteres_pct"]), 0)
 		elif m.get("azonosito") == "levego_varosok":
-			var air_title := str(m.get("magyarazat", ""))
+			var air_title := L.field(m, "magyarazat")
 			if m.get("ertek") != null and m.get("legrosszabb") != null and m.get("legrosszabb_pm2_5") != null:
 				var total := str(m.get("egyseg", "")).replace("/", "").replace("város", "").strip_edges()
-				air_title = "%d/%s városban túl sok a finom por (WHO-határ felett). Legrosszabb: %s, %s µg/m³" % [
-					int(m["ertek"]), total, str(m["legrosszabb"]), UI.hu(float(m["legrosszabb_pm2_5"]), 1)]
-			_events_box.add_child(_event_card({"kategoria": "levego", "kategoria_nev": "Levegőminőség",
+				air_title = L.t("%d/%s városban túl sok a finom por (WHO-határ felett). Legrosszabb: %s, %s µg/m³") % [
+					int(m["ertek"]), total, L.field(m, "legrosszabb"), UI.hu(float(m["legrosszabb_pm2_5"]), 1)]
+			_events_box.add_child(_event_card({"kategoria": "levego",
 				"cim": air_title, "datum": str(m.get("datum", "")).left(10),
 				"forras": str(m.get("forras", "")), "link": str(m.get("link", "")), "orszag": ""}))
 		if key != "":
 			var l: Label = _stats[key]
 			l.text = txt
 			l.mouse_filter = Control.MOUSE_FILTER_PASS
-			l.tooltip_text = "%s, %s. %s" % [str(m.get("forras", "")), str(m.get("datum", "")), str(m.get("magyarazat", ""))]
+			l.tooltip_text = "%s, %s. %s" % [str(m.get("forras", "")), str(m.get("datum", "")), L.field(m, "magyarazat")]
 	for key in ["co2", "jeg"]:
 		var l: Label = _stats[key]
-		if l.text == "letöltés…":
-			l.text = "nem elérhető"
+		if l.text == L.t("letöltés…"):
+			l.text = L.t("nem elérhető")
 
 
 ## Változatos válogatás a listához: előbb országhoz kötött, különböző típusú
@@ -352,11 +366,11 @@ func _event_card(e: Dictionary) -> Control:
 	var accent: Color = Globe.EVENT_COLORS.get(str(e.get("kategoria", "")), UI.EDGE)
 	var row := UI.card(accent)
 	var place := str(e.get("orszag", ""))
-	row.add_child(UI.label(str(e.get("kategoria_nev", "")) + (" · " + place if place != "" else ""), 14, UI.MUTE, false))
-	var t := UI.label(str(e.get("cim", "")), 16, UI.TEXT, true)
+	row.add_child(UI.label(L.category(str(e.get("kategoria", ""))) + (" · " + place if place != "" else ""), 14, UI.MUTE, false))
+	var t := UI.label(L.field(e, "cim"), 16, UI.TEXT, true)
 	t.max_lines_visible = 2
 	row.add_child(t)
-	row.add_child(UI.label("%s · %s" % [str(e.get("datum", "")), str(e.get("forras", ""))], 13, UI.MUTE, false))
+	row.add_child(UI.label("%s · %s" % [str(e.get("datum", "")), L.field(e, "forras")], 13, UI.MUTE, false))
 	var root := UI.card_root(row)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
@@ -369,8 +383,8 @@ func _event_card(e: Dictionary) -> Control:
 
 func _show_event(e: Dictionary) -> void:
 	var where := str(e.get("orszag", ""))
-	var txt := "%s%s (%s): %s. Forrás: %s." % [str(e.get("kategoria_nev", "")), (", " + where) if where != "" else "",
-		str(e.get("datum", "")), str(e.get("cim", "")), str(e.get("forras", ""))]
+	var txt := L.t("%s%s (%s): %s. Forrás: %s.") % [L.category(str(e.get("kategoria", ""))), (", " + where) if where != "" else "",
+		str(e.get("datum", "")), L.field(e, "cim"), L.field(e, "forras")]
 	_show_info(txt, str(e.get("link", "")))
 	_advance(1)
 
@@ -411,7 +425,7 @@ func _on_results_shown(_has_levers: bool) -> void:
 
 func _on_approved(levers: Array) -> void:
 	_plan.add_levers(levers)
-	_show_info("%d kutatási eredményt beépítettél a tervedbe. Nyomd meg „A terved” gombot!" % levers.size(), "")
+	_show_info(L.t("%d kutatási eredményt beépítettél a tervedbe. Nyomd meg „A terved” gombot!") % levers.size(), "")
 	_close_overlay()
 	_advance(3)
 
@@ -457,13 +471,13 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 	if tag != "vilag":
 		return
 	_refresh_btn.disabled = false
-	_refresh_btn.text = "Frissítés valós adatokkal"
+	_refresh_btn.text = L.t("Frissítés valós adatokkal")
 	var w: Variant = Bridge.read_json(_world_path())
 	if code == 0 and typeof(w) == TYPE_DICTIONARY:
 		world = w
 		_render_world()
 	else:
-		_world_note.text = "A valós adatok letöltése nem sikerült. Telepítve van a Python 3.10+, és van internet?"
+		_world_note.text = L.t("A valós adatok letöltése nem sikerült. Telepítve van a Python 3.10+, és van internet?")
 		print(output)
 
 

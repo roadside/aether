@@ -42,6 +42,18 @@ class TestJavaslatok(unittest.TestCase):
         self.assertTrue(j[0]["bizonyossag_szoveg"])
 
 
+class TestJavaslatokEnglish(unittest.TestCase):
+    def test_codes_stay_texts_translate(self):
+        j = gb.javaslatok(_pub({"a": _agg("cdr_potencial_gtco2_ev", "biochar", 9.0)}), lang="en")[0]
+        self.assertEqual(j["kar"], "cdr:bioszen")          # a kód nyelvfüggetlen
+        self.assertEqual(j["bizonyossag"], "közepes")
+        self.assertEqual(j["kar_nev"], "Biochar")
+        self.assertEqual(j["egyseg"], "GtCO2/yr")
+        self.assertIn("upper limit", j["megjegyzes"])
+        self.assertIn("billion tonnes", j["jelentes"])
+        self.assertTrue(j["bizonyossag_szoveg"].startswith("Medium"))
+
+
 class TestModel(unittest.TestCase):
     def test_series_and_plain_text(self):
         out = gb.model_series({"nev": "t", "co2_cel_ev": 2050, "co2_cel_ertek": 0.0})
@@ -49,6 +61,11 @@ class TestModel(unittest.TestCase):
         self.assertLess(out["osszegzes"]["kozep"]["T2100"], out["alapeset_osszegzes"]["kozep"]["T2100"])
         self.assertIn("kevesebb", out["jelentes"])
         self.assertIn(",", out["jelentes"])  # magyar tizedesvessző
+
+    def test_english_text(self):
+        out = gb.model_series({"nev": "t", "co2_cel_ev": 2050, "co2_cel_ertek": 0.0}, lang="en")
+        self.assertIn("less than if nothing changed", out["jelentes"])
+        self.assertNotIn(",", out["jelentes"].split("(")[0])  # angol tizedespont
 
     def test_unknown_field_rejected(self):
         with self.assertRaises(ValueError):

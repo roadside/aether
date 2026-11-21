@@ -7,6 +7,7 @@ signal results_shown(has_levers: bool)
 signal closed
 
 const UI := preload("res://scripts/ui.gd")
+const L := preload("res://scripts/i18n.gd")
 const Bridge := preload("res://scripts/lab_bridge.gd")
 
 const QUESTIONS := [
@@ -73,8 +74,8 @@ func _header(title: String, step: int, help: String) -> void:
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(spacer)
 	if step > 0:
-		h.add_child(UI.label("%d. lépés / 4" % step, 15, UI.MUTE, false, false))
-	var x := UI.button("Bezárás")
+		h.add_child(UI.label(L.t("%d. lépés / 4") % step, 15, UI.MUTE, false, false))
+	var x := UI.button(L.t("Bezárás"))
 	x.pressed.connect(_close)
 	h.add_child(x)
 	_body.add_child(h)
@@ -89,25 +90,25 @@ func _close() -> void:
 
 # --- 1. Mit kutassunk? -----------------------------------------------------
 func show_questions() -> void:
-	_header("Mit kutassunk?", 1, "Válassz egy kérdést. A játék valódi, megjelent tudományos cikkekben keres rá választ.")
+	_header(L.t("Mit kutassunk?"), 1, L.t("Válassz egy kérdést. A játék valódi, megjelent tudományos cikkekben keres rá választ."))
 	for q in QUESTIONS:
 		var c := UI.card(UI.CYAN)
-		c.add_child(UI.label(q["cim"], 19, UI.TEXT, true))
-		c.add_child(UI.label(q["magyarazat"], 16, UI.SOFT))
-		var b := UI.button("Ezt kutatom")
+		c.add_child(UI.label(L.t(q["cim"]), 19, UI.TEXT, true))
+		c.add_child(UI.label(L.t(q["magyarazat"]), 16, UI.SOFT))
+		var b := UI.button(L.t("Ezt kutatom"))
 		b.size_flags_horizontal = Control.SIZE_SHRINK_END
 		b.pressed.connect(_pick_question.bind(q))
 		c.add_child(b)
 		_body.add_child(UI.card_root(c))
 	# saját kérdés: haladóknak, alapból rejtve
-	var more := UI.button("Saját kérdést írok (haladó)")
+	var more := UI.button(L.t("Saját kérdést írok (haladó)"))
 	var box := UI.hbox(8)
 	box.visible = false
 	var edit := LineEdit.new()
-	edit.placeholder_text = "Pl.: Mennyi metánt bocsátanak ki a rizsföldek?"
+	edit.placeholder_text = L.t("Pl.: Mennyi metánt bocsátanak ki a rizsföldek?")
 	edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	box.add_child(edit)
-	var go := UI.button("Ezt kutatom")
+	var go := UI.button(L.t("Ezt kutatom"))
 	var go_fn := func() -> void:
 		var q := edit.text.strip_edges()
 		if q != "":
@@ -122,22 +123,22 @@ func show_questions() -> void:
 
 func _pick_question(q: Dictionary) -> void:
 	_question = q
-	_header("Ki kutasson?", 2, "Megnézem, milyen AI érhető el a gépeden…")
+	_header(L.t("Ki kutasson?"), 2, L.t("Megnézem, milyen AI érhető el a gépeden…"))
 	var path: String = bridge.work_dir("aether_kutatas").path_join("ai.json")
-	if not bridge.run("ai", ["godot-ai", "--ki", path]):
+	if not bridge.run("ai", ["godot-ai", "--ki", path, "--nyelv", L.lang]):
 		_show_busy()
 
 
 func _show_busy() -> void:
-	_header("Egy pillanat…", 0, "A játék még letölti a valós adatokat. Próbáld újra pár másodperc múlva.")
-	var back := UI.button("Újra")
+	_header(L.t("Egy pillanat…"), 0, L.t("A játék még letölti a valós adatokat. Próbáld újra pár másodperc múlva."))
+	var back := UI.button(L.t("Újra"))
 	back.pressed.connect(show_questions)
 	_body.add_child(back)
 
 
 # --- 2. Ki kutasson? -------------------------------------------------------
 func _show_ai_choice() -> void:
-	_header("Ki kutasson?", 2, "Kérdés: " + str(_question["cim"]))
+	_header(L.t("Ki kutasson?"), 2, L.t("Kérdés: ") + L.t(str(_question["cim"])))
 	var best := "none"
 	if _ai_status.get("ollama", {}).get("elerheto", false):
 		best = "ollama"
@@ -151,7 +152,7 @@ func _show_ai_choice() -> void:
 		var c := UI.card(UI.GREEN if st.get("elerheto", false) else UI.EDGE)
 		var rb := CheckBox.new()
 		rb.button_group = group
-		rb.text = ch["cim"] + ("   (ajánlott)" if id == best else "")
+		rb.text = L.t(ch["cim"]) + (L.t("   (ajánlott)") if id == best else "")
 		rb.add_theme_font_override("font", UI.font_bold)
 		rb.add_theme_font_size_override("font_size", 18)
 		rb.button_pressed = id == best
@@ -162,14 +163,14 @@ func _show_ai_choice() -> void:
 				key_box.visible = need_key
 		rb.toggled.connect(pick_fn)
 		c.add_child(rb)
-		c.add_child(UI.label(ch["magyarazat"], 16, UI.SOFT))
+		c.add_child(UI.label(L.t(ch["magyarazat"]), 16, UI.SOFT))
 		c.add_child(UI.label(str(st.get("ok", "")), 15, UI.GREEN if st.get("elerheto", false) else UI.MUTE))
 		_body.add_child(UI.card_root(c))
 	_ai = best
 	key_box.visible = false
 	# API-kulcs megadása: csak erre a futásra, sehova nem mentjük
 	key_box.visible = false
-	key_box.add_child(UI.label("Anthropic API-kulcs (csak amíg a játék fut, nem mentjük el):", 16, UI.SOFT))
+	key_box.add_child(UI.label(L.t("Anthropic API-kulcs (csak amíg a játék fut, nem mentjük el):"), 16, UI.SOFT))
 	var key := LineEdit.new()
 	key.secret = true
 	key.placeholder_text = "sk-ant-…"
@@ -178,10 +179,10 @@ func _show_ai_choice() -> void:
 	key_box.add_child(key)
 	_body.add_child(key_box)
 	var row := UI.hbox(12)
-	var back := UI.button("Vissza")
+	var back := UI.button(L.t("Vissza"))
 	back.pressed.connect(show_questions)
 	row.add_child(back)
-	var start := UI.button("Indulhat a kutatás", true)
+	var start := UI.button(L.t("Indulhat a kutatás"), true)
 	start.pressed.connect(_start_research)
 	row.add_child(start)
 	_body.add_child(row)
@@ -191,16 +192,16 @@ func _show_ai_choice() -> void:
 func _start_research() -> void:
 	_folder = str(bridge.work_dir("aether_kutatas")).path_join("kutatas_%d" % Time.get_unix_time_from_system())
 	DirAccess.make_dir_recursive_absolute(_folder)
-	_header("Kutatás folyamatban", 3, "Az AI cikkeket olvas, a játék pedig mindent szó szerint ellenőriz. Ez 1–5 percig is tarthat.")
+	_header(L.t("Kutatás folyamatban"), 3, L.t("Az AI cikkeket olvas, a játék pedig mindent szó szerint ellenőriz. Ez 1–5 percig is tarthat."))
 	_step_rows.clear()
-	var names := ["Kérdés pontosítása", "Cikkek keresése 4 tudományos adatbázisban", "Fontos számok kiemelése", "Ellenőrzés: tényleg benne van a cikkben?"]
+	var names := [L.t("Kérdés pontosítása"), L.t("Cikkek keresése 4 tudományos adatbázisban"), L.t("Fontos számok kiemelése"), L.t("Ellenőrzés: tényleg benne van a cikkben?")]
 	for n in names:
 		var l := UI.label("○  " + n, 18, UI.MUTE)
 		_step_rows.append([l, n])
 		_body.add_child(l)
 	_log_label = UI.label("", 14, UI.MUTE)
 	_body.add_child(_log_label)
-	if bridge.run("kutat", ["godot-kutat", str(_question["cim"]), "--ai", _ai, "--mappa", _folder,
+	if bridge.run("kutat", ["godot-kutat", L.t(str(_question["cim"])), "--ai", _ai, "--mappa", _folder, "--nyelv", L.lang,
 			"--kereses", str(_question.get("kereses", ""))]):
 		_poll.start()
 	else:
@@ -251,19 +252,19 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 
 
 func _show_python_error(code: int, output: String) -> void:
-	_header("Valami nem sikerült", 0, "")
-	var hint := "Ellenőrizd, hogy telepítve van-e a Python 3.10 vagy újabb, és van-e internet."
+	_header(L.t("Valami nem sikerült"), 0, "")
+	var hint := L.t("Ellenőrizd, hogy telepítve van-e a Python 3.10 vagy újabb, és van-e internet.")
 	if code == -1 or code == 9009:
-		hint = "Nem találom a Pythont. Telepítsd a python.org oldalról (3.10 vagy újabb), majd indítsd újra a játékot."
+		hint = L.t("Nem találom a Pythont. Telepítsd a python.org oldalról (3.10 vagy újabb), majd indítsd újra a játékot.")
 	_body.add_child(UI.label(hint, 18, UI.TEXT))
 	var det := UI.label(output.right(1200), 14, UI.MUTE)
 	det.visible = false
-	var more := UI.button("Részletek")
+	var more := UI.button(L.t("Részletek"))
 	var det_fn := func() -> void: det.visible = not det.visible
 	more.pressed.connect(det_fn)
 	_body.add_child(more)
 	_body.add_child(det)
-	var back := UI.button("Újra")
+	var back := UI.button(L.t("Újra"))
 	back.pressed.connect(show_questions)
 	_body.add_child(back)
 	print(output)
@@ -271,17 +272,17 @@ func _show_python_error(code: int, output: String) -> void:
 
 # --- 4. Mit találtunk? -----------------------------------------------------
 func _show_results() -> void:
-	_header("Mit találtunk?", 4, "")
+	_header(L.t("Mit találtunk?"), 4, "")
 	var o: Dictionary = _result["osszefoglalo"]
 	var pub: Dictionary = _result["publikacio"]
-	var s := "%d cikket olvastunk el. " % int(o["cikkek"])
+	var s := L.t("%d cikket olvastunk el. ") % int(o["cikkek"])
 	if int(o["allitasok"]) > 0:
-		s += "%d számot szó szerint megtaláltunk a cikkekben, %d másikat kidobtunk, mert nem szerepelt bennük pontosan így." % [int(o["ellenorizve"]), int(o["elutasitva"])]
+		s += L.t("%d számot szó szerint megtaláltunk a cikkekben, %d másikat kidobtunk, mert nem szerepelt bennük pontosan így.") % [int(o["ellenorizve"]), int(o["elutasitva"])]
 	_body.add_child(UI.label(s, 18, UI.TEXT))
 	var summary := str(pub.get("ai_osszegzes", ""))
 	if summary != "":
 		var c := UI.card(UI.GOLD)
-		c.add_child(UI.label("Az AI összefoglalója", 16, UI.GOLD, true))
+		c.add_child(UI.label(L.t("Az AI összefoglalója"), 16, UI.GOLD, true))
 		c.add_child(UI.label(summary, 16, UI.SOFT))
 		_body.add_child(UI.card_root(c))
 	_checks.clear()
@@ -289,20 +290,20 @@ func _show_results() -> void:
 	for j in props:
 		_body.add_child(_proposal_card(j, pub))
 	if props.is_empty():
-		var why := "AI nélkül csak a cikkeket gyűjtöttük össze. Számokat az AI tud kiemelni belőlük." if _ai == "none" \
-			else "Ezekben a cikkekben nem találtunk ellenőrizhető számot erre a kérdésre. Ez is eredmény: érdemes másképp kérdezni."
+		var why := L.t("AI nélkül csak a cikkeket gyűjtöttük össze. Számokat az AI tud kiemelni belőlük.") if _ai == "none" \
+			else L.t("Ezekben a cikkekben nem találtunk ellenőrizhető számot erre a kérdésre. Ez is eredmény: érdemes másképp kérdezni.")
 		_body.add_child(UI.label(why, 17, UI.SOFT))
 	_body.add_child(_paper_list(pub))
 	var row := UI.hbox(12)
-	var again := UI.button("Új kutatás")
+	var again := UI.button(L.t("Új kutatás"))
 	again.pressed.connect(show_questions)
 	row.add_child(again)
 	if not _checks.is_empty():
-		var ok := UI.button("Jóváhagyom, mehet a tervembe", true)
+		var ok := UI.button(L.t("Jóváhagyom, mehet a tervembe"), true)
 		ok.pressed.connect(_approve)
 		row.add_child(ok)
 	_body.add_child(row)
-	_body.add_child(UI.label("Ez játékon belüli, gépi irodalmi összefoglaló, nem lektorált szakvélemény.", 14, UI.MUTE))
+	_body.add_child(UI.label(L.t("Ez játékon belüli, gépi irodalmi összefoglaló, nem lektorált szakvélemény."), 14, UI.MUTE))
 	results_shown.emit(not _checks.is_empty())
 
 
@@ -310,7 +311,7 @@ func _proposal_card(j: Dictionary, pub: Dictionary) -> Control:
 	var usable: bool = j.get("kar") != null
 	var c := UI.card(UI.CYAN if usable else UI.EDGE)
 	c.add_child(UI.label(str(j["nev"]) + (" – " + str(j["alkategoria"]) if str(j["alkategoria"]) != "" else ""), 17, UI.SOFT))
-	var big := "%s %s" % [UI.hu(float(j["ertek"]), 2).trim_suffix("0").trim_suffix(",0"), j["egyseg"]]
+	var big := "%s %s" % [UI.hu(float(j["ertek"]), 2).trim_suffix("0").trim_suffix(",0").trim_suffix(".0"), j["egyseg"]]
 	c.add_child(UI.label(big, 26, UI.CYAN if usable else UI.TEXT, true))
 	c.add_child(UI.label(str(j["jelentes"]), 17, UI.TEXT))
 	var conf := str(j["bizonyossag"])
@@ -319,7 +320,7 @@ func _proposal_card(j: Dictionary, pub: Dictionary) -> Control:
 		c.add_child(UI.label(str(j["megjegyzes"]), 14, UI.MUTE))
 	if usable:
 		var cb := CheckBox.new()
-		cb.text = "Beteszem a tervembe: " + str(j["kar_nev"])
+		cb.text = L.t("Beteszem a tervembe: ") + str(j["kar_nev"])
 		cb.button_pressed = true
 		cb.add_theme_font_size_override("font_size", 17)
 		c.add_child(cb)
@@ -333,7 +334,7 @@ func _proposal_card(j: Dictionary, pub: Dictionary) -> Control:
 		det.add_child(UI.label("„" + str(cl["szo_szerinti_idezet"]) + "”", 15, UI.SOFT))
 		var paper: Dictionary = pub["cikkek"].get(str(cl["cikk_azonosito"]), {})
 		det.add_child(_paper_link(paper))
-	var more := UI.button("Részletek: honnan tudjuk?")
+	var more := UI.button(L.t("Részletek: honnan tudjuk?"))
 	var det_fn := func() -> void: det.visible = not det.visible
 	more.pressed.connect(det_fn)
 	c.add_child(more)
@@ -345,12 +346,12 @@ func _paper_link(p: Dictionary) -> Control:
 	var authors: Array = p.get("authors", [])
 	var who := "?"
 	if not authors.is_empty():
-		who = str(authors[0]) + (" és mtsai" if authors.size() > 1 else "")
+		who = str(authors[0]) + (L.t(" és mtsai") if authors.size() > 1 else "")
 	var yr: Variant = p.get("year")
 	var yr_s := str(int(yr)) if typeof(yr) in [TYPE_INT, TYPE_FLOAT] else "?"
 	var t := "%s (%s): %s" % [who, yr_s, str(p.get("title", ""))]
 	if typeof(p.get("peer_reviewed")) == TYPE_BOOL and p.get("peer_reviewed") == false:
-		t += "  [preprint, nem lektorált]"
+		t += L.t("  [preprint, nem lektorált]")
 	var url := ""
 	var doi: Variant = p.get("doi")
 	var plain: Variant = p.get("url")
@@ -383,7 +384,7 @@ func _paper_list(pub: Dictionary) -> Control:
 	det.visible = _result["javaslatok"].is_empty()
 	for pid in papers:
 		det.add_child(_paper_link(papers[pid]))
-	var b := UI.button("Az átnézett cikkek listája (%d)" % papers.size())
+	var b := UI.button(L.t("Az átnézett cikkek listája (%d)") % papers.size())
 	var det_fn := func() -> void: det.visible = not det.visible
 	b.pressed.connect(det_fn)
 	box.add_child(b)

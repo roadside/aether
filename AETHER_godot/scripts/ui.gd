@@ -103,6 +103,6 @@ static func clear(node: Node) -> void:
 		c.queue_free()
 
 
-## Szám magyar tizedesvesszővel.
+## Szám a választott nyelv tizedesjelével (magyarul vessző, angolul pont).
 static func hu(x: float, decimals: int = 1) -> String:
-	return String.num(x, decimals).replace(".", ",")
+	return preload("res://scripts/i18n.gd").num(x, decimals)

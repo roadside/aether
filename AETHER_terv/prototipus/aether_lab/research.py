@@ -28,7 +28,8 @@ def plan_queries(provider: Optional[Provider], question: str) -> Dict:
     return provider.json_call(ev.PLANNER_SYSTEM, f"Kutatási kérdés: {question}", ev.QUERY_PLAN_SCHEMA, 2000)
 
 
-def extract(provider: Provider, question: str, papers: Dict[str, Paper], params: List[str]) -> Dict:
+def extract(provider: Provider, question: str, papers: Dict[str, Paper], params: List[str],
+            lang: str = "hu") -> Dict:
     blocks = []
     for pid, p in papers.items():
         flag = " [PREPRINT, nem lektorált]" if p.peer_reviewed is False else ""
@@ -37,38 +38,45 @@ def extract(provider: Provider, question: str, papers: Dict[str, Paper], params:
     wanted = ", ".join(params) if params else "bármely releváns paraméter a listából"
     user = (f"Kutatási kérdés: {question}\nKeresett paraméterek: {wanted}\n\n"
             + "\n\n".join(blocks))
+    if lang.startswith("en"):
+        user += ("\n\nA játékos angolul játszik: az 'osszegzes' és az 'ellentmondasok' mezőt "
+                 "ANGOLUL írd (write these two fields in plain English). A többi mező marad.")
     return provider.json_call(ev.EXTRACTOR_SYSTEM, user, ev.EXTRACTION_SCHEMA, 16000)
 
 
 def run_research(question: str, provider: Optional[Provider], n_papers: int = 12,
                  per_source: int = 6, mailto: str = "", openalex_key: str = "",
-                 s2_key: str = "", use_arxiv: bool = True, log=print) -> Dict:
-    log("1/4 Kérdés pontosítása...")
+                 s2_key: str = "", use_arxiv: bool = True, log=print, lang: str = "hu") -> Dict:
+    en = lang.startswith("en")
+    m = lambda hu, eng: eng if en else hu  # noqa: E731  (napló a játékos nyelvén)
+    log(m("1/4 Kérdés pontosítása...", "1/4 Refining the question..."))
     plan = plan_queries(provider, question)
     queries = plan["angol_keresokifejezesek"][:5]
-    log(f"    Keresőkifejezések: {queries}")
+    log(m(f"    Keresőkifejezések: {queries}", f"    Search terms: {queries}"))
 
-    log("2/4 Irodalomkeresés (OpenAlex, Semantic Scholar, Crossref, arXiv)...")
+    log(m("2/4 Irodalomkeresés (OpenAlex, Semantic Scholar, Crossref, arXiv)...",
+          "2/4 Literature search (OpenAlex, Semantic Scholar, Crossref, arXiv)..."))
     ranked = search_all(queries, per_source, mailto, openalex_key, s2_key, use_arxiv, log)
     chosen = ranked[:n_papers]
     papers = {f"P{i+1}": p for i, p in enumerate(chosen)}
-    log(f"    {len(ranked)} egyedi, nem visszavont cikk; a legjobb {len(papers)} kerül elemzésre.")
+    log(m(f"    {len(ranked)} egyedi, nem visszavont cikk; a legjobb {len(papers)} kerül elemzésre.",
+          f"    {len(ranked)} unique, non-retracted papers; the best {len(papers)} are analysed."))
 
     claims: List[ev.Claim] = []
     summary, contradictions = "", ""
     if provider is not None and papers:
-        log("3/4 AI-kivonatolás (szó szerinti idézetekkel)...")
-        raw = extract(provider, plan["kutatasi_kerdes_pontositva"], papers, plan["keresett_parameterek"])
+        log(m("3/4 AI-kivonatolás (szó szerinti idézetekkel)...", "3/4 AI extraction (with verbatim quotes)..."))
+        raw = extract(provider, plan["kutatasi_kerdes_pontositva"], papers, plan["keresett_parameterek"], lang)
         claims = [ev.Claim(**c) for c in raw.get("allitasok", [])]
         summary, contradictions = raw.get("osszegzes", ""), raw.get("ellentmondasok", "")
     else:
-        log("3/4 AI nélküli mód: kivonatolás kihagyva.")
+        log(m("3/4 AI nélküli mód: kivonatolás kihagyva.", "3/4 No-AI mode: extraction skipped."))
 
-    log("4/4 Determinisztikus ellenőrzés...")
+    log(m("4/4 Determinisztikus ellenőrzés...", "4/4 Deterministic check..."))
     claims = ev.verify(claims, papers)
     agg = ev.aggregate(claims)
     ok = sum(c.statusz.startswith("ellenorizve") for c in claims)
-    log(f"    {ok}/{len(claims)} állítás ment át az ellenőrzésen.")
+    log(m(f"    {ok}/{len(claims)} állítás ment át az ellenőrzésen.", f"    {ok}/{len(claims)} claims passed the check."))
 
     pub = {
         "aether_publikacio_verzio": 1,
