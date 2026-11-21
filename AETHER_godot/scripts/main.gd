@@ -376,7 +376,7 @@ func _event_card(e: Dictionary) -> Control:
 	var place := str(e.get("orszag", ""))
 	row.add_child(UI.label(L.category(str(e.get("kategoria", ""))) + (" · " + place if place != "" else ""), 14, UI.MUTE, false))
 	var t := UI.label(L.field(e, "cim"), 16, UI.TEXT, true)
-	t.max_lines_visible = 2
+	t.max_lines_visible = 3
 	row.add_child(t)
 	row.add_child(UI.label("%s · %s" % [str(e.get("datum", "")), L.field(e, "forras")], 13, UI.MUTE, false))
 	var root := UI.card_root(row)
