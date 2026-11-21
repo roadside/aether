@@ -25,6 +25,43 @@ def _index() -> Tuple[Dict[Tuple[int, int], List[Tuple[float, float, str]]], Dic
     return buckets, d["nevek"]
 
 
+@lru_cache(maxsize=1)
+def _hu_names() -> Dict[str, str]:
+    """Angol országnév -> magyar név (kisbetűs, normalizált kulccsal)."""
+    d = json.loads(_DATA.read_text(encoding="utf-8"))
+    out = {}
+    for cc, en in d["nevek"].items():
+        out[_norm(en)] = d.get("nevek_hu", {}).get(cc, en)
+    for alias, cc in ALIASES.items():
+        out[_norm(alias)] = d.get("nevek_hu", {}).get(cc, alias)
+    return out
+
+
+# A források (GDACS, ReliefWeb) néhol másként írják az országneveket.
+ALIASES = {"Russia": "RU", "Czech Republic": "CZ", "Turkey": "TR", "Türkiye": "TR", "Vietnam": "VN", "Viet Nam": "VN",
+           "Iran (Islamic Republic of)": "IR", "Syrian Arab Republic": "SY", "Republic of Korea": "KR",
+           "Democratic Republic of the Congo": "CD", "Congo, The Democratic Republic of the": "CD", "Macedonia": "MK",
+           "Moldova, Republic of": "MD", "Republic of Moldova": "MD", "Tanzania, United Republic of": "TZ",
+           "United Republic of Tanzania": "TZ", "Bolivia (Plurinational State of)": "BO", "Lao PDR": "LA",
+           "Venezuela (Bolivarian Republic of)": "VE", "United States of America": "US", "USA": "US", "UK": "GB",
+           "Ivory Coast": "CI", "Cote d'Ivoire": "CI", "Kosovo": "XK", "Palestine, State of": "PS"}
+
+
+def _norm(name: str) -> str:
+    return " ".join(name.lower().replace("&", "and").split())
+
+
+def hu_country(name: str) -> str:
+    """Az ország magyar neve; ha nem ismerjük, az eredeti név marad."""
+    return _hu_names().get(_norm(name), name.strip())
+
+
+def country_name(cc: str, hungarian: bool = False) -> str:
+    """ISO-kódból országnév (angolul vagy magyarul); ismeretlen kódnál ''."""
+    d = json.loads(_DATA.read_text(encoding="utf-8"))
+    return (d.get("nevek_hu", {}) if hungarian else d["nevek"]).get(cc.upper(), "")
+
+
 def _km(lat1, lon1, lat2, lon2) -> float:
     p1, p2 = math.radians(lat1), math.radians(lat2)
     dp, dl = p2 - p1, math.radians(lon2 - lon1)

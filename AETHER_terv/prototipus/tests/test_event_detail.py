@@ -120,6 +120,19 @@ class TestHonesty(unittest.TestCase):
         self.assertIn("4.6 times", en)
         self.assertIn("PM10) 90 µg/m³", en)
 
+    def test_hungarian_names_home_and_area(self):
+        from aether_lab.geo import hu_country
+        self.assertEqual([hu_country(c) for c in ["Bosnia & Herzegovina", "Hungary", "Atlantis"]],
+                         ["Bosznia-Hercegovina", "Magyarország", "Atlantis"])
+        ev = {"forras": "GDACS", "kategoria": "aszaly",
+              "orszag": "Albania, Austria, Bosnia & Herzegovina, Croatia, Hungary"}
+        facts = [{"nev": "Súlyosság (a forrás szerint)", "ertek": "Medium impact for agricultural drought in 1121702 km2"}]
+        s = ed.plain_summary(ev, facts, "hu", "HU")
+        self.assertIn("például: Magyarország, Albánia", s)
+        self.assertIn("1,12 millió km², nagyjából 12-szer akkora, mint Magyarország", s)
+        self.assertIn("Magyarország is az érintettek között van.", s)
+        self.assertNotIn("érintettek", ed.plain_summary(ev, facts, "hu", ""))
+
     def test_unsupported_numbers(self):
         self.assertEqual(ed.unsupported_numbers("12 000 ember, CO₂", "12,000 people"), [])
         self.assertEqual(ed.unsupported_numbers("45 km²", "TESZT"), [45.0])

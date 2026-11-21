@@ -271,8 +271,56 @@ def gdacs_facts(data: Dict, lang: str = "hu") -> List[Dict]:
     countries = [c.get("countryname", "") for c in (p.get("affectedcountries") or []) if isinstance(c, dict)]
     countries = [c for c in countries if c] or [c.strip() for c in str(p.get("country", "")).split(",") if c.strip()]
     if countries:
-        f("Érintett országok", "Affected countries", f"{len(countries)}: " + ", ".join(countries))
+        f("Érintett országok", "Affected countries", f"{len(countries)}: " + ", ".join(_names(countries, en)))
     return facts
+
+
+def _names(countries: List[str], en: bool) -> List[str]:
+    if en:
+        return countries
+    from .geo import hu_country
+    return [hu_country(c) for c in countries]
+
+
+# Az ország területe (km²) az összevetéshez. Forrás: KSH, Magyarország területe 93 030 km².
+HOME_AREA = {"HU": 93030}
+_AREA = re.compile(r"([0-9][0-9 ,.]*[0-9])\s*km(?:2|²)", re.I)
+
+
+def _area_sentence(text: str, home: str, en: bool) -> str:
+    """Ha a forrás egy területet ad meg km²-ben: érthetően, és összevetve a játékos országával."""
+    hit = _AREA.search(text or "")
+    if not hit:
+        return ""
+    try:
+        km2 = float(re.sub(r"[ ,]", "", hit.group(1)))
+    except ValueError:
+        return ""
+    if km2 >= 1e6:
+        size = f"{_fmt(km2 / 1e6, en, 2)} million km²" if en else f"{_fmt(km2 / 1e6, en, 2)} millió km²"
+    else:
+        size = f"{km2:,.0f}".replace(",", "," if en else "\u00a0") + " km²"
+    s = f" The affected area is about {size}" if en else f" Az érintett terület kb. {size}"
+    area = HOME_AREA.get(home.upper())
+    if not area:
+        return s + "."
+    from .geo import country_name
+    name = country_name(home, not en)
+    if km2 >= 1.5 * area:
+        x = round(km2 / area)
+        return s + (f", roughly {x} times the size of {name}." if en else f", nagyjából {x}-szer akkora, mint {name}.")
+    pct = round(100 * km2 / area)
+    return s + (f", about {pct}% of the size of {name}." if en else f", ez {name} területének kb. {pct}%-a.")
+
+
+def _home_sentence(countries: List[str], home: str, en: bool) -> str:
+    if not home:
+        return ""
+    from .geo import country_name
+    name_en = country_name(home)
+    if name_en and name_en in countries:
+        return f" {name_en} is among the affected countries." if en else f" {country_name(home, True)} is az érintettek között van."
+    return ""
 
 
 # ---------------------------------------------------------------------------
@@ -348,13 +396,20 @@ def measurement_summary(event: Dict, lang: str = "hu") -> str:
     return ""
 
 
-def plain_summary(event: Dict, facts: List[Dict], lang: str = "hu") -> str:
+def plain_summary(event: Dict, facts: List[Dict], lang: str = "hu", home: str = "") -> str:
     """AI nélküli, a forrás adataiból összerakott egyszerű összefoglaló."""
     en = lang.startswith("en")
     ms = measurement_summary(event, lang)
     if ms:
         return ms
-    countries = [c.strip() for c in str(event.get("orszag", "")).split(",") if c.strip()]
+    raw = [c.strip() for c in str(event.get("orszag", "")).split(",") if c.strip()]
+    countries = _names(raw, en)
+    if home:   # a játékos országa kerüljön előre
+        from .geo import country_name
+        mine = country_name(home)
+        if mine in raw:
+            i = raw.index(mine)
+            countries.insert(0, countries.pop(i))
     where = ""
     if len(countries) > 3:
         where = (f" in {len(countries)} countries, including {', '.join(countries[:3])}" if en
@@ -379,11 +434,12 @@ def plain_summary(event: Dict, facts: List[Dict], lang: str = "hu") -> str:
         s += f" It has lasted {dur} so far." if en else f" Már {dur} óta tart."
     if sev:
         s += (f" The source's own assessment: “{sev}”." if en else f" A forrás saját értékelése (angolul): „{sev}”.")
-    return s
+        s += _area_sentence(sev, home, en)
+    return s + (_home_sentence(raw, home, en) if len(raw) > 3 else "")
 
 
 def build(event: Dict, folder: Path, fetch: Callable[..., bytes], provider=None, lang: str = "hu",
-          log=print) -> Dict:
+          log=print, home: str = "") -> Dict:
     en = lang.startswith("en")
     link = str(event.get("link", ""))
     res = {"link": link, "forras": event.get("forras", ""), "cim": event.get("cim", ""), "kepek": [],
@@ -454,8 +510,12 @@ def build(event: Dict, folder: Path, fetch: Callable[..., bytes], provider=None,
             res["megjegyzes"] = (res["megjegyzes"] + " " + (f"AI summary failed: {e}" if en
                                  else f"Az AI-összefoglaló nem sikerült: {e}")).strip()
     if not res["osszegzes"]:
-        res["osszegzes"] = plain_summary(event, res["tenyek"], lang)
+        res["osszegzes"] = plain_summary(event, res["tenyek"], lang, home)
         res["osszegzes_tipus"] = "forras"
+    else:
+        raw = [c.strip() for c in str(event.get("orszag", "")).split(",") if c.strip()]
+        if len(raw) > 3:
+            res["osszegzes"] += _home_sentence(raw, home, en)
     # Az ellenőrzött, forrásolt magyarázat elsőbbséget kap az AI-szöveggel szemben.
     if event.get("kategoria") in WHY:
         hu_t, en_t, src = WHY[event["kategoria"]]
@@ -476,7 +536,7 @@ def cmd_reszlet(args):
             provider = get_provider(args.ai)
         except Exception as e:  # pl. nincs kulcs: AI nélkül folytatjuk
             note = str(e)
-    res = build(event, Path(args.mappa), _http, provider, args.nyelv)
+    res = build(event, Path(args.mappa), _http, provider, args.nyelv, home=args.orszag)
     if note:
         res["megjegyzes"] = (res["megjegyzes"] + " " + note).strip()
     out = Path(args.ki)
@@ -493,4 +553,5 @@ def add_parsers(sub):
     p.add_argument("--ki", required=True)
     p.add_argument("--ai", default="none", choices=["claude", "openai", "gemini", "ollama", "none"])
     p.add_argument("--nyelv", default="hu", choices=["hu", "en"])
+    p.add_argument("--orszag", default="", help="a játékos országa (ISO-kód), pl. HU: ezt kiemeljük")
     p.set_defaults(fn=cmd_reszlet)

@@ -29,8 +29,15 @@ static func countries_of(e: Dictionary) -> PackedStringArray:
 	return out
 
 
+## A megjelenítendő országnevek: magyar nyelven a magyar nevek (orszag_hu), ha vannak.
+static func display_countries(e: Dictionary) -> PackedStringArray:
+	if L.is_en() or str(e.get("orszag_hu", "")) == "":
+		return countries_of(e)
+	return countries_of({"orszag": e["orszag_hu"]})
+
+
 static func short_place(e: Dictionary) -> String:
-	var cs := countries_of(e)
+	var cs := display_countries(e)
 	if cs.size() <= 3:
 		return ", ".join(cs)
 	return (L.t("%s, %s és még %d ország")) % [cs[0], cs[1], cs.size() - 2]
@@ -99,14 +106,15 @@ func _request() -> void:
 	_dir = bridge.work_dir("aether_esemenyek").path_join(key.md5_text().left(16))
 	DirAccess.make_dir_recursive_absolute(_dir)
 	var ai: String = L.get_setting("ai", "none")
-	_out = _dir.path_join("reszlet2_%s_%s.json" % [L.lang, ai])   # 2: bővebb magyarázat, új összefoglaló
+	_out = _dir.path_join("reszlet3_%s_%s.json" % [L.lang, ai])   # 3: magyar országnevek, hazai kiemelés
 	var cached: Variant = Bridge.read_json(_out)
 	if typeof(cached) == TYPE_DICTIONARY:
 		_show(cached)
 		return
 	var inp := _dir.path_join("esemeny.json")
 	Bridge.write_json(inp, event)
-	if not bridge.run("reszlet", ["esemeny-reszlet", inp, "--mappa", _dir, "--ki", _out, "--ai", ai, "--nyelv", L.lang]):
+	if not bridge.run("reszlet", ["esemeny-reszlet", inp, "--mappa", _dir, "--ki", _out, "--ai", ai, "--nyelv", L.lang,
+			"--orszag", L.country()]):
 		_retry.start()   # a játék épp mással dolgozik: kicsit később újra
 
 
@@ -175,7 +183,7 @@ func _show(r: Dictionary) -> void:
 	det.visible = false
 	for f in facts:
 		det.add_child(UI.label("%s: %s" % [str(f.get("nev", "")), str(f.get("ertek", ""))], 15, UI.SOFT))
-	var cs := countries_of(event)
+	var cs := display_countries(event)
 	if cs.size() > 3 and not facts.any(func(f): return str(f.get("nev", "")).begins_with("Érintett") or str(f.get("nev", "")).begins_with("Affected")):
 		det.add_child(UI.label(L.t("Érintett országok: ") + ", ".join(cs), 15, UI.SOFT))
 	if str(r.get("megjegyzes", "")) != "":

@@ -445,6 +445,13 @@ def build(fetch: Callable[..., bytes] = _http, log=print, today: Optional[_dt.da
                 e["orszag"] = country_at(e["lat"], e["lon"])
     except Exception as e:
         log(f"  Országkeresés kihagyva: {e}")
+    try:   # magyar országnevek a megjelenítéshez (a kiemeléshez az angol név marad)
+        from .geo import hu_country
+        for e in world["esemenyek"]:
+            if e["orszag"]:
+                e["orszag_hu"] = ", ".join(hu_country(c) for c in e["orszag"].split(",") if c.strip())
+    except Exception as e:
+        log(f"  Magyar országnevek kihagyva: {e}")
     # csak hellyel és linkkel rendelkező, egyedi események; legfrissebb elöl
     seen, clean = set(), []
     for e in sorted(world["esemenyek"], key=lambda e: e["datum"], reverse=True):
