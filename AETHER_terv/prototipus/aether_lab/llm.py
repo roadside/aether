@@ -124,7 +124,7 @@ class OllamaProvider(Provider):
             "format": schema,  # Ollama >= 0.5: JSON-séma szerinti kimenet
             "options": {"num_predict": min(max_tokens, self.num_ctx // 2), "num_ctx": self.num_ctx},
             "messages": [{"role": "system", "content": system},
-                         {"role": "user", "content": user}],
+                         {"role": "user", "content": user + ("\n/no_think" if "qwen3" in self.model else "")}],
         }
         if self._think_ok:
             body["think"] = False  # gondolkodó modellnél (qwen3) sokkal gyorsabb, a JSON-hoz nem kell
@@ -176,9 +176,14 @@ def _post_json(url: str, body: Dict, headers: Dict[str, str], timeout: int = 600
 
 def _parse(text: str) -> Dict:
     t = (text or "").strip()
+    # gondolkodó modellek (qwen3) a think=False ellenére is írhatnak <think>…</think> blokkot
+    while "<think>" in t and "</think>" in t:
+        t = (t[:t.index("<think>")] + t[t.index("</think>") + len("</think>"):]).strip()
     if t.startswith("```"):  # néhány modell kódblokkba teszi a JSON-t
         t = t.strip("`")
         t = t[t.find("{"):]
+    if not t.startswith("{") and "{" in t and "}" in t:
+        t = t[t.find("{"):t.rfind("}") + 1]
     try:
         return json.loads(t)
     except json.JSONDecodeError as e:
