@@ -62,6 +62,8 @@ var _step_rows: Array = []
 var _log_label: Label
 var _short_label: Label
 var _dots := 0
+var _title_label: Label        # a fejléc címe (kutatás közben pontok futnak utána)
+var _title_text := ""
 
 
 func _ready() -> void:
@@ -90,7 +92,9 @@ func _ready() -> void:
 func _header(title: String, step: int, help: String) -> void:
 	UI.clear(_body)
 	var h := UI.hbox(12)
-	h.add_child(UI.heading(title))
+	_title_text = title
+	_title_label = UI.heading(title)
+	h.add_child(_title_label)
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(spacer)
@@ -465,7 +469,10 @@ func _start_research() -> void:
 
 
 func _on_poll() -> void:
-	_dots = (_dots + 1) % 4
+	# a cím után 1, 2, 3 pont jelenik meg balról jobbra, aztán újra elölről
+	_dots = _dots % 3 + 1
+	if is_instance_valid(_title_label):
+		_title_label.text = _title_text + ".".repeat(_dots)
 	var st: Variant = Bridge.read_json(_folder.path_join("allapot.json"))
 	if typeof(st) != TYPE_DICTIONARY:
 		return
@@ -477,7 +484,7 @@ func _on_poll() -> void:
 			l.text = "✓  " + n
 			l.add_theme_color_override("font_color", UI.GREEN)
 		elif i + 1 == step:
-			l.text = "●  " + n + ".".repeat(_dots)
+			l.text = "●  " + n
 			l.add_theme_color_override("font_color", UI.GOLD)
 	var lines: Array = st.get("naplo", [])
 	_log_label.text = "\n".join(PackedStringArray(lines.slice(max(0, lines.size() - 12))))
