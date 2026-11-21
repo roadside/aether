@@ -196,22 +196,17 @@ func _add_source_button() -> void:
 	for ext in [".csv", ".json", ".geojson", ".xml", ".txt", ".zip", ".kml", ".kmz", ".nc"]:
 		if path.ends_with(ext):
 			is_data = true
-	# Műholdkép az esemény napjáról és helyéről (NASA Worldview), ha van koordináta
-	var lat: Variant = event.get("lat")
-	var lon: Variant = event.get("lon")
-	if typeof(lat) in [TYPE_INT, TYPE_FLOAT] and typeof(lon) in [TYPE_INT, TYPE_FLOAT]:
-		var wv := "https://worldview.earthdata.nasa.gov/?v=%.1f,%.1f,%.1f,%.1f&t=%s" % [
-			float(lon) - 8.0, float(lat) - 6.0, float(lon) + 8.0, float(lat) + 6.0, str(event.get("datum", "")).left(10)]
-		var wb := UI.button(L.t("Műholdkép aznapról (NASA Worldview)"))
-		var wv_fn := func() -> void: OS.shell_open(wv)
-		wb.pressed.connect(wv_fn)
-		_summary_box.add_child(wb)
 	if not is_data:
 		var b := UI.button(L.t("Hivatalos forrás megnyitása (eredeti nyelven)"))
 		var open_fn := func() -> void: OS.shell_open(link)
 		b.pressed.connect(open_fn)
 		_summary_box.add_child(b)
-		return
+	else:
+		_add_data_buttons(link, path)
+	_add_worldview_button()
+
+
+func _add_data_buttons(link: String, path: String) -> void:
 	var parts := link.split("/")
 	var home := "%s//%s/" % [parts[0], parts[2]] if parts.size() > 2 else link
 	var hb := UI.button(L.t("A forrás honlapja: ") + (parts[2] if parts.size() > 2 else link))
@@ -222,3 +217,16 @@ func _add_source_button() -> void:
 	var data_fn := func() -> void: OS.shell_open(link)
 	db.pressed.connect(data_fn)
 	_summary_box.add_child(db)
+
+
+## Műholdkép az esemény napjáról és helyéről (NASA Worldview), ha van koordináta.
+func _add_worldview_button() -> void:
+	var lat: Variant = event.get("lat")
+	var lon: Variant = event.get("lon")
+	if typeof(lat) in [TYPE_INT, TYPE_FLOAT] and typeof(lon) in [TYPE_INT, TYPE_FLOAT]:
+		var wv := "https://worldview.earthdata.nasa.gov/?v=%.1f,%.1f,%.1f,%.1f&t=%s" % [
+			maxf(-180.0, float(lon) - 8.0), maxf(-90.0, float(lat) - 6.0), minf(180.0, float(lon) + 8.0), minf(90.0, float(lat) + 6.0), str(event.get("datum", "")).left(10)]
+		var wb := UI.button(L.t("Műholdkép aznapról (NASA Worldview)"))
+		var wv_fn := func() -> void: OS.shell_open(wv)
+		wb.pressed.connect(wv_fn)
+		_summary_box.add_child(wb)
