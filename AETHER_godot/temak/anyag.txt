@@ -1,6 +1,6 @@
 # AETHER kutatási témák · Anyagtudomány
 #
-# Lektorálás: a "Kérdés", "Röviden", "Ad a játékban", "Mire jó?", "Mi a gond vele?" és
+# Lektorálás: a "Kérdés", "Röviden", "Ha kikutatod", "Mire jó?", "Mi a gond vele?" és
 # "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
 # Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
 # A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet). Csak tudományos forrás
@@ -15,13 +15,13 @@
 Korszak: III. (Átalakulás)
 Kérdés: Lehet-e jobb napelemet gyártani perovszkitból?
 Röviden: A perovszkit egy kristályszerkezet. Vékony rétege a szilíciummal együtt több fényt alakít áramra.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Can perovskite make better solar cells?
 Röviden angolul: Perovskite is a crystal structure. A thin layer of it on silicon turns more light into electricity.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -36,13 +36,13 @@ Paraméter: hatasfok_pct
 Korszak: III. (Átalakulás)
 Kérdés: Mennyi energiát tárolnak a mai akkumulátorok?
 Röviden: A lítiumion-akkumulátor hajtja a villanyautókat, és tárolja a napenergiát.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much energy do today's batteries store?
 Röviden angolul: Lithium-ion batteries power electric cars and store solar energy.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -57,13 +57,13 @@ Paraméter: energiasuruseg_wh_kg
 Korszak: III. (Átalakulás)
 Kérdés: Jobb lesz-e a szilárd elektrolitos akkumulátor?
 Röviden: Ebben folyadék helyett szilárd anyag vezeti az áramot. Biztonságosabb lehet, és többet tárolhat.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Will solid-state batteries be better?
 Röviden angolul: In these, a solid material carries the current instead of a liquid. They may be safer and store more.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -78,13 +78,13 @@ Paraméter: energiasuruseg_wh_kg
 Korszak: III. (Átalakulás)
 Kérdés: Kiválthatja-e a nátrium a lítiumot az akkumulátorban?
 Röviden: A nátrium olcsó, és bőven van belőle, például a konyhasóban.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Can sodium replace lithium in batteries?
 Röviden angolul: Sodium is cheap and plentiful, for example in table salt.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -99,13 +99,13 @@ Paraméter: energiasuruseg_wh_kg
 Korszak: III. (Átalakulás)
 Kérdés: Gyártható-e acél szén helyett hidrogénnel?
 Röviden: Az acélgyártás az egyik legnagyobb kibocsátó. A hidrogén kiválthatja a kokszot.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Can steel be made with hydrogen instead of coal?
 Röviden angolul: Steelmaking is one of the largest emitters. Hydrogen can replace coke.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -120,13 +120,13 @@ Paraméter: kibocsatas_csokkentes_pct
 Korszak: III. (Átalakulás)
 Kérdés: Mennyivel csökkenthető a cementgyártás kibocsátása?
 Röviden: A cementgyártás a mészkő hevítésekor is CO2-t enged ki, nem csak az égetéstől.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much can cement emissions be cut?
 Röviden angolul: Making cement releases CO2 when limestone is heated, not only from burning fuel.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -141,13 +141,13 @@ Paraméter: kibocsatas_csokkentes_pct
 Korszak: III. (Átalakulás)
 Kérdés: Mennyi CO2-t spórol, ha fából építünk beton helyett?
 Röviden: A fa építés után is tárolja a szenet, és kiválthatja a betont és az acélt.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much CO2 is saved by building with wood instead of concrete?
 Röviden angolul: Wood keeps storing carbon after it is built in, and can replace concrete and steel.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:

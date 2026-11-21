@@ -1,6 +1,6 @@
 # AETHER kutatási témák · Egészség és alkalmazkodás
 #
-# Lektorálás: a "Kérdés", "Röviden", "Ad a játékban", "Mire jó?", "Mi a gond vele?" és
+# Lektorálás: a "Kérdés", "Röviden", "Ha kikutatod", "Mire jó?", "Mi a gond vele?" és
 # "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
 # Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
 # A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet). Csak tudományos forrás
@@ -15,13 +15,13 @@
 Korszak: I. (Felismerés)
 Kérdés: A hőség okozta halálesetek mekkora része jön a melegedésből?
 Röviden: A forró napokon több idős és beteg ember hal meg. A melegedéssel ez nő.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: What share of heat deaths is caused by warming?
 Röviden angolul: On hot days more elderly and sick people die. Warming makes this worse.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -36,13 +36,13 @@ Paraméter: reszarany_pct
 Korszak: I. (Felismerés)
 Kérdés: Mennyi munkaidőt visz el a hőség?
 Röviden: Nagy melegben kint dolgozni veszélyes, ezért kevesebbet lehet dolgozni.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much working time does heat take away?
 Röviden angolul: Working outdoors in great heat is dangerous, so less work gets done.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -57,13 +57,13 @@ Paraméter: csokkenes_pct
 Korszak: I. (Felismerés)
 Kérdés: Hány életet ment, ha kevesebb szenet és olajat égetünk?
 Röviden: A kémények és kipufogók füstje betegséget okoz. A tisztább levegő a klímának is jó.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How many lives are saved by burning less coal and oil?
 Röviden angolul: Smoke from chimneys and exhausts causes disease. Cleaner air also helps the climate.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -80,13 +80,13 @@ Paraméter: kockazat_csokkentes_pct
 Korszak: II. (Mérséklés)
 Kérdés: Mennyivel hűvösebb a fák alatt a város?
 Röviden: A fák árnyéka és párologtatása nyáron hűti az utcát.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much cooler is the city under trees?
 Röviden angolul: Tree shade and evaporation cool the street in summer.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -101,13 +101,13 @@ Paraméter: lehules_c
 Korszak: II. (Mérséklés)
 Kérdés: Mennyit hűtenek a világos tetők?
 Röviden: A fehér tető visszaveri a napfényt, ezért kevésbé melegszik fel a ház.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much do light-coloured roofs cool?
 Röviden angolul: A white roof reflects sunlight, so the house heats up less.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -122,13 +122,13 @@ Paraméter: lehules_c
 Korszak: II. (Mérséklés)
 Kérdés: Mennyit hűt a zöldtető?
 Röviden: A növényekkel borított tető hűti az épületet, és visszatartja az esővizet.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much does a green roof cool?
 Röviden angolul: A roof covered in plants cools the building and holds back rainwater.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -143,13 +143,13 @@ Paraméter: lehules_c
 Korszak: II. (Mérséklés)
 Kérdés: Hány életet ment a hőségriasztás?
 Röviden: Figyelmeztetés, hűvös termek és segítség az időseknek a hőhullámok idején.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How many lives do heat warnings save?
 Röviden angolul: Warnings, cool rooms and help for the elderly during heatwaves.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -164,13 +164,13 @@ Paraméter: kockazat_csokkentes_pct
 Korszak: II. (Mérséklés)
 Kérdés: Hány életet ment az árvíz- és viharriasztás?
 Röviden: Ha időben szólnak, az emberek elmenekülhetnek és megvédhetik a házukat.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How many lives do flood and storm warnings save?
 Röviden angolul: With warnings in time, people can flee and protect their homes.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:

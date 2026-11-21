@@ -1,6 +1,6 @@
 # AETHER kutatási témák · Biológia
 #
-# Lektorálás: a "Kérdés", "Röviden", "Ad a játékban", "Mire jó?", "Mi a gond vele?" és
+# Lektorálás: a "Kérdés", "Röviden", "Ha kikutatod", "Mire jó?", "Mi a gond vele?" és
 # "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
 # Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
 # A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet). Csak tudományos forrás
@@ -15,13 +15,13 @@
 Korszak: I. (Felismerés)
 Kérdés: Mit okoz a melegedés a beporzó rovaroknak?
 Röviden: A méhek és más beporzók nélkül sok gyümölcs és zöldség nem terem.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: What does warming do to pollinating insects?
 Röviden angolul: Without bees and other pollinators, many fruits and vegetables do not grow.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -36,13 +36,13 @@ Paraméter: csokkenes_pct
 Korszak: I. (Felismerés)
 Kérdés: Túlélik-e a korallzátonyok a melegedést?
 Röviden: A túl meleg víz kifehéríti, majd megöli a korallokat.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Can coral reefs survive warming?
 Röviden angolul: Water that is too warm bleaches corals and then kills them.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -57,13 +57,13 @@ Paraméter: csokkenes_pct
 Korszak: I. (Felismerés)
 Kérdés: Közel van-e az Amazonas esőerdő az átbillenéshez?
 Röviden: Ha az esőerdő túl sokat szárad és ritkul, szavannává alakulhat.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Is the Amazon rainforest near a tipping point?
 Röviden angolul: If the rainforest dries and thins too much, it could turn into savanna.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -80,13 +80,13 @@ Paraméter: csokkenes_pct
 Korszak: II. (Mérséklés)
 Kérdés: Csökkenthető-e a tehenek metánja takarmánnyal?
 Röviden: A kérődzők emésztés közben metánt böfögnek. Egyes takarmány-kiegészítők ezt csökkentik.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Can feed reduce methane from cows?
 Röviden angolul: Ruminants burp methane as they digest. Some feed additives reduce it.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -101,13 +101,13 @@ Paraméter: metan_csokkentes_pct
 Korszak: II. (Mérséklés)
 Kérdés: Tényleg csökkenti-e egy tengeri alga a tehenek metánját?
 Röviden: Egy vörös tengeri alga kis adagban a takarmányban erősen csökkentheti a metánt.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Does a seaweed really cut cattle methane?
 Röviden angolul: A red seaweed, in small amounts in feed, may strongly reduce methane.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -124,13 +124,13 @@ Paraméter: metan_csokkentes_pct
 Korszak: IV. (Helyreállítás)
 Kérdés: Mennyi CO2-t köthet meg az erdősítés?
 Röviden: Új erdők telepítése: a fák növekedés közben szenet építenek be.
-Ad a játékban: Erdősítés a tervedben.
+Ha kikutatod: Erdősítés a tervedben.
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much CO2 can new forests store?
 Röviden angolul: Planting new forests: trees build carbon into themselves as they grow.
-Ad a játékban angolul: Afforestation in your plan.
+Ha kikutatod angolul: Afforestation in your plan.
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -145,13 +145,13 @@ Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
 Korszak: IV. (Helyreállítás)
 Kérdés: Mennyi szenet köt meg az erdő, ha hagyjuk magától visszanőni?
 Röviden: Az elhagyott földeken az erdő ültetés nélkül is visszanőhet.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much carbon does a forest store if left to regrow by itself?
 Röviden angolul: On abandoned land, forest can grow back without planting.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -166,13 +166,13 @@ Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
 Korszak: IV. (Helyreállítás)
 Kérdés: Mennyi szenet tárolnak a mangroveerdők?
 Röviden: A trópusi partok mangroveerdői sok szenet zárnak a sáros talajba, és védik a partot.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much carbon do mangrove forests store?
 Röviden angolul: Mangrove forests on tropical coasts lock a lot of carbon in their muddy soil and protect the shore.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -187,13 +187,13 @@ Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
 Korszak: IV. (Helyreállítás)
 Kérdés: Mennyi szenet köt meg a tengerifű?
 Röviden: A sekély tengerek fűmezői szenet raktároznak az aljzatban.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much carbon does seagrass store?
 Röviden angolul: Meadows of seagrass in shallow seas store carbon in the seabed.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -208,13 +208,13 @@ Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
 Korszak: IV. (Helyreállítás)
 Kérdés: Megköthet-e szenet a tengeri moszaterdő?
 Röviden: A nagy barna moszatok gyorsan nőnek. Ha a mélybe süllyednek, a szén ott maradhat.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Can kelp forests store carbon?
 Röviden angolul: Large brown seaweeds grow fast. If they sink to the deep, the carbon can stay there.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -229,13 +229,13 @@ Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
 Korszak: IV. (Helyreállítás)
 Kérdés: Megmenthetők-e a korallzátonyok ültetéssel?
 Röviden: Korallokat nevelnek és telepítenek vissza, köztük olyanokat, amelyek jobban bírják a meleget.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Can coral reefs be saved by replanting?
 Röviden angolul: Corals are grown and replanted, including ones that cope better with heat.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:

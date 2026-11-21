@@ -1,6 +1,6 @@
 # AETHER kutatási témák · Fizika
 #
-# Lektorálás: a "Kérdés", "Röviden", "Ad a játékban", "Mire jó?", "Mi a gond vele?" és
+# Lektorálás: a "Kérdés", "Röviden", "Ha kikutatod", "Mire jó?", "Mi a gond vele?" és
 # "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
 # Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
 # A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet). Csak tudományos forrás
@@ -15,13 +15,13 @@
 Korszak: I. (Felismerés)
 Kérdés: Mennyit melegít a kibocsátott CO2?
 Röviden: Minden elégetett tonna szén-dioxid melegít. Mennyit, ha összeadjuk?
-Ad a játékban: Megérted, miért számít minden tonna.
+Ha kikutatod: Megérted, miért számít minden tonna.
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much does emitted CO2 warm the Earth?
 Röviden angolul: Every tonne of carbon dioxide burned warms the Earth. How much, added up?
-Ad a játékban angolul: You understand why every tonne counts.
+Ha kikutatod angolul: You understand why every tonne counts.
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -36,13 +36,13 @@ Paraméter: tcre_c_per_1000gtco2
 Korszak: I. (Felismerés)
 Kérdés: Mennyit melegszik a Föld, ha kétszer annyi lesz a CO2?
 Röviden: Ez a klímaérzékenység: ebből látszik, mekkora melegedés vár ránk.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much does Earth warm if CO2 doubles?
 Röviden angolul: This is climate sensitivity: it tells us how much warming lies ahead.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -57,13 +57,13 @@ Paraméter: klimaerzekenyseg_c
 Korszak: I. (Felismerés)
 Kérdés: Mennyit hűt a levegő szennyezése?
 Röviden: A füst és a kénes szennyezés apró részecskéi visszaverik a napfényt, és elfedik a melegedés egy részét.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much does air pollution cool the Earth?
 Röviden angolul: Tiny particles of smoke and sulphur pollution reflect sunlight and hide part of the warming.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -78,13 +78,13 @@ Paraméter: aeroszol_erf_w_m2
 Korszak: I. (Felismerés)
 Kérdés: Erősítik vagy fékezik a felhők a melegedést?
 Röviden: A melegedés megváltoztatja a felhőket, és ez visszahat a hőmérsékletre.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Do clouds amplify or slow warming?
 Röviden angolul: Warming changes clouds, and that feeds back on temperature.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -99,13 +99,13 @@ Paraméter: visszacsatolas_w_m2_c
 Korszak: I. (Felismerés)
 Kérdés: A melegedés hőjének mekkora részét nyeli el az óceán?
 Röviden: A többlethő a tengerbe, a jégbe, a talajba és a levegőbe kerül. A tengerben évszázadokig megmarad.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: What share of the extra heat does the ocean absorb?
 Röviden angolul: The extra heat goes into the sea, ice, land and air. In the sea it stays for centuries.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -120,13 +120,13 @@ Paraméter: reszarany_pct
 Korszak: I. (Felismerés)
 Kérdés: Lassul-e a Golf-áramlat rendszere?
 Röviden: Az Atlanti-óceán nagy áramlása meleget visz Európába. Ha gyengül, megváltozik az időjárásunk.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Is the Gulf Stream system slowing down?
 Röviden angolul: The Atlantic's great current carries heat to Europe. If it weakens, our weather changes.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -143,13 +143,13 @@ Paraméter: csokkenes_pct
 Korszak: II. (Mérséklés)
 Kérdés: Mennyi áramot spórol a LED-lámpa?
 Röviden: A LED (világító dióda) ugyanannyi fényt kevesebb árammal ad, mint a régi izzó.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much electricity does an LED lamp save?
 Röviden angolul: An LED (light-emitting diode) gives the same light with less electricity than an old bulb.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -164,13 +164,13 @@ Paraméter: kibocsatas_csokkentes_pct
 Korszak: II. (Mérséklés)
 Kérdés: Mennyit melegítenek a repülők kondenzcsíkjai?
 Röviden: A repülők mögötti fehér csíkok vékony felhőként csapdába ejtik a hőt. Elkerülhetők, ha a gép más magasságon repül.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much do aircraft contrails warm the Earth?
 Röviden angolul: The white trails behind aircraft trap heat like thin clouds. Flying at another altitude can avoid them.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -187,13 +187,13 @@ Paraméter: sugarzasi_kenyszer_w_m2
 Korszak: III. (Átalakulás)
 Kérdés: Mennyi kibocsátást válthat ki az atomenergia?
 Röviden: Az atomerőmű nem éget semmit, de az építésnek és az üzemanyagnak is van kibocsátása.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much emission can nuclear power replace?
 Röviden angolul: A nuclear plant burns nothing, but building it and its fuel cause some emissions.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -208,13 +208,13 @@ Paraméter: kibocsatas_potencial_gtco2e_ev
 Korszak: III. (Átalakulás)
 Kérdés: Eltehető-e a napenergia hőként, sóban vagy kőben?
 Röviden: A felforrósított só vagy kő órákig, akár napokig megtartja a hőt.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Can solar energy be stored as heat, in salt or stone?
 Röviden angolul: Heated salt or stone holds heat for hours or even days.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -231,13 +231,13 @@ Paraméter: hatasfok_pct
 Korszak: IV. (Helyreállítás)
 Kérdés: Mennyi energiát nyernek ma a magfúziós kísérletek?
 Röviden: A Nap energiáját utánozza: könnyű atommagok egyesülnek, és sok energia szabadul fel.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much energy do fusion experiments produce today?
 Röviden angolul: It copies the Sun: light atomic nuclei fuse and release a lot of energy.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -252,13 +252,13 @@ Paraméter: energia_nyereseg
 Korszak: IV. (Helyreállítás)
 Kérdés: Mennyire hűtene a kén a magaslégkörben?
 Röviden: A magaslégkörbe juttatott kén visszaverné a napfényt. Nagy a kockázata: ha leáll, gyors melegedés jön.
-Ad a játékban: Csak megérted: a játékban nem vezethető be.
+Ha kikutatod: Csak megérted: a játékban nem vezethető be.
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much would sulphur in the upper atmosphere cool the Earth?
 Röviden angolul: Sulphur in the upper atmosphere would reflect sunlight. The risk is high: if it stops, rapid warming follows.
-Ad a játékban angolul: Understanding only: it cannot be deployed in the game.
+Ha kikutatod angolul: Understanding only: it cannot be deployed in the game.
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -273,13 +273,13 @@ Paraméter: sai_kenyszer_w_m2_per_tg
 Korszak: IV. (Helyreállítás)
 Kérdés: Hűthetik-e a Földet a fényesebbé tett tengeri felhők?
 Röviden: Tengervíz-permetet fújnának a felhőkbe, így azok több napfényt vernének vissza. Kockázatos ötlet.
-Ad a játékban: Csak megérted: a játékban nem vezethető be.
+Ha kikutatod: Csak megérted: a játékban nem vezethető be.
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Could brighter sea clouds cool the Earth?
 Röviden angolul: Sea-water spray would be blown into clouds so they reflect more sunlight. A risky idea.
-Ad a játékban angolul: Understanding only: it cannot be deployed in the game.
+Ha kikutatod angolul: Understanding only: it cannot be deployed in the game.
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -294,13 +294,13 @@ Paraméter: sugarzasi_kenyszer_w_m2
 Korszak: IV. (Helyreállítás)
 Kérdés: Hűtene-e a magas jégfelhők ritkítása?
 Röviden: A vékony, magas jégfelhők csapdába ejtik a hőt. Ritkításuk hűthetne, de nagyon bizonytalan.
-Ad a játékban: Csak megérted: a játékban nem vezethető be.
+Ha kikutatod: Csak megérted: a játékban nem vezethető be.
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Would thinning high ice clouds cool the Earth?
 Röviden angolul: Thin, high ice clouds trap heat. Thinning them might cool, but it is very uncertain.
-Ad a játékban angolul: Understanding only: it cannot be deployed in the game.
+Ha kikutatod angolul: Understanding only: it cannot be deployed in the game.
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:

@@ -206,7 +206,7 @@ func _question_card(q: Dictionary, is_done: bool) -> Control:
 		l.tooltip_text = star_rule()
 		c.add_child(l)
 	elif gives != "":
-		c.add_child(UI.label(L.t("Ad: ") + gives, 15, UI.GOLD))
+		c.add_child(UI.label(L.t("Ha kikutatod: ") + gives, 15, UI.GOLD))
 	var row := UI.hbox(12)
 	row.alignment = BoxContainer.ALIGNMENT_END
 	var info := UI.button(L.t("Mi ez, és mire jó?"))

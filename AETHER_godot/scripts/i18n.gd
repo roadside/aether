@@ -414,7 +414,7 @@ const EN := {
 	"Nincs ilyen téma a nyitott korszakokban.": "No such topic in the open eras.",
 	"Erősebb tudás a tudásfán: ": "Stronger knowledge in the tree: ",
 	"Játékszabály: ★ ellenőrzött szám, ★★ legalább 2 cikk egyezik, ★★★ legalább 3 cikk, köztük összefoglaló elemzés.": "Game rule: ★ a verified number, ★★ at least 2 papers agree, ★★★ at least 3 papers, including a summary analysis.",
-	"Ad: ": "Gives: ",
+	"Ha kikutatod: ": "If you research it: ",
 	"Újra kutatom": "Research again",
 	"Új tudás a tudásfán: ": "New knowledge in the tree: ",
 	"Kutatott téma a(z) %s korszakból: %d/%d": "Researched topics from era %s: %d/%d",

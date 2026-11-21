@@ -1,6 +1,6 @@
 # AETHER kutatási témák · Földtudomány
 #
-# Lektorálás: a "Kérdés", "Röviden", "Ad a játékban", "Mire jó?", "Mi a gond vele?" és
+# Lektorálás: a "Kérdés", "Röviden", "Ha kikutatod", "Mire jó?", "Mi a gond vele?" és
 # "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
 # Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
 # A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet). Csak tudományos forrás
@@ -15,13 +15,13 @@
 Korszak: I. (Felismerés)
 Kérdés: Mennyit emelkedik a tenger 2100-ig?
 Röviden: Az olvadó jég és a melegedő, táguló víz megemeli a tenger szintjét.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much will the sea rise by 2100?
 Röviden angolul: Melting ice and warming, expanding water raise the sea level.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -36,13 +36,13 @@ Paraméter: tengerszint_cm
 Korszak: I. (Felismerés)
 Kérdés: Milyen gyorsan olvad Grönland jege?
 Röviden: Grönland jégtakarója évről évre veszít a tömegéből, és ez emeli a tengert.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How fast is Greenland's ice melting?
 Röviden angolul: Greenland's ice sheet loses mass year after year, raising the sea.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -57,13 +57,13 @@ Paraméter: jegveszteseg_gt_ev
 Korszak: I. (Felismerés)
 Kérdés: Mennyi jeget veszít az Antarktisz?
 Röviden: A déli jégtakaró a legnagyobb jégtömeg a Földön. Ha nagy része elolvadna, méterekkel emelné a tengert.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much ice is Antarctica losing?
 Röviden angolul: The southern ice sheet is the largest mass of ice on Earth. If much of it melted, the sea would rise by metres.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -78,13 +78,13 @@ Paraméter: jegveszteseg_gt_ev
 Korszak: I. (Felismerés)
 Kérdés: Mennyit olvadnak a hegyi gleccserek?
 Röviden: Az Alpok és a Himalája gleccserei nyáron sok folyó vizét adják.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much are mountain glaciers melting?
 Röviden angolul: Glaciers in the Alps and the Himalayas feed many rivers in summer.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -99,13 +99,13 @@ Paraméter: jegveszteseg_gt_ev
 Korszak: I. (Felismerés)
 Kérdés: Mennyi szenet enged ki a felolvadó fagyott talaj?
 Röviden: Az északi fagyott talajban több szén van, mint a levegőben. Olvadáskor egy része kiszabadul.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much carbon does thawing frozen ground release?
 Röviden angolul: The frozen northern ground holds more carbon than the air. When it thaws, part of it escapes.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -120,13 +120,13 @@ Paraméter: szen_gtc
 Korszak: I. (Felismerés)
 Kérdés: Gyakoribb lesz-e az aszály?
 Röviden: A melegebb levegő több vizet párologtat el a talajból és a növényekből.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Will droughts become more frequent?
 Röviden angolul: Warmer air draws more water out of soil and plants.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -141,13 +141,13 @@ Paraméter: valtozas_pct
 Korszak: I. (Felismerés)
 Kérdés: Hevesebbek lesznek-e a nagy esők?
 Röviden: A meleg levegő több vizet tart, ezért a felhőszakadások erősebbek lehetnek.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Will heavy rain get heavier?
 Röviden angolul: Warm air holds more water, so downpours can be stronger.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -162,13 +162,13 @@ Paraméter: valtozas_pct_per_c
 Korszak: I. (Felismerés)
 Kérdés: Több erdőtűz lesz-e a melegedéssel?
 Röviden: A forró, száraz nyarakon könnyebben és nagyobb területen ég az erdő.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Will warming bring more wildfires?
 Röviden angolul: In hot, dry summers forests catch fire more easily and burn over larger areas.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -185,13 +185,13 @@ Paraméter: valtozas_pct
 Korszak: III. (Átalakulás)
 Kérdés: Mennyit segít a kőzetmállasztás?
 Röviden: Finomra őrölt kőzetet szórnak a földekre, ami lassan megköti a levegő CO2-jét.
-Ad a játékban: Kőzetpor a földekre a tervedben.
+Ha kikutatod: Kőzetpor a földekre a tervedben.
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much does rock weathering help?
 Röviden angolul: Finely ground rock is spread on fields, where it slowly binds CO2 from the air.
-Ad a játékban angolul: Rock dust on fields in your plan.
+Ha kikutatod angolul: Rock dust on fields in your plan.
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -206,13 +206,13 @@ Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
 Korszak: III. (Átalakulás)
 Kérdés: Biztonságosan tárolható-e a CO2 a föld alatt?
 Röviden: A kiválasztott CO2-t mély kőzetrétegekbe sajtolják. Mennyi szivároghat vissza?
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Can CO2 be stored safely underground?
 Röviden angolul: Captured CO2 is pumped into deep rock layers. How much could leak back?
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -229,13 +229,13 @@ Paraméter: reszarany_pct
 Korszak: IV. (Helyreállítás)
 Kérdés: Mennyi szenet ment meg a lápok újra elárasztása?
 Röviden: A kiszárított láp szenet enged ki. Ha újra vizes lesz, megint tárolja.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much carbon does rewetting peatlands save?
 Röviden angolul: A drained peatland releases carbon. Made wet again, it stores carbon once more.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -250,13 +250,13 @@ Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
 Korszak: IV. (Helyreállítás)
 Kérdés: Segít-e, ha vassal trágyázzuk a tengert?
 Röviden: A vas serkenti a tengeri algák növekedését. Kérdés, mennyi szén süllyed le tartósan.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Does fertilising the sea with iron help?
 Röviden angolul: Iron boosts the growth of ocean algae. The question is how much carbon sinks for good.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:

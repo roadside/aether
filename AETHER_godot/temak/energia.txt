@@ -1,6 +1,6 @@
 # AETHER kutatási témák · Energia
 #
-# Lektorálás: a "Kérdés", "Röviden", "Ad a játékban", "Mire jó?", "Mi a gond vele?" és
+# Lektorálás: a "Kérdés", "Röviden", "Ha kikutatod", "Mire jó?", "Mi a gond vele?" és
 # "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
 # Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
 # A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet). Csak tudományos forrás
@@ -15,13 +15,13 @@
 Korszak: II. (Mérséklés)
 Kérdés: Mennyi metánszivárgás szüntethető meg a gáziparban?
 Röviden: A földgáz főleg metán. A szivárgó kutakból és csövekből sok jut a levegőbe.
-Ad a játékban: Megérted, hol lehet gyorsan metánt spórolni.
+Ha kikutatod: Megérted, hol lehet gyorsan metánt spórolni.
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much methane leakage can the gas industry stop?
 Röviden angolul: Natural gas is mostly methane. Leaking wells and pipes release a lot of it into the air.
-Ad a játékban angolul: You understand where methane can be cut quickly.
+Ha kikutatod angolul: You understand where methane can be cut quickly.
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -36,13 +36,13 @@ Paraméter: metan_csokkentes_pct
 Korszak: II. (Mérséklés)
 Kérdés: Mennyi metán fogható fel a szénbányákban?
 Röviden: A szénrétegekből metán szabadul fel a bányákban, a bezárt bányákból is.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much methane can coal mines capture?
 Röviden angolul: Coal seams release methane in mines, even in closed ones.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -57,13 +57,13 @@ Paraméter: metan_csokkentes_pct
 Korszak: II. (Mérséklés)
 Kérdés: Mennyi CO2-t spórol a napelem?
 Röviden: A szilícium napelem a napfényt közvetlenül árammá alakítja. Gyártása is jár kibocsátással.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much CO2 do solar panels save?
 Röviden angolul: A silicon solar panel turns sunlight straight into electricity. Making it also causes emissions.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -78,13 +78,13 @@ Paraméter: kibocsatas_csokkentes_pct
 Korszak: II. (Mérséklés)
 Kérdés: Mennyi kibocsátást válthat ki a szélenergia?
 Röviden: A szélturbinák a szél mozgási energiáját alakítják árammá.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much emission can wind power replace?
 Röviden angolul: Wind turbines turn the energy of moving air into electricity.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -99,13 +99,13 @@ Paraméter: kibocsatas_potencial_gtco2e_ev
 Korszak: II. (Mérséklés)
 Kérdés: Mennyi fűtést és áramot adhat a föld hője?
 Röviden: A föld mélyének hője fűtésre és áramtermelésre is használható. Magyarországon különösen sok van belőle.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much heat and power can the Earth's heat provide?
 Röviden angolul: Heat from deep underground can be used for heating and electricity. Hungary has a great deal of it.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -120,13 +120,13 @@ Paraméter: kibocsatas_csokkentes_pct
 Korszak: II. (Mérséklés)
 Kérdés: Mennyi energiát spórol a napkollektor?
 Röviden: A napkollektor a napfénnyel melegíti a vizet, áram nélkül.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much energy does a solar water heater save?
 Röviden angolul: A solar collector heats water with sunlight, without electricity.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -143,13 +143,13 @@ Paraméter: kibocsatas_csokkentes_pct
 Korszak: III. (Átalakulás)
 Kérdés: Mennyi CO2-t zárhat a föld alá a növényi energia?
 Röviden: Növényeket égetnek energiáért, a keletkező CO2-t pedig a föld alá zárják.
-Ad a játékban: Növényi energia CO2-tárolással a tervedben.
+Ha kikutatod: Növényi energia CO2-tárolással a tervedben.
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much CO2 can plant-based energy lock underground?
 Röviden angolul: Plants are burned for energy, and the resulting CO2 is stored underground.
-Ad a játékban angolul: Plant energy with CO2 storage in your plan.
+Ha kikutatod angolul: Plant energy with CO2 storage in your plan.
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -164,13 +164,13 @@ Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
 Korszak: III. (Átalakulás)
 Kérdés: Mennyi kibocsátást válthat ki a tengeri szélenergia?
 Röviden: A tengeren erősebb és egyenletesebb a szél, mint a szárazföldön.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much emission can offshore wind replace?
 Röviden angolul: At sea the wind is stronger and steadier than on land.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -185,13 +185,13 @@ Paraméter: kibocsatas_potencial_gtco2e_ev
 Korszak: III. (Átalakulás)
 Kérdés: Milyen hatékony az energiatárolás víztározókkal?
 Röviden: Ha sok az áram, vizet szivattyúznak fel. Ha kevés, leengedik, és turbinát hajt.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How efficient is energy storage with reservoirs?
 Röviden angolul: When power is plentiful, water is pumped up. When it is scarce, it flows down and drives a turbine.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -206,13 +206,13 @@ Paraméter: hatasfok_pct
 Korszak: III. (Átalakulás)
 Kérdés: Mennyit spórolhat a gyárakban a hőszivattyú?
 Röviden: Sok gyár forró vizet és gőzt használ. Ipari hőszivattyú is előállíthatja áramból.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much can heat pumps save in factories?
 Röviden angolul: Many factories use hot water and steam. Industrial heat pumps can make it from electricity.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -227,13 +227,13 @@ Paraméter: kibocsatas_csokkentes_pct
 Korszak: III. (Átalakulás)
 Kérdés: Mennyi kibocsátást spórol a biogáz?
 Röviden: A trágya és az ételmaradék erjesztésekor éghető gáz keletkezik.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much emission does biogas save?
 Röviden angolul: Fermenting manure and food waste produces a gas that can be burned.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:

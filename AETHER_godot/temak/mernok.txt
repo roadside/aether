@@ -1,6 +1,6 @@
 # AETHER kutatási témák · Közlekedés és épületek
 #
-# Lektorálás: a "Kérdés", "Röviden", "Ad a játékban", "Mire jó?", "Mi a gond vele?" és
+# Lektorálás: a "Kérdés", "Röviden", "Ha kikutatod", "Mire jó?", "Mi a gond vele?" és
 # "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
 # Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
 # A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet). Csak tudományos forrás
@@ -15,13 +15,13 @@
 Korszak: II. (Mérséklés)
 Kérdés: Mennyit spórol a hőszivattyú a gázkazánhoz képest?
 Röviden: A hőszivattyú a kinti levegő vagy a föld hőjét hozza be a házba, árammal.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much does a heat pump save compared to a gas boiler?
 Röviden angolul: A heat pump brings heat from the outside air or the ground into the house, using electricity.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -36,13 +36,13 @@ Paraméter: kibocsatas_csokkentes_pct
 Korszak: II. (Mérséklés)
 Kérdés: Mennyi fűtést spórol a hőszigetelés?
 Röviden: A jól szigetelt fal, tető és ablak bent tartja a meleget.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much heating does insulation save?
 Röviden angolul: Well-insulated walls, roofs and windows keep the warmth in.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -57,13 +57,13 @@ Paraméter: kibocsatas_csokkentes_pct
 Korszak: II. (Mérséklés)
 Kérdés: Mennyivel kevesebb CO2-t okoz a villanyautó?
 Röviden: Az elektromos autó teljes élete alatt, az akkumulátor gyártásával együtt számolva.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much less CO2 does an electric car cause?
 Röviden angolul: Counted over the electric car's whole life, including making the battery.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -78,13 +78,13 @@ Paraméter: kibocsatas_csokkentes_pct
 Korszak: II. (Mérséklés)
 Kérdés: Mennyi CO2-t spórol, ha vonattal utazunk autó és repülő helyett?
 Röviden: A vonat sok utast visz egyszerre, és gyakran árammal megy.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much CO2 is saved by taking the train instead of car or plane?
 Röviden angolul: A train carries many passengers at once and often runs on electricity.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -99,13 +99,13 @@ Paraméter: kibocsatas_csokkentes_pct
 Korszak: II. (Mérséklés)
 Kérdés: Mennyit segít, ha többen kerékpárral járnak?
 Röviden: A rövid városi utak egy részét kerékpárral is meg lehet tenni.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much does it help if more people cycle?
 Röviden angolul: Many short city trips can be made by bicycle.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -120,13 +120,13 @@ Paraméter: kibocsatas_csokkentes_pct
 Korszak: II. (Mérséklés)
 Kérdés: Csökkenti-e a kibocsátást az otthoni munka?
 Röviden: Kevesebb az ingázás, de otthon több a fűtés és az áram.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: Does working from home cut emissions?
 Röviden angolul: There is less commuting, but more heating and electricity at home.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -143,13 +143,13 @@ Paraméter: kibocsatas_csokkentes_pct
 Korszak: III. (Átalakulás)
 Kérdés: Mennyi CO2-t szűrhetnek ki gépek a levegőből?
 Röviden: Nagy ventilátoros gépek kiszűrik a CO2-t, és a föld alá zárják. Sok energiát igényel.
-Ad a játékban: CO2-szűrés a levegőből a tervedben.
+Ha kikutatod: CO2-szűrés a levegőből a tervedben.
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much CO2 can machines filter from the air?
 Röviden angolul: Large fan-driven machines filter out CO2 and store it underground. It takes a lot of energy.
-Ad a játékban angolul: Filtering CO2 from the air in your plan.
+Ha kikutatod angolul: Filtering CO2 from the air in your plan.
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -164,13 +164,13 @@ Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
 Korszak: III. (Átalakulás)
 Kérdés: Mennyi CO2 fogható fel a gyárkéményekben?
 Röviden: Az erőművek és gyárak füstjéből a CO2 kiválasztható, mielőtt a levegőbe jut.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much CO2 can be captured from factory chimneys?
 Röviden angolul: CO2 can be separated from the smoke of power plants and factories before it reaches the air.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -185,13 +185,13 @@ Paraméter: hatasfok_pct
 Korszak: III. (Átalakulás)
 Kérdés: Mennyit spórol az elektromos teherautó?
 Röviden: A teherautók sok gázolajat fogyasztanak. Akkumulátorral hosszabb utakra is képesek.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much does an electric truck save?
 Röviden angolul: Trucks burn a lot of diesel. With batteries they can also make longer trips.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
@@ -206,13 +206,13 @@ Paraméter: kibocsatas_csokkentes_pct
 Korszak: III. (Átalakulás)
 Kérdés: Mennyivel csökkenthető a hajózás kibocsátása?
 Röviden: A teherhajók nehézolajat égetnek. Új üzemanyag, lassabb haladás vagy szélvitorla segíthet.
-Ad a játékban:
+Ha kikutatod:
 Mire jó?:
 Mi a gond vele?:
 Mennyire bizonyított?:
 Kérdés angolul: How much can shipping emissions be cut?
 Röviden angolul: Cargo ships burn heavy fuel oil. New fuels, slower sailing or wind sails can help.
-Ad a játékban angolul:
+Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:

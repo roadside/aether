@@ -46,13 +46,13 @@ FIELDS = [
     ("korszak", "Korszak"),
     ("cim", "Kérdés"),
     ("magyarazat", "Röviden"),
-    ("nyit", "Ad a játékban"),
+    ("nyit", "Ha kikutatod"),
     ("mire_jo", "Mire jó?"),
     ("hatranyok", "Mi a gond vele?"),
     ("mennyire_bizonyitott", "Mennyire bizonyított?"),
     ("cim_en", "Kérdés angolul"),
     ("magyarazat_en", "Röviden angolul"),
-    ("nyit_en", "Ad a játékban angolul"),
+    ("nyit_en", "Ha kikutatod angolul"),
     ("mire_jo_en", "Mire jó? angolul"),
     ("hatranyok_en", "Mi a gond vele? angolul"),
     ("mennyire_bizonyitott_en", "Mennyire bizonyított? angolul"),
@@ -63,11 +63,13 @@ FIELDS = [
     ("attekintes", "Áttekintő cikkek keresése"),
 ]
 TECH_FROM = "kereses"          # innentől technikai mezők
-_LABELS = sorted(FIELDS, key=lambda f: -len(f[1]))   # a hosszabb név előbb ("Kérdés angolul" vs "Kérdés")
+# régi mezőnevek is olvashatók (ha valaki régi fájlt szerkeszt)
+_OLD = [("nyit_en", "Ad a játékban angolul"), ("nyit", "Ad a játékban")]
+_LABELS = sorted(FIELDS + _OLD, key=lambda f: -len(f[1]))   # a hosszabb név előbb ("Kérdés angolul" vs "Kérdés")
 
 HEADER = """# AETHER kutatási témák · {nev}
 #
-# Lektorálás: a "Kérdés", "Röviden", "Ad a játékban", "Mire jó?", "Mi a gond vele?" és
+# Lektorálás: a "Kérdés", "Röviden", "Ha kikutatod", "Mire jó?", "Mi a gond vele?" és
 # "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
 # Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
 # A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet). Csak tudományos forrás

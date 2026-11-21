@@ -24,9 +24,10 @@ const FIELDS := {
 const LABELS := [
 	["Mennyire bizonyított? angolul", "mennyire_bizonyitott_en"], ["Áttekintő cikkek keresése", "attekintes"],
 	["Mi a gond vele? angolul", "hatranyok_en"], ["Ad a játékban angolul", "nyit_en"],
+	["Ha kikutatod angolul", "nyit_en"],
 	["Mennyire bizonyított?", "mennyire_bizonyitott"],
 	["Mire jó? angolul", "mire_jo_en"], ["Röviden angolul", "magyarazat_en"], ["Kérdés angolul", "cim_en"],
-	["Mi a gond vele?", "hatranyok"], ["Ad a játékban", "nyit"], ["Lektorálva", "lektoralva"],
+	["Mi a gond vele?", "hatranyok"], ["Ad a játékban", "nyit"], ["Ha kikutatod", "nyit"], ["Lektorálva", "lektoralva"],
 	["Paraméter", "parameterek"], ["Mire jó?", "mire_jo"], ["Keresés", "kereses"],
 	["Korszak", "korszak"], ["Röviden", "magyarazat"], ["Kérdés", "cim"], ["Forrás", "forras"],
 ]
