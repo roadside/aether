@@ -78,6 +78,14 @@ static func num(x: float, decimals: int = 1) -> String:
 	return s if is_en() else s.replace(".", ",")
 
 
+## Szám legfeljebb ennyi tizedessel, a felesleges nullák nélkül (5,0 -> 5; 0,50 -> 0,5).
+static func num_short(x: float, decimals: int = 2) -> String:
+	var s := String.num(snappedf(x, pow(10.0, -decimals)), decimals)
+	if "." in s:
+		s = s.rstrip("0").rstrip(".")
+	return s if is_en() else s.replace(".", ",")
+
+
 const CATEGORY := {
 	"aszaly": ["Aszály", "Drought"], "arviz": ["Árvíz", "Flood"], "vihar": ["Vihar", "Storm"],
 	"foldrenges": ["Földrengés", "Earthquake"], "vulkan": ["Vulkán", "Volcano"], "tuz": ["Erdőtűz", "Wildfire"],

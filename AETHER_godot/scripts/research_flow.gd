@@ -589,7 +589,7 @@ func _proposal_card(j: Dictionary, pub: Dictionary) -> Control:
 	var usable: bool = j.get("kar") != null
 	var c := UI.card(UI.CYAN if usable else UI.EDGE)
 	c.add_child(UI.label(str(j["nev"]) + (" – " + str(j["alkategoria"]) if str(j["alkategoria"]) != "" else ""), 17, UI.SOFT))
-	var big := "%s %s" % [UI.hu(float(j["ertek"]), 2).trim_suffix("0").trim_suffix(",0").trim_suffix(".0"), j["egyseg"]]
+	var big := "%s %s" % [L.num_short(float(j["ertek"]), 2), j["egyseg"]]
 	c.add_child(UI.label(big, 26, UI.CYAN if usable else UI.TEXT, true))
 	c.add_child(UI.label(str(j["jelentes"]), 17, UI.TEXT))
 	var conf := str(j["bizonyossag"])

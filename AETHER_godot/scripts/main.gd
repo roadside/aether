@@ -142,6 +142,21 @@ func _make_theme() -> Theme:
 	t.set_font("font", "Button", UI.font_bold)
 	t.set_font_size("font_size", "Button", 17)
 	t.set_font("font", "CheckBox", UI.font_body)
+	# A jelölőnégyzet és a kapcsológomb minden állapota ugyanazt a keretet és belső margót kapja,
+	# különben egér alatt (bejelölve) a szöveg a négyzet alá csúszik.
+	var cb_imgs := {"normal": "gomb", "pressed": "gomb", "disabled": "gomb", "hover": "gomb_folotte",
+		"hover_pressed": "gomb_folotte"}
+	for state in cb_imgs:
+		var cbs := _frame("res://assets/ui/%s.png" % cb_imgs[state], 8, 10)
+		cbs.content_margin_left = 16
+		cbs.content_margin_right = 16
+		t.set_stylebox(state, "CheckBox", cbs)
+	t.set_stylebox("focus", "CheckBox", focus)
+	t.set_constant("h_separation", "CheckBox", 10)
+	var hp := _frame("res://assets/ui/gomb_lenyomva.png", 8, 10)
+	hp.content_margin_left = 16
+	hp.content_margin_right = 16
+	t.set_stylebox("hover_pressed", "Button", hp)
 	t.set_color("font_color", "Label", UI.TEXT)
 	return t
 
