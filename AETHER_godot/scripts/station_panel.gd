@@ -62,7 +62,6 @@ func rebuild() -> void:
 	for mod in ORDER:
 		row.add_child(_card(mod))
 	_body.add_child(row)
-	_body.add_child(UI.label(L.t("Az állomás szabályai játékszabályok, nem valós adatok."), 13, UI.MUTE))
 
 
 func _picture() -> Control:

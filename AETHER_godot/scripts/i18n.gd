@@ -346,7 +346,6 @@ const EN := {
 	"Az AI-mag %d cikket néz át. Idén még %d kutatást indíthatsz.": "The AI core reviews %d papers. You can start %d more research projects this year.",
 	"Kutatóállomás": "Research station",
 	"Fejleszd az állomásodat: több és alaposabb kutatás, több bizalom. Egy modul építése 1 évig tart.": "Upgrade your station: more and deeper research, more trust. Building a module takes 1 year.",
-	"Az állomás szabályai játékszabályok, nem valós adatok.": "The station's rules are game rules, not real data.",
 	"még nincs": "not built yet",
 	"%d. szint": "level %d",
 	"%d cikket néz át, évente %d kutatás.": "Reviews %d papers, %d research projects per year.",
