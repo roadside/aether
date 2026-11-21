@@ -41,6 +41,7 @@ class Paper:
     is_retracted: bool = False
     work_type: str = ""                    # article, review, preprint, ...
     orszagok: List[str] = field(default_factory=list)  # a szerzők intézményeinek országai (ISO-kód, OpenAlex)
+    intezmenyek: Dict[str, List[str]] = field(default_factory=dict)  # országkód -> intézménynevek (OpenAlex)
 
     def key(self) -> str:
         if self.doi:
@@ -111,7 +112,19 @@ def parse_openalex(data: Dict) -> List[Paper]:
             is_retracted=bool(w.get("is_retracted")),
             work_type=w.get("type") or "",
             orszagok=sorted({c for a in w.get("authorships", []) for c in (a.get("countries") or []) if c}),
+            intezmenyek=_institutions(w),
         ))
+    return out
+
+
+def _institutions(w: Dict) -> Dict[str, List[str]]:
+    """Országonként a szerzők intézményei, az első előfordulás sorrendjében."""
+    out: Dict[str, List[str]] = {}
+    for a in w.get("authorships", []) or []:
+        for inst in a.get("institutions") or []:
+            c, name = inst.get("country_code") or "", inst.get("display_name") or ""
+            if c and name and name not in out.setdefault(c, []):
+                out[c].append(name)
     return out
 
 
@@ -276,15 +289,19 @@ def merge(papers: List[Paper]) -> List[Paper]:
             best[k] = p
             continue
         countries = sorted(set(p.orszagok) | set(cur.orszagok))
+        insts = {c: list(dict.fromkeys(cur.intezmenyek.get(c, []) + p.intezmenyek.get(c, [])))
+                 for c in set(p.intezmenyek) | set(cur.intezmenyek)}
         if len(p.abstract) > len(cur.abstract):
             p.cited_by = max(p.cited_by, cur.cited_by)
             p.is_retracted = p.is_retracted or cur.is_retracted
             p.orszagok = countries
+            p.intezmenyek = insts
             best[k] = p
         else:
             cur.cited_by = max(p.cited_by, cur.cited_by)
             cur.is_retracted = p.is_retracted or cur.is_retracted
             cur.orszagok = countries
+            cur.intezmenyek = insts
     return list(best.values())
 
 

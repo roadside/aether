@@ -598,8 +598,12 @@ func _paper_link(p: Dictionary) -> Control:
 	var yr: Variant = p.get("year")
 	var yr_s := str(int(yr)) if typeof(yr) in [TYPE_INT, TYPE_FLOAT] else "?"
 	var t := "%s (%s): %s" % [who, yr_s, str(p.get("title", ""))]
+	var home := ""
 	if L.country() in Array(p.get("orszagok", [])):
 		t = L.t("[Hazai] ") + t
+		var inst: Variant = p.get("intezmenyek", {})
+		if typeof(inst) == TYPE_DICTIONARY and inst.has(L.country()):
+			home = L.t("Hazai intézmény: %s") % ", ".join(PackedStringArray(Array(inst[L.country()]).slice(0, 3))) + "\n"
 	if typeof(p.get("peer_reviewed")) == TYPE_BOOL and p.get("peer_reviewed") == false:
 		t += L.t("  [preprint, nem lektorált]")
 	var url := ""
@@ -619,7 +623,7 @@ func _paper_link(p: Dictionary) -> Control:
 	for st in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
 		lb.add_theme_color_override(st, UI.CYAN)
 	lb.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	lb.tooltip_text = url
+	lb.tooltip_text = home + url
 	lb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	if url != "":
 		var open_fn := func() -> void: OS.shell_open(url)

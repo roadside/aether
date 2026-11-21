@@ -294,6 +294,7 @@ const EN := {
 	"Első küldetés kész! Jöhet a következő.": "First mission done! On to the next one.",
 	"%d cikk (%d hazai). ": "%d papers (%d from your country). ",
 	"[Hazai] ": "[Your country] ",
+	"Hazai intézmény: %s": "Institution in your country: %s",
 	"A forrás honlapja: ": "Source website: ",
 	"Nyers adat letöltése (%s-fájl)": "Download raw data (%s file)",
 	"Műholdkép aznapról (NASA Worldview)": "Satellite image of that day (NASA Worldview)",

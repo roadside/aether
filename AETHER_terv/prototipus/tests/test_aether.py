@@ -198,6 +198,13 @@ class TestHomeCountry(unittest.TestCase):
                              "authorships": [{"author": {"display_name": "A"}, "countries": ["HU"]},
                                              {"author": {"display_name": "B"}, "countries": ["AT", "HU"]}]}]}
         self.assertEqual(lit.parse_openalex(data)[0].orszagok, ["AT", "HU"])
+        data["results"][0]["authorships"][0]["institutions"] = [
+            {"display_name": "Magyar Agrár- és Élettudományi Egyetem", "country_code": "HU"}]
+        data["results"][0]["authorships"][1]["institutions"] = [
+            {"display_name": "BOKU", "country_code": "AT"},
+            {"display_name": "Magyar Agrár- és Élettudományi Egyetem", "country_code": "HU"}]
+        self.assertEqual(lit.parse_openalex(data)[0].intezmenyek,
+                         {"HU": ["Magyar Agrár- és Élettudományi Egyetem"], "AT": ["BOKU"]})
         seen = {}
         orig = lit._get
         lit._get = lambda url, *a, **k: (seen.setdefault("url", url), b'{"results": []}')[1]
