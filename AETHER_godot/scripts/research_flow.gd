@@ -245,9 +245,21 @@ func _pick_question(q: Dictionary) -> void:
 	_topic_q = {}
 	_question = q
 	_header(L.t("Ki kutasson?"), 2, L.t("Megnézem, milyen AI érhető el a gépeden…"))
+	_ask_ai(0)
+
+
+## Az elérhető AI-k lekérdezése; ha a játék épp mással dolgozik (pl. egy esemény
+## összefoglalóján), fél másodpercenként újrapróbálja, legfeljebb egy percig.
+func _ask_ai(tries: int) -> void:
+	if not is_inside_tree():
+		return
 	var path: String = bridge.work_dir("aether_kutatas").path_join("ai.json")
-	if not bridge.run("ai", ["godot-ai", "--ki", path, "--nyelv", L.lang]):
+	if bridge.run("ai", ["godot-ai", "--ki", path, "--nyelv", L.lang]):
+		return
+	if tries >= 120:
 		_show_busy()
+		return
+	get_tree().create_timer(0.5).timeout.connect(_ask_ai.bind(tries + 1))
 
 
 func _show_busy() -> void:
@@ -332,6 +344,10 @@ func _show_ai_choice() -> void:
 	back.pressed.connect(show_questions)
 	row.add_child(back)
 	var start := UI.button(L.t("Indulhat a kutatás"), true)
+	if campaign != null:
+		start.text += L.t(" (%d pénz)") % campaign.research_cost()
+		start.tooltip_text = L.t("Az AI-mag %d cikket néz át. Idén még %d kutatást indíthatsz.") % [
+			campaign.papers_per_research(), maxi(0, campaign.research_limit() - campaign.research_this_year)]
 	start.pressed.connect(_start_research)
 	row.add_child(start)
 	_body.add_child(row)
@@ -415,9 +431,9 @@ func _on_dl_poll() -> void:
 # --- 3. Kutatás folyamatban -----------------------------------------------
 func _start_research() -> void:
 	if campaign != null:
-		if not campaign.can_research():
-			_body.add_child(UI.label(L.t("Nincs elég pénz kutatásra (%d kell, neked %d van). Indítsd el az időt, évente kapsz pénzt.") % [
-				campaign.research_cost(), campaign.money], 17, UI.EMBER))
+		var problem: String = campaign.research_problem()
+		if problem != "":
+			_body.add_child(UI.label(problem, 17, UI.EMBER))
 			return
 		campaign.pay_research()
 	L.set_setting("ai", _ai)   # az események összefoglalója is ezt az AI-t használja
@@ -442,7 +458,7 @@ func _start_research() -> void:
 	_body.add_child(_log_label)
 	if bridge.run("kutat", ["godot-kutat", L.t(str(_question["cim"])), "--ai", _ai, "--mappa", _folder, "--nyelv", L.lang,
 			"--kereses", str(_question.get("kereses", "")), "--parameterek", str(_question.get("parameterek", "")),
-			"--orszag", L.country()]):
+			"--orszag", L.country(), "--cikkek", str(campaign.papers_per_research() if campaign != null else 12)]):
 		_poll.start()
 	else:
 		_show_busy()

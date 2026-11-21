@@ -12,6 +12,7 @@ const PlanPanel := preload("res://scripts/plan_panel.gd")
 const EventPanel := preload("res://scripts/event_panel.gd")
 const Missions := preload("res://scripts/missions.gd")
 const Campaign := preload("res://scripts/campaign.gd")
+const StationPanel := preload("res://scripts/station_panel.gd")
 
 const MISSION := [
 	["Nézd meg a mai Földet", "A bal oldali lista és a földgömb pöttyei valódi, friss jelentések. Kattints egyre!"],
@@ -278,6 +279,11 @@ func _build_bottom_bar() -> void:
 	plan.custom_minimum_size = Vector2(150, 0)
 	plan.pressed.connect(_open_plan)
 	h.add_child(plan)
+	var station := UI.button(L.t("Állomás"))
+	station.custom_minimum_size = Vector2(130, 0)
+	station.tooltip_text = L.t("A kutatóállomásod: modulok építése és fejlesztése.")
+	station.pressed.connect(_open_station)
+	h.add_child(station)
 	var tbox := UI.vbox(6)
 	var trow := UI.hbox(6)
 	_play_btn = UI.button(L.t("Idő indítása"))
@@ -344,7 +350,19 @@ func _open_info_link() -> void:
 
 
 func _on_station(s: Dictionary) -> void:
-	_show_info(L.t("A te kutatóállomásod: ") + str(s["name"]), "")
+	if bool(s.get("me", false)):
+		_open_station()
+	else:
+		_show_info(L.t("Kutatóállomás: ") + str(s["name"]), "")
+
+
+func _open_station() -> void:
+	var st = StationPanel.new()
+	st.campaign = campaign
+	st.closed.connect(_close_overlay)
+	var built_fn := func(note: String) -> void: _show_info(note, "")
+	st.built.connect(built_fn)
+	_place_overlay(st)
 
 
 # ---------------------------------------------------------------------------
@@ -769,6 +787,10 @@ func _selftest() -> void:
 	await _shot(dir, "1_mai_fold.png")
 	if not world.get("esemenyek", []).is_empty():
 		_show_event(world["esemenyek"][0])
+		for i in 120:   # az esemény összefoglalója a hídon fut: megvárjuk
+			if not bridge.is_busy():
+				break
+			await get_tree().create_timer(0.5).timeout
 	_open_research()
 	var r = _overlay
 	r._pick_question(ResearchFlow.QUESTIONS[0])
@@ -798,6 +820,14 @@ func _selftest() -> void:
 		await _shot(dir, "5_ido_10_ev.png")
 		_year_slider.value = 2100
 		await _shot(dir, "5b_fold_2100.png")
+		_year_slider.value = campaign.year
+		print("ONTESZT építés: ", campaign.build("ai_mag"))
+		campaign.advance()
+		print("ONTESZT állomás: ", campaign.station, " cikk/kutatás=", campaign.papers_per_research())
+		print("ONTESZT építés 2: ", campaign.build("uveghaz"))
+		_open_station()
+		await _shot(dir, "7_allomas.png")
+		_close_overlay()
 	_close_overlay()
 	for e in world.get("esemenyek", []):
 		if str(e.get("kategoria", "")) == "levego":

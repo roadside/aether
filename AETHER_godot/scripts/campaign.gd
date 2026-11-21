@@ -21,6 +21,14 @@ const TRUST_PER_RESULT := 6          # ellenőrzött eredményenként a tervben
 const TRUST_STEP_BACK := 10          # visszalépés egy gyengébb tervre
 const SECONDS_PER_YEAR := [12.0, 4.0]  # normál, gyors
 
+## A kutatóállomás moduljai (játékszabály). Szintenkénti építési ár; az építés 1 évig tart.
+const MODULES := {
+	"ai_mag": {"nev": "AI-mag", "ar": [80, 160, 300]},
+	"archivum": {"nev": "Archívum", "ar": [60, 120, 240]},
+	"uveghaz": {"nev": "Üvegház", "ar": [70, 140, 260]},
+}
+const MAX_LEVEL := 3
+
 var year := START_YEAR
 var money := START_MONEY
 var trust := START_TRUST
@@ -29,6 +37,9 @@ var model: Dictionary = {}           # a modell eredménye a jelenlegi idővonal
 var running := false
 var fast := false
 var blocked := false                 # nyitott ablak alatt az idő áll
+var station := {"ai_mag": 0, "archivum": 0, "uveghaz": 0}
+var building := {}                   # {"modul": "ai_mag", "kesz": 2028} amíg épül
+var research_this_year := 0
 var save_file := "aether_jatek.json"  # az önteszt külön fájlt használ
 var _acc := 0.0
 
@@ -47,11 +58,18 @@ func load_game() -> void:
 	timeline = d.get("idovonal", [])
 	var m: Variant = d.get("modell", {})
 	model = m if typeof(m) == TYPE_DICTIONARY else {}
+	var st: Variant = d.get("allomas", {})
+	if typeof(st) == TYPE_DICTIONARY:
+		for k in station:
+			station[k] = int(st.get(k, 0))
+	var b: Variant = d.get("epul", {})
+	building = b if typeof(b) == TYPE_DICTIONARY else {}
+	research_this_year = int(d.get("kutatas_ev", 0))
 
 
 func save() -> void:
 	Bridge.write_json(save_path(), {"ev": year, "penz": money, "bizalom": trust, "idovonal": timeline,
-		"modell": model})
+		"modell": model, "allomas": station, "epul": building, "kutatas_ev": research_this_year})
 
 
 func new_game() -> void:
@@ -60,6 +78,9 @@ func new_game() -> void:
 	trust = START_TRUST
 	timeline = []
 	model = {}
+	station = {"ai_mag": 0, "archivum": 0, "uveghaz": 0}
+	building = {}
+	research_this_year = 0
 	running = false
 	_acc = 0.0
 	save()
@@ -88,11 +109,21 @@ func advance() -> void:
 	money += inc
 	var d := _trust_drift()
 	trust = clampi(trust + d, 0, 100)
+	research_this_year = 0
 	var note := L.t("%d: bevétel +%d.") % [year, inc]
 	if d > 0:
 		note += " " + L.t("A kibocsátás csökken: bizalom +%d.") % d
 	elif d < 0:
 		note += " " + L.t("A kibocsátás nem csökken: bizalom %d.") % d
+	var g := greenhouse_trust()
+	if g > 0:
+		trust = mini(100, trust + g)
+		note += " " + L.t("Üvegház: bizalom +%d.") % g
+	if not building.is_empty() and year >= int(building["kesz"]):
+		var mod := str(building["modul"])
+		station[mod] = int(station[mod]) + 1
+		building = {}
+		note += " " + L.t("Elkészült: %s, %d. szint.") % [L.t(MODULES[mod]["nev"]), station[mod]]
 	save()
 	year_passed.emit(year, note)
 	changed.emit()
@@ -110,8 +141,56 @@ func _trust_drift() -> int:
 	return 1 if (now < before - 0.05 or now <= 1.0) else -1
 
 
+# --- állomás ---------------------------------------------------------------
+## AI-mag: ennyi cikket néz át egy kutatás (több cikk = alaposabb, de lassabb kutatás).
+func papers_per_research() -> int:
+	return 12 + 4 * int(station["ai_mag"])
+
+
+## AI-mag: ennyi kutatást lehet indítani egy játékévben.
+func research_limit() -> int:
+	return 2 + int(station["ai_mag"])
+
+
+## Archívum: a már letöltött cikkeket nem kell újra keresni, ezért olcsóbb a kutatás.
 func research_cost() -> int:
-	return RESEARCH_COST
+	return RESEARCH_COST - 8 * int(station["archivum"])
+
+
+## Üvegház: a helyi kísérletek eredményét az emberek látják: évente ennyi bizalom.
+func greenhouse_trust() -> int:
+	return int(station["uveghaz"])
+
+
+func module_cost(mod: String) -> int:
+	var lvl := int(station[mod])
+	if lvl >= MAX_LEVEL:
+		return -1
+	return int(MODULES[mod]["ar"][lvl])
+
+
+## "" ha építhető, különben az ok.
+func build_problem(mod: String) -> String:
+	if int(station[mod]) >= MAX_LEVEL:
+		return L.t("Elérte a legmagasabb szintet.")
+	if not building.is_empty():
+		return L.t("Egyszerre egy modul épülhet.")
+	if year >= END_YEAR:
+		return L.t("A játék véget ért.")
+	if money < module_cost(mod):
+		return L.t("Ehhez %d pénz kell, neked %d van.") % [module_cost(mod), money]
+	return ""
+
+
+func build(mod: String) -> String:
+	var problem := build_problem(mod)
+	if problem != "":
+		return problem
+	money -= module_cost(mod)
+	building = {"modul": mod, "kesz": year + 1}
+	save()
+	changed.emit()
+	return L.t("Építés indult: %s, kész: %d.") % [L.t(MODULES[mod]["nev"]), year + 1]
 
 
 func series_at(key: String, y: int, ens: String = "kozep") -> float:
@@ -198,12 +277,21 @@ func adopt(sc: Dictionary, res: Dictionary) -> String:
 
 
 # --- kutatás ---------------------------------------------------------------
+func research_problem() -> String:
+	if research_this_year >= research_limit():
+		return L.t("Idén már %d kutatást indítottál, ennyit enged az AI-mag. Várj egy évet, vagy fejleszd az AI-magot!") % research_limit()
+	if money < research_cost():
+		return L.t("Nincs elég pénz kutatásra (%d kell, neked %d van). Indítsd el az időt, évente kapsz pénzt.") % [research_cost(), money]
+	return ""
+
+
 func can_research() -> bool:
-	return money >= RESEARCH_COST
+	return research_problem() == ""
 
 
 func pay_research() -> void:
-	money -= RESEARCH_COST
+	money -= research_cost()
+	research_this_year += 1
 	save()
 	changed.emit()
 

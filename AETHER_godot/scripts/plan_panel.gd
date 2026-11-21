@@ -206,9 +206,6 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 	var res: Dictionary = r
 	_result_box.add_child(UI.label(str(res["jelentes"]), 19, UI.TEXT, true))
 	_chart = Chart.new()
-	_result_box.add_child(_chart)
-	_chart.set_data(res)
-	_result_box.add_child(UI.label(L.t("Egyszerű oktatási modell: irányt mutat, nem jósol."), 14, UI.MUTE))
 	var sc := _scenario()
 	res["_terv"] = sc   # a küldetés értékeléséhez
 	if campaign == null:
@@ -216,9 +213,8 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 		var see_fn := func() -> void: model_ready.emit(res)
 		see.pressed.connect(see_fn)
 		_result_box.add_child(see)
+		_add_chart(res)
 		return
-	_chart.now_year = campaign.year
-	_chart.set_year(campaign.year)
 	var need: int = campaign.required_trust(sc)
 	var cost: int = campaign.plan_cost(sc)
 	_result_box.add_child(UI.label(L.t("Első év: %d. Ára: %d pénz, és legalább %d%% bizalom kell.") % [
@@ -237,3 +233,13 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 		model_ready.emit(res)
 	adopt.pressed.connect(adopt_fn)
 	_result_box.add_child(adopt)
+	_chart.now_year = campaign.year
+	_chart.year = campaign.year
+	_add_chart(res)
+
+
+## A grafikon a döntés (Bevezetem) alatt van, így a gomb görgetés nélkül is látszik.
+func _add_chart(res: Dictionary) -> void:
+	_result_box.add_child(_chart)
+	_chart.set_data(res)
+	_result_box.add_child(UI.label(L.t("Egyszerű oktatási modell: irányt mutat, nem jósol."), 14, UI.MUTE))
