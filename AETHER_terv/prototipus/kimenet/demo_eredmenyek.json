@@ -1,0 +1,233 @@
+[
+  {
+    "nev": "0. Alapeset: kibocsátás marad a mai szinten",
+    "leiras": "42 GtCO2/év 2100-ig, semmi más nem változik.",
+    "eredmenyek": {
+      "alacsony": {
+        "T2050": 1.69,
+        "T2100": 2.26,
+        "csucs": 2.26,
+        "csucs_ev": 2100,
+        "1.5C_atlepes": 2034,
+        "2.0C_atlepes": 2078,
+        "kukorica_hozam_2050_pct": -2.19
+      },
+      "kozep": {
+        "T2050": 1.88,
+        "T2100": 2.83,
+        "csucs": 2.83,
+        "csucs_ev": 2100,
+        "1.5C_atlepes": 2030,
+        "2.0C_atlepes": 2057,
+        "kukorica_hozam_2050_pct": -3.65
+      },
+      "magas": {
+        "T2050": 2.08,
+        "T2100": 3.41,
+        "csucs": 3.41,
+        "csucs_ev": 2100,
+        "1.5C_atlepes": 2029,
+        "2.0C_atlepes": 2047,
+        "kukorica_hozam_2050_pct": -5.11
+      }
+    }
+  },
+  {
+    "nev": "1. Szárazságtűrő növények + víztakarékosság",
+    "leiras": "Alkalmazkodás: a hozamveszteség 30%-át ellensúlyozza (FELTEVÉS, forrás kell). A kibocsátás nem változik.",
+    "eredmenyek": {
+      "alacsony": {
+        "T2050": 1.69,
+        "T2100": 2.26,
+        "csucs": 2.26,
+        "csucs_ev": 2100,
+        "1.5C_atlepes": 2034,
+        "2.0C_atlepes": 2078,
+        "kukorica_hozam_2050_pct": -1.53
+      },
+      "kozep": {
+        "T2050": 1.88,
+        "T2100": 2.83,
+        "csucs": 2.83,
+        "csucs_ev": 2100,
+        "1.5C_atlepes": 2030,
+        "2.0C_atlepes": 2057,
+        "kukorica_hozam_2050_pct": -2.56
+      },
+      "magas": {
+        "T2050": 2.08,
+        "T2100": 3.41,
+        "csucs": 3.41,
+        "csucs_ev": 2100,
+        "1.5C_atlepes": 2029,
+        "2.0C_atlepes": 2047,
+        "kukorica_hozam_2050_pct": -3.58
+      }
+    }
+  },
+  {
+    "nev": "2. Légszennyezés csökkentése (csak szulfát és korom)",
+    "leiras": "A szulfát- és koromszennyezés 80%-a megszűnik 2040-ig. Tisztább levegő, de a szulfát hűtő hatása is eltűnik.",
+    "eredmenyek": {
+      "alacsony": {
+        "T2050": 1.97,
+        "T2100": 2.57,
+        "csucs": 2.57,
+        "csucs_ev": 2100,
+        "1.5C_atlepes": 2030,
+        "2.0C_atlepes": 2053,
+        "kukorica_hozam_2050_pct": -4.29
+      },
+      "kozep": {
+        "T2050": 2.2,
+        "T2100": 3.19,
+        "csucs": 3.19,
+        "csucs_ev": 2100,
+        "1.5C_atlepes": 2029,
+        "2.0C_atlepes": 2042,
+        "kukorica_hozam_2050_pct": -6.02
+      },
+      "magas": {
+        "T2050": 2.46,
+        "T2100": 3.84,
+        "csucs": 3.84,
+        "csucs_ev": 2100,
+        "1.5C_atlepes": 2028,
+        "2.0C_atlepes": 2038,
+        "kukorica_hozam_2050_pct": -7.92
+      }
+    }
+  },
+  {
+    "nev": "3. Gyors metáncsökkentés (-45% 2030-ig)",
+    "leiras": "Global Methane Assessment (UNEP/CCAC 2021) szerinti cél.",
+    "eredmenyek": {
+      "alacsony": {
+        "T2050": 1.51,
+        "T2100": 2.02,
+        "csucs": 2.02,
+        "csucs_ev": 2100,
+        "1.5C_atlepes": 2049,
+        "2.0C_atlepes": 2098,
+        "kukorica_hozam_2050_pct": -0.89
+      },
+      "kozep": {
+        "T2050": 1.69,
+        "T2100": 2.57,
+        "csucs": 2.57,
+        "csucs_ev": 2100,
+        "1.5C_atlepes": 2033,
+        "2.0C_atlepes": 2069,
+        "kukorica_hozam_2050_pct": -2.2
+      },
+      "magas": {
+        "T2050": 1.85,
+        "T2100": 3.09,
+        "csucs": 3.09,
+        "csucs_ev": 2100,
+        "1.5C_atlepes": 2029,
+        "2.0C_atlepes": 2057,
+        "kukorica_hozam_2050_pct": -3.41
+      }
+    }
+  },
+  {
+    "nev": "4. Nettó zéró CO2 2050-re",
+    "leiras": "Lineáris csökkentés 2025-2050 között nullára.",
+    "eredmenyek": {
+      "alacsony": {
+        "T2050": 1.54,
+        "T2100": 1.54,
+        "csucs": 1.54,
+        "csucs_ev": 2049,
+        "1.5C_atlepes": 2037,
+        "2.0C_atlepes": null,
+        "kukorica_hozam_2050_pct": -1.1
+      },
+      "kozep": {
+        "T2050": 1.64,
+        "T2100": 1.64,
+        "csucs": 1.64,
+        "csucs_ev": 2049,
+        "1.5C_atlepes": 2031,
+        "2.0C_atlepes": null,
+        "kukorica_hozam_2050_pct": -1.83
+      },
+      "magas": {
+        "T2050": 1.74,
+        "T2100": 1.74,
+        "csucs": 1.74,
+        "csucs_ev": 2049,
+        "1.5C_atlepes": 2029,
+        "2.0C_atlepes": null,
+        "kukorica_hozam_2050_pct": -2.56
+      }
+    }
+  },
+  {
+    "nev": "5. Nettó zéró 2050 + metán -45% + CO2-eltávolítás",
+    "leiras": "Kombinált csomag: CDR a Fuss et al. 2018 potenciálok alsó-közép tartományában (összesen 5 GtCO2/év 2050-re).",
+    "eredmenyek": {
+      "alacsony": {
+        "T2050": 1.63,
+        "T2100": 1.54,
+        "csucs": 1.65,
+        "csucs_ev": 2044,
+        "1.5C_atlepes": 2031,
+        "2.0C_atlepes": null,
+        "kukorica_hozam_2050_pct": -1.26
+      },
+      "kozep": {
+        "T2050": 1.74,
+        "T2100": 1.59,
+        "csucs": 1.75,
+        "csucs_ev": 2045,
+        "1.5C_atlepes": 2029,
+        "2.0C_atlepes": null,
+        "kukorica_hozam_2050_pct": -1.8
+      },
+      "magas": {
+        "T2050": 1.85,
+        "T2100": 1.66,
+        "csucs": 1.87,
+        "csucs_ev": 2045,
+        "1.5C_atlepes": 2028,
+        "2.0C_atlepes": null,
+        "kukorica_hozam_2050_pct": -2.39
+      }
+    }
+  },
+  {
+    "nev": "6. Csak sztratoszférikus aeroszol (SAI), 2070-ben leáll",
+    "leiras": "8 Tg SO2/év 2035-től, kibocsátás változatlan, 2070-ben hirtelen leállítás (\"termination shock\").",
+    "eredmenyek": {
+      "alacsony": {
+        "T2050": 1.16,
+        "T2100": 2.23,
+        "csucs": 2.23,
+        "csucs_ev": 2100,
+        "1.5C_atlepes": 2034,
+        "2.0C_atlepes": 2081,
+        "kukorica_hozam_2050_pct": 1.69
+      },
+      "kozep": {
+        "T2050": 1.3,
+        "T2100": 2.79,
+        "csucs": 2.79,
+        "csucs_ev": 2100,
+        "1.5C_atlepes": 2030,
+        "2.0C_atlepes": 2072,
+        "kukorica_hozam_2050_pct": 0.7
+      },
+      "magas": {
+        "T2050": 1.39,
+        "T2100": 3.35,
+        "csucs": 3.35,
+        "csucs_ev": 2100,
+        "1.5C_atlepes": 2029,
+        "2.0C_atlepes": 2070,
+        "kukorica_hozam_2050_pct": -0.02
+      }
+    }
+  }
+]

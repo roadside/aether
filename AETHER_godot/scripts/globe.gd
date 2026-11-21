@@ -1,0 +1,178 @@
+extends Control
+## A forgó földgömb: shaderes gömb + a kutatóállomások és szövetségi vonalak rajzolása.
+## A shader és ez a script ugyanazt a vetítést használja, így a jelölők a helyükön maradnak.
+
+signal station_clicked(station: Dictionary)
+signal event_clicked(event: Dictionary)
+
+const SHADER := preload("res://shaders/globe.gdshader")
+
+@export var pixels := 360.0          # a gömb "játékpixel"-felbontása
+@export var radius_ratio := 0.86     # egyezzen a shader `radius` értékével
+@export var tilt := 0.35
+@export var spin_speed := 0.006      # fordulat / másodperc
+@export var cloud_speed := 0.0015
+
+var spin := 0.12
+var cloud_drift := 0.0
+var time := 0.0
+var stations: Array = []             # [{name, lat, lon, color, me, locked}]
+var links: Array = []                # [[lat1, lon1, lat2, lon2], ...]
+var events: Array = []               # valós események (world_state.py): {cim, kategoria, lat, lon, link, ...}
+var heat := 0.0                      # 0 = ma; 1 = kb. +2 °C a mához képest (csak szemléltetés)
+
+const EVENT_COLORS := {
+	"aszaly": Color("#e0a24a"), "ehezes": Color("#f07a4a"), "arviz": Color("#4aa0e0"), "vihar": Color("#9ab8ff"),
+	"tuz": Color("#ff5a3a"), "jeg": Color("#cfefff"), "hoseg": Color("#ff8a3a"), "szennyezes": Color("#b48cff"),
+	"levego": Color("#c8b49a"), "uv": Color("#e8f060"), "jarvany": Color("#ff6fa0"), "vulkan": Color("#d0503a"), "foldrenges": Color("#c0a070"),
+}
+var dragging := false
+
+var _rect: ColorRect
+var _mat: ShaderMaterial
+
+
+func _ready() -> void:
+	mouse_filter = Control.MOUSE_FILTER_STOP
+	_rect = ColorRect.new()
+	_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_mat = ShaderMaterial.new()
+	_mat.shader = SHADER
+	_mat.set_shader_parameter("albedo_map", load("res://assets/earth_albedo.png"))
+	_mat.set_shader_parameter("data_map", load("res://assets/earth_data.png"))
+	_mat.set_shader_parameter("night_map", load("res://assets/earth_night.png"))
+	_mat.set_shader_parameter("cloud_map", load("res://assets/earth_clouds.png"))
+	_mat.set_shader_parameter("pixels", pixels)
+	_mat.set_shader_parameter("radius", radius_ratio)
+	_mat.set_shader_parameter("tilt", tilt)
+	_rect.material = _mat
+	add_child(_rect)
+	# a jelölők a gömb fölé rajzolódnak
+	_rect.show_behind_parent = true
+
+
+func _process(delta: float) -> void:
+	time += delta
+	if not dragging:
+		spin += spin_speed * delta
+	cloud_drift += cloud_speed * delta
+	_mat.set_shader_parameter("spin", spin)
+	_mat.set_shader_parameter("cloud_drift", cloud_drift)
+	_mat.set_shader_parameter("heat", heat)
+	queue_redraw()
+
+
+func _gui_input(event: InputEvent) -> void:
+	# egérrel forgatható
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		dragging = event.pressed
+		if event.pressed:
+			var hit := _station_at(event.position)
+			if not hit.is_empty():
+				station_clicked.emit(hit)
+			else:
+				var ev := _event_at(event.position)
+				if not ev.is_empty():
+					event_clicked.emit(ev)
+	elif event is InputEventMouseMotion and dragging:
+		spin -= event.relative.x / (size.x * PI)
+
+
+## Földrajzi pont -> képernyőpont. Visszaad: Vector3(x, y, látható? 1 : 0)
+func project(lat_deg: float, lon_deg: float) -> Vector3:
+	var lat := deg_to_rad(lat_deg)
+	var o := deg_to_rad(lon_deg) - spin * TAU
+	var x := cos(lat) * sin(o)
+	var y2 := -sin(lat)
+	var z2 := cos(lat) * cos(o)
+	var ct := cos(tilt)
+	var st := sin(tilt)
+	var ny := y2 * ct + z2 * st
+	var nz := -y2 * st + z2 * ct
+	var r := size.x * 0.5 * radius_ratio
+	var px := size.x / pixels                      # egy játékpixel mérete
+	var c := size * 0.5
+	var sx := snappedf(c.x + x * r, px)
+	var sy := snappedf(c.y + ny * r, px)
+	return Vector3(sx, sy, 1.0 if nz > 0.04 else 0.0)
+
+
+func _draw() -> void:
+	var px := size.x / pixels
+	# szövetségi vonalak: pontozott, futó fénnyel
+	for l in links:
+		var a := _vec(l[0], l[1])
+		var b := _vec(l[2], l[3])
+		for i in 121:
+			var u := i / 120.0
+			var v := a.lerp(b, u).normalized()
+			var lat := rad_to_deg(asin(v.y))
+			var lon := rad_to_deg(atan2(v.z, v.x))
+			var p := project(lat, lon)
+			if p.z < 0.5:
+				continue
+			var lift := 1.0 + sin(u * PI) * 0.14
+			var c := size * 0.5
+			var q := c + (Vector2(p.x, p.y) - c) * lift
+			var on := (i + int(time * 6.0)) % 6 < 3
+			draw_rect(Rect2(q.snapped(Vector2(px, px)), Vector2(px, px)), Color(0.39, 0.95, 0.89, 0.95 if on else 0.25))
+	# valós események: kis, pulzáló pixel-jelölők
+	var pulse := 0.6 + 0.4 * sin(time * 3.0)
+	for e in events:
+		if e.get("lat") == null or e.get("lon") == null:
+			continue
+		var pe := project(float(e["lat"]), float(e["lon"]))
+		if pe.z < 0.5:
+			continue
+		var ec: Color = EVENT_COLORS.get(str(e.get("kategoria", "")), Color("#d8d8d8"))
+		var big := 2 if str(e.get("szint", "")) in ["orange", "red"] else 1
+		var center := Vector2(pe.x, pe.y)
+		draw_rect(Rect2(center - Vector2(big + 1, big + 1) * px, Vector2(2 * big + 3, 2 * big + 3) * px), Color(0, 0, 0, 0.55))
+		draw_rect(Rect2(center - Vector2(big, big) * px, Vector2(2 * big + 1, 2 * big + 1) * px), Color(ec, pulse))
+	# állomások: fényoszlop + gyémánt
+	for s in stations:
+		var p := project(s.lat, s.lon)
+		if p.z < 0.5:
+			continue
+		var col: Color = s.color
+		var pos := Vector2(p.x, p.y)
+		var beam := 22 if s.get("me", false) else 12
+		for j in beam:
+			draw_rect(Rect2(pos + Vector2(0, -j * px), Vector2(px, px)), Color(col, 0.55 * (1.0 - float(j) / beam)))
+		for off in [Vector2(0, -3), Vector2(-1, -2), Vector2(0, -2), Vector2(1, -2), Vector2(-2, -1), Vector2(-1, -1), Vector2(0, -1), Vector2(1, -1), Vector2(2, -1),
+				Vector2(-3, 0), Vector2(-2, 0), Vector2(-1, 0), Vector2(0, 0), Vector2(1, 0), Vector2(2, 0), Vector2(3, 0),
+				Vector2(-2, 1), Vector2(-1, 1), Vector2(0, 1), Vector2(1, 1), Vector2(2, 1), Vector2(-1, 2), Vector2(0, 2), Vector2(1, 2), Vector2(0, 3)]:
+			var edge: bool = abs(off.x) + abs(off.y) == 3
+			var cc := Color.WHITE if off == Vector2.ZERO else (col.darkened(0.4) if edge else col)
+			draw_rect(Rect2(pos + off * px, Vector2(px, px)), cc)
+		if s.get("locked", false):
+			draw_rect(Rect2(pos + Vector2(-2, -8) * px, Vector2(5, 3) * px), Color(0.67, 0.67, 0.67))
+
+
+func _vec(lat_deg: float, lon_deg: float) -> Vector3:
+	var a := deg_to_rad(lat_deg)
+	var o := deg_to_rad(lon_deg)
+	return Vector3(cos(a) * cos(o), sin(a), cos(a) * sin(o))
+
+
+func _event_at(pos: Vector2) -> Dictionary:
+	var best: Dictionary = {}
+	var best_d := 12.0
+	for e in events:
+		if e.get("lat") == null or e.get("lon") == null:
+			continue
+		var p := project(float(e["lat"]), float(e["lon"]))
+		var d := pos.distance_to(Vector2(p.x, p.y))
+		if p.z > 0.5 and d < best_d:
+			best_d = d
+			best = e
+	return best
+
+
+func _station_at(pos: Vector2) -> Dictionary:
+	for s in stations:
+		var p := project(s.lat, s.lon)
+		if p.z > 0.5 and pos.distance_to(Vector2(p.x, p.y)) < 14.0:
+			return s
+	return {}
