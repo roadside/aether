@@ -208,7 +208,7 @@ func _render_topic(r: Dictionary) -> void:
 			c.add_child(UI.label(str(m.get(part[0], "")), 17, UI.TEXT))
 			_body.add_child(UI.card_root(c))
 	# A források: AI-összefoglaló mellett egy gomb mögött, egymás alatt; anélkül láthatóan.
-	var src := UI.vbox(8)
+	var src := UI.vbox(2)
 	var w: Variant = r.get("wiki")
 	if typeof(w) == TYPE_DICTIONARY:
 		if typeof(m) != TYPE_DICTIONARY:
@@ -216,25 +216,17 @@ func _render_topic(r: Dictionary) -> void:
 			c.add_child(UI.label(L.t("Mi ez? (Wikipédia)"), 17, UI.GOLD, true))
 			c.add_child(UI.label(str(w.get("bevezeto", "")), 17, UI.TEXT))
 			_body.add_child(UI.card_root(c))
-		var wb := UI.button(L.t("Wikipédia: ") + str(w.get("cim", "")) + " (" + str(w.get("nyelv", "")) + ", CC BY-SA 4.0)")
-		var wurl := str(w.get("link", ""))
-		var w_fn := func() -> void: OS.shell_open(wurl)
-		wb.pressed.connect(w_fn)
-		wb.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		src.add_child(wb)
+		src.add_child(_text_link(L.t("Wikipédia: ") + str(w.get("cim", "")) + " (" + str(w.get("nyelv", "")) + ", CC BY-SA 4.0)",
+			str(w.get("link", ""))))
 	var papers: Array = r.get("cikkek", [])
 	if not papers.is_empty():
-		src.add_child(UI.label(L.t("Tudományos összefoglaló cikkek"), 16, UI.CYAN, true))
+		src.add_child(UI.label(L.t("Tudományos összefoglaló cikkek"), 15, UI.SOFT, true))
 		for p in papers:
 			var ev := str(p.get("ev", ""))
 			if ev.is_valid_float():
 				ev = str(int(float(ev)))   # 2023.0 -> 2023
-			var pb := UI.button("%s (%s)" % [str(p.get("cim", "")), ev] if ev != "" else str(p.get("cim", "")))
-			var purl := str(p.get("link", ""))
-			var p_fn := func() -> void: OS.shell_open(purl)
-			pb.pressed.connect(p_fn)
-			pb.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART   # hosszú cím: több sorba törik
-			src.add_child(pb)
+			var t := "• " + str(p.get("cim", "")) + (" (%s)" % ev if ev != "" else "")
+			src.add_child(_text_link(t, str(p.get("link", ""))))
 	if typeof(m) == TYPE_DICTIONARY and src.get_child_count() > 0:
 		src.visible = false
 		var sb := UI.button(L.t("AI-összefoglaló forrásai"))
@@ -617,6 +609,33 @@ func _proposal_card(j: Dictionary, _pub: Dictionary) -> Control:
 		c.add_child(cb)
 		_checks.append([cb, j])
 	return UI.card_root(c)
+
+
+## Egyszerű, kattintható szöveges link (nem gomb): ciánkék, balra, sort tör.
+func _text_link(text: String, url: String, size: int = 15) -> Button:
+	UI.load_fonts()
+	var lb := Button.new()
+	lb.text = text
+	lb.flat = true
+	lb.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	lb.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	lb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	lb.add_theme_font_size_override("font_size", size)
+	if UI.font_body != null:   # normál szöveg, nem a gombok vastag betűje
+		lb.add_theme_font_override("font", UI.font_body)
+	for st in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
+		lb.add_theme_color_override(st, UI.CYAN)
+	var empty := StyleBoxEmpty.new()
+	empty.content_margin_top = 2
+	empty.content_margin_bottom = 2
+	for st in ["normal", "hover", "pressed", "focus", "hover_pressed"]:
+		lb.add_theme_stylebox_override(st, empty)
+	if url != "":
+		lb.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		lb.tooltip_text = url
+		var open_fn := func() -> void: OS.shell_open(url)
+		lb.pressed.connect(open_fn)
+	return lb
 
 
 func _paper_link(p: Dictionary) -> Control:
