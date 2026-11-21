@@ -10,6 +10,7 @@ const Globe := preload("res://scripts/globe.gd")
 const ResearchFlow := preload("res://scripts/research_flow.gd")
 const PlanPanel := preload("res://scripts/plan_panel.gd")
 const EventPanel := preload("res://scripts/event_panel.gd")
+const Missions := preload("res://scripts/missions.gd")
 
 const MISSION := [
 	["Nézd meg a mai Földet", "A bal oldali lista és a földgömb pöttyei valódi, friss jelentések. Kattints egyre!"],
@@ -22,7 +23,10 @@ var globe                     # globe.gd példány
 var bridge                    # lab_bridge.gd példány
 var world: Dictionary = {}
 var model: Dictionary = {}
-var mission_step := 0
+var mission_step := 0          # a bevezető (első küldetés) lépése; 4 = kész
+var mission_idx := 0           # az aktuális küldetés a Missions.LIST-ben
+var _mission_note := ""        # az utolsó értékelés rövid szövege
+var _mission_title: Label
 
 var _events_box: VBoxContainer
 var _world_note: Label
@@ -72,6 +76,11 @@ func _ready() -> void:
 	_plan.bridge = bridge
 	_plan.closed.connect(_close_overlay)
 	_plan.model_ready.connect(_on_model)
+	if bool(L.get_setting("bevezeto_kesz", false)):
+		mission_step = MISSION.size()
+		mission_idx = Missions.first_open()
+		_plan.set_mission(Missions.LIST[mission_idx])
+		_render_mission()
 
 	_load_world_cache()
 	if "--onteszt" in OS.get_cmdline_user_args():
@@ -197,7 +206,8 @@ func _build_left_panel() -> void:
 
 func _build_right_panel() -> void:
 	var v := _panel(Vector2(1212, 90), 370)
-	v.add_child(UI.heading(L.t("Első küldetés"), 24))
+	_mission_title = UI.heading(L.t("Első küldetés"), 24)
+	v.add_child(_mission_title)
 	_mission_box = UI.vbox(8)
 	v.add_child(_mission_box)
 	_render_mission()
@@ -266,6 +276,9 @@ func _on_station(s: Dictionary) -> void:
 # ---------------------------------------------------------------------------
 func _render_mission() -> void:
 	UI.clear(_mission_box)
+	if mission_step >= MISSION.size():
+		_render_missions()
+		return
 	for i in MISSION.size():
 		var done := i < mission_step
 		var current := i == mission_step
@@ -274,14 +287,52 @@ func _render_mission() -> void:
 		_mission_box.add_child(UI.label("%s  %d. %s" % [mark, i + 1, L.t(MISSION[i][0])], 18, col, current))
 		if current:
 			_mission_box.add_child(UI.label(L.t(MISSION[i][1]), 15, UI.SOFT))
-	if mission_step >= MISSION.size():
-		_mission_box.add_child(UI.label(L.t("Kész! Húzd az év-csúszkát, és nézd a Földet."), 15, UI.GREEN))
+
+
+## A bevezető után: küldetéslista csillagokkal; az aktuálisnál a cél és az utolsó eredmény.
+func _render_missions() -> void:
+	_mission_title.text = L.t("Küldetések")
+	for i in Missions.LIST.size():
+		var m: Dictionary = Missions.LIST[i]
+		var st := Missions.stars_of(m["id"])
+		var of := 1 if m["id"] == "alkalmazkodas" else 3
+		var current := i == mission_idx
+		var b := Button.new()
+		b.flat = true
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		b.text = "%s  %s" % [Missions.star_text(st, of), L.t(m["cim"])]
+		b.add_theme_font_size_override("font_size", 17)
+		for s in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
+			b.add_theme_color_override(s, UI.GOLD if current else (UI.GREEN if st > 0 else UI.SOFT))
+		b.pressed.connect(_select_mission.bind(i))
+		_mission_box.add_child(b)
+		if current:
+			_mission_box.add_child(UI.label(L.t(m["cel"]), 15, UI.TEXT))
+			if _mission_note != "":
+				_mission_box.add_child(UI.label(_mission_note, 15, UI.CYAN))
+
+
+func _select_mission(i: int) -> void:
+	mission_idx = i
+	_mission_note = ""
+	_plan.set_mission(Missions.LIST[i])
+	_render_mission()
 
 
 func _advance(to_step: int) -> void:
 	if to_step > mission_step:
 		mission_step = to_step
 		_render_mission()
+
+
+## A bevezető vége: a következő modellfuttatástól a küldetések számítanak.
+func _start_missions() -> void:
+	L.set_setting("bevezeto_kesz", true)
+	_mission_note = L.t("Első küldetés kész! Jöhet a következő.")
+	mission_idx = Missions.first_open()
+	_plan.set_mission(Missions.LIST[mission_idx])
+	_render_mission()
 
 
 # ---------------------------------------------------------------------------
@@ -475,7 +526,17 @@ func _on_model(res: Dictionary) -> void:
 	var l: Label = _stats["jovo"]
 	l.text = "2100: +%s °C" % UI.hu(float(k["T2100"]), 1)
 	_show_info(str(res["jelentes"]), "")
-	_advance(4)
+	if mission_step >= MISSION.size() and not _plan.mission.is_empty():
+		var m: Dictionary = Missions.LIST[mission_idx]
+		var ev := Missions.evaluate(m, res)
+		_mission_note = str(ev["szoveg"])
+		if int(ev["csillag"]) > 0:
+			Missions.save_stars(m["id"], int(ev["csillag"]))
+			_mission_note += "\n" + L.t(m["tanulsag"])
+		_render_mission()
+	elif mission_step < MISSION.size():
+		_advance(4)
+		_start_missions()
 
 
 func _temp_at(year: int) -> float:

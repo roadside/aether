@@ -208,6 +208,13 @@ Egyéni rangsor helyett „hozzájárulási” profil, hogy az együttműködés
 
 **Megvalósítva az 1. mérföldkőben (Godot):** a jobb oldali „Első küldetés” panel négy lépésen vezet végig: (1) nézd meg a mai Földet a valós jelentésekkel, (2) kutass egy kész kérdés-gombbal, (3) nézd meg, mit találtál, és hagyd jóvá, (4) állítsd be a terved, és nézd meg, mi lesz 2100-ban. Mindig csak az aktuális lépés magyarázata látszik.
 
+**Küldetések (megvalósítva, 2026-11-21):** a bevezető után a jobb oldali panel küldetéslistát mutat csillagokkal. Mindegyiknek egy mondatos célja van, a feltételt a játék a modell eredményéből számolja (nem az AI), és teljesítéskor egy mondatos tanulságot mutat:
+1. *Megmenti-e a Földet a szárazságtűrő növény?* A termés javul, a hőmérséklet nem: az alkalmazkodás véd, de nem hűt.
+2. *Mi hűti a bolygót?* 2100-ra 2 °C alatt (★), 1,7 alatt (★★), 1,5 alatt (★★★).
+3. *Késői kezdés:* a CO2 csak 2070-re nulla (rögzített). Csúcs 1,6 °C alatt; a további csillagokhoz saját kutatású CO2-kivonás kell.
+4. *Másfél fok:* a CO2 2060-ra nulla (rögzített), 2100-ra 1,45 °C alá. Őszintén jelezzük, hogy lehet, hogy nem sikerül.
+A csillaghatárok az AETHER-mini oktatási modellhez vannak hangolva, nem valódi előrejelzések.
+
 **„Az első kérdés”** (oktató, ~20 perc): a játékos megépíti az AI-magot, és feltesz egy kérdést, javasolt: *„Megmenti-e a Földet a szárazságtűrő növény?”* Az AI valódi cikkeket hoz, a modell megmutatja, hogy a hozam javul, a hőmérséklet nem. A narrátor nem magyaráz; a második küldetés természetes kérdése: *„Akkor mi hűti a bolygót?”*
 
 ## 14. Művészeti irány: „festett pixel”

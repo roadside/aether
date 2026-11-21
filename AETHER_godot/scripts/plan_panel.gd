@@ -16,6 +16,7 @@ const NEVER := 2105          # a csúszka L.t("Soha") állása
 
 var bridge
 var levers: Dictionary = {}  # kar -> javaslat (a jóváhagyott kutatásokból)
+var mission: Dictionary = {}  # az aktuális küldetés (missions.gd); co2_ev esetén a CO2-év rögzített
 var _body: VBoxContainer
 var _co2: HSlider
 var _ch4: HSlider
@@ -48,6 +49,12 @@ func _ready() -> void:
 func add_levers(new_levers: Array) -> void:
 	for j in new_levers:
 		levers[str(j["kar"])] = j
+	if is_inside_tree():
+		rebuild()
+
+
+func set_mission(m: Dictionary) -> void:
+	mission = m
 	if is_inside_tree():
 		rebuild()
 
@@ -91,7 +98,10 @@ func rebuild() -> void:
 	x.pressed.connect(close_fn)
 	h.add_child(x)
 	_body.add_child(h)
-	_body.add_child(UI.label(L.t("Állítsd be, mit tegyen a világ, és nézd meg, mi lesz 2100-ig."), 17, UI.SOFT))
+	if mission.is_empty():
+		_body.add_child(UI.label(L.t("Állítsd be, mit tegyen a világ, és nézd meg, mi lesz 2100-ig."), 17, UI.SOFT))
+	else:
+		_body.add_child(UI.label(L.t("Küldetés: ") + L.t(mission["cel"]), 17, UI.GOLD, true))
 
 	var year_fmt := func(y: float) -> String: return L.t("Soha") if int(y) >= NEVER else str(int(y))
 	var pct_fmt := func(p: float) -> String: return "%d%%" % int(p)
@@ -100,6 +110,10 @@ func rebuild() -> void:
 		L.t("A melegedés fő oka. Minél hamarabb nulla, annál jobb."),
 		2035, NEVER, 5, 2050, year_fmt,
 		L.t("IPCC AR6: a melegedés a kibocsátott CO2 összmennyiségével arányos"))
+	if mission.has("co2_ev"):   # ebben a küldetésben a világ nem tud gyorsabban
+		_co2.value = int(mission["co2_ev"])
+		_co2.editable = false
+		_co2.tooltip_text = L.t("Ebben a küldetésben rögzített.")
 	_ch4 = _slider_row(L.t("Mennyivel csökkentsük a metánt 2030-ig?"),
 		L.t("Gyorsan hat: csökkentése pár évtized alatt lassítja a melegedést."),
 		0, 45, 5, 0, pct_fmt,
@@ -182,6 +196,7 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 	_chart.set_data(res)
 	_result_box.add_child(UI.label(L.t("Egyszerű oktatási modell: irányt mutat, nem jósol."), 14, UI.MUTE))
 	var see := UI.button(L.t("Megnézem a földgömbön"), true)
+	res["_terv"] = _scenario()   # a küldetés értékeléséhez
 	var see_fn := func() -> void: model_ready.emit(res)
 	see.pressed.connect(see_fn)
 	_result_box.add_child(see)
