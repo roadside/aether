@@ -11,6 +11,7 @@ const ResearchFlow := preload("res://scripts/research_flow.gd")
 const PlanPanel := preload("res://scripts/plan_panel.gd")
 const EventPanel := preload("res://scripts/event_panel.gd")
 const Missions := preload("res://scripts/missions.gd")
+const Campaign := preload("res://scripts/campaign.gd")
 
 const MISSION := [
 	["Nézd meg a mai Földet", "A bal oldali lista és a földgömb pöttyei valódi, friss jelentések. Kattints egyre!"],
@@ -42,6 +43,11 @@ var _year_label: Label
 var _overlay: Control
 var _dim: ColorRect
 var _plan                     # plan_panel.gd példány (megmarad a jóváhagyott karokkal)
+var campaign                  # campaign.gd: telő idő, pénz, bizalom
+var _play_btn: Button
+var _fast_btn: Button
+var _reset_btn: Button
+var _base_retry: Timer
 
 
 func _ready() -> void:
@@ -58,6 +64,15 @@ func _ready() -> void:
 	bridge = Bridge.new()
 	add_child(bridge)
 	bridge.finished.connect(_on_bridge_finished)
+	campaign = Campaign.new()
+	add_child(campaign)
+	if "--onteszt" in OS.get_cmdline_user_args():   # az önteszt nem nyúl a játékos mentéséhez
+		campaign.save_file = "aether_jatek_onteszt.json"
+		campaign.new_game()
+	campaign.load_game()
+	campaign.year_passed.connect(_on_year_passed)
+	campaign.changed.connect(_update_stats)
+	campaign.game_over.connect(_on_game_over)
 
 	globe = Globe.new()
 	globe.position = Vector2(440, 74)
@@ -74,6 +89,7 @@ func _ready() -> void:
 
 	_plan = PlanPanel.new()
 	_plan.bridge = bridge
+	_plan.campaign = campaign
 	_plan.closed.connect(_close_overlay)
 	_plan.model_ready.connect(_on_model)
 	if bool(L.get_setting("bevezeto_kesz", false)):
@@ -82,7 +98,19 @@ func _ready() -> void:
 		_plan.set_mission(Missions.LIST[mission_idx])
 		_render_mission()
 
+	_base_retry = Timer.new()
+	_base_retry.wait_time = 2.0
+	_base_retry.one_shot = true
+	_base_retry.timeout.connect(_ensure_model)
+	add_child(_base_retry)
+	if not campaign.model.is_empty():
+		model = campaign.model
+		_year_row.visible = true
+		_year_slider.value = campaign.year
+	_update_stats()
+
 	_load_world_cache()
+	_ensure_model()
 	if "--onteszt" in OS.get_cmdline_user_args():
 		_selftest()
 	elif world.is_empty():
@@ -177,14 +205,19 @@ func _build_top_bar() -> void:
 	var p := PanelContainer.new()
 	p.custom_minimum_size = Vector2(1600, 70)
 	add_child(p)
-	var h := UI.hbox(34)
+	var h := UI.hbox(26)
 	p.add_child(h)
 	var logo := UI.label("AETHER", 32, UI.CYAN, false, false)
 	logo.add_theme_font_override("font", UI.font_pixel)
 	h.add_child(logo)
-	var d := Time.get_date_dict_from_system()
-	_stat(h, "ma", L.t("Ma"), ("%d-%02d-%02d" if L.is_en() else "%d. %02d. %02d.") % [d["year"], d["month"], d["day"]], UI.TEXT)
-	_stat(h, "melegedes", L.t("Ember okozta melegedés (2024)"), "+%s °C" % L.num(1.36, 2), UI.EMBER, "https://doi.org/10.5194/essd-17-2641-2025")
+	_stat(h, "ev", L.t("Év"), str(campaign.year), UI.TEXT)
+	_stat(h, "penz", L.t("Pénz"), str(campaign.money), UI.GOLD)
+	_stat(h, "bizalom", L.t("Bizalom"), "%d%%" % campaign.trust, UI.GREEN)
+	for k in ["penz", "bizalom"]:
+		var sl: Label = _stats[k]
+		sl.mouse_filter = Control.MOUSE_FILTER_PASS
+		sl.tooltip_text = L.t("Játékszabály, nem valós adat. Pénz: kutatás és tervek bevezetése; évente kapsz. Bizalom: a gyors tervekhez kell; ellenőrzött kutatással és csökkenő kibocsátással nő.")
+	_stat(h, "melegedes", L.t("Melegedés (modell)"), "+%s °C" % L.num(1.36, 2), UI.EMBER, "https://doi.org/10.5194/essd-17-2641-2025")
 	_stat(h, "co2", L.t("CO2 a levegőben"), L.t("letöltés…"), UI.GOLD)
 	_stat(h, "jeg", L.t("Északi-sarki tengeri jég"), L.t("letöltés…"), Color("#a9dcea"))
 	_stat(h, "jovo", L.t("A terved szerint"), L.t("még nincs terv"), UI.CYAN)
@@ -245,6 +278,32 @@ func _build_bottom_bar() -> void:
 	plan.custom_minimum_size = Vector2(150, 0)
 	plan.pressed.connect(_open_plan)
 	h.add_child(plan)
+	var tbox := UI.vbox(6)
+	var trow := UI.hbox(6)
+	_play_btn = UI.button(L.t("Idő indítása"))
+	_play_btn.custom_minimum_size = Vector2(150, 0)
+	_play_btn.tooltip_text = L.t("Az évek telnek. Ha egy ablak nyitva van, az idő áll.")
+	_play_btn.pressed.connect(_toggle_time)
+	trow.add_child(_play_btn)
+	_fast_btn = UI.button(L.t("Gyors"))
+	_fast_btn.toggle_mode = true
+	_fast_btn.tooltip_text = L.t("Gyorsabban telik az idő.")
+	var fast_fn := func(on: bool) -> void: campaign.fast = on
+	_fast_btn.toggled.connect(fast_fn)
+	trow.add_child(_fast_btn)
+	tbox.add_child(trow)
+	var trow2 := UI.hbox(6)
+	var step := UI.button(L.t("+1 év"))
+	step.tooltip_text = L.t("Egy évvel előre.")
+	var step_fn := func() -> void: campaign.advance()
+	step.pressed.connect(step_fn)
+	trow2.add_child(step)
+	_reset_btn = UI.button(L.t("Új játék"))
+	_reset_btn.tooltip_text = L.t("Elölről kezdi 2026-tól. A küldetések csillagai megmaradnak.")
+	_reset_btn.pressed.connect(_reset_game)
+	trow2.add_child(_reset_btn)
+	tbox.add_child(trow2)
+	h.add_child(tbox)
 	var info_box := UI.vbox(2)
 	info_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_info = UI.label(L.t("Üdv az AETHER-ben! Kezdd a jobb oldali küldetéssel."), 16, UI.SOFT)
@@ -371,6 +430,8 @@ func _refresh_world() -> void:
 		_refresh_btn.disabled = true
 		_refresh_btn.text = L.t("Letöltés folyamatban…")
 		_world_note.text = L.t("Valós jelentések letöltése…")
+	else:   # épp más fut (pl. a modell): kicsit később újra
+		get_tree().create_timer(2.0).timeout.connect(_refresh_world)
 
 
 func _render_world() -> void:
@@ -476,6 +537,8 @@ func _show_event(e: Dictionary) -> void:
 # Kutatás és terv
 # ---------------------------------------------------------------------------
 func _close_overlay() -> void:
+	if campaign != null:
+		campaign.blocked = false
 	if _overlay != null:
 		remove_child(_overlay)
 		if _overlay != _plan:
@@ -490,6 +553,7 @@ func _close_overlay() -> void:
 ## A sötét részre kattintva az ablak bezárul.
 func _place_overlay(c: Control) -> void:
 	_close_overlay()
+	campaign.blocked = true
 	_dim = ColorRect.new()
 	_dim.color = Color(0.0, 0.0, 0.02, 0.72)
 	_dim.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -511,6 +575,7 @@ func _place_overlay(c: Control) -> void:
 func _open_research() -> void:
 	var r = ResearchFlow.new()
 	r.bridge = bridge
+	r.campaign = campaign
 	r.closed.connect(_close_overlay)
 	r.results_shown.connect(_on_results_shown)
 	r.approved.connect(_on_approved)
@@ -524,25 +589,26 @@ func _on_results_shown(_has_levers: bool) -> void:
 
 func _on_approved(levers: Array) -> void:
 	_plan.add_levers(levers)
-	_show_info(L.t("%d eredmény a tervedben. Nyomd meg „A terved” gombot!") % levers.size(), "")
+	campaign.reward_results(levers.size())
+	_show_info(L.t("%d eredmény a tervedben, bizalom +%d%%. Nyomd meg „A terved” gombot!") % [
+		levers.size(), levers.size() * Campaign.TRUST_PER_RESULT], "")
 	_close_overlay()
 	_advance(3)
 
 
 func _open_plan() -> void:
 	_place_overlay(_plan)
+	_plan.rebuild()   # az eltelt idő miatt változhatott a legkorábbi céldátum
 
 
 func _on_model(res: Dictionary) -> void:
 	model = res
 	_close_overlay()
 	_year_row.visible = true
-	_year_slider.value = 2050
-	_on_year(2050)
-	var k: Dictionary = res["osszegzes"]["kozep"]
-	var l: Label = _stats["jovo"]
-	l.text = "2100: +%s °C" % UI.hu(float(k["T2100"]), 1)
-	_show_info(str(res["jelentes"]), "")
+	_year_slider.value = campaign.year
+	_on_year(campaign.year)
+	_update_stats()
+	_show_info((str(res.get("_bevezetes", "")) + " " if res.has("_bevezetes") else "") + str(res["jelentes"]), "")
 	if mission_step >= MISSION.size() and not _plan.mission.is_empty():
 		var m: Dictionary = Missions.LIST[mission_idx]
 		var ev := Missions.evaluate(m, res)
@@ -576,7 +642,91 @@ func _on_year(v: float) -> void:
 	globe.heat = clampf((t - now) / 2.0, 0.0, 1.0)
 
 
+# ---------------------------------------------------------------------------
+# Telő idő és erőforrások
+# ---------------------------------------------------------------------------
+func _ensure_model() -> void:
+	if not campaign.model.is_empty():
+		return
+	# új játék: az alapeset (semmi sem változik) a modellből, hogy legyen mihez mérni
+	var dir: String = bridge.work_dir("aether_modell")
+	Bridge.write_json(dir.path_join("jatek_alap.json"), {"idovonal": [{"ev": 2025, "terv": {"nev": "Alapeset"}}]})
+	if not bridge.run("jatekmodell", ["godot-modell", dir.path_join("jatek_alap.json"), "--ki",
+			dir.path_join("jatek_alap_ki.json"), "--nyelv", L.lang]):
+		_base_retry.start()
+
+
+func _update_stats() -> void:
+	if _stats.is_empty():
+		return
+	(_stats["ev"] as Label).text = str(campaign.year)
+	(_stats["penz"] as Label).text = str(campaign.money)
+	(_stats["bizalom"] as Label).text = "%d%%" % campaign.trust
+	var t: float = campaign.temp_now()
+	if not is_nan(t):
+		var ml: Label = _stats["melegedes"]
+		ml.text = "+%s °C" % UI.hu(t, 2)
+		ml.tooltip_text = L.t("A klímamodell becslése erre az évre: %d. (2024-ben mért érték: +1,36 °C, Forster és mtsai 2025.)") % campaign.year
+	if not model.is_empty():
+		var k: Dictionary = model["osszegzes"]["kozep"]
+		(_stats["jovo"] as Label).text = "2100: +%s °C" % UI.hu(float(k["T2100"]), 1)
+	if _play_btn != null:
+		_play_btn.text = L.t("Szünet") if campaign.running else L.t("Idő indítása")
+		_play_btn.disabled = campaign.year >= Campaign.END_YEAR
+
+
+func _toggle_time() -> void:
+	campaign.running = not campaign.running and campaign.year < Campaign.END_YEAR
+	_update_stats()
+	if campaign.running and campaign.timeline.is_empty():
+		_show_info(L.t("Telik az idő, de még nincs terved: a kibocsátás nem csökken. Nyisd meg „A terved” ablakot!"), "")
+
+
+func _on_year_passed(y: int, note: String) -> void:
+	if _year_row.visible:
+		_year_slider.value = y
+	_show_info(note, "")
+
+
+func _on_game_over() -> void:
+	_update_stats()
+	var k: Dictionary = model.get("osszegzes", {}).get("kozep", {})
+	if k.is_empty():
+		return
+	_show_info(L.t("2100: vége a játéknak. A Föld +%s °C-kal melegebb, a csúcs +%s °C volt. „Új játék”: próbáld meg jobban!") % [
+		UI.hu(float(k["T2100"]), 1), UI.hu(float(k["csucs"]), 1)], "")
+
+
+func _reset_game() -> void:
+	if _reset_btn.text != L.t("Biztos? Kattints újra"):
+		_reset_btn.text = L.t("Biztos? Kattints újra")
+		var back := func() -> void:
+			if is_instance_valid(_reset_btn):
+				_reset_btn.text = L.t("Új játék")
+		get_tree().create_timer(3.0).timeout.connect(back)
+		return
+	_reset_btn.text = L.t("Új játék")
+	campaign.new_game()
+	model = {}
+	_year_row.visible = false
+	globe.heat = 0.0
+	_ensure_model()
+	_show_info(L.t("Új játék 2026-tól. Kutass, készíts tervet, és indítsd el az időt!"), "")
+
+
 func _on_bridge_finished(tag: String, code: int, output: String) -> void:
+	if tag == "jatekmodell":
+		var r: Variant = Bridge.read_json(bridge.work_dir("aether_modell").path_join("jatek_alap_ki.json"))
+		if code == 0 and typeof(r) == TYPE_DICTIONARY and not r.has("hiba") and campaign.model.is_empty():
+			campaign.model = r
+			campaign.save()
+			model = r
+			_year_row.visible = true
+			_year_slider.value = campaign.year
+			_update_stats()
+		elif code != 0:
+			print(output)
+		return
 	if tag != "vilag":
 		return
 	_refresh_btn.disabled = false
@@ -638,8 +788,28 @@ func _selftest() -> void:
 	await _shot(dir, "4_terv.png")
 	var res: Variant = Bridge.read_json(_plan._out_path)
 	if typeof(res) == TYPE_DICTIONARY and not res.has("hiba"):
+		res["_bevezetes"] = campaign.adopt(_plan._scenario(), res)
+		print("ONTESZT bevezetés: ", res["_bevezetes"], " pénz=", campaign.money, " bizalom=", campaign.trust)
 		_on_model(res)
+		for i in 10:
+			campaign.advance()
+		print("ONTESZT idő: év=", campaign.year, " pénz=", campaign.money, " bizalom=", campaign.trust,
+			" T=", campaign.temp_now())
+		await _shot(dir, "5_ido_10_ev.png")
 		_year_slider.value = 2100
-		await _shot(dir, "5_fold_2100.png")
+		await _shot(dir, "5b_fold_2100.png")
+	_close_overlay()
+	for e in world.get("esemenyek", []):
+		if str(e.get("kategoria", "")) == "levego":
+			_show_event(e)
+			var ep = _overlay
+			for i in 60:
+				await get_tree().create_timer(1.0).timeout
+				if ep._out != "" and FileAccess.file_exists(ep._out):
+					break
+			await get_tree().create_timer(1.0).timeout
+			await _shot(dir, "6_esemeny_levego.png")
+			_close_overlay()
+			break
 	print("ONTESZT kész")
 	get_tree().quit()

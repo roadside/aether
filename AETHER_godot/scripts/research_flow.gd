@@ -49,6 +49,7 @@ const AI_CHOICES := [
 ]
 
 var bridge                  # lab_bridge.gd példány (a main.gd adja át)
+var campaign                  # campaign.gd: a kutatás pénzbe kerül
 var _body: VBoxContainer
 var _question: Dictionary = {}
 var _ai := "none"
@@ -413,6 +414,12 @@ func _on_dl_poll() -> void:
 
 # --- 3. Kutatás folyamatban -----------------------------------------------
 func _start_research() -> void:
+	if campaign != null:
+		if not campaign.can_research():
+			_body.add_child(UI.label(L.t("Nincs elég pénz kutatásra (%d kell, neked %d van). Indítsd el az időt, évente kapsz pénzt.") % [
+				campaign.research_cost(), campaign.money], 17, UI.EMBER))
+			return
+		campaign.pay_research()
 	L.set_setting("ai", _ai)   # az események összefoglalója is ezt az AI-t használja
 	_folder = str(bridge.work_dir("aether_kutatas")).path_join("kutatas_%d" % Time.get_unix_time_from_system())
 	DirAccess.make_dir_recursive_absolute(_folder)

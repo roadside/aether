@@ -370,18 +370,34 @@ def _scenario_from(data: Dict) -> cl.Scenario:
     return cl.Scenario(**data)
 
 
+def _timeline_from(data: Dict):
+    """{"idovonal": [{"ev": 2025, "terv": {...}}, ...]} -> [(év, Scenario)]; egyébként None (egyetlen terv)."""
+    tl = data.get("idovonal")
+    if not tl:
+        return None
+    out = [(int(x["ev"]), _scenario_from(x.get("terv") or {})) for x in tl]
+    out.sort(key=lambda x: x[0])
+    if out[0][0] > cl.START_YEAR:   # a játék előtti évek: alapeset
+        out.insert(0, (cl.START_YEAR, cl.Scenario(nev="Alapeset")))
+    return out
+
+
 def model_series(data: Dict, lang: str = "hu") -> Dict:
-    s = _scenario_from(data)
+    import dataclasses
+    tl = _timeline_from(data)
+    s = tl[-1][1] if tl else _scenario_from(data)
     base = cl.Scenario(nev="Alapeset")
     out = {"nev": s.nev, "evek": list(range(cl.START_YEAR, cl.END_YEAR + 1)), "terv": {}, "alapeset": {},
-           "osszegzes": cl.summarize(s)["eredmenyek"], "alapeset_osszegzes": cl.summarize(base)["eredmenyek"]}
-    if s.alkalmazkodas_hozam_kompenzacio_pct > 0:
+           "osszegzes": cl.summarize(s, tl)["eredmenyek"], "alapeset_osszegzes": cl.summarize(base)["eredmenyek"]}
+    if tl:
+        out["idovonal"] = [{"ev": y, "terv": dataclasses.asdict(sc)} for y, sc in tl]
+    if any(sc.alkalmazkodas_hozam_kompenzacio_pct > 0 for _, sc in (tl or [(0, s)])):
         # ugyanez a terv alkalmazkodás nélkül: így látszik, mennyit tesz hozzá maga az alkalmazkodás
-        import dataclasses
         no_ad = dataclasses.replace(s, alkalmazkodas_hozam_kompenzacio_pct=0.0)
-        out["alkalmazkodas_nelkul_osszegzes"] = cl.summarize(no_ad)["eredmenyek"]
+        no_tl = [(y, dataclasses.replace(sc, alkalmazkodas_hozam_kompenzacio_pct=0.0)) for y, sc in tl] if tl else None
+        out["alkalmazkodas_nelkul_osszegzes"] = cl.summarize(no_ad, no_tl)["eredmenyek"]
     for e in cl.ENSEMBLE:
-        r = cl.run(s, e)
+        r = cl.run(s, e, timeline=tl)
         b = cl.run(base, e)
         out["terv"][e] = {"homerseklet": r.temp, "kukorica_pct": r.crop_change_pct["kukorica"], "netto_co2": r.co2_net}
         out["alapeset"][e] = {"homerseklet": b.temp}

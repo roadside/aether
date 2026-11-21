@@ -15,6 +15,7 @@ const Chart := preload("res://scripts/chart.gd")
 const NEVER := 2105          # a csúszka L.t("Soha") állása
 
 var bridge
+var campaign                 # campaign.gd: idővonal, pénz, bizalom
 var levers: Dictionary = {}  # kar -> javaslat (a jóváhagyott kutatásokból)
 var mission: Dictionary = {}  # az aktuális küldetés (missions.gd); co2_ev esetén a CO2-év rögzített
 var _body: VBoxContainer
@@ -106,9 +107,14 @@ func rebuild() -> void:
 	var year_fmt := func(y: float) -> String: return L.t("Soha") if int(y) >= NEVER else str(int(y))
 	var pct_fmt := func(p: float) -> String: return "%d%%" % int(p)
 	var gt_fmt := func(v: float) -> String: return UI.hu(v, 2) + L.t(" mrd t")
+	var cur := _current_plan()
+	var min_y := 2035
+	if campaign != null:   # a múltba nem lehet célt tenni: legalább 5 évvel a bevezetés után
+		min_y = maxi(2035, int(ceil((campaign.start_year() + 5) / 5.0)) * 5)
+	var co2_now := int(cur.get("co2_cel_ev", NEVER)) if not cur.is_empty() else 2050
 	_co2 = _slider_row(L.t("Mikorra csökkenjen nullára a CO2-kibocsátás?"),
 		L.t("A melegedés fő oka. Minél hamarabb nulla, annál jobb."),
-		2035, NEVER, 5, 2050, year_fmt,
+		min_y, NEVER, 5, maxi(min_y, co2_now), year_fmt,
 		L.t("IPCC AR6: a melegedés a kibocsátott CO2 összmennyiségével arányos"))
 	if mission.has("co2_ev"):   # ebben a küldetésben a világ nem tud gyorsabban
 		_co2.value = int(mission["co2_ev"])
@@ -116,7 +122,7 @@ func rebuild() -> void:
 		_co2.tooltip_text = L.t("Ebben a küldetésben rögzített.")
 	_ch4 = _slider_row(L.t("Mennyivel csökkentsük a metánt 2030-ig?"),
 		L.t("Gyorsan hat: csökkentése pár évtized alatt lassítja a melegedést."),
-		0, 45, 5, 0, pct_fmt,
+		0, 45, 5, float(cur.get("metan_csokkentes_pct", 0.0)), pct_fmt,
 		L.t("UNEP/CCAC Global Methane Assessment (2021): 45% elérhető 2030-ig"))
 
 	var keys := levers.keys()
@@ -127,7 +133,7 @@ func rebuild() -> void:
 		if str(k).begins_with("cdr:"):
 			_lever_sliders[k] = _slider_row(L.t("%s: évente mennyi CO2-t vonjon ki 2050-re?") % j["kar_nev"],
 				L.t("A kutatásod szerint legfeljebb ennyi lehetséges. ") + str(j["bizonyossag_szoveg"]),
-				0, mx, mx / 20.0, mx, gt_fmt,
+				0, mx, mx / 20.0, minf(mx, float(Dictionary(cur.get("cdr", {})).get(str(k).substr(4), mx))), gt_fmt,
 				L.t("saját kutatásod, ") + str(j["publikacio"]))
 		elif k == "alkalmazkodas":
 			_lever_sliders[k] = _slider_row(L.t("Aszálytűrő fajták: mekkora részét védjék a termésnek?"),
@@ -145,6 +151,13 @@ func rebuild() -> void:
 	_body.add_child(_run_btn)
 	_result_box = UI.vbox(10)
 	_body.add_child(_result_box)
+
+
+## A most érvényes terv (a játék idővonalának utolsó eleme), vagy üres.
+func _current_plan() -> Dictionary:
+	if campaign == null or campaign.timeline.is_empty():
+		return {}
+	return campaign.timeline[-1]["terv"]
 
 
 func _scenario() -> Dictionary:
@@ -170,7 +183,8 @@ func _run_model() -> void:
 	var dir: String = bridge.work_dir("aether_modell")
 	var inp := dir.path_join("terv.json")
 	_out_path = dir.path_join("eredmeny.json")
-	Bridge.write_json(inp, _scenario())
+	var sc := _scenario()
+	Bridge.write_json(inp, {"idovonal": campaign.timeline_with(sc)} if campaign != null else sc)
 	if bridge.run("modell", ["godot-modell", inp, "--ki", _out_path, "--nyelv", L.lang]):
 		_run_btn.disabled = true
 		_run_btn.text = L.t("Számolok…")
@@ -195,8 +209,31 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 	_result_box.add_child(_chart)
 	_chart.set_data(res)
 	_result_box.add_child(UI.label(L.t("Egyszerű oktatási modell: irányt mutat, nem jósol."), 14, UI.MUTE))
-	var see := UI.button(L.t("Megnézem a földgömbön"), true)
-	res["_terv"] = _scenario()   # a küldetés értékeléséhez
-	var see_fn := func() -> void: model_ready.emit(res)
-	see.pressed.connect(see_fn)
-	_result_box.add_child(see)
+	var sc := _scenario()
+	res["_terv"] = sc   # a küldetés értékeléséhez
+	if campaign == null:
+		var see := UI.button(L.t("Megnézem a földgömbön"), true)
+		var see_fn := func() -> void: model_ready.emit(res)
+		see.pressed.connect(see_fn)
+		_result_box.add_child(see)
+		return
+	_chart.now_year = campaign.year
+	_chart.set_year(campaign.year)
+	var need: int = campaign.required_trust(sc)
+	var cost: int = campaign.plan_cost(sc)
+	_result_box.add_child(UI.label(L.t("Első év: %d. Ára: %d pénz, és legalább %d%% bizalom kell.") % [
+		campaign.start_year(), cost, need], 17, UI.GOLD, true))
+	var problem: String = campaign.adopt_problem(sc)
+	if problem == "" and campaign.is_step_back(sc):
+		_result_box.add_child(UI.label(L.t("Ez gyengébb a mostani tervednél: a bizalom csökken."), 15, UI.EMBER))
+	var adopt := UI.button(L.t("Bevezetem"), true)
+	adopt.tooltip_text = L.t("A pénz és a bizalom játékszabály, nem valós adat. A hőmérséklet a klímamodellből jön.")
+	if problem != "":
+		adopt.disabled = true
+		_result_box.add_child(UI.label(problem, 16, UI.EMBER))
+	var adopt_fn := func() -> void:
+		var note: String = campaign.adopt(sc, res)
+		res["_bevezetes"] = note
+		model_ready.emit(res)
+	adopt.pressed.connect(adopt_fn)
+	_result_box.add_child(adopt)

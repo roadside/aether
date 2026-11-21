@@ -24,7 +24,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass, field, asdict
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 # ---------------------------------------------------------------------------
 # Kiinduló állapot és paraméterek (mind forrással)
@@ -176,7 +176,79 @@ class RunResult:
         return None
 
 
-def run(s: Scenario, ensemble: str = "kozep", sai_hatekonysag: str = "kozep") -> RunResult:
+Timeline = List[Tuple[int, Scenario]]
+
+
+def _drivers(s: Scenario, y: int, sai_eff: float) -> Dict[str, float]:
+    """Egy év hajtóerői egyetlen forgatókönyv szerint."""
+    r = _ramp(y, 2025, s.legszennyezes_cel_ev)
+    sai_on = s.sai_tg_so2 > 0 and y >= s.sai_kezdes and (s.sai_leallitas is None or y < s.sai_leallitas)
+    return {
+        "co2": co2_emissions(s, y),
+        "cdr": cdr_removal(s, y),
+        "ch4": s.metan_csokkentes_pct / 100.0 * _ramp(y, 2025, s.metan_cel_ev),
+        "szulfat": s.szulfat_csokkentes_pct / 100.0 * r,
+        "korom": s.korom_csokkentes_pct / 100.0 * r,
+        "sai": -sai_eff * s.sai_tg_so2 * _ramp(y, s.sai_kezdes, s.sai_kezdes + 5) if sai_on else 0.0,
+    }
+
+
+def _targets(s: Scenario, start: int, prev: Dict[str, float]) -> Dict[str, Tuple[float, int]]:
+    """Egy később bevezetett terv céljai: (célérték, célév). A célév legalább 1 évvel a bevezetés után van:
+    a terv nem hat visszamenőleg, és az átállás időbe telik."""
+    def yr(target_year: int, min_years: int = 1) -> int:
+        return max(int(target_year), start + min_years)
+    cdr_total = sum(min(a, CDR_LIMITS.get(m, (0.0, 0.0))[1]) for m, a in s.cdr.items())
+    t = {
+        # Ha nincs CO2-cél, a kibocsátás ott marad, ahol a bevezetéskor volt.
+        "co2": (prev["co2"], start) if s.co2_cel_ev is None else (s.co2_cel_ertek, yr(s.co2_cel_ev)),
+        # A CO2-kivonást legalább 10 év alatt lehet felfuttatni (az eredeti terv: 2030-2050, 20 év).
+        "cdr": (cdr_total, yr(2050, 10)),
+        "ch4": (s.metan_csokkentes_pct / 100.0, yr(s.metan_cel_ev, 3)),
+        "szulfat": (s.szulfat_csokkentes_pct / 100.0, yr(s.legszennyezes_cel_ev, 3)),
+        "korom": (s.korom_csokkentes_pct / 100.0, yr(s.legszennyezes_cel_ev, 3)),
+    }
+    return t
+
+
+def driver_series(timeline: Timeline, sai_eff: float) -> Dict[int, Dict[str, float]]:
+    """Évenkénti hajtóerők egy idővonalra: [(bevezetés éve, terv), ...], időrendben.
+    Az első terv (START_YEAR-tól) pontosan úgy fut, mint önmagában. Egy később bevezetett terv
+    a bevezetése előtti év tényleges értékéből indul, és lineárisan éri el a céljait."""
+    tl = sorted(timeline, key=lambda x: x[0])
+    out: Dict[int, Dict[str, float]] = {}
+    seg, start, targets, prev = 0, tl[0][0], None, None
+    for y in range(START_YEAR, END_YEAR + 1):
+        while seg + 1 < len(tl) and y >= tl[seg + 1][0]:
+            seg += 1
+            start = tl[seg][0]
+            prev = out.get(y - 1) or _drivers(tl[0][1], y - 1, sai_eff)
+            targets = _targets(tl[seg][1], start, prev)
+        s = tl[seg][1]
+        if seg == 0 or targets is None:
+            out[y] = _drivers(s, y, sai_eff)
+            continue
+        d = {}
+        for k, (goal, goal_year) in targets.items():
+            d[k] = prev[k] + (goal - prev[k]) * _ramp(y, start - 1, goal_year)
+        kezdes = max(s.sai_kezdes, start)
+        sai_on = s.sai_tg_so2 > 0 and y >= kezdes and (s.sai_leallitas is None or y < s.sai_leallitas)
+        d["sai"] = -sai_eff * s.sai_tg_so2 * _ramp(y, kezdes, kezdes + 5) if sai_on else 0.0
+        out[y] = d
+    return out
+
+
+def _active(timeline: Timeline, y: int) -> Scenario:
+    s = timeline[0][1]
+    for start, sc in sorted(timeline, key=lambda x: x[0]):
+        if y >= start:
+            s = sc
+    return s
+
+
+def run(s: Scenario, ensemble: str = "kozep", sai_hatekonysag: str = "kozep",
+        timeline: Optional[Timeline] = None) -> RunResult:
+    """timeline: [(bevezetés éve, terv), ...] – a játék telő idejéhez; ha nincs, csak s fut 2025-től."""
     p = ENSEMBLE[ensemble]
     tcre = p["tcre"] / 1000.0          # °C / GtCO2
     lam = F_2X / p["ecs"]              # W m^-2 K^-1
@@ -184,6 +256,8 @@ def run(s: Scenario, ensemble: str = "kozep", sai_hatekonysag: str = "kozep") ->
     # az együttesben a középértéket használjuk; a sávot külön futtatással
     # (sai_hatekonysag paraméter) lehet vizsgálni.
     sai_eff = SAI_EFFICIENCY[sai_hatekonysag]
+    tl = timeline or [(START_YEAR, s)]
+    drv = driver_series(tl, sai_eff)
 
     years = list(range(START_YEAR, END_YEAR + 1))
     cum = 0.0
@@ -193,20 +267,16 @@ def run(s: Scenario, ensemble: str = "kozep", sai_hatekonysag: str = "kozep") ->
     temps, nets, forc = [], [], []
 
     for y in years:
-        net = co2_emissions(s, y) - cdr_removal(s, y)
+        d = drv[y]
+        net = d["co2"] - d["cdr"]
         # Metán: kibocsátás-eltérés (Tg/év) -> koncentráció-eltérés (ppb)
-        d_e_ch4 = -E_CH4_ANTHRO_NOW * s.metan_csokkentes_pct / 100.0 * _ramp(y, 2025, s.metan_cel_ev)
+        d_e_ch4 = -E_CH4_ANTHRO_NOW * d["ch4"]
         ch4_pert_ppb += d_e_ch4 / TG_PER_PPB_CH4 - ch4_pert_ppb / CH4_PERTURBATION_LIFETIME
         conc = CH4_PPB_NOW + ch4_pert_ppb
         f_ch4 = 0.036 * (math.sqrt(conc) - math.sqrt(CH4_PPB_NOW)) * CH4_INDIRECT_FACTOR
         # Aeroszolok: néhány napos élettartam -> azonnali hatás
-        r = _ramp(y, 2025, s.legszennyezes_cel_ev)
-        f_aer = -SULFATE_ERF_NOW * s.szulfat_csokkentes_pct / 100.0 * r \
-                - BLACK_CARBON_ERF_NOW * s.korom_csokkentes_pct / 100.0 * r
-        # SAI
-        sai_on = s.sai_tg_so2 > 0 and y >= s.sai_kezdes and (s.sai_leallitas is None or y < s.sai_leallitas)
-        f_sai = -sai_eff * s.sai_tg_so2 * _ramp(y, s.sai_kezdes, s.sai_kezdes + 5) if sai_on else 0.0
-        f_tot = f_ch4 + f_aer + f_sai
+        f_aer = -SULFATE_ERF_NOW * d["szulfat"] - BLACK_CARBON_ERF_NOW * d["korom"]
+        f_tot = f_ch4 + f_aer + d["sai"]
         # Kétrétegű energiamérleg (explicit Euler, 1 év)
         d_up = (f_tot - lam * t_up - GAMMA * (t_up - t_dp)) / C_UPPER
         d_dp = GAMMA * (t_up - t_dp) / C_DEEP
@@ -218,22 +288,22 @@ def run(s: Scenario, ensemble: str = "kozep", sai_hatekonysag: str = "kozep") ->
         forc.append(round(f_tot, 4))
 
     # Termés: a 2025-ös szinthez képesti további melegedés hatása,
-    # mínusz az alkalmazkodás kompenzációja. KORLÁT: csak a hőmérsékletet
-    # nézi; a CO2-trágyázást, a csapadékot és SAI esetén a csökkent
-    # napfényt (Proctor et al. 2018, Nature) nem.
+    # mínusz az alkalmazkodás kompenzációja (az adott évben érvényes terv szerint).
+    # KORLÁT: csak a hőmérsékletet nézi; a CO2-trágyázást, a csapadékot és SAI
+    # esetén a csökkent napfényt (Proctor et al. 2018, Nature) nem.
     crops = {}
-    k = 1.0 - s.alkalmazkodas_hozam_kompenzacio_pct / 100.0
+    ks = [1.0 - _active(tl, y).alkalmazkodas_hozam_kompenzacio_pct / 100.0 for y in years]
     for crop, sens in CROP_SENSITIVITY_PCT_PER_C.items():
-        crops[crop] = [round(sens * (t - T_START) * k, 2) for t in temps]
+        crops[crop] = [round(sens * (t - T_START) * k, 2) for t, k in zip(temps, ks)]
     return RunResult(s.nev, ensemble, years, temps, nets, forc, crops)
 
 
-def run_ensemble(s: Scenario) -> Dict[str, RunResult]:
-    return {e: run(s, e) for e in ENSEMBLE}
+def run_ensemble(s: Scenario, timeline: Optional[Timeline] = None) -> Dict[str, RunResult]:
+    return {e: run(s, e, timeline=timeline) for e in ENSEMBLE}
 
 
-def summarize(s: Scenario) -> Dict:
-    res = run_ensemble(s)
+def summarize(s: Scenario, timeline: Optional[Timeline] = None) -> Dict:
+    res = run_ensemble(s, timeline)
     out = {"nev": s.nev, "leiras": s.leiras, "eredmenyek": {}}
     for e, r in res.items():
         pk, py = r.peak()

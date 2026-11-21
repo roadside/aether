@@ -9,6 +9,7 @@ const L := preload("res://scripts/i18n.gd")
 
 var data: Dictionary = {}
 var year := 2050
+var now_year := 0              # a játék aktuális éve (0 = nincs jelölve)
 var _t_min := 1.0
 var _t_max := 3.5
 const PAD_L := 54.0
@@ -90,6 +91,13 @@ func _draw() -> void:
 			draw_string(f, Vector2(p.x - 16, size.y - 8), str(yr), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, UI.MUTE)
 	_band("alapeset", UI.EMBER)
 	_band("terv", UI.CYAN)
+	# a játék jelenlegi éve: előtte a múlt (már nem változtatható)
+	var ni := ys.find(now_year)
+	if ni >= 0:
+		var nx := _pt(ni, _t_min).x
+		draw_rect(Rect2(PAD_L, PAD_T, nx - PAD_L, size.y - PAD_T - PAD_B), Color(1, 1, 1, 0.05))
+		draw_line(Vector2(nx, PAD_T), Vector2(nx, size.y - PAD_B), Color(UI.TEXT, 0.6), 1.0)
+		draw_string(f, Vector2(nx + 4, size.y - PAD_B - 6), L.t("most"), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, UI.SOFT)
 	# kiválasztott év
 	var yi := ys.find(year)
 	if yi >= 0:
