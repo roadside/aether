@@ -148,6 +148,17 @@ A játék indításakor a Python-háttér letölti a Föld mai állapotát nyíl
 
 A melegedés és a maradék CO2-keret idézett érték (Forster és mtsai 2025, *Earth System Science Data*), évente frissítendő.
 
+### 9.2 Helyi tudomány: a játékos saját országa (ötlet: Zoltán, 2026-11-21)
+
+Sok ország a talaj-, levegő- és vízminőségről, a szennyezésről a saját nyelvén és a saját tudományos szerverein publikál. Ezek a nagy nemzetközi adatbázisokban gyakran nem, vagy csak angol absztrakttal jelennek meg. Ezért a kutatás a játékos országában is keressen.
+
+- **Első lépés (olcsó, gyorsan kész):** az OpenAlex-keresésben előnyben a játékos országának intézményei (szerzői intézmény országkódja szerinti szűrés), és az AI a keresőkifejezéseket az ország nyelvére is lefordítja (pl. magyarul: „bioszén talaj szénmegkötés”).
+- **Nemzeti tudományos tárak:** sok ország repozitóriuma szabványos OAI-PMH felületen érhető el, ezeket a BASE és a CORE gyűjtő-keresők nagyrészt lefedik. Magyarországon például: MTMT (Magyar Tudományos Művek Tára), REAL (MTA Könyvtár repozitóriuma). Országonként egy-egy bejegyzés egy nyílt, bővíthető forráslistában.
+- **Hivatalos nemzeti mérések a valós kiindulóponthoz:** pl. Magyarországon az Országos Légszennyezettségi Mérőhálózat (levegominoseg.hu), az EU-ban az Európai Környezetvédelmi Ügynökség (EEA) levegőminőségi adatai. Ezek mérőállomás-adatok, nem modellbecslések.
+- **Ugyanaz a szabály:** helyi nyelvű cikkből is csak az a szám kerülhet a modellbe, ami szó szerint benne van (az idézet az eredeti nyelven marad, mellette fordítás). A forrás linkje mindig látszik.
+- **Közösségi bővítés:** a játékosok javasolhatnak új nemzeti forrást, de a listába csak ellenőrzés után kerül (pl. tudományos intézmény vagy hivatal üzemelteti).
+- **Haszon (vö. 18. fejezet):** a helyi, kevéssé ismert kutatások így bekerülhetnek a nyílt bizonyíték-adatbázisba, és láthatóbbá válnak.
+
 Minden intézkedésnek van **felfutási ideje**, **költsége**, **bizalomigénye** és **mellékhatása** (pl. BECCS: földhasználati verseny; tiszta levegő: aeroszolos „leleplezés”; SAI: leállítási sokk, csapadékváltozás).
 
 ## 10. Többjátékos mód: közös Föld, megosztás vagy elzárkózás
@@ -328,7 +339,7 @@ Nem állítjuk, hogy a játék megoldja a klímaváltozást, hogy a játékbeli 
 |---|---|---|
 | **M0 – most kész** | Terv, mockupok, működő Python kutatólabor-prototípus, klímamodell, tesztek | ✓ |
 | M1 – Függőleges szelet | Godot-kliens: földgömb + 1 állomás + 1 teljes kutatási ciklus a Python-háttérrel, egyjátékos | 2–3 hónap, 1–2 fő |
-| M2 – Stratégiai réteg | Építkezés, erőforrások, korszakok, tudásfa, regionális modell | +3–4 hónap |
+| M2 – Stratégiai réteg | Építkezés, erőforrások, korszakok, tudásfa, regionális modell; helyi tudomány: a játékos országának forrásai (9.2) | +3–4 hónap |
 | M3 – Közös Föld | Szerver, chat, publikációk, replikáció, szövetségek; nyílt bizonyíték-adatbázis első változata; zárt teszt 50 fővel | +4 hónap |
 | M4 – Offline | Helyi modell, Archívum-cikktár, szinkron | +2 hónap |
 | M5 – Korai hozzáférés | Hangolás, hang, további nyelvek (a magyar és az angol már kész), tudományos tanácsadói átnézés, kutatói partner, osztálytermi mód | +3 hónap |
