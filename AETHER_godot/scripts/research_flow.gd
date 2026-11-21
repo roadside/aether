@@ -201,7 +201,7 @@ func _render_topic(r: Dictionary) -> void:
 	var m: Variant = r.get("magyarazat")
 	if typeof(m) == TYPE_DICTIONARY:
 		for part in [["mire_jo", "Mire jó?"], ["hatranyok", "Mi a gond vele?"], ["mennyire_bizonyitott", "Mennyire bizonyított?"]]:
-			if str(m.get(part[0], "")).strip() == "":
+			if str(m.get(part[0], "")).strip_edges() == "":
 				continue
 			var c := UI.card(UI.GOLD)
 			c.add_child(UI.label(L.t(part[1]), 17, UI.GOLD, true))
