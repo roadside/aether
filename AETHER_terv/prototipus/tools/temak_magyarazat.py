@@ -1,6 +1,6 @@
 """Nyers magyarázatok a témákhoz, lektorálásra (a témafájlokba írja őket).
 
-Témánként: Wikipédia + 3 áttekintő cikk (OpenAlex) -> AI-magyarázat ("Mire jó?", "Mi a gond
+Témánként: 4 tudományos áttekintő cikk (OpenAlex, Wikipédia nélkül) -> AI-magyarázat ("Mire jó?", "Mi a gond
 vele?", "Mennyire bizonyított?") és a "Forrás" sorok. Csak az üres magyarázatú témákat tölti ki,
 a lektorált ("Lektorálva: igen") témákhoz sosem nyúl. Minden téma után ment, így bármikor
 megszakítható és folytatható.
@@ -27,9 +27,6 @@ KEYS = ("mire_jo", "hatranyok", "mennyire_bizonyitott")
 
 def sources(res: dict) -> list:
     out = []
-    w = res.get("wiki")
-    if w:
-        out.append(f"Wikipédia: {w['cim']} ({w['nyelv']}, CC BY-SA 4.0) – {w['link']}")
     for c in res.get("cikkek", []):
         ev = f" ({c['ev']})" if c.get("ev") else ""
         out.append(f"{c['cim']}{ev} – {c['link']}")
@@ -57,8 +54,7 @@ def main() -> int:
     for i, t in enumerate(todo, 1):
         t0 = time.time()
         title = t["cim_en"] if suf else t["cim"]
-        res = topic.build(t["wiki"], t["wiki_en"], t["attekintes"], _http, provider, a.nyelv,
-                          log=lambda m: None, title=title)
+        res = topic.build(t["attekintes"], _http, provider, a.nyelv, log=lambda m: None, title=title)
         m = res.get("magyarazat") or {}
         if not any(str(m.get(k, "")).strip() for k in KEYS):
             print(f"[{i}/{len(todo)}] {t['id']}: nem sikerült ({res.get('megjegyzes', '')[:120]})", flush=True)

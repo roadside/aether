@@ -3,7 +3,8 @@
 # Lektorálás: a "Kérdés", "Röviden", "Ad a játékban", "Mire jó?", "Mi a gond vele?" és
 # "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
 # Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
-# A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet).
+# A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet). Csak tudományos forrás
+# (lektorált cikk, IPCC-jelentés, nemzetközi adatgyűjtemény) legyen, Wikipédia ne.
 # A "technikai" vonal alatti sorokkal keres a kutatás: csak akkor módosítsd, ha biztos vagy benne.
 # Új téma: másolj le egy blokkot, és adj neki új, ékezet nélküli azonosítót (=== uj_tema ===).
 # A játék induláskor olvassa ezt a fájlt: mentés után indítsd újra a játékot.
@@ -29,8 +30,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: heat-related mortality attributable to climate change|heat wave mortality temperature|temperature mortality association multi-country
 Paraméter: reszarany_pct
-Wikipédia: hőhullám egészség
-Wikipédia angolul: heat wave
 Áttekintő cikkek keresése: heat-related mortality review
 
 === munkakepesseg ===
@@ -52,8 +51,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: heat stress labour productivity loss climate change|occupational heat exposure labor capacity|heat stress outdoor workers productivity
 Paraméter: csokkenes_pct
-Wikipédia: hőstressz munka
-Wikipédia angolul: occupational heat stress
 Áttekintő cikkek keresése: occupational heat stress review
 
 === legszennyezes ===
@@ -75,8 +72,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: air quality health co-benefits of climate mitigation|fossil fuel air pollution premature deaths|PM2.5 mortality fossil fuel combustion
 Paraméter: kockazat_csokkentes_pct
-Wikipédia: légszennyezés
-Wikipédia angolul: air pollution
 Áttekintő cikkek keresése: health co-benefits climate mitigation review
 
 # ----- II. korszak: Mérséklés -----
@@ -100,8 +95,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: urban trees cooling effect air temperature|urban greening heat island mitigation meta-analysis|street trees land surface temperature
 Paraméter: lehules_c
-Wikipédia: városi hősziget
-Wikipédia angolul: urban heat island
 Áttekintő cikkek keresése: urban green space cooling review
 
 === feher_teto ===
@@ -123,8 +116,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: cool roofs high albedo urban temperature reduction|reflective roofs cooling energy savings
 Paraméter: lehules_c
-Wikipédia: hűvös tető
-Wikipédia angolul: reflective surfaces climate engineering
 Áttekintő cikkek keresése: cool roofs review
 
 === zoldteto ===
@@ -146,8 +137,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: green roof cooling effect building energy|green roofs urban heat island temperature reduction
 Paraméter: lehules_c
-Wikipédia: zöldtető
-Wikipédia angolul: green roof
 Áttekintő cikkek keresése: green roofs review
 
 === hoseg_riasztas ===
@@ -169,8 +158,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: heat health warning system mortality reduction|heat action plan effectiveness mortality
 Paraméter: kockazat_csokkentes_pct
-Wikipédia: hőségriasztás
-Wikipédia angolul: heat health warning
 Áttekintő cikkek keresése: heat action plans effectiveness review
 
 === korai_riasztas ===
@@ -192,6 +179,4 @@ Lektorálva: nem
 --- technikai ---
 Keresés: early warning systems disaster mortality reduction|flood early warning effectiveness|tropical cyclone early warning mortality
 Paraméter: kockazat_csokkentes_pct
-Wikipédia: korai előrejelző rendszer
-Wikipédia angolul: early warning system
 Áttekintő cikkek keresése: early warning systems effectiveness review

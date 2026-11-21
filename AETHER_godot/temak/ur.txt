@@ -3,7 +3,8 @@
 # Lektorálás: a "Kérdés", "Röviden", "Ad a játékban", "Mire jó?", "Mi a gond vele?" és
 # "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
 # Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
-# A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet).
+# A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet). Csak tudományos forrás
+# (lektorált cikk, IPCC-jelentés, nemzetközi adatgyűjtemény) legyen, Wikipédia ne.
 # A "technikai" vonal alatti sorokkal keres a kutatás: csak akkor módosítsd, ha biztos vagy benne.
 # Új téma: másolj le egy blokkot, és adj neki új, ékezet nélküli azonosítót (=== uj_tema ===).
 # A játék induláskor olvassa ezt a fájlt: mentés után indítsd újra a játékot.
@@ -29,8 +30,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: solar irradiance variability contribution to global warming|total solar irradiance trend climate|solar forcing twentieth century temperature
 Paraméter: sugarzasi_kenyszer_w_m2
-Wikipédia: naptevékenység éghajlat
-Wikipédia angolul: solar activity and climate
 Áttekintő cikkek keresése: solar influence on climate review
 
 === kozmikus ===
@@ -52,8 +51,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: cosmic rays cloud formation climate|galactic cosmic rays cloud condensation nuclei|CLOUD experiment ion-induced nucleation
 Paraméter: valtozas_pct
-Wikipédia: kozmikus sugárzás felhő
-Wikipédia angolul: cosmic ray
 Áttekintő cikkek keresése: cosmic rays clouds climate review
 
 === metan_muhold ===
@@ -75,8 +72,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: satellite detection of methane super-emitters|TROPOMI methane emissions point sources|satellite methane plume detection oil and gas
 Paraméter: reszarany_pct
-Wikipédia: metán műhold
-Wikipédia angolul: atmospheric methane
 Áttekintő cikkek keresése: satellite methane observations review
 
 === muhold_erdo ===
@@ -98,8 +93,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: satellite monitoring global forest loss|remote sensing deforestation carbon emissions|Landsat global forest change
 Paraméter: terulet_mha_ev
-Wikipédia: erdőirtás
-Wikipédia angolul: deforestation
 Áttekintő cikkek keresése: remote sensing deforestation review
 
 # ----- III. korszak: Átalakulás -----
@@ -123,8 +116,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: space-based solar power feasibility|space solar power wireless power transmission efficiency
 Paraméter: hatasfok_pct
-Wikipédia: űrbeli napenergia
-Wikipédia angolul: space-based solar power
 Áttekintő cikkek keresése: space-based solar power review
 
 # ----- IV. korszak: Helyreállítás -----
@@ -148,6 +139,4 @@ Lektorálva: nem
 --- technikai ---
 Keresés: space sunshade solar radiation management Lagrange point|space-based geoengineering sunshade
 Paraméter: sugarzasi_kenyszer_w_m2
-Wikipédia: űrbeli napernyő
-Wikipédia angolul: space sunshade
 Áttekintő cikkek keresése: space-based solar geoengineering review

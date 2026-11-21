@@ -26,22 +26,22 @@ def validate(topics=None) -> list:
     """Hibák listája (üres, ha minden rendben)."""
     from aether_lab.evidence import PARAMETERS
     topics = TEMAK if topics is None else topics
-    errs, ids, wikis = [], set(), set()
+    errs, ids = [], set()
     for t in topics:
         if t["id"] in ids:
             errs.append(f"dupla azonosító: {t['id']}")
         ids.add(t["id"])
         if not t["id"].isascii():
             errs.append(f"ékezetes azonosító: {t['id']}")
-        if t["wiki_en"].lower() in wikis:
-            errs.append(f"dupla 'Wikipédia angolul': {t['wiki_en']} ({t['id']})")
-        wikis.add(t["wiki_en"].lower())
+        for f in t["forras"]:
+            if "wikipedia.org" in f.lower():
+                errs.append(f"a Wikipédia nem tudományos forrás: {t['id']}")
         if t["korszak"] not in (1, 2, 3, 4):
             errs.append(f"rossz korszak: {t['id']}")
         for p in t["parameterek"].split(","):
             if p.strip() not in PARAMETERS:
                 errs.append(f"ismeretlen paraméter {p}: {t['id']}")
-        for k in ("cim", "cim_en", "magyarazat", "magyarazat_en", "kereses", "wiki", "wiki_en", "attekintes"):
+        for k in ("cim", "cim_en", "magyarazat", "magyarazat_en", "kereses", "attekintes"):
             if not str(t[k]).strip():
                 errs.append(f"üres mező ({k}): {t['id']}")
         if not t["cim"].endswith("?") or not t["cim_en"].endswith("?"):

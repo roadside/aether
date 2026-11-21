@@ -7,11 +7,7 @@ from aether_lab.literature import Paper
 
 
 def fetch(url, *a, **k):
-    if "list=search" in url:
-        if "hu.wikipedia" in url:
-            return json.dumps({"query": {"search": []}}).encode()   # nincs magyar cikk
-        return json.dumps({"query": {"search": [{"title": "TESZT Biochar"}]}}).encode()
-    return json.dumps({"query": {"pages": {"1": {"extract": "TESZT intro sentence. " * 20 + "\n\nMore."}}}}).encode()
+    raise AssertionError("a téma-magyarázat nem tölthet le semmit közvetlenül (Wikipédiát sem)")
 
 
 def reviews(q):
@@ -33,22 +29,21 @@ class TestTopic(unittest.TestCase):
         self.assertTrue(topic.title_matches("Enhanced weathering", "enhanced weathering"))
         self.assertTrue(topic.title_matches("Erdősítés", "erdősítés"))
 
-    def test_falls_back_to_english_wiki_and_uses_ai(self):
+    def test_uses_ai_on_review_abstracts_only(self):
         ai = FakeAI()
-        r = topic.build("bioszén", "biochar", "biochar review", fetch, ai, "hu", log=lambda *_: None,
-                        search_reviews=reviews)
-        self.assertEqual(r["wiki"]["nyelv"], "en")
-        self.assertIn("en.wikipedia.org/wiki/TESZT_Biochar", r["wiki"]["link"])
+        r = topic.build("biochar review", fetch, ai, "hu", log=lambda *_: None, search_reviews=reviews,
+                        title="Mennyi CO2-t vonhat ki a bioszén?")
+        self.assertNotIn("wiki", r)
         self.assertEqual(r["tipus"], "ai")
         self.assertEqual(r["magyarazat"]["hatranyok"], "c")
         self.assertIn("TESZT abstract", ai.user)
+        self.assertNotIn("wikipedia", ai.user.lower())
         self.assertNotIn("absztrakt", r["cikkek"][0])
 
     def test_without_ai(self):
-        r = topic.build("bioszén", "biochar", "biochar review", fetch, None, "en", log=lambda *_: None,
-                        search_reviews=reviews)
+        r = topic.build("biochar review", fetch, None, "en", log=lambda *_: None, search_reviews=reviews)
         self.assertEqual(r["tipus"], "forras")
-        self.assertTrue(r["wiki"]["bevezeto"].startswith("TESZT intro"))
+        self.assertEqual(r["cikkek"][0]["link"], "https://doi.org/10.1/x")
 
 
 class TestTitleAllWords(unittest.TestCase):

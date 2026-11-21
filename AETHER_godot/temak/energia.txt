@@ -3,7 +3,8 @@
 # Lektorálás: a "Kérdés", "Röviden", "Ad a játékban", "Mire jó?", "Mi a gond vele?" és
 # "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
 # Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
-# A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet).
+# A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet). Csak tudományos forrás
+# (lektorált cikk, IPCC-jelentés, nemzetközi adatgyűjtemény) legyen, Wikipédia ne.
 # A "technikai" vonal alatti sorokkal keres a kutatás: csak akkor módosítsd, ha biztos vagy benne.
 # Új téma: másolj le egy blokkot, és adj neki új, ékezet nélküli azonosítót (=== uj_tema ===).
 # A játék induláskor olvassa ezt a fájlt: mentés után indítsd újra a játékot.
@@ -29,8 +30,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: oil and gas methane emissions abatement potential|methane leak detection and repair emission reduction|fossil fuel methane mitigation potential
 Paraméter: metan_csokkentes_pct
-Wikipédia: földgáz metánszivárgás
-Wikipédia angolul: methane emissions
 Áttekintő cikkek keresése: oil and gas methane mitigation review
 
 === metan_szen ===
@@ -52,8 +51,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: coal mine methane emissions mitigation|coal mine methane capture utilization|abandoned coal mine methane emissions
 Paraméter: metan_csokkentes_pct
-Wikipédia: bányagáz metán
-Wikipédia angolul: coal mine methane
 Áttekintő cikkek keresése: coal mine methane review
 
 === napelem ===
@@ -75,8 +72,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: photovoltaic life cycle greenhouse gas emissions|solar PV carbon payback time|crystalline silicon photovoltaic life cycle assessment
 Paraméter: kibocsatas_csokkentes_pct
-Wikipédia: napelem
-Wikipédia angolul: photovoltaics
 Áttekintő cikkek keresése: photovoltaic life cycle assessment review
 
 === szelenergia ===
@@ -98,8 +93,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: wind power greenhouse gas mitigation potential|onshore wind energy technical potential|wind turbine life cycle emissions
 Paraméter: kibocsatas_potencial_gtco2e_ev
-Wikipédia: szélenergia
-Wikipédia angolul: wind power
 Áttekintő cikkek keresése: wind energy potential review
 
 === geotermia ===
@@ -121,8 +114,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: geothermal energy potential emissions reduction|geothermal district heating potential|geothermal power life cycle emissions
 Paraméter: kibocsatas_csokkentes_pct
-Wikipédia: geotermikus energia
-Wikipédia angolul: geothermal energy
 Áttekintő cikkek keresése: geothermal energy review
 
 === napkollektor ===
@@ -144,8 +135,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: solar water heating energy savings emissions|solar thermal collectors domestic hot water performance|solar thermal heating life cycle assessment
 Paraméter: kibocsatas_csokkentes_pct
-Wikipédia: napkollektor
-Wikipédia angolul: solar water heating
 Áttekintő cikkek keresése: solar thermal collectors review
 
 # ----- III. korszak: Átalakulás -----
@@ -169,8 +158,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: bioenergy with carbon capture and storage BECCS removal potential|BECCS land use sustainable potential|negative emissions technologies potentials costs side effects
 Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
-Wikipédia: biomassza szén-dioxid-tárolás
-Wikipédia angolul: bioenergy with carbon capture and storage
 Áttekintő cikkek keresése: BECCS review
 
 === tengeri_szel ===
@@ -192,8 +179,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: offshore wind technical potential global|floating offshore wind potential|offshore wind greenhouse gas mitigation
 Paraméter: kibocsatas_potencial_gtco2e_ev
-Wikipédia: tengeri szélerőmű
-Wikipédia angolul: offshore wind power
 Áttekintő cikkek keresése: offshore wind energy review
 
 === vizi_tarolo ===
@@ -215,8 +200,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: pumped hydro energy storage round-trip efficiency|pumped storage hydropower potential|closed-loop pumped hydro storage
 Paraméter: hatasfok_pct
-Wikipédia: szivattyús energiatározó
-Wikipédia angolul: pumped-storage hydroelectricity
 Áttekintő cikkek keresése: pumped hydro storage review
 
 === ipari_hoszivattyu ===
@@ -238,8 +221,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: industrial heat pumps decarbonization potential process heat|high temperature heat pump industrial applications
 Paraméter: kibocsatas_csokkentes_pct
-Wikipédia: ipari hőszivattyú
-Wikipédia angolul: industrial heat pump
 Áttekintő cikkek keresése: industrial heat pumps review
 
 === biogaz ===
@@ -261,6 +242,4 @@ Lektorálva: nem
 --- technikai ---
 Keresés: biogas anaerobic digestion greenhouse gas emissions savings|biomethane life cycle emissions|anaerobic digestion food waste life cycle assessment
 Paraméter: kibocsatas_csokkentes_pct
-Wikipédia: biogáz
-Wikipédia angolul: biogas
 Áttekintő cikkek keresése: biogas life cycle review
