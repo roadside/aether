@@ -188,7 +188,6 @@ const EN := {
 	"Új kutatás": "New research",
 	"Jóváhagyom, mehet a tervembe": "Approve, add it to my plan",
 	"Beteszem a tervembe: ": "Add to my plan: ",
-	"Részletek: honnan tudjuk?": "Details: how do we know?",
 	" és mtsai": " et al.",
 	"  [preprint, nem lektorált]": "  [preprint, not peer-reviewed]",
 	"Az átnézett cikkek listája (%d)": "Papers we looked at (%d)",

@@ -584,7 +584,7 @@ func _show_results() -> void:
 	results_shown.emit(not _checks.is_empty())
 
 
-func _proposal_card(j: Dictionary, pub: Dictionary) -> Control:
+func _proposal_card(j: Dictionary, _pub: Dictionary) -> Control:
 	var usable: bool = j.get("kar") != null
 	var c := UI.card(UI.CYAN if usable else UI.EDGE)
 	var sub := str(j.get("alkategoria_nev", j.get("alkategoria", "")))   # köznapi név, nem a nyers (angol) alkategória
@@ -603,20 +603,6 @@ func _proposal_card(j: Dictionary, pub: Dictionary) -> Control:
 		cb.add_theme_font_size_override("font_size", 17)
 		c.add_child(cb)
 		_checks.append([cb, j])
-	# Részletek: a szó szerinti idézetek és a forrás
-	var det := UI.vbox(6)
-	det.visible = false
-	for cl in pub.get("allitasok", []):
-		if str(cl["parameter"]) != str(j["parameter"]) or not str(cl["statusz"]).begins_with("ellenorizve"):
-			continue
-		det.add_child(UI.label("„" + str(cl["szo_szerinti_idezet"]) + "”", 15, UI.SOFT))
-		var paper: Dictionary = pub["cikkek"].get(str(cl["cikk_azonosito"]), {})
-		det.add_child(_paper_link(paper))
-	var more := UI.button(L.t("Részletek: honnan tudjuk?"))
-	var det_fn := func() -> void: det.visible = not det.visible
-	more.pressed.connect(det_fn)
-	c.add_child(more)
-	c.add_child(det)
 	return UI.card_root(c)
 
 
