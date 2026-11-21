@@ -178,6 +178,36 @@ class TestAdaptationQuote(unittest.TestCase):
         self.assertGreater(a["kukorica_hozam_2050_pct"], b["kukorica_hozam_2050_pct"])
 
 
+class TestHomeCountry(unittest.TestCase):
+    def _p(self, i, countries):
+        from aether_lab.literature import Paper
+        return Paper(source="openalex", source_id=str(i), title=f"TESZT {i}", year=2020, doi=f"10.1/{i}",
+                     abstract="x", orszagok=countries)
+
+    def test_home_papers_get_two_slots(self):
+        from aether_lab.research import select_papers
+        ranked = [self._p(i, ["US"]) for i in range(10)] + [self._p(10, ["HU", "DE"]), self._p(11, ["HU"])]
+        chosen = select_papers(ranked, 5, "HU")
+        self.assertEqual(len(chosen), 5)
+        self.assertEqual(sum("HU" in p.orszagok for p in chosen), 2)
+        self.assertEqual(select_papers(ranked, 5, ""), ranked[:5])
+
+    def test_openalex_countries_and_filter(self):
+        from aether_lab import literature as lit
+        data = {"results": [{"id": "W1", "display_name": "TESZT", "publication_year": 2021,
+                             "authorships": [{"author": {"display_name": "A"}, "countries": ["HU"]},
+                                             {"author": {"display_name": "B"}, "countries": ["AT", "HU"]}]}]}
+        self.assertEqual(lit.parse_openalex(data)[0].orszagok, ["AT", "HU"])
+        seen = {}
+        orig = lit._get
+        lit._get = lambda url, *a, **k: (seen.setdefault("url", url), b'{"results": []}')[1]
+        try:
+            lit.search_openalex("biochar", 3, country="hu")
+        finally:
+            lit._get = orig
+        self.assertIn("authorships.countries%3AHU", seen["url"])
+
+
 class TestQuoteSpacing(unittest.TestCase):
     def test_broken_formula_spacing(self):
         from aether_lab.evidence import quote_in

@@ -40,6 +40,7 @@ class Paper:
     peer_reviewed: Optional[bool] = None   # arXiv = False
     is_retracted: bool = False
     work_type: str = ""                    # article, review, preprint, ...
+    orszagok: List[str] = field(default_factory=list)  # a szerzők intézményeinek országai (ISO-kód, OpenAlex)
 
     def key(self) -> str:
         if self.doi:
@@ -109,16 +110,21 @@ def parse_openalex(data: Dict) -> List[Paper]:
             peer_reviewed=None if w.get("type") == "preprint" else True,
             is_retracted=bool(w.get("is_retracted")),
             work_type=w.get("type") or "",
+            orszagok=sorted({c for a in w.get("authorships", []) for c in (a.get("countries") or []) if c}),
         ))
     return out
 
 
 def search_openalex(query: str, n: int = 10, mailto: str = "", api_key: str = "",
-                    from_year: int = 2000) -> List[Paper]:
+                    from_year: int = 2000, country: str = "") -> List[Paper]:
+    """country: ISO-kód (pl. HU) – csak azok a cikkek, amelyeknek van ilyen országbeli intézményű szerzője."""
+    flt = f"has_abstract:true,from_publication_date:{from_year}-01-01"
+    if country:
+        flt += f",authorships.countries:{country.upper()}"
     params = {
         "search": query,
         "per-page": str(n),
-        "filter": f"has_abstract:true,from_publication_date:{from_year}-01-01",
+        "filter": flt,
         "sort": "relevance_score:desc",
     }
     if mailto:
@@ -269,13 +275,16 @@ def merge(papers: List[Paper]) -> List[Paper]:
         if cur is None:
             best[k] = p
             continue
+        countries = sorted(set(p.orszagok) | set(cur.orszagok))
         if len(p.abstract) > len(cur.abstract):
             p.cited_by = max(p.cited_by, cur.cited_by)
             p.is_retracted = p.is_retracted or cur.is_retracted
+            p.orszagok = countries
             best[k] = p
         else:
             cur.cited_by = max(p.cited_by, cur.cited_by)
             cur.is_retracted = p.is_retracted or cur.is_retracted
+            cur.orszagok = countries
     return list(best.values())
 
 
@@ -300,7 +309,7 @@ def rank(papers: List[Paper]) -> List[Paper]:
 
 def search_all(queries: List[str], per_source: int = 8, mailto: str = "",
                openalex_key: str = "", s2_key: str = "", use_arxiv: bool = True,
-               log=print) -> List[Paper]:
+               log=print, country: str = "") -> List[Paper]:
     found: List[Paper] = []
     off = set()   # forrás, amely "túl sok kérés" (429) hibát adott: a többi kérdésnél kihagyjuk
     for q in queries:
@@ -308,7 +317,10 @@ def search_all(queries: List[str], per_source: int = 8, mailto: str = "",
             ("OpenAlex", lambda: search_openalex(q, per_source, mailto, openalex_key)),
             ("Semantic Scholar", lambda: search_semanticscholar(q, per_source, s2_key)),
             ("Crossref", lambda: search_crossref(q, per_source, mailto)),
-        ] + ([("arXiv", lambda: search_arxiv(q, per_source))] if use_arxiv else []):
+        ] + ([("arXiv", lambda: search_arxiv(q, per_source))] if use_arxiv else []) + (
+            # hazai kutatás: külön keresés a játékos országának intézményeire (OpenAlex)
+            [(f"OpenAlex, {country.upper()}", lambda: search_openalex(q, per_source, mailto, openalex_key,
+                                                                      country=country))] if country else []):
             if name in off:
                 continue
             try:

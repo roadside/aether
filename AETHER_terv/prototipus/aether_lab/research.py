@@ -20,6 +20,25 @@ from .llm import Provider
 MAX_ABSTRACT_CHARS = 2500
 
 
+HOME_SLOTS = 2   # ennyi hely jut legalább a hazai cikkeknek az elemzettek között (ha vannak)
+
+
+def select_papers(ranked: List[Paper], n: int, country: str = "") -> List[Paper]:
+    """A legjobb n cikk, de ha van a játékos országából származó, abból legalább HOME_SLOTS
+    bekerül (a sorrend egyébként változatlan, a hazai cikk nem kap más előnyt)."""
+    chosen = ranked[:n]
+    if not country:
+        return chosen
+    c = country.upper()
+    have = sum(c in p.orszagok for p in chosen)
+    extra = [p for p in ranked[n:] if c in p.orszagok][:max(0, HOME_SLOTS - have)]
+    if extra:
+        keep = [p for p in chosen if c in p.orszagok]
+        others = [p for p in chosen if c not in p.orszagok][:n - len(keep) - len(extra)]
+        chosen = [p for p in ranked if p in keep or p in others or p in extra]
+    return chosen
+
+
 def plan_queries(provider: Optional[Provider], question: str) -> Dict:
     if provider is None:
         # AI nélküli mód: a kérdést változatlanul használjuk keresőkifejezésként
@@ -88,7 +107,8 @@ def extract(provider: Provider, question: str, papers: Dict[str, Paper], params:
 def run_research(question: str, provider: Optional[Provider], n_papers: int = 12,
                  per_source: int = 6, mailto: str = "", openalex_key: str = "",
                  s2_key: str = "", use_arxiv: bool = True, log=print, lang: str = "hu",
-                 queries: Optional[List[str]] = None, params: Optional[List[str]] = None) -> Dict:
+                 queries: Optional[List[str]] = None, params: Optional[List[str]] = None,
+                 country: str = "") -> Dict:
     en = lang.startswith("en")
     m = lambda hu, eng: eng if en else hu  # noqa: E731  (napló a játékos nyelvén)
     log(m("1/4 Kérdés pontosítása...", "1/4 Refining the question..."))
@@ -105,11 +125,15 @@ def run_research(question: str, provider: Optional[Provider], n_papers: int = 12
 
     log(m("2/4 Irodalomkeresés (OpenAlex, Semantic Scholar, Crossref, arXiv)...",
           "2/4 Literature search (OpenAlex, Semantic Scholar, Crossref, arXiv)..."))
-    ranked = search_all(queries, per_source, mailto, openalex_key, s2_key, use_arxiv, log)
-    chosen = ranked[:min(n_papers, getattr(provider, "max_papers", n_papers))]
+    ranked = search_all(queries, per_source, mailto, openalex_key, s2_key, use_arxiv, log, country=country)
+    chosen = select_papers(ranked, min(n_papers, getattr(provider, "max_papers", n_papers)), country)
     papers = {f"P{i+1}": p for i, p in enumerate(chosen)}
     log(m(f"    {len(ranked)} egyedi, nem visszavont cikk; a legjobb {len(papers)} kerül elemzésre.",
           f"    {len(ranked)} unique, non-retracted papers; the best {len(papers)} are analysed."))
+    if country:
+        home = sum(country.upper() in p.orszagok for p in papers.values())
+        log(m(f"    Hazai ({country.upper()}) cikk az elemzettek között: {home}.",
+              f"    Home-country ({country.upper()}) papers among those analysed: {home}."))
 
     claims: List[ev.Claim] = []
     summary, contradictions = "", ""

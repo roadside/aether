@@ -45,6 +45,15 @@ static func set_setting(key: String, value: Variant) -> void:
 	cfg.save(SETTINGS)
 
 
+## A játékos országa (ISO-kód, pl. HU): a beállításból, különben a gép területi beállításából.
+static func country() -> String:
+	var c := str(get_setting("orszag", ""))
+	if c == "":
+		var parts := OS.get_locale().split("_")
+		c = parts[1] if parts.size() > 1 else "HU"
+	return c.to_upper().left(2)
+
+
 static func is_en() -> bool:
 	init()
 	return lang == "en"
@@ -283,6 +292,8 @@ const EN := {
 	"Küldetés: ": "Mission: ",
 	"Ebben a küldetésben rögzített.": "Fixed in this mission.",
 	"Első küldetés kész! Jöhet a következő.": "First mission done! On to the next one.",
+	"%d cikk (%d hazai). ": "%d papers (%d from your country). ",
+	"[Hazai] ": "[Your country] ",
 	"Kész, a játék ezt használja.": "Done, the game uses it now.",
 	"A letöltés nem sikerült: ": "The download failed: ",
 }

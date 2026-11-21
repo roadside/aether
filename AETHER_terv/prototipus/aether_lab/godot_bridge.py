@@ -337,17 +337,22 @@ def cmd_kutat(args, run_research=None, get_provider=None):
         queries = [q.strip() for q in (getattr(args, "kereses", "") or "").split("|") if q.strip()]
         params = [p.strip() for p in (getattr(args, "parameterek", "") or "").split(",") if p.strip()]
         question = args.kerdes if provider is not None else (" ".join(queries[:1]) or args.kerdes)
+        country = (getattr(args, "orszag", "") or "").strip().upper()
         pub = run_research(question, provider, n_papers=args.cikkek, per_source=args.forrasonkent,
                            queries=queries or ([question] if provider is None else None),
                            params=params or ([] if provider is None else None),
                            mailto=os.environ.get("AETHER_MAILTO", ""),
                            openalex_key=os.environ.get("OPENALEX_API_KEY", ""),
-                           s2_key=os.environ.get("S2_API_KEY", ""), log=log, lang=lang)
+                           s2_key=os.environ.get("S2_API_KEY", ""), log=log, lang=lang,
+                           **({"country": country} if country else {}))
         claims = pub["allitasok"]
         ok = sum(c["statusz"].startswith("ellenorizve") for c in claims)
         result = {"publikacio": pub, "javaslatok": javaslatok(pub, lang),
                   "osszefoglalo": {"cikkek": len(pub["cikkek"]), "allitasok": len(claims),
-                                   "ellenorizve": ok, "elutasitva": len(claims) - ok}}
+                                   "ellenorizve": ok, "elutasitva": len(claims) - ok,
+                                   "orszag": country,
+                                   "hazai": sum(country in (p.get("orszagok") or []) for p in pub["cikkek"].values())
+                                   if country else 0}}
         _write_json(folder / "eredmeny.json", result)
         log.done(eredmeny=str(folder / "eredmeny.json"))
     except LLMError as e:
@@ -428,6 +433,7 @@ def add_parsers(sub):
     k.add_argument("--cikkek", type=int, default=12)
     k.add_argument("--forrasonkent", type=int, default=6)
     k.add_argument("--nyelv", default="hu", choices=["hu", "en"], help="a játékos nyelve (hu/en)")
+    k.add_argument("--orszag", default="", help="a játékos országa (ISO-kód, pl. HU): hazai kutatások is")
     k.set_defaults(fn=cmd_kutat)
     m = sub.add_parser("godot-modell"); m.add_argument("be"); m.add_argument("--ki", required=True)
     m.add_argument("--nyelv", default="hu", choices=["hu", "en"])

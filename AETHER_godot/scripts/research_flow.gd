@@ -434,7 +434,8 @@ func _start_research() -> void:
 	_body.add_child(log_btn)
 	_body.add_child(_log_label)
 	if bridge.run("kutat", ["godot-kutat", L.t(str(_question["cim"])), "--ai", _ai, "--mappa", _folder, "--nyelv", L.lang,
-			"--kereses", str(_question.get("kereses", "")), "--parameterek", str(_question.get("parameterek", ""))]):
+			"--kereses", str(_question.get("kereses", "")), "--parameterek", str(_question.get("parameterek", "")),
+			"--orszag", L.country()]):
 		_poll.start()
 	else:
 		_show_busy()
@@ -521,6 +522,8 @@ func _show_results() -> void:
 	var o: Dictionary = _result["osszefoglalo"]
 	var pub: Dictionary = _result["publikacio"]
 	var s := L.t("%d cikk. ") % int(o["cikkek"])
+	if int(o.get("hazai", 0)) > 0:   # a játékos országának kutatóintézeteiből
+		s = L.t("%d cikk (%d hazai). ") % [int(o["cikkek"]), int(o["hazai"])]
 	if int(o["allitasok"]) > 0:
 		s += L.t("%d szám ellenőrizve, %d elvetve.") % [int(o["ellenorizve"]), int(o["elutasitva"])]
 	_body.add_child(UI.label(s, 18, UI.TEXT))
@@ -595,6 +598,8 @@ func _paper_link(p: Dictionary) -> Control:
 	var yr: Variant = p.get("year")
 	var yr_s := str(int(yr)) if typeof(yr) in [TYPE_INT, TYPE_FLOAT] else "?"
 	var t := "%s (%s): %s" % [who, yr_s, str(p.get("title", ""))]
+	if L.country() in Array(p.get("orszagok", [])):
+		t = L.t("[Hazai] ") + t
 	if typeof(p.get("peer_reviewed")) == TYPE_BOOL and p.get("peer_reviewed") == false:
 		t += L.t("  [preprint, nem lektorált]")
 	var url := ""
