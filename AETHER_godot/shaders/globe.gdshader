@@ -107,15 +107,18 @@ void fragment() {
 		col = mix(col, cloud_col, cv > 0.6 ? 1.0 : (cv > 0.3 ? 0.6 : cv));
 
 		// naplemente-sáv és perem-pára
-		if (ndl > -0.05 && ndl < 0.16) {
-			col = mix(col, vec3(1.0, 0.55, 0.31), 0.18 * (1.0 - abs(ndl - 0.05) / 0.11));
+		// keskeny, halvány alkonysáv a nappal-éjszaka határán
+		if (ndl > -0.03 && ndl < 0.07) {
+			col = mix(col, vec3(1.0, 0.55, 0.31), 0.10 * (1.0 - abs(ndl - 0.02) / 0.05));
 		}
 		float rim = pow(1.0 - n.z, 3.0);
 		col = mix(col, vec3(0.43, 0.75, 1.0), min(0.55, rim * 0.9 * (0.4 + max(0.0, ndl))) * step(-0.1, ndl));
 
 		// éjszakai oldal: városfények
 		float night = smoothstep(0.02, -0.12, ndl);
-		col = mix(col, col * 0.3 + texture(night_map, tex).rgb * (1.0 - cv * 0.8), night);
+		// éjjel a felszín szinte sötét (kékes árnyalat), csak a városfények világítanak
+		vec3 dark_side = col * 0.12 + vec3(0.01, 0.02, 0.05);
+		col = mix(col, dark_side + texture(night_map, tex).rgb * (1.0 - cv * 0.8), night);
 
 		COLOR = vec4(posterize(clamp(col, 0.0, 1.0), d), 1.0);
 	}

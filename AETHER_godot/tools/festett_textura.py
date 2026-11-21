@@ -99,7 +99,10 @@ def albedo_and_data(src: Path):
 
 def night(src: Path) -> Image.Image:
     n = load(src, "earth-night.jpg", "L")
-    v = np.clip((n - 0.10) / 0.55, 0, 1)
+    v = np.clip((n - 0.21) / 0.17, 0, 1)   # a holdfényes, halvány földfelszín ne világítson
+    # a földgömb egy képpontja kb. 2-3 textúrapont: a fényeket kicsit „megnöveljük”,
+    # hogy a mintavételezés ne hagyja ki őket (a fényerő marad, csak a pötty nagyobb)
+    v = ndimage.grey_dilation(v, size=(3, 3))
     v = np.round(v * 4) / 4                                         # 4 fényességszint
     col = (NIGHT[None, None] * v[..., None] * 255).astype(np.uint8)
     return Image.fromarray(col, "RGB")
