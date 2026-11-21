@@ -117,3 +117,30 @@ static func clear(node: Node) -> void:
 ## Szám a választott nyelv tizedesjelével (magyarul vessző, angolul pont).
 static func hu(x: float, decimals: int = 1) -> String:
 	return preload("res://scripts/i18n.gd").num(x, decimals)
+
+
+## Egyszerű, kattintható szöveges link (nem gomb): ciánkék, balra, sort tör.
+static func text_link(text: String, url: String, size: int = 15) -> Button:
+	load_fonts()
+	var lb := Button.new()
+	lb.text = text
+	lb.flat = true
+	lb.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	lb.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	lb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	lb.add_theme_font_size_override("font_size", size)
+	if font_body != null:   # normál szöveg, nem a gombok vastag betűje
+		lb.add_theme_font_override("font", font_body)
+	for st in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
+		lb.add_theme_color_override(st, CYAN)
+	var empty := StyleBoxEmpty.new()
+	empty.content_margin_top = 2
+	empty.content_margin_bottom = 2
+	for st in ["normal", "hover", "pressed", "focus", "hover_pressed"]:
+		lb.add_theme_stylebox_override(st, empty)
+	if url != "":
+		lb.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		lb.tooltip_text = url
+		var open_fn := func() -> void: OS.shell_open(url)
+		lb.pressed.connect(open_fn)
+	return lb

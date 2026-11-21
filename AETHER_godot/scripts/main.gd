@@ -14,6 +14,7 @@ const Missions := preload("res://scripts/missions.gd")
 const Campaign := preload("res://scripts/campaign.gd")
 const Knowledge := preload("res://scripts/knowledge.gd")
 const StationPanel := preload("res://scripts/station_panel.gd")
+const NalunkPanel := preload("res://scripts/nalunk_panel.gd")
 
 const MISSION := [
 	["Nézd meg a mai Földet", "A bal oldali lista és a földgömb pöttyei valódi, friss jelentések. Kattints egyre!"],
@@ -308,6 +309,11 @@ func _build_bottom_bar() -> void:
 	station.tooltip_text = L.t("A kutatóállomásod: modulok építése és fejlesztése.")
 	station.pressed.connect(_open_station)
 	h.add_child(station)
+	var home := UI.button(L.t("Nálunk"))
+	home.custom_minimum_size = Vector2(120, 0)
+	home.tooltip_text = L.t("Mit jelent a melegedés nálunk: forró napok és nyári eső, mért adatokból és a terved szerint.")
+	home.pressed.connect(_open_nalunk)
+	h.add_child(home)
 	var tbox := UI.vbox(6)
 	var trow := UI.hbox(6)
 	_play_btn = UI.button(L.t("Idő indítása"))
@@ -378,6 +384,14 @@ func _on_station(s: Dictionary) -> void:
 		_open_station()
 	else:
 		_show_info(L.t("Kutatóállomás: ") + str(s["name"]), "")
+
+
+func _open_nalunk() -> void:
+	var n = NalunkPanel.new()
+	n.bridge = bridge
+	n.campaign = campaign
+	n.closed.connect(_close_overlay)
+	_place_overlay(n)
 
 
 func _open_station() -> void:
@@ -905,6 +919,14 @@ func _selftest() -> void:
 			" III. feltételei=", campaign.era_conditions(3))
 		_open_research()
 		await _shot(dir, "8_tudasfa.png")
+		_close_overlay()
+		_open_nalunk()
+		for i in 60:   # a mért adatok letöltése
+			await get_tree().create_timer(1.0).timeout
+			if not bridge.is_busy():
+				break
+		await get_tree().create_timer(1.0).timeout
+		await _shot(dir, "9_nalunk.png")
 		_close_overlay()
 	_close_overlay()
 	for e in world.get("esemenyek", []):
