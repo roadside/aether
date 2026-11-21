@@ -262,10 +262,10 @@ def ai_status(ollama_host: Optional[str] = None, timeout: float = 1.5, lang: str
             models = [m.get("name", "") for m in json.loads(r.read()).get("models", [])]
         if en:
             msg = ("Running, downloaded models: " + ", ".join(models) if models
-                   else "Running, but no model downloaded (e.g. ollama pull qwen3:14b).")
+                   else "Running, but no model downloaded (e.g. ollama pull qwen3:8b).")
         else:
             msg = ("Fut, letöltött modellek: " + ", ".join(models) if models
-                   else "Fut, de nincs letöltött modell (pl. ollama pull qwen3:14b).")
+                   else "Fut, de nincs letöltött modell (pl. ollama pull qwen3:8b).")
         res["ollama"] = {"elerheto": bool(models), "modellek": models, "ok": msg}
     except Exception:
         res["ollama"]["ok"] = ("Not running on this computer (https://ollama.com)." if en

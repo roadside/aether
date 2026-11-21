@@ -4,7 +4,7 @@ Szolgáltatók:
   - "claude": Anthropic Claude API, a játékos saját előfizetésével / API-kulcsával
                (ANTHROPIC_API_KEY környezeti változó vagy `ant auth login`).
   - "ollama": helyi modell a játékos gépén (offline mód), https://ollama.com
-               pl. `ollama pull qwen3:14b` vagy bármely más letöltött modell.
+               pl. `ollama pull qwen3:8b` vagy bármely más letöltött modell.
   - "none":   AI nélküli mód: a játék csak a cikkeket listázza, kivonatolás nincs.
 
 ALAPELV: az AI soha nem számol a modell helyett, és nem talál ki számokat.
@@ -82,16 +82,31 @@ class OllamaProvider(Provider):
     """Helyi modell az Ollama natív REST API-ján (offline működés)."""
     name = "ollama"
 
-    def __init__(self, model: str = None, host: str = None):
-        self.model = model or os.environ.get("AETHER_OLLAMA_MODEL", "qwen3:14b")
+    # Ha a játékos nem ad meg modellt, a letöltöttek közül ezeket keressük ebben a
+    # sorrendben (a 8B-s modellek kb. 6 GB videómemóriában is elférnek).
+    PREFERRED = ["qwen3:8b", "qwen3:14b", "qwen3:4b", "llama3.1:8b", "gemma3:12b", "gemma3:4b", "mistral"]
+
+    def __init__(self, model: str = None, host: str = None, num_ctx: int = 16384):
         self.host = (host or os.environ.get("OLLAMA_HOST", "http://localhost:11434")).rstrip("/")
+        self.model = model or os.environ.get("AETHER_OLLAMA_MODEL") or self._pick_model()
+        # Az alapértelmezett 2–4 ezer tokenes kontextusba nem férne bele 12 absztrakt:
+        # csendben levágná őket, ezért nagyobb ablakot kérünk.
+        self.num_ctx = num_ctx
+
+    def _pick_model(self) -> str:
+        try:
+            with urllib.request.urlopen(self.host + "/api/tags", timeout=3) as r:
+                names = [m.get("name", "") for m in json.loads(r.read()).get("models", [])]
+        except Exception:
+            return "qwen3:8b"
+        return pick_model(names, self.PREFERRED) or "qwen3:8b"
 
     def json_call(self, system, user, schema, max_tokens=8000):
         body = {
             "model": self.model,
             "stream": False,
             "format": schema,  # Ollama >= 0.5: JSON-séma szerinti kimenet
-            "options": {"num_predict": max_tokens},
+            "options": {"num_predict": max_tokens, "num_ctx": self.num_ctx},
             "messages": [{"role": "system", "content": system},
                          {"role": "user", "content": user}],
         }
@@ -106,6 +121,15 @@ class OllamaProvider(Provider):
             return json.loads(data["message"]["content"])
         except (KeyError, json.JSONDecodeError) as e:
             raise LLMError("A helyi modell érvénytelen JSON-t adott.") from e
+
+
+def pick_model(available, preferred):
+    """Az első előnyben részesített modell, ami le van töltve; különben az első letöltött."""
+    for want in preferred:
+        for name in available:
+            if name == want or name.split(":")[0] == want or name.startswith(want + "-"):
+                return name
+    return available[0] if available else ""
 
 
 def get_provider(name: str, **kw) -> Provider | None:

@@ -103,3 +103,12 @@ class TestKutat(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestOllamaModelChoice(unittest.TestCase):
+    def test_pick(self):
+        from aether_lab.llm import pick_model, OllamaProvider
+        pref = OllamaProvider.PREFERRED
+        self.assertEqual(pick_model(["llama3.1:8b", "qwen3:8b"], pref), "qwen3:8b")
+        self.assertEqual(pick_model(["phi4:latest"], pref), "phi4:latest")
+        self.assertEqual(pick_model([], pref), "")
