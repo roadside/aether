@@ -128,6 +128,9 @@ func _card(mod: String) -> Control:
 	c.add_child(UI.label(title, 18, UI.TEXT, true))
 	c.add_child(UI.label(_why(mod), 14, UI.SOFT))
 	c.add_child(UI.label(L.t("Most: ") + _effect(mod, lvl), 15, UI.TEXT))
+	var push := Control.new()   # a kártya alja: így a gombok egy sorban vannak
+	push.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	c.add_child(push)
 	if is_building:
 		c.add_child(UI.label(L.t("Épül, kész: %d.") % int(campaign.building["kesz"]), 16, UI.GOLD, true))
 	elif lvl < Campaign.MAX_LEVEL:
