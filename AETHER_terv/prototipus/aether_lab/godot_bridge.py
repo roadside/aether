@@ -241,6 +241,10 @@ class StatusLog:
         if m:
             return (f"{m.group(1)} papers found, the AI reads the best {m.group(2)}." if self.en else
                     f"{m.group(1)} cikket találtunk. Az AI most a {m.group(2)} legjobbat olvassa.")
+        m = re.match(r"(\d+)/(\d+) (?:cikkben van|papers contain)", s)
+        if m:
+            return (f"{m.group(1)} of {m.group(2)} papers contain a usable number. The AI is reading them." if self.en
+                    else f"{m.group(2)} cikkből {m.group(1)} tartalmaz használható számot. Az AI most ezeket olvassa.")
         m = re.match(r"(\d+)/(\d+) (?:állítás|claims)", s)
         if m:
             return (f"{m.group(1)} of {m.group(2)} numbers passed the check." if self.en else

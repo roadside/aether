@@ -52,7 +52,7 @@ Az 5-ös szám egy másik módszeré (talaj szénmegkötés): azt külön állí
 
 
 def extract(provider: Provider, question: str, papers: Dict[str, Paper], params: List[str],
-            lang: str = "hu") -> Dict:
+            lang: str = "hu", log=None) -> Dict:
     wanted_list = [k for k in (params or [k for k in ev.PARAMETERS if k != "egyeb"]) if k in ev.PARAMETERS]
     intro = min(INTRO_CHARS, getattr(provider, "max_abstract_chars", INTRO_CHARS))
     blocks = []
@@ -65,6 +65,9 @@ def extract(provider: Provider, question: str, papers: Dict[str, Paper], params:
         blocks.append(f"<cikk azonosito=\"{pid}\">\nCím: {p.title}{flag}\nÉv: {p.year}\n"
                       f"Az absztrakt eleje: {p.abstract[:intro]}…\n"
                       f"Számot és mértékegységet tartalmazó mondatok (CSAK ezekből idézz, szó szerint):\n{lines}\n</cikk>")
+    if log is not None:
+        log((f"    {len(blocks)}/{len(papers)} papers contain a number with the right unit." if lang.startswith("en")
+             else f"    {len(blocks)}/{len(papers)} cikkben van megfelelő mértékegységű szám."))
     if not blocks:
         return {"allitasok": [], "ellentmondasok": "",
                 "osszegzes": ("The papers found contain no number with the unit we need." if lang.startswith("en")
@@ -113,7 +116,7 @@ def run_research(question: str, provider: Optional[Provider], n_papers: int = 12
     raw_extraction = None
     if provider is not None and papers:
         log(m("3/4 AI-kivonatolás (szó szerinti idézetekkel)...", "3/4 AI extraction (with verbatim quotes)..."))
-        raw = extract(provider, plan["kutatasi_kerdes_pontositva"], papers, plan["keresett_parameterek"], lang)
+        raw = extract(provider, plan["kutatasi_kerdes_pontositva"], papers, plan["keresett_parameterek"], lang, log)
         raw_extraction = raw   # hibakereséshez: az AI nyers válasza a publikációba kerül
         claims = [ev.Claim(**c) for c in raw.get("allitasok", [])]
         summary, contradictions = raw.get("osszegzes", ""), raw.get("ellentmondasok", "")

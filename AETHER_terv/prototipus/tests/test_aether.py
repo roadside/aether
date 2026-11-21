@@ -137,6 +137,8 @@ class TestUnitCheck(unittest.TestCase):
         self.assertFalse(unit_in_quote("cdr_potencial_gtco2_ev", "limit warming to 1.5°C"))
         self.assertTrue(unit_in_quote("cdr_potencial_gtco2_ev", "0.5–2 GtCO 2 yr −1 for biochar"))
         self.assertTrue(unit_in_quote("cdr_koltseg_usd_tco2", "costs of US$90–120 per tonne"))
+        # szénben (nem CO2-ben) és nem évente megadott teljes potenciál: nem fogadjuk el
+        self.assertFalse(unit_in_quote("cdr_potencial_gtco2_ev", "0.0066 to 2.0 Pg C using a biochar rate of 2 t ha−1"))
 
 
 class TestCandidateSentences(unittest.TestCase):

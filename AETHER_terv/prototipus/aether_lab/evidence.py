@@ -171,8 +171,10 @@ def quote_in(quote: str, text: str) -> bool:
 
 
 # Az idézetben a paraméter mértékegységének nyoma (kisbetűs, normalizált szövegben).
-UNIT_PATTERNS: Dict[str, str] = {
-    "cdr_potencial_gtco2_ev": r"g\s*t\s*-?\s*co|gtc|pg\s*c|gigaton|billion\s+(metric\s+)?tonnes|bn\s*t",
+UNIT_PATTERNS: Dict[str, object] = {
+    # CO2-ben (nem szénben: a "Pg C"/"Gt C" 3,67-szer kisebb szám) ÉS évente
+    "cdr_potencial_gtco2_ev": [r"(g\s*t|gigaton\w*|billion\s+(metric\s+)?tonnes?|bn\s*t|pg)\s*(of\s+)?-?\s*co\s*2",
+                               r"yr|year|annual|/\s*a\b|\ba\s*-\s*1|y\s*-\s*1"],
     "cdr_koltseg_usd_tco2": r"\$|usd|dollar|€|eur",
     "metan_csokkentes_pct": r"%|percent|per\s*cent",
     "hozam_valtozas_pct_per_c": r"%|percent|per\s*cent",
@@ -185,8 +187,12 @@ UNIT_PATTERNS: Dict[str, str] = {
 
 
 def unit_in_quote(param: str, quote: str) -> bool:
-    pat = UNIT_PATTERNS.get(param)
-    return True if pat is None else re.search(pat, _norm_text(quote)) is not None
+    """Minden megadott mintának illeszkednie kell (pl. CO2-egység ÉS évenként)."""
+    pats = UNIT_PATTERNS.get(param)
+    if pats is None:
+        return True
+    q = _norm_text(quote)
+    return all(re.search(p, q) is not None for p in ([pats] if isinstance(pats, str) else pats))
 
 
 def verify(claims: List[Claim], papers: Dict[str, Paper]) -> List[Claim]:
