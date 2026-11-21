@@ -134,6 +134,14 @@ func _stat(parent: Control, key: String, caption: String, value: String, color: 
 	parent.add_child(v)
 
 
+## F11: teljes képernyő be/ki. (A felület 1600×900-as tervből bármekkora
+## kijelzőre élesen felnagyul, a betűk a valódi felbontáson rajzolódnak.)
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F11:
+		var fs := DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED if fs else DisplayServer.WINDOW_MODE_FULLSCREEN)
+
+
 # ---------------------------------------------------------------------------
 # Felület
 # ---------------------------------------------------------------------------
