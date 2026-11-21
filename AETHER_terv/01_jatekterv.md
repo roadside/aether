@@ -88,6 +88,12 @@ Közben folyik a klasszikus stratégiai réteg: építkezés, erőforrás-gazdá
 
 A **Számítás** szándékosan kötődik a valódi AI-költséghez: a játék előre megmutatja egy kutatás becsült tokenigényét és árát, és napi/havi limitet lehet beállítani.
 
+### 5.1 Ami már működik (2026-11-21)
+
+- **Telő idő:** a játék 2026-ban indul; az évek indítással / szünettel / gyorsítással / „+1 év” gombbal telnek, nyitott ablak alatt az idő áll. A játék 2100-ban ér véget, értékeléssel.
+- **Idővonal a klímamodellben:** egy terv csak a bevezetése utáni évtől hat, a múlt nem változik; a késés látható többlet-melegedést okoz.
+- **Pénz és bizalom (játékszabály, a felületen is jelölve):** évi bevétel 40 + bizalom/2; kutatás 40, terv bevezetése 30 + bizalomigény. A bizalom nő az ellenőrzött kutatási eredményekkel (+6 eredményenként) és a csökkenő kibocsátással (+1/év), csökken, ha a kibocsátás nem csökken (−1/év) és visszalépéskor (−10). A gyors tervekhez bizalom kell (pl. nulla CO2 2050-re: 50%).
+
 ## 6. Építkezés és egységek
 
 **Állomásmodulok** (mind fejleszthető 3 szinten):
