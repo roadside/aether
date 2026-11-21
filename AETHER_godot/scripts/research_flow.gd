@@ -80,7 +80,7 @@ func _ready() -> void:
 	add_child(scroll)
 	_body = UI.vbox(14)
 	_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(_body)
+	scroll.add_child(UI.scroll_pad(_body))
 	_poll = Timer.new()
 	_poll.wait_time = 0.4
 	_poll.timeout.connect(_on_poll)
@@ -220,6 +220,7 @@ func _render_topic(r: Dictionary) -> void:
 		var wurl := str(w.get("link", ""))
 		var w_fn := func() -> void: OS.shell_open(wurl)
 		wb.pressed.connect(w_fn)
+		wb.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		src.add_child(wb)
 	var papers: Array = r.get("cikkek", [])
 	if not papers.is_empty():
@@ -232,6 +233,7 @@ func _render_topic(r: Dictionary) -> void:
 			var purl := str(p.get("link", ""))
 			var p_fn := func() -> void: OS.shell_open(purl)
 			pb.pressed.connect(p_fn)
+			pb.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART   # hosszú cím: több sorba törik
 			src.add_child(pb)
 	if typeof(m) == TYPE_DICTIONARY and src.get_child_count() > 0:
 		src.visible = false

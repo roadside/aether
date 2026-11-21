@@ -43,7 +43,7 @@ func _ready() -> void:
 	add_child(_scroll)
 	_body = UI.vbox(14)
 	_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_scroll.add_child(_body)
+	_scroll.add_child(UI.scroll_pad(_body))
 	bridge.finished.connect(_on_bridge_finished)
 	rebuild()
 

@@ -264,7 +264,7 @@ func _build_left_panel() -> void:
 	v.add_child(scroll)
 	_events_box = UI.vbox(8)
 	_events_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(_events_box)
+	scroll.add_child(UI.scroll_pad(_events_box, 16))
 	_refresh_btn = UI.button(L.t("Frissítés valós adatokkal"))
 	_refresh_btn.pressed.connect(_refresh_world)
 	v.add_child(_refresh_btn)

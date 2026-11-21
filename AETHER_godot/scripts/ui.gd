@@ -47,6 +47,15 @@ static func heading(text: String, fsize: int = 26) -> Label:
 	return l
 
 
+## Görgethető tartalom: a jobb szélén helyet hagy a görgetősávnak, így semmi nem csúszik alá.
+static func scroll_pad(body: Control, right: int = 24) -> MarginContainer:
+	var m := MarginContainer.new()
+	m.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	m.add_theme_constant_override("margin_right", right)
+	m.add_child(body)
+	return m
+
+
 static func button(text: String, primary: bool = false) -> Button:
 	var b := Button.new()
 	b.text = text

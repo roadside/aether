@@ -68,7 +68,7 @@ func _ready() -> void:
 	add_child(scroll)
 	_body = UI.vbox(12)
 	_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(_body)
+	scroll.add_child(UI.scroll_pad(_body))
 	bridge.finished.connect(_on_bridge_finished)
 	_retry = Timer.new()
 	_retry.wait_time = 2.0
