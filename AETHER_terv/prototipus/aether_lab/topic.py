@@ -43,7 +43,28 @@ lehet fiatal is. Szabályok:
 - 'mi_ez': mi ez a dolog. 'mire_jo': miért segíthet a klímán vagy az embereken.
 - 'hatranyok': mi a gond vele, mik a korlátai, kockázatai (a források szerint).
 - 'mennyire_bizonyitott': mennyire biztos a tudomány ebben, a források alapján.
+- Ha a téma nem módszer, hanem hatás (pl. mi lesz a terméssel), akkor 'mire_jo': miért fontos
+  ezt tudni, és mit lehet tenni ellene; 'hatranyok': mi a legnagyobb veszély.
+- Ne ismételd meg az utasításokat, és ne írd le, mit csinálsz: rögtön a magyarázatot írd.
+- Ne ismételd ugyanazt a mondatot több mezőben.
 - Ha a források valamiről nem szólnak, írd azt, hogy erről a források nem szólnak."""
+
+# Ha a kis modell az utasítást „visszhangozza”, azt a mezőt eldobjuk.
+_ECHO = ("klímajáték", "climate game", "magyarázatát készítjük", "egy témában", "the player",
+         "a játékos", "forrásszöveg", "source text")
+
+
+def clean_explanation(m: Dict, lang: str = "hu") -> Dict:
+    out = {}
+    for k, v in m.items():
+        t = str(v).strip()
+        if any(e in t.lower() for e in _ECHO):
+            t = ""
+        if t and not lang.startswith("en"):
+            from .evidence import hungarianize
+            t = hungarianize(t)
+        out[k] = t
+    return out
 
 
 def wiki_search_url(lang: str, term: str) -> str:
@@ -91,7 +112,7 @@ def wiki_article(fetch: Callable[..., bytes], lang: str, term: str) -> Optional[
 
 
 def build(wiki_term: str, wiki_term_en: str, review_query: str, fetch: Callable[..., bytes],
-          provider=None, lang: str = "hu", log=print, search_reviews=None) -> Dict:
+          provider=None, lang: str = "hu", log=print, search_reviews=None, title: str = "") -> Dict:
     en = lang.startswith("en")
     res = {"wiki": None, "cikkek": [], "magyarazat": None, "tipus": "forras", "megjegyzes": ""}
     try:
@@ -116,11 +137,12 @@ def build(wiki_term: str, wiki_term_en: str, review_query: str, fetch: Callable[
             parts.append(f"<wikipedia nyelv=\"{res['wiki']['nyelv']}\">\n{res['wiki']['szoveg']}\n</wikipedia>")
         for i, c in enumerate(res["cikkek"], 1):
             parts.append(f"<cikk {i}: {c['cim']} ({c['ev']})>\n{c['absztrakt']}\n</cikk>")
-        user = f"Nyelv: {'English' if en else 'magyar'}\nTéma: {wiki_term_en if en else wiki_term}\n\n" + "\n\n".join(parts)
+        theme = title or (wiki_term_en if en else wiki_term)   # a játék kérdése érthetőbb, mint a keresőszó
+        user = f"Nyelv: {'English' if en else 'magyar'}\nTéma: {theme}\n\n" + "\n\n".join(parts)
         if en:   # a rendszerprompt magyar, ezért a kis modellek hajlamosak magyarul válaszolni
             user += "\n\nIMPORTANT: write all four fields in ENGLISH."
         try:
-            res["magyarazat"] = provider.json_call(TOPIC_SYSTEM, user, TOPIC_SCHEMA, 1500)
+            res["magyarazat"] = clean_explanation(provider.json_call(TOPIC_SYSTEM, user, TOPIC_SCHEMA, 1500), lang)
             res["tipus"] = "ai"
         except Exception as e:
             res["megjegyzes"] = (f"AI explanation failed: {e}" if en else f"Az AI-magyarázat nem sikerült: {e}")
@@ -140,7 +162,7 @@ def cmd_tema(args):
             provider = get_provider(args.ai)
         except Exception as e:
             note = str(e)
-    res = build(args.wiki, args.wiki_en, args.kereses, _http, provider, args.nyelv)
+    res = build(args.wiki, args.wiki_en, args.kereses, _http, provider, args.nyelv, title=args.cim)
     if note:
         res["megjegyzes"] = (res["megjegyzes"] + " " + note).strip()
     out = Path(args.ki)
@@ -156,6 +178,7 @@ def add_parsers(sub):
     p.add_argument("--wiki-en", required=True, help="angol Wikipédia-keresőszó")
     p.add_argument("--kereses", required=True, help="angol keresőkifejezés összefoglaló cikkekhez")
     p.add_argument("--ki", required=True)
+    p.add_argument("--cim", default="", help="a játék kérdése (az AI ezt magyarázza)")
     p.add_argument("--ai", default="none", choices=["claude", "openai", "gemini", "ollama", "none"])
     p.add_argument("--nyelv", default="hu", choices=["hu", "en"])
     p.set_defaults(fn=cmd_tema)

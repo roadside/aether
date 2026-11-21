@@ -163,7 +163,7 @@ var _topic_phase := ""           # "gyors" (AI nélkül) vagy "ai"
 
 
 func _topic_path(q: Dictionary, ai: String) -> String:
-	return bridge.work_dir("aether_temak").path_join("%s_%s_%s.json" % [str(q["wiki_en"]).md5_text().left(10), L.lang, ai])
+	return bridge.work_dir("aether_temak").path_join("v2_%s_%s_%s.json" % [str(q["wiki_en"]).md5_text().left(10), L.lang, ai])
 
 
 func _show_topic(q: Dictionary) -> void:
@@ -191,7 +191,7 @@ func _run_topic(phase: String) -> void:
 	var ai := "none" if phase == "gyors" else _topic_ai
 	_topic_out = _topic_path(_topic_q, ai)
 	if not bridge.run("tema", ["tema", "--wiki", str(_topic_q["wiki"]), "--wiki-en", str(_topic_q["wiki_en"]),
-			"--kereses", str(_topic_q["attekintes"]), "--ki", _topic_out, "--ai", ai, "--nyelv", L.lang]):
+			"--kereses", str(_topic_q["attekintes"]), "--cim", L.t(str(_topic_q["cim"])), "--ki", _topic_out, "--ai", ai, "--nyelv", L.lang]):
 		if phase == "gyors":
 			_show_busy()
 
@@ -200,7 +200,9 @@ func _render_topic(r: Dictionary) -> void:
 	_header(L.t(_topic_q["cim"]), 0, "")
 	var m: Variant = r.get("magyarazat")
 	if typeof(m) == TYPE_DICTIONARY:
-		for part in [["mi_ez", "Mi ez?"], ["mire_jo", "Mire jó?"], ["hatranyok", "Mi a gond vele?"], ["mennyire_bizonyitott", "Mennyire bizonyított?"]]:
+		for part in [["mire_jo", "Mire jó?"], ["hatranyok", "Mi a gond vele?"], ["mennyire_bizonyitott", "Mennyire bizonyított?"]]:
+			if str(m.get(part[0], "")).strip() == "":
+				continue
 			var c := UI.card(UI.GOLD)
 			c.add_child(UI.label(L.t(part[1]), 17, UI.GOLD, true))
 			c.add_child(UI.label(str(m.get(part[0], "")), 17, UI.TEXT))
@@ -209,9 +211,10 @@ func _render_topic(r: Dictionary) -> void:
 	var src := UI.vbox(2)
 	var w: Variant = r.get("wiki")
 	if typeof(w) == TYPE_DICTIONARY:
-		if typeof(m) != TYPE_DICTIONARY:
+		# AI nélkül a Wikipédia bevezetője, de csak a játékos nyelvén; ha az AI még ír, semmi
+		if typeof(m) != TYPE_DICTIONARY and _topic_ai == "none" and str(w.get("nyelv", "")) == L.lang:
 			var c := UI.card(UI.GOLD)
-			c.add_child(UI.label(L.t("Mi ez? (Wikipédia)"), 17, UI.GOLD, true))
+			c.add_child(UI.label(L.t("Wikipédia"), 17, UI.GOLD, true))
 			c.add_child(UI.label(str(w.get("bevezeto", "")), 17, UI.TEXT))
 			_body.add_child(UI.card_root(c))
 		src.add_child(_text_link(L.t("Wikipédia: ") + str(w.get("cim", "")) + " (" + str(w.get("nyelv", "")) + ", CC BY-SA 4.0)",

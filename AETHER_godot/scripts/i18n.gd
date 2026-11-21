@@ -422,4 +422,5 @@ const EN := {
 	"Korszak": "Era",
 	"Tudásfa (játékszabály): a kutatott témák új korszakot, új témákat és új tervlehetőségeket nyitnak. Kutatás gomb.": "Knowledge tree (game rule): researched topics open new eras, topics and plan options. See the Research button.",
 	"Új korszak: %s! %s": "New era: %s! %s",
+	"Wikipédia": "Wikipedia",
 }

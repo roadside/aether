@@ -60,3 +60,12 @@ class TestTitleAllWords(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestCleanExplanation(unittest.TestCase):
+    def test_echo_dropped_and_hungarianized(self):
+        m = topic.clean_explanation({"mi_ez": "Egy témában a klímajáték játékosának magyarázatát készítjük.",
+                                     "mire_jo": "A biochar 0.5 GtCO2/év kivonást adhat."}, "hu")
+        self.assertEqual(m["mi_ez"], "")
+        self.assertIn("bioszén", m["mire_jo"])
+        self.assertIn("0,5", m["mire_jo"])
