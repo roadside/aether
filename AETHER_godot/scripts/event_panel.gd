@@ -86,10 +86,6 @@ func _build() -> void:
 	var sp := Control.new()
 	sp.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(sp)
-	var x := UI.button(L.t("Bezárás"))
-	var close_fn := func() -> void: closed.emit()
-	x.pressed.connect(close_fn)
-	h.add_child(x)
 	_body.add_child(h)
 	var hd := UI.heading(display_title(event, home), 24)
 	hd.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

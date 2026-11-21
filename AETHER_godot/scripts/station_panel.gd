@@ -51,10 +51,6 @@ func rebuild() -> void:
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(spacer)
-	var x := UI.button(L.t("Bezárás"))
-	var close_fn := func() -> void: closed.emit()
-	x.pressed.connect(close_fn)
-	h.add_child(x)
 	_body.add_child(h)
 	_body.add_child(UI.label(L.t("Fejleszd az állomásodat: több és alaposabb kutatás, több bizalom. Egy modul építése 1 évig tart."), 16, UI.SOFT))
 	_body.add_child(_picture())

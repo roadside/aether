@@ -78,9 +78,6 @@ func _header(title: String, step: int, help: String) -> void:
 	h.add_child(spacer)
 	if step > 0:
 		h.add_child(UI.label(L.t("%d. lépés / 4") % step, 15, UI.MUTE, false, false))
-	var x := UI.button(L.t("Bezárás"))
-	x.pressed.connect(_close)
-	h.add_child(x)
 	_body.add_child(h)
 	if help != "":
 		_body.add_child(UI.label(help, 17, UI.SOFT))

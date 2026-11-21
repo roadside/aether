@@ -101,10 +101,6 @@ func rebuild() -> void:
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(spacer)
-	var x := UI.button(L.t("Bezárás"))
-	var close_fn := func() -> void: closed.emit()
-	x.pressed.connect(close_fn)
-	h.add_child(x)
 	_body.add_child(h)
 	if mission.is_empty():
 		_body.add_child(UI.label(L.t("Állítsd be, mit tegyen a világ, és nézd meg, mi lesz 2100-ig."), 17, UI.SOFT))

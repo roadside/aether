@@ -44,6 +44,7 @@ var _year_slider: HSlider
 var _year_label: Label
 var _overlay: Control
 var _dim: ColorRect
+var _close_x: Button                 # kerek X a megnyitott ablak sarkán
 var _plan                     # plan_panel.gd példány (megmarad a jóváhagyott karokkal)
 var campaign                  # campaign.gd: telő idő, pénz, bizalom
 var _play_btn: Button
@@ -211,6 +212,9 @@ func _stat(parent: Control, key: String, caption: String, value: String, color: 
 ## F11: teljes képernyő be/ki. (A felület 1600×900-as tervből bármekkora
 ## kijelzőre élesen felnagyul, a betűk a valódi felbontáson rajzolódnak.)
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ESCAPE and _overlay != null:
+		_request_close()
+		return
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F11:
 		var fs := DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED if fs else DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -577,6 +581,9 @@ func _show_event(e: Dictionary) -> void:
 func _close_overlay() -> void:
 	if campaign != null:
 		campaign.blocked = false
+	if _close_x != null:
+		_close_x.queue_free()
+		_close_x = null
 	if _overlay != null:
 		remove_child(_overlay)
 		if _overlay != _plan:
@@ -608,6 +615,41 @@ func _place_overlay(c: Control) -> void:
 	c.z_index = 11
 	_overlay = c
 	add_child(c)
+	# Kerek X a keret jobb felső sarkán: görgetéstől függetlenül mindig látszik.
+	_close_x = Button.new()
+	_close_x.text = "X"
+	_close_x.tooltip_text = L.t("Bezárás")
+	_close_x.focus_mode = Control.FOCUS_NONE
+	_close_x.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	_close_x.add_theme_font_override("font", UI.font_bold)
+	_close_x.add_theme_font_size_override("font_size", 22)
+	for st in ["font_color", "font_hover_color", "font_pressed_color"]:
+		_close_x.add_theme_color_override(st, Color.WHITE)
+	for st in ["normal", "hover", "pressed", "hover_pressed", "focus"]:
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color("#8a2b2b") if st.begins_with("hover") or st == "pressed" else Color("#1a2238")
+		sb.border_color = UI.CYAN
+		sb.set_border_width_all(3)
+		sb.set_corner_radius_all(22)
+		_close_x.add_theme_stylebox_override(st, sb)
+	_close_x.size = Vector2(44, 44)
+	_close_x.custom_minimum_size = Vector2(44, 44)
+	_close_x.position = c.position + Vector2(c.size.x - 22, -22)
+	_close_x.z_index = 12
+	_close_x.pressed.connect(_request_close)
+	add_child(_close_x)
+
+
+## Az X és az Esc: az ablak saját bezárását hívja (pl. a kutatás leállítja a figyelést).
+func _request_close() -> void:
+	if _overlay == null:
+		return
+	if _overlay.has_method("_close"):
+		_overlay._close()
+	elif _overlay.has_signal("closed"):
+		_overlay.emit_signal("closed")
+	else:
+		_close_overlay()
 
 
 func _open_research() -> void:
