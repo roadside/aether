@@ -250,7 +250,7 @@ func _show_topic(q: Dictionary) -> void:
 		return
 	for ai in [_topic_ai, "none"]:
 		var cached: Variant = Bridge.read_json(_topic_path(q, ai))
-		if typeof(cached) == TYPE_DICTIONARY:
+		if typeof(cached) == TYPE_DICTIONARY and not ((cached as Dictionary).get("cikkek", []) as Array).is_empty():
 			_render_topic(cached)
 			if ai != _topic_ai and _topic_ai != "none":
 				_run_topic("ai")
@@ -284,6 +284,7 @@ func _render_topic(r: Dictionary) -> void:
 	# A források: AI-összefoglaló mellett egy gomb mögött, egymás alatt; anélkül láthatóan.
 	var src := UI.vbox(2)
 	var w: Variant = r.get("wiki")
+	var wiki_shown := false
 	if typeof(w) == TYPE_DICTIONARY:
 		# AI nélkül a Wikipédia bevezetője, de csak a játékos nyelvén; ha az AI még ír, semmi
 		if typeof(m) != TYPE_DICTIONARY and _topic_ai == "none" and str(w.get("nyelv", "")) == L.lang:
@@ -291,8 +292,18 @@ func _render_topic(r: Dictionary) -> void:
 			c.add_child(UI.label(L.t("Wikipédia"), 17, UI.GOLD, true))
 			c.add_child(UI.label(str(w.get("bevezeto", "")), 17, UI.TEXT))
 			_body.add_child(UI.card_root(c))
+			wiki_shown = true
 		src.add_child(UI.text_link(L.t("Wikipédia: ") + str(w.get("cim", "")) + " (" + str(w.get("nyelv", "")) + ", CC BY-SA 4.0)",
 			str(w.get("link", ""))))
+	if typeof(m) != TYPE_DICTIONARY and not wiki_shown:
+		var own := Knowledge.text(_topic_q, "magyarazat")
+		if own != "":
+			var c := UI.card(UI.GOLD)
+			c.add_child(UI.label(L.t("Röviden"), 17, UI.GOLD, true))
+			c.add_child(UI.label(own, 17, UI.TEXT))
+			_body.add_child(UI.card_root(c))
+		if _topic_ai == "none":
+			_body.add_child(UI.label(L.t("Részletesebb magyarázatot az AI ír. AI-t a kutatás 2. lépésében választhatsz."), 15, UI.SOFT))
 	var papers: Array = r.get("cikkek", [])
 	if not papers.is_empty():
 		src.add_child(UI.label(L.t("Tudományos összefoglaló cikkek"), 15, UI.SOFT, true))

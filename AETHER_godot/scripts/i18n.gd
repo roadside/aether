@@ -411,6 +411,8 @@ const EN := {
 	"Csak megérted: a játékban nem vezethető be.": "Understanding only: it cannot be deployed in the game.",
 	"zárva": "locked",
 	"✓ Kutatva ": "✓ Researched ",
+	"Röviden": "In short",
+	"Részletesebb magyarázatot az AI ír. AI-t a kutatás 2. lépésében választhatsz.": "The AI writes a more detailed explanation. You can choose an AI in step 2 of research.",
 	"Keresés a témák között, pl. jég, akkumulátor, metán": "Search topics, e.g. ice, battery, methane",
 	"Nincs ilyen téma a nyitott korszakokban.": "No such topic in the open eras.",
 	"Erősebb tudás a tudásfán: ": "Stronger knowledge in the tree: ",
