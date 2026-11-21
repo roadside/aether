@@ -1,0 +1,37 @@
+{
+ "wiki": {
+  "nyelv": "en",
+  "cim": "Drought tolerance in barley",
+  "bevezeto": "Barley (Hordeum vulgare) is known to be more environmentally-tolerant than other cereal crops, in terms of soil pH, mineral nutrient availability, and water availability. Because of this, much research is being done on barley plants in order to determine whether or not there is a genetic basis for this environmental hardiness.",
+  "link": "https://en.wikipedia.org/wiki/Drought_tolerance_in_barley",
+  "licenc": "CC BY-SA 4.0"
+ },
+ "cikkek": [
+  {
+   "cim": "Review on the Development of Drought Tolerant Maize Genotypes in Iraq",
+   "ev": 2021,
+   "folyoirat": "IOP Conference Series Earth and Environmental Science",
+   "link": "https://doi.org/10.1088/1755-1315/904/1/012010"
+  },
+  {
+   "cim": "Two decades of creating drought tolerant maize and underpinning prediction technologies in the US corn-belt: Review and perspectives on the future of crop design",
+   "ev": 2020,
+   "folyoirat": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "link": "https://doi.org/10.1101/2020.10.29.361337"
+  },
+  {
+   "cim": "Adoption Rates and Yield Improvements of Drought-Tolerant Maize Varieties among Smallholder Farmers in Eastern Uganda: A Systematic Literature Review",
+   "ev": 2005,
+   "folyoirat": "Zenodo (CERN European Organization for Nuclear Research)",
+   "link": "https://doi.org/10.5281/zenodo.18817261"
+  }
+ ],
+ "magyarazat": {
+  "mi_ez": "A kukorica szárazságtűrés a növények képessége, hogy jól teljesítsen száraz időjárás esetén, például kevesebb víz elérhetősége mellett.",
+  "mire_jo": "A szárazságtűrő kukorica segíthet a klímaváltozás miatti szárazságok ellen, különösen észak-afrikai, arab területek és dél-amerikai országokban, ahol a növénytermesztés fontos a táplálkozáshoz.",
+  "hatranyok": "A kukorica szárazságtűrésének fejlesztése még nem teljesen bizonyított, és a tudományos kutatások szerint a szárazság hatásai komplexek, így a növények teljesítményének javítása nehéz lehet.",
+  "mennyire_bizonyitott": "A tudományos kutatások szerint a kukorica szárazságtűrésének bizonyos mechanizmusai, például a C4-fotoszintézis és a növényi hormonok működése, részben bizonyítottak, de a teljes kép még nem teljesen tisztázott."
+ },
+ "tipus": "ai",
+ "megjegyzes": ""
+}

@@ -1,0 +1,37 @@
+{
+ "wiki": {
+  "nyelv": "en",
+  "cim": "Afforestation",
+  "bevezeto": "Afforestation is the establishment of a forest or stand of trees in an area where there was no recent tree cover. There are three types of afforestation: natural regeneration, agroforestry and tree plantations. In the context of climate change, afforestation can be helpful for climate change mitigation through the route of carbon sequestration. Afforestation can also improve the local climate through increased rainfall and by being a barrier against high winds. The additional trees can also prevent or reduce topsoil erosion (from water and wind), floods and landslides. Finally, additional trees can be a habitat for wildlife, and provide employment and wood products.\nIn comparison, reforestation means re-establishing forest that have either been cut down or lost due to natural causes, such as fire, storm, etc. Nowadays, the boundaries between afforestation and reforestation projects can be blurred as it may not be so clear what was there before at what point in time.\nAn essential aspect of successful afforestation efforts lies in the careful selection of tree species that are well-suited to the local climate and soil conditions. By choosing appropriate species, afforested areas can ",
+  "link": "https://en.wikipedia.org/wiki/Afforestation",
+  "licenc": "CC BY-SA 4.0"
+ },
+ "cikkek": [
+  {
+   "cim": "Pine afforestation on degraded lands: a global review of carbon sequestration potential",
+   "ev": 2025,
+   "folyoirat": "Frontiers in Forests and Global Change",
+   "link": "https://doi.org/10.3389/ffgc.2025.1648094"
+  },
+  {
+   "cim": "[Greenhouse gas emissions, carbon leakage and net carbon sequestration from afforestation and forest management: A review.]",
+   "ev": 2017,
+   "folyoirat": "PubMed",
+   "link": "https://doi.org/10.13287/j.1001-9332.201702.004"
+  },
+  {
+   "cim": "Economics of afforestation for carbon sequestration in western Canada",
+   "ev": 2000,
+   "folyoirat": "The Forestry Chronicle",
+   "link": "https://doi.org/10.5558/tfc76165-1"
+  }
+ ],
+ "magyarazat": {
+  "mi_ez": "Erdősítés az erdők kialakítása, azaz fafajták növekedése egy olyan területen, ahol korábban nem volt erdő. Ez segíthet a klímaváltozás ellen, mert a fák elnyelnek szén-dioxidot.",
+  "mire_jo": "A fák növekedése csökkentheti a levegő szén-dioxid-tartalmát, megvédheti a talajt a lemosással szemben, és segíthet az állatok élőhelyének megőrzésében.",
+  "hatranyok": "A fák növekedése nem mindig segít az állatvilágban, mert a terület szétszórtabbá válhat. Ezenkívül, a fák növekedése néha károsíthatja a természetes szénképződést, például a szavannákat vagy a tundrát.",
+  "mennyire_bizonyitott": "A tudományos tanulmányok szerint az erdősítés segíthet a klímaváltozás ellen, de vannak kritikák is, mivel a fák növekedése nem mindig hatékony, és más természeti területek is fontosak a klímaváltozás elleni küzdelemben."
+ },
+ "tipus": "ai",
+ "megjegyzes": ""
+}

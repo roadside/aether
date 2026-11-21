@@ -1,0 +1,37 @@
+{
+ "wiki": {
+  "nyelv": "en",
+  "cim": "Afforestation",
+  "bevezeto": "Afforestation is the establishment of a forest or stand of trees in an area where there was no recent tree cover. There are three types of afforestation: natural regeneration, agroforestry and tree plantations. In the context of climate change, afforestation can be helpful for climate change mitigation through the route of carbon sequestration. Afforestation can also improve the local climate through increased rainfall and by being a barrier against high winds. The additional trees can also prevent or reduce topsoil erosion (from water and wind), floods and landslides. Finally, additional trees can be a habitat for wildlife, and provide employment and wood products.\nIn comparison, reforestation means re-establishing forest that have either been cut down or lost due to natural causes, such as fire, storm, etc. Nowadays, the boundaries between afforestation and reforestation projects can be blurred as it may not be so clear what was there before at what point in time.\nAn essential aspect of successful afforestation efforts lies in the careful selection of tree species that are well-suited to the local climate and soil conditions. By choosing appropriate species, afforested areas can ",
+  "link": "https://en.wikipedia.org/wiki/Afforestation",
+  "licenc": "CC BY-SA 4.0"
+ },
+ "cikkek": [
+  {
+   "cim": "Pine afforestation on degraded lands: a global review of carbon sequestration potential",
+   "ev": 2025,
+   "folyoirat": "Frontiers in Forests and Global Change",
+   "link": "https://doi.org/10.3389/ffgc.2025.1648094"
+  },
+  {
+   "cim": "[Greenhouse gas emissions, carbon leakage and net carbon sequestration from afforestation and forest management: A review.]",
+   "ev": 2017,
+   "folyoirat": "PubMed",
+   "link": "https://doi.org/10.13287/j.1001-9332.201702.004"
+  },
+  {
+   "cim": "Economics of afforestation for carbon sequestration in western Canada",
+   "ev": 2000,
+   "folyoirat": "The Forestry Chronicle",
+   "link": "https://doi.org/10.5558/tfc76165-1"
+  }
+ ],
+ "magyarazat": {
+  "mi_ez": "Afforestation is planting trees in areas where there were no trees before, like old farms or empty land. It helps make new forests.",
+  "mire_jo": "Trees can catch carbon from the air, which helps fight climate change. They also stop soil from washing away, bring more rain, and give homes to animals.",
+  "hatranyok": "Planting trees can sometimes harm other wildlife by splitting their habitats. Also, not all tree areas are good for carbon storage, and some areas are better left as grasslands.",
+  "mennyire_bizonyitott": "There is strong science showing that planting trees can help the climate, but some studies say it's not the only way to reduce carbon. The benefits depend on where and how trees are planted."
+ },
+ "tipus": "ai",
+ "megjegyzes": ""
+}

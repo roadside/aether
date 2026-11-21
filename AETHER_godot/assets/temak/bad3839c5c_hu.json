@@ -1,0 +1,37 @@
+{
+ "wiki": {
+  "nyelv": "en",
+  "cim": "Biochar",
+  "bevezeto": "Biochar is a form of charcoal, sometimes modified, that is intended for organic use, as in soil. It is the lightweight black remnants of the pyrolysis of biomass, consisting of carbon and ashes. Despite its name, biochar is sterile immediately after production and only gains biological life following assisted or incidental exposure to biota. Biochar is defined by the International Biochar Initiative as the \"solid material obtained from the thermochemical conversion of biomass in an oxygen-limited environment\".\nBiochar is mainly used in soils to increase soil aeration, reduce soil emissions of greenhouse gases, improve soil fertility, reduce nutrient leaching, reduce soil acidity, and potentially increase the water content of coarse soils. Biochar application may increase soil fertility and agricultural productivity. However, when applied excessively or made from feedstock unsuitable for the soil type, biochar soil amendments also have the potential for negative effects, including harming soil biota, reducing available water content, altering soil pH, and increasing salinity.\nBeyond soil application, biochar can be used for slash-and-char farming, for water retention in soil, and as",
+  "link": "https://en.wikipedia.org/wiki/Biochar",
+  "licenc": "CC BY-SA 4.0"
+ },
+ "cikkek": [
+  {
+   "cim": "Potential Role of Biochar on Capturing Soil Nutrients, Carbon Sequestration and Managing Environmental Challenges: A Review",
+   "ev": 2023,
+   "folyoirat": "Sustainability",
+   "link": "https://doi.org/10.3390/su15032527"
+  },
+  {
+   "cim": "Review of the Effects of Biochar Amendment on Soil Properties and Carbon Sequestration",
+   "ev": 2015,
+   "folyoirat": "Journal of Hazardous Toxic and Radioactive Waste",
+   "link": "https://doi.org/10.1061/(asce)hz.2153-5515.0000293"
+  },
+  {
+   "cim": "The impacts of biochar on carbon sequestration, soil processes, and microbial communities: a review",
+   "ev": 2025,
+   "folyoirat": "Biochar",
+   "link": "https://doi.org/10.1007/s42773-025-00499-3"
+  }
+ ],
+ "magyarazat": {
+  "mi_ez": "A bioszén egy szénból álló, könnyű, fekete anyag, amit biomassza (pl. növényi hulladék) pirólízisén készül, és a talajba való alkalmazásra készül. A bioszén nem élő, de a talajban megjelenve élő szervezetekkel érintkezve élővé válhat.",
+  "mire_jo": "A bioszén segít a talajban megőrizni a szénat, növelni a talaj termékenységét, csökkenteni a növényi hulladék kibocsátását, és a talaj pH-értékét javítani. Egyes esetekben segíthet a talaj vízálló képességének növelésében is.",
+  "hatranyok": "Ha túl sokat alkalmaznak, vagy rossz anyagból készül, a bioszén károsíthatja a talaj mikrobáit, csökkentheti a talajban lévő vízmennyiséget, és módosíthatja a talaj pH-értékét. Egyes esetekben a talaj sótartalma is nőhet.",
+  "mennyire_bizonyitott": "A tudományos kutatások szerint a bioszén használata bizonyítottan segíthet a klímavédelemben, de van olyan eset, amikor a hatások nem teljesen ismertek. A bioszén hatásának pontos értékelése további vizsgálatokra szorul."
+ },
+ "tipus": "ai",
+ "megjegyzes": ""
+}

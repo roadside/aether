@@ -1,0 +1,37 @@
+{
+ "wiki": {
+  "nyelv": "en",
+  "cim": "Enhanced weathering",
+  "bevezeto": "Enhanced weathering, also termed ocean alkalinity enhancement when proposed for carbon credit systems, is a process that aims to accelerate natural weathering by spreading finely ground silicate rock, such as basalt, onto surfaces, speeding up chemical reactions between rocks, water, and air. It also removes carbon dioxide (CO2) from the atmosphere through the formation of carbonic acid, permanently storing it in solid carbonate minerals or ocean alkalinity. The latter also slows ocean acidification.\nEnhanced weathering is a chemical approach to removing carbon dioxide involving land-based or ocean-based techniques. One example of a land-based enhanced weathering technique is in-situ carbonation of silicates. Ultramafic rock, for example, has the potential to store hundreds to thousands of years' worth of CO2 emissions. Ocean-based techniques involve alkalinity enhancement, such as grinding, dispersing, and dissolving olivine, limestone, silicates, or calcium hydroxide to address ocean acidification and CO2 sequestration.\nAlthough existing mine tailings or alkaline industrial silicate minerals (such as steel slags, construction and demolition waste, or ash from biomass incineration",
+  "link": "https://en.wikipedia.org/wiki/Enhanced_weathering",
+  "licenc": "CC BY-SA 4.0"
+ },
+ "cikkek": [
+  {
+   "cim": "CO₂ sequestration and soil improvement in enhanced rock weathering: A review from an experimental perspective",
+   "ev": 2024,
+   "folyoirat": "Greenhouse Gases Science and Technology",
+   "link": "https://doi.org/10.1002/ghg.2313"
+  },
+  {
+   "cim": "Review and syntheses: Ocean alkalinity enhancement and carbon dioxide removal through marine enhanced rock weathering using olivine",
+   "ev": 2025,
+   "folyoirat": "Biogeosciences",
+   "link": "https://doi.org/10.5194/bg-22-355-2025"
+  },
+  {
+   "cim": "Reviews and syntheses: Carbon vs. cation based MRV of Enhanced Rock Weathering and the issue of soil organic carbon",
+   "ev": 2026,
+   "folyoirat": "Biogeosciences",
+   "link": "https://doi.org/10.5194/bg-23-53-2026"
+  }
+ ],
+ "magyarazat": {
+  "mi_ez": "Enhanced weathering is a method to remove carbon dioxide from the air by using finely crushed rocks like basalt. These rocks react with water and air to form solid minerals that store carbon long-term.",
+  "mire_jo": "This method helps reduce atmospheric CO2, which can slow global warming, and also helps neutralize ocean acidification by increasing ocean alkalinity.",
+  "hatranyok": "It can be expensive to crush and spread the rocks, and there are risks of releasing harmful metals into the environment. Also, it works best in certain soil and rock types.",
+  "mennyire_bizonyitott": "There is some scientific support for enhanced weathering, but more research is needed, especially for large-scale ocean use. Lab experiments show promise, but real-world results are still being studied."
+ },
+ "tipus": "ai",
+ "megjegyzes": ""
+}

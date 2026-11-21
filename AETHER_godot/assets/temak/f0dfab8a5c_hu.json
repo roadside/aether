@@ -1,0 +1,37 @@
+{
+ "wiki": {
+  "nyelv": "en",
+  "cim": "Enhanced weathering",
+  "bevezeto": "Enhanced weathering, also termed ocean alkalinity enhancement when proposed for carbon credit systems, is a process that aims to accelerate natural weathering by spreading finely ground silicate rock, such as basalt, onto surfaces, speeding up chemical reactions between rocks, water, and air. It also removes carbon dioxide (CO2) from the atmosphere through the formation of carbonic acid, permanently storing it in solid carbonate minerals or ocean alkalinity. The latter also slows ocean acidification.\nEnhanced weathering is a chemical approach to removing carbon dioxide involving land-based or ocean-based techniques. One example of a land-based enhanced weathering technique is in-situ carbonation of silicates. Ultramafic rock, for example, has the potential to store hundreds to thousands of years' worth of CO2 emissions. Ocean-based techniques involve alkalinity enhancement, such as grinding, dispersing, and dissolving olivine, limestone, silicates, or calcium hydroxide to address ocean acidification and CO2 sequestration.\nAlthough existing mine tailings or alkaline industrial silicate minerals (such as steel slags, construction and demolition waste, or ash from biomass incineration",
+  "link": "https://en.wikipedia.org/wiki/Enhanced_weathering",
+  "licenc": "CC BY-SA 4.0"
+ },
+ "cikkek": [
+  {
+   "cim": "CO₂ sequestration and soil improvement in enhanced rock weathering: A review from an experimental perspective",
+   "ev": 2024,
+   "folyoirat": "Greenhouse Gases Science and Technology",
+   "link": "https://doi.org/10.1002/ghg.2313"
+  },
+  {
+   "cim": "Review and syntheses: Ocean alkalinity enhancement and carbon dioxide removal through marine enhanced rock weathering using olivine",
+   "ev": 2025,
+   "folyoirat": "Biogeosciences",
+   "link": "https://doi.org/10.5194/bg-22-355-2025"
+  },
+  {
+   "cim": "Reviews and syntheses: Carbon vs. cation based MRV of Enhanced Rock Weathering and the issue of soil organic carbon",
+   "ev": 2026,
+   "folyoirat": "Biogeosciences",
+   "link": "https://doi.org/10.5194/bg-23-53-2026"
+  }
+ ],
+ "magyarazat": {
+  "mi_ez": "A kőzetmállás szén-dioxid egy technológia, amely segítségével a talajra vagy tengerre szórják a finoman összetört kőzeteket, például a bazaltot, hogy gyorsabban elszívják a levegőből a szén-dioxidot.",
+  "mire_jo": "Ez a technológia segíthet a klímaváltozás ellen, mert a szén-dioxidot kiszedi a levegőből, és hosszú időre elhelyezheti a talajban vagy a tengerben, így csökkentheti a globális felmelegedést.",
+  "hatranyok": "A technológia még nem teljesen bizonyított, mert a laboratóriumi eredmények és a valóság között nagy különbség lehet. Továbbá, a szén-dioxid kiszedése során kiszivároghatnak a talajba a nehézfémek, amelyek károsak lehetnek az emberi egészségre és a talajra.",
+  "mennyire_bizonyitott": "A tudományos ismeretek szerint a kőzetmállás szén-dioxid részben bizonyított, de még nem teljesen biztos, mert a valós körülmények között nem minden összefüggés működik ugyanúgy, mint a laboratóriumban."
+ },
+ "tipus": "ai",
+ "megjegyzes": ""
+}
