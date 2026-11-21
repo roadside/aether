@@ -9,7 +9,7 @@ const GREEN := Color("#8fe388")
 const TEXT := Color("#f2f4f8")
 const SOFT := Color("#c9d1de")
 const MUTE := Color("#a7b2c4")
-const PANEL_BG := Color(0.043, 0.063, 0.114, 0.96)
+const PANEL_BG := Color(0.043, 0.063, 0.114, 1.0)
 const CARD_BG := Color(0.09, 0.13, 0.22, 1.0)
 const EDGE := Color("#33476b")
 

@@ -57,12 +57,28 @@ def wiki_extract_url(lang: str, title: str) -> str:
          "titles": title, "format": "json", "redirects": 1})
 
 
+def _stem(w: str) -> str:
+    import unicodedata
+    w = unicodedata.normalize("NFKD", w.lower())
+    w = "".join(c for c in w if c.isalnum())
+    return w[:5]
+
+
+def title_matches(title: str, term: str) -> bool:
+    """A cikk címe tényleg a keresett témáról szól? (a keresőszó első szavának töve a címben)"""
+    first = (term.split() or [""])[0]
+    t = [_stem(x) for x in title.replace("-", " ").split()]
+    return bool(first) and _stem(first) in t
+
+
 def wiki_article(fetch: Callable[..., bytes], lang: str, term: str) -> Optional[Dict]:
     """Az első találat cikkének szövege (a bevezetővel kezdve)."""
     hits = json.loads(fetch(wiki_search_url(lang, term))).get("query", {}).get("search", [])
     if not hits:
         return None
     title = hits[0]["title"]
+    if not title_matches(title, term):
+        return None   # pl. "bioszén" keresésre a "Biogáz" jött: az nem ugyanaz, inkább az angol cikk
     pages = json.loads(fetch(wiki_extract_url(lang, title))).get("query", {}).get("pages", {})
     text = next(iter(pages.values()), {}).get("extract", "") if pages else ""
     if len(text) < 200:
@@ -88,7 +104,7 @@ def build(wiki_term: str, wiki_term_en: str, review_query: str, fetch: Callable[
             from .literature import search_openalex
             search_reviews = lambda q: search_openalex(q, 6)  # noqa: E731
         papers = [p for p in search_reviews(review_query) if p.abstract][:3]
-        res["cikkek"] = [{"cim": p.title, "ev": p.year, "folyoirat": p.venue,
+        res["cikkek"] = [{"cim": p.title, "ev": int(p.year) if p.year else "", "folyoirat": p.venue,
                           "link": f"https://doi.org/{p.doi}" if p.doi else p.url,
                           "absztrakt": p.abstract[:MAX_ABSTRACT]} for p in papers]
     except Exception as e:

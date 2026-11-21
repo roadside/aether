@@ -36,6 +36,7 @@ var _year_row: HBoxContainer
 var _year_slider: HSlider
 var _year_label: Label
 var _overlay: Control
+var _dim: ColorRect
 var _plan                     # plan_panel.gd példány (megmarad a jóváhagyott karokkal)
 
 
@@ -412,13 +413,29 @@ func _close_overlay() -> void:
 		if _overlay != _plan:
 			_overlay.queue_free()
 		_overlay = null
+	if _dim != null:
+		_dim.queue_free()
+		_dim = null
 
 
+## A megnyitott ablak mögött elsötétített háttér: így az ablak jól kiemelkedik.
+## A sötét részre kattintva az ablak bezárul.
 func _place_overlay(c: Control) -> void:
 	_close_overlay()
-	c.position = Vector2(380, 84)
-	c.custom_minimum_size = Vector2(840, 680)
-	c.size = Vector2(840, 680)
+	_dim = ColorRect.new()
+	_dim.color = Color(0.0, 0.0, 0.02, 0.72)
+	_dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_dim.mouse_filter = Control.MOUSE_FILTER_STOP
+	_dim.z_index = 10
+	var dim_fn := func(ev: InputEvent) -> void:
+		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
+			_close_overlay()
+	_dim.gui_input.connect(dim_fn)
+	add_child(_dim)
+	c.position = Vector2(340, 84)
+	c.custom_minimum_size = Vector2(920, 680)
+	c.size = Vector2(920, 680)
+	c.z_index = 11
 	_overlay = c
 	add_child(c)
 

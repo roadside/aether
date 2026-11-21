@@ -51,7 +51,9 @@ func _ready() -> void:
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = UI.PANEL_BG
 	sb.border_color = UI.CYAN
-	sb.set_border_width_all(2)
+	sb.set_border_width_all(3)
+	sb.shadow_color = Color(0, 0, 0, 0.7)
+	sb.shadow_size = 28
 	sb.set_content_margin_all(24)
 	add_theme_stylebox_override("panel", sb)
 	var scroll := ScrollContainer.new()

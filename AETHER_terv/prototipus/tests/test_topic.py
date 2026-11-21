@@ -26,6 +26,13 @@ class FakeAI:
 
 
 class TestTopic(unittest.TestCase):
+    def test_title_match(self):
+        self.assertFalse(topic.title_matches("Biogáz", "bioszén"))
+        self.assertTrue(topic.title_matches("Bioszén", "bioszén"))
+        self.assertTrue(topic.title_matches("Biochar", "biochar"))
+        self.assertTrue(topic.title_matches("Enhanced weathering", "enhanced weathering"))
+        self.assertTrue(topic.title_matches("Erdősítés", "erdősítés"))
+
     def test_falls_back_to_english_wiki_and_uses_ai(self):
         ai = FakeAI()
         r = topic.build("bioszén", "biochar", "biochar review", fetch, ai, "hu", log=lambda *_: None,
