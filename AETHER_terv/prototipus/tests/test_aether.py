@@ -237,3 +237,9 @@ class TestHungarianize(unittest.TestCase):
         self.assertIn("0,5–5", t)
         self.assertIn("kőzetmállasztás", t)
         self.assertEqual(hungarianize("2026. január"), "2026. január")
+
+
+def test_redact_hides_keys():
+    from aether_lab.literature import redact
+    s = redact("Nem sikerült lekérni: https://api.openalex.org/works?search=x&api_key=ABC123&mailto=a@b.hu (HTTP 429)")
+    assert "ABC123" not in s and "a@b.hu" not in s and "search=x" in s and "api_key=REJTETT" in s

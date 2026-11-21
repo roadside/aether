@@ -69,7 +69,7 @@ def check(t: dict) -> dict:
         out["cikkek"], out["szammal"] = number_papers(t["kereses"].split("|"), params)
         out["gyenge"] = out["attekintok"] < MIN_REVIEWS or out["szammal"] < MIN_NUMBER_PAPERS
     except Exception as e:   # hálózati hiba: jelezzük, ne álljon le az egész
-        out["hiba"] = str(e)[:200]
+        out["hiba"] = lit.redact(str(e))[:200]
         out["gyenge"] = None
     return out
 

@@ -56,6 +56,14 @@ class Paper:
         return f"{a}{etal} ({self.year}). {self.title}. {self.venue}.{doi}"
 
 
+_SECRET_PARAM = re.compile(r"((?:api_key|apikey|key|token|mailto)=)[^&\s'\")]+", re.I)
+
+
+def redact(text: str) -> str:
+    """URL-ek és hibaüzenetek: az API-kulcs és az e-mail-cím sosem kerülhet naplóba vagy fájlba."""
+    return _SECRET_PARAM.sub(r"\1REJTETT", str(text))
+
+
 def _get(url: str, headers: Optional[Dict[str, str]] = None, timeout: int = 30, retries: int = 3) -> bytes:
     h = {"User-Agent": USER_AGENT}
     if headers:
@@ -69,7 +77,7 @@ def _get(url: str, headers: Optional[Dict[str, str]] = None, timeout: int = 30, 
         except Exception as e:  # hálózati hiba, 429, 5xx
             last = e
             time.sleep(1.5 * (2 ** i))
-    raise ConnectionError(f"Nem sikerült lekérni: {url} ({last})")
+    raise ConnectionError(redact(f"Nem sikerült lekérni: {url} ({last})"))
 
 
 def _norm_doi(doi: Optional[str]) -> Optional[str]:

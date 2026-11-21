@@ -100,7 +100,8 @@ def _http(url: str, data: Optional[bytes] = None, timeout: int = 30, retries: in
         except Exception as e:
             last = e
             time.sleep(1.0 * (i + 1))
-    raise ConnectionError(f"{url}: {last}")
+    from .literature import redact
+    raise ConnectionError(redact(f"{url}: {last}"))
 
 
 def _event(forras, cim, kat, datum, orszag, lat, lon, link, szint="", leiras="", cim_en="", forras_en="") -> Dict:
