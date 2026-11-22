@@ -370,6 +370,8 @@ func _saved_ai() -> String:
 
 
 static func _ai_name(id: String) -> String:
+	if id == "none":
+		return L.t("nincs (csak cikkeket keresek)")
 	for ch in AI_CHOICES:
 		if ch["id"] == id:
 			return L.t(ch["cim"])

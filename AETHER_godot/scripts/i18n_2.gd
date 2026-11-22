@@ -8,6 +8,7 @@ const EN := {
 	"Kutató AI: ": "Research AI: ",
 	"az első kutatásnál választod": "you choose at your first research",
 	"Másik AI": "Another AI",
+	"nincs (csak cikkeket keresek)": "none (I only search for papers)",
 	"A következő kutatásnál választasz": "You'll choose at the next research",
 	" · %d pénz": " · %d money",
 	"Ajánlott most": "Suggested now",
