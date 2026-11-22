@@ -45,6 +45,10 @@ func run(tag: String, args: Array) -> bool:
 func _worker(args: PackedStringArray) -> void:
 	var wrapper := "import os,runpy,sys; os.chdir(sys.argv[1]); sys.path.insert(0, sys.argv[1]); sys.argv=['aether_lab']+sys.argv[2:]; runpy.run_module('aether_lab', run_name='__main__')"
 	var candidates: Array = [_python] if _python != "" else ["py", "python", "python3"]
+	# a kiadott játék a saját, mellé csomagolt Pythonját használja (a játékos gépén nem kell Python)
+	var own := lab_dir().path_join("python").path_join("python.exe")
+	if _python == "" and FileAccess.file_exists(own):
+		candidates.push_front(own)
 	var code := -1
 	var output: Array = []
 	for exe in candidates:

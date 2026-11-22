@@ -49,6 +49,7 @@ var shots_dir := ""            # ha nem üres: minden snittről képernyőkép (
 var _caption: Label
 var _sub: Label
 var _hint: Label
+var _own_music := false        # a játékos saját zenefájlja szól-e (csak akkor jár a szerző neve)
 var _locked := false           # az előhang alatt nincs átugrás
 var _pro: Label                # az előhang középre írt mondatai
 var _black: ColorRect
@@ -156,6 +157,7 @@ func _start_music() -> void:
 		if FileAccess.file_exists(full):
 			stream = AudioStreamWAV.load_from_file(full)
 			if stream != null:
+				_own_music = true
 				break
 	if stream == null:
 		stream = load("res://assets/hang/intro_handpan.wav")
@@ -1066,8 +1068,9 @@ func _scene_player(lt: float) -> void:
 	_fx.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	# a zene szerzője (jobbra lent), Zoltán kérése szerinti szöveggel
 	var ca := _win(lt, 3.0, PRELUDE - 0.9, 1.0)
-	_fx.draw_string(UI.font_bold, Vector2(W - 520.0, H - 78.0), "Music: Malte Marten", HORIZONTAL_ALIGNMENT_RIGHT, 500.0, 24, Color(UI.TEXT, ca))
-	_fx.draw_string(UI.font_body, Vector2(W - 520.0, H - 54.0), "www.maltemarten.com", HORIZONTAL_ALIGNMENT_RIGHT, 500.0, 16, Color(UI.SOFT, ca))
+	if _own_music:   # a kiadott játékban a saját handpan-zenénk szól: ott nem az ő neve áll
+		_fx.draw_string(UI.font_bold, Vector2(W - 520.0, H - 78.0), "Music: Malte Marten", HORIZONTAL_ALIGNMENT_RIGHT, 500.0, 24, Color(UI.TEXT, ca))
+		_fx.draw_string(UI.font_body, Vector2(W - 520.0, H - 54.0), "www.maltemarten.com", HORIZONTAL_ALIGNMENT_RIGHT, 500.0, 16, Color(UI.SOFT, ca))
 	# lassú beúszás a sötétből, a végén vissza a sötétbe
 	var dark := maxf(1.0 - _ss(0.8, 4.2, lt), _ss(PRELUDE - 0.9, PRELUDE - 0.05, lt))
 	if dark > 0.0:
