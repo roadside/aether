@@ -7,6 +7,7 @@ signal closed
 
 const UI := preload("res://scripts/ui.gd")
 const L := preload("res://scripts/i18n.gd")
+const Knowledge := preload("res://scripts/knowledge.gd")
 const Bridge := preload("res://scripts/lab_bridge.gd")
 
 var bridge
@@ -142,8 +143,8 @@ func _show(r: Dictionary) -> void:
 		w.add_child(UI.label(str(r["miert_fontos"]), 17, UI.TEXT))
 		var src: Variant = r.get("miert_forras")
 		if typeof(src) == TYPE_DICTIONARY:
-			var sb := UI.button(L.t("Forrás: ") + str(src.get("nev", "")))
 			var surl := str(src.get("link", ""))
+			var sb := UI.button(L.t("Forrás: ") + str(src.get("nev", "")) + Knowledge.lang_note(surl))
 			var s_fn := func() -> void: OS.shell_open(surl)
 			sb.pressed.connect(s_fn)
 			w.add_child(sb)
@@ -199,14 +200,10 @@ func _add_source_button() -> void:
 func _add_data_buttons(link: String, path: String) -> void:
 	var parts := link.split("/")
 	var home := "%s//%s/" % [parts[0], parts[2]] if parts.size() > 2 else link
-	var hb := UI.button(L.t("A forrás honlapja: ") + (parts[2] if parts.size() > 2 else link))
+	var hb := UI.button(L.t("A forrás honlapja: ") + (parts[2] if parts.size() > 2 else link) + Knowledge.lang_note(home))
 	var home_fn := func() -> void: OS.shell_open(home)
 	hb.pressed.connect(home_fn)
 	_summary_box.add_child(hb)
-	var db := UI.button(L.t("Nyers adat letöltése (%s-fájl)") % path.get_extension().to_upper())
-	var data_fn := func() -> void: OS.shell_open(link)
-	db.pressed.connect(data_fn)
-	_summary_box.add_child(db)
 
 
 ## Műholdkép az esemény napjáról és helyéről (NASA Worldview), ha van koordináta.
@@ -216,7 +213,7 @@ func _add_worldview_button() -> void:
 	if typeof(lat) in [TYPE_INT, TYPE_FLOAT] and typeof(lon) in [TYPE_INT, TYPE_FLOAT]:
 		var wv := "https://worldview.earthdata.nasa.gov/?v=%.1f,%.1f,%.1f,%.1f&t=%s" % [
 			maxf(-180.0, float(lon) - 8.0), maxf(-90.0, float(lat) - 6.0), minf(180.0, float(lon) + 8.0), minf(90.0, float(lat) + 6.0), str(event.get("datum", "")).left(10)]
-		var wb := UI.button(L.t("Műholdkép aznapról (NASA Worldview)"))
+		var wb := UI.button(L.t("Műholdkép aznapról (NASA Worldview)") + Knowledge.lang_note("en"))
 		var wv_fn := func() -> void: OS.shell_open(wv)
 		wb.pressed.connect(wv_fn)
 		_summary_box.add_child(wb)

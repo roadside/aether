@@ -21,7 +21,7 @@ const START_TRUST := 50
 const RESEARCH_COST := 40
 const TRUST_PER_RESULT := 6          # ellenőrzött eredményenként a tervben
 const TRUST_STEP_BACK := 10          # visszalépés egy gyengébb tervre
-const SECONDS_PER_YEAR := [12.0, 4.0]  # normál, gyors
+const SECONDS_PER_YEAR := [48.0, 48.0]  # egy év 48 másodperc (gyorsítás nincs)
 
 ## A kutatóállomás moduljai (játékszabály). Szintenkénti építési ár; az építés 1 évig tart.
 const MODULES := {
@@ -106,7 +106,10 @@ func new_game() -> void:
 	era = 1
 	levers = {}
 	running = false
+	fast = false
 	_acc = 0.0
+	if save_file == "aether_jatek.json":   # az önteszt ne törölje a játékos küldetéscsillagait
+		L.set_setting("kuldetesek", {})   # a küldetések csillagai is alapra állnak
 	save()
 	changed.emit()
 

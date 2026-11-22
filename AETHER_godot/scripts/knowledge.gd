@@ -162,6 +162,32 @@ static func text_raw(q: Dictionary, key: String) -> String:
 	return str(q.get(key + "_en" if L.is_en() else key, ""))
 
 
+## Egy link nyelve a címéből (pl. hu.wikipedia.org -> "hu"). A tudományos cikkek és a nemzetközi
+## adatforrások szinte mind angolok, ezért ez az alapeset.
+static func lang_of(url: String) -> String:
+	var host := url.get_slice("//", 1).get_slice("/", 0).to_lower()
+	for code in ["hu", "de", "fr", "es", "it", "pl", "ro", "sk"]:
+		if host.begins_with(code + ".") or host.ends_with("." + code):
+			return code
+	return "en"
+
+
+const LANG_NAMES := {"hu": "magyar", "en": "angol", "de": "német", "fr": "francia", "es": "spanyol",
+	"it": "olasz", "pl": "lengyel", "ro": "román", "sk": "szlovák"}
+const LANG_NAMES_EN := {"hu": "Hungarian", "en": "English", "de": "German", "fr": "French", "es": "Spanish",
+	"it": "Italian", "pl": "Polish", "ro": "Romanian", "sk": "Slovak"}
+
+
+## " (angol nyelvű)", ha a link nyelve más, mint a játéké; különben üres.
+static func lang_note(url_or_code: String) -> String:
+	var code := url_or_code if url_or_code.length() == 2 else lang_of(url_or_code)
+	if code == L.lang or not LANG_NAMES.has(code):
+		return ""
+	if L.is_en():
+		return " (in %s)" % LANG_NAMES_EN[code]
+	return " (%s nyelvű)" % LANG_NAMES[code]
+
+
 ## A források: [{"cim": ..., "link": ...}] ("Cím (2024) – https://..." sorokból).
 static func sources(q: Dictionary) -> Array:
 	var out: Array = []

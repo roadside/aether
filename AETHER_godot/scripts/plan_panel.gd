@@ -73,8 +73,10 @@ func set_mission(m: Dictionary) -> void:
 
 
 func _slider_row(question: String, help: String, mn: float, mx: float, step: float, value: float,
-		fmt: Callable, source: String = "") -> HSlider:
-	var c := UI.card(UI.GOLD)
+		fmt: Callable, source: String = "", is_new: bool = false) -> HSlider:
+	var c := UI.card(UI.CYAN if is_new else UI.GOLD)
+	if is_new:   # az új, kikutatott lehetőség kiemelve, legfelül
+		c.add_child(UI.label(L.t("ÚJ · a kutatásodból, most bevezetheted"), 15, UI.CYAN, true))
 	c.add_child(UI.label(question, 18, UI.TEXT, true))
 	c.add_child(UI.label(help, 15, UI.SOFT))
 	var row := UI.hbox(14)
@@ -122,6 +124,11 @@ func rebuild() -> void:
 	if campaign != null:   # a múltba nem lehet célt tenni: legalább 5 évvel a bevezetés után
 		min_y = maxi(2035, int(ceil((campaign.start_year() + 5) / 5.0)) * 5)
 	var co2_now := int(cur.get("co2_cel_ev", NEVER)) if not cur.is_empty() else 2050
+	var keys := levers.keys()
+	keys.sort()
+	for k in keys:
+		if _is_new(k, cur):
+			_lever_row(k, cur, true)
 	_co2 = _slider_row(L.t("Mikorra csökkenjen nullára a CO2-kibocsátás?"),
 		L.t("A melegedés fő oka. Minél hamarabb nulla, annál jobb."),
 		min_y, NEVER, 5, maxi(min_y, co2_now), year_fmt,
@@ -139,21 +146,9 @@ func rebuild() -> void:
 	if ch4_locked:
 		_ch4.editable = false
 
-	var keys := levers.keys()
-	keys.sort()
 	for k in keys:
-		var j: Dictionary = levers[k]
-		var mx := float(j["kar_ertek"])
-		if str(k).begins_with("cdr:"):
-			_lever_sliders[k] = _slider_row(L.t("%s: évente mennyi CO2-t vonjon ki 2050-re?") % j["kar_nev"],
-				L.t("A kutatásod szerint legfeljebb ennyi lehetséges. ") + str(j["bizonyossag_szoveg"]),
-				0, mx, mx / 20.0, minf(mx, float(Dictionary(cur.get("cdr", {})).get(str(k).substr(4), mx))), gt_fmt,
-				L.t("saját kutatásod, ") + str(j["publikacio"]))
-		elif k == "alkalmazkodas":
-			_lever_sliders[k] = _slider_row(L.t("Aszálytűrő fajták: mekkora részét védjék a termésnek?"),
-				L.t("Ez nem hűti a Földet, de csökkenti a termésveszteséget. ") + str(j["bizonyossag_szoveg"]),
-				0, mx, 1, mx, pct_fmt,
-				L.t("saját kutatásod, ") + str(j["publikacio"]))
+		if not _is_new(k, cur):
+			_lever_row(k, cur, false)
 	if levers.is_empty():
 		var c := UI.card(UI.EDGE)
 		c.add_child(UI.label(L.t("Zárolva: CO2-kivonás és alkalmazkodás"), 17, UI.MUTE, true))
@@ -175,7 +170,11 @@ func rebuild() -> void:
 	_auto.start(0.05)
 
 
+var _user_moved := false       # csak a játékos csúszkája után görgetünk a Bevezetem gombhoz
+
+
 func _on_slider(_v: float) -> void:
+	_user_moved = true
 	_result_box.modulate = Color(1, 1, 1, 0.45)   # a régi eredmény halványan, amíg számol
 	_status.text = L.t("Számolok…")
 	_auto.start(0.6)
@@ -189,6 +188,60 @@ func _auto_run() -> void:
 		_auto.start(0.5)
 		return
 	_run_model()
+
+
+## Egy kikutatott tervkar csúszkája (CO2-kivonás vagy alkalmazkodás).
+func _lever_row(k: Variant, cur: Dictionary, is_new: bool) -> void:
+	var j: Dictionary = levers[k]
+	var mx := float(j["kar_ertek"])
+	var pct_fmt := func(p: float) -> String: return "%d%%" % int(p)
+	var gt_fmt := func(v: float) -> String: return UI.hu(v, 2) + L.t(" mrd t")
+	if str(k).begins_with("cdr:"):
+		_lever_sliders[k] = _slider_row(L.t("%s: évente mennyi CO2-t vonjon ki 2050-re?") % j["kar_nev"],
+			L.t("A kutatásod szerint legfeljebb ennyi lehetséges. ") + str(j["bizonyossag_szoveg"]),
+			0, mx, mx / 20.0, minf(mx, float(Dictionary(cur.get("cdr", {})).get(str(k).substr(4), mx))), gt_fmt,
+			L.t("saját kutatásod, ") + str(j["publikacio"]), is_new)
+	elif k == "alkalmazkodas":
+		var now := float(cur.get("alkalmazkodas_hozam_kompenzacio_pct", 0.0))
+		_lever_sliders[k] = _slider_row(L.t("Aszálytűrő fajták: mekkora részét védjék a termésnek?"),
+			L.t("Ez nem hűti a Földet, de csökkenti a termésveszteséget. ") + str(j["bizonyossag_szoveg"]),
+			0, mx, 1, mx if now <= 0.0 else minf(mx, now), pct_fmt,
+			L.t("saját kutatásod, ") + str(j["publikacio"]), is_new)
+
+
+## Új-e a kar: a mostani tervben még nincs benne.
+func _is_new(k: Variant, cur: Dictionary) -> bool:
+	if str(k) == "alkalmazkodas":
+		return float(cur.get("alkalmazkodas_hozam_kompenzacio_pct", 0.0)) <= 0.0
+	if str(k).begins_with("cdr:"):
+		return not Dictionary(cur.get("cdr", {})).has(str(k).substr(4))
+	return false
+
+
+## Mi változik a mostani tervhez képest, rövid sorokban. Üres, ha semmi.
+func _changes(sc: Dictionary) -> Array:
+	var cur := _current_plan()
+	var out: Array = []
+	var yr := func(d: Dictionary) -> String: return str(int(d["co2_cel_ev"])) if d.has("co2_cel_ev") else L.t("soha")
+	if cur.is_empty() or yr.call(cur) != yr.call(sc):
+		out.append(L.t("A CO2-kibocsátás nulla: %s") % yr.call(sc) if cur.is_empty()
+			else L.t("A CO2-kibocsátás nulla: %s (eddig: %s)") % [yr.call(sc), yr.call(cur)])
+	var m_new := int(float(sc.get("metan_csokkentes_pct", 0.0)))
+	var m_old := int(float(cur.get("metan_csokkentes_pct", 0.0)))
+	if m_new != m_old:
+		out.append(L.t("Metán: −%d%% 2030-ig (eddig: −%d%%)") % [m_new, m_old])
+	var a_new := int(float(sc.get("alkalmazkodas_hozam_kompenzacio_pct", 0.0)))
+	var a_old := int(float(cur.get("alkalmazkodas_hozam_kompenzacio_pct", 0.0)))
+	if a_new != a_old:
+		out.append(L.t("Új: aszálytűrő fajták, a termés %d%%-át védik") % a_new if a_old == 0
+			else L.t("Aszálytűrő fajták: %d%% (eddig: %d%%)") % [a_new, a_old])
+	var c_new: Dictionary = sc.get("cdr", {})
+	var c_old: Dictionary = cur.get("cdr", {})
+	for k in c_new:
+		if absf(float(c_new[k]) - float(c_old.get(k, 0.0))) > 0.001:
+			var nm := str(levers.get("cdr:" + str(k), {}).get("kar_nev", k))
+			out.append(L.t("%s: %s mrd t CO2/év kivonás 2050-re") % [nm, UI.hu(float(c_new[k]), 2)])
+	return out
 
 
 ## A most érvényes terv (a játék idővonalának utolsó eleme), vagy üres.
@@ -261,6 +314,16 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 		_result_box.add_child(see)
 		_add_chart(res)
 		return
+	# Mit vezet be? A gomb fölött kiemelve, hogy egyértelmű legyen.
+	var ch := _changes(sc)
+	var box := UI.card(UI.CYAN)
+	if ch.is_empty() and not campaign.timeline.is_empty():
+		box.add_child(UI.label(L.t("Ez ugyanaz, mint a mostani terved. Húzz el egy csúszkát!"), 17, UI.SOFT, true))
+	else:
+		box.add_child(UI.label(L.t("Ha bevezeted:"), 17, UI.CYAN, true))
+		for line in ch:
+			box.add_child(UI.label("•  " + str(line), 18, UI.TEXT, true))
+	_result_box.add_child(UI.card_root(box))
 	var need: int = campaign.required_trust(sc)
 	var cost: int = campaign.plan_cost(sc)
 	_result_box.add_child(UI.label(L.t("Első év: %d. Ára: %d pénz, és legalább %d%% bizalom kell.") % [
@@ -270,6 +333,8 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 		_result_box.add_child(UI.label(L.t("Ez gyengébb a mostani tervednél: a bizalom csökken."), 15, UI.EMBER))
 	var adopt := UI.button(L.t("Bevezetem"), true)
 	adopt.tooltip_text = L.t("A pénz és a bizalom játékszabály, nem valós adat. A hőmérséklet a klímamodellből jön.")
+	if ch.is_empty() and not campaign.timeline.is_empty():
+		adopt.disabled = true
 	if problem != "":
 		adopt.disabled = true
 		_result_box.add_child(UI.label(problem, 16, UI.EMBER))
@@ -282,7 +347,8 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 	_chart.now_year = campaign.year
 	_chart.year = campaign.year
 	_add_chart(res)
-	_show_control.call_deferred(adopt)
+	if _user_moved:
+		_show_control.call_deferred(adopt)
 
 
 ## A fő eredmény egy pillantásra: a 2100-as melegedés nagy számmal, színnel, és mellette a terv nélküli.

@@ -301,8 +301,8 @@ func _render_topic(r: Dictionary) -> void:
 			c.add_child(UI.label(str(w.get("bevezeto", "")), 17, UI.TEXT))
 			_body.add_child(UI.card_root(c))
 			wiki_shown = true
-		src.add_child(UI.text_link(L.t("Wikipédia: ") + str(w.get("cim", "")) + " (" + str(w.get("nyelv", "")) + ", CC BY-SA 4.0)",
-			str(w.get("link", ""))))
+		src.add_child(UI.text_link(L.t("Wikipédia: ") + str(w.get("cim", "")) + Knowledge.lang_note(str(w.get("nyelv", "")))
+			+ " · CC BY-SA 4.0", str(w.get("link", ""))))
 	if typeof(m) != TYPE_DICTIONARY and not wiki_shown:
 		var own := Knowledge.text(_topic_q, "magyarazat")
 		if own != "":
@@ -320,7 +320,7 @@ func _render_topic(r: Dictionary) -> void:
 			if ev.is_valid_float():
 				ev = str(int(float(ev)))   # 2023.0 -> 2023
 			var t := "• " + str(p.get("cim", "")) + (" (%s)" % ev if ev != "" else "")
-			src.add_child(UI.text_link(t, str(p.get("link", ""))))
+			src.add_child(UI.text_link(t + Knowledge.lang_note(str(p.get("link", ""))), str(p.get("link", ""))))
 	if typeof(m) == TYPE_DICTIONARY and src.get_child_count() > 0:
 		src.visible = false
 		var sb := UI.button(L.t("AI-összefoglaló forrásai"))
@@ -888,6 +888,7 @@ func _paper_link(p: Dictionary) -> Control:
 		url = "https://doi.org/" + str(doi)
 	elif plain != null:
 		url = str(plain)
+	t += Knowledge.lang_note(url if url != "" else "en")
 	# LinkButton nem tud sort törni, ezért lapos Button (hosszú cikkcímek miatt).
 	var lb := Button.new()
 	lb.text = t

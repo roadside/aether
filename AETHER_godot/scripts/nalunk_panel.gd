@@ -6,6 +6,7 @@ signal closed
 
 const UI := preload("res://scripts/ui.gd")
 const L := preload("res://scripts/i18n.gd")
+const Knowledge := preload("res://scripts/knowledge.gd")
 const Bridge := preload("res://scripts/lab_bridge.gd")
 
 var bridge
@@ -189,4 +190,4 @@ func _render(r: Dictionary) -> void:
 	_body.add_child(UI.card_root(p))
 	_body.add_child(UI.label(L.t("Mért adat: ERA5, kb. 25 km-es rácspont (a város belsejében melegebb). Becslés: a 2006–2025 között mért napokat a régió várható melegedésével toljuk el (34 klímamodell). Nem helyi előrejelzés."), 14, UI.MUTE))
 	for s in r.get("forrasok", []):
-		_body.add_child(UI.text_link(L.t(str(s["nev"])), str(s["link"])))
+		_body.add_child(UI.text_link(L.t(str(s["nev"])) + Knowledge.lang_note(str(s["link"])), str(s["link"])))

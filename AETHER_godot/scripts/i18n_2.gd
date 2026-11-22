@@ -23,4 +23,14 @@ const EN := {
 	"Terv nélkül: +%s °C": "Without a plan: +%s °C",
 	# idő
 	"%d: bevétel +%d, ebből a tudásodból +%d.": "%d: income +%d, of which +%d from your knowledge.",
+	"ÚJ · a kutatásodból, most bevezetheted": "NEW · from your research, you can bring it in now",
+	"soha": "never",
+	"A CO2-kibocsátás nulla: %s": "CO2 emissions reach zero: %s",
+	"A CO2-kibocsátás nulla: %s (eddig: %s)": "CO2 emissions reach zero: %s (was: %s)",
+	"Metán: −%d%% 2030-ig (eddig: −%d%%)": "Methane: −%d%% by 2030 (was: −%d%%)",
+	"Új: aszálytűrő fajták, a termés %d%%-át védik": "New: drought-tolerant varieties protect %d%% of the harvest",
+	"Aszálytűrő fajták: %d%% (eddig: %d%%)": "Drought-tolerant varieties: %d%% (was: %d%%)",
+	"%s: %s mrd t CO2/év kivonás 2050-re": "%s: %s billion t CO2/year removed by 2050",
+	"Ez ugyanaz, mint a mostani terved. Húzz el egy csúszkát!": "This is the same as your current plan. Move a slider!",
+	"Ha bevezeted:": "If you bring it in:",
 }
