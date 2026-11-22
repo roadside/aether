@@ -87,6 +87,8 @@ func _ready() -> void:
 	size = Vector2(W, H)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	z_index = 50
+	if shots_dir == "":
+		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN   # a bevezető alatt nincs kurzor
 	# a játék felülete az intro alatt nem látszik, csak a háttér, a csillagok és a gömb
 	var keep: Array = main.intro_keep()
 	for c in main.get_children():
@@ -463,9 +465,9 @@ func _draw_title(lt: float) -> void:
 			_fx.draw_polyline(pts, core, 5.0, true)
 			for q in [pts[0], pts[pts.size() - 1]]:
 				_fx.draw_circle(q, 2.5, core)
-	# vékony aranyvonal és a cím jelentése
+	# vékony vonal a cím színében, és a cím jelentése
 	var a2 := a * _ss(TITLE_IN * 0.7, TITLE_IN + 0.9, lt)
-	_fx.draw_line(Vector2(W / 2.0 - 190.0 * a2, y0 + hgt + 62), Vector2(W / 2.0 + 190.0 * a2, y0 + hgt + 62), Color(0.96, 0.78, 0.35, 0.8 * a2), 2.0, true)
+	_fx.draw_line(Vector2(W / 2.0 - 190.0, y0 + hgt + 62), Vector2(W / 2.0 + 190.0, y0 + hgt + 62), Color(0.80, 1.0, 0.97, 0.85 * a), 2.0, true)
 	var fs := 34
 	var full := "".join(PackedStringArray(TITLE_PARTS))
 	var px := (W - UI.font_body.get_string_size(full, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x) / 2.0
@@ -1076,6 +1078,7 @@ func _finish() -> void:
 	if _done:
 		return
 	_done = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_stop_music()
 	var g = main.globe
 	g.highlight = {}

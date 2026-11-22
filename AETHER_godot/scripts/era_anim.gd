@@ -24,6 +24,14 @@ const T_TEXT := 5.5           # ekkor úszik be a korszak neve
 const HORIZON := 150.0
 
 var era := 2
+## Ha nem üres: rövid „pillanat” (kb. 8 mp) egy fordulóponthoz vagy egy baj első előfordulásához.
+## "hoseg" | "aszaly" | "arviz" | "tuz" | "dagaly" | "fok" | "nulla" | "megallt"
+var kind := ""
+var title := ""               # a pillanat címe és egy mondata (a hívó adja, már lefordítva)
+var sub := ""
+var good := false
+var _end := T_END
+var _text_at := T_TEXT
 var shots_dir := ""           # ha nem üres: képek ellenőrzéshez, és nem ugorható át
 var _t := 0.0
 var _done := false
@@ -39,11 +47,15 @@ func _ready() -> void:
 	modulate.a = 0.0
 	create_tween().tween_property(self, "modulate:a", 1.0, 0.8)
 	var key := "korszak_anim_%d" % era
+	if kind != "":
+		key = "pillanat_" + kind
+		_end = 8.5
+		_text_at = 2.2
 	_can_skip = bool(L.get_setting(key, false)) and shots_dir == ""
 	if shots_dir == "":
 		L.set_setting(key, true)
 	_player = AudioStreamPlayer.new()
-	_player.stream = Milestones.load_sound("jel_jo")
+	_player.stream = Milestones.load_sound("jel_jo" if kind == "" or good else "jel_rossz")
 	_player.volume_db = -6.0
 	add_child(_player)
 	if _player.stream != null:
@@ -53,17 +65,18 @@ func _ready() -> void:
 
 
 func _shots() -> void:
-	for at in [4.0, 9.5]:
+	for at in ([4.0, 9.5] if kind == "" else [5.5]):
 		await get_tree().create_timer(at - _t).timeout
 		for i in 3:
 			await RenderingServer.frame_post_draw
-		get_viewport().get_texture().get_image().save_png(shots_dir.path_join("korszak_%d_%02d.png" % [era, int(at)]))
+		var fname := ("korszak_%d_%02d.png" % [era, int(at)]) if kind == "" else ("pillanat_%s.png" % kind)
+		get_viewport().get_texture().get_image().save_png(shots_dir.path_join(fname))
 
 
 func _process(delta: float) -> void:
 	_t += delta
 	queue_redraw()
-	if _t >= T_END:
+	if _t >= _end:
 		_finish()
 
 
@@ -116,6 +129,9 @@ static func _near(x: float) -> float:
 
 
 func _draw() -> void:
+	if kind != "":
+		_draw_moment()
+		return
 	var dawn := _ss(0.5, 9.0, _t)           # 0 éjszaka, 1 reggel
 	# az új korszak színe: II. meleg narancs, III. arany, IV. zöldes arany
 	var glow: Color = [Color("#f0935a"), Color("#f6c453"), Color("#d9e27a")][clampi(era - 2, 0, 2)]
@@ -173,7 +189,7 @@ func _draw() -> void:
 			_river(dawn)
 			_trees(_near, 46, 2.0, 2.2, Color("#0a1a12").lerp(Color("#1f5a36"), dawn), 1.0)
 	# finom sötétítés alul és a szöveg alatt
-	var ta := _ss(T_TEXT, T_TEXT + 1.6, _t)
+	var ta := _ss(_text_at, _text_at + 1.6, _t)
 	for i in 34:
 		draw_rect(Rect2(0, 220 + i * 10, W, 10), Color(0.01, 0.02, 0.05, 0.55 * ta * sin(PI * (i + 0.5) / 34.0)))
 	_text(ta)
@@ -296,15 +312,205 @@ func _river(dawn: float) -> void:
 func _text(a: float) -> void:
 	if a <= 0.0:
 		return
-	var small := L.t("Új korszak")
-	draw_string(UI.font_body, Vector2(0, 318), small, HORIZONTAL_ALIGNMENT_CENTER, W, 28, Color(0.95, 0.96, 0.97, 0.85 * a))
-	var title := Knowledge.era_name(era)
+	var head := Knowledge.era_name(era) if kind == "" else title
+	var body: String = L.t(Knowledge.ERAS[era - 1]["tema"]) if kind == "" else sub
+	var tcol: Color = UI.GOLD if kind == "" else (UI.GREEN if good else UI.EMBER.lightened(0.25))
+	if kind == "":
+		draw_string(UI.font_body, Vector2(0, 318), L.t("Új korszak"), HORIZONTAL_ALIGNMENT_CENTER, W, 28, Color(0.95, 0.96, 0.97, 0.85 * a))
 	var rise := (1.0 - a) * 14.0
-	draw_string(UI.font_pixel, Vector2(4, 414 + rise), title, HORIZONTAL_ALIGNMENT_CENTER, W, 84, Color(0, 0, 0, 0.6 * a))
-	draw_string(UI.font_pixel, Vector2(0, 410 + rise), title, HORIZONTAL_ALIGNMENT_CENTER, W, 84, Color(UI.GOLD.r, UI.GOLD.g, UI.GOLD.b, a))
-	var a2 := _ss(T_TEXT + 1.2, T_TEXT + 2.6, _t)
+	var rx := RegEx.create_from_string("[0-9()őűŐŰ]")   # ezek a pixeles betűben rosszul olvashatók
+	var font: Font = UI.font_bold if rx.search(head) != null and kind != "" else UI.font_pixel
+	var fs := 84 if head.length() < 22 else 62
+	draw_string(font, Vector2(4, 414 + rise), head, HORIZONTAL_ALIGNMENT_CENTER, W, fs, Color(0, 0, 0, 0.6 * a))
+	draw_string(font, Vector2(0, 410 + rise), head, HORIZONTAL_ALIGNMENT_CENTER, W, fs, Color(tcol.r, tcol.g, tcol.b, a))
+	var a2 := _ss(_text_at + 1.2, _text_at + 2.6, _t)
 	var lw := 220.0 * a2
-	draw_line(Vector2(W / 2.0 - lw, 440), Vector2(W / 2.0 + lw, 440), Color(UI.GOLD.r, UI.GOLD.g, UI.GOLD.b, 0.8 * a2), 2.0)
-	draw_multiline_string(UI.font_body, Vector2(300, 488), L.t(Knowledge.ERAS[era - 1]["tema"]), HORIZONTAL_ALIGNMENT_CENTER, 1000, 28, 3, Color(0.95, 0.96, 0.97, a2))
+	draw_line(Vector2(W / 2.0 - lw, 440), Vector2(W / 2.0 + lw, 440), Color(tcol.r, tcol.g, tcol.b, 0.8 * a2), 2.0)
+	draw_multiline_string(UI.font_body, Vector2(300, 488), body, HORIZONTAL_ALIGNMENT_CENTER, 1000, 28, 3, Color(0.95, 0.96, 0.97, a2))
 	if _can_skip:
 		draw_string(UI.font_body, Vector2(1460, 882), L.t("Esc: átugrás"), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(0.7, 0.74, 0.8, 0.8))
+
+
+# --- pillanatok: fordulópontok és a bajok első előfordulása --------------------
+func _sky(top: Color, low: Color, to_y: float = HORIZON + 30.0) -> void:
+	var n := 30
+	for i in n:
+		var k := float(i) / float(n - 1)
+		_r(0, k * to_y * (float(n - 1) / n), GW, to_y / n + 1, top.lerp(low, pow(k, 1.5)))
+
+
+func _hills(ridge: Callable, col: Color) -> void:
+	for x in GW:
+		var y: float = ridge.call(x)
+		_r(x, y, 1, GH - y, col)
+
+
+func _houses(wall: Color, roof: Color, lit: float) -> void:
+	for i in 16:
+		var x := 60.0 + i * 18.0 + _h(i + 3.0) * 6.0
+		var w := 9.0 + floorf(_h(i + 11.0) * 6.0)
+		var hh := 9.0 + floorf(_h(i + 21.0) * 12.0)
+		var base := _near(x + w * 0.5) + 2.0
+		_r(x, base - hh, w, hh, wall)
+		_r(x - 1, base - hh - 2, w + 2, 2, roof)
+		if lit > 0.0:
+			_r(x + 2, base - hh + 3, 2, 2, Color(1.0, 0.82, 0.45, lit))
+			if w > 11.0:
+				_r(x + 7, base - hh + 3, 2, 2, Color(1.0, 0.82, 0.45, lit * 0.8))
+
+
+func _thermo(level: float, col: Color, mark: float, a: float) -> void:
+	# nagy hőmérő jobbra: a folyadék `level`-ig (0..1) ér, `mark` a jelölt vonal
+	var x := 318.0
+	var top := 40.0
+	var hgt := 120.0
+	_r(x - 1, top - 1, 12, hgt + 2, Color(0.9, 0.93, 0.96, 0.9 * a))
+	_r(x, top, 10, hgt, Color(0.07, 0.09, 0.14, a))
+	var fill := hgt * clampf(level, 0.0, 1.0)
+	_r(x + 2, top + hgt - fill, 6, fill, Color(col.r, col.g, col.b, a))
+	_disc(x + 5.0, top + hgt + 8.0, 11.0, Color(0.9, 0.93, 0.96, 0.9 * a))
+	_disc(x + 5.0, top + hgt + 8.0, 9.0, Color(col.r, col.g, col.b, a))
+	var my := top + hgt - hgt * mark
+	_r(x - 8, my, 26, 1, Color(1, 1, 1, 0.9 * a))
+	for k in 9:
+		_r(x + 10, top + hgt * k / 8.0, 3, 1, Color(0.9, 0.93, 0.96, 0.7 * a))
+
+
+func _draw_moment() -> void:
+	var p := _ss(0.3, 6.0, _t)
+	match kind:
+		"hoseg":
+			_sky(Color("#7a2a12"), Color("#f6b24a"))
+			var sy := 70.0 - 8.0 * p
+			for ring in [[70.0, 0.06], [52.0, 0.10], [38.0, 0.16]]:
+				_disc(200.0, sy, ring[0] + 3.0 * sin(_t * 2.0), Color(1.0, 0.85, 0.5, ring[1]))
+			_disc(200.0, sy, 26.0, Color("#fff1c0"))
+			_hills(_far, Color("#8a4a2a"))
+			_hills(_near, Color("#3a2416"))
+			_houses(Color("#2a1a14"), Color("#1c110d"), 0.0)
+			# remegő forró levegő
+			for i in 26:
+				var y := HORIZON - 30.0 + i * 3.0
+				_r(0, y, GW, 1, Color(1.0, 0.9, 0.6, 0.05 + 0.05 * sin(_t * 5.0 + i * 0.9)))
+		"aszaly":
+			_sky(Color("#8fa4b8"), Color("#e8d6a8"))
+			_disc(300.0, 46.0, 18.0, Color("#fff6d8"))
+			_hills(_far, Color("#b89a6a"))
+			_hills(_near, Color("#9a7444").lerp(Color("#7a5a36"), p))
+			# repedések a földön, egyre több
+			for i in 70:
+				if _h(i + 1.0) < p * 1.1:
+					var x := _h(i + 20.0) * GW
+					var y := _near(x) + 4.0 + _h(i + 30.0) * 40.0
+					var l := 4.0 + _h(i + 40.0) * 10.0
+					_r(x, y, l, 1, Color("#4a3320"))
+					_r(x + l * 0.5, y, 1, 3.0 + _h(i + 50.0) * 4.0, Color("#4a3320"))
+			# kiszáradt fák
+			for i in 7:
+				var x := 30.0 + i * 55.0 + _h(i) * 20.0
+				var b := _near(x) + 2.0
+				_r(x, b - 22, 2, 22, Color("#3a2a1c"))
+				_r(x - 6, b - 16, 6, 1, Color("#3a2a1c"))
+				_r(x + 2, b - 19, 7, 1, Color("#3a2a1c"))
+				_r(x - 6, b - 20, 1, 4, Color("#3a2a1c"))
+				_r(x + 8, b - 24, 1, 5, Color("#3a2a1c"))
+		"arviz":
+			_sky(Color("#1a2230"), Color("#4a5a6a"))
+			_hills(_far, Color("#2c3a48"))
+			_hills(_near, Color("#22302a"))
+			_houses(Color("#3a3a40"), Color("#5a3a34"), 0.8)
+			var lvl := HORIZON + 62.0 - 44.0 * p
+			var y := lvl
+			while y < GH:
+				_r(0, y, GW, 1, Color("#3f6f8a").lerp(Color("#27485e"), (y - lvl) / 60.0))
+				y += 1.0
+			for i in 40:
+				_r(fposmod(_h(i) * GW + _t * (6.0 + _h(i + 3.0) * 8.0), GW), lvl + _h(i + 9.0) * 3.0, 6, 1, Color(0.8, 0.9, 1.0, 0.5))
+			for i in 150:      # eső
+				var rx := fposmod(_h(i) * GW - _t * 40.0, GW)
+				var ry := fposmod(_h(i + 60.0) * GH + _t * 260.0, GH)
+				_r(rx, ry, 1, 4, Color(0.75, 0.85, 1.0, 0.35))
+		"tuz":
+			_sky(Color("#140a0c"), Color("#b3401a"))
+			_hills(_far, Color("#3a1a14"))
+			_trees(_far, 40, -9.0, 1.4, Color("#1a0d0a"), 0.7)
+			_hills(_near, Color("#160c0a"))
+			_trees(_near, 46, -9.0, 2.2, Color("#0e0706"), 1.0)
+			for i in 110:      # lángok a gerincen, balról jobbra terjednek
+				var x := _h(i + 5.0) * GW
+				if x / GW > p * 1.15:
+					continue
+				var b := _near(x) + 2.0 - _h(i + 8.0) * 14.0
+				var fh := (6.0 + _h(i + 2.0) * 16.0) * (0.6 + 0.4 * sin(_t * 9.0 + i))
+				_r(x, b - fh, 3, fh, Color("#f25a1a"))
+				_r(x + 1, b - fh * 0.6, 1, fh * 0.6, Color("#ffd35a"))
+			for i in 60:       # szikrák
+				var ph := fposmod(_t * 0.35 + _h(i), 1.0)
+				_r(_h(i + 12.0) * GW * minf(p * 1.2, 1.0) + ph * 20.0, HORIZON + 10.0 - ph * 130.0, 1, 1, Color(1.0, 0.75, 0.3, 1.0 - ph))
+			for i in 14:       # füst
+				var ph := fposmod(_t * 0.12 + i / 14.0, 1.0)
+				_r(_h(i + 31.0) * GW - 20.0, HORIZON - ph * 120.0, 40.0 + ph * 30.0, 10.0, Color(0.12, 0.1, 0.1, 0.22 * (1.0 - ph)))
+		"dagaly":
+			var flash := 1.0 if fmod(_t, 2.7) < 0.09 or (fmod(_t, 2.7) > 0.2 and fmod(_t, 2.7) < 0.26) else 0.0
+			_sky(Color("#0a0e18").lerp(Color("#8a94b0"), flash * 0.6), Color("#2c3646").lerp(Color("#c0c8dc"), flash * 0.6))
+			_hills(_near, Color("#141a1c"))
+			_houses(Color("#22262c"), Color("#30282a"), 0.7)
+			# tenger balról, a hullámok a partra törnek
+			for x in GW:
+				var reach := 150.0 + 150.0 * p
+				if x > reach:
+					break
+				var wy := HORIZON + 36.0 - 16.0 * p + 7.0 * sin(x * 0.08 - _t * 3.0) + 3.0 * sin(x * 0.23 + _t * 5.0) + (x / reach) * 26.0
+				_r(x, wy, 1, GH - wy, Color("#1f4a66"))
+				_r(x, wy, 1, 2, Color(0.85, 0.93, 1.0, 0.8))
+			for i in 30:       # tajték
+				var ph := fposmod(_t * 0.8 + _h(i), 1.0)
+				_r(140.0 + 150.0 * p + ph * 26.0 - 10.0, HORIZON + 50.0 - sin(ph * PI) * (24.0 + _h(i + 4.0) * 26.0), 2, 2, Color(0.9, 0.95, 1.0, 1.0 - ph))
+			for i in 170:      # ferde eső
+				var rx := fposmod(_h(i) * GW + _t * 150.0, GW)
+				var ry := fposmod(_h(i + 60.0) * GH + _t * 300.0, GH)
+				_r(rx, ry, 2, 3, Color(0.75, 0.85, 1.0, 0.3))
+		"fok":
+			_sky(Color("#2a1020").lerp(Color("#5a1414"), p), Color("#c8683a").lerp(Color("#f08a3a"), p))
+			_disc(120.0, 80.0, 30.0, Color("#ffd9a0"))
+			_hills(_far, Color("#6a3a2a"))
+			_hills(_near, Color("#2c1a14"))
+			_houses(Color("#20140f"), Color("#170e0b"), 0.0)
+			_thermo(0.35 + 0.33 * p, Color("#e8412a"), 0.62, 1.0)
+		"nulla":
+			_sky(Color("#3a4a5a").lerp(Color("#2f6fd0"), p), Color("#8a8f94").lerp(Color("#bfe3f2"), p))
+			_disc(300.0, 50.0, 18.0, Color(1.0, 0.97, 0.8, p))
+			_hills(_far, Color("#4a5a60").lerp(Color("#5f9a86"), p))
+			_hills(_near, Color("#2a3430").lerp(Color("#2f7a45"), p))
+			_houses(Color("#4a4640"), Color("#7a4a3a"), 0.0)
+			for c in 4:
+				var x := 96.0 + c * 64.0
+				var base := _near(x) + 2.0
+				var top := base - 38.0
+				_r(x, top, 4, base - top, Color("#5a5450"))
+				for q in 9:
+					var ph := fposmod(_t * 0.22 + q / 9.0 + c * 0.13, 1.0)
+					var a := (1.0 - _ss(0.5, 4.5, _t)) * (1.0 - ph) * 0.6
+					if a > 0.02:
+						_r(x - 2.0 + ph * 16.0, top - 4.0 - ph * 46.0, 3.0 + ph * 9.0, 3.0 + ph * 5.0, Color(0.35, 0.35, 0.38, a))
+		"megallt":
+			_sky(Color("#16264a"), Color("#f0b46a"))
+			_disc(60.0, 40.0, 16.0, Color("#fff1c0"))
+			_hills(_far, Color("#3f6f7a"))
+			_hills(_near, Color("#2c5a40"))
+			_trees(_near, 30, -9.0, 2.0, Color("#1f4a30"), 1.0)
+			# a görbe felfelé megy, aztán kisimul
+			var prev := Vector2.ZERO
+			var n := int(120.0 * _ss(0.4, 5.0, _t))
+			for i in n:
+				var k := i / 120.0
+				var pt := Vector2((150.0 + k * 210.0) * U, (120.0 - 62.0 * (1.0 - pow(1.0 - minf(k / 0.7, 1.0), 2.2))) * U)
+				if i > 0:
+					draw_line(prev, pt, Color("#ffd35a"), U * 1.2)
+				prev = pt
+			if n > 2:
+				draw_rect(Rect2(prev - Vector2(U * 2, U * 2), Vector2(U * 4, U * 4)), Color.WHITE)
+	var ta := _ss(_text_at, _text_at + 1.6, _t)
+	for i in 34:
+		draw_rect(Rect2(0, 220 + i * 10, W, 10), Color(0.01, 0.02, 0.05, 0.6 * ta * sin(PI * (i + 0.5) / 34.0)))
+	_text(ta)

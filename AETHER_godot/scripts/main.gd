@@ -185,6 +185,11 @@ func _ready() -> void:
 		var kd := str(bridge.work_dir("aether_onteszt"))
 		for e in [2, 3, 4]:
 			await _play_era(e, kd)
+		for pk in [["hoseg", "Hőhullám", "Hetekig tartó forróság a városokban.", false], ["aszaly", "Aszály", "Kevés az eső, gyenge a termés.", false],
+				["arviz", "Áradás", "Egy nap alatt egy hónapnyi eső esett.", false], ["tuz", "Erdőtűz", "Száraz, szeles időben ég az erdő.", false],
+				["dagaly", "Vihardagály", "A vihar a tengert a partra nyomta.", false], ["fok", "Átléptük a másfél fokot", "A Föld 1,5 °C-kal melegebb, mint 150 éve.", false],
+				["nulla", "Nulla lett a CO2-kibocsátás", "Ettől kezdve nem melegítjük tovább a Földet.", true], ["megallt", "Megállt a melegedés", "A csúcs +1,65 °C volt.", true]]:
+			await _play_moment(pk[0], L.t(pk[1]), L.t(pk[2]), pk[3], kd)
 		get_tree().quit()
 		return
 	if not ("--onteszt" in args):
@@ -1536,9 +1541,21 @@ func _on_year_passed(y: int, note: String) -> void:
 	_year_slider.value = y   # rejtett: a földgömb színezését követi az év
 	_show_info(note, "")
 	_toast(note, UI.SOFT)   # az év rövid mérlege (bevétel, költség)
-	_milestones.on_year(y)
+	var selftest := "--onteszt" in OS.get_cmdline_user_args()
+	# fordulópontok: a nagyok rövid festett jelenetet kapnak, a többi sávot
+	for ms in _milestones.for_year(y):
+		if ms.has("kep") and not selftest:
+			await _play_moment(str(ms["kep"]), str(ms["cim"]), str(ms["alcim"]), str(ms["fajta"]) == "jo")
+		else:
+			_milestones.show_banner(ms)
 	# az év eseményei (játékszabály): kár, ami ellen a kikutatott témák védenek
 	var evs: Array = Events.draw(campaign, y)
+	# egy baj első előfordulása ebben a játékban: rövid jelenet az eseménylap előtt
+	if not selftest:
+		for ev in evs:
+			if not ev.get("jo", false) and _first_time(str(ev["id"])):
+				await _play_moment(str(ev["id"]), L.t(str(ev["cim"])), L.t(str(ev["szoveg"])), false)
+				break
 	if not evs.is_empty():
 		Events.apply(campaign, evs)
 		_update_stats()
@@ -1593,6 +1610,26 @@ func _on_era_reached(e: int) -> void:
 	_toast(L.t("Új korszak: %s") % Knowledge.era_name(e), UI.GOLD)
 	if is_instance_valid(_plan) and _plan.is_inside_tree():
 		_plan.rebuild()
+
+
+## Volt-e már ilyen esemény ebben a játékban? (A krónika még nem tartalmazza az ideit.)
+func _first_time(id: String) -> bool:
+	for h in campaign.history:
+		if id in h.get("esemenyek", []):
+			return false
+	return true
+
+
+## Rövid festett jelenet egy fordulóponthoz vagy egy baj első előfordulásához.
+func _play_moment(kind: String, title: String, sub: String, good: bool, shots: String = "") -> void:
+	var anim := EraAnim.new()
+	anim.kind = kind
+	anim.title = title
+	anim.sub = sub
+	anim.good = good
+	anim.shots_dir = shots
+	add_child(anim)
+	await anim.finished
 
 
 ## A korszakváltás festett jelenete (era_anim.gd); megvárja a végét.

@@ -76,17 +76,17 @@ func for_year(y: int) -> Array:
 	if is_nan(b):
 		b = t
 	if not is_nan(t) and not is_nan(t_prev) and t >= 1.5 and t_prev < 1.5:
-		out.append({"cim": L.t("Átléptük a másfél fokot"), "alcim": L.t("A Föld 1,5 °C-kal melegebb, mint 150 éve."), "fajta": "rossz"})
+		out.append({"cim": L.t("Átléptük a másfél fokot"), "alcim": L.t("A Föld 1,5 °C-kal melegebb, mint 150 éve."), "fajta": "rossz", "kep": "fok"})
 	if not is_nan(t) and not is_nan(t_prev) and t >= 2.0 and t_prev < 2.0:
-		out.append({"cim": L.t("Átléptük a két fokot"), "alcim": L.t("A Föld 2 °C-kal melegebb, mint 150 éve."), "fajta": "rossz"})
+		out.append({"cim": L.t("Átléptük a két fokot"), "alcim": L.t("A Föld 2 °C-kal melegebb, mint 150 éve."), "fajta": "rossz", "kep": "fok"})
 	if has_plan:
 		var n1 := _at("terv", "netto_co2", y)
 		var n0 := _at("terv", "netto_co2", y - 1)
 		if not is_nan(n1) and not is_nan(n0) and n1 <= 0.5 and n0 > 0.5:
-			out.append({"cim": L.t("Nulla lett a CO2-kibocsátás"), "alcim": L.t("Ettől kezdve nem melegítjük tovább a Földet."), "fajta": "jo"})
+			out.append({"cim": L.t("Nulla lett a CO2-kibocsátás"), "alcim": L.t("Ettől kezdve nem melegítjük tovább a Földet."), "fajta": "jo", "kep": "nulla"})
 		var peak_y := _year_of(k.get("csucs_ev"))
 		if peak_y == y and y < 2095 and float(k.get("T2100", 99.0)) <= float(k.get("csucs", 0.0)) + 0.005:
-			out.append({"cim": L.t("Megállt a melegedés"), "alcim": L.t("A csúcs +%s °C volt.") % UI.hu(float(k["csucs"]), 2), "fajta": "jo"})
+			out.append({"cim": L.t("Megállt a melegedés"), "alcim": L.t("A csúcs +%s °C volt.") % UI.hu(float(k["csucs"]), 2), "fajta": "jo", "kep": "megallt"})
 		var b0: float = campaign.world_value("alapeset", "homerseklet", y - 1)
 		var t0: float = t_prev
 		if not is_nan(b0) and not is_nan(t0) and not is_nan(t):
