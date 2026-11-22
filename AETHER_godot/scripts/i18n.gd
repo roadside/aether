@@ -491,4 +491,13 @@ const EN := {
 	"Az évek telnek. Ha egy ablak nyitva van, az idő megáll.": "Years pass. While a window is open, time stops.",
 	"Elölről kezdi a játékot 2026-tól.": "Starts the game again from 2026.",
 	"Részletek a megnyitott ablakban.": "Details in the open window.",
+	"Mai hőmérséklet-eltérés": "Today's temperature anomaly",
+	"Hol melegebb és hol hidegebb ma, mint az 1991–2020-as átlag. Forrás: Copernicus Climate Pulse (ERA5). Gyorsbillentyű: M": "Where it is warmer or colder today than the 1991–2020 average. Source: Copernicus Climate Pulse (ERA5). Shortcut: M",
+	"hidegebb": "colder",
+	"melegebb": "warmer",
+	"Térkép letöltése…": "Downloading map…",
+	"%s · eltérés az 1991–2020-as átlagtól · Copernicus Climate Pulse (angol nyelvű)": "%s · anomaly vs 1991–2020 average · Copernicus Climate Pulse (in English)",
+	"A hőmérséklet-térképet most nem sikerült letölteni. Van internet?": "The temperature map could not be downloaded. Are you online?",
+	"Kész a kutatás!": "Research complete!",
+	"Új lehetőség a tervedben": "New option in your plan",
 }

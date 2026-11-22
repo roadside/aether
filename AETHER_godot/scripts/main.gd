@@ -136,6 +136,7 @@ func _ready() -> void:
 	_build_left_panel()
 	_build_right_panel()
 	_build_bottom_bar()
+	_build_anomaly_toggle()
 
 	_plan = PlanPanel.new()
 	_plan.bridge = bridge
@@ -288,6 +289,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_N: _open_nalunk()
 			KEY_SPACE: _toggle_time()
 			KEY_H: globe.home()
+			KEY_M: _anom_btn.button_pressed = not _anom_btn.button_pressed
 			KEY_F1: _open_help()
 			_: handled = false
 		if handled:
@@ -478,6 +480,138 @@ func _build_bottom_bar() -> void:
 	add_child(_year_row)
 	_year_row.visible = false
 	h.add_child(info_box)
+
+
+# ---------------------------------------------------------------------------
+# Mai hőmérséklet-eltérés a földgömbön (Copernicus Climate Pulse, ERA5, napi térkép)
+# ---------------------------------------------------------------------------
+const PULSE_STATUS := "https://sites.ecmwf.int/data/climatepulse/status/climpulse_status.json"
+const PULSE_MAP := "https://sites.ecmwf.int/data/climatepulse/maps/wrap/daily/2t/anomaly/%s/climpulse_map_era5_wrap_daily_2t_anomaly_%s.png"
+const PULSE_PAGE := "https://pulse.climate.copernicus.eu/"
+var _anom_btn: Button
+var _anom_legend: Control
+var _anom_link: LinkButton
+var _anom_date := ""
+var _anom_loaded := false
+
+
+func _build_anomaly_toggle() -> void:
+	_anom_btn = UI.button(L.t("Mai hőmérséklet-eltérés"))
+	_anom_btn.toggle_mode = true
+	_anom_btn.focus_mode = Control.FOCUS_NONE
+	_anom_btn.tooltip_text = L.t("Hol melegebb és hol hidegebb ma, mint az 1991–2020-as átlag. Forrás: Copernicus Climate Pulse (ERA5). Gyorsbillentyű: M")
+	_anom_btn.position = Vector2(540, 706)
+	_anom_btn.toggled.connect(_toggle_anomaly)
+	add_child(_anom_btn)
+	# jelmagyarázat: kék = hidegebb, piros = melegebb (a Climate Pulse színskálája)
+	var panel := PanelContainer.new()
+	var psb := StyleBoxFlat.new()
+	psb.bg_color = Color(0.03, 0.05, 0.1, 0.85)
+	psb.set_corner_radius_all(6)
+	psb.set_content_margin_all(8)
+	panel.add_theme_stylebox_override("panel", psb)
+	panel.position = Vector2(800, 700)
+	panel.visible = false
+	var box := UI.vbox(2)
+	panel.add_child(box)
+	var bar := Gradient.new()
+	bar.offsets = PackedFloat32Array([0.0, 0.25, 0.5, 0.75, 1.0])
+	bar.colors = PackedColorArray([Color("#1f4e9c"), Color("#8cc4ec"), Color("#fbf6e0"), Color("#f29a3c"), Color("#9e1a1a")])
+	var gt := GradientTexture2D.new()
+	gt.gradient = bar
+	gt.width = 256
+	gt.height = 8
+	var tr := TextureRect.new()
+	tr.texture = gt
+	tr.custom_minimum_size = Vector2(300, 10)
+	tr.stretch_mode = TextureRect.STRETCH_SCALE
+	box.add_child(tr)
+	var lab := UI.hbox(0)
+	lab.custom_minimum_size = Vector2(300, 0)
+	lab.add_child(UI.label(L.t("hidegebb"), 13, Color("#8cc4ec"), false, false))
+	var sp := Control.new()
+	sp.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	lab.add_child(sp)
+	lab.add_child(UI.label(L.t("melegebb"), 13, Color("#f29a3c"), false, false))
+	box.add_child(lab)
+	var src := LinkButton.new()
+	src.add_theme_font_size_override("font_size", 12)
+	src.add_theme_color_override("font_color", UI.MUTE)
+	src.pressed.connect(func() -> void: OS.shell_open(PULSE_PAGE))
+	box.add_child(src)
+	add_child(panel)
+	_anom_legend = panel
+	_anom_link = src
+
+
+func _toggle_anomaly(on: bool) -> void:
+	if on and not _anom_loaded:
+		_anom_btn.text = L.t("Térkép letöltése…")
+		_load_anomaly()
+		return
+	globe.show_anomaly(on)
+	_anom_legend.visible = on
+
+
+## A legfrissebb napi térkép: előbb a gyorsítótár, különben letöltés (állapotfájl -> dátum -> PNG).
+func _load_anomaly() -> void:
+	var st := HTTPRequest.new()
+	add_child(st)
+	st.request_completed.connect(func(_r: int, code: int, _h: PackedStringArray, body: PackedByteArray) -> void:
+		st.queue_free()
+		var date := ""
+		if code == 200:
+			var j: Variant = JSON.parse_string(body.get_string_from_utf8())
+			if typeof(j) == TYPE_DICTIONARY and j.has("daily"):
+				date = str(int(j["daily"]))
+		if date == "":
+			date = Time.get_date_string_from_unix_time(Time.get_unix_time_from_system() - 2 * 86400).replace("-", "")
+		_fetch_anomaly(date))
+	if st.request(PULSE_STATUS) != OK:
+		st.queue_free()
+		_anomaly_failed()
+
+
+func _fetch_anomaly(date: String) -> void:
+	_anom_date = date
+	var cache: String = str(bridge.work_dir("aether_vilag")).path_join("pulse_2t_anomalia_%s.png" % date)
+	if FileAccess.file_exists(cache):
+		_apply_anomaly(cache)
+		return
+	var rq := HTTPRequest.new()
+	rq.download_file = cache
+	add_child(rq)
+	rq.request_completed.connect(func(_r: int, code: int, _h: PackedStringArray, _b: PackedByteArray) -> void:
+		rq.queue_free()
+		if code == 200:
+			_apply_anomaly(cache)
+		else:
+			DirAccess.remove_absolute(cache)
+			_anomaly_failed())
+	if rq.request(PULSE_MAP % [date.left(4), date]) != OK:
+		rq.queue_free()
+		_anomaly_failed()
+
+
+func _apply_anomaly(path: String) -> void:
+	var img := Image.new()
+	if img.load(path) != OK:
+		_anomaly_failed()
+		return
+	globe.set_anomaly_texture(ImageTexture.create_from_image(img))
+	_anom_loaded = true
+	_anom_btn.text = L.t("Mai hőmérséklet-eltérés")
+	var d := "%s.%s.%s." % [_anom_date.left(4), _anom_date.substr(4, 2), _anom_date.substr(6, 2)]
+	_anom_link.text =L.t("%s · eltérés az 1991–2020-as átlagtól · Copernicus Climate Pulse (angol nyelvű)") % d
+	if _anom_btn.button_pressed:
+		globe.show_anomaly(true)
+		_anom_legend.visible = true
+
+
+func _anomaly_failed() -> void:
+	_anom_btn.text = L.t("Mai hőmérséklet-eltérés")
+	_anom_btn.set_pressed_no_signal(false)
+	_show_info(L.t("A hőmérséklet-térképet most nem sikerült letölteni. Van internet?"), "")
 
 
 func _show_info(text: String, link: String) -> void:
@@ -931,8 +1065,77 @@ func _open_research() -> void:
 	_advance(1)
 
 
-func _on_results_shown(_has_levers: bool) -> void:
+func _on_results_shown(has_levers: bool) -> void:
 	_advance(3)
+	_celebrate(L.t("Kész a kutatás!") + ("  " + L.t("Új lehetőség a tervedben") if has_levers else ""))
+
+
+## Látványos jelzés: felvillanó felirat és pixel-konfetti az ablak fölött (2-3 másodperc).
+func _celebrate(text: String) -> void:
+	var c := Confetti.new()
+	c.set_anchors_preset(Control.PRESET_FULL_RECT)
+	c.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	c.z_index = 40
+	add_child(c)
+	var p := PanelContainer.new()
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color("#0d2a26")
+	sb.border_color = UI.CYAN
+	sb.set_border_width_all(3)
+	sb.set_corner_radius_all(8)
+	sb.set_content_margin_all(18)
+	sb.content_margin_left = 34
+	sb.content_margin_right = 34
+	sb.shadow_color = Color(0.2, 1.0, 0.85, 0.35)
+	sb.shadow_size = 24
+	p.add_theme_stylebox_override("panel", sb)
+	var l := UI.label(text, 30, UI.CYAN, true, false)
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	p.add_child(l)
+	p.z_index = 41
+	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(p)
+	await get_tree().process_frame
+	if not is_instance_valid(p):
+		return
+	p.position = Vector2((1600 - p.size.x) / 2.0, 360)
+	p.pivot_offset = p.size * 0.5
+	p.scale = Vector2(0.6, 0.6)
+	var tw := create_tween()
+	tw.tween_property(p, "scale", Vector2(1.08, 1.08), 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(p, "scale", Vector2.ONE, 0.12)
+	tw.tween_interval(1.8)
+	tw.tween_property(p, "modulate:a", 0.0, 0.5)
+	tw.tween_callback(p.queue_free)
+	tw.tween_callback(c.queue_free)
+
+
+## Pixel-konfetti: a képernyő közepéről kirepülő, lehulló színes négyzetek.
+class Confetti extends Control:
+	var _parts: Array = []
+	var _t := 0.0
+
+	func _ready() -> void:
+		var rng := RandomNumberGenerator.new()
+		rng.randomize()
+		var cols := [Color("#5ff0d8"), Color("#f4c85a"), Color("#ff7a5a"), Color("#8cc4ec"), Color("#9ee06a")]
+		for i in 90:
+			var a := rng.randf_range(-PI, 0.0)
+			var sp := rng.randf_range(260.0, 620.0)
+			_parts.append([Vector2(800, 400), Vector2(cos(a), sin(a)) * sp, cols[i % cols.size()], rng.randf_range(4.0, 8.0)])
+
+	func _process(delta: float) -> void:
+		_t += delta
+		for p in _parts:
+			p[1].y += 900.0 * delta
+			p[0] += p[1] * delta
+		queue_redraw()
+
+	func _draw() -> void:
+		var a := clampf(2.6 - _t, 0.0, 1.0)
+		for p in _parts:
+			var s: float = p[3]
+			draw_rect(Rect2((p[0] as Vector2).snapped(Vector2(2, 2)), Vector2(s, s)), Color(p[2], a))
 
 
 func _on_approved(levers: Array) -> void:
@@ -1251,6 +1454,17 @@ func _selftest() -> void:
 		await _shot(dir, "1e_ido.png")
 		campaign.running = false
 		_update_stats()
+		# 1f: mai hőmérséklet-eltérés a földgömbön (Copernicus Climate Pulse)
+		globe.home()
+		_anom_btn.button_pressed = true
+		for i in 40:
+			if _anom_loaded:
+				break
+			await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(1.0).timeout
+		print("ONTESZT eltérés-térkép: betöltve=", _anom_loaded, " dátum=", _anom_date)
+		await _shot(dir, "1f_anomalia.png")
+		_anom_btn.button_pressed = false
 		globe.highlight = {}
 		globe.home()
 		await get_tree().create_timer(0.8).timeout

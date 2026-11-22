@@ -17,6 +17,8 @@ uniform float levels = 9.0;            // színszintek csatornánként (poszteri
 uniform float cloud_drift = 0.0;       // felhők elmozdulása (fordulat)
 uniform vec3 atmosphere = vec3(0.39, 0.95, 0.89);
 uniform float zoom = 1.0;              // nagyítás (1 = egész gömb)
+uniform sampler2D anomaly_map : source_color, filter_linear, repeat_enable;  // mai hőmérséklet-eltérés (Climate Pulse)
+uniform float anomaly_mix = 0.0;       // 0 = normál Föld, 1 = eltérés-térkép
 uniform float heat = 0.0;              // melegedés szemléltetése: 0 = ma, 1 = kb. +2 °C a mához képest
 
 const float BAYER[16] = float[16](0.0, 8.0, 2.0, 10.0, 12.0, 4.0, 14.0, 6.0, 3.0, 11.0, 1.0, 9.0, 15.0, 7.0, 13.0, 5.0);
@@ -125,6 +127,20 @@ void fragment() {
 		// éjjel a felszín szinte sötét (kékes árnyalat), csak a városfények világítanak
 		vec3 dark_side = col * 0.12 + vec3(0.01, 0.02, 0.05);
 		col = mix(col, dark_side + texture(night_map, tex).rgb * (1.0 - cv * 0.8), night);
+
+		// Mai hőmérséklet-eltérés (Copernicus Climate Pulse, ERA5): a színes térkép a felszínre
+		// kerül; az éjszakai oldal is látszik, csak kicsit sötétebb, hogy a gömb térbeli maradjon.
+		if (anomaly_mix > 0.0) {
+			vec3 an = texture(anomaly_map, tex).rgb;
+			float shade = 0.55 + 0.45 * clamp(ndl * 1.5 + 0.5, 0.0, 1.0);
+			vec3 anc = an * shade + vec3(0.43, 0.75, 1.0) * rim * 0.25;
+			// partvonalak, hogy látszódjon, melyik ország hol van
+			vec2 e = vec2(1.0 / 2048.0, 0.0);
+			float land = texture(data_map, tex).r;
+			float edge = abs(land - texture(data_map, tex + e.xy).r) + abs(land - texture(data_map, tex + e.yx * 2.0).r);
+			anc = mix(anc, vec3(0.12, 0.14, 0.2), clamp(edge, 0.0, 1.0) * 0.8);
+			col = mix(col, anc, anomaly_mix);
+		}
 
 		COLOR = vec4(posterize(clamp(col, 0.0, 1.0), d), 1.0);
 	}

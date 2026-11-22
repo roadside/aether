@@ -29,6 +29,17 @@ var links: Array = []                # [[lat1, lon1, lat2, lon2], ...]
 var events: Array = []               # valós események (world_state.py): {cim, kategoria, lat, lon, link, ...}
 var heat := 0.0                      # 0 = ma; 1 = kb. +2 °C a mához képest (csak szemléltetés)
 var highlight: Dictionary = {}       # a listában éppen rámutatott esemény: gyűrű jelöli
+var anomaly_mix := 0.0               # 0..1: a mai hőmérséklet-eltérés térkép áttűnése
+
+
+## A Copernicus Climate Pulse napi eltérés-térképe (egyenközű, -180..180) a gömbre.
+func set_anomaly_texture(tex: Texture2D) -> void:
+	_mat.set_shader_parameter("anomaly_map", tex)
+
+
+func show_anomaly(on: bool) -> void:
+	var tw := create_tween()
+	tw.tween_property(self, "anomaly_mix", 1.0 if on else 0.0, 0.6)
 var _look_tw: Tween
 var sun_lat := 0.0                   # ahol a Nap éppen merőlegesen süt (fok)
 var sun_lon := 0.0
@@ -119,6 +130,7 @@ func _process(delta: float) -> void:
 		_mat.set_shader_parameter("sun_dir", _sun_dir())
 	_mat.set_shader_parameter("cloud_drift", cloud_drift)
 	_mat.set_shader_parameter("heat", heat)
+	_mat.set_shader_parameter("anomaly_mix", anomaly_mix)
 	queue_redraw()
 
 
