@@ -181,7 +181,7 @@ const EN := {
 	"A játékban minden adat, grafikon és hír valós.": "Every piece of data, every chart and every news item in this game is real.",
 	"Minden tudományos cikket forrásmegjelöléssel mellékelek, így bárki elolvashatja.": "I attach every scientific paper with its source, so anyone can read it.",
 	"Talán köztük van a megoldás...": "Maybe the solution is among them...",
-	"Egy küldetésért 1–3 csillag jár: minél jobban megoldod, annál több. A kutatásnál a csillag a bizonyosságot mutatja: minél több cikk mondja ugyanazt, annál több.": "A mission gives 1–3 stars: the better you solve it, the more you get. In research, stars show certainty: the more papers say the same, the more stars.",
+	"Egy küldetésért 1–3 csillag jár. Minél jobban elvégzed a küldetést, annál többet kapsz. Egy kutatásnál a csillag a bizonyosságot jelzi: minél több cikk mondja ugyanazt, annál biztosabb a kutatás.": "A mission gives 1–3 stars. The better you complete it, the more you get. In research, stars show certainty: the more papers say the same, the more certain the research.",
 	"Átugrom": "Skip",
 	"Tovább →": "Next →",
 	"Kezdjük!": "Let's start!",

@@ -254,7 +254,7 @@ func _start_tour() -> void:
 		{"rect": func() -> Rect2: return _right_panel.get_global_rect(),
 			"cim": "Küldetések", "szoveg": "Innen indulj! A küldetés lépésről lépésre vezet téged, és csillagot ad."},
 		{"rect": func() -> Rect2: return _right_panel.get_global_rect(),
-			"cim": "Csillagok", "szoveg": "Egy küldetésért 1–3 csillag jár: minél jobban megoldod, annál több. A kutatásnál a csillag a bizonyosságot mutatja: minél több cikk mondja ugyanazt, annál több."},
+			"cim": "Csillagok", "szoveg": "Egy küldetésért 1–3 csillag jár. Minél jobban elvégzed a küldetést, annál többet kapsz. Egy kutatásnál a csillag a bizonyosságot jelzi: minél több cikk mondja ugyanazt, annál biztosabb a kutatás."},
 	]
 	add_child(_tour)
 	await _tour.finished
