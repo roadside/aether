@@ -2,6 +2,19 @@ extends RefCounted
 ## További angol fordítások (kulcs: a magyar szöveg). Az i18n.gd t() függvénye ezt is nézi.
 
 const EN := {
+	# éves események
+	"Hőhullám": "Heatwave", "Hetekig tartó forróság a városokban.": "Weeks of extreme heat in the cities.",
+	"Aszály": "Drought", "Kevés az eső, gyenge a termés.": "Little rain, poor harvests.",
+	"Áradás": "Flood", "Egy nap alatt egy hónapnyi eső esett.": "A month of rain fell in a single day.",
+	"Erdőtűz": "Wildfire", "Száraz, szeles időben ég az erdő.": "Forests burn in dry, windy weather.",
+	"Vihardagály": "Storm surge", "A vihar a tengert a partra nyomta.": "A storm pushed the sea onto the coast.",
+	"Ez történt %d-ben": "This happened in %d",
+	"játékesemény": "game event",
+	"Játékszabály: a játék sorsolja. A melegebb Földön az ilyen események gyakoribbak (IPCC AR6).": "Game rule: drawn by the game. On a warmer Earth such events are more frequent (IPCC AR6).",
+	"Kár: −%d pénz, −%d bizalom": "Damage: −%d money, −%d trust",
+	"A tudásod megvédett: a kár %d%%-kal kisebb.": "Your knowledge protected you: %d%% less damage.",
+	"Ez ellen véd, ha kikutatod:": "Researching these protects against it:",
+	"Rendben": "OK",
 	"Év lezárása": "End the year",
 	"Ha idén már mindent megtettél, zárd le az évet. Jön a következő. (Szóköz)": "When you have done everything for this year, end it. The next one comes. (Space)",
 	"Még nincs terved: a kibocsátás nem csökken.": "You have no plan yet: emissions are not falling.",

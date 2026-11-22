@@ -10,6 +10,7 @@ const L := preload("res://scripts/i18n.gd")
 const SHOW := 5.2             # egy sáv ideje (mp)
 const CENTER := Vector2(800, 434)
 var campaign
+var blocked: Callable        # igaz, amíg egy ablak nyitva van: addig a jelzés vár
 var _queue: Array = []
 var _cur: Dictionary = {}
 var _t := 0.0
@@ -117,7 +118,7 @@ func show_banner(ms: Dictionary) -> void:
 
 func _process(delta: float) -> void:
 	if _cur.is_empty():
-		if _queue.is_empty():
+		if _queue.is_empty() or (blocked.is_valid() and blocked.call()):
 			return
 		_cur = _queue.pop_front()
 		_t = 0.0

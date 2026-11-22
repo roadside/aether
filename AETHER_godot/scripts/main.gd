@@ -19,6 +19,7 @@ const Intro := preload("res://scripts/intro.gd")
 const PathStrip := preload("res://scripts/path_strip.gd")
 const Milestones := preload("res://scripts/milestones.gd")
 const Finale := preload("res://scripts/finale.gd")
+const Events := preload("res://scripts/events.gd")
 
 const MISSION := [
 	["Nézd meg a mai Földet", "A bal oldali lista és a földgömb pöttyei valódi, friss jelentések. Kattints egyre!"],
@@ -137,6 +138,7 @@ func _ready() -> void:
 
 	_milestones = Milestones.new()
 	_milestones.campaign = campaign
+	_milestones.blocked = func() -> bool: return _overlay != null
 	add_child(_milestones)
 
 	_plan = PlanPanel.new()
@@ -1355,6 +1357,27 @@ func _on_year_passed(y: int, note: String) -> void:
 	_year_slider.value = y   # rejtett: a földgömb színezését követi az év
 	_show_info(note, "")
 	_milestones.on_year(y)
+	# az év eseményei (játékszabály): kár, ami ellen a kikutatott témák védenek
+	var evs: Array = Events.draw(campaign, y)
+	if not evs.is_empty():
+		Events.apply(campaign, evs)
+		_update_stats()
+		if not ("--onteszt" in OS.get_cmdline_user_args()):
+			_open_year_events(evs)
+
+
+func _open_year_events(evs: Array) -> void:
+	var to_research := func() -> void:
+		_close_overlay()
+		_open_research()
+	var p: Control = Events.panel(campaign, evs, to_research, _close_overlay)
+	_place_overlay(p)
+	p.custom_minimum_size = Vector2(760, 0)
+	p.position = Vector2(420, 150)
+	var fit := func() -> void:
+		if is_instance_valid(p):
+			p.size = Vector2(760, 0)
+	fit.call_deferred()
 
 
 func _on_era_reached(e: int) -> void:
@@ -1605,6 +1628,21 @@ func _selftest() -> void:
 		print("ONTESZT idő: év=", campaign.year, " pénz=", campaign.money, " bizalom=", campaign.trust,
 			" T=", campaign.temp_now())
 		await _shot(dir, "5_ido_10_ev.png")
+		# 5e: évzáró eseménylap (játékszabály), egy ismert védő témával
+		campaign.world_seed = 424242
+		campaign.mark_researched("hoseg_riasztas")
+		var demo: Array = []
+		for yy in range(2037, 2100):
+			demo = Events.draw(campaign, yy)
+			if demo.size() >= 2:
+				break
+		print("ONTESZT események: ", demo.map(func(e): return [e["ev"], e["id"], e["kar_penz"], e["pajzs"]]))
+		if not demo.is_empty():
+			_open_year_events(demo)
+			await get_tree().create_timer(0.6).timeout
+			await _shot(dir, "5e_esemenyek.png")
+			_close_overlay()
+		campaign.world_seed = 2026
 		# 5c: fordulópont-sáv a földgömb előtt (a modellből), 5d: évtized
 		print("ONTESZT fordulópontok 2027–2100: ", _milestone_years())
 		_milestones.show_banner({"cim": L.t("Megállt a melegedés"), "alcim": L.t("A csúcs +%s °C volt.") % "1,65", "fajta": "jo"})
