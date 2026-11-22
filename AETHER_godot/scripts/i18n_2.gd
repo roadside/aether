@@ -121,6 +121,7 @@ const EN := {
 	"Ezt a Földet kérem": "Give me this Earth",
 	"Csak számokból áll": "Numbers only",
 	"Megosztom": "Share",
+	"Megosztva ✓": "Shared ✓",
 	"Beceneved (nem kötelező)": "Your nickname (optional)",
 	"Fájl készítése": "Make the file",
 	"Kész. Küldd el ezt a fájlt a barátodnak: ő a „Kutatás átvétele” gombbal olvassa be.": "Done. Send this file to your friend: they load it with the “Import research” button.",

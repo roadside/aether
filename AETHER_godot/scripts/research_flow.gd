@@ -974,6 +974,7 @@ func _show_results() -> void:
 	if not _from_archive and int(o.get("ellenorizve", 0)) > 0 and tid != "":
 		var share := UI.button(L.t("Megosztom"))
 		share.pressed.connect(_share_result)
+		_share_btn = share
 		row.add_child(share)
 	_body.add_child(row)
 	_share_box = UI.vbox(8)
@@ -1027,6 +1028,9 @@ func _share_result() -> void:
 		UI.clear(_share_box)
 		_share_box.add_child(UI.label(L.t("Kész. Küldd el ezt a fájlt a barátodnak: ő a „Kutatás átvétele” gombbal olvassa be."), 16, UI.GREEN))
 		_share_box.add_child(UI.label(path, 14, UI.MUTE))
+		if is_instance_valid(_share_btn):
+			_share_btn.text = L.t("Megosztva ✓")
+			_share_btn.disabled = true
 		OS.shell_open(share_dir())
 	go.pressed.connect(go_fn)
 
@@ -1037,6 +1041,7 @@ static func _identity():
 	return load(path) if ResourceLoader.exists(path) else null
 
 
+var _share_btn: Button = null
 var _import_signer := ""     # az átvett fájl érvényes aláírásának rövid azonosítója (vagy üres)
 
 

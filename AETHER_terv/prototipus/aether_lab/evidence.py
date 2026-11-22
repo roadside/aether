@@ -444,6 +444,7 @@ def only_verified_numbers(text: str, claims: List[Claim]) -> str:
             if v is not None:
                 allowed.add(round(abs(float(v)), 6))
     kept = []
+    cut = False                    # az előző mondatot kihagytuk
     for sent in split_sentences(text):
         ok = True
         for m in _NUM_RE.finditer(sent):
@@ -458,5 +459,24 @@ def only_verified_numbers(text: str, claims: List[Claim]) -> str:
                 ok = False
                 break
         if ok and sent.strip():
-            kept.append(sent.strip())
-    return " ".join(kept)
+            kept.append(_drop_linking(sent.strip()) if cut else sent.strip())
+        cut = not ok
+    return " ".join(k for k in kept if k)
+
+
+_LINK_START = re.compile(
+    r"^(?:azonban|viszont|ugyanakkor|ezzel szemben|ennek ellenére|emellett|ezért|így|tehát|de|"
+    r"however|but|yet|still|nevertheless|in contrast|therefore|thus|moreover)\b\s*,?\s*", re.I)
+_LINK_SECOND = re.compile(
+    r"^((?:\S+\s+){1,3}?)(?:azonban|viszont|ugyanakkor|pedig|however),?\s+", re.I)
+
+
+def _drop_linking(sent: str) -> str:
+    """Ha a megelőző mondatot kihagytuk, a mondat elejéről lekerül az arra visszautaló
+    kötőszó („Azonban…", „A fajták azonban…", „However, …"), hogy a szöveg önállóan is álljon."""
+    out = _LINK_START.sub("", sent, count=1)
+    if out == sent:
+        out = _LINK_SECOND.sub(r"\1", sent, count=1)
+    if out and out != sent:
+        out = out[0].upper() + out[1:]
+    return out

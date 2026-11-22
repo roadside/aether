@@ -279,3 +279,16 @@ def test_split_sentences_keeps_parentheses_and_abbreviations():
     t = "A kőzetpor (pl. dunite vagy basalt) szenet köt meg. A költség kb. magas. Vége."
     assert split_sentences(t) == ["A kőzetpor (pl. dunite vagy basalt) szenet köt meg.",
                                   "A költség kb. magas.", "Vége."]
+
+
+def test_only_verified_numbers_kotoszo():
+    """Kihagyott mondat után a visszautaló kötőszó lekerül a következő mondat elejéről."""
+    from types import SimpleNamespace
+    from aether_lab import evidence as ev
+    claims = [SimpleNamespace(ertek=6.0, also=None, felso=None, statusz="ellenorizve")]
+    t = "A hozam 40 százalékkal nő. A fajták azonban 6 százalékkal többet teremnek."
+    assert ev.only_verified_numbers(t, claims) == "A fajták 6 százalékkal többet teremnek."
+    t = "Yields rise by 40 percent. However, the varieties give 6 percent more."
+    assert ev.only_verified_numbers(t, claims) == "The varieties give 6 percent more."
+    t = "A fajták azonban 6 százalékkal többet teremnek."      # nem volt kihagyás: marad
+    assert ev.only_verified_numbers(t, claims) == t
