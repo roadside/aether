@@ -72,7 +72,6 @@ var _close_x: Button                 # kerek X a megnyitott ablak sarkán
 var _plan                     # plan_panel.gd példány (megmarad a jóváhagyott karokkal)
 var campaign                  # campaign.gd: telő idő, pénz, bizalom
 var _play_btn: Button
-var _fast_btn: Button
 var _reset_btn: Button
 var _base_retry: Timer
 var _toasts := 0                      # egyszerre látható értesítések (egymás alá kerülnek)
@@ -156,7 +155,7 @@ func _ready() -> void:
 	add_child(_base_retry)
 	if not campaign.model.is_empty():
 		model = campaign.model
-		_year_row.visible = true
+		_year_row.visible = false
 		_year_slider.value = campaign.year
 	_update_stats()
 
@@ -263,7 +262,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_request_close()
 		return
 	# Gyorsbillentyűk (csak ha nincs nyitott ablak, és nem egy szövegmezőbe gépelünk):
-	# K kutatás, T terv, A állomás, N nálunk, szóköz idő indítása/szünet, jobbra nyíl +1 év,
+	# K kutatás, T terv, A állomás, N nálunk, szóköz idő indítása/szünet,
 	# H a földgömb vissza a saját helyedre.
 	if event is InputEventKey and event.pressed and not event.echo and _overlay == null \
 			and not (get_viewport().gui_get_focus_owner() is LineEdit):
@@ -274,7 +273,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_A: _open_station()
 			KEY_N: _open_nalunk()
 			KEY_SPACE: _toggle_time()
-			KEY_RIGHT: campaign.advance()
 			KEY_H: globe.home()
 			KEY_F1: _open_help()
 			_: handled = false
@@ -421,27 +419,19 @@ func _build_bottom_bar() -> void:
 	_play_btn.tooltip_text = L.t("Az évek telnek. Ha egy ablak nyitva van, az idő áll. Gyorsbillentyű: szóköz")
 	_play_btn.pressed.connect(_toggle_time)
 	trow.add_child(_play_btn)
-	_fast_btn = UI.button(L.t("Gyors"))
-	_fast_btn.toggle_mode = true
-	_fast_btn.tooltip_text = L.t("Gyorsabban telik az idő.")
-	var fast_fn := func(on: bool) -> void: campaign.fast = on
-	_fast_btn.toggled.connect(fast_fn)
-	trow.add_child(_fast_btn)
 	tbox.add_child(trow)
+	# Az idő csak indítható és megállítható (nincs gyorsítás és évugrás).
+	campaign.fast = false
 	var trow2 := UI.hbox(6)
-	var step := UI.button(L.t("+1 év"))
-	step.tooltip_text = L.t("Egy évvel előre. Gyorsbillentyű: jobbra nyíl")
-	var step_fn := func() -> void: campaign.advance()
-	step.pressed.connect(step_fn)
-	trow2.add_child(step)
 	_reset_btn = UI.button(L.t("Új játék"))
+	_reset_btn.custom_minimum_size = Vector2(150, 0)
 	_reset_btn.tooltip_text = L.t("Elölről kezdi 2026-tól. A küldetések csillagai megmaradnak.")
 	_reset_btn.pressed.connect(_reset_game)
 	trow2.add_child(_reset_btn)
 	tbox.add_child(trow2)
 	h.add_child(tbox)
 	# A gombok ne tartsák meg a fókuszt: így a szóköz az időt indítja, nem az utoljára nyomott gombot.
-	for b in [research, plan, station, home, _play_btn, _fast_btn, step, _reset_btn]:
+	for b in [research, plan, station, home, _play_btn, _reset_btn]:
 		(b as Button).focus_mode = Control.FOCUS_NONE
 	var info_box := UI.vbox(2)
 	info_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -467,7 +457,10 @@ func _build_bottom_bar() -> void:
 	_year_label = UI.label("", 17, UI.GOLD, true, false)
 	_year_label.custom_minimum_size = Vector2(150, 0)
 	_year_row.add_child(_year_label)
-	info_box.add_child(_year_row)
+	# Az évcsúszka nem kerül a képernyőre (összezavart): csak belül követi az évet, hogy a
+	# földgömb melegedés-színezése a mostani évhez igazodjon. Az évet a felső sáv mutatja.
+	add_child(_year_row)
+	_year_row.visible = false
 	h.add_child(info_box)
 
 
@@ -520,7 +513,7 @@ func _open_help() -> void:
 		v.add_child(UI.card_root(c))
 	v.add_child(UI.label(L.t("Gyorsbillentyűk"), 18, UI.CYAN, true))
 	var keys := [["K", L.t("Kutatás")], ["T", L.t("A terved")], ["A", L.t("Állomás")], ["N", L.t("Nálunk")],
-		[L.t("Szóköz"), L.t("idő indítása / szünet")], ["→", L.t("+1 év")], ["H", L.t("földgömb: vissza a helyedre")],
+		[L.t("Szóköz"), L.t("idő indítása / szünet")], ["H", L.t("földgömb: vissza a helyedre")],
 		["Esc", L.t("ablak bezárása")], ["F11", L.t("teljes képernyő")]]
 	var grid := GridContainer.new()
 	grid.columns = 2
@@ -941,7 +934,7 @@ func _open_plan() -> void:
 func _on_model(res: Dictionary) -> void:
 	model = res
 	_close_overlay()
-	_year_row.visible = true
+	_year_row.visible = false
 	_year_slider.value = campaign.year
 	_on_year(campaign.year)
 	_update_stats()
@@ -1049,8 +1042,7 @@ func _toggle_time() -> void:
 
 
 func _on_year_passed(y: int, note: String) -> void:
-	if _year_row.visible:
-		_year_slider.value = y
+	_year_slider.value = y   # rejtett: a földgömb színezését követi az év
 	_show_info(note, "")
 
 
@@ -1158,7 +1150,7 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 			campaign.model = r
 			campaign.save()
 			model = r
-			_year_row.visible = true
+			_year_row.visible = false
 			_year_slider.value = campaign.year
 			_update_stats()
 		elif code != 0:
