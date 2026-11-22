@@ -365,7 +365,7 @@ HU_GLOSSARY = [
     (r"meta-?analys[ie]s", "metaanalízis"),
     (r"drought[\s-]+toleran(?:t|ce)\s+(?:maize|corn)", "aszálytűrő kukorica"),
     (r"drought[\s-]+toleran(?:t|ce)", "aszálytűrő"),
-    (r"\bmaize\b|\bcorn\b", "kukorica"),
+    (r"\bmaize\b", "kukorica"),
 ]
 HU_ABBR = [
     (r"\bBECCS\b", "növényi energia a CO2 föld alá zárásával"),
