@@ -512,6 +512,15 @@ func pay_research() -> void:
 	changed.emit()
 
 
+## Ha egy kutatás technikai hiba miatt állt le (nem a játékos hibája), visszajár a pénz
+## és az idei kutatási hely. Az összeg az, amit a kutatás indításakor ténylegesen fizetett.
+func refund_research(amount: int) -> void:
+	money += maxi(0, amount)
+	research_this_year = maxi(0, research_this_year - 1)
+	save()
+	changed.emit()
+
+
 func reward_results(n: int) -> void:
 	trust = mini(100, trust + n * TRUST_PER_RESULT)
 	save()

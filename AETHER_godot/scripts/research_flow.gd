@@ -371,6 +371,7 @@ func _pick_question(q: Dictionary) -> void:
 
 var _quick := false
 var _force_choice := false
+var _paid := 0                   # ennyit fizetett az aktuális kutatásért (hiba esetén visszajár)
 var _from_archive := false       # az eredmény az archívumból jött (nem most kutattuk)
 
 
@@ -755,6 +756,7 @@ func _start_research() -> void:
 		if problem != "":
 			_body.add_child(UI.label(problem, 17, UI.EMBER))
 			return
+		_paid = campaign.research_cost()
 		campaign.pay_research()
 	L.set_setting("ai", _ai)   # az események összefoglalója is ezt az AI-t használja
 	if _ai == "none":   # AI nélkül: ha van kész, ellenőrzött kutatás az archívumban, azt mutatjuk
@@ -841,8 +843,31 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 				return
 		var msg := ""
 		if typeof(st) == TYPE_DICTIONARY:
-			msg = str(st.get("uzenet", ""))
-		_show_python_error(code, output if msg == "" else msg)
+			msg = str(st.get("uzenet", st.get("hiba", "")))
+		_research_failed(code, output if msg == "" else msg)
+
+
+## A kutatás technikai hiba miatt leállt: a pénz és a kutatási hely visszajár, és a játékos
+## érthető mondatot kap (nem Python-telepítést, hacsak tényleg nem a Python hiányzik).
+func _research_failed(code: int, output: String) -> void:
+	if campaign != null and _paid > 0:
+		campaign.refund_research(_paid)
+	var refunded := _paid
+	_paid = 0
+	if code == -1 or code == 9009:
+		_show_python_error(code, output)
+		return
+	_header(L.t("A kutatás most nem sikerült"), 0, "")
+	_body.add_child(UI.label(L.t("Technikai hiba történt (például egy adatbázis vagy az AI épp nem válaszolt). Nem a te hibád."), 18, UI.TEXT))
+	if refunded > 0:
+		_body.add_child(UI.label(L.t("A %d pénz és az idei kutatási helyed visszajár.") % refunded, 17, UI.GREEN))
+	var det := output.strip_edges()
+	if det != "":
+		_body.add_child(UI.label(L.t("Részletek: ") + det.left(220), 13, UI.MUTE))
+	var back := UI.button(L.t("Újra"))
+	back.pressed.connect(show_questions)
+	_body.add_child(back)
+	print(output)
 
 
 func _show_python_error(code: int, output: String) -> void:

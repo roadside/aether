@@ -26,6 +26,7 @@ from pathlib import Path
 from typing import Callable, Dict, List, Optional
 
 from .evidence import _norm_text, numbers_in
+from .biztos_iras import write_text
 
 MAX_TEXT = 8000          # ennyi karakter megy az AI-nak
 MAX_IMAGES = 4
@@ -544,10 +545,7 @@ def cmd_reszlet(args):
     if note:
         res["megjegyzes"] = (res["megjegyzes"] + " " + note).strip()
     out = Path(args.ki)
-    out.parent.mkdir(parents=True, exist_ok=True)
-    tmp = out.with_suffix(".tmp")
-    tmp.write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
-    os.replace(tmp, out)
+    write_text(out, json.dumps(res, ensure_ascii=False, indent=1))
 
 
 def add_parsers(sub):

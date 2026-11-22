@@ -32,6 +32,7 @@ from typing import Dict, List, Optional
 
 from . import climate as cl
 from . import evidence as ev
+from .biztos_iras import write_text
 
 # ---------------------------------------------------------------------------
 # Hétköznapi nyelvű magyarázatok (alacsony tanulási görbe)
@@ -370,10 +371,8 @@ def javaslatok(pub: Dict, lang: str = "hu") -> List[Dict]:
 # ---------------------------------------------------------------------------
 def _write_json(path: Path, data) -> None:
     """Atomikus írás, hogy a Godot sose olvasson félkész fájlt."""
-    path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = path.with_suffix(path.suffix + ".tmp")
-    tmp.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
-    os.replace(tmp, path)
+    # újrapróbál, ha a játék épp olvassa a fájlt (Windows: WinError 5)
+    write_text(path, json.dumps(data, ensure_ascii=False, indent=1))
 
 
 class StatusLog:

@@ -14,6 +14,7 @@ import os
 import platform
 import subprocess
 from typing import Dict, List, Optional
+from .biztos_iras import write_text
 
 # (modell, letöltési méret GB, kb. igény GB a 8k kontextussal együtt)
 MODELS = [
@@ -127,9 +128,7 @@ def pull(model: str, progress_path, host: Optional[str] = None) -> None:
     p = Path(progress_path)
 
     def write(d):
-        tmp = p.with_suffix(".tmp")
-        tmp.write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
-        os.replace(tmp, p)
+        write_text(p, json.dumps(d, ensure_ascii=False))
 
     req = urllib.request.Request(host + "/api/pull", data=json.dumps({"model": model, "stream": True}).encode(),
                                  headers={"Content-Type": "application/json"})

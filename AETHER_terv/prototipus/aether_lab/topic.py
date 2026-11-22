@@ -18,6 +18,7 @@ import os
 import urllib.parse
 from pathlib import Path
 from typing import Callable, Dict, List, Optional
+from .biztos_iras import write_text
 
 MAX_WIKI_CHARS = 5000
 MAX_ABSTRACT = 1500
@@ -166,10 +167,7 @@ def cmd_tema(args):
     if note:
         res["megjegyzes"] = (res["megjegyzes"] + " " + note).strip()
     out = Path(args.ki)
-    out.parent.mkdir(parents=True, exist_ok=True)
-    tmp = out.with_suffix(".tmp")
-    tmp.write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
-    os.replace(tmp, out)
+    write_text(out, json.dumps(res, ensure_ascii=False, indent=1))
 
 
 def add_parsers(sub):

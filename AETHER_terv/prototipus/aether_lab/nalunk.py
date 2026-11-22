@@ -21,6 +21,7 @@ import os
 import urllib.parse
 from pathlib import Path
 from typing import Callable, Dict, List, Optional
+from .biztos_iras import write_text
 
 HOT = 30.0                 # °C: „30 °C feletti nap” (a napi legmagasabb hőmérséklet alapján)
 REF = (2006, 2025)         # a mai állapot: az utolsó 20 teljes év
@@ -137,9 +138,7 @@ def cmd_nalunk(args):
         res = build(args.lat, args.lon, args.orszag, args.hely, lambda u: _http(u, timeout=60), args.nyelv)
     except Exception as e:
         res = {"hiba": str(e)}
-    tmp = out.with_suffix(".tmp")
-    tmp.write_text(json.dumps(res, ensure_ascii=False), encoding="utf-8")
-    os.replace(tmp, out)
+    write_text(out, json.dumps(res, ensure_ascii=False))
 
 
 def add_parsers(sub):
