@@ -316,7 +316,6 @@ const EN := {
 	"Bizalom": "Trust",
 	"Biztos? Kattints újra": "Sure? Click again",
 	"Egy évvel előre.": "One year forward.",
-	"Elölről kezdi 2026-tól. A küldetések csillagai megmaradnak.": "Starts again from 2026. Mission stars are kept.",
 	"Gyors": "Fast",
 	"Gyorsabban telik az idő.": "Time passes faster.",
 	"Idő indítása": "Start time",

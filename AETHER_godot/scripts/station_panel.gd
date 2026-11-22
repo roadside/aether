@@ -9,7 +9,7 @@ const UI := preload("res://scripts/ui.gd")
 const L := preload("res://scripts/i18n.gd")
 const Campaign := preload("res://scripts/campaign.gd")
 
-const SCALE := 2   # kisebb kép: a kártyák építés-gombjai görgetés nélkül látszanak
+const SCALE := 3   # a magasabb ablakban így is elférnek a kártyák és az Építés gombok
 ## A modulok helye a háttérképen (pixelben, nagyítás előtt).
 const POS := {"ai_mag": Vector2(22, 32), "archivum": Vector2(72, 32), "uveghaz": Vector2(122, 32)}
 const ORDER := ["ai_mag", "archivum", "uveghaz"]
@@ -66,15 +66,80 @@ func _picture() -> Control:
 	holder.custom_minimum_size = Vector2(bg.get_width(), bg.get_height()) * SCALE
 	holder.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	holder.add_child(_sprite(bg, Vector2.ZERO))
+	var blink := Blink.new()
+	blink.scale_px = SCALE
+	# a háttér jelzőfényei: lámpák és az alapzat fényei
+	blink.add_light(Vector2(12, 69), Color("#ffd97a"), 0.6)
+	blink.add_light(Vector2(188, 69), Color("#ffd97a"), 0.7)
+	for x in range(20, 182, 12):
+		blink.add_light(Vector2(x, 87), Color("#f4c85a"), 1.5 + float(x % 5) * 0.3)
 	for mod in ORDER:
 		var lvl := int(campaign.station[mod])
-		var tex: Texture2D = load("res://assets/allomas/%s_%d.png" % [mod, lvl])
+		var is_building: bool = not campaign.building.is_empty() and str(campaign.building["modul"]) == mod
+		# épülő modulnál a következő szint halványan, előtte állvány és daru
+		var show_lvl := mini(lvl + 1, Campaign.MAX_LEVEL) if is_building else lvl
+		var tex: Texture2D = load("res://assets/allomas/%s_%d.png" % [mod, show_lvl])
 		var spr := _sprite(tex, POS[mod] * SCALE)
-		if not campaign.building.is_empty() and str(campaign.building["modul"]) == mod:
-			spr.modulate = Color(1, 1, 1, 0.55)   # épül: halványan
-		spr.tooltip_text = "%s · %s" % [L.t(Campaign.MODULES[mod]["nev"]), _level_text(lvl)]
+		if is_building:
+			spr.modulate = Color(1, 1, 1, 0.45)
+		spr.tooltip_text = "%s · %s" % [L.t(Campaign.MODULES[mod]["nev"]), L.t("épül") if is_building else _level_text(lvl)]
 		holder.add_child(spr)
+		if is_building:
+			var sc := _sprite(load("res://assets/allomas/allvany.png"), POS[mod] * SCALE)
+			sc.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			holder.add_child(sc)
+		elif lvl > 0:
+			blink.add_from_texture(tex, POS[mod], mod == "uveghaz")
+	blink.size = holder.custom_minimum_size
+	holder.add_child(blink)
 	return holder
+
+
+## Finom animáció a festett kép fölött: pislákoló ablak- és jelzőfények, ringó növények.
+class Blink extends Control:
+	var scale_px := 2
+	var _lights: Array = []   # [pos (képpixel), szín, sebesség, fázis, növény?]
+	var _t := 0.0
+
+	func _ready() -> void:
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	func add_light(p: Vector2, c: Color, speed: float) -> void:
+		_lights.append([p, c, speed, p.x * 1.7 + p.y, false])
+
+	## A modulkép világos (fény) és zöld (növény) pixeleit gyűjti ki.
+	func add_from_texture(tex: Texture2D, off: Vector2, plants: bool) -> void:
+		var img := tex.get_image()
+		if img == null:
+			return
+		if img.is_compressed():
+			img.decompress()
+		for y in img.get_height():
+			for x in img.get_width():
+				var c := img.get_pixel(x, y)
+				if c.a < 0.9:
+					continue
+				var is_light := (c.r > 0.85 and c.g > 0.7 and c.b < 0.45) or (c.b > 0.9 and c.g > 0.8 and c.r < 0.5) or (c.r > 0.95 and c.g < 0.5)
+				var is_leaf := plants and c.g > 0.75 and c.r < 0.6 and c.b < 0.55
+				if (is_light and (x + y) % 2 == 0) or (is_leaf and (x * 7 + y) % 3 == 0):
+					_lights.append([off + Vector2(x, y), c, 0.7 + float((x * 13 + y * 7) % 10) * 0.15, float(x * 3 + y * 5), is_leaf])
+
+	func _process(delta: float) -> void:
+		_t += delta
+		queue_redraw()
+
+	func _draw() -> void:
+		var s := float(scale_px)
+		for l in _lights:
+			var v := sin(_t * float(l[2]) + float(l[3]))
+			var p: Vector2 = l[0]
+			if l[4]:
+				# a levél egy pixelt ring jobbra-balra
+				var dx := 1.0 if v > 0.6 else (-1.0 if v < -0.6 else 0.0)
+				draw_rect(Rect2((p + Vector2(dx, 0)) * s, Vector2(s, s)), l[1])
+			else:
+				var a := 0.0 if v < -0.55 else (0.5 + 0.5 * v) * 0.6
+				draw_rect(Rect2(p * s, Vector2(s, s)), Color(0, 0, 0, 0.55) if v < -0.55 else Color(1, 1, 1, a * 0.5))
 
 
 func _sprite(tex: Texture2D, pos: Vector2) -> TextureRect:
