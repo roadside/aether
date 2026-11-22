@@ -49,6 +49,7 @@ var shots_dir := ""            # ha nem üres: minden snittről képernyőkép (
 var _caption: Label
 var _sub: Label
 var _hint: Label
+var _pro: Label                # az előhang középre írt mondatai
 var _black: ColorRect
 var _logo: Control
 var _done := false
@@ -131,7 +132,15 @@ func _ready() -> void:
 	_hint = UI.label(L.t("Esc: átugrás"), 14, UI.MUTE, false, false)
 	_hint.position = Vector2(1460, 870)
 	add_child(_hint)
-	_start_music()
+	_pro = UI.label("", 40, UI.TEXT, false, false)
+	_pro.add_theme_font_override("font", UI.font_body)
+	_pro.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_pro.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_pro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_pro.position = Vector2(250, 300)
+	_pro.size = Vector2(1100, 300)
+	_pro.modulate.a = 0.0
+	add_child(_pro)
 	_play()
 
 
@@ -274,8 +283,11 @@ func _play() -> void:
 func _play_full() -> void:
 	var g = main.globe
 	main.load_anomaly_quietly()
-	# 0. Nyitány: a handpan-játékos az erdőben (11 mp)
 	g.scale = Vector2.ONE * 0.04
+	# Előhang, még zene nélkül: a cím és három mondat (kb. 27 mp)
+	if not await _prologue(): return
+	_start_music()
+	# 0. Nyitány: a handpan-játékos az erdőben (11 mp)
 	_set_mode("jatekos")
 	if not await _wait(7.0): return
 	await _shot("intro_00_jatekos.png")
@@ -370,6 +382,96 @@ func _play_full() -> void:
 ## az iparosodás előtti szinthez mért eltérés, ha van, különben az 1991–2020-as átlaghoz mért.
 ## „Melegebb, mint valaha” csak akkor, ha a mai nap a valaha mért legmelegebb ilyen nap.
 ## Ha nincs adat, nincs szám sem (a játék modelljének becslését itt nem mutatjuk).
+## Előhang a zene előtt: 2 mp sötét, felfénylik a cím a jelentésével (4 mp),
+## majd három mondat egymás után, mindegyik sötétből jön és sötétbe megy.
+const PRO_LINES := [
+	["A játékban minden adat, grafikon és hír valós.", 3.6],
+	["Minden tudományos cikket forrásmegjelöléssel mellékelek, így bárki elolvashatja.", 4.8],
+	["Talán köztük van a megoldás...", 3.6],
+]
+## A cím feloldása (a játékterv szerint); a páros indexű darabok a kiemelt kezdőbetűk.
+const TITLE_PARTS := ["A", "rtificial Intelligence for ", "E", "arth's ", "Th", "ermal & ", "E", "cological ", "R", "ecovery"]
+const TITLE_MEANING := "Mesterséges intelligencia a Föld hőmérsékletének és élővilágának helyreállításáért"
+
+
+func _prologue() -> bool:
+	if not await _wait(2.0): return false
+	_set_mode("cim")
+	if not await _wait(3.4): return false
+	await _shot("intro_a_cim.png")
+	if not await _wait(TITLE_IN + TITLE_HOLD + TITLE_OUT - 3.4): return false
+	_end_mode()
+	for i in PRO_LINES.size():
+		_pro.text = L.t(PRO_LINES[i][0])
+		create_tween().tween_property(_pro, "modulate:a", 1.0, 1.1).set_trans(Tween.TRANS_SINE)
+		if not await _wait(1.1 + float(PRO_LINES[i][1]) * 0.5): return false
+		await _shot("intro_b_felirat_%d.png" % (i + 1))
+		if not await _wait(float(PRO_LINES[i][1]) * 0.5): return false
+		create_tween().tween_property(_pro, "modulate:a", 0.0, 1.1).set_trans(Tween.TRANS_SINE)
+		if not await _wait(1.5): return false
+	return true
+
+
+const TITLE_IN := 1.6
+const TITLE_HOLD := 4.0
+const TITLE_OUT := 1.4
+## A cím betűi vonalakból (egységnyi magas, 0,7 széles dobozban; y lefelé nő).
+const GLYPHS := {
+	"A": [[Vector2(0, 1), Vector2(0.35, 0), Vector2(0.7, 1)], [Vector2(0.23, 0.66), Vector2(0.47, 0.66)]],
+	"E": [[Vector2(0, 0), Vector2(0.66, 0)], [Vector2(0, 0.5), Vector2(0.5, 0.5)], [Vector2(0, 1), Vector2(0.66, 1)]],
+	"T": [[Vector2(0, 0), Vector2(0.7, 0)], [Vector2(0.35, 0), Vector2(0.35, 1)]],
+	"H": [[Vector2(0, 0), Vector2(0, 1)], [Vector2(0.7, 0), Vector2(0.7, 1)], [Vector2(0, 0.5), Vector2(0.7, 0.5)]],
+	"R": [[Vector2(0, 1), Vector2(0, 0), Vector2(0.42, 0), Vector2(0.56, 0.04), Vector2(0.65, 0.13), Vector2(0.68, 0.25),
+		Vector2(0.65, 0.37), Vector2(0.56, 0.46), Vector2(0.42, 0.5), Vector2(0, 0.5)], [Vector2(0.36, 0.5), Vector2(0.7, 1)]],
+}
+
+
+## A cím: vékony, fénylő vonalbetűk; felfénylik, egy fénycsík fut végig rajta, majd elsötétül.
+func _draw_title(lt: float) -> void:
+	var a := _ss(0.0, TITLE_IN, lt) * (1.0 - _ss(TITLE_IN + TITLE_HOLD, TITLE_IN + TITLE_HOLD + TITLE_OUT, lt))
+	if a <= 0.0:
+		return
+	var word := "AETHER"
+	var hgt := 170.0
+	var gap := 78.0
+	var lw := 0.7 * hgt
+	var total := word.length() * lw + (word.length() - 1) * gap
+	var x0 := (W - total) / 2.0
+	var y0 := 290.0
+	var flash := 1.0 + 0.9 * (1.0 - _ss(TITLE_IN * 0.6, TITLE_IN + 1.2, lt)) * _ss(0.2, TITLE_IN, lt)   # felfénylés
+	var sweep_x := x0 - 200.0 + (total + 400.0) * _ss(TITLE_IN + 0.3, TITLE_IN + 2.6, lt)
+	for i in word.length():
+		var ox := x0 + i * (lw + gap)
+		var near := exp(-pow((ox + lw * 0.5 - sweep_x) / 150.0, 2.0))
+		var bright := a * minf(flash + 0.8 * near, 2.0)
+		for stroke in GLYPHS[word[i]]:
+			var pts := PackedVector2Array()
+			for q in stroke:
+				pts.append(Vector2(ox + q.x * hgt, y0 + q.y * hgt))
+			for pass_i in [[30.0, 0.035], [18.0, 0.07], [10.0, 0.14]]:
+				_fx.draw_polyline(pts, Color(0.39, 0.95, 0.89, pass_i[1] * bright), pass_i[0], true)
+			var core := Color(0.80, 1.0, 0.97).lerp(Color.WHITE, clampf(bright - 1.0, 0.0, 1.0))
+			core.a = clampf(bright, 0.0, 1.0)
+			_fx.draw_polyline(pts, core, 5.0, true)
+			for q in [pts[0], pts[pts.size() - 1]]:
+				_fx.draw_circle(q, 2.5, core)
+	# vékony aranyvonal és a cím jelentése
+	var a2 := a * _ss(TITLE_IN * 0.7, TITLE_IN + 0.9, lt)
+	_fx.draw_line(Vector2(W / 2.0 - 190.0 * a2, y0 + hgt + 62), Vector2(W / 2.0 + 190.0 * a2, y0 + hgt + 62), Color(0.96, 0.78, 0.35, 0.8 * a2), 2.0, true)
+	var fs := 34
+	var full := "".join(PackedStringArray(TITLE_PARTS))
+	var px := (W - UI.font_body.get_string_size(full, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x) / 2.0
+	for i in TITLE_PARTS.size():
+		var part: String = TITLE_PARTS[i]
+		var hi := i % 2 == 0
+		var f: Font = UI.font_bold if hi else UI.font_body
+		var col := Color(0.39, 0.95, 0.89, a2) if hi else Color(0.95, 0.96, 0.97, 0.9 * a2)
+		_fx.draw_string(f, Vector2(px, y0 + hgt + 124), part, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, col)
+		px += f.get_string_size(part, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+	if L.lang == "hu":
+		_fx.draw_string(UI.font_body, Vector2(0, y0 + hgt + 176), TITLE_MEANING, HORIZONTAL_ALIGNMENT_CENTER, W, 24, Color(0.75, 0.8, 0.86, 0.9 * a2))
+
+
 func _today_caption() -> Array:
 	var v: Variant = _today.get("elteres_ipar_elott")
 	var basis := L.t("az iparosodás előtti (1850–1900) átlaghoz képest")
@@ -501,6 +603,8 @@ static func _stripe(n: float) -> Color:
 func _draw_fx() -> void:
 	var lt := _t - _mode_t0
 	match _mode:
+		"cim":
+			_draw_title(lt)
 		"jatekos":
 			_scene_player(_music_time(lt))
 		"szamlalo":
