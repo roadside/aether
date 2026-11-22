@@ -171,20 +171,20 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyi kárt előz meg a gát és a viharkapu?
 Röviden: A gát és a zárható viharkapu kizárja a tengert a városból. Drága, és egyszer túl alacsony lehet.
 Ha kikutatod:
-Mire jó?: A gát és a viharkapu megakadályozzák az árvízt, így védekeznek az emberek és a tárgyak károsodása ellen.
-Mi a gond vele?: A gátak és viharkapuk építése költséges, és lehet, hogy nem tudják megakadályozni mindenféle árvízt, különösen ha a víz túl erős.
-Mennyire bizonyított?: A gátak és viharkapuk hatékonyságáról sok kutatás szól, de mindig van valamilyen korlát, mert a természetes környezet is befolyásolhatja az árvíz mértékét.
+Mire jó?: A gátak és a viharkapuk segítenek távol tartani a vizet, így védik az emberi életeket, az otthonokat és az anyagi értékeket az árvízkároktól.
+Mi a gond vele?: Az építésük és a fenntartásuk is költséges, és extrém terhelés, kedvezőtlen kialakítás vagy rendkívül erős vihar esetén meghibásodhatnak, illetve nem nyújtanak teljes védelmet.
+Mennyire bizonyított?: Számos kutatás és gyakorlati példa támasztja alá, hogy hatékonyak, de működésük mindig függ a helyi adottságoktól, a tervezéstől, a karbantartástól és a természeti környezet hatásaitól.
 Kérdés angolul: How much damage do dikes and storm surge barriers prevent?
 Röviden angolul: A dike and a closable storm surge barrier keep the sea out of the city. They are costly and may one day be too low.
 Ha kikutatod angolul:
-Mire jó? angolul: They protect cities and homes from flood damage, saving lives and property by keeping water out.
-Mi a gond vele? angolul: They are expensive to build and maintain, and they can fail if not properly designed or if there is a very strong storm.
-Mennyire bizonyított? angolul: There is strong evidence that these structures work, as seen in places like the Netherlands and New York, but their effectiveness depends on how they are built and used.
+Mire jó? angolul: They protect cities and homes from flood damage, helping save lives and property by keeping floodwaters out.
+Mi a gond vele? angolul: They are expensive to build and maintain, and they can fail if poorly designed or hit by an extreme storm.
+Mennyire bizonyított? angolul: There is strong evidence that these structures are effective—as seen in places such as the Netherlands and New York—though their performance depends on proper design, maintenance, and operation.
 Forrás: Wikipédia: Árvízvédelmi fal (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/%C3%81rv%C3%ADzv%C3%A9delmi_fal
 Forrás: A Review of Cost Estimates for Flood Adaptation (2018) – https://doi.org/10.3390/w10111646
 Forrás: Hydrodynamic Modelling of Mangrove-Mediated Coastal Flood Protection: A Systematic Review and Bibliometric Analysis (2026) – https://doi.org/10.36956/sms.v8i3.3337
 Forrás: The Global Flood Protection Benefits of Mangroves (2020) – https://doi.org/10.1038/s41598-020-61136-6
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: coastal flood protection dikes avoided damage sea level rise|storm surge barrier effectiveness flood risk reduction|coastal adaptation costs benefits sea level rise
 Paraméter: kockazat_csokkentes_pct
@@ -303,25 +303,25 @@ Korszak: III. (Átalakulás)
 Kérdés: Mennyire véd a parti mocsár és az ártér?
 Röviden: A parti mocsár és a folyónak visszaadott ártér felfogja a hullámot és az áradást.
 Ha kikutatod:
-Mire jó?: Ezek a területek segítenek a tengeri és folyami áradások ellen, megakadályozzák a katasztrófákat, és megőrzik a természetes életet.
-Mi a gond vele?: A mocsarak és ártérek hatékonysága függhet a környezeti változásoktól, például a szintváltozástól, és nem mindig biztosítanak teljes védelmet.
-Mennyire bizonyított?: A tudományos ismeretek szerint a természetes védőrendszer hatékony, de további kutatásokra van szükség a teljes hatékonyság meghatározásához.
+Mire jó?: Ezek a területek lassítják és tárolják a vizet, így mérséklik a folyami és tengerparti áradások okozta károkat, emellett támogatják az élővilágot, javítják a vízminőséget, és szénmegkötéssel az éghajlatváltozás ellen is hatnak.
+Mi a gond vele?: Rendkívül nagy árvizeknél önmagukban nem mindig elégségesek, hatékonyságuk függ a helyi adottságoktól (például a talajtól, a növényzettől és a vízáramlástól), helyreállításukhoz pedig sok helyen kevés a tér vagy az erőforrás.
+Mennyire bizonyított?: Erős bizonyítékok szólnak amellett, hogy mérsékelik a gyakoribb áradásokat és támogatják az éghajlatváltozás elleni fellépést, de a hosszú távú hatások és a legoptimálisabb alkalmazás pontosabb feltárásához további kutatások szükségesek.
 Kérdés angolul: How well do coastal marshes and floodplains protect?
 Röviden angolul: Coastal marshes and floodplains given back to the river absorb waves and floods.
 Ha kikutatod angolul:
-Mire jó? angolul: They can reduce flood damage by slowing water, storing it, and improving water quality. They also support wildlife and help fight climate change by storing carbon.
-Mi a gond vele? angolul: They are not always effective for very big floods, and their success depends on local conditions like soil, plants, and water flow. Some areas may not have enough space or resources to restore them properly.
-Mennyire bizonyított? angolul: There is strong evidence that they help with regular floods and climate change, but more research is needed to fully understand their long-term benefits and how to use them best.
-Forrás: Wikipédia: Maros-ártér (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Maros-%C3%A1rt%C3%A9r
+Mire jó? angolul: They reduce flood damage by slowing and storing water while improving water quality. They also support wildlife and help mitigate climate change by storing carbon.
+Mi a gond vele? angolul: They are less effective during severe or extreme floods, and their success depends on local conditions such as soil, vegetation, and water flow. Some areas may also lack the space or resources needed for effective restoration.
+Mennyire bizonyított? angolul: There is strong evidence that they help mitigate routine floods and support climate change adaptation, though further research is needed to fully assess their long-term benefits and optimal use.
+Forrás: Wikipédia: Salt marsh (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Salt_marsh
 Forrás: Nature-based Solutions for Flood Risk Reduction:A Review and Guidance for Coastal Protection (2024) – https://pure.au.dk/portal/en/publications/d7ac67b1-5d38-4358-bf80-125336086548
 Forrás: Nature-Based Engineering: A Review on Reducing Coastal Flood Risk With Mangroves (2021) – https://doi.org/10.3389/fmars.2021.702412
 Forrás: Mangrove forests as a nature-based solution for coastal flood protection: Biophysical and ecological considerations (2022) – https://doi.org/10.1016/j.wse.2022.10.004
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: salt marsh wave attenuation coastal protection|floodplain restoration flood peak reduction|nature-based solutions coastal flood risk reduction
 Paraméter: kockazat_csokkentes_pct
-Wikipédia: ártér
-Wikipédia angolul: floodplain restoration
+Wikipédia: vizes élőhely
+Wikipédia angolul: salt marsh
 Áttekintő cikkek keresése: nature-based coastal flood protection review
 
 === megemelt_haz ===
@@ -329,23 +329,23 @@ Korszak: III. (Átalakulás)
 Kérdés: Megéri megemelni a házakat ott, ahol jön a víz?
 Röviden: A cölöpre emelt vagy úszó ház szárazon marad, amikor jön a víz.
 Ha kikutatod:
-Mire jó?: Ez a módszer segíthet a vízszint emelkedésének hatására, így a lakók biztonsága nőhet, és a házak károsodása csökkenthető.
-Mi a gond vele?: A házak emelése költséges, és nem biztos, hogy hatékonyan csökkenti a károkat, különösen ha a víz szintje nagyon magasra emelkedik.
-Mennyire bizonyított?: A források szerint ez a megoldás nem teljesen bizonyított, és a hatékonyságát további kutatások is alárendelték.
+Mire jó?: Az árvízvédelmi megemelés és megerősítés védi az embereket és az ingatlanokat az elöntéstől, ami növeli a lakók biztonságát és csökkentheti a helyreállítási költségeket.
+Mi a gond vele?: A kivitelezés költsége magas lehet, és a megoldás kevésbé hatékony, ha az árvizek a vártnál erősebbek, magasabb vízállással járnak vagy gyakrabban fordulnak elő.
+Mennyire bizonyított?: Vannak pozitív tapasztalatok és bizonyítékok a működésére, de még további kutatásokra van szükség ahhoz, hogy pontosan lássuk, mennyire hatékony a különböző helyzetekben.
 Kérdés angolul: Is it worth raising houses where the water comes?
 Röviden angolul: A house on stilts or a floating house stays dry when the water comes.
 Ha kikutatod angolul:
-Mire jó? angolul: Flood-proofing helps protect people and property from flood damage, which can save lives and reduce repair costs.
-Mi a gond vele? angolul: The cost of flood-proofing can be high, and it may not be effective if floods are stronger or more frequent than expected.
-Mennyire bizonyított? angolul: There is some evidence that flood-proofing works, but more research is needed to know how effective it is in different situations.
-Forrás: Wikipédia: Az úszó sziget (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Az_%C3%BAsz%C3%B3_sziget
+Mire jó? angolul: Elevating and flood-proofing homes helps protect people and property from flood damage, saving lives and reducing repair costs.
+Mi a gond vele? angolul: Upfront and adaptation costs can be high, and measures may fall short if floods are more severe, higher, or more frequent than anticipated.
+Mennyire bizonyított? angolul: There is evidence that flood-proofing can be effective, but further research is needed to determine how well it performs across different settings and conditions.
+Forrás: Wikipédia: Cölöpépítmény (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/C%C3%B6l%C3%B6p%C3%A9p%C3%ADtm%C3%A9ny
 Forrás: Efficiency of private flood proofing of new buildings – adapted redevelopment of a floodplain in The Netherlands (2008) – https://doi.org/10.2495/friar080241
 Forrás: A Review of Cost Estimates for Flood Adaptation (2018) – https://doi.org/10.3390/w10111646
 Forrás: Flood-proof Architectural Solutions for Urban Environments: A Review (2023) – https://doi.org/10.70470/khwarizmia/2023/016
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: building elevation flood damage reduction cost benefit|amphibious floating housing flood adaptation|flood-proofing buildings effectiveness
 Paraméter: kockazat_csokkentes_pct
-Wikipédia: úszó ház
-Wikipédia angolul: flood mitigation
+Wikipédia: cölöpépítmény
+Wikipédia angolul: stilt house
 Áttekintő cikkek keresése: building flood-proofing elevation review
