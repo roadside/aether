@@ -65,6 +65,7 @@ var _events_box: VBoxContainer
 var _world_note: Label
 var _refresh_btn: Button
 var _mission_box: VBoxContainer
+var _mission_scroll: ScrollContainer
 var _stats: Dictionary = {}   # név -> érték-címke
 var _info: Label
 var _info_link: LinkButton
@@ -124,6 +125,7 @@ func _ready() -> void:
 	campaign.load_game()
 	campaign.year_passed.connect(_on_year_passed)
 	campaign.changed.connect(_update_stats)
+	campaign.changed.connect(_journey_tick)
 	campaign.game_over.connect(_on_game_over)
 	campaign.era_reached.connect(_on_era_reached)
 
@@ -153,7 +155,7 @@ func _ready() -> void:
 	_plan.model_ready.connect(_on_model)
 	if bool(L.get_setting("bevezeto_kesz", false)):
 		mission_step = MISSION.size()
-		mission_idx = Missions.first_open()
+		mission_idx = Missions.first_open(campaign)
 		_plan.set_mission(Missions.LIST[mission_idx])
 		_render_mission()
 
@@ -469,7 +471,11 @@ func _build_right_panel() -> void:
 	_mission_title = UI.heading(L.t("Első küldetés"), 24)
 	v.add_child(_mission_title)
 	_mission_box = UI.vbox(8)
-	v.add_child(_mission_box)
+	_mission_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_mission_scroll = ScrollContainer.new()     # sok küldetésnél a lista görgethető, nem lóg ki
+	_mission_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_mission_scroll.add_child(_mission_box)
+	v.add_child(_mission_scroll)
 	_render_mission()
 
 
@@ -750,6 +756,7 @@ func _open_help() -> void:
 
 
 func _open_nalunk() -> void:
+	L.set_setting("nalunk_latta", true)
 	var n = NalunkPanel.new()
 	n.bridge = bridge
 	n.campaign = campaign
@@ -771,8 +778,17 @@ func _open_station() -> void:
 # ---------------------------------------------------------------------------
 # Küldetés
 # ---------------------------------------------------------------------------
+func _fit_missions() -> void:
+	if _mission_scroll == null:
+		return
+	for i in 2:      # a tördelt feliratok magassága csak elrendezés után ismert
+		_mission_scroll.custom_minimum_size.y = minf(590.0, _mission_box.get_combined_minimum_size().y)
+		await get_tree().process_frame
+
+
 func _render_mission() -> void:
 	UI.clear(_mission_box)
+	_fit_missions.call_deferred()
 	if mission_step >= MISSION.size():
 		_render_missions()
 		return
@@ -797,10 +813,14 @@ func _render_mission() -> void:
 func _render_missions() -> void:
 	_mission_title.text = L.t("Küldetések")
 	_render_daily()
+	for m2 in Missions.check_journey(campaign):     # az út küldetései: a játék állapotából
+		_toast("%s  %s" % [Missions.star_text(Missions.stars_of(m2["id"]), Missions.max_stars(m2)), L.t(m2["cim"])], UI.GOLD)
 	for i in Missions.LIST.size():
 		var m: Dictionary = Missions.LIST[i]
+		if not Missions.shown(m, campaign):
+			continue
 		var st := Missions.stars_of(m["id"])
-		var of := 1 if m["id"] == "alkalmazkodas" else 3
+		var of := Missions.max_stars(m)
 		var current := i == mission_idx
 		var b := Button.new()
 		b.flat = true
@@ -814,6 +834,19 @@ func _render_missions() -> void:
 		_mission_box.add_child(b)
 		if current:
 			_mission_box.add_child(UI.label(L.t(m["cel"]), 15, UI.TEXT))
+			if m.get("ut", false):
+				if st > 0:
+					_mission_box.add_child(UI.label(L.t(m["tanulsag"]), 15, UI.CYAN))
+				if st < of and not m.get("vegig", false):
+					var jump := str(m.get("ugras", "terv"))
+					if jump == "nalunk":
+						_mission_box.add_child(_go_button(L.t("Nálunk →"), _open_nalunk))
+					elif jump == "terv":
+						_mission_box.add_child(_go_button(L.t("A terved →"), _open_plan))
+					else:
+						var nid := Missions.next_topic(m, campaign)
+						_mission_box.add_child(_go_button(L.t("Kutatás →"), _open_research.bind(Knowledge.topic(nid)) if nid != "" else _open_research))
+				continue
 			if _mission_note != "":
 				_mission_box.add_child(UI.label(_mission_note, 15, UI.CYAN))
 			# az aszálytűrő kukoricához előbb kutatni kell; a többi küldetés a tervben dől el
@@ -874,6 +907,16 @@ func _pulse(c: CanvasItem) -> void:
 	tw.tween_property(c, "modulate", Color.WHITE, 0.7).set_trans(Tween.TRANS_SINE)
 
 
+## Ha a játék állapota szerint egy út-küldetésen új csillag járna, frissül a lista.
+func _journey_tick() -> void:
+	if mission_step < MISSION.size():
+		return
+	for m in Missions.LIST:
+		if m.get("ut", false) and not m.get("vegig", false) and Missions.journey_stars(m, campaign) > Missions.stars_of(m["id"]):
+			_render_mission()
+			return
+
+
 func _select_mission(i: int) -> void:
 	mission_idx = i
 	_mission_note = ""
@@ -891,7 +934,7 @@ func _advance(to_step: int) -> void:
 func _start_missions() -> void:
 	L.set_setting("bevezeto_kesz", true)
 	_mission_note = L.t("Első küldetés kész! Jöhet a következő.")
-	mission_idx = Missions.first_open()
+	mission_idx = Missions.first_open(campaign)
 	_plan.set_mission(Missions.LIST[mission_idx])
 	_render_mission()
 
@@ -1056,6 +1099,8 @@ func _close_overlay() -> void:
 	if _dim != null:
 		_dim.queue_free()
 		_dim = null
+	if campaign != null and _mission_box != null:
+		_journey_tick()   # a „Nálunk” megnyitása vagy egy átvett kutatás is csillagot érhet
 
 
 ## A megnyitott ablak mögött elsötétített háttér: így az ablak jól kiemelkedik.
@@ -1290,7 +1335,7 @@ func _on_model(res: Dictionary) -> void:
 		_mission_note = str(ev["szoveg"])
 		if int(ev["csillag"]) > 0:
 			Missions.save_stars(m["id"], int(ev["csillag"]))
-			_toast("%s  %s" % [Missions.star_text(int(ev["csillag"]), 1 if m["id"] == "alkalmazkodas" else 3), L.t(m["cim"])], UI.GOLD)
+			_toast("%s  %s" % [Missions.star_text(int(ev["csillag"]), Missions.max_stars(m)), L.t(m["cim"])], UI.GOLD)
 			_mission_note += "\n" + L.t(m["tanulsag"])
 		_render_mission()
 	elif mission_step < MISSION.size():
@@ -1457,6 +1502,7 @@ func _on_game_over() -> void:
 		return
 	k = {"T2100": campaign.real_t2100(), "csucs": campaign.real_peak()}   # ami ezen a Földön tényleg történt
 	_last_result = campaign.record_result()
+	Missions.finale_check(campaign)
 	_show_info(L.t("2100: vége a játéknak. A Föld +%s °C-kal melegebb, a csúcs +%s °C volt. „Új játék”: próbáld meg jobban!") % [
 		UI.hu(float(k["T2100"]), 1), UI.hu(float(k["csucs"]), 1)], "")
 	_close_overlay()
@@ -1560,7 +1606,7 @@ func _open_summary(k: Dictionary) -> void:
 	var all := 0
 	for m in Missions.LIST:
 		got += Missions.stars_of(m["id"])
-		all += 1 if m["id"] == "alkalmazkodas" else 3
+		all += Missions.max_stars(m)
 	v.add_child(UI.label(L.t("Küldetések: %s  (%d/%d csillag)") % [Missions.star_text(got, all), got, all], 18, UI.GOLD, true))
 	var brow := UI.hbox(12)
 	brow.add_child(again)
@@ -1613,7 +1659,7 @@ func _reset_game() -> void:
 	campaign.new_game(_next_seed)
 	_next_seed = -1
 	# a küldetések is elölről: csillagok törölve, az első küldetés az aktuális
-	L.set_setting("kuldetesek", {})
+	Missions.reset_stars()
 	mission_idx = 0
 	_mission_note = ""
 	if mission_step >= MISSION.size():

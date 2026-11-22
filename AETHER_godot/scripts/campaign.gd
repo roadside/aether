@@ -348,7 +348,7 @@ func advance() -> void:
 		station[mod] = int(station[mod]) + 1
 		building = {}
 		note += " " + L.t("Elkészült: %s, %d. szint.") % [L.t(MODULES[mod]["nev"]), station[mod]]
-	history.append({"ev": year, "T": snappedf(measured_temp(year), 0.01)})
+	history.append({"ev": year, "T": snappedf(measured_temp(year), 0.01), "bizalom": trust})
 	save()
 	year_passed.emit(year, note)
 	check_era()

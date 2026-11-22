@@ -102,6 +102,12 @@ static func apply(campaign, events: Array) -> void:
 		for ev in events:
 			ids.append(ev["id"])
 		campaign.history[-1]["esemenyek"] = ids
+		var shields := {}       # a küldetésekhez: melyik eseményt mekkora védelemmel érte a játékos
+		for ev in events:
+			if ev.has("pajzs"):
+				shields[ev["id"]] = float(ev["pajzs"])
+		if not shields.is_empty():
+			campaign.history[-1]["pajzs"] = shields
 	if not events.is_empty():
 		campaign.save()
 		campaign.changed.emit()

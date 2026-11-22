@@ -150,6 +150,12 @@ func _render(r: Dictionary) -> void:
 	var row := UI.hbox(18)
 	_big(row, "%d–%d" % [int(regi["idoszak"][0]), int(regi["idoszak"][1])], L.t("%s nap") % UI.hu(float(regi["napok"]), 0), L.t("mért"), UI.SOFT)
 	_big(row, "%d–%d" % [int(mai["idoszak"][0]), int(mai["idoszak"][1])], L.t("%s nap") % UI.hu(float(mai["napok"]), 0), L.t("mért"), UI.GOLD)
+	# küldetés („Mit jelent ez nálunk?”): hány nappal kevesebb 2100-ban a terv szerint, mint terv nélkül
+	if campaign != null and not campaign.timeline.is_empty() and campaign.model.has("alapeset_osszegzes"):
+		var base_row := row_for(r, float(campaign.model["alapeset_osszegzes"]["kozep"].get("T2100", NAN)))
+		var plan_row := row_for(r, _temp_at(2100))
+		if not base_row.is_empty() and not plan_row.is_empty():
+			L.set_setting("nalunk_kulonbseg", float(base_row["napok"]) - float(plan_row["napok"]))
 	var future: Array = []
 	var vmax := 10.0
 	for e in r["evek"]:

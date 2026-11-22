@@ -1094,6 +1094,8 @@ func _import_done(r: Dictionary) -> void:
 		if typeof(saved) == TYPE_DICTIONARY and saved.has("archivum"):
 			saved["archivum"]["azonosito"] = _import_signer
 			Bridge.write_json(str(r["fajl"]), saved)
+	if int(r.get("ellenorizve", 0)) > 0:     # küldetés: egy társ kutatásának újraellenőrzése
+		L.set_setting("atvett_kutatas", int(L.get_setting("atvett_kutatas", 0)) + 1)
 	var msg := L.t("%d számot megtaláltam a cikkekben.") % int(r.get("ellenorizve", 0))
 	if int(r.get("kiesett", 0)) > 0:
 		msg += " " + L.t("%d nem igazolódott, az kimaradt.") % int(r["kiesett"])
