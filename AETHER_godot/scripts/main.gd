@@ -1275,6 +1275,21 @@ func _on_year(v: float) -> void:
 	_year_label.text = "%d: +%s °C" % [y, UI.hu(t, 1)]
 	# csak szemléltetés: a mához képest +2 °C = teljes "hő" színezés
 	globe.heat = clampf((t - now) / 2.0, 0.0, 1.0)
+	# a veszélyeztetett alacsony partok a modell tengerszintje szerint (szemléltetés, lásd globe.gd)
+	globe.sea_rise = Globe.sea_rise_of(_sea_at(2026), _sea_at(y))
+
+
+## A terved szerinti tengerszint (m) az adott évben, a modellből; ha nincs, NAN.
+func _sea_at(year: int) -> float:
+	var ys: Array = model.get("evek", [])
+	var sl: Variant = model.get("tengerszint", {})
+	if typeof(sl) != TYPE_DICTIONARY or not sl.has("terv"):
+		return NAN
+	var series: Array = sl["terv"].get("kozep", [])
+	for i in mini(ys.size(), series.size()):
+		if int(ys[i]) == year:
+			return float(series[i])
+	return NAN
 
 
 # ---------------------------------------------------------------------------

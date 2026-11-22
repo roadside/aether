@@ -146,6 +146,8 @@ func _process(delta: float) -> void:
 		g.modulate.a = show
 		# csak szemléltetés: a mához képest +2 °C = teljes „hő” színezés (ugyanúgy, mint a főképernyőn)
 		g.heat = clampf((_temp(pair[1], yf) - now) / 2.0, 0.0, 1.0)
+		var grp := "alapeset" if g == _g_base else "terv"
+		g.sea_rise = Globe.sea_rise_of(_sea(grp, Y0), _sea(grp, yf))   # veszélyeztetett partok
 		g._mat.set_shader_parameter("atmosphere", Vector3(0.39, 0.95, 0.89).lerp(Vector3(1.0, 0.50, 0.28), g.heat))
 	_btn.modulate.a = _ss(T_VERDICT + 1.5, T_VERDICT + 2.5, _t)
 	_btn.disabled = _t < T_VERDICT + 1.5

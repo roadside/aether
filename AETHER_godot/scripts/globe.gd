@@ -30,6 +30,16 @@ var events: Array = []               # valós események (world_state.py): {cim,
 ## Tengerszint-emelkedés szemléltetése (0–1): a veszélyeztetett alacsony partvidékek (a mai
 ## tengerszint fölött legfeljebb 10 m, NOAA ETOPO1) fokozatosan vízszínt kapnak. Lásd a shadert.
 var sea_rise := 0.0
+## A szemléltetés léptéke: ennyi méter emelkedés (a mához képest) = a teljes ≤10 m-es partsáv
+## vízszínű. (2100-ra a tenger kb. 0,4–0,8 m-rel magasabb; gömbléptékben ez nem látszana.)
+const SEA_FULL_M := 0.8
+
+
+## A modell tengerszint-sorából (méter) a sea_rise érték: a mához képesti emelkedés / SEA_FULL_M.
+static func sea_rise_of(meters_now: float, meters_then: float) -> float:
+	if is_nan(meters_now) or is_nan(meters_then):
+		return 0.0
+	return clampf((meters_then - meters_now) / SEA_FULL_M, 0.0, 1.0)
 var heat := 0.0                      # 0 = ma; 1 = kb. +2 °C a mához képest (csak szemléltetés)
 var highlight: Dictionary = {}       # a listában éppen rámutatott esemény: gyűrű jelöli
 var anomaly_mix := 0.0               # 0..1: a mai hőmérséklet-eltérés térkép áttűnése
