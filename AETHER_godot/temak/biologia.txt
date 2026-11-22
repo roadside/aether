@@ -3,8 +3,7 @@
 # Lektorálás: a "Kérdés", "Röviden", "Ha kikutatod", "Mire jó?", "Mi a gond vele?" és
 # "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
 # Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
-# A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet). Csak tudományos forrás
-# (lektorált cikk, IPCC-jelentés, nemzetközi adatgyűjtemény) legyen, Wikipédia ne.
+# A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet).
 # A "technikai" vonal alatti sorokkal keres a kutatás: csak akkor módosítsd, ha biztos vagy benne.
 # Új téma: másolj le egy blokkot, és adj neki új, ékezet nélküli azonosítót (=== uj_tema ===).
 # A játék induláskor olvassa ezt a fájlt: mentés után indítsd újra a játékot.
@@ -33,6 +32,8 @@ Lektorálva: nem
 --- technikai ---
 Keresés: climate change effects on pollinators bumblebee decline|pollinator decline climate warming|climate change plant pollinator mismatch
 Paraméter: csokkenes_pct
+Wikipédia: beporzás
+Wikipédia angolul: pollinator decline
 Áttekintő cikkek keresése: climate change pollinators review
 
 === korall ===
@@ -57,6 +58,8 @@ Lektorálva: nem
 --- technikai ---
 Keresés: coral reef bleaching warming thresholds|mass coral bleaching events frequency|coral reefs under 1.5 degrees warming
 Paraméter: csokkenes_pct
+Wikipédia: korallzátony kifehéredés
+Wikipédia angolul: coral bleaching
 Áttekintő cikkek keresése: coral bleaching climate change review
 
 === amazonas ===
@@ -81,6 +84,8 @@ Lektorálva: nem
 --- technikai ---
 Keresés: Amazon rainforest tipping point dieback|Amazon forest resilience loss|Amazon deforestation drought carbon sink
 Paraméter: csokkenes_pct
+Wikipédia: amazóniai esőerdő
+Wikipédia angolul: Amazon rainforest
 Áttekintő cikkek keresése: Amazon forest tipping point review
 
 # ----- II. korszak: Mérséklés -----
@@ -107,6 +112,8 @@ Lektorálva: nem
 --- technikai ---
 Keresés: enteric methane mitigation feed additives meta-analysis|3-nitrooxypropanol methane reduction dairy cows|enteric methane mitigation strategies ruminants
 Paraméter: metan_csokkentes_pct
+Wikipédia: kérődzők metán
+Wikipédia angolul: enteric fermentation
 Áttekintő cikkek keresése: enteric methane mitigation review
 
 === voros_alga ===
@@ -131,6 +138,8 @@ Lektorálva: nem
 --- technikai ---
 Keresés: Asparagopsis seaweed enteric methane reduction|red seaweed cattle methane|Asparagopsis taxiformis beef cattle methane
 Paraméter: metan_csokkentes_pct
+Wikipédia: vörösmoszatok
+Wikipédia angolul: Asparagopsis taxiformis
 Áttekintő cikkek keresése: seaweed feed methane review
 
 # ----- IV. korszak: Helyreállítás -----
@@ -157,6 +166,8 @@ Lektorálva: nem
 --- technikai ---
 Keresés: afforestation reforestation carbon dioxide removal potential global|global tree restoration potential carbon|negative emissions technologies potentials costs side effects
 Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
+Wikipédia: erdősítés
+Wikipédia angolul: afforestation
 Áttekintő cikkek keresése: afforestation carbon sequestration review
 
 === erdo_magatol ===
@@ -181,6 +192,8 @@ Lektorálva: nem
 --- technikai ---
 Keresés: natural forest regrowth carbon accumulation rates|natural regeneration versus tree planting carbon|secondary forest carbon sequestration
 Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
+Wikipédia: erdő természetes felújulás
+Wikipédia angolul: natural regeneration
 Áttekintő cikkek keresése: natural forest regeneration carbon review
 
 === mangrove ===
@@ -205,6 +218,8 @@ Lektorálva: nem
 --- technikai ---
 Keresés: mangrove blue carbon sequestration rate|mangrove restoration carbon|mangrove soil carbon stocks
 Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
+Wikipédia: mangrove
+Wikipédia angolul: mangrove
 Áttekintő cikkek keresése: mangrove blue carbon review
 
 === tengerifu ===
@@ -229,6 +244,8 @@ Lektorálva: nem
 --- technikai ---
 Keresés: seagrass blue carbon sequestration|seagrass meadow restoration carbon|seagrass sediment carbon stocks
 Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
+Wikipédia: tengerifű
+Wikipédia angolul: seagrass
 Áttekintő cikkek keresése: seagrass blue carbon review
 
 === moszaterdo ===
@@ -253,6 +270,8 @@ Lektorálva: nem
 --- technikai ---
 Keresés: kelp forest carbon sequestration|macroalgae cultivation carbon dioxide removal|seaweed carbon export deep ocean
 Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
+Wikipédia: barnamoszatok
+Wikipédia angolul: kelp forest
 Áttekintő cikkek keresése: seaweed carbon sequestration review
 
 === korall_ujra ===
@@ -277,4 +296,6 @@ Lektorálva: nem
 --- technikai ---
 Keresés: coral reef restoration effectiveness survival|assisted evolution heat tolerant corals|coral gardening outplanting survival
 Paraméter: reszarany_pct
+Wikipédia: korallzátony helyreállítása
+Wikipédia angolul: coral reef restoration
 Áttekintő cikkek keresése: coral reef restoration review
