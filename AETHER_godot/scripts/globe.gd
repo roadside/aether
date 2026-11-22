@@ -28,6 +28,8 @@ var stations: Array = []             # [{name, lat, lon, color, me, locked}]
 var links: Array = []                # [[lat1, lon1, lat2, lon2], ...]
 var events: Array = []               # valós események (world_state.py): {cim, kategoria, lat, lon, link, ...}
 var heat := 0.0                      # 0 = ma; 1 = kb. +2 °C a mához képest (csak szemléltetés)
+var highlight: Dictionary = {}       # a listában éppen rámutatott esemény: gyűrű jelöli
+var _look_tw: Tween
 var sun_lat := 0.0                   # ahol a Nap éppen merőlegesen süt (fok)
 var sun_lon := 0.0
 var _sun_timer := 0.0
@@ -166,6 +168,20 @@ func home() -> void:
 	tw.tween_property(self, "zoom", 1.0, 0.6)
 
 
+## Lassan odafordul, hogy az esemény a gömb közepe felé kerüljön (a nagyítás marad).
+func look_at_event(e: Dictionary) -> void:
+	if e.get("lat") == null or e.get("lon") == null or dragging:
+		return
+	var target_spin := spin + wrapf(float(e["lon"]) / 360.0 - spin, -0.5, 0.5)
+	var target_tilt := clampf(deg_to_rad(float(e["lat"])) * 0.8, -TILT_MAX, TILT_MAX)
+	if _look_tw != null and _look_tw.is_valid():
+		_look_tw.kill()
+	_look_tw = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_look_tw.set_parallel(true)
+	_look_tw.tween_property(self, "spin", target_spin, 0.7)
+	_look_tw.tween_property(self, "tilt", target_tilt, 0.7)
+
+
 ## Rámutatáskor kis felirat: mi ez az esemény (vagy az állomás neve).
 func _get_tooltip(at_position: Vector2) -> String:
 	var s := _station_at(at_position)
@@ -232,6 +248,16 @@ func _draw() -> void:
 		var center := Vector2(pe.x, pe.y)
 		draw_rect(Rect2(center - Vector2(big + 1, big + 1) * px, Vector2(2 * big + 3, 2 * big + 3) * px), Color(0, 0, 0, 0.55))
 		draw_rect(Rect2(center - Vector2(big, big) * px, Vector2(2 * big + 1, 2 * big + 1) * px), Color(ec, pulse))
+	# a listában kijelölt esemény: pixeles, lüktető gyűrű
+	if not highlight.is_empty() and highlight.get("lat") != null and highlight.get("lon") != null:
+		var ph := project(float(highlight["lat"]), float(highlight["lon"]))
+		if ph.z > 0.5:
+			var hc := Vector2(ph.x, ph.y)
+			var rad := (10.0 + 2.5 * sin(time * 5.0)) * px
+			for k in 36:
+				var a := TAU * k / 36.0
+				var q := (hc + Vector2(cos(a), sin(a)) * rad).snapped(Vector2(px, px))
+				draw_rect(Rect2(q, Vector2(px, px)), Color(1.0, 0.85, 0.35, 0.95))
 	# állomások: fényoszlop + gyémánt
 	for s in stations:
 		var p := project(s.lat, s.lon)

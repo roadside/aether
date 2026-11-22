@@ -266,6 +266,9 @@ func _build_top_bar() -> void:
 	_stat(h, "co2", L.t("CO2 a levegőben"), L.t("letöltés…"), UI.GOLD)
 	_stat(h, "jeg", L.t("Északi-sarki tengeri jég"), L.t("letöltés…"), Color("#a9dcea"))
 	_stat(h, "jovo", L.t("A terved szerint"), L.t("még nincs terv"), UI.CYAN)
+	# egy kattintás: a korszakról a kutatáshoz (tudásfa), a tervről a tervhez
+	_click_stat("korszak", _open_research)
+	_click_stat("jovo", _open_plan)
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(spacer)
@@ -622,6 +625,15 @@ func _event_card(e: Dictionary) -> Control:
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 			_show_event(e)
 	root.gui_input.connect(click_fn)
+	# rámutatáskor a földgömb megmutatja, hol történt (és odafordul)
+	var enter_fn := func() -> void:
+		globe.highlight = e
+		globe.look_at_event(e)
+	var exit_fn := func() -> void:
+		if globe.highlight == e:
+			globe.highlight = {}
+	root.mouse_entered.connect(enter_fn)
+	root.mouse_exited.connect(exit_fn)
 	return root
 
 
@@ -864,6 +876,16 @@ func _update_stats() -> void:
 		_play_btn.disabled = campaign.year >= Campaign.END_YEAR
 
 
+func _click_stat(key: String, fn: Callable) -> void:
+	var l: Label = _stats[key]
+	l.mouse_filter = Control.MOUSE_FILTER_STOP
+	l.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	var f := func(e: InputEvent) -> void:
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT and _overlay == null:
+			fn.call()
+	l.gui_input.connect(f)
+
+
 ## A felső sáv értéke; ha változott, röviden felvillan (így látszik, mi történt).
 func _set_stat(key: String, value: String) -> void:
 	var l: Label = _stats[key]
@@ -981,6 +1003,17 @@ func _selftest() -> void:
 	var w := await _wait_tag("vilag")
 	print("ONTESZT világ: kód=", w[1], " események=", world.get("esemenyek", []).size(), " források=", world.get("forrasok", {}))
 	await _shot(dir, "1_mai_fold.png")
+	# 1b: egy esemény kijelölése a listából (gyűrű a gömbön, odafordulás) és egy értesítés
+	var evs: Array = world.get("esemenyek", [])
+	if not evs.is_empty():
+		globe.highlight = evs[0]
+		globe.look_at_event(evs[0])
+		_toast(L.t("Új korszak: %s") % Knowledge.era_name(2), UI.GOLD)
+		await get_tree().create_timer(1.0).timeout
+		await _shot(dir, "1b_kiemeles.png")
+		globe.highlight = {}
+		globe.home()
+		await get_tree().create_timer(0.8).timeout
 	if not world.get("esemenyek", []).is_empty():
 		_show_event(world["esemenyek"][0])
 		for i in 120:   # az esemény összefoglalója a hídon fut: megvárjuk
