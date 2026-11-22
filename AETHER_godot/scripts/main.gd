@@ -52,6 +52,7 @@ var _play_btn: Button
 var _fast_btn: Button
 var _reset_btn: Button
 var _base_retry: Timer
+var _toasts := 0                      # egyszerre látható értesítések (egymás alá kerülnek)
 
 
 func _ready() -> void:
@@ -216,6 +217,22 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ESCAPE and _overlay != null:
 		_request_close()
 		return
+	# Gyorsbillentyűk (csak ha nincs nyitott ablak, és nem egy szövegmezőbe gépelünk):
+	# K kutatás, T terv, A állomás, N nálunk, szóköz idő indítása/szünet, jobbra nyíl +1 év.
+	if event is InputEventKey and event.pressed and not event.echo and _overlay == null \
+			and not (get_viewport().gui_get_focus_owner() is LineEdit):
+		var handled := true
+		match event.keycode:
+			KEY_K: _open_research()
+			KEY_T: _open_plan()
+			KEY_A: _open_station()
+			KEY_N: _open_nalunk()
+			KEY_SPACE: _toggle_time()
+			KEY_RIGHT: campaign.advance()
+			_: handled = false
+		if handled:
+			get_viewport().set_input_as_handled()
+			return
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F11:
 		var fs := DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED if fs else DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -298,27 +315,29 @@ func _build_bottom_bar() -> void:
 	p.add_child(h)
 	var research := UI.button(L.t("Kutatás"), true)
 	research.custom_minimum_size = Vector2(150, 0)
+	research.tooltip_text = L.t("Válassz kérdést, a válasz valódi cikkekből jön. Gyorsbillentyű: K")
 	research.pressed.connect(_open_research)
 	h.add_child(research)
 	var plan := UI.button(L.t("A terved"))
 	plan.custom_minimum_size = Vector2(150, 0)
+	plan.tooltip_text = L.t("Állítsd be, mit tegyen a világ, és nézd meg, mi lesz 2100-ig. Gyorsbillentyű: T")
 	plan.pressed.connect(_open_plan)
 	h.add_child(plan)
 	var station := UI.button(L.t("Állomás"))
 	station.custom_minimum_size = Vector2(130, 0)
-	station.tooltip_text = L.t("A kutatóállomásod: modulok építése és fejlesztése.")
+	station.tooltip_text = L.t("A kutatóállomásod: modulok építése és fejlesztése. Gyorsbillentyű: A")
 	station.pressed.connect(_open_station)
 	h.add_child(station)
 	var home := UI.button(L.t("Nálunk"))
 	home.custom_minimum_size = Vector2(120, 0)
-	home.tooltip_text = L.t("Mit jelent a melegedés nálunk: forró napok és nyári eső, mért adatokból és a terved szerint.")
+	home.tooltip_text = L.t("Mit jelent a melegedés nálunk: forró napok és nyári eső, mért adatokból és a terved szerint. Gyorsbillentyű: N")
 	home.pressed.connect(_open_nalunk)
 	h.add_child(home)
 	var tbox := UI.vbox(6)
 	var trow := UI.hbox(6)
 	_play_btn = UI.button(L.t("Idő indítása"))
 	_play_btn.custom_minimum_size = Vector2(150, 0)
-	_play_btn.tooltip_text = L.t("Az évek telnek. Ha egy ablak nyitva van, az idő áll.")
+	_play_btn.tooltip_text = L.t("Az évek telnek. Ha egy ablak nyitva van, az idő áll. Gyorsbillentyű: szóköz")
 	_play_btn.pressed.connect(_toggle_time)
 	trow.add_child(_play_btn)
 	_fast_btn = UI.button(L.t("Gyors"))
@@ -330,7 +349,7 @@ func _build_bottom_bar() -> void:
 	tbox.add_child(trow)
 	var trow2 := UI.hbox(6)
 	var step := UI.button(L.t("+1 év"))
-	step.tooltip_text = L.t("Egy évvel előre.")
+	step.tooltip_text = L.t("Egy évvel előre. Gyorsbillentyű: jobbra nyíl")
 	var step_fn := func() -> void: campaign.advance()
 	step.pressed.connect(step_fn)
 	trow2.add_child(step)
@@ -340,6 +359,9 @@ func _build_bottom_bar() -> void:
 	trow2.add_child(_reset_btn)
 	tbox.add_child(trow2)
 	h.add_child(tbox)
+	# A gombok ne tartsák meg a fókuszt: így a szóköz az időt indítja, nem az utoljára nyomott gombot.
+	for b in [research, plan, station, home, _play_btn, _fast_btn, step, _reset_btn]:
+		(b as Button).focus_mode = Control.FOCUS_NONE
 	var info_box := UI.vbox(2)
 	info_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_info = UI.label(L.t("Üdv az AETHER-ben! Kezdd a jobb oldali küldetéssel."), 16, UI.SOFT)
@@ -398,7 +420,9 @@ func _open_station() -> void:
 	var st = StationPanel.new()
 	st.campaign = campaign
 	st.closed.connect(_close_overlay)
-	var built_fn := func(note: String) -> void: _show_info(note, "")
+	var built_fn := func(note: String) -> void:
+		_show_info(note, "")
+		_toast(note, UI.CYAN)
 	st.built.connect(built_fn)
 	_place_overlay(st)
 
@@ -419,6 +443,11 @@ func _render_mission() -> void:
 		_mission_box.add_child(UI.label("%s  %d. %s" % [mark, i + 1, L.t(MISSION[i][0])], 18, col, current))
 		if current:
 			_mission_box.add_child(UI.label(L.t(MISSION[i][1]), 15, UI.SOFT))
+			# egy kattintással oda, ahol a lépést el kell végezni
+			if i == 1:
+				_mission_box.add_child(_go_button(L.t("Kutatás →"), _open_research))
+			elif i == 3:
+				_mission_box.add_child(_go_button(L.t("A terved →"), _open_plan))
 
 
 ## A bevezető után: küldetéslista csillagokkal; az aktuálisnál a cél és az utolsó eredmény.
@@ -443,6 +472,21 @@ func _render_missions() -> void:
 			_mission_box.add_child(UI.label(L.t(m["cel"]), 15, UI.TEXT))
 			if _mission_note != "":
 				_mission_box.add_child(UI.label(_mission_note, 15, UI.CYAN))
+			# az aszálytűrő kukoricához előbb kutatni kell; a többi küldetés a tervben dől el
+			var need_research: bool = m["id"] == "alkalmazkodas" and (_plan == null or not _plan.levers.has("alkalmazkodas"))
+			if need_research:
+				_mission_box.add_child(_go_button(L.t("Kutatás →"), _open_research))
+			else:
+				_mission_box.add_child(_go_button(L.t("A terved →"), _open_plan))
+
+
+## Kis „ugrás” gomb a küldetés alatt: egy kattintással a következő teendőhöz visz.
+func _go_button(text: String, fn: Callable) -> Button:
+	var b := UI.button(text, true)
+	b.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	b.focus_mode = Control.FOCUS_NONE
+	b.pressed.connect(fn)
+	return b
 
 
 func _select_mission(i: int) -> void:
@@ -652,6 +696,48 @@ func _place_overlay(c: Control) -> void:
 	_close_x.z_index = 12
 	_close_x.pressed.connect(_request_close)
 	add_child(_close_x)
+	# Ha az ablak a saját méretét állítja (pl. az állomás szélesebb), az X kövesse a sarkot.
+	c.resized.connect(_place_close_x)
+	_place_close_x.call_deferred()
+
+
+func _place_close_x() -> void:
+	if _close_x != null and _overlay != null:
+		_close_x.position = _overlay.position + Vector2(_overlay.size.x - 22, -22)
+
+
+## Rövid, magától eltűnő értesítés a felső sáv alatt (pl. új korszak, kész modul, csillag).
+func _toast(text: String, color: Color = UI.GOLD) -> void:
+	var p := PanelContainer.new()
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color("#101a2c")
+	sb.border_color = color
+	sb.set_border_width_all(2)
+	sb.set_corner_radius_all(6)
+	sb.set_content_margin_all(12)
+	sb.content_margin_left = 22
+	sb.content_margin_right = 22
+	sb.shadow_color = Color(0, 0, 0, 0.6)
+	sb.shadow_size = 12
+	p.add_theme_stylebox_override("panel", sb)
+	var l := UI.label(text, 19, color, true, false)
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	p.add_child(l)
+	p.z_index = 30
+	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(p)
+	await get_tree().process_frame
+	if not is_instance_valid(p):
+		return
+	p.position = Vector2((1600 - p.size.x) / 2.0, 84 + 58 * _toasts)
+	_toasts += 1
+	p.modulate.a = 0.0
+	var tw := create_tween()
+	tw.tween_property(p, "modulate:a", 1.0, 0.25)
+	tw.tween_interval(3.2)
+	tw.tween_property(p, "modulate:a", 0.0, 0.6)
+	tw.tween_callback(p.queue_free)
+	tw.tween_callback(func() -> void: _toasts = maxi(0, _toasts - 1))
 
 
 ## Az X és az Esc: az ablak saját bezárását hívja (pl. a kutatás leállítja a figyelést).
@@ -684,6 +770,8 @@ func _on_results_shown(_has_levers: bool) -> void:
 func _on_approved(levers: Array) -> void:
 	_plan.add_levers(levers)
 	campaign.reward_results(levers.size())
+	if levers.size() > 0:
+		_toast(L.t("Új lehetőség a tervedben: %d") % levers.size(), UI.GREEN)
 	_show_info(L.t("%d eredmény a tervedben, bizalom +%d%%. Nyomd meg „A terved” gombot!") % [
 		levers.size(), levers.size() * Campaign.TRUST_PER_RESULT], "")
 	_close_overlay()
@@ -709,6 +797,7 @@ func _on_model(res: Dictionary) -> void:
 		_mission_note = str(ev["szoveg"])
 		if int(ev["csillag"]) > 0:
 			Missions.save_stars(m["id"], int(ev["csillag"]))
+			_toast("%s  %s" % [Missions.star_text(int(ev["csillag"]), 1 if m["id"] == "alkalmazkodas" else 3), L.t(m["cim"])], UI.GOLD)
 			_mission_note += "\n" + L.t(m["tanulsag"])
 		_render_mission()
 	elif mission_step < MISSION.size():
@@ -786,6 +875,7 @@ func _on_year_passed(y: int, note: String) -> void:
 func _on_era_reached(e: int) -> void:
 	_update_stats()
 	_show_info(L.t("Új korszak: %s! %s") % [Knowledge.era_name(e), L.t(Knowledge.ERAS[e - 1]["tema"])], "")
+	_toast(L.t("Új korszak: %s") % Knowledge.era_name(e), UI.GOLD)
 	if is_instance_valid(_plan) and _plan.is_inside_tree():
 		_plan.rebuild()
 
