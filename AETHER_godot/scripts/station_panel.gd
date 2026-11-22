@@ -9,7 +9,7 @@ const UI := preload("res://scripts/ui.gd")
 const L := preload("res://scripts/i18n.gd")
 const Campaign := preload("res://scripts/campaign.gd")
 
-const SCALE := 3
+const SCALE := 2   # kisebb kép: a kártyák építés-gombjai görgetés nélkül látszanak
 ## A modulok helye a háttérképen (pixelben, nagyítás előtt).
 const POS := {"ai_mag": Vector2(22, 32), "archivum": Vector2(72, 32), "uveghaz": Vector2(122, 32)}
 const ORDER := ["ai_mag", "archivum", "uveghaz"]
