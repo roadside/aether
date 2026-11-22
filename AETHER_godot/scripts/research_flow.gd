@@ -227,7 +227,7 @@ static func star_rule() -> String:
 # --- „Mi ez, és mire jó?” ---------------------------------------------------
 ## Gyorsítás, három szinten:
 ##  1. a témafájlban (res://temak/*.txt) lévő, lektorálható magyarázat – azonnali,
-##  2. különben előbb AI nélkül (áttekintő cikkek listája, pár mp) jelenik meg valami,
+##  2. különben előbb AI nélkül (Wikipédia, 1–2 mp) jelenik meg valami,
 ##  3. az AI közben a háttérben dolgozik, és ha kész, lecseréli a részletesre.
 ## Ami egyszer elkészült, a gépen megmarad (user://aether_temak).
 var _topic_out := ""
@@ -237,7 +237,7 @@ var _topic_phase := ""           # "gyors" (AI nélkül) vagy "ai"
 
 
 func _topic_path(q: Dictionary, ai: String) -> String:
-	return bridge.work_dir("aether_temak").path_join("v3_%s_%s_%s.json" % [str(q.get("id", "")), L.lang, ai])
+	return bridge.work_dir("aether_temak").path_join("v2_%s_%s_%s.json" % [str(q["wiki_en"]).md5_text().left(10), L.lang, ai])
 
 
 func _show_topic(q: Dictionary) -> void:
@@ -265,7 +265,7 @@ func _run_topic(phase: String) -> void:
 	_topic_phase = phase
 	var ai := "none" if phase == "gyors" else _topic_ai
 	_topic_out = _topic_path(_topic_q, ai)
-	if not bridge.run("tema", ["tema",
+	if not bridge.run("tema", ["tema", "--wiki", str(_topic_q["wiki"]), "--wiki-en", str(_topic_q["wiki_en"]),
 			"--kereses", str(_topic_q["attekintes"]), "--cim", Knowledge.text(_topic_q, "cim"), "--ki", _topic_out, "--ai", ai, "--nyelv", L.lang]):
 		if phase == "gyors":
 			_show_busy()
@@ -284,7 +284,19 @@ func _render_topic(r: Dictionary) -> void:
 			_body.add_child(UI.card_root(c))
 	# A források: AI-összefoglaló mellett egy gomb mögött, egymás alatt; anélkül láthatóan.
 	var src := UI.vbox(2)
-	if typeof(m) != TYPE_DICTIONARY:
+	var w: Variant = r.get("wiki")
+	var wiki_shown := false
+	if typeof(w) == TYPE_DICTIONARY:
+		# AI nélkül a Wikipédia bevezetője, de csak a játékos nyelvén; ha az AI még ír, semmi
+		if typeof(m) != TYPE_DICTIONARY and _topic_ai == "none" and str(w.get("nyelv", "")) == L.lang:
+			var c := UI.card(UI.GOLD)
+			c.add_child(UI.label(L.t("Wikipédia"), 17, UI.GOLD, true))
+			c.add_child(UI.label(str(w.get("bevezeto", "")), 17, UI.TEXT))
+			_body.add_child(UI.card_root(c))
+			wiki_shown = true
+		src.add_child(UI.text_link(L.t("Wikipédia: ") + str(w.get("cim", "")) + " (" + str(w.get("nyelv", "")) + ", CC BY-SA 4.0)",
+			str(w.get("link", ""))))
+	if typeof(m) != TYPE_DICTIONARY and not wiki_shown:
 		var own := Knowledge.text(_topic_q, "magyarazat")
 		if own != "":
 			var c := UI.card(UI.GOLD)
@@ -309,7 +321,7 @@ func _render_topic(r: Dictionary) -> void:
 		sb.pressed.connect(src_fn)
 		_body.add_child(sb)
 	_body.add_child(src)
-	if papers.is_empty() and str(r.get("tipus", "")) != "fajl":
+	if typeof(w) != TYPE_DICTIONARY and papers.is_empty() and str(r.get("tipus", "")) != "fajl":
 		_body.add_child(UI.label(L.t("Most nem sikerült forrást letölteni. Van internet?"), 17, UI.EMBER))
 	if str(r.get("megjegyzes", "")) != "":
 		_body.add_child(UI.label(str(r["megjegyzes"]), 13, UI.MUTE))

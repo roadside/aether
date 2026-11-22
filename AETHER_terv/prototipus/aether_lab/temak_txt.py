@@ -60,6 +60,8 @@ FIELDS = [
     ("lektoralva", "Lektorálva"),
     ("kereses", "Keresés"),
     ("parameterek", "Paraméter"),
+    ("wiki", "Wikipédia"),
+    ("wiki_en", "Wikipédia angolul"),
     ("attekintes", "Áttekintő cikkek keresése"),
 ]
 TECH_FROM = "kereses"          # innentől technikai mezők
@@ -72,8 +74,7 @@ HEADER = """# AETHER kutatási témák · {nev}
 # Lektorálás: a "Kérdés", "Röviden", "Ha kikutatod", "Mire jó?", "Mi a gond vele?" és
 # "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
 # Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
-# A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet). Csak tudományos forrás
-# (lektorált cikk, IPCC-jelentés, nemzetközi adatgyűjtemény) legyen, Wikipédia ne.
+# A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet).
 # A "technikai" vonal alatti sorokkal keres a kutatás: csak akkor módosítsd, ha biztos vagy benne.
 # Új téma: másolj le egy blokkot, és adj neki új, ékezet nélküli azonosítót (=== uj_tema ===).
 # A játék induláskor olvassa ezt a fájlt: mentés után indítsd újra a játékot.

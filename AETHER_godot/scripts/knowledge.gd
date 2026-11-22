@@ -10,7 +10,7 @@ const L := preload("res://scripts/i18n.gd")
 ## A témák a lektorálható szövegfájlokban vannak: res://temak/<terület>.txt (egyetlen forrás;
 ## formátum: AETHER_terv/prototipus/aether_lab/temak_txt.py). Mezők: id, korszak, terulet,
 ## cim, magyarazat, nyit, mire_jo, hatranyok, mennyire_bizonyitott (és _en párjuk), forras
-## (lista), lektoralva, kereses, parameterek, attekintes.
+## (lista), lektoralva, kereses, parameterek, wiki, wiki_en, attekintes.
 const TOPIC_DIR := "res://temak"
 const FIELDS := {
 	"fizika": ["Fizika", "Physics"], "kemia": ["Kémia", "Chemistry"], "anyag": ["Anyagtudomány", "Materials science"],
@@ -25,10 +25,10 @@ const LABELS := [
 	["Mennyire bizonyított? angolul", "mennyire_bizonyitott_en"], ["Áttekintő cikkek keresése", "attekintes"],
 	["Mi a gond vele? angolul", "hatranyok_en"], ["Ad a játékban angolul", "nyit_en"],
 	["Ha kikutatod angolul", "nyit_en"],
-	["Mennyire bizonyított?", "mennyire_bizonyitott"],
+	["Mennyire bizonyított?", "mennyire_bizonyitott"], ["Wikipédia angolul", "wiki_en"],
 	["Mire jó? angolul", "mire_jo_en"], ["Röviden angolul", "magyarazat_en"], ["Kérdés angolul", "cim_en"],
 	["Mi a gond vele?", "hatranyok"], ["Ad a játékban", "nyit"], ["Ha kikutatod", "nyit"], ["Lektorálva", "lektoralva"],
-	["Paraméter", "parameterek"], ["Mire jó?", "mire_jo"], ["Keresés", "kereses"],
+	["Wikipédia", "wiki"], ["Paraméter", "parameterek"], ["Mire jó?", "mire_jo"], ["Keresés", "kereses"],
 	["Korszak", "korszak"], ["Röviden", "magyarazat"], ["Kérdés", "cim"], ["Forrás", "forras"],
 ]
 
