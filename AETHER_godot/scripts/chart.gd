@@ -109,7 +109,7 @@ func _draw() -> void:
 	draw_rect(Rect2(PAD_L + 10, PAD_T + 4, 14, 4), UI.EMBER)
 	draw_string(f, Vector2(PAD_L + 30, PAD_T + 11), L.t("Ha semmi sem változik"), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, UI.SOFT)
 	draw_rect(Rect2(PAD_L + 10, PAD_T + 22, 14, 4), UI.CYAN)
-	draw_string(f, Vector2(PAD_L + 30, PAD_T + 29), L.t("A te terved (sáv = bizonytalanság)"), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, UI.SOFT)
+	draw_string(f, Vector2(PAD_L + 30, PAD_T + 29), L.t("A te terved (a sáv: ennyivel tévedhet a modell)"), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, UI.SOFT)
 
 
 func _gui_input(event: InputEvent) -> void:

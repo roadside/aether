@@ -105,16 +105,16 @@ static func draw(campaign, y: int) -> Array:
 static func options(campaign, ev: Dictionary) -> Array:
 	var cost := int(ev["kar_penz"])
 	var out: Array = [{"id": "segit", "cim": "Segítek most", "penz": cost, "bizalom": HELP_TRUST,
-		"szoveg": L.t("−%d pénz, +%d bizalom") % [cost, HELP_TRUST], "tilt": campaign.money < cost}]
+		"szoveg": L.t("−%d pénz, +%d%% bizalom") % [cost, HELP_TRUST], "tilt": campaign.money < cost}]
 	if int(ev.get("felkeszules", 0)) < PREP_MAX and float(ev["pajzs"]) < SHIELD_MAX:
 		var pc := int(round(float(ev["penz"]) * PREP_COST))
 		var pt := int(ev["bizalom"])
 		out.append({"id": "felkeszul", "cim": "Felkészülök a következőre", "penz": pc, "bizalom": -pt,
-			"szoveg": L.t("−%d pénz, −%d bizalom. Később kisebb a kár.") % [pc, pt],
+			"szoveg": L.t("−%d pénz, −%d%% bizalom. Később kisebb a kár.") % [pc, pt],
 			"tilt": campaign.money < pc})
 	var it := int(ev["bizalom"]) + IGNORE_TRUST
 	out.append({"id": "semmi", "cim": "Nem teszek semmit", "penz": 0, "bizalom": -it,
-		"szoveg": L.t("−%d bizalom") % it, "tilt": false})
+		"szoveg": L.t("−%d%% bizalom") % it, "tilt": false})
 	return out
 
 
@@ -215,7 +215,7 @@ static func panel(campaign, events: Array, on_research: Callable, on_ok: Callabl
 		c.add_child(UI.label(L.t(ev["cim"]), 26, Color(str(ev["szin"])), true))
 		c.add_child(UI.label(L.t(ev["szoveg"]), 18, UI.TEXT))
 		if ev.get("jo", false):
-			c.add_child(UI.label(L.t("Nyereség: +%d pénz, +%d bizalom") % [int(ev["penz"]), int(ev["bizalom"])], 18, UI.GREEN, true))
+			c.add_child(UI.label(L.t("Nyereség: +%d pénz, +%d%% bizalom") % [int(ev["penz"]), int(ev["bizalom"])], 18, UI.GREEN, true))
 			v.add_child(UI.card_root(c))
 			continue
 		var known: Array = ev["vedett"]

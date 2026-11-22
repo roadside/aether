@@ -333,25 +333,30 @@ func advance() -> void:
 	var d := _trust_drift()
 	trust = clampi(trust + d, 0, 100)
 	research_this_year = 0
-	var note := L.t("%d: bevétel +%d.") % [year, inc]
+	# az év mérlege egy rendezett mondatban: előbb a pénz, utána a bizalom
+	var parts: Array = [L.t("+%d pénz bevétel") % inc]
 	if knowledge_income() > 0:
-		note = L.t("%d: bevétel +%d, ebből a tudásodból +%d.") % [year, inc, knowledge_income()]
+		parts[0] = L.t("+%d pénz bevétel (ebből +%d a kutatásaidért)") % [inc, knowledge_income()]
 	var up := plan_upkeep()
 	if up > 0:
 		money = maxi(0, money - up)
-		note += " " + L.t("A terved költsége: −%d.") % up
+		parts.append(L.t("−%d pénz a terved éves költsége") % up)
 	var cc := coast_cost(year)
 	if cc > 0:
 		money = maxi(0, money - cc)
-		note += " " + L.t("Emelkedő tenger: partkár −%d.") % cc
+		parts.append(L.t("−%d pénz kár a tengerparton") % cc)
+	var note := L.t("%d mérlege: ") % year + ", ".join(parts) + "."
+	var tparts: Array = []
 	if d > 0:
-		note += " " + L.t("A kibocsátás csökken: bizalom +%d.") % d
+		tparts.append(L.t("+%d%% (csökken a kibocsátás)") % d)
 	elif d < 0:
-		note += " " + L.t("A kibocsátás nem csökken: bizalom %d.") % d
+		tparts.append(L.t("−%d%% (nem csökken a kibocsátás)") % -d)
 	var g := greenhouse_trust()
 	if g > 0:
 		trust = mini(100, trust + g)
-		note += " " + L.t("Üvegház: bizalom +%d.") % g
+		tparts.append(L.t("+%d%% (üvegház)") % g)
+	if not tparts.is_empty():
+		note += " " + L.t("Bizalom: ") + ", ".join(tparts) + "."
 	if not building.is_empty() and year >= int(building["kesz"]):
 		var mod := str(building["modul"])
 		station[mod] = int(station[mod]) + 1
@@ -488,7 +493,7 @@ func adopt_problem(sc: Dictionary) -> String:
 		return L.t("A játék véget ért.")
 	var need := required_trust(sc)
 	if trust < need:
-		return L.t("Ehhez %d%% bizalom kell, neked %d%% van. Kutass, és tartsd a terved!") % [need, trust]
+		return L.t("Ehhez %d%% bizalom kell, neked %d%% van. Kutass még: minden ellenőrzött kutatás növeli a bizalmat.") % [need, trust]
 	var cost := plan_cost(sc)
 	if money < cost:
 		return L.t("Ehhez %d pénz kell, neked %d van. Évente %d pénzt kapsz.") % [cost, money, income()]
@@ -513,7 +518,7 @@ func adopt(sc: Dictionary, res: Dictionary) -> String:
 	var note := L.t("A terved életbe lép, első éve: %d.") % start_year()
 	if is_step_back(sc):
 		trust = maxi(0, trust - TRUST_STEP_BACK)
-		note += " " + L.t("Visszaléptél egy gyengébb tervre: bizalom −%d.") % TRUST_STEP_BACK
+		note += " " + L.t("Gyengébb tervre váltottál: −%d%% bizalom.") % TRUST_STEP_BACK
 	timeline = timeline_with(sc)
 	model = res
 	save()
@@ -525,9 +530,9 @@ func adopt(sc: Dictionary, res: Dictionary) -> String:
 # --- kutatás ---------------------------------------------------------------
 func research_problem() -> String:
 	if research_this_year >= research_limit():
-		return L.t("Idén már %d kutatást indítottál, ennyit enged az AI-mag. Várj egy évet, vagy fejleszd az AI-magot!") % research_limit()
+		return L.t("Idén már %d kutatást indítottál: az AI-mag ennyit enged egy évben. Zárd le az évet, vagy fejleszd tovább az AI-magot az Állomáson!") % research_limit()
 	if money < research_cost():
-		return L.t("Nincs elég pénz kutatásra (%d kell, neked %d van). Indítsd el az időt, évente kapsz pénzt.") % [research_cost(), money]
+		return L.t("Nincs elég pénzed a kutatásra (%d kell, %d van). Zárd le az évet: minden évben kapsz pénzt.") % [research_cost(), money]
 	return ""
 
 

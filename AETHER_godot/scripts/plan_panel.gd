@@ -76,7 +76,7 @@ func _slider_row(question: String, help: String, mn: float, mx: float, step: flo
 		fmt: Callable, source: String = "", is_new: bool = false) -> HSlider:
 	var c := UI.card(UI.CYAN if is_new else UI.GOLD)
 	if is_new:   # az új, kikutatott lehetőség kiemelve, legfelül
-		c.add_child(UI.label(L.t("ÚJ · a kutatásodból, most bevezetheted"), 15, UI.CYAN, true))
+		c.add_child(UI.label(L.t("ÚJ · a kutatásod nyitotta meg: most beteheted a tervedbe."), 15, UI.CYAN, true))
 	c.add_child(UI.label(question, 18, UI.TEXT, true))
 	c.add_child(UI.label(help, 15, UI.SOFT))
 	var row := UI.hbox(14)
@@ -136,7 +136,7 @@ func rebuild() -> void:
 	if mission.has("co2_ev"):   # ebben a küldetésben a világ nem tud gyorsabban
 		_co2.value = int(mission["co2_ev"])
 		_co2.editable = false
-		_co2.tooltip_text = L.t("Ebben a küldetésben rögzített.")
+		_co2.tooltip_text = L.t("Ezt a csúszkát most a küldetés rögzíti, nem állíthatod.")
 	var ch4_locked: bool = campaign != null and campaign.era < 2   # tudásfa: a Mérséklés korszakában nyílik meg
 	_ch4 = _slider_row(L.t("Mennyivel csökkentsük a metánt 2030-ig?"),
 		L.t("A II. Mérséklés korszakban nyílik meg. Kutass ki 2 témát az I. korszakból!") if ch4_locked

@@ -115,9 +115,9 @@ static func panel(campaign, d: Dictionary, on_ok: Callable) -> Control:
 			UI.clear(box)
 			var right: Dictionary = Knowledge.topic(str(d["tema"]))
 			if good:
-				box.add_child(UI.label(L.t("Jó válasz! +%d bizalom") % WIN_TRUST, 22, UI.GREEN, true))
+				box.add_child(UI.label(L.t("Jó válasz! +%d%% bizalom") % WIN_TRUST, 22, UI.GREEN, true))
 			else:
-				box.add_child(UI.label(L.t("Nem ez cáfolja. −%d bizalom") % LOSE_TRUST, 22, UI.EMBER, true))
+				box.add_child(UI.label(L.t("Nem ez cáfolja. −%d%% bizalom") % LOSE_TRUST, 22, UI.EMBER, true))
 			box.add_child(UI.label(Knowledge.text(right, "cim"), 18, UI.CYAN, true))
 			box.add_child(UI.label(Knowledge.text(right, "mennyire_bizonyitott"), 18, UI.TEXT))
 			var ok := UI.button(L.t("Rendben"), true)

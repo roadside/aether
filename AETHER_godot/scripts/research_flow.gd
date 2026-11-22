@@ -235,7 +235,7 @@ func _question_card(q: Dictionary, is_done: bool) -> Control:
 
 ## A csillagok szabálya (játékszabály), a csillagok fölé húzott egérnél.
 static func star_rule() -> String:
-	return L.t("Csillagok: ★ elolvastad, vagy találtál egy számot a cikkben; ★★ két cikk ugyanazt mondja; ★★★ legalább három cikk, köztük egy, amely sok kutatást összegez.")
+	return L.t("Bizonyosság: ★ elolvastad, vagy találtál egy számot a cikkben; ★★ két cikk ugyanazt mondja; ★★★ legalább három cikk, köztük egy, amely sok kutatást összegez.")
 
 
 # --- „Mi ez, és mire jó?” ---------------------------------------------------
@@ -499,7 +499,7 @@ func _recommend() -> Dictionary:
 		var need := int(Knowledge.ERAS[era].get("kell", 0))
 		var left := need - Knowledge.count_done(done, era)
 		if left > 0:
-			why = L.t("Még %d kutatott téma, és közelebb kerülsz ehhez: %s.") % [left, Knowledge.era_name(era + 1)]
+			why = L.t("Még %d kutatott téma kell a következő korszakhoz (%s).") % [left, Knowledge.era_name(era + 1)]
 	if why == "":
 		why = L.t("Új tudás ebben a korszakban.")
 	# változatosság: abból a területből, ahol a legkevesebb a kutatott téma
@@ -952,7 +952,7 @@ func _show_results() -> void:
 		var old := int(campaign.stars.get(tid, 0))
 		campaign.mark_researched(tid, n_stars)   # tudásfa: ellenőrzött szám van, a téma kutatott
 		if not was_done or n_stars > old:
-			var msg := L.t("Új tudás a tudásfán: ") if not was_done else L.t("Erősebb tudás a tudásfán: ")
+			var msg := L.t("Új kikutatott téma: ") if not was_done else L.t("Ezt a témát most alaposabban ismered: ")
 			var l := UI.label(msg + Missions.star_text(n_stars) + "  " + Knowledge.text(_question, "cim"), 17, UI.GREEN, true)
 			l.mouse_filter = Control.MOUSE_FILTER_PASS
 			l.tooltip_text = star_rule()

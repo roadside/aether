@@ -796,7 +796,7 @@ func _open_help() -> void:
 		[L.t("1. Nézz körül"), L.t("A bal oldali lista és a földgömb pöttyei valódi, mai jelentések.")],
 		[L.t("2. Kutass"), L.t("Válassz kérdést: a válasz valódi tudományos cikkekből jön.")],
 		[L.t("3. Tervezz"), L.t("A kutatott megoldásokat tedd a tervedbe, és nézd meg, mi lesz 2100-ig.")],
-		[L.t("4. Indítsd az időt"), L.t("Telnek az évek, nő a pénz és a bizalom. Fejleszd az állomásod.")],
+		[L.t("4. Zárd le az évet"), L.t("Ha idén mindent megtettél, jön a következő év: pénzt kapsz, és kiderül, mi történt a világban.")],
 	]
 	for st in steps:
 		var c := UI.card(UI.GOLD)
@@ -805,7 +805,7 @@ func _open_help() -> void:
 		v.add_child(UI.card_root(c))
 	v.add_child(UI.label(L.t("Gyorsbillentyűk"), 18, UI.CYAN, true))
 	var keys := [["K", L.t("Kutatás")], ["T", L.t("A terved")], ["A", L.t("Állomás")], ["N", L.t("Nálunk")],
-		[L.t("Szóköz"), L.t("idő indítása / szünet")], ["H", L.t("földgömb: vissza a helyedre")],
+		[L.t("Szóköz"), L.t("az év lezárása")], ["H", L.t("földgömb: vissza a helyedre")],
 		["Esc", L.t("ablak bezárása")], ["F11", L.t("teljes képernyő")]]
 	var grid := GridContainer.new()
 	grid.columns = 2
@@ -1364,7 +1364,7 @@ class Confetti extends Control:
 func _on_learned(q: Dictionary) -> void:
 	_render_mission()   # ha ez volt a mai kérdés, jár a napi csillag
 	_toast("★  " + Knowledge.text(q, "cim"), UI.GREEN)
-	_show_info(L.t("Új tudás a tudásfán: ") + Knowledge.text(q, "cim"), "")
+	_show_info(L.t("Új kikutatott téma: ") + Knowledge.text(q, "cim"), "")
 
 
 func _on_approved(levers: Array) -> void:
@@ -1372,7 +1372,7 @@ func _on_approved(levers: Array) -> void:
 	campaign.reward_results(levers.size())
 	if levers.size() > 0:
 		_toast(L.t("Új lehetőség a tervedben: %d") % levers.size(), UI.GREEN)
-	_show_info(L.t("%d eredmény a tervedben, bizalom +%d%%. Nyomd meg „A terved” gombot!") % [
+	_show_info(L.t("A kutatásod %d új lehetőséget adott a tervedhez, és +%d%% bizalmat. Nyisd meg „A terved” ablakot!") % [
 		levers.size(), levers.size() * Campaign.TRUST_PER_RESULT], "")
 	_close_overlay()
 	_advance(3)
@@ -1622,14 +1622,14 @@ func _open_summary(k: Dictionary) -> void:
 	v.add_child(UI.heading(L.t("2100 – így alakult")))
 	var t2100 := float(k.get("T2100", 0.0))
 	var verdict := L.t("Másfél fok alatt maradt. Kiváló!") if t2100 < 1.5 else (
-		L.t("Két fok alatt maradt.") if t2100 < 2.0 else L.t("Két fok fölé ment. Próbáld korábbi CO2-nullával!"))
+		L.t("Két fok alatt maradt.") if t2100 < 2.0 else L.t("Két fok fölé ment. Próbáld meg, hogy a CO2-kibocsátás hamarabb legyen nulla!"))
 	v.add_child(UI.label(verdict, 22, UI.GREEN if t2100 < 2.0 else UI.EMBER, true))
 	# a Föld rejtett tulajdonsága csak a végén derül ki
 	var earth := L.t("Ez egy átlagos Föld volt.")
 	if campaign.sens > 0.33:
-		earth = L.t("Ez a Föld érzékenyebb volt az átlagnál: nehezebb dolgod volt.")
+		earth = L.t("Ez a Föld érzékenyebb volt az átlagnál: ugyanannyi CO2-től jobban melegedett, ezért nehezebb dolgod volt.")
 	elif campaign.sens < -0.33:
-		earth = L.t("Ez a Föld kevésbé volt érzékeny az átlagnál: könnyebb dolgod volt.")
+		earth = L.t("Ez a Föld kevésbé volt érzékeny az átlagnál: ugyanannyi CO2-től kevésbé melegedett, ezért könnyebb dolgod volt.")
 	v.add_child(UI.label(earth, 17, UI.SOFT))
 	var grid := GridContainer.new()
 	grid.columns = 3
@@ -1647,6 +1647,8 @@ func _open_summary(k: Dictionary) -> void:
 		var c := UI.vbox(2)
 		c.add_child(UI.label(it[0], 15, UI.MUTE, false, false))
 		c.add_child(UI.label(it[1], 30, it[2], true, false))
+		if it[0] == L.t("Pontszám"):
+			c.tooltip_text = L.t("Pontszám: minden tized fok, amivel 4 °C alatt maradsz, 30 pont; minden kikutatott téma 10 pont; minden százalék bizalom 2 pont.")
 		grid.add_child(c)
 	v.add_child(grid)
 	var again := UI.button(L.t("Új Föld"), true)
