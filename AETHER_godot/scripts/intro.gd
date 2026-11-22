@@ -41,9 +41,9 @@ const OWN_MUSIC := ["res://sajat_zene/intro.wav", "user://sajat_zene/intro.wav"]
 ## A nyitány ütései (mp) a saját zenefájl első 11 másodpercéből kimérve: [idő, kéz (0 bal, 1 jobb), hangmező]
 const HITS := [[3.09, 1, 0], [3.37, 0, 3], [4.46, 1, 2], [5.07, 0, 1], [5.61, 1, 4], [6.44, 0, 5],
 	[6.70, 1, 0], [6.87, 0, 3], [7.57, 1, 6], [7.85, 0, 1], [9.20, 1, 2], [9.75, 0, 5], [10.30, 1, 0]]
-## A handpan hangmezői a közepéhez képest (festett pixelben): 0 a középső „ding”
-const FIELDS := [Vector2(0, -1), Vector2(-17, -2), Vector2(17, -2), Vector2(-11, 3), Vector2(11, 3),
-	Vector2(-23, 1), Vector2(23, 1)]
+## A handpan hangmezői a közepéhez képest (a 640×360-as képen; egyezzen a tools/intro_erdo.py-jal): 0 a középső „ding”
+const FIELDS := [Vector2(0, -8), Vector2(-50, -6), Vector2(-32, -22), Vector2(4, -27), Vector2(38, -20),
+	Vector2(52, -3), Vector2(28, 12), Vector2(-26, 13)]
 
 var main                       # main.gd példány (földgömb, világállapot, eltérés-térkép)
 var shots_dir := ""            # ha nem üres: minden snittről képernyőkép (ellenőrzéshez)
@@ -773,171 +773,130 @@ func _draw_future(lt: float) -> void:
 	_fx.draw_string(UI.font_bold, now + Vector2(-40.0, -30.0), str(_year_now), HORIZONTAL_ALIGNMENT_CENTER, 80.0, 26, Color(UI.GOLD, na))
 
 
-# --- nyitány: handpan-játékos az erdőben (saját figura, 320×180-as vászon) -------
-## Vonal festett pixelekből (kar, ág).
-func _seg(a: Vector2, b: Vector2, th: float, col: Color) -> void:
-	var n := int(maxf(absf(b.x - a.x), absf(b.y - a.y))) + 1
-	for i in n + 1:
-		var p := a.lerp(b, float(i) / float(n))
-		_r(p.x - th * 0.5, p.y - th * 0.5, th, th, col)
+# --- nyitány: handpan-játékos az erdőben -----------------------------------------
+## A háttér, a törzs és a hangszer festett pixeles kép (tools/intro_erdo.py, 640×360);
+## a karokat és a kezeket itt rajzoljuk, és a zene ütéseire mozgatjuk.
+const P := 2.5                 # a nyitány egy „pixele” a képernyőn (640×360 -> 1600×900)
+const PAN := Vector2(300, 250) # a hangszer közepe a képen
+var _tex_forest: Texture2D
+var _tex_player: Texture2D
+var _tex_pan: Texture2D
+
+
+## Kétcsontos kar: a könyök helye a váll és a kéz között, kifelé hajlítva.
+static func _elbow(sh: Vector2, hand: Vector2, l1: float, l2: float, out: float) -> Vector2:
+	var d := hand - sh
+	var dist := clampf(d.length(), 1.0, l1 + l2 - 0.5)
+	var a := (l1 * l1 - l2 * l2 + dist * dist) / (2.0 * dist)
+	var h := sqrt(maxf(l1 * l1 - a * a, 0.0))
+	var dir := d.normalized()
+	return sh + dir * a + Vector2(-dir.y, dir.x) * h * out
 
 
 ## A kéz helye: a hangmező fölött lebeg, az ütés előtt lecsap, utána visszarugózik.
-func _hand(side: int, lt: float, pan: Vector2) -> Vector2:
-	var hover := pan + Vector2(-13.0 if side == 0 else 13.0, -11.0)
-	hover.y += sin(lt * 1.3 + side * 2.0) * 0.8
+func _hand(side: int, lt: float) -> Vector2:
+	var hover := PAN + (Vector2(-34, -30) if side == 0 else Vector2(40, -34))
+	hover += Vector2(sin(lt * 0.9 + side * 2.0) * 2.0, sin(lt * 1.3 + side * 2.0) * 2.0)
 	var pos := hover
 	for h in HITS:
 		if int(h[1]) != side:
 			continue
 		var dt := lt - float(h[0])
-		var target: Vector2 = pan + FIELDS[int(h[2])] + Vector2(0, -2)
-		if dt > -0.22 and dt <= 0.0:
-			var k := 1.0 + dt / 0.22
-			pos = hover.lerp(target, k * k) + Vector2(0, -3.0 * sin(k * PI) * (1.0 - k))
-		elif dt > 0.0 and dt < 0.38:
-			var k2 := dt / 0.38
+		var target: Vector2 = PAN + FIELDS[int(h[2])] + Vector2(0, -4)
+		if dt > -0.24 and dt <= 0.0:
+			var k := 1.0 + dt / 0.24
+			pos = hover.lerp(target, k * k) + Vector2(0, -8.0 * sin(k * PI) * (1.0 - k))
+		elif dt > 0.0 and dt < 0.42:
+			var k2 := dt / 0.42
 			pos = target.lerp(hover, 1.0 - pow(1.0 - k2, 2.0))
 	return pos
 
 
+func _limb(a: Vector2, b: Vector2, w: float, col: Color) -> void:
+	_fx.draw_line(a * P, b * P, col, w * P)
+	_fx.draw_circle(a * P, w * P * 0.5, col)
+	_fx.draw_circle(b * P, w * P * 0.5, col)
+
+
+func _arm(side: int, lt: float) -> void:
+	var lit := side == 0                      # a fény balról-fentről jön
+	var skin := Color("#b28464") if lit else Color("#8f6649")
+	var dark := Color("#6f4c38") if lit else Color("#5a3d2d")
+	var sh := Vector2(300, 124) if side == 0 else Vector2(402, 124)
+	var hand := _hand(side, lt)
+	var el := _elbow(sh, hand, 70.0, 64.0, 1.0 if side == 0 else -1.0)
+	var off := Vector2(2.5, 3.0)
+	_limb(sh + off, el + off, 21.0, dark)     # árnyékos szél
+	_limb(el + off, hand + off, 16.0, dark)
+	_limb(sh, el, 19.0, skin)
+	_limb(el, hand, 14.0, skin)
+	_fx.draw_line((sh + Vector2(-4, -3)) * P, (el + Vector2(-4, -3)) * P, skin.lightened(0.14), 4.0 * P)
+	# kézfej és ujjak a hangszer felé
+	var dir := (hand - el).normalized()
+	var side_v := Vector2(-dir.y, dir.x)
+	_limb(hand, hand + dir * 9.0, 15.0, skin)
+	for f in 4:
+		var base := hand + dir * 10.0 + side_v * (f - 1.5) * 4.2
+		_limb(base, base + dir * (9.0 + (1.5 - absf(f - 1.5)) * 2.0) + Vector2(0, 3.0), 3.6, skin if f % 2 == 0 else skin.darkened(0.10))
+	var thumb := hand + dir * 3.0 + side_v * (9.0 if side == 0 else -9.0)
+	_limb(thumb, thumb + dir * 7.0 + side_v * (3.0 if side == 0 else -3.0), 4.2, skin.darkened(0.06))
+
+
 func _scene_player(lt: float) -> void:
-	# erdő: sötét zöld mélység, törzsek, fénypászmák
-	_bands(["#07110c", "#0a1810", "#0e2015", "#12281a", "#16301e", "#193722", "#1a3a22"], 0, 128)
-	for i in 13:
-		var tx := -6.0 + i * 27.0 + _h(i + 2.0) * 12.0
-		var tw := 5.0 + _h(i + 40.0) * 9.0
-		var tc := Color("#0b140f") if i % 2 == 0 else Color("#101c14")
-		_r(tx, 0, tw, 132, tc)
-		_r(tx, 0, 1, 132, tc.lightened(0.06))
-		for b in 3:      # moha a törzsön
-			_r(tx + 1.0, 30.0 + b * 31.0 + _h(i * 7.0 + b) * 12.0, tw - 2.0, 4.0, Color("#1f4a26"))
-	for i in 5:          # fénypászmák a lombon át
-		var lx := 30.0 + i * 62.0 + sin(lt * 0.25 + i) * 3.0
-		for y in range(0, 126, 3):
-			_r(lx + y * 0.35, y, 13.0 + y * 0.05, 3, Color(0.75, 0.95, 0.65, 0.035 + 0.01 * sin(lt * 0.7 + i * 2.0)))
-	for i in 34:         # lombfoltok fent
-		var fx := _h(i + 300.0) * 330.0 - 5.0
-		var fy := _h(i + 340.0) * 46.0 - 4.0
-		_r(fx + sin(lt * 0.6 + i) * 0.7, fy, 16.0 + _h(i + 380.0) * 22.0, 6.0 + _h(i + 420.0) * 6.0,
-			Color("#1c4424") if i % 3 != 0 else Color("#265a2c"))
-	# mohos sziklák a háttérben
-	for rk in [[18, 106, 46, 24], [70, 112, 34, 18], [214, 108, 50, 24], [270, 100, 56, 32], [0, 118, 30, 16]]:
-		for row in int(rk[3] / 2.0):
-			var k: float = float(row) / (float(rk[3]) / 2.0)
-			var wd: float = float(rk[2]) * (0.45 + 0.55 * sin(minf(1.0, k * 1.6) * PI * 0.5))
-			_r(rk[0] + (rk[2] - wd) * 0.5, rk[1] + row * 2.0, wd, 2, Color("#2f6a34") if k < 0.3 else (Color("#24452c") if k < 0.6 else Color("#1a2a22")))
-	# talaj
-	_bands(["#1d3f22", "#1a381f", "#16301b", "#122717", "#0e1f13"], 128, 180)
-	for i in 70:         # fűcsomók, aljnövényzet
-		var gx := _h(i + 500.0) * 320.0
-		var gy := 130.0 + _h(i + 560.0) * 46.0
-		var sway := sin(lt * 1.1 + i) * 0.6
-		_r(gx + sway, gy - 3.0, 1, 4, Color("#3f8a3f"))
-		_r(gx + 2.0, gy - 2.0, 1, 3, Color("#2f6f33"))
-	# páfrányok (jobbra és balra elöl)
-	for f in [[236, 150, 1.0], [262, 158, 1.2], [292, 146, 0.9], [44, 154, 1.1], [82, 162, 0.9], [14, 148, 0.8]]:
-		for side in [-1.0, 1.0]:
-			for fr in 3:
-				var ang: float = (0.22 + fr * 0.30) * side + sin(lt * 0.9 + float(f[0]) * 0.1 + fr) * 0.04
-				var length: float = (26.0 - fr * 5.0) * float(f[2])
-				for sgm in int(length):
-					var px: float = float(f[0]) + sin(ang) * sgm
-					var py: float = float(f[1]) - cos(ang) * sgm * 0.95 + (sgm * sgm) * 0.02
-					var leaf := maxf(1.0, (1.0 - float(sgm) / length) * 5.0)
-					_r(px, py, 1, 1, Color("#2c6b33"))
-					if sgm % 2 == 0:
-						_r(px - leaf * 0.5 * (1.0 if side > 0.0 else 1.0), py - 1.0, leaf, 1, Color("#3f8f45") if sgm % 4 == 0 else Color("#347a3b"))
-	# --- a játékos: mohos kövön ül, ölében a handpan ---
-	var sway_b := sin(lt * 0.8) * 0.6
-	var hit_glow := 0.0
+	if _tex_forest == null:
+		_tex_forest = load("res://assets/intro/erdo.png")
+		_tex_player = load("res://assets/intro/jatekos.png")
+		_tex_pan = load("res://assets/intro/handpan.png")
+	# lassú közelítés a kép közepe felé
+	var z := lerpf(1.0, 1.05, lt / PRELUDE)
+	var c := Vector2(W, H) * 0.5
+	_fx.draw_set_transform(c - c * z, 0.0, Vector2(z, z))
+	var full := Rect2(0, 0, W, H)
+	_fx.draw_texture_rect(_tex_forest, full, false)
+	# fénypászmák a lombon át
+	for i in 4:
+		var lx := 140.0 + i * 330.0 + sin(lt * 0.22 + i) * 10.0
+		_fx.draw_colored_polygon(PackedVector2Array([Vector2(lx, 0), Vector2(lx + 70, 0), Vector2(lx + 300, 700), Vector2(lx + 150, 700)]),
+			Color(0.75, 0.95, 0.65, 0.030 + 0.012 * sin(lt * 0.6 + i * 2.0)))
+	# lélegzés: a törzs alig észrevehetően emelkedik-süllyed
+	var breath := sin(lt * 1.1) * 1.2
+	_fx.draw_texture_rect(_tex_player, Rect2(0, breath, W, H), false)
+	_fx.draw_texture_rect(_tex_pan, full, false)
+	# a megütött hangmező felfénylik
 	for h in HITS:
 		var d := lt - float(h[0])
-		if d >= 0.0 and d < 0.3:
-			hit_glow = maxf(hit_glow, 1.0 - d / 0.3)
-	var pan := Vector2(160.0, 107.0)
-	var skin := Color("#c69872")
-	var skin_d := Color("#a67c5b")
-	var shirt := Color("#d9ceb4")
-	var shirt_d := Color("#b6aa90")
-	var trousers := Color("#5b4735")
-	# a kő, amin ül
-	for row in 10:
-		var wd2 := 78.0 - absf(row - 3.0) * 3.0
-		_r(160.0 - wd2 * 0.5, 120.0 + row * 2.0, wd2, 2, Color("#2f6a34") if row < 2 else (Color("#27382d") if row < 6 else Color("#1b2620")))
-	# lábak (törökülés)
-	for row in 7:
-		var wd3 := 46.0 + row * 5.0
-		_r(160.0 - wd3 * 0.5, 108.0 + row * 2.0, wd3, 2, trousers if row < 5 else trousers.darkened(0.2))
-	_r(122, 119, 14, 4, trousers.darkened(0.15))
-	_r(184, 119, 14, 4, trousers.darkened(0.15))
-	_r(140, 122, 9, 3, skin_d)
-	_r(171, 122, 9, 3, skin_d)
-	# törzs, nyak, fej (kissé lehajtva, csukott szemmel)
-	var bx := 160.0 + sway_b
-	_r(bx - 13.0, 68, 26, 34, shirt)
-	_r(bx + 7.0, 70, 6, 32, shirt_d)
-	_r(bx - 13.0, 68, 26, 2, shirt.lightened(0.1))
-	_r(bx - 4.0, 70, 8, 3, skin_d)          # kivágás
-	_r(bx - 3.0, 63, 6, 6, skin_d)          # nyak
-	var nod := 1.0 if hit_glow > 0.5 else 0.0
-	var hx := bx - 7.0
-	var hy := 46.0 + nod
-	_r(hx, hy + 2.0, 14, 15, skin)
-	_r(hx + 1.0, hy + 17.0, 12, 1, skin_d)
-	_r(hx + 10.0, hy + 4.0, 4, 12, skin_d)
-	_r(hx - 1.0, hy, 16, 5, Color("#2a2018"))        # haj
-	_r(hx - 1.0, hy + 5.0, 2, 4, Color("#2a2018"))
-	_r(hx + 13.0, hy + 5.0, 2, 3, Color("#2a2018"))
-	_r(hx + 2.0, hy + 10.0, 3, 1, Color("#3a2a20"))  # csukott szemek
-	_r(hx + 8.0, hy + 10.0, 3, 1, Color("#3a2a20"))
-	_r(hx + 6.0, hy + 11.0, 1, 3, skin_d)            # orr
-	_r(hx + 5.0, hy + 14.0, 4, 1, Color("#8a5a44"))  # száj
-	_r(hx + 1.0, hy + 15.0, 12, 2, Color("#3b2c20")) # szakáll az állon
-	_r(hx, hy + 11.0, 1, 5, Color("#3b2c20"))
-	# a handpan
-	var steel := Color("#7e8f9a")
-	for row in [[-11, 14, "#b9c8d0"], [-10, 24, "#b1c1ca"], [-8, 36, "#a9b9c2"], [-6, 48, "#98a9b3"], [-4, 56, "#8b9ca7"], [-2, 60, "#7e8f9a"], [0, 62, "#74858f"],
-			[2, 60, "#687883"], [4, 52, "#4a5862"], [6, 40, "#39454e"]]:
-		_r(pan.x - row[1] * 0.5, pan.y + row[0], row[1], 2, Color(row[2]))
-	_r(pan.x - 30.0, pan.y + 2.0, 60, 1, Color("#c8d6dc"))       # perem csillanása
-	for i in FIELDS.size():
-		var fp: Vector2 = pan + FIELDS[i]
-		var wdf := 7.0 if i == 0 else 5.0
-		_r(fp.x - wdf * 0.5, fp.y - 1.0, wdf, 2, steel.darkened(0.28))
-		_r(fp.x - wdf * 0.5 + 1.0, fp.y - 1.0, 2, 1, Color("#c2d0d8"))
-	# karok: váll -> könyök -> kéz, a zene ütéseire
-	for side in 2:
-		var sh := Vector2(bx + (-13.0 if side == 0 else 13.0), 72.0)
-		var hand := _hand(side, lt, pan)
-		var elbow := (sh + hand) * 0.5 + Vector2(-9.0 if side == 0 else 9.0, 3.0)
-		_seg(sh, elbow, 5.0, skin if side == 0 else skin_d)
-		_seg(elbow, hand, 4.0, skin if side == 0 else skin_d)
-		_r(hand.x - 3.0, hand.y - 1.0, 6, 3, skin)
-		_r(hand.x - 3.0, hand.y + 2.0, 6, 1, skin_d)
-		_r(sh.x - 3.0, sh.y - 4.0, 6, 5, shirt)
-	# a megütött hangmezőből táguló fénygyűrűk és halvány fény a játékoson
+		if d >= 0.0 and d < 0.5:
+			var fp: Vector2 = (PAN + FIELDS[int(h[2])]) * P
+			_fx.draw_set_transform(c - c * z + fp * z, 0.0, Vector2(z, z * 0.45))
+			_fx.draw_circle(Vector2.ZERO, 12.0 * P, Color(1.0, 0.97, 0.85, 0.45 * (1.0 - d / 0.5)))
+			_fx.draw_set_transform(c - c * z, 0.0, Vector2(z, z))
+	_arm(1, lt)
+	_arm(0, lt)
+	# a hangból táguló, halvány fénygyűrűk
 	for h in HITS:
 		var d2 := lt - float(h[0])
-		if d2 >= 0.0 and d2 < 1.6:
-			var k3 := d2 / 1.6
-			var c: Vector2 = (pan + FIELDS[int(h[2])]) * U
-			_fx.draw_set_transform(c, 0.0, Vector2(1.0, 0.42))
+		if d2 >= 0.0 and d2 < 1.8:
+			var k3 := d2 / 1.8
+			var rc: Vector2 = (PAN + FIELDS[int(h[2])]) * P
+			_fx.draw_set_transform(c - c * z + rc * z, 0.0, Vector2(z, z * 0.42))
 			for ring in 2:
-				var rr := (20.0 + 260.0 * k3) * (1.0 - ring * 0.35)
-				_fx.draw_arc(Vector2.ZERO, rr, 0.0, TAU, 48, Color(0.75, 0.95, 0.85, 0.5 * (1.0 - k3) * (1.0 - ring * 0.4)), 5.0)
-			_fx.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+				var rr := (30.0 + 420.0 * k3) * (1.0 - ring * 0.35)
+				_fx.draw_arc(Vector2.ZERO, rr, 0.0, TAU, 64, Color(0.80, 0.97, 0.88, 0.32 * (1.0 - k3) * (1.0 - ring * 0.4)), 4.0)
+			_fx.draw_set_transform(c - c * z, 0.0, Vector2(z, z))
 	# szálló fénypontok
-	for i in 46:
+	for i in 60:
 		var life := fposmod(_h(i + 700.0) + lt * (0.03 + _h(i + 720.0) * 0.05), 1.0)
-		var mx := _h(i + 740.0) * 320.0 + sin(lt * 0.5 + i) * 6.0
-		var my := 170.0 - life * 150.0
+		var mx := _h(i + 740.0) * W + sin(lt * 0.5 + i) * 30.0
+		var my := H - 40.0 - life * 780.0
 		var a := sin(life * PI) * (0.35 + 0.35 * sin(lt * 2.0 + i * 1.3))
-		_r(mx, my, 1, 1, Color(0.85, 1.0, 0.6, maxf(a, 0.0)))
-	# szegélysötétítés, lassú beúszás a sötétből, a végén vissza a sötétbe
-	for v in 6:
-		_fx.draw_rect(Rect2(0, 0, W, 34.0 - v * 5.0), Color(0, 0, 0, 0.10))
-		_fx.draw_rect(Rect2(0, H - 34.0 + v * 5.0, W, 34.0), Color(0, 0, 0, 0.10))
+		var sz := P * (1.0 + float(i % 2))
+		_fx.draw_rect(Rect2(Vector2(mx, my).snappedf(P), Vector2(sz, sz)), Color(0.85, 1.0, 0.6, maxf(a, 0.0)))
+	_fx.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	# a zene szerzője (jobbra lent)
+	var ca := _win(lt, 3.0, PRELUDE - 0.9, 1.0)
+	_fx.draw_string(UI.font_bold, Vector2(W - 520.0, H - 78.0), "Malte Marten", HORIZONTAL_ALIGNMENT_RIGHT, 500.0, 24, Color(UI.TEXT, ca))
+	_fx.draw_string(UI.font_body, Vector2(W - 520.0, H - 54.0), "www.maltemarten.com", HORIZONTAL_ALIGNMENT_RIGHT, 500.0, 16, Color(UI.SOFT, ca))
+	# lassú beúszás a sötétből, a végén vissza a sötétbe
 	var dark := maxf(1.0 - _ss(0.8, 4.2, lt), _ss(PRELUDE - 0.9, PRELUDE - 0.05, lt))
 	if dark > 0.0:
 		_fx.draw_rect(Rect2(0, 0, W, H), Color(0, 0, 0, dark))
