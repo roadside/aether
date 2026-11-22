@@ -7,3 +7,6 @@ __pycache__/
 AETHER_godot/sajat_zene/*.wav
 AETHER_godot/sajat_zene/*.mp3
 AETHER_godot/sajat_zene/*.ogg
+
+# Claude Code helyi beállítások (nem kerül a tárolóba)
+.claude/settings.local.json
