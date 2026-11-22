@@ -42,8 +42,8 @@ const CONT_FROM := 12.0
 const END_FADE := 9.0
 const OWN_MUSIC := ["res://sajat_zene/intro.wav", "user://sajat_zene/intro.wav"]
 ## A nyitány ütései (mp) a saját zenefájl első 11 másodpercéből kimérve: [idő, kéz (0 bal, 1 jobb), hangmező]
-const HITS := [[3.09, 1, 0], [3.36, 0, 3], [4.18, 1, 2], [4.46, 0, 1], [5.61, 1, 4], [5.90, 0, 5],
-	[6.17, 1, 0], [6.45, 0, 3], [6.70, 1, 6], [7.56, 0, 1], [7.85, 1, 2], [8.41, 0, 5]]
+const HITS := [[3.09, 1, 0], [3.36, 0, 3], [4.18, 1, 2], [4.46, 0, 1], [5.07, 1, 4], [5.61, 0, 5], [5.90, 1, 0],
+	[6.17, 0, 3], [6.45, 1, 6], [6.70, 0, 1], [7.56, 1, 2], [7.85, 0, 5], [8.41, 1, 0]]
 var main                       # main.gd példány (földgömb, világállapot, eltérés-térkép)
 var shots_dir := ""            # ha nem üres: minden snittről képernyőkép (ellenőrzéshez)
 var _caption: Label
