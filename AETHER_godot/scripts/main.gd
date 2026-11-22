@@ -15,6 +15,7 @@ const Campaign := preload("res://scripts/campaign.gd")
 const Knowledge := preload("res://scripts/knowledge.gd")
 const StationPanel := preload("res://scripts/station_panel.gd")
 const NalunkPanel := preload("res://scripts/nalunk_panel.gd")
+const Intro := preload("res://scripts/intro.gd")
 
 const MISSION := [
 	["Nézd meg a mai Földet", "A bal oldali lista és a földgömb pöttyei valódi, friss jelentések. Kattints egyre!"],
@@ -109,6 +110,7 @@ func _ready() -> void:
 	stars.set_anchors_preset(Control.PRESET_FULL_RECT)
 	stars.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(stars)
+	_bg_nodes = [bg, stars]
 
 	bridge = Bridge.new()
 	add_child(bridge)
@@ -162,16 +164,61 @@ func _ready() -> void:
 
 	_load_world_cache()
 	_ensure_model()
-	if "--onteszt" in OS.get_cmdline_user_args():
+	var args := OS.get_cmdline_user_args()
+	if "--onteszt" in args:
 		_selftest()
 	elif world.is_empty() or _world_age() > 3600:
 		_refresh_world()   # a régi (egy óránál régebbi) jelentések helyett frissek
+	# Kezdő animáció: első indításkor a teljes (~30 mp), utána a rövid (~9 mp). Esc: átugrás.
+	if not ("--onteszt" in args):
+		_play_intro("--intro-kepek" in args)
 	# óránként magától frissül a „Mi történik most?” lista
 	var hourly := Timer.new()
 	hourly.wait_time = 3600.0
 	hourly.autostart = not ("--onteszt" in OS.get_cmdline_user_args())
 	hourly.timeout.connect(_refresh_world)
 	add_child(hourly)
+
+
+var _bg_nodes: Array = []
+var _intro: Control
+
+
+## A kezdő animáció. shots: minden snittről kép, a teljes változattal, utána kilép (ellenőrzéshez).
+func _play_intro(shots: bool) -> void:
+	_intro = Intro.new()
+	_intro.main = self
+	_intro.short = bool(L.get_setting("intro_latva", false)) and not shots
+	if shots:
+		_intro.shots_dir = str(bridge.work_dir("aether_onteszt"))
+	add_child(_intro)
+	await _intro.finished
+	_intro = null
+	if not shots:
+		L.set_setting("intro_latva", true)
+	else:
+		print("INTRO kész")
+		get_tree().quit()
+
+
+## Az intro alatt is látszó elemek: háttér, csillagok, földgömb.
+func intro_keep() -> Array:
+	return _bg_nodes + [globe]
+
+
+## Az intro 3. snittjéhez: a mai eltérés-térkép csendes betöltése (a gomb nem kapcsol be).
+func load_anomaly_quietly() -> void:
+	if not _anom_loaded:
+		_load_anomaly()
+
+
+func anomaly_ready() -> bool:
+	return _anom_loaded
+
+
+## A felső sáv melegedés-értéke (pl. „+1,43 °C”) az intro feliratához.
+func warming_text() -> String:
+	return (_stats["melegedes"] as Label).text
 
 
 ## Hány másodperce töltöttük le utoljára a világállapotot (a fájl ideje alapján).
@@ -273,6 +320,8 @@ func _stat(parent: Control, key: String, caption: String, value: String, color: 
 ## F11: teljes képernyő be/ki. (A felület 1600×900-as tervből bármekkora
 ## kijelzőre élesen felnagyul, a betűk a valódi felbontáson rajzolódnak.)
 func _unhandled_input(event: InputEvent) -> void:
+	if _intro != null:
+		return   # az intro alatt csak az átugrás működik (azt az intro kezeli)
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ESCAPE and _overlay != null:
 		_request_close()
 		return
