@@ -6,3 +6,9 @@
   https://github.com/vasturiano/three-globe/tree/master/example/img
   A festett pixeles stílus (saját paletta, lépcsős domborzat-árnyalás, mélységi tengerszínek) saját feldolgozás.
 - `earth_clouds.png`, `nebula_bg.png`: saját, programmal generált kép (nem valós felhőkép).
+
+# Hangok forrása
+
+- `hang/intro_handpan.wav`: a kezdő animáció lágy, handpan-szerű zenéje. Saját, programmal szintetizált
+  hang (nem felvétel, nem minta): a `tools/intro_zene_handpan.py` állítja elő (D kurd hangsor, szinusz-részhangok,
+  egyszerű visszhang).

@@ -25,6 +25,7 @@ var _done := false
 var _hidden: Array = []        # az intro alatt elrejtett felületelemek
 var _globe_pos: Vector2
 var _globe_scale: Vector2
+var _music: AudioStreamPlayer  # lágy handpan-zene (tools/intro_zene_handpan.py állítja elő)
 
 
 func _ready() -> void:
@@ -63,7 +64,32 @@ func _ready() -> void:
 	_hint = UI.label(L.t("Esc: átugrás"), 14, UI.MUTE, false, false)
 	_hint.position = Vector2(1460, 870)
 	add_child(_hint)
+	_start_music()
 	_play()
+
+
+## A zene a főjelenethez kerül, hogy átugráskor / a végén lágyan elhalkulhasson,
+## akkor is, ha az intro már eltűnt.
+func _start_music() -> void:
+	var stream = load("res://assets/hang/intro_handpan.wav")
+	if stream == null:
+		return
+	_music = AudioStreamPlayer.new()
+	_music.stream = stream
+	_music.volume_db = -6.0
+	main.add_child(_music)
+	# a rövid változat a dallam közepéről indul (események + zárás)
+	_music.play(13.8 if short else 0.0)
+
+
+func _stop_music() -> void:
+	if _music == null or not is_instance_valid(_music):
+		return
+	var m := _music
+	_music = null
+	var tw := m.create_tween()
+	tw.tween_property(m, "volume_db", -40.0, 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	tw.tween_callback(m.queue_free)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -301,6 +327,7 @@ func _finish() -> void:
 	if _done:
 		return
 	_done = true
+	_stop_music()
 	var g = main.globe
 	g.highlight = {}
 	g.show_anomaly(false)
