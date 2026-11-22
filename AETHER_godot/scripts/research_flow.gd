@@ -369,13 +369,11 @@ func _saved_ai() -> String:
 	return str(L.get_setting("ai", ""))
 
 
+## Rövid név a „Kutató AI:” sorhoz.
 static func _ai_name(id: String) -> String:
-	if id == "none":
-		return L.t("nincs (csak cikkeket keresek)")
-	for ch in AI_CHOICES:
-		if ch["id"] == id:
-			return L.t(ch["cim"])
-	return id
+	var short := {"claude": "Claude", "openai": "ChatGPT", "gemini": "Gemini",
+		"ollama": L.t("helyi Ollama"), "none": L.t("nincs (csak cikkeket keresek)")}
+	return str(short.get(id, id))
 
 
 ## Egy sor a kereső fölött: ki kutat, és egy gomb, hogy másik AI-t válasszon a következő kutatáshoz.
@@ -705,7 +703,7 @@ func _start_research() -> void:
 	L.set_setting("ai", _ai)   # az események összefoglalója is ezt az AI-t használja
 	_folder = str(bridge.work_dir("aether_kutatas")).path_join("kutatas_%d" % Time.get_unix_time_from_system())
 	DirAccess.make_dir_recursive_absolute(_folder)
-	_header(L.t("Kutatás folyamatban"), 3, L.t("Pár perc.") + "  " + L.t("Kutató AI: ") + _ai_name(_ai)
+	_header(L.t("Kutatás folyamatban"), 3, L.t("Pár percig tarthat.") + " " + L.t("Kutató AI: ") + _ai_name(_ai)
 		+ (L.t(" · %d pénz") % campaign.research_cost() if campaign != null else ""))
 	_step_rows.clear()
 	var names := [L.t("Kérdés pontosítása"), L.t("Cikkek keresése 4 tudományos adatbázisban"), L.t("Fontos számok kiemelése"), L.t("Ellenőrzés: tényleg benne van a cikkben?")]

@@ -121,6 +121,18 @@ func _process(delta: float) -> void:
 		advance()
 
 
+## Hol tart az idő az éven belül (0–1): a felső sáv ebből mutatja a hónapot és a csíkot.
+func year_progress() -> float:
+	if not running:
+		return 0.0
+	return clampf(_acc / float(SECONDS_PER_YEAR[1 if fast else 0]), 0.0, 1.0)
+
+
+## Az aktuális hónap (1–12), amíg az idő fut.
+func month() -> int:
+	return clampi(int(year_progress() * 12.0) + 1, 1, 12)
+
+
 func income() -> int:
 	return 40 + trust / 2 + knowledge_income()
 
