@@ -2,3 +2,8 @@ __pycache__/
 *.pyc
 .godot/
 *.tmp
+
+# a játékos saját zenéje: nem része a játéknak
+AETHER_godot/sajat_zene/*.wav
+AETHER_godot/sajat_zene/*.mp3
+AETHER_godot/sajat_zene/*.ogg
