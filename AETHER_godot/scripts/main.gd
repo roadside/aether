@@ -441,7 +441,7 @@ func _build_bottom_bar() -> void:
 	var trow2 := UI.hbox(6)
 	_reset_btn = UI.button(L.t("Új játék"))
 	_reset_btn.custom_minimum_size = Vector2(150, 0)
-	_reset_btn.tooltip_text = L.t("Mindent elölről kezd 2026-tól, a küldetésekkel együtt.")
+	_reset_btn.tooltip_text = L.t("Elölről kezdi a játékot 2026-tól.")
 	_reset_btn.pressed.connect(_reset_game)
 	trow2.add_child(_reset_btn)
 	tbox.add_child(trow2)
@@ -701,6 +701,12 @@ func _render_world() -> void:
 	if mission_step == 0 and _events_box.get_child_count() > 0:
 		_pulse(_events_box.get_child(0))
 	for m in world.get("meresek", []):
+		# globális mérések (metán, N2O, déli jég, hőmérséklet, óceán…) kártyaként a listában
+		if L.field(m, "kartya") != "":
+			_events_box.add_child(_event_card({"kategoria": str(m.get("kategoria", "")),
+				"cim": L.field(m, "kartya"), "datum": str(m.get("datum", "")).left(10),
+				"forras": str(m.get("forras", "")), "link": str(m.get("link", "")), "orszag": "",
+				"leiras": L.field(m, "magyarazat")}))
 		var key := ""
 		var txt := ""
 		if m.get("azonosito") == "co2_ppm":

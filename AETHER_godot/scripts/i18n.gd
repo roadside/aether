@@ -91,7 +91,7 @@ const CATEGORY := {
 	"aszaly": ["Aszály", "Drought"], "arviz": ["Árvíz", "Flood"], "vihar": ["Vihar", "Storm"],
 	"foldrenges": ["Földrengés", "Earthquake"], "vulkan": ["Vulkán", "Volcano"], "tuz": ["Erdőtűz", "Wildfire"],
 	"jeg": ["Jég és hó", "Ice and snow"], "levego": ["Levegőminőség", "Air quality"],
-	"szennyezes": ["Szennyezés", "Pollution"], "viz": ["Vízminőség", "Water quality"], "hoseg": ["Hőség", "Heat"],
+	"szennyezes": ["Szennyezés", "Pollution"], "viz": ["Vízminőség", "Water quality"], "hoseg": ["Hőség", "Heat"], "tenger": ["Óceán", "Ocean"],
 	"ehezes": ["Élelmiszerhiány", "Food insecurity"], "jarvany": ["Járvány", "Epidemic"],
 	"uv": ["Erős UV-sugárzás", "Strong UV radiation"], "egyeb": ["Egyéb", "Other"],
 }
@@ -490,6 +490,6 @@ const EN := {
 	"Pénz: a kutatásokhoz és a tervek bevezetéséhez szükséges; évente kapsz.": "Money: needed for research and for putting plans into effect; you get some every year.",
 	"Bizalom: a tervekhez szükséges; ellenőrzött kutatással és csökkenő kibocsátással növelhető.": "Trust: needed for plans; grows with verified research and falling emissions.",
 	"Az évek telnek. Ha egy ablak nyitva van, az idő megáll.": "Years pass. While a window is open, time stops.",
-	"Mindent elölről kezd 2026-tól, a küldetésekkel együtt.": "Starts everything over from 2026, missions included.",
+	"Elölről kezdi a játékot 2026-tól.": "Starts the game again from 2026.",
 	"Részletek a megnyitott ablakban.": "Details in the open window.",
 }
