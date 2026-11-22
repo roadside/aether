@@ -12,3 +12,5 @@
 - `hang/intro_handpan.wav`: a kezdő animáció lágy, handpan-szerű zenéje. Saját, programmal szintetizált
   hang (nem felvétel, nem minta): a `tools/intro_zene_handpan.py` állítja elő (D kurd hangsor, szinusz-részhangok,
   egyszerű visszhang).
+- `hang/intro.wav`: a bevezető másik, handpan hangzású saját zenéje (a `tools/intro_zene.py` állítja elő).
+  Jelenleg a játék az `intro_handpan.wav`-ot játssza; a kettő közül Zoltán választ.

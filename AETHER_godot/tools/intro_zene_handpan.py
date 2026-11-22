@@ -3,7 +3,7 @@
 Nem felvétel és nem minta: minden hang matematikailag készül (szinusz-részhangok
 lecsengéssel, enyhe lebegéssel, rövid "kézütés" zajjal, majd egyszerű tér-visszhang).
 Hangsor: D kurd (D3 A3 B♭3 C4 D4 E4 F4 G4 A4), ahogy a legtöbb handpan.
-A dallam a snittekhez igazodik (kb. 28 mp × PACE + lecsengés).
+A dallam a bevezető snittjeihez igazodik (kb. 58,5 mp + lecsengés; lásd intro.gd).
 
 Futtatás (csak a Python standard könyvtára kell):
     py tools/intro_zene_handpan.py
@@ -16,8 +16,7 @@ import struct
 import wave
 
 SR = 22050
-PACE = 1.6            # ugyanaz, mint az intro.gd PACE-e: a snittek ennyivel lassabbak
-LENGTH = 28.0 * PACE + 5.0
+LENGTH = 58.5 + 5.0
 N = int(SR * LENGTH)
 
 NOTE = {"D3": 146.83, "A3": 220.00, "Bb3": 233.08, "C4": 261.63, "D4": 293.66,
@@ -25,27 +24,37 @@ NOTE = {"D3": 146.83, "A3": 220.00, "Bb3": 233.08, "C4": 261.63, "D4": 293.66,
 PAN = {"D3": 0.0, "A3": -0.35, "Bb3": 0.35, "C4": -0.5, "D4": 0.5,
        "E4": -0.25, "F4": 0.25, "G4": -0.4, "A4": 0.4}
 
-# (idő mp PACE = 1 mellett, hang, erősség) – snittenként
-SCORE = [
-    # 1. űr
-    (0.20, "D3", 0.90), (1.90, "A3", 0.50), (2.90, "D4", 0.40),
-    # 2. „Ez a Föld ma.”
-    (3.90, "D3", 0.80), (4.50, "A3", 0.50), (5.00, "D4", 0.50), (5.50, "F4", 0.55),
-    (6.30, "E4", 0.45), (7.00, "D4", 0.40), (7.60, "A3", 0.45), (8.30, "C4", 0.40),
-    # 3. hőmérséklet-eltérés (B♭: egy kis feszültség)
-    (8.90, "D3", 0.70), (9.40, "Bb3", 0.55), (9.90, "D4", 0.50), (10.40, "F4", 0.55),
-    (11.20, "G4", 0.50), (11.80, "F4", 0.40), (12.40, "E4", 0.45), (13.10, "C4", 0.40),
-    # 4. események (kicsit sűrűbb)
-    (13.90, "D3", 0.75), (14.30, "A3", 0.45), (14.70, "E4", 0.50), (15.10, "F4", 0.50),
-    (15.50, "A4", 0.55), (16.20, "G4", 0.45), (16.60, "F4", 0.40), (17.00, "E4", 0.45),
-    (17.60, "C4", 0.40), (18.20, "A3", 0.40),
-    # 5. kutatóállomás (meleg, reményteli)
-    (18.90, "D3", 0.80), (19.40, "A3", 0.50), (19.90, "D4", 0.50), (20.40, "E4", 0.50),
-    (20.90, "F4", 0.55), (21.60, "A4", 0.50), (22.40, "G4", 0.45), (23.10, "E4", 0.45),
-    # 6. zárás: feloldás D-re
-    (23.90, "D3", 0.80), (23.92, "A3", 0.45), (24.60, "D4", 0.40), (25.60, "A4", 0.35),
-    (27.00, "D3", 0.65), (27.03, "D4", 0.35),
+# Snittenként: (kezdet mp, [(idő a snitten belül, hang, erősség), ...]).
+# A kezdetek az intro.gd időbeosztását követik.
+SECTIONS = [
+    (0.0, [  # 1. űr, „2026.”
+        (0.25, "D3", 0.90), (2.30, "A3", 0.50), (3.70, "D4", 0.40)]),
+    (5.0, [  # 2. „Ez a Föld ma.”
+        (0.0, "D3", 0.80), (0.7, "A3", 0.50), (1.3, "D4", 0.50), (1.9, "F4", 0.55),
+        (2.9, "E4", 0.45), (3.7, "D4", 0.40), (4.4, "A3", 0.45), (5.2, "C4", 0.40)]),
+    (11.0, [  # 3. évszámláló: lassan emelkedő dallam, ahogy telnek az évek
+        (0.0, "D3", 0.75), (0.9, "A3", 0.45), (1.8, "C4", 0.45), (2.7, "D4", 0.48),
+        (3.6, "E4", 0.50), (4.5, "F4", 0.52), (5.4, "G4", 0.52), (6.3, "A4", 0.55),
+        (7.2, "G4", 0.42), (7.8, "F4", 0.40)]),
+    (19.5, [  # 4. hőmérséklet-eltérés (B♭: egy kis feszültség)
+        (0.0, "D3", 0.70), (0.6, "Bb3", 0.55), (1.2, "D4", 0.50), (1.8, "F4", 0.55),
+        (2.8, "G4", 0.50), (3.5, "F4", 0.40), (4.2, "E4", 0.45), (5.0, "C4", 0.40)]),
+    (25.5, [  # 5. négy festett kép, 4–4 mp
+        (0.0, "D3", 0.75), (0.6, "A3", 0.45), (1.3, "E4", 0.48), (2.2, "F4", 0.48), (3.1, "E4", 0.40),
+        (4.0, "Bb3", 0.65), (4.6, "D4", 0.45), (5.3, "F4", 0.48), (6.2, "E4", 0.42), (7.1, "C4", 0.40),
+        (8.0, "D3", 0.70), (8.6, "A3", 0.45), (9.3, "C4", 0.45), (10.2, "D4", 0.45), (11.1, "Bb3", 0.42),
+        (12.0, "D3", 0.75), (12.6, "Bb3", 0.50), (13.3, "F4", 0.50), (14.2, "G4", 0.50), (15.1, "F4", 0.42)]),
+    (41.5, [  # 6. kutatóállomás (meleg, reményteli)
+        (0.0, "D3", 0.80), (0.6, "A3", 0.50), (1.3, "D4", 0.50), (2.0, "E4", 0.50),
+        (2.7, "F4", 0.55), (3.6, "A4", 0.50), (4.6, "G4", 0.45), (5.5, "E4", 0.45)]),
+    (48.0, [  # 7. a jövő még nincs megírva: kérdés, aztán felfelé nyíló válasz
+        (0.0, "Bb3", 0.60), (0.8, "D4", 0.45), (1.6, "F4", 0.45), (2.7, "C4", 0.42),
+        (3.4, "E4", 0.48), (4.2, "G4", 0.50), (5.0, "A4", 0.55)]),
+    (54.5, [  # 8. zárás: feloldás D-re, hosszú lecsengés
+        (0.0, "D3", 0.80), (0.02, "A3", 0.45), (0.9, "D4", 0.40), (1.9, "A4", 0.35),
+        (3.1, "D3", 0.60), (3.13, "D4", 0.35)]),
 ]
+SCORE = [(start + t, n, v) for start, notes in SECTIONS for t, n, v in notes]
 
 
 def handpan(f, vel, out_l, out_r, start, pan):
@@ -105,7 +114,7 @@ def main():
     L = [0.0] * N
     R = [0.0] * N
     for t, n, v in SCORE:
-        t = t * PACE + rnd.uniform(-0.015, 0.015)          # emberi időzítés
+        t = t + rnd.uniform(-0.015, 0.015)          # emberi időzítés
         handpan(NOTE[n], v, L, R, max(0, int(t * SR)), PAN[n])
     # nagyon halk, meleg alapzúgás (D2 + A2), hogy ne legyen „üres” a tér
     for i in range(N):
