@@ -117,3 +117,37 @@ class TestBuild(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+CH4 = "# TESZT\nyear,month,decimal,average,average_unc,trend,trend_unc\n2025,8,2025.6,1920.5,1,1,1\n2026,8,2026.6,1931.2,1,1,1\n"
+PULSE = "# TESZT\ndate,2t,clim_91-20,ano_91-20,ano_pi,status\n2026-11-19,14.10,13.50,0.60,1.45,preliminary\n2026-11-20,14.20,13.50,0.70,1.55,preliminary\n"
+GISS = "Land-Ocean: Global Means\nYear,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec,J-D\n" \
+       "2025,1.1,1.2,1.3,1.2,1.1,1.0,1.1,1.2,1.3,1.2,1.1,1.0,1.15\n2026,1.3,1.4,1.2,1.1,1.0,1.2,1.3,1.25,1.15,1.21,***,***,***\n"
+NHC = {"activeStorms": [{"name": "TESZT", "classification": "HU", "intensity": "90", "latitudeNumeric": 25.1,
+       "longitudeNumeric": -70.2, "lastUpdate": "2026-09-01T12:00:00.000Z", "publicAdvisory": {"url": "https://www.nhc.noaa.gov/teszt"}}]}
+
+
+class TestNewSources(unittest.TestCase):
+    def test_noaa_gas(self):
+        m = ws.parse_noaa_gas(CH4, "ch4")
+        self.assertEqual((m["ertek"], m["datum"], m["valtozas_1_ev"]), (1931.2, "2026-08", 10.7))
+        self.assertIn("1931,2 ppb", m["kartya"])
+
+    def test_pulse(self):
+        m = ws.parse_pulse(PULSE, "levego")
+        self.assertEqual((m["ertek"], m["datum"], m["elteres_ipar_elott"]), (14.2, "2026-11-20", 1.55))
+        self.assertIn("+1,55 °C", m["kartya"])
+
+    def test_gistemp_last_month(self):
+        m = ws.parse_gistemp(GISS)
+        self.assertEqual((m["datum"], m["ertek"]), ("2026-10", 1.21))
+        self.assertIn("2026. októberben +1,21 °C", m["kartya"])
+
+    def test_nhc(self):
+        e = ws.parse_nhc(NHC)[0]
+        self.assertEqual((e["kategoria"], e["lat"], e["lon"]), ("vihar", 25.1, -70.2))
+
+    def test_south_ice(self):
+        m = ws.parse_nsidc_south(ICE)
+        self.assertEqual(m["azonosito"], "antarktisz_jeg")
+        self.assertIn("Déli-sarki", m["kartya"])

@@ -84,7 +84,7 @@ UV_VERY_HIGH = 8.0       # WHO UV-index skála: 8–10 nagyon magas, 11+ extrém
 KATEGORIA_NEV = {"aszaly": "Aszály", "arviz": "Árvíz", "vihar": "Vihar", "foldrenges": "Földrengés",
                  "vulkan": "Vulkán", "tuz": "Erdőtűz", "jeg": "Jég és hó", "levego": "Por, füst, levegő",
                  "szennyezes": "Szennyezés", "viz": "Vízminőség", "hoseg": "Hőség", "ehezes": "Élelmiszerhiány",
-                 "jarvany": "Járvány", "uv": "Erős UV-sugárzás", "egyeb": "Egyéb"}
+                 "jarvany": "Járvány", "uv": "Erős UV-sugárzás", "tenger": "Tenger", "egyeb": "Egyéb"}
 
 
 def _http(url: str, data: Optional[bytes] = None, timeout: int = 30, retries: int = 2) -> bytes:
@@ -250,6 +250,172 @@ def parse_nsidc(text: str) -> Dict:
             "cim_en": "Arctic sea ice", "egyseg_en": "million km²",
             "magyarazat_en": "This is the area covered by sea ice in the Arctic today, compared with the 1981–2010 average.",
             "forras": "NSIDC Sea Ice Index (G02135)", "link": "https://nsidc.org/data/seaice_index"}
+
+
+# --- további mérések (kulcs nélkül, napi/havi frissítés) --------------------------
+# Minden mérés kap egy rövid, kész "kartya" sort (magyarul és angolul), hogy a játék
+# egyformán ki tudja írni a „Mi történik most?” listában.
+NOAA_GAS_URLS = {
+    "ch4": "https://gml.noaa.gov/webdata/ccgg/trends/ch4/ch4_mm_gl.csv",
+    "n2o": "https://gml.noaa.gov/webdata/ccgg/trends/n2o/n2o_mm_gl.csv",
+}
+NOAA_GAS = {
+    "ch4": ("metan_ppb", "Metán a levegőben", "Methane in the air", "ppb",
+            "A második legfontosabb üvegházgáz. Az ipari forradalom előtt kb. 720 ppb volt.",
+            "The second most important greenhouse gas. Before the industrial revolution it was about 720 ppb.",
+            "https://gml.noaa.gov/ccgg/trends_ch4/"),
+    "n2o": ("dinitrogen_oxid_ppb", "Kéjgáz (N2O) a levegőben", "Nitrous oxide (N2O) in the air", "ppb",
+            "Főleg a műtrágyából jön, és száz évnél tovább marad a levegőben. Az ipari forradalom előtt kb. 270 ppb volt.",
+            "Mostly from fertiliser, and it stays in the air for more than a hundred years. Before the industrial revolution it was about 270 ppb.",
+            "https://gml.noaa.gov/ccgg/trends_n2o/"),
+}
+
+
+def _hu1(x: float, d: int = 1) -> str:
+    return f"{x:.{d}f}".replace(".", ",")
+
+
+def parse_noaa_gas(text: str, gas: str) -> Dict:
+    """NOAA GML havi globális átlag (CSV: year,month,decimal,average,...)."""
+    data = []
+    for r in csv.reader(io.StringIO(text)):
+        if not r or r[0].startswith("#"):
+            continue
+        try:
+            y, m, avg = int(r[0]), int(r[1]), float(r[3])
+        except (ValueError, IndexError):
+            continue
+        if avg > 0:
+            data.append((y, m, avg))
+    if not data:
+        raise ValueError(f"Üres NOAA {gas}-adatsor")
+    y, m, v = data[-1]
+    prev = [d for d in data if d[0] == y - 1 and d[1] == m]
+    azon, cim, cim_en, unit, magy, magy_en, link = NOAA_GAS[gas]
+    ch = round(v - prev[0][2], 1) if prev else None
+    kartya = f"{cim}: {_hu1(v)} {unit}" + (f" (egy éve: {_hu1(prev[0][2])})" if prev else "")
+    kartya_en = f"{cim_en}: {v:.1f} {unit}" + (f" (a year ago: {prev[0][2]:.1f})" if prev else "")
+    return {"azonosito": azon, "cim": cim, "cim_en": cim_en, "ertek": round(v, 1), "egyseg": unit,
+            "datum": f"{y}-{m:02d}", "valtozas_1_ev": ch, "magyarazat": magy, "magyarazat_en": magy_en,
+            "kartya": kartya, "kartya_en": kartya_en, "kategoria": "levego",
+            "forras": "NOAA Global Monitoring Laboratory", "link": link}
+
+
+NSIDC_SOUTH_URLS = [u.replace("/north/", "/south/").replace("N_seaice", "S_seaice") for u in NSIDC_URLS]
+
+
+def parse_nsidc_south(text: str) -> Dict:
+    m = parse_nsidc(text)
+    m.update({"azonosito": "antarktisz_jeg", "cim": "Déli-sarki tengeri jég", "cim_en": "Antarctic sea ice",
+              "magyarazat": "Ekkora területet borít ma tengeri jég az Antarktisz körül, az 1981–2010-es átlaghoz képest.",
+              "magyarazat_en": "This is the area covered by sea ice around Antarctica today, compared with the 1981–2010 average."})
+    e = m.get("elteres_pct")
+    m["kartya"] = f"Déli-sarki tengeri jég: {_hu1(m['ertek'], 2)} millió km²" + (f" ({_hu1(e, 0)}% az átlaghoz képest)" if e is not None else "")
+    m["kartya_en"] = f"Antarctic sea ice: {m['ertek']:.2f} million km²" + (f" ({e:.0f}% vs. average)" if e is not None else "")
+    m["kategoria"] = "jeg"
+    return m
+
+
+# Copernicus Climate Pulse (ERA5, napi globális értékek; CSV, kulcs nélkül)
+PULSE_URLS = {
+    "levego": "https://sites.ecmwf.int/data/climatepulse/data/series/era5_daily_series_2t_global.csv",
+    "tenger": "https://sites.ecmwf.int/data/climatepulse/data/series/era5_daily_series_sst_60S-60N_ocean.csv",
+}
+
+
+def parse_pulse(text: str, kind: str) -> Dict:
+    """Az utolsó nap értéke és eltérése az 1991–2020-as átlagtól (és, ha van, az iparosodás előttitől)."""
+    rows = [r for r in csv.reader(io.StringIO(text)) if r and not r[0].lstrip().startswith("#")]
+    head = [h.strip().lower() for h in rows[0]]
+    last = None
+    for r in rows[1:]:
+        if len(r) == len(head) and r[0].strip():
+            try:
+                float(r[1])
+                last = r
+            except ValueError:
+                continue
+    if last is None:
+        raise ValueError("Üres Climate Pulse-adatsor")
+
+    def col(*names):
+        for i, h in enumerate(head):
+            if any(h.startswith(n) for n in names):
+                try:
+                    return float(last[i])
+                except ValueError:
+                    return None
+        return None
+    v = float(last[1])
+    ano = col("ano_91-20", "ano_1991")
+    ano_pi = col("ano_pi", "ano_1850")
+    day = last[0].strip()[:10]
+    if kind == "levego":
+        cim, cim_en, magy, magy_en = ("A Föld átlaghőmérséklete ma", "Earth's average temperature today",
+            "Az egész Föld felszín közeli levegőjének átlaga egy napra (ERA5 újraelemzés).",
+            "The average of near-surface air over the whole Earth for one day (ERA5 reanalysis).")
+        azon, kat = "globalis_homerseklet", "hoseg"
+    else:
+        cim, cim_en, magy, magy_en = ("Az óceánok felszíni hőmérséklete ma", "Ocean surface temperature today",
+            "A tengerfelszín átlaghőmérséklete a 60. szélességi körök között (ERA5 újraelemzés).",
+            "Average sea surface temperature between 60°S and 60°N (ERA5 reanalysis).")
+        azon, kat = "tengerfelszin_homerseklet", "tenger"
+    diff = ano_pi if ano_pi is not None else ano
+    base_hu = "az iparosodás előttihez" if ano_pi is not None else "az 1991–2020-as átlaghoz"
+    base_en = "pre-industrial" if ano_pi is not None else "the 1991–2020 average"
+    kartya = f"{cim}: {_hu1(v, 2)} °C" + (f" ({'+' if diff >= 0 else ''}{_hu1(diff, 2)} °C {base_hu} képest)" if diff is not None else "")
+    kartya_en = f"{cim_en}: {v:.2f} °C" + (f" ({diff:+.2f} °C vs. {base_en})" if diff is not None else "")
+    return {"azonosito": azon, "cim": cim, "cim_en": cim_en, "ertek": round(v, 2), "egyseg": "°C", "datum": day,
+            "elteres_1991_2020": ano, "elteres_ipar_elott": ano_pi, "magyarazat": magy, "magyarazat_en": magy_en,
+            "kartya": kartya, "kartya_en": kartya_en, "kategoria": kat,
+            "forras": "Copernicus Climate Pulse (C3S/ECMWF, ERA5)", "link": "https://pulse.climate.copernicus.eu/"}
+
+
+GISTEMP_URL = "https://data.giss.nasa.gov/gistemp/tabledata_v4/GLB.Ts+dSST.csv"
+MONTHS_HU_BAN = ["januárban", "februárban", "márciusban", "áprilisban", "májusban", "júniusban", "júliusban",
+                 "augusztusban", "szeptemberben", "októberben", "novemberben", "decemberben"]
+MONTHS_EN = ["January", "February", "March", "April", "May", "June", "July", "August",
+             "September", "October", "November", "December"]
+
+
+def parse_gistemp(text: str) -> Dict:
+    """NASA GISTEMP v4: a legutóbbi hónap eltérése az 1951–1980-as átlagtól."""
+    best = None
+    for r in csv.reader(io.StringIO(text)):
+        if not r or not r[0].strip().isdigit():
+            continue
+        y = int(r[0])
+        for m in range(12):
+            try:
+                best = (y, m, float(r[1 + m]))
+            except (ValueError, IndexError):
+                continue
+    if best is None:
+        raise ValueError("Üres GISTEMP-adatsor")
+    y, m, a = best
+    return {"azonosito": "gistemp_havi", "cim": "Melegedés a múlt hónapban (NASA)", "cim_en": "Warming last month (NASA)",
+            "ertek": a, "egyseg": "°C", "datum": f"{y}-{m + 1:02d}",
+            "magyarazat": "A Föld felszínének havi átlaga az 1951–1980-as átlaghoz képest.",
+            "magyarazat_en": "The Earth's monthly surface average compared with the 1951–1980 average.",
+            "kartya": f"A Föld {y}. {MONTHS_HU_BAN[m]} {'+' if a >= 0 else ''}{_hu1(a, 2)} °C-kal melegebb volt az 1951–1980-as átlagnál",
+            "kartya_en": f"In {MONTHS_EN[m]} {y} the Earth was {a:+.2f} °C warmer than the 1951–1980 average",
+            "kategoria": "hoseg", "forras": "NASA GISS (GISTEMP v4)", "link": "https://data.giss.nasa.gov/gistemp/"}
+
+
+# NOAA Nemzeti Hurrikánközpont: az épp aktív trópusi viharok (Atlanti- és Csendes-óceán keleti része)
+NHC_URL = "https://www.nhc.noaa.gov/CurrentStorms.json"
+
+
+def parse_nhc(data: Dict) -> List[Dict]:
+    out = []
+    for st in data.get("activeStorms", []) or []:
+        name = f"{st.get('classification', '')} {st.get('name', '')}".strip()
+        adv = st.get("publicAdvisory") or {}
+        link = adv.get("url") if isinstance(adv, dict) else ""
+        out.append(_event("NOAA NHC", name or "Trópusi vihar", "vihar", str(st.get("lastUpdate", "")), "",
+                          st.get("latitudeNumeric"), st.get("longitudeNumeric"), link or "https://www.nhc.noaa.gov/",
+                          leiras=f"{st.get('intensity', '')} kt"))
+    return out
 
 
 # --- Open-Meteo: levegő, UV, talajnedvesség ------------------------------------
@@ -434,8 +600,43 @@ def build(fetch: Callable[..., bytes] = _http, log=print, today: Optional[_dt.da
         world["talaj"] = rows
         return len(rows)
 
+    def gas(g):
+        def f():
+            world["meresek"].append(parse_noaa_gas(fetch(NOAA_GAS_URLS[g]).decode("utf-8", "replace"), g))
+            return 1
+        return f
+
+    def ice_s():
+        last = None
+        for u in NSIDC_SOUTH_URLS:
+            try:
+                world["meresek"].append(parse_nsidc_south(fetch(u).decode("utf-8", "replace")))
+                return 1
+            except Exception as e:
+                last = e
+        raise ConnectionError(last)
+
+    def pulse(kind):
+        def f():
+            world["meresek"].append(parse_pulse(fetch(PULSE_URLS[kind]).decode("utf-8", "replace"), kind))
+            return 1
+        return f
+
+    def giss():
+        world["meresek"].append(parse_gistemp(fetch(GISTEMP_URL).decode("utf-8", "replace")))
+        return 1
+
+    def nhc():
+        ev = parse_nhc(json.loads(fetch(NHC_URL)))
+        world["esemenyek"] += ev
+        return len(ev)
+
     log("Valós adatok letöltése…")
-    for name, fn in [("GDACS", gd), ("ReliefWeb", rw), ("NASA EONET", eo), ("NOAA CO2", co2), ("NSIDC jég", ice),
+    for name, fn in [("GDACS", gd), ("ReliefWeb", rw), ("NASA EONET", eo), ("NOAA NHC viharok", nhc),
+                     ("NOAA CO2", co2), ("NOAA metán", gas("ch4")), ("NOAA N2O", gas("n2o")),
+                     ("NSIDC északi jég", ice), ("NSIDC déli jég", ice_s),
+                     ("Copernicus: Föld hőmérséklete", pulse("levego")), ("Copernicus: óceánok", pulse("tenger")),
+                     ("NASA GISTEMP", giss),
                      ("Levegő és UV (Open-Meteo/CAMS)", air), ("Talajnedvesség (Open-Meteo)", soil)]:
         attempt(name, fn)
     # hiányzó ország pótlása koordinátából (internet nélkül, GeoNames-adat)
