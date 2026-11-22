@@ -171,16 +171,19 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyi kárt előz meg a gát és a viharkapu?
 Röviden: A gát és a zárható viharkapu kizárja a tengert a városból. Drága, és egyszer túl alacsony lehet.
 Ha kikutatod:
-Mire jó?:
-Mi a gond vele?:
-Mennyire bizonyított?:
+Mire jó?: A gát és a viharkapu megakadályozzák az árvízt, így védekeznek az emberek és a tárgyak károsodása ellen.
+Mi a gond vele?: A gátak és viharkapuk építése költséges, és lehet, hogy nem tudják megakadályozni mindenféle árvízt, különösen ha a víz túl erős.
+Mennyire bizonyított?: A gátak és viharkapuk hatékonyságáról sok kutatás szól, de mindig van valamilyen korlát, mert a természetes környezet is befolyásolhatja az árvíz mértékét.
 Kérdés angolul: How much damage do dikes and storm surge barriers prevent?
 Röviden angolul: A dike and a closable storm surge barrier keep the sea out of the city. They are costly and may one day be too low.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
-Forrás:
+Mire jó? angolul: They protect cities and homes from flood damage, saving lives and property by keeping water out.
+Mi a gond vele? angolul: They are expensive to build and maintain, and they can fail if not properly designed or if there is a very strong storm.
+Mennyire bizonyított? angolul: There is strong evidence that these structures work, as seen in places like the Netherlands and New York, but their effectiveness depends on how they are built and used.
+Forrás: Wikipédia: Árvízvédelmi fal (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/%C3%81rv%C3%ADzv%C3%A9delmi_fal
+Forrás: A Review of Cost Estimates for Flood Adaptation (2018) – https://doi.org/10.3390/w10111646
+Forrás: Hydrodynamic Modelling of Mangrove-Mediated Coastal Flood Protection: A Systematic Review and Bibliometric Analysis (2026) – https://doi.org/10.36956/sms.v8i3.3337
+Forrás: The Global Flood Protection Benefits of Mangroves (2020) – https://doi.org/10.1038/s41598-020-61136-6
 Lektorálva: nem
 --- technikai ---
 Keresés: coastal flood protection dikes avoided damage sea level rise|storm surge barrier effectiveness flood risk reduction|coastal adaptation costs benefits sea level rise
@@ -300,16 +303,19 @@ Korszak: III. (Átalakulás)
 Kérdés: Mennyire véd a parti mocsár és az ártér?
 Röviden: A parti mocsár és a folyónak visszaadott ártér felfogja a hullámot és az áradást.
 Ha kikutatod:
-Mire jó?:
-Mi a gond vele?:
-Mennyire bizonyított?:
+Mire jó?: Ezek a területek segítenek a tengeri és folyami áradások ellen, megakadályozzák a katasztrófákat, és megőrzik a természetes életet.
+Mi a gond vele?: A mocsarak és ártérek hatékonysága függhet a környezeti változásoktól, például a szintváltozástól, és nem mindig biztosítanak teljes védelmet.
+Mennyire bizonyított?: A tudományos ismeretek szerint a természetes védőrendszer hatékony, de további kutatásokra van szükség a teljes hatékonyság meghatározásához.
 Kérdés angolul: How well do coastal marshes and floodplains protect?
 Röviden angolul: Coastal marshes and floodplains given back to the river absorb waves and floods.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
-Forrás:
+Mire jó? angolul: They can reduce flood damage by slowing water, storing it, and improving water quality. They also support wildlife and help fight climate change by storing carbon.
+Mi a gond vele? angolul: They are not always effective for very big floods, and their success depends on local conditions like soil, plants, and water flow. Some areas may not have enough space or resources to restore them properly.
+Mennyire bizonyított? angolul: There is strong evidence that they help with regular floods and climate change, but more research is needed to fully understand their long-term benefits and how to use them best.
+Forrás: Wikipédia: Maros-ártér (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Maros-%C3%A1rt%C3%A9r
+Forrás: Nature-based Solutions for Flood Risk Reduction:A Review and Guidance for Coastal Protection (2024) – https://pure.au.dk/portal/en/publications/d7ac67b1-5d38-4358-bf80-125336086548
+Forrás: Nature-Based Engineering: A Review on Reducing Coastal Flood Risk With Mangroves (2021) – https://doi.org/10.3389/fmars.2021.702412
+Forrás: Mangrove forests as a nature-based solution for coastal flood protection: Biophysical and ecological considerations (2022) – https://doi.org/10.1016/j.wse.2022.10.004
 Lektorálva: nem
 --- technikai ---
 Keresés: salt marsh wave attenuation coastal protection|floodplain restoration flood peak reduction|nature-based solutions coastal flood risk reduction
@@ -323,16 +329,19 @@ Korszak: III. (Átalakulás)
 Kérdés: Megéri megemelni a házakat ott, ahol jön a víz?
 Röviden: A cölöpre emelt vagy úszó ház szárazon marad, amikor jön a víz.
 Ha kikutatod:
-Mire jó?:
-Mi a gond vele?:
-Mennyire bizonyított?:
+Mire jó?: Ez a módszer segíthet a vízszint emelkedésének hatására, így a lakók biztonsága nőhet, és a házak károsodása csökkenthető.
+Mi a gond vele?: A házak emelése költséges, és nem biztos, hogy hatékonyan csökkenti a károkat, különösen ha a víz szintje nagyon magasra emelkedik.
+Mennyire bizonyított?: A források szerint ez a megoldás nem teljesen bizonyított, és a hatékonyságát további kutatások is alárendelték.
 Kérdés angolul: Is it worth raising houses where the water comes?
 Röviden angolul: A house on stilts or a floating house stays dry when the water comes.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
-Forrás:
+Mire jó? angolul: Flood-proofing helps protect people and property from flood damage, which can save lives and reduce repair costs.
+Mi a gond vele? angolul: The cost of flood-proofing can be high, and it may not be effective if floods are stronger or more frequent than expected.
+Mennyire bizonyított? angolul: There is some evidence that flood-proofing works, but more research is needed to know how effective it is in different situations.
+Forrás: Wikipédia: Az úszó sziget (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Az_%C3%BAsz%C3%B3_sziget
+Forrás: Efficiency of private flood proofing of new buildings – adapted redevelopment of a floodplain in The Netherlands (2008) – https://doi.org/10.2495/friar080241
+Forrás: A Review of Cost Estimates for Flood Adaptation (2018) – https://doi.org/10.3390/w10111646
+Forrás: Flood-proof Architectural Solutions for Urban Environments: A Review (2023) – https://doi.org/10.70470/khwarizmia/2023/016
 Lektorálva: nem
 --- technikai ---
 Keresés: building elevation flood damage reduction cost benefit|amphibious floating housing flood adaptation|flood-proofing buildings effectiveness
