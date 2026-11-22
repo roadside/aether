@@ -16,6 +16,9 @@ const Knowledge := preload("res://scripts/knowledge.gd")
 const StationPanel := preload("res://scripts/station_panel.gd")
 const NalunkPanel := preload("res://scripts/nalunk_panel.gd")
 const Intro := preload("res://scripts/intro.gd")
+const PathStrip := preload("res://scripts/path_strip.gd")
+const Milestones := preload("res://scripts/milestones.gd")
+const Finale := preload("res://scripts/finale.gd")
 
 const MISSION := [
 	["Nézd meg a mai Földet", "A bal oldali lista és a földgömb pöttyei valódi, friss jelentések. Kattints egyre!"],
@@ -73,6 +76,8 @@ var _close_x: Button                 # kerek X a megnyitott ablak sarkán
 var _plan                     # plan_panel.gd példány (megmarad a jóváhagyott karokkal)
 var campaign                  # campaign.gd: telő idő, pénz, bizalom
 var _play_btn: Button
+var _path: Control                    # path_strip.gd: a jövő görbéje az alsó sávban
+var _milestones                       # milestones.gd: a modell fordulópontjai
 var _reset_btn: Button
 var _base_retry: Timer
 var _toasts := 0                      # egyszerre látható értesítések (egymás alá kerülnek)
@@ -139,6 +144,10 @@ func _ready() -> void:
 	_build_right_panel()
 	_build_bottom_bar()
 	_build_anomaly_toggle()
+
+	_milestones = Milestones.new()
+	_milestones.campaign = campaign
+	add_child(_milestones)
 
 	_plan = PlanPanel.new()
 	_plan.bridge = bridge
@@ -403,6 +412,15 @@ func _build_top_bar() -> void:
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(spacer)
+	# a 2100-as érték már az alsó sáv görbéjén látszik nagyban: itt nem ismételjük
+	(_stats["jovo"] as Label).get_parent().visible = false
+	# Új játék: fent, a súgó mellett, távol az időgombtól (két kattintás kell hozzá)
+	_reset_btn = UI.button(L.t("Új játék"))
+	_reset_btn.tooltip_text = L.t("Elölről kezdi a játékot 2026-tól.")
+	_reset_btn.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	_reset_btn.focus_mode = Control.FOCUS_NONE
+	_reset_btn.pressed.connect(_reset_game)
+	h.add_child(_reset_btn)
 	# Súgó: egy rövid lap a négy lépésről és a gyorsbillentyűkről (F1 is).
 	var help_btn := UI.button("?")
 	help_btn.tooltip_text = L.t("Hogyan játssz? (F1)")
@@ -478,21 +496,16 @@ func _build_bottom_bar() -> void:
 	h.add_child(home)
 	var tbox := UI.vbox(6)
 	var trow := UI.hbox(6)
-	_play_btn = UI.button(L.t("Idő indítása"))
-	_play_btn.custom_minimum_size = Vector2(150, 0)
+	_play_btn = UI.button("▶  " + L.t("Idő indítása"))
+	_play_btn.custom_minimum_size = Vector2(170, 0)
+	_play_btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	trow.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_play_btn.tooltip_text = L.t("Az évek telnek. Ha egy ablak nyitva van, az idő megáll.")
 	_play_btn.pressed.connect(_toggle_time)
 	trow.add_child(_play_btn)
 	tbox.add_child(trow)
 	# Az idő csak indítható és megállítható (nincs gyorsítás és évugrás).
 	campaign.fast = false
-	var trow2 := UI.hbox(6)
-	_reset_btn = UI.button(L.t("Új játék"))
-	_reset_btn.custom_minimum_size = Vector2(150, 0)
-	_reset_btn.tooltip_text = L.t("Elölről kezdi a játékot 2026-tól.")
-	_reset_btn.pressed.connect(_reset_game)
-	trow2.add_child(_reset_btn)
-	tbox.add_child(trow2)
 	h.add_child(tbox)
 	# A gombok ne tartsák meg a fókuszt: így a szóköz az időt indítja, nem az utoljára nyomott gombot.
 	for b in [research, plan, station, home, _play_btn, _reset_btn]:
@@ -507,6 +520,9 @@ func _build_bottom_bar() -> void:
 	_info_link.visible = false
 	_info_link.pressed.connect(_open_info_link)
 	info_box.add_child(_info_link)
+	_path = PathStrip.new()        # a jövő görbéje: a te utad és a „semmi sem változik” út
+	_path.campaign = campaign
+	info_box.add_child(_path)
 	_year_row = UI.hbox(12)
 	_year_row.visible = false
 	_year_row.add_child(UI.label(L.t("Év:"), 16, UI.MUTE, false, false))
@@ -1113,7 +1129,12 @@ func _open_research() -> void:
 
 func _on_results_shown(has_levers: bool) -> void:
 	_advance(3)
-	_celebrate(L.t("Kész a kutatás!") + ("  " + L.t("Új lehetőség a tervedben") if has_levers else ""))
+	# csak akkor ünneplünk, ha a kutatás talált is valamit
+	var found := 0
+	if _overlay != null and "_result" in _overlay and typeof(_overlay._result) == TYPE_DICTIONARY:
+		found = int(Dictionary(_overlay._result.get("osszefoglalo", {})).get("cikkek", 0))
+	if found > 0 or has_levers:
+		_celebrate(L.t("Kész a kutatás!") + ("  " + L.t("Új lehetőség a tervedben") if has_levers else ""))
 
 
 ## Látványos jelzés: felvillanó felirat és pixel-konfetti az ablak fölött (2-3 másodperc).
@@ -1274,7 +1295,7 @@ func _update_stats() -> void:
 		var k: Dictionary = model["osszegzes"]["kozep"]
 		(_stats["jovo"] as Label).text = "2100: +%s °C" % UI.hu(float(k["T2100"]), 1)
 	if _play_btn != null:
-		_play_btn.text = L.t("Szünet") if campaign.running else L.t("Idő indítása")
+		_play_btn.text = ("❚❚  " + L.t("Szünet")) if campaign.running else ("▶  " + L.t("Idő indítása"))
 		_play_btn.disabled = campaign.year >= Campaign.END_YEAR
 
 
@@ -1315,6 +1336,7 @@ func _toggle_time() -> void:
 func _on_year_passed(y: int, note: String) -> void:
 	_year_slider.value = y   # rejtett: a földgömb színezését követi az év
 	_show_info(note, "")
+	_milestones.on_year(y)
 
 
 func _on_era_reached(e: int) -> void:
@@ -1332,7 +1354,16 @@ func _on_game_over() -> void:
 		return
 	_show_info(L.t("2100: vége a játéknak. A Föld +%s °C-kal melegebb, a csúcs +%s °C volt. „Új játék”: próbáld meg jobban!") % [
 		UI.hu(float(k["T2100"]), 1), UI.hu(float(k["csucs"]), 1)], "")
-	_open_summary(k)
+	_close_overlay()
+	_play_finale(k)
+
+
+## A záró jelenet (két Föld egymás mellett), utána az összegzés.
+func _play_finale(k: Dictionary) -> void:
+	var f := Finale.new()
+	f.campaign = campaign
+	f.finished.connect(_open_summary.bind(k))
+	add_child(f)
 
 
 ## A játék vége: néhány nagy szám egy lapon, és egy gomb az új játékhoz.
@@ -1468,6 +1499,15 @@ func _shot(dir: String, name: String) -> void:
 	print("ONTESZT kép: ", dir.path_join(name))
 
 
+## Önteszthez: mely években szól fordulópont a mostani modell szerint.
+func _milestone_years() -> Array:
+	var out: Array = []
+	for y in range(2027, 2101):
+		for ms in _milestones.for_year(y):
+			out.append("%d %s" % [y, ms["cim"]])
+	return out
+
+
 func _selftest() -> void:
 	var dir: String = bridge.work_dir("aether_onteszt")
 	print("ONTESZT indul, képek: ", dir)
@@ -1547,6 +1587,16 @@ func _selftest() -> void:
 		print("ONTESZT idő: év=", campaign.year, " pénz=", campaign.money, " bizalom=", campaign.trust,
 			" T=", campaign.temp_now())
 		await _shot(dir, "5_ido_10_ev.png")
+		# 5c: fordulópont-sáv a földgömb előtt (a modellből), 5d: évtized
+		print("ONTESZT fordulópontok 2027–2100: ", _milestone_years())
+		_milestones.show_banner({"cim": L.t("Megállt a melegedés"), "alcim": L.t("A csúcs +%s °C volt.") % "1,65", "fajta": "jo"})
+		await get_tree().create_timer(1.6).timeout
+		await _shot(dir, "5c_fordulopont.png")
+		await get_tree().create_timer(4.0).timeout
+		_milestones.on_year(2040)
+		await get_tree().create_timer(1.6).timeout
+		await _shot(dir, "5d_evtized.png")
+		await get_tree().create_timer(4.0).timeout
 		_year_slider.value = 2100
 		await _shot(dir, "5b_fold_2100.png")
 		_year_slider.value = campaign.year
@@ -1594,6 +1644,13 @@ func _selftest() -> void:
 			await _shot(dir, "6_esemeny_levego.png")
 			_close_overlay()
 			break
+	# 10: a záró jelenet (két Föld), közben és a végén
+	if not model.is_empty():
+		_play_finale(model["osszegzes"]["kozep"])
+		await get_tree().create_timer(10.0).timeout
+		await _shot(dir, "10_zaro_kozben.png")
+		await get_tree().create_timer(11.5).timeout
+		await _shot(dir, "10b_zaro_vege.png")
 	for key in saved:
 		# ha előtte nem volt ilyen kulcs, a null érték törli
 		L.set_setting(key, null if str(saved[key]) == "__nincs__" else saved[key])
