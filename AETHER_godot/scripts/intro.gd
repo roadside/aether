@@ -49,6 +49,7 @@ var shots_dir := ""            # ha nem üres: minden snittről képernyőkép (
 var _caption: Label
 var _sub: Label
 var _hint: Label
+var _locked := false           # az előhang alatt nincs átugrás
 var _pro: Label                # az előhang középre írt mondatai
 var _black: ColorRect
 var _logo: Control
@@ -198,6 +199,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	# képkészítő próbafutásnál nem lehet átugrani (egy véletlen kattintás ne szakítsa meg)
 	if _done or shots_dir != "":
 		return
+	if _locked:                   # a cím és a három mondat nem ugorható át
+		if event is InputEventKey or event is InputEventMouseButton:
+			get_viewport().set_input_as_handled()
+		return
 	var skip := false
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode in [KEY_ESCAPE, KEY_SPACE, KEY_ENTER]:
 		skip = true
@@ -211,7 +216,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and not _done:
 		accept_event()
-		if shots_dir != "":
+		if shots_dir != "" or _locked:
 			return
 		_finish()
 
@@ -285,7 +290,11 @@ func _play_full() -> void:
 	main.load_anomaly_quietly()
 	g.scale = Vector2.ONE * 0.04
 	# Előhang, még zene nélkül: a cím és három mondat (kb. 27 mp)
+	_locked = true
+	_hint.visible = false
 	if not await _prologue(): return
+	_locked = false
+	_hint.visible = true
 	_start_music()
 	# 0. Nyitány: a handpan-játékos az erdőben (11 mp)
 	_set_mode("jatekos")
@@ -382,7 +391,7 @@ func _play_full() -> void:
 ## az iparosodás előtti szinthez mért eltérés, ha van, különben az 1991–2020-as átlaghoz mért.
 ## „Melegebb, mint valaha” csak akkor, ha a mai nap a valaha mért legmelegebb ilyen nap.
 ## Ha nincs adat, nincs szám sem (a játék modelljének becslését itt nem mutatjuk).
-## Előhang a zene előtt: 2 mp sötét, felfénylik a cím a jelentésével (4 mp),
+## Előhang a zene előtt: 2 mp sötét, felfénylik a cím a jelentésével (7 mp),
 ## majd három mondat egymás után, mindegyik sötétből jön és sötétbe megy.
 const PRO_LINES := [
 	["A játékban minden adat, grafikon és hír valós.", 3.6],
@@ -391,7 +400,6 @@ const PRO_LINES := [
 ]
 ## A cím feloldása (a játékterv szerint); a páros indexű darabok a kiemelt kezdőbetűk.
 const TITLE_PARTS := ["A", "rtificial Intelligence for ", "E", "arth's ", "Th", "ermal & ", "E", "cological ", "R", "ecovery"]
-const TITLE_MEANING := "Mesterséges intelligencia a Föld hőmérsékletének és élővilágának helyreállításáért"
 
 
 func _prologue() -> bool:
@@ -413,7 +421,7 @@ func _prologue() -> bool:
 
 
 const TITLE_IN := 1.6
-const TITLE_HOLD := 4.0
+const TITLE_HOLD := 7.0
 const TITLE_OUT := 1.4
 ## A cím betűi vonalakból (egységnyi magas, 0,7 széles dobozban; y lefelé nő).
 const GLYPHS := {
@@ -468,8 +476,6 @@ func _draw_title(lt: float) -> void:
 		var col := Color(0.39, 0.95, 0.89, a2) if hi else Color(0.95, 0.96, 0.97, 0.9 * a2)
 		_fx.draw_string(f, Vector2(px, y0 + hgt + 124), part, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, col)
 		px += f.get_string_size(part, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
-	if L.lang == "hu":
-		_fx.draw_string(UI.font_body, Vector2(0, y0 + hgt + 176), TITLE_MEANING, HORIZONTAL_ALIGNMENT_CENTER, W, 24, Color(0.75, 0.8, 0.86, 0.9 * a2))
 
 
 func _today_caption() -> Array:

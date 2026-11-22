@@ -178,6 +178,7 @@ const EN := {
 	"Ha idén már mindent megtettél, zárd le az évet. A görbe mutatja, merre tart a melegedés.": "When you have done everything for this year, close it. The curve shows where warming is heading.",
 	"Innen indulj! A küldetés lépésről lépésre vezet téged, és csillagot ad.": "Start here! The mission guides you step by step and gives stars.",
 	"Csillagok": "Stars",
+	"Új korszak": "New era",
 	"A játékban minden adat, grafikon és hír valós.": "Every piece of data, every chart and every news item in this game is real.",
 	"Minden tudományos cikket forrásmegjelöléssel mellékelek, így bárki elolvashatja.": "I attach every scientific paper with its source, so anyone can read it.",
 	"Talán köztük van a megoldás...": "Maybe the solution is among them...",

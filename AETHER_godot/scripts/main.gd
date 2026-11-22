@@ -21,6 +21,7 @@ const Debate := preload("res://scripts/debate.gd")
 const PathStrip := preload("res://scripts/path_strip.gd")
 const Milestones := preload("res://scripts/milestones.gd")
 const Finale := preload("res://scripts/finale.gd")
+const EraAnim := preload("res://scripts/era_anim.gd")
 const Events := preload("res://scripts/events.gd")
 const Daily := preload("res://scripts/daily.gd")
 
@@ -180,6 +181,12 @@ func _ready() -> void:
 	elif world.is_empty() or _world_age() > 3600:
 		_refresh_world()   # a régi (egy óránál régebbi) jelentések helyett frissek
 	# Kezdő animáció (~58 mp), minden indításkor. Esc: átugrás.
+	if "--korszak-kepek" in args:      # ellenőrzés: a három korszakváltó jelenet képei, utána kilép
+		var kd := str(bridge.work_dir("aether_onteszt"))
+		for e in [2, 3, 4]:
+			await _play_era(e, kd)
+		get_tree().quit()
+		return
 	if not ("--onteszt" in args):
 		_play_intro("--intro-kepek" in args)
 	# óránként magától frissül a „Mi történik most?” lista
@@ -1580,10 +1587,21 @@ func _open_year_events(evs: Array) -> void:
 
 func _on_era_reached(e: int) -> void:
 	_update_stats()
+	if not ("--onteszt" in OS.get_cmdline_user_args()):
+		await _play_era(e)
 	_show_info(L.t("Új korszak: %s! %s") % [Knowledge.era_name(e), L.t(Knowledge.ERAS[e - 1]["tema"])], "")
 	_toast(L.t("Új korszak: %s") % Knowledge.era_name(e), UI.GOLD)
 	if is_instance_valid(_plan) and _plan.is_inside_tree():
 		_plan.rebuild()
+
+
+## A korszakváltás festett jelenete (era_anim.gd); megvárja a végét.
+func _play_era(e: int, shots: String = "") -> void:
+	var anim := EraAnim.new()
+	anim.era = e
+	anim.shots_dir = shots
+	add_child(anim)
+	await anim.finished
 
 
 func _on_game_over() -> void:
