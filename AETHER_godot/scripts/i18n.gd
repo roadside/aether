@@ -4,6 +4,7 @@ extends RefCounted
 ## A kulcs maga a magyar szöveg; ha nincs angol fordítás, a magyar marad.
 
 const SETTINGS := "user://beallitasok.cfg"
+const I2 := preload("res://scripts/i18n_2.gd")   # további fordítások (külön fájl, hogy ne ütközzenek)
 
 static var lang := ""
 
@@ -62,7 +63,7 @@ static func is_en() -> bool:
 static func t(hu: String) -> String:
 	if not is_en():
 		return hu
-	return EN.get(hu, hu)
+	return EN.get(hu, I2.EN.get(hu, hu))
 
 
 ## Adatmező a választott nyelven (pl. "cim" -> "cim_en", ha van).

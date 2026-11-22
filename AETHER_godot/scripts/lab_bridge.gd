@@ -55,7 +55,7 @@ func _worker(args: PackedStringArray) -> void:
 		if code == 0:
 			_python = exe
 			break
-		if code != -1 and code != 9009:
+		if code != -1 and code != 9009 and code != 127:   # 127: nincs ilyen parancs (Linux)
 			break  # a Python elindult, de hibával állt le: ezt jelezzük, nem próbálunk mást
 	call_deferred("_emit", code, "\n".join(PackedStringArray(output)))
 

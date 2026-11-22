@@ -99,6 +99,12 @@ var _list: VBoxContainer
 func show_questions() -> void:
 	_topic_q = {}
 	_header(L.t("Mit kutassunk?"), 1, L.t("Válassz kérdést. A válasz valódi tudományos cikkekből jön."))
+	if campaign != null:
+		_body.add_child(_era_strip())
+		var rec := _recommend()
+		if not rec.is_empty():
+			_body.add_child(_recommend_card(rec))
+	_body.add_child(_ai_line())
 	var search := LineEdit.new()
 	search.placeholder_text = L.t("Keresés a témák között, pl. jég, akkumulátor, metán")
 	search.text = _filter
@@ -199,16 +205,17 @@ func _question_card(q: Dictionary, is_done: bool) -> Control:
 	c.add_child(UI.label(Knowledge.text(q, "cim"), 19, UI.TEXT, true))
 	c.add_child(UI.label(Knowledge.text(q, "magyarazat"), 16, UI.SOFT))
 	var gives := Knowledge.text(q, "nyit")
+	var row := UI.hbox(12)
+	var l: Label
 	if is_done:
 		var n: int = int(campaign.stars.get(q["id"], 1)) if campaign != null else 1
-		var l := UI.label(L.t("✓ Kutatva ") + Missions.star_text(n) + ("  " + gives if gives != "" else ""), 15, UI.GREEN)
+		l = UI.label(L.t("✓ Kutatva ") + Missions.star_text(n) + ("  " + gives if gives != "" else ""), 15, UI.GREEN)
 		l.mouse_filter = Control.MOUSE_FILTER_PASS
 		l.tooltip_text = star_rule()
-		c.add_child(l)
-	elif gives != "":
-		c.add_child(UI.label(L.t("Ha kikutatod: ") + gives, 15, UI.GOLD))
-	var row := UI.hbox(12)
-	row.alignment = BoxContainer.ALIGNMENT_END
+	else:
+		l = UI.label(L.t("Ha kikutatod: ") + gives if gives != "" else "", 15, UI.GOLD)
+	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(l)
 	var info := UI.button(L.t("Mi ez, és mire jó?"))
 	info.pressed.connect(_show_topic.bind(q))
 	row.add_child(info)
@@ -340,8 +347,173 @@ func _render_topic(r: Dictionary) -> void:
 func _pick_question(q: Dictionary) -> void:
 	_topic_q = {}
 	_question = q
-	_header(L.t("Ki kutasson?"), 2, L.t("Megnézem, milyen AI érhető el a gépeden…"))
+	if campaign != null and campaign.research_problem() != "":   # még a választás előtt szólunk
+		_header(L.t("Most nem lehet kutatni"), 0, campaign.research_problem())
+		var back := UI.button(L.t("Vissza"))
+		back.pressed.connect(show_questions)
+		_body.add_child(back)
+		return
+	# Ha már választott AI-t, nem kérdezzük újra (kevesebb kattintás); a „Másik AI” gombbal válthat.
+	_quick = not _force_choice and _saved_ai() != "" and not ("--onteszt" in OS.get_cmdline_user_args())
+	_force_choice = false
+	_header(L.t("Kutatás indul…") if _quick else L.t("Ki kutasson?"), 2,
+		L.t("Megnézem, milyen AI érhető el a gépeden…"))
 	_ask_ai(0)
+
+
+var _quick := false
+var _force_choice := false
+
+
+func _saved_ai() -> String:
+	return str(L.get_setting("ai", ""))
+
+
+static func _ai_name(id: String) -> String:
+	for ch in AI_CHOICES:
+		if ch["id"] == id:
+			return L.t(ch["cim"])
+	return id
+
+
+## Egy sor a kereső fölött: ki kutat, és egy gomb, hogy másik AI-t válasszon a következő kutatáshoz.
+func _ai_line() -> Control:
+	var row := UI.hbox(12)
+	var id := _saved_ai()
+	var l := UI.label(L.t("Kutató AI: ") + (_ai_name(id) if id != "" else L.t("az első kutatásnál választod")),
+		15, UI.MUTE, false, false)
+	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(l)
+	if id != "":
+		var b := UI.button(L.t("Másik AI") if not _force_choice else L.t("A következő kutatásnál választasz"))
+		b.add_theme_font_size_override("font_size", 15)
+		var fn := func() -> void:
+			_force_choice = true
+			b.text = L.t("A következő kutatásnál választasz")
+		b.pressed.connect(fn)
+		row.add_child(b)
+	return row
+
+
+## Korszak-sáv: négy csempe, mindegyiken a kutatott témák aránya. A nyitott korszak
+## csempéjére kattintva annak minden területe kinyílik.
+func _era_strip() -> Control:
+	var row := UI.hbox(10)
+	var done: Array = campaign.done
+	for e in range(1, Knowledge.ERAS.size() + 1):
+		var all: Array = Knowledge.topics_of(e)
+		var n := all.filter(func(t: Dictionary) -> bool: return t["id"] in done).size()
+		var col: Color = UI.GREEN if e < campaign.era else (UI.GOLD if e == campaign.era else UI.EDGE)
+		var p := Button.new()
+		p.focus_mode = Control.FOCUS_NONE
+		p.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		p.custom_minimum_size = Vector2(0, 76)
+		p.disabled = e > campaign.era
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = UI.CARD_BG.lerp(col, 0.12 if e <= campaign.era else 0.0)
+		sb.border_color = col
+		sb.set_border_width_all(2)
+		sb.border_width_bottom = 4
+		for st in ["normal", "hover", "pressed", "disabled", "focus"]:
+			var x: StyleBoxFlat = sb.duplicate()
+			if st == "hover":
+				x.bg_color = sb.bg_color.lightened(0.08)
+			p.add_theme_stylebox_override(st, x)
+		var v := UI.vbox(4)
+		v.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT, Control.PRESET_MODE_MINSIZE, 10)
+		v.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var era_label: String = Knowledge.era_name(e) if e <= campaign.era + 1 else Knowledge.ROMAN[e - 1] + " " + L.t("zárva")
+		var t := UI.label(era_label, 16, col if e <= campaign.era else UI.MUTE, true, false)
+		t.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		v.add_child(t)
+		var bar := ProgressBar.new()
+		bar.show_percentage = false
+		bar.custom_minimum_size = Vector2(0, 10)
+		bar.max_value = maxi(1, all.size())
+		bar.value = n
+		bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var bg := StyleBoxFlat.new()
+		bg.bg_color = Color(0, 0, 0, 0.35)
+		var fg := StyleBoxFlat.new()
+		fg.bg_color = col if e <= campaign.era else UI.MUTE
+		bar.add_theme_stylebox_override("background", bg)
+		bar.add_theme_stylebox_override("fill", fg)
+		v.add_child(bar)
+		var cnt := UI.label("%d/%d" % [n, all.size()], 14, UI.SOFT, false, false)
+		cnt.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		v.add_child(cnt)
+		p.add_child(v)
+		p.pressed.connect(_open_era.bind(e))
+		row.add_child(p)
+	var total := 0
+	for k in campaign.stars:
+		total += int(campaign.stars[k])
+	var st_l := UI.label("★ %d" % total, 22, UI.GOLD, true, false)
+	st_l.tooltip_text = star_rule()
+	st_l.mouse_filter = Control.MOUSE_FILTER_PASS
+	st_l.custom_minimum_size = Vector2(70, 0)
+	st_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	row.add_child(st_l)
+	return row
+
+
+## Egy korszak minden területét kinyitja, a többit becsukja.
+func _open_era(e: int) -> void:
+	_open_fields.clear()
+	for code in Knowledge.field_codes():
+		_open_fields["%d:%s" % [e, code]] = true
+	_filter = ""
+	show_questions()
+
+
+## Mit érdemes most kutatni? (játékszabály: a küldetéshez vagy a következő korszakhoz kell)
+## {"tema": téma, "miert": egy rövid mondat}, vagy üres.
+func _recommend() -> Dictionary:
+	var done: Array = campaign.done
+	var m: Dictionary = Missions.LIST[Missions.first_open()]
+	if m["id"] == "alkalmazkodas" and not ("kukorica" in done) and not Knowledge.topic("kukorica").is_empty():
+		return {"tema": Knowledge.topic("kukorica"), "miert": L.t("Ez kell a küldetésedhez.")}
+	var era: int = campaign.era
+	var open: Array = Knowledge.topics_of(era).filter(func(t: Dictionary) -> bool: return not (t["id"] in done))
+	if open.is_empty():
+		return {}
+	var why := ""
+	if era < Knowledge.ERAS.size():
+		var need := int(Knowledge.ERAS[era].get("kell", 0))
+		var left := need - Knowledge.count_done(done, era)
+		if left > 0:
+			why = L.t("Még %d kutatott téma, és közelebb kerülsz ehhez: %s.") % [left, Knowledge.era_name(era + 1)]
+	if why == "":
+		why = L.t("Új tudás ebben a korszakban.")
+	# változatosság: abból a területből, ahol a legkevesebb a kutatott téma
+	var best: Dictionary = open[0]
+	var best_n := 999
+	for t in open:
+		var f := str(t.get("terulet", ""))
+		var n := done.filter(func(id) -> bool: return str(Knowledge.topic(str(id)).get("terulet", "")) == f).size()
+		if n < best_n:
+			best_n = n
+			best = t
+	return {"tema": best, "miert": why}
+
+
+func _recommend_card(rec: Dictionary) -> Control:
+	var q: Dictionary = rec["tema"]
+	var c := UI.card(UI.GOLD)
+	c.add_child(UI.label(L.t("Ajánlott most") + " · " + Knowledge.field_name(str(q.get("terulet", ""))), 15, UI.GOLD, true))
+	c.add_child(UI.label(Knowledge.text(q, "cim"), 20, UI.TEXT, true))
+	var row := UI.hbox(12)
+	var why := UI.label(str(rec["miert"]), 15, UI.SOFT)
+	why.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(why)
+	var info := UI.button(L.t("Mi ez, és mire jó?"))
+	info.pressed.connect(_show_topic.bind(q))
+	row.add_child(info)
+	var b := UI.button(L.t("Ezt kutatom"), true)
+	b.pressed.connect(_pick_question.bind(q))
+	row.add_child(b)
+	c.add_child(row)
+	return UI.card_root(c)
 
 
 ## Az elérhető AI-k lekérdezése; ha a játék épp mással dolgozik (pl. egy esemény
@@ -378,6 +550,8 @@ func _show_ai_choice() -> void:
 	for id in ["ollama", "gemini", "openai", "claude"]:   # a legalaposabb elérhető
 		if _ai_status.get(id, {}).get("elerheto", false):
 			best = id
+	if _saved_ai() != "" and _ai_status.get(_saved_ai(), {}).get("elerheto", false):
+		best = _saved_ai()   # amit legutóbb választott
 	var group := ButtonGroup.new()
 	var key_box := UI.vbox(6)
 	var key_label := UI.label("", 16, UI.SOFT)
@@ -529,7 +703,8 @@ func _start_research() -> void:
 	L.set_setting("ai", _ai)   # az események összefoglalója is ezt az AI-t használja
 	_folder = str(bridge.work_dir("aether_kutatas")).path_join("kutatas_%d" % Time.get_unix_time_from_system())
 	DirAccess.make_dir_recursive_absolute(_folder)
-	_header(L.t("Kutatás folyamatban"), 3, L.t("Pár perc."))
+	_header(L.t("Kutatás folyamatban"), 3, L.t("Pár perc.") + "  " + L.t("Kutató AI: ") + _ai_name(_ai)
+		+ (L.t(" · %d pénz") % campaign.research_cost() if campaign != null else ""))
 	_step_rows.clear()
 	var names := [L.t("Kérdés pontosítása"), L.t("Cikkek keresése 4 tudományos adatbázisban"), L.t("Fontos számok kiemelése"), L.t("Ellenőrzés: tényleg benne van a cikkben?")]
 	for n in names:
@@ -585,6 +760,9 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 		_ai_status = d if typeof(d) == TYPE_DICTIONARY else {}
 		if _ai_status.is_empty():
 			_show_python_error(code, output)
+		elif _quick and _ai_status.get(_saved_ai(), {}).get("elerheto", false):
+			_ai = _saved_ai()
+			_start_research()
 		else:
 			_show_ai_choice()
 	elif tag == "kutat":

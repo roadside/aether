@@ -122,7 +122,15 @@ func _process(delta: float) -> void:
 
 
 func income() -> int:
-	return 40 + trust / 2
+	return 40 + trust / 2 + knowledge_income()
+
+
+## A tudás hasznot hoz (játékszabály): minden kutatott téma évente +1 pénz, a ★★★ témák +2.
+func knowledge_income() -> int:
+	var n := 0
+	for id in done:
+		n += 2 if int(stars.get(str(id), 1)) >= 3 else 1
+	return n
 
 
 func advance() -> void:
@@ -135,6 +143,8 @@ func advance() -> void:
 	trust = clampi(trust + d, 0, 100)
 	research_this_year = 0
 	var note := L.t("%d: bevétel +%d.") % [year, inc]
+	if knowledge_income() > 0:
+		note = L.t("%d: bevétel +%d, ebből a tudásodból +%d.") % [year, inc, knowledge_income()]
 	if d > 0:
 		note += " " + L.t("A kibocsátás csökken: bizalom +%d.") % d
 	elif d < 0:

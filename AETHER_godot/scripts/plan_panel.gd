@@ -27,6 +27,9 @@ var _chart                 # chart.gd példány
 var _run_btn: Button
 var _out_path := ""
 var _scroll: ScrollContainer
+var _status: Label             # „Számolok…”: a csúszka elengedése után magától újraszámol
+var _auto: Timer
+var _last_sc := ""             # a legutóbb elindított terv (JSON), hogy ne számoljuk kétszer
 
 
 func _ready() -> void:
@@ -45,6 +48,10 @@ func _ready() -> void:
 	_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_scroll.add_child(UI.scroll_pad(_body))
 	bridge.finished.connect(_on_bridge_finished)
+	_auto = Timer.new()
+	_auto.one_shot = true
+	_auto.timeout.connect(_auto_run)
+	add_child(_auto)
 	rebuild()
 
 
@@ -153,11 +160,35 @@ func rebuild() -> void:
 		c.add_child(UI.label(L.t("Ezeket előbb ki kell kutatnod."), 15, UI.MUTE))
 		_body.add_child(UI.card_root(c))
 
-	_run_btn = UI.button(L.t("Mi lesz a Földdel? (modell futtatása)"), true)
+	# Nincs külön „számold ki” gomb: a csúszka elengedése után a modell magától fut.
+	_run_btn = UI.button(L.t("Újraszámolás"), true)
 	_run_btn.pressed.connect(_run_model)
+	_run_btn.visible = false   # csak ha a modell nem futott le
 	_body.add_child(_run_btn)
+	_status = UI.label("", 16, UI.MUTE)
+	_body.add_child(_status)
 	_result_box = UI.vbox(10)
 	_body.add_child(_result_box)
+	_last_sc = ""
+	for s in [_co2, _ch4] + _lever_sliders.values():
+		(s as HSlider).value_changed.connect(_on_slider)
+	_auto.start(0.05)
+
+
+func _on_slider(_v: float) -> void:
+	_result_box.modulate = Color(1, 1, 1, 0.45)   # a régi eredmény halványan, amíg számol
+	_status.text = L.t("Számolok…")
+	_auto.start(0.6)
+
+
+## Magától fut (csúszka után); ha a játék épp mással dolgozik, kicsit később újra próbálja.
+func _auto_run() -> void:
+	if JSON.stringify(_scenario()) == _last_sc:
+		return
+	if bridge.is_busy():
+		_auto.start(0.5)
+		return
+	_run_model()
 
 
 ## A most érvényes terv (a játék idővonalának utolsó eleme), vagy üres.
@@ -191,27 +222,35 @@ func _run_model() -> void:
 	var inp := dir.path_join("terv.json")
 	_out_path = dir.path_join("eredmeny.json")
 	var sc := _scenario()
+	_last_sc = JSON.stringify(sc)
 	Bridge.write_json(inp, {"idovonal": campaign.timeline_with(sc)} if campaign != null else sc)
 	if bridge.run("modell", ["godot-modell", inp, "--ki", _out_path, "--nyelv", L.lang]):
-		_run_btn.disabled = true
-		_run_btn.text = L.t("Számolok…")
+		_status.text = L.t("Számolok…")
 	else:
-		_run_btn.text = L.t("Egy pillanat, próbáld újra")
+		_last_sc = ""
+		_auto.start(0.5)
 
 
 func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 	if tag != "modell":
 		return
-	_run_btn.disabled = false
-	_run_btn.text = L.t("Újraszámolás")
+	if not is_instance_valid(_result_box):
+		return
+	_status.text = ""
+	_result_box.modulate = Color.WHITE
 	UI.clear(_result_box)
 	var r: Variant = Bridge.read_json(_out_path)
 	if code != 0 or typeof(r) != TYPE_DICTIONARY or r.has("hiba"):
 		_result_box.add_child(UI.label(L.t("A modell nem futott le. Telepítve van a Python 3.10+?"), 17, UI.EMBER))
+		_run_btn.visible = true
 		print(output)
 		return
+	_run_btn.visible = false
+	if JSON.stringify(_scenario()) != _last_sc:   # közben továbbhúzta a csúszkát: az újat számoljuk
+		_auto.start(0.1)
 	var res: Dictionary = r
-	_result_box.add_child(UI.label(str(res["jelentes"]), 19, UI.TEXT, true))
+	_result_box.add_child(_thermometer(res))
+	_result_box.add_child(UI.label(str(res["jelentes"]), 16, UI.SOFT))
 	_chart = Chart.new()
 	var sc := _scenario()
 	res["_terv"] = sc   # a küldetés értékeléséhez
@@ -244,6 +283,46 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 	_chart.year = campaign.year
 	_add_chart(res)
 	_show_control.call_deferred(adopt)
+
+
+## A fő eredmény egy pillantásra: a 2100-as melegedés nagy számmal, színnel, és mellette a terv nélküli.
+func _thermometer(res: Dictionary) -> Control:
+	var k: Dictionary = res["osszegzes"]["kozep"]
+	var t := float(k["T2100"])
+	var base := float(res["alapeset_osszegzes"]["kozep"]["T2100"])
+	var col: Color = UI.GREEN if t < 1.5 else (UI.GOLD if t < 2.0 else UI.EMBER)
+	var row := UI.hbox(24)
+	var big := UI.label("+%s °C" % UI.hu(t, 1), 46, col, true, false)
+	row.add_child(big)
+	var v := UI.vbox(2)
+	v.alignment = BoxContainer.ALIGNMENT_CENTER
+	v.add_child(UI.label(L.t("2100-ban, a terved szerint"), 17, UI.TEXT, true, false))
+	v.add_child(UI.label(L.t("Terv nélkül: +%s °C") % UI.hu(base, 1), 16, UI.MUTE, false, false))
+	row.add_child(v)
+	# skála: 1 °C-tól 3 °C-ig; a jel a terved, a halvány jel a terv nélküli
+	var scale := Control.new()
+	scale.custom_minimum_size = Vector2(260, 46)
+	scale.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var draw_fn := func() -> void:
+		var w := scale.size.x
+		var y := 18.0
+		var x_of := func(v2: float) -> float: return clampf((v2 - 1.0) / 2.0, 0.0, 1.0) * w
+		var stops := [[1.0, UI.GREEN], [1.5, UI.GOLD], [2.0, UI.EMBER], [3.0, Color("#c0392b")]]
+		for i in stops.size() - 1:
+			var a: float = x_of.call(stops[i][0])
+			var b: float = x_of.call(stops[i + 1][0])
+			scale.draw_rect(Rect2(a, y, b - a, 10), Color(stops[i][1], 0.55))
+		for mark in [1.5, 2.0]:
+			scale.draw_line(Vector2(x_of.call(mark), y - 4), Vector2(x_of.call(mark), y + 14), UI.TEXT, 2)
+			scale.draw_string(UI.font_body, Vector2(x_of.call(mark) - 14, y + 30), UI.hu(mark, 1), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, UI.MUTE)
+		var xb: float = x_of.call(base)
+		scale.draw_rect(Rect2(xb - 3, y - 8, 6, 26), Color(UI.MUTE, 0.7))
+		var xt: float = x_of.call(t)
+		scale.draw_rect(Rect2(xt - 4, y - 10, 8, 30), col)
+		scale.draw_rect(Rect2(xt - 4, y - 10, 8, 30), Color.WHITE, false, 1.5)
+	scale.draw.connect(draw_fn)
+	row.add_child(scale)
+	return row
 
 
 ## Odagörget, hogy a gomb (pl. Bevezetem) kisebb képernyőn is görgetés nélkül látsszon.
