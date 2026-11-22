@@ -181,7 +181,17 @@ def save(topics: List[Dict], directory: Path = DIR) -> None:
 
 
 def save_topic(t: Dict, directory: Path = DIR) -> None:
-    """Egy téma frissítése a saját fájljában (a többi téma változatlan marad)."""
-    all_ = load(directory)
-    all_ = [t if x["id"] == t["id"] else x for x in all_]
-    save(all_, directory)
+    """Egy téma frissítése a saját fájljában. CSAK ennek a témának a blokkja változik, a fájl többi
+    része (más témák, megjegyzések, sorvégek) bájtra azonos marad; a többi fájlhoz nem nyúl."""
+    p = directory / f"{t['terulet']}.txt"
+    raw = p.read_bytes().decode("utf-8")
+    nl = "\r\n" if "\r\n" in raw else "\n"
+    m = re.search(rf"^=== {re.escape(t['id'])} ===[ \t]*\r?$", raw, flags=re.M)
+    if m is None:
+        raise KeyError(f"nincs ilyen téma a fájlban: {t['id']}")
+    nxt = re.search(r"^(=== |# -----)", raw[m.end():], flags=re.M)
+    end = m.end() + nxt.start() if nxt else len(raw)
+    old = raw[m.start():end]
+    trail = old[len(old.rstrip("\r\n")):]          # a blokk utáni üres sor(ok) maradjanak
+    new = format_topic(t).rstrip("\r\n").replace("\r\n", "\n").replace("\n", nl) + trail
+    p.write_bytes((raw[:m.start()] + new + raw[end:]).encode("utf-8"))
