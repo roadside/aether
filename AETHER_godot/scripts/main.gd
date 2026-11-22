@@ -535,7 +535,6 @@ func _build_menu() -> void:
 	add_child(_menu)
 	var v := UI.vbox(8)
 	_menu.add_child(v)
-	v.add_child(_anom_btn)
 	var help_btn := UI.button(L.t("Hogyan játssz? (F1)"))
 	help_btn.pressed.connect(func() -> void:
 		_show_menu(false)
@@ -746,9 +745,39 @@ var _anom_loaded := false
 
 
 func _build_anomaly_toggle() -> void:
-	_anom_btn = UI.button(L.t("Mai hőmérséklet-eltérés"))
+	# Kerek, hőmérős gomb a Föld mellett: be- és kikapcsolja a mai eltérés-térképet.
+	_anom_btn = Button.new()
 	_anom_btn.toggle_mode = true
 	_anom_btn.focus_mode = Control.FOCUS_NONE
+	_anom_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	_anom_btn.position = Vector2(1092, 700)
+	_anom_btn.custom_minimum_size = Vector2(58, 58)
+	_anom_btn.size = Vector2(58, 58)
+	for st in ["normal", "hover", "pressed", "hover_pressed", "focus", "disabled"]:
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color("#3a1c14") if st.contains("pressed") else (Color("#1c2a48") if st == "hover" else Color("#101a2c"))
+		sb.border_color = UI.EMBER if st.contains("pressed") else UI.CYAN
+		sb.set_border_width_all(3 if st.contains("pressed") else 2)
+		sb.set_corner_radius_all(29)
+		_anom_btn.add_theme_stylebox_override(st, sb)
+	var ico := Control.new()
+	ico.set_anchors_preset(Control.PRESET_FULL_RECT)
+	ico.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var ico_fn := func() -> void:
+		# hőmérő: fehér cső, alul piros gömb, benne piros oszlop; mellette három kis beosztás
+		var c := Vector2(27, 29)
+		var glass := Color("#e8f1ff")
+		var red := Color("#f0623a")
+		ico.draw_line(c + Vector2(0, -17), c + Vector2(0, 8), glass, 9.0, true)
+		ico.draw_circle(c + Vector2(0, -17), 4.5, glass)
+		ico.draw_circle(c + Vector2(0, 12), 9.0, glass)
+		ico.draw_circle(c + Vector2(0, 12), 6.0, red)
+		ico.draw_line(c + Vector2(0, -8), c + Vector2(0, 10), red, 4.0, true)
+		for i in 3:
+			ico.draw_line(c + Vector2(9, -15 + i * 7), c + Vector2(15, -15 + i * 7), glass, 2.0)
+	ico.draw.connect(ico_fn)
+	_anom_btn.add_child(ico)
+	add_child(_anom_btn)
 	_anom_btn.tooltip_text = L.t("Hol melegebb és hol hidegebb ma, mint az 1991–2020-as átlag. Forrás: Copernicus Climate Pulse (ERA5). Gyorsbillentyű: M")
 	_anom_btn.toggled.connect(_toggle_anomaly)
 	# jelmagyarázat: kék = hidegebb, piros = melegebb (a Climate Pulse színskálája)
@@ -758,7 +787,7 @@ func _build_anomaly_toggle() -> void:
 	psb.set_corner_radius_all(6)
 	psb.set_content_margin_all(8)
 	panel.add_theme_stylebox_override("panel", psb)
-	panel.position = Vector2(1262, 716)
+	panel.position = Vector2(1162, 700)
 	panel.visible = false
 	var box := UI.vbox(2)
 	panel.add_child(box)
@@ -794,7 +823,7 @@ func _build_anomaly_toggle() -> void:
 
 func _toggle_anomaly(on: bool) -> void:
 	if on and not _anom_loaded:
-		_anom_btn.text = L.t("Térkép letöltése…")
+		_anom_btn.modulate.a = 0.5      # letöltés közben halvány
 		_load_anomaly()
 		return
 	globe.show_anomaly(on)
@@ -848,7 +877,7 @@ func _apply_anomaly(path: String) -> void:
 		return
 	globe.set_anomaly_texture(ImageTexture.create_from_image(img))
 	_anom_loaded = true
-	_anom_btn.text = L.t("Mai hőmérséklet-eltérés")
+	_anom_btn.modulate.a = 1.0
 	var d := "%s.%s.%s." % [_anom_date.left(4), _anom_date.substr(4, 2), _anom_date.substr(6, 2)]
 	_anom_link.text =L.t("%s · eltérés az 1991–2020-as átlagtól · Copernicus Climate Pulse (angol nyelvű)") % d
 	if _anom_btn.button_pressed:
@@ -857,7 +886,7 @@ func _apply_anomaly(path: String) -> void:
 
 
 func _anomaly_failed() -> void:
-	_anom_btn.text = L.t("Mai hőmérséklet-eltérés")
+	_anom_btn.modulate.a = 1.0
 	_anom_btn.set_pressed_no_signal(false)
 	_show_info(L.t("A hőmérséklet-térképet most nem sikerült letölteni. Van internet?"), "")
 
@@ -2074,10 +2103,12 @@ func _selftest() -> void:
 	await _shot(dir, "1_mai_fold.png")
 	_show_menu(true)
 	_anom_legend.visible = true
+	_anom_btn.set_pressed_no_signal(true)
 	await get_tree().create_timer(0.3).timeout
 	await _shot(dir, "1m_menu.png")
 	_show_menu(false)
 	_anom_legend.visible = false
+	_anom_btn.set_pressed_no_signal(false)
 	# 1t: a rámutatós bemutató lépései (a beállítást nem írja át: a végén visszaáll)
 	var tour_done: Variant = L.get_setting("bemutato_kesz", false)
 	_start_tour()
