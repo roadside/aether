@@ -218,7 +218,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		_request_close()
 		return
 	# Gyorsbillentyűk (csak ha nincs nyitott ablak, és nem egy szövegmezőbe gépelünk):
-	# K kutatás, T terv, A állomás, N nálunk, szóköz idő indítása/szünet, jobbra nyíl +1 év.
+	# K kutatás, T terv, A állomás, N nálunk, szóköz idő indítása/szünet, jobbra nyíl +1 év,
+	# H a földgömb vissza a saját helyedre.
 	if event is InputEventKey and event.pressed and not event.echo and _overlay == null \
 			and not (get_viewport().gui_get_focus_owner() is LineEdit):
 		var handled := true
@@ -229,6 +230,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_N: _open_nalunk()
 			KEY_SPACE: _toggle_time()
 			KEY_RIGHT: campaign.advance()
+			KEY_H: globe.home()
 			_: handled = false
 		if handled:
 			get_viewport().set_input_as_handled()

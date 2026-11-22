@@ -122,6 +122,9 @@ func _process(delta: float) -> void:
 
 func _gui_input(event: InputEvent) -> void:
 	# egérrel forgatható
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.double_click:
+		home()   # dupla kattintás: vissza a saját helyedre, nagyítás nélkül
+		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		dragging = event.pressed
 		if event.pressed:
@@ -136,12 +139,44 @@ func _gui_input(event: InputEvent) -> void:
 		var f := 1.12 if event.button_index == MOUSE_BUTTON_WHEEL_UP else 1.0 / 1.12
 		zoom = clampf(zoom * f, ZOOM_MIN, ZOOM_MAX)
 		accept_event()
+	elif event is InputEventMouseMotion and not dragging:
+		# rámutatáskor kéz-kurzor az eseményeken és az állomáson (kattintható)
+		var over := not _event_at(event.position).is_empty() or not _station_at(event.position).is_empty()
+		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND if over else Control.CURSOR_ARROW
 	elif event is InputEventMouseMotion and dragging:
 		# vízszintesen: forgatás a tengely körül; függőlegesen: észak-dél billentés.
 		# Nagyításkor lassabban mozog, hogy pontosan lehessen célozni.
 		var k := PI * zoom
 		spin -= event.relative.x / (size.x * k)
 		tilt = clampf(tilt + event.relative.y / (size.y * k) * PI, -TILT_MAX, TILT_MAX)
+
+
+## Vissza a kiinduló nézetbe: a játékos helye középen, nagyítás nélkül (finom átmenettel).
+func home() -> void:
+	var target_spin := spin
+	for s in stations:
+		if s.get("me", false):
+			target_spin = float(s["lon"]) / 360.0
+	# a legrövidebb úton forduljon
+	target_spin = spin + wrapf(target_spin - spin, -0.5, 0.5)
+	var tw := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tw.set_parallel(true)
+	tw.tween_property(self, "spin", target_spin, 0.6)
+	tw.tween_property(self, "tilt", 0.35, 0.6)
+	tw.tween_property(self, "zoom", 1.0, 0.6)
+
+
+## Rámutatáskor kis felirat: mi ez az esemény (vagy az állomás neve).
+func _get_tooltip(at_position: Vector2) -> String:
+	var s := _station_at(at_position)
+	if not s.is_empty():
+		return str(s.get("name", ""))
+	var e := _event_at(at_position)
+	if e.is_empty():
+		return ""
+	var t := str(e.get("cim", ""))
+	var place := str(e.get("orszag_hu", e.get("orszag", "")))
+	return t + ("\n" + place if place != "" and not t.contains(place) else "")
 
 
 ## Földrajzi pont -> képernyőpont. Visszaad: Vector3(x, y, látható? 1 : 0)
