@@ -104,7 +104,7 @@ var _sun_timer := 0.0
 const EVENT_COLORS := {
 	"aszaly": Color("#e0a24a"), "ehezes": Color("#f07a4a"), "arviz": Color("#4aa0e0"), "vihar": Color("#9ab8ff"),
 	"tuz": Color("#ff5a3a"), "jeg": Color("#cfefff"), "hoseg": Color("#ff8a3a"), "tenger": Color("#3fa8d8"), "szennyezes": Color("#b48cff"),
-	"levego": Color("#c8b49a"), "uv": Color("#e8f060"), "jarvany": Color("#ff6fa0"), "vulkan": Color("#d0503a"), "foldrenges": Color("#c0a070"),
+	"levego": Color("#c8b49a"), "uv": Color("#e8f060"), "jarvany": Color("#ff6fa0"), "vulkan": Color("#d0503a"), "foldrenges": Color("#c0a070"), "viz": Color("#4ac0d0"),
 }
 var dragging := false
 
