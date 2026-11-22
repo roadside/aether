@@ -558,7 +558,9 @@ func _render_missions() -> void:
 			if _mission_note != "":
 				_mission_box.add_child(UI.label(_mission_note, 15, UI.CYAN))
 			# az aszálytűrő kukoricához előbb kutatni kell; a többi küldetés a tervben dől el
-			var need_research: bool = m["id"] == "alkalmazkodas" and (_plan == null or not _plan.levers.has("alkalmazkodas"))
+			# a mentett játék karjai a campaign-ben vannak (a tervablak csak megnyitáskor tölti be őket)
+			var has_lever: bool = campaign.levers.has("alkalmazkodas") or (_plan != null and _plan.levers.has("alkalmazkodas"))
+			var need_research: bool = m["id"] == "alkalmazkodas" and not has_lever
 			if need_research:
 				_mission_box.add_child(_go_button(L.t("Kutatás →"), _open_research))
 			else:
@@ -886,6 +888,8 @@ func _on_approved(levers: Array) -> void:
 		levers.size(), levers.size() * Campaign.TRUST_PER_RESULT], "")
 	_close_overlay()
 	_advance(3)
+	_mission_note = ""   # a régi „még nincs a tervedben” figyelmeztetés már nem igaz
+	_render_mission()   # a küldetés ugrógombja: kutatás után már „A terved →”
 
 
 func _open_plan() -> void:
