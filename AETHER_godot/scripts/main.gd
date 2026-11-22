@@ -76,6 +76,24 @@ var _fast_btn: Button
 var _reset_btn: Button
 var _base_retry: Timer
 var _toasts := 0                      # egyszerre látható értesítések (egymás alá kerülnek)
+var _year_bar: ProgressBar             # az év telése a felső sávban
+var _month_label: Label
+const MONTHS := ["jan.", "febr.", "márc.", "ápr.", "máj.", "jún.", "júl.", "aug.", "szept.", "okt.", "nov.", "dec."]
+const MONTHS_EN := ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+
+func _process(_delta: float) -> void:
+	if _year_bar == null or campaign == null:
+		return
+	var per: float = Campaign.SECONDS_PER_YEAR[1 if campaign.fast else 0]
+	var f: float = clampf(campaign._acc / per, 0.0, 1.0) if campaign.running else 0.0
+	_year_bar.value = f
+	_year_bar.modulate.a = 1.0 if campaign.running and not campaign.blocked else 0.35
+	if campaign.running:
+		var m := int(f * 12.0) % 12
+		_month_label.text = (MONTHS_EN if L.is_en() else MONTHS)[m] + ("" if not campaign.blocked else "  ⏸")
+	else:
+		_month_label.text = ""
 
 
 func _ready() -> void:
@@ -281,6 +299,29 @@ func _build_top_bar() -> void:
 	logo.add_theme_font_override("font", UI.font_pixel)
 	h.add_child(logo)
 	_stat(h, "ev", L.t("Év"), str(campaign.year), UI.TEXT)
+	# telő idő: az év alatt egy vékony sáv töltődik, mellette a hónap – így látszik, hogy halad
+	var ev_box: VBoxContainer = (_stats["ev"] as Label).get_parent()
+	_year_bar = ProgressBar.new()
+	_year_bar.show_percentage = false
+	_year_bar.custom_minimum_size = Vector2(70, 5)
+	_year_bar.max_value = 1.0
+	_year_bar.step = 0.001
+	var bg := StyleBoxFlat.new()
+	bg.bg_color = Color(1, 1, 1, 0.08)
+	var fg := StyleBoxFlat.new()
+	fg.bg_color = UI.CYAN
+	_year_bar.add_theme_stylebox_override("background", bg)
+	_year_bar.add_theme_stylebox_override("fill", fg)
+	_year_bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var yrow := UI.hbox(6)
+	yrow.add_child(_year_bar)
+	_month_label = UI.label("", 11, UI.CYAN, false, false)
+	_month_label.custom_minimum_size = Vector2(38, 0)
+	yrow.add_child(_month_label)
+	yrow.custom_minimum_size = Vector2(0, 0)
+	ev_box.add_child(yrow)
+	# az évszám és a sáv közötti hely ne nyújtsa meg a felső sávot
+	ev_box.add_theme_constant_override("separation", -2)
 	_stat(h, "korszak", L.t("Korszak"), Knowledge.era_name(campaign.era), UI.GOLD)
 	(_stats["korszak"] as Label).mouse_filter = Control.MOUSE_FILTER_PASS
 	(_stats["korszak"] as Label).tooltip_text = L.t("Tudásfa (játékszabály): a kutatott témák új korszakot, új témákat és új tervlehetőségeket nyitnak. Kutatás gomb.")
@@ -1176,6 +1217,13 @@ func _selftest() -> void:
 		_open_summary({"T2100": 1.62, "csucs": 1.66})
 		await _shot(dir, "1d_osszegzes.png")
 		_close_overlay()
+		# 1e: telő idő (évsáv és hónap a felső sávban), utána megáll
+		campaign.running = true
+		_update_stats()
+		await get_tree().create_timer(5.0).timeout
+		await _shot(dir, "1e_ido.png")
+		campaign.running = false
+		_update_stats()
 		globe.highlight = {}
 		globe.home()
 		await get_tree().create_timer(0.8).timeout
