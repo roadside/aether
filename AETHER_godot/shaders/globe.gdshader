@@ -73,18 +73,60 @@ void fragment() {
 		vec3 albedo = texture(albedo_map, tex).rgb;
 		vec4 data = texture(data_map, tex);
 
-		// melegedés szemléltetése (nem pontos regionális előrejelzés!)
+		// melegedés szemléltetése (heat: 0 = ma, 1 = kb. +2 °C a mához képest).
+		// SZEMLÉLTETÉS, NEM regionális előrejelzés: csak a fő irányokat mutatja.
+		// – a mai száraz övek (szubtrópus, Mediterráneum, Száhel, Ausztrália, DNy-USA) PEREMÉN
+		//   kiszárad a növényzet, terjed a száraz táj; a magas északi szárazföld nem sivatagosodik;
+		// – a trópusi esőerdő fakul, de megmarad;
+		// – a sarki tengeri jég nagy melegedésnél szinte eltűnik;
+		// – Grönland és az Antarktisz jégtakarója 2100-ig megmarad, csak a széle húzódik vissza;
+		//   az alacsonyabb szélességű hófoltok, hegyi gleccserek fogynak.
 		float lum = dot(albedo, vec3(0.333));
 		if (heat > 0.0) {
+			float alat = abs(lat);
+			// foltos, természetes szélű terjedéshez: a felhőzaj két léptéke
+			float nz = texture(cloud_map, fract(tex * vec2(6.0, 3.0) + vec2(0.21, 0.57))).r * 0.65
+				+ texture(cloud_map, fract(tex * vec2(17.0, 9.0) + vec2(0.63, 0.12))).r * 0.35;
 			if (data.r > 0.5) {
-				// a nem jeges szárazföld szárazabb, sárgásabb árnyalatot kap
-				if (lum < 0.7) {
-					float band = smoothstep(0.0, 0.6, 1.0 - abs(lat) / 1.2);
-					albedo = mix(albedo, vec3(0.62, 0.50, 0.30), heat * 0.35 * band);
+				bool ice = lum > 0.72 && albedo.b >= albedo.r * 0.95;
+				if (ice) {
+					// jég és hó: az alacsonyabb szélességeken (hófoltok, gleccserek) fogy; a nagy
+					// jégtakarók (Grönland, Antarktisz belseje) megmaradnak, csak a szélük húzódik vissza
+					float edge = 0.98 + heat * 0.24;
+					float keep = smoothstep(edge, edge + 0.06, alat + (nz - 0.5) * 0.16);
+					albedo = mix(mix(vec3(0.33, 0.35, 0.24), vec3(0.44, 0.41, 0.31), nz), albedo, keep);
+				} else {
+					// a környék szárazsága: mennyi nem zöld (száraz) felszín van a közelben → a mai
+					// sivatagok pereme felől terjed
+					vec2 d = vec2(0.012, 0.0);
+					float neigh = 0.0;
+					for (int k = 0; k < 4; k++) {
+						vec2 o = k == 0 ? d.xy : (k == 1 ? -d.xy : (k == 2 ? d.yx * 1.6 : -d.yx * 1.6));
+						vec3 a2 = texture(albedo_map, tex + o).rgb;
+						neigh += 1.0 - clamp((a2.g - max(a2.r, a2.b)) * 6.0 + 0.25, 0.0, 1.0);
+					}
+					neigh *= 0.25;
+					float green = clamp((albedo.g - max(albedo.r, albedo.b)) * 6.0 + 0.25, 0.0, 1.0);
+					// szubtrópusi–mérsékelt száraz sáv; az egyenlítőnél és északon (> kb. 55°) nincs
+					float dry_band = smoothstep(0.10, 0.30, alat) * (1.0 - smoothstep(0.72, 0.96, alat));
+					float score = dry_band * 0.40 + neigh * 0.38 + (1.0 - green) * 0.10 + nz * 0.18;
+					float thr = 1.0 - heat * 0.9;
+					// csak a növényzet változik; a mai sivatag a saját festett színét megtartja
+					float veg = clamp(0.15 + green * 1.8, 0.0, 1.0);
+					float savanna = smoothstep(thr, thr + 0.05, score) * dry_band * (0.5 + 0.5 * veg);
+					float desert = smoothstep(thr + 0.09, thr + 0.14, score) * dry_band * veg;
+					// a festett textúra világossága megmarad (domborzat, folyóvölgyek), csak a szín változik
+					float shade = 0.72 + 0.6 * clamp(lum, 0.0, 0.8);
+					albedo = mix(albedo, vec3(0.58, 0.49, 0.27) * shade, savanna * 0.95);
+					albedo = mix(albedo, vec3(0.76, 0.61, 0.38) * shade, desert * 0.88);
+					// a megmaradó növényzet (esőerdő is) fakóbb, olajzöldebb
+					albedo = mix(albedo, vec3(dot(albedo, vec3(0.4, 0.45, 0.15))) * vec3(1.15, 1.0, 0.62), heat * 0.7 * green);
 				}
-			} else if (lum > 0.82 && abs(lat) < 1.05 + heat * 0.25) {
-				// a tengeri jég széle a sark felé húzódik
-				albedo = vec3(0.10, 0.27, 0.45);
+			} else if (lum > 0.6) {
+				// tengeri jég: nagy melegedésnél (nyáron) szinte eltűnik, nyílt tenger lesz a helyén
+				float edge = 1.08 + heat * 0.46;
+				float keep = smoothstep(edge, edge + 0.06, alat + (nz - 0.5) * 0.14);
+				albedo = mix(vec3(0.08, 0.24, 0.42), albedo, keep);
 			}
 		}
 		float ndl = dot(n, L);

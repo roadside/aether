@@ -34,7 +34,9 @@ var _has_plan := false
 
 
 func _ready() -> void:
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	# a szülő (főképernyő) mérete 0 lehet: kifejezetten a teljes képre feszül, hogy a kattintás is ide jusson
+	position = Vector2.ZERO
+	size = Vector2(1600, 900)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	z_index = 50
 	var m: Dictionary = campaign.model
@@ -163,7 +165,7 @@ func _verdict(t: float) -> String:
 
 
 func _draw() -> void:
-	draw_rect(Rect2(Vector2.ZERO, Vector2(1600, 900)), Color(0.01, 0.015, 0.035, _ss(0.0, T_FADE, _t) * 0.97))
+	draw_rect(Rect2(Vector2.ZERO, Vector2(1600, 900)), Color(0.01, 0.015, 0.035, _ss(0.0, T_FADE, _t)))   # teljesen fedi a főképernyőt
 	# „2100.”
 	var ta := _ss(T_FADE, T_FADE + 0.8, _t) * (1.0 - _ss(T_TITLE - 1.0, T_TITLE - 0.2, _t))
 	if ta > 0.0:
@@ -204,7 +206,8 @@ func _draw() -> void:
 	for lim in [1.5, 2.0]:
 		var ly: float = py.call(lim)
 		draw_line(Vector2(gx0, ly), Vector2(gx1, ly), Color(1, 1, 1, 0.16 * show), 1.0)
-		draw_string(UI.font_body, Vector2(gx0, ly - 4), "%s °C" % UI.hu(lim, 1 if lim < 2.0 else 0), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color(1, 1, 1, 0.5 * show))
+		# a felirat a vonal jobb vége mögé kerül, hogy ne fusson rá a görbék elejére
+		draw_string(UI.font_body, Vector2(gx1 + 8, ly + 5), "%s °C" % UI.hu(lim, 1 if lim < 2.0 else 0), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color(1, 1, 1, 0.5 * show))
 	var pb := PackedVector2Array()
 	var pp := PackedVector2Array()
 	var y := float(Y0)
