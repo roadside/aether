@@ -1,0 +1,327 @@
+# AETHER kutatási témák · Földtudomány
+#
+# Lektorálás: a "Kérdés", "Röviden", "Ha kikutatod", "Mire jó?", "Mi a gond vele?" és
+# "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
+# Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
+# A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet).
+# A "technikai" vonal alatti sorokkal keres a kutatás: csak akkor módosítsd, ha biztos vagy benne.
+# Új téma: másolj le egy blokkot, és adj neki új, ékezet nélküli azonosítót (=== uj_tema ===).
+# A játék induláskor olvassa ezt a fájlt: mentés után indítsd újra a játékot.
+
+# ----- I. korszak: Felismerés -----
+
+=== tengerszint ===
+Korszak: I. (Felismerés)
+Kérdés: Mennyit emelkedik a tenger 2100-ig?
+Röviden: Az olvadó jég és a melegedő, táguló víz megemeli a tenger szintjét.
+Ha kikutatod:
+Mire jó?: Annak ismerete, hogy mennyit emelkedik a tenger, segít felkészülni az olyan veszélyekre, mint az árhullámok, és megvédeni a part menti településeket.
+Mi a gond vele?: A tengerszint-emelkedés súlyos környezeti és gazdasági kockázatokat okozhat, például part menti területek elárasztását, édesvízkészletek veszélyeztetését és sok ember elvándorlását.
+Mennyire bizonyított?: A tudomány nagy valószínűséggel bizonyítja, hogy a tengerszint emelkedni fog, de a pontos értékeket még nem lehet teljes bizonyossággal megadni.
+Kérdés angolul: How much will the sea rise by 2100?
+Röviden angolul: Melting ice and warming, expanding water raise the sea level.
+Ha kikutatod angolul:
+Mire jó? angolul: Knowing how much the sea will rise helps prepare for hazards such as storm surges and protect coastal settlements.
+Mi a gond vele? angolul: Sea level rise can cause severe environmental and economic risks, such as flooding of coastal areas, threats to freshwater supplies, and displacement of many people.
+Mennyire bizonyított? angolul: Science shows with high likelihood that sea level will rise, though exact figures cannot yet be given with complete certainty.
+Forrás: Wikipédia: Tengerszint-emelkedés (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Tengerszint-emelked%C3%A9s
+Forrás: Sea Level Rise in Europe: Observations and projections (2024) – https://doi.org/10.5194/sp-3-slre1-4-2024
+Forrás: Sea level rise and its coastal impacts (2014) – https://doi.org/10.1002/2013ef000188
+Forrás: Sea-level rise in Venice: historic and future trends (review article) (2021) – https://doi.org/10.5194/nhess-21-2643-2021
+Lektorálva: igen
+--- technikai ---
+Keresés: global mean sea level rise projections 2100|sea level rise projections ice sheet contribution|sea level rise observations acceleration
+Paraméter: tengerszint_cm
+Wikipédia: tengerszint-emelkedés
+Wikipédia angolul: sea level rise
+Áttekintő cikkek keresése: sea level rise projections review
+
+=== gronland ===
+Korszak: I. (Felismerés)
+Kérdés: Milyen gyorsan olvad Grönland jege?
+Röviden: Grönland jégtakarója évről évre veszít a tömegéből, és ez emeli a tengert.
+Ha kikutatod:
+Mire jó?: A jégveszteség növeli a tengerszintet, ami veszélyezteti a tengerparti városokat.
+Mi a gond vele?: A jégveszteség meghaladja a hófelhalmozódást, így a jégtakaró tömege tovább csökken.
+Mennyire bizonyított?: A tudományos adatok alapján jól bizonyított, hogy Grönland jégtakarója gyorsabban veszít tömeget, mint korábban.
+Kérdés angolul: How fast is Greenland's ice melting?
+Röviden angolul: Greenland's ice sheet loses mass year after year, raising the sea.
+Ha kikutatod angolul:
+Mire jó? angolul: Ice loss raises sea level, which threatens coastal cities.
+Mi a gond vele? angolul: Ice loss exceeds snowfall accumulation, so the ice sheet's mass decreases further.
+Mennyire bizonyított? angolul: Based on scientific data, it is well proven that Greenland's ice sheet is losing mass faster than before.
+Forrás: Wikipédia: Greenland ice sheet (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Greenland_ice_sheet
+Forrás: Greenland ice sheet mass balance: a review (2015) – https://doi.org/10.1088/0034-4885/78/4/046801
+Forrás: Review: Remapping of Greenland ice sheet surface mass balance anomalies ... (2019) – https://doi.org/10.5194/tc-2019-188-rc1
+Forrás: Review of “GrSMBMIP: Intercomparison of the modelled 1980-2012 surface mass balance over the Greenland Ice sheet (2020) – https://doi.org/10.5194/tc-2019-321-rc1
+Lektorálva: igen
+--- technikai ---
+Keresés: Greenland ice sheet mass loss rate|Greenland ice sheet mass balance|Greenland surface melt runoff
+Paraméter: jegveszteseg_gt_ev
+Wikipédia: grönlandi jégtakaró
+Wikipédia angolul: Greenland ice sheet
+Áttekintő cikkek keresése: Greenland ice sheet mass balance review
+
+=== antarktisz ===
+Korszak: I. (Felismerés)
+Kérdés: Mennyi jeget veszít az Antarktisz?
+Röviden: A déli jégtakaró a legnagyobb jégtömeg a Földön. Ha nagy része elolvadna, méterekkel emelné a tengert.
+Ha kikutatod:
+Mire jó?: A keleti jégtakaró stabilabb, így kevésbé veszélyezteti a tengerszintet, míg a folyamatok megértése segít felmérni a jövőbeli tengerszint-emelkedést.
+Mi a gond vele?: A nyugat-antarktiszi rész különösen érzékeny a felmelegedésre, és a jégtömeg csökkenése hosszú távon jelentős tengerszint-emelkedést okozhat, ami veszélyezteti az embereket.
+Mennyire bizonyított?: A tudományos kutatások bizonyítják, hogy a nyugat-antarktiszi rész sérülékeny, a keleti rész pedig stabilabb, bár a jövőbeli hatások pontosan nem határozhatók meg.
+Kérdés angolul: How much ice is Antarctica losing?
+Röviden angolul: The southern ice sheet is the largest mass of ice on Earth. If much of it melted, the sea would rise by metres.
+Ha kikutatod angolul:
+Mire jó? angolul: The eastern ice sheet is more stable and thus less of a threat to sea level, while understanding these processes helps assess future sea level rise.
+Mi a gond vele? angolul: The West Antarctic part is especially sensitive to warming, and ice mass loss can cause major sea level rise over the long term, threatening people.
+Mennyire bizonyított? angolul: Scientific studies show that the West Antarctic part is vulnerable and the East Antarctic part is more stable, though future effects cannot be precisely determined.
+Forrás: Wikipédia: Antarctic ice sheet (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Antarctic_ice_sheet
+Forrás: Mass balance of the Antarctic ice sheet (2006) – https://doi.org/10.1098/rsta.2006.1792
+Forrás: Mass Balances of the Antarctic and Greenland Ice Sheets Monitored from Space (2023) – https://doi.org/10.1007/s10712-023-09795-8
+Forrás: Review Surface Mass Balance of the Antarctic Ice Sheet and its link with surface temperature change in model simulations and reconstructions by Q. Delaiden et al. (2019) – https://doi.org/10.5194/tc-2019-111-rc1
+Lektorálva: igen
+--- technikai ---
+Keresés: Antarctic ice sheet mass balance|Antarctic ice sheet mass loss acceleration|West Antarctic ice sheet instability
+Paraméter: jegveszteseg_gt_ev
+Wikipédia: antarktiszi jégtakaró
+Wikipédia angolul: Antarctic ice sheet
+Áttekintő cikkek keresése: Antarctic ice sheet mass balance review
+
+=== gleccser ===
+Korszak: I. (Felismerés)
+Kérdés: Mennyit olvadnak a hegyi gleccserek?
+Röviden: Az Alpok és a Himalája gleccserei nyáron sok folyó vizét adják.
+Ha kikutatod:
+Mire jó?: A gleccserolvadás megértése segít előrejelezni a vízforrások változását, amely az emberekre és az élővilágra is hatással van, különösen a hegyvidéki térségekben.
+Mi a gond vele?: A gleccserolvadás hozzájárul a tengerszint-emelkedéshez is, ami az alacsonyabban fekvő területeket veszélyezteti, a megadott források azonban nem tartalmaznak pontos számokat.
+Mennyire bizonyított?: A tudományos bizonyítékok szerint a gleccserolvadás jelentős, de a pontos mérték és a jövőbeli folyamatok részletei még nem teljesen ismertek.
+Kérdés angolul: How much are mountain glaciers melting?
+Röviden angolul: Glaciers in the Alps and the Himalayas feed many rivers in summer.
+Ha kikutatod angolul:
+Mire jó? angolul: Understanding glacier melt helps predict changes in water resources, which affect people and wildlife, especially in mountainous regions.
+Mi a gond vele? angolul: Glacier melt also contributes to sea level rise, threatening low-lying areas, though the provided sources do not give exact figures.
+Mennyire bizonyított? angolul: According to scientific evidence, glacier melt is significant, though the exact extent and details of future trends are not yet completely known.
+Forrás: Wikipédia: Visszahúzódó gleccserek (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Visszah%C3%BAz%C3%B3d%C3%B3_gleccserek
+Forrás: Review of Roe et al., Attribution of industrial-era glacier mass loss (2020) – https://doi.org/10.5194/tc-2020-265-rc1
+Forrás: Review of Significant mass loss in the accumulation area of the Adamello glacier indicated by the chronology of a 46 m ice core (2020) – https://doi.org/10.5194/tc-2020-334-rc1
+Forrás: Where glaciers meet water: Subaqueous melt and its relevance to glaciers in various settings (2016) – https://doi.org/10.1002/2015rg000494
+Lektorálva: igen
+--- technikai ---
+Keresés: global glacier mass loss|glacier mass change worldwide|mountain glacier retreat projections
+Paraméter: jegveszteseg_gt_ev
+Wikipédia: gleccser visszahúzódás
+Wikipédia angolul: retreat of glaciers since 1850
+Áttekintő cikkek keresése: glacier mass loss review
+
+=== permafroszt ===
+Korszak: I. (Felismerés)
+Kérdés: Mennyi szenet enged ki a felolvadó fagyott talaj?
+Röviden: Az északi fagyott talajban több szén van, mint a levegőben. Olvadáskor egy része kiszabadul.
+Ha kikutatod:
+Mire jó?: Ennek megértése segít felmérni a klímaváltozás öngerjesztő hatását, mivel a felszabaduló szén tovább növelheti a légkör hőmérsékletét.
+Mi a gond vele?: A szénkibocsátás pontos mértéke nehezen becsülhető, és a folyamatot a talaj és a növényzet tulajdonságai is befolyásolják.
+Mennyire bizonyított?: A tudomány bizonyos mértékig tudja, hogy a fagyott talaj felolvadása szénkibocsátáshoz vezethet, de pontos értékek még nem ismertek.
+Kérdés angolul: How much carbon does thawing frozen ground release?
+Röviden angolul: The frozen northern ground holds more carbon than the air. When it thaws, part of it escapes.
+Ha kikutatod angolul:
+Mire jó? angolul: Understanding this helps assess a self-reinforcing effect of climate change, as released carbon can further increase atmospheric temperature.
+Mi a gond vele? angolul: The exact amount of carbon emissions is hard to estimate, and the process is also influenced by soil and vegetation characteristics.
+Mennyire bizonyított? angolul: Science knows to some extent that thawing frozen ground can lead to carbon emissions, though exact figures are not yet known.
+Forrás: Wikipédia: Permafroszt (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Permafroszt
+Forrás: A review on mathematical modeling of microbial and plant induced permafrost carbon feedback (2024) – https://doi.org/10.1016/j.scitotenv.2024.173144
+Forrás: Sensitivity of carbon budgets to permafrost carbon feedbacks and non-CO 2 forcings (2015) – https://doi.org/10.1088/1748-9326/10/12/125003
+Forrás: Deep Yedoma permafrost: A synthesis of depositional characteristics and carbon vulnerability (2017) – https://doi.org/10.1016/j.earscirev.2017.07.007
+Lektorálva: igen
+--- technikai ---
+Keresés: permafrost carbon feedback emissions|permafrost thaw carbon release projections|permafrost carbon climate feedback
+Paraméter: szen_gtc
+Wikipédia: permafroszt
+Wikipédia angolul: permafrost carbon cycle
+Áttekintő cikkek keresése: permafrost carbon feedback review
+
+=== aszaly ===
+Korszak: I. (Felismerés)
+Kérdés: Gyakoribb lesz-e az aszály?
+Röviden: A melegebb levegő több vizet párologtat el a talajból és a növényekből.
+Ha kikutatod:
+Mire jó?: Az aszályok hatásának ismerete segít a védekezésben, mert a súlyos aszály élelmiszerhiányt, tűzveszélyt és környezeti károkat okozhat.
+Mi a gond vele?: Az aszályok gyakoribbá és hosszabbá válhatnak a klímaváltozás miatt, ami megnehezíti a mezőgazdasági termelést és a vízgazdálkodást.
+Mennyire bizonyított?: A tudomány szerint a klímaváltozás növeli az aszályok gyakoriságát és súlyosságát, de a pontos helyi hatások még nem minden térségben ismertek.
+Kérdés angolul: Will droughts become more frequent?
+Röviden angolul: Warmer air draws more water out of soil and plants.
+Ha kikutatod angolul:
+Mire jó? angolul: Knowing the impacts of drought helps with protection, because severe drought can cause food shortages, fire risk, and environmental damage.
+Mi a gond vele? angolul: Droughts can become more frequent and longer due to climate change, making agricultural production and water management more difficult.
+Mennyire bizonyított? angolul: According to science, climate change increases the frequency and severity of droughts, though exact local impacts are not yet known in every region.
+Forrás: Wikipédia: Aszály (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Asz%C3%A1ly
+Forrás: Drought-related cholera outbreaks in Africa and the implications for climate change: a narrative review (2021) – https://doi.org/10.1080/20477724.2021.1981716
+Forrás: Effects of Climate Change on Drought: A Systematic Review of Drought Indices and Climate Change (2026) – https://doi.org/10.46488/nept.2026.v25i01.b4341
+Forrás: Droughts and floods in a changing climate and implications for multi-hazard urban planning: A review (2024) – https://doi.org/10.1016/j.cacint.2024.100169
+Lektorálva: igen
+--- technikai ---
+Keresés: drought frequency increase climate change|soil moisture drought projections warming|agricultural drought attribution
+Paraméter: valtozas_pct
+Wikipédia: aszály
+Wikipédia angolul: drought
+Áttekintő cikkek keresése: drought climate change review
+
+=== felhoszakadas ===
+Korszak: I. (Felismerés)
+Kérdés: Hevesebbek lesznek-e a nagy esők?
+Röviden: A meleg levegő több vizet tart, ezért a felhőszakadások erősebbek lehetnek.
+Ha kikutatod:
+Mire jó?: Ez a tudás segít megérteni, milyen hatással lehet a szélsőséges csapadék a növényekre és a termésre, valamint milyen alkalmazkodási tervezésre van szükség a mezőgazdaságban.
+Mi a gond vele?: A megadott források nem emelik ki a legnagyobb veszélyt, de mind a szárazság, mind a heves eső károsíthatja a növényeket.
+Mennyire bizonyított?: A tudomány szerint a klímaváltozás növeli a heves esőzések és a szárazságok valószínűségét, de pontos számok még nem ismertek.
+Kérdés angolul: Will heavy rain get heavier?
+Röviden angolul: Warm air holds more water, so downpours can be stronger.
+Ha kikutatod angolul:
+Mire jó? angolul: This knowledge helps us understand how extreme rainfall can affect plants and crops, and what adaptation planning is needed in agriculture.
+Mi a gond vele? angolul: The provided sources do not highlight the greatest danger, though both drought and heavy rain can harm plants.
+Mennyire bizonyított? angolul: According to science, climate change increases the likelihood of heavy rain and droughts, though exact figures are not yet known.
+Forrás: Wikipédia: Extreme weather (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Extreme_weather
+Forrás: Temperature and Precipitation Extremes over the Iberian Peninsula under Climate Change Scenarios: A Review (2021) – https://doi.org/10.3390/cli9090139
+Forrás: Precipitation Extremes Under Climate Change (2015) – https://doi.org/10.1007/s40641-015-0009-3
+Forrás: Impacts of extreme precipitation and seasonal changes in precipitation on plants (2014) – https://doi.org/10.5194/bg-11-3083-2014
+Lektorálva: igen
+--- technikai ---
+Keresés: extreme precipitation intensification per degree warming|heavy rainfall scaling with temperature|observed increase extreme precipitation
+Paraméter: valtozas_pct_per_c
+Wikipédia: szélsőséges időjárás csapadék
+Wikipédia angolul: extreme weather
+Áttekintő cikkek keresése: extreme precipitation climate change review
+
+=== erdotuz ===
+Korszak: I. (Felismerés)
+Kérdés: Több erdőtűz lesz-e a melegedéssel?
+Röviden: A forró, száraz nyarakon könnyebben és nagyobb területen ég az erdő.
+Ha kikutatod:
+Mire jó?: Fontos tudni, mert a melegedés miatt gyakoribbá válhatnak az erdőtüzek, ami súlyos környezeti és gazdasági károkat okozhat.
+Mi a gond vele?: A tüzek károsak lehetnek a természetre és az emberekre, ugyanakkor a természetes tűzdinamika egyes ökoszisztémákban szerepet játszik.
+Mennyire bizonyított?: A tudományos ismeretek szerint a melegedés növeli a tűzveszélyt és a tüzek kialakulásának valószínűségét, de bizonyos tényezők bizonytalanok.
+Kérdés angolul: Will warming bring more wildfires?
+Röviden angolul: In hot, dry summers forests catch fire more easily and burn over larger areas.
+Ha kikutatod angolul:
+Mire jó? angolul: It is important to know because warming can make wildfires more frequent, which can cause severe environmental and economic damage.
+Mi a gond vele? angolul: Fires can be harmful to nature and people, while natural fire dynamics play a role in some ecosystems.
+Mennyire bizonyított? angolul: According to scientific knowledge, warming increases fire danger and the likelihood of fires occurring, though certain factors are uncertain.
+Forrás: Wikipédia: Wildfire (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Wildfire
+Forrás: A Review of the Literature on Wildfires in the Context of Climate Change (2026) – https://doi.org/10.3390/fire9020052
+Forrás: Review of: "Connection Between Climate Change and Wildfires" (2024) – https://doi.org/10.32388/o8dm05
+Forrás: Review: “Climate changes and wildfire emissions of atmospheric pollutants in Europe” (2016) – https://doi.org/10.5194/acp-2015-1000-rc1
+Lektorálva: igen
+--- technikai ---
+Keresés: climate change wildfire burned area increase|fire weather climate change attribution|wildfire carbon emissions trend
+Paraméter: valtozas_pct
+Wikipédia: erdőtűz
+Wikipédia angolul: wildfire
+Áttekintő cikkek keresése: wildfire climate change review
+
+# ----- III. korszak: Átalakulás -----
+
+=== kozet ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyit segít a kőzetmállasztás?
+Röviden: Finomra őrölt kőzetet szórnak a földekre, ami lassan megköti a levegő CO2-jét.
+Ha kikutatod: Kőzetpor a földekre a tervedben.
+Mire jó?: A kőzetmállasztás segíthet a klímaváltozás ellen, mert megköti a levegőből a szén-dioxidot, és hosszú távon rögzítheti a talajban vagy az óceánban.
+Mi a gond vele?: A kőzetmállasztás nem biztos, hogy mindenhol hatékony, mert a talajtípus, a kőzet típusa és más tényezők befolyásolják a szénmegkötést. Emellett kockázatok is felmerülnek, például a nehézfémek felszabadulása.
+Mennyire bizonyított?: A kőzetmállasztás még nem teljesen bizonyított, mert a laboratóriumi eredmények és a valós környezet között jelentős különbségek lehetnek, ezért további kutatásokra van szükség.
+Kérdés angolul: How much does rock weathering help?
+Röviden angolul: Finely ground rock is spread on fields, where it slowly binds CO2 from the air.
+Ha kikutatod angolul: Rock dust on fields in your plan.
+Mire jó? angolul: Rock weathering can help against climate change because it captures carbon dioxide from the air and can lock it away over the long term in soil or the ocean.
+Mi a gond vele? angolul: Rock weathering is not certain to be effective everywhere because soil type, rock type, and other factors affect carbon uptake. In addition, risks arise, such as the release of heavy metals.
+Mennyire bizonyított? angolul: Rock weathering is not yet fully proven because there can be significant differences between laboratory results and the real environment, so further research is needed.
+Forrás: Wikipédia: Enhanced weathering (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Enhanced_weathering
+Forrás: CO₂ sequestration and soil improvement in enhanced rock weathering: A review from an experimental perspective (2024) – https://doi.org/10.1002/ghg.2313
+Forrás: Review and syntheses: Ocean alkalinity enhancement and carbon dioxide removal through marine enhanced rock weathering using olivine (2025) – https://doi.org/10.5194/bg-22-355-2025
+Forrás: Reviews and syntheses: Carbon vs. cation based MRV of Enhanced Rock Weathering and the issue of soil organic carbon (2026) – https://doi.org/10.5194/bg-23-53-2026
+Lektorálva: igen
+--- technikai ---
+Keresés: enhanced rock weathering carbon dioxide removal potential|enhanced weathering croplands global potential|negative emissions technologies potentials costs side effects
+Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
+Wikipédia: kőzetmállás szén-dioxid
+Wikipédia angolul: enhanced weathering
+Áttekintő cikkek keresése: enhanced rock weathering review
+
+=== co2_tarolas ===
+Korszak: III. (Átalakulás)
+Kérdés: Biztonságosan tárolható-e a CO2 a föld alatt?
+Röviden: A leválasztott CO2-t mély kőzetrétegekbe sajtolják. Mennyi szivároghat vissza?
+Ha kikutatod:
+Mire jó?: Ez csökkentheti a légkörben lévő szén-dioxid mennyiségét, így segíthet a klímaváltozás lassításában.
+Mi a gond vele?: A tárolás során kockázatok lehetnek, például a kőzetrétegek megváltozása vagy a szén-dioxid visszaszivárgása a légkörbe.
+Mennyire bizonyított?: A tudományos vizsgálatok alapján a tárolás technológiája bizonyított, de további kutatások szükségesek a teljes biztonság igazolásához.
+Kérdés angolul: Can CO2 be stored safely underground?
+Röviden angolul: Captured CO2 is pumped into deep rock layers. How much could leak back?
+Ha kikutatod angolul:
+Mire jó? angolul: This can reduce the amount of carbon dioxide in the atmosphere, thus helping slow climate change.
+Mi a gond vele? angolul: There can be risks during storage, such as changes in rock layers or carbon dioxide leaking back into the atmosphere.
+Mennyire bizonyított? angolul: Based on scientific studies, the storage technology is proven, though further research is needed to confirm full safety.
+Forrás: Wikipédia: Carbon sequestration (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Carbon_sequestration
+Forrás: A review of carbon mineralization mechanism during geological CO2 storage (2023) – https://doi.org/10.1016/j.heliyon.2023.e23135
+Forrás: A review of geochemical–mechanical impacts in geological carbon storage reservoirs (2019) – https://doi.org/10.1002/ghg.1870
+Forrás: Carbon dioxide storage in subsurface geologic medium: A review on capillary trapping mechanism (2015) – https://doi.org/10.1016/j.ejpe.2015.08.002
+Lektorálva: igen
+--- technikai ---
+Keresés: geological CO2 storage leakage risk|CO2 storage capacity saline aquifers|CO2 mineralization basalt storage
+Paraméter: reszarany_pct
+Wikipédia: szén-dioxid tárolás föld alatt
+Wikipédia angolul: carbon sequestration
+Áttekintő cikkek keresése: geological carbon storage review
+
+# ----- IV. korszak: Helyreállítás -----
+
+=== lap ===
+Korszak: IV. (Helyreállítás)
+Kérdés: Mennyi szenet ment meg a lápok újra elárasztása?
+Röviden: A kiszárított láp szenet enged ki. Ha újra vizes lesz, megint tárolja.
+Ha kikutatod:
+Mire jó?: A visszanedvesítés segíthet a klímaváltozás ellen, mert a lápok csökkenthetik a szénkibocsátást, és a természetes életközösségek visszaállíthatók.
+Mi a gond vele?: A visszanedvesítés nem biztos, hogy teljesen visszaállítja a lápokat, mert a talaj és a növényzet helyreállása évekig tarthat, és nem mindig éri el a korábbi állapotot.
+Mennyire bizonyított?: A tudomány szerint a visszanedvesítés segíthet a klímaváltozás ellen, de a pontos hatások és a helyreállítás időtartama még nem teljesen ismert.
+Kérdés angolul: How much carbon does rewetting peatlands save?
+Röviden angolul: A drained peatland releases carbon. Made wet again, it stores carbon once more.
+Ha kikutatod angolul:
+Mire jó? angolul: Rewetting can help against climate change because peatlands can reduce carbon emissions and natural ecological communities can be restored.
+Mi a gond vele? angolul: Rewetting is not certain to fully restore peatlands because recovery of the soil and vegetation can take years and does not always reach the previous state.
+Mennyire bizonyított? angolul: According to science, rewetting can help against climate change, though exact effects and the duration of restoration are not yet fully known.
+Forrás: Wikipédia: Láp (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/L%C3%A1p
+Forrás: The Response of Microbial Communities to Peatland Drainage and Rewetting. A Review (2020) – https://doi.org/10.3389/fmicb.2020.582812
+Forrás: From Drainage to Rewetting—Soil Transformations in European Agricultural Peatlands: A Review (2026) – https://doi.org/10.3390/agronomy16050586
+Forrás: Global guidelines for peatland rewetting and restoration (2021) – https://doi.org/10.69556/strp.tr11.21.eng
+Lektorálva: igen
+--- technikai ---
+Keresés: peatland rewetting greenhouse gas emissions reduction|peatland restoration carbon|drained peatland emissions
+Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
+Wikipédia: láp
+Wikipédia angolul: peatland
+Áttekintő cikkek keresése: peatland rewetting review
+
+=== vas_tenger ===
+Korszak: IV. (Helyreállítás)
+Kérdés: Segít-e, ha vassal trágyázzuk a tengert?
+Röviden: A vas serkenti a tengeri algák növekedését. Kérdés, mennyi szén süllyed le tartósan.
+Ha kikutatod:
+Mire jó?: A vas adagolása serkentheti a fitoplankton növekedését, ami megköthet szén-dioxidot a légkörből, így mérsékelheti a klímaváltozás ütemét.
+Mi a gond vele?: A kísérletek szerint a vas adagolása nem biztos, hogy hatékony, és ökológiai kockázatok is felmerülnek, valamint a megkötött szén visszakerülhet a körforgásba.
+Mennyire bizonyított?: A tudományos bizonyítékok kevésbé erősek, mert a kísérletek eredményei változóak, és a hatások még nem teljesen ismertek. A kutatások továbbra is folynak.
+Kérdés angolul: Does fertilising the sea with iron help?
+Röviden angolul: Iron boosts the growth of ocean algae. The question is how much carbon sinks for good.
+Ha kikutatod angolul:
+Mire jó? angolul: Adding iron can stimulate phytoplankton growth, which can capture carbon dioxide from the atmosphere, thus moderating the pace of climate change.
+Mi a gond vele? angolul: According to experiments, adding iron is not certain to be effective, ecological risks also arise, and captured carbon can return to the cycle.
+Mennyire bizonyított? angolul: Scientific evidence is less strong because experiment results vary and effects are not yet fully known. Research is still ongoing.
+Forrás: Wikipédia: Iron fertilization (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Iron_fertilization
+Forrás: Reviews and syntheses: Ocean iron fertilization experiments – past, present, and future looking to a future Korean Iron Fertilization Experiment in the Southern Ocean (KIFES) project (2018) – https://doi.org/10.5194/bg-15-5847-2018
+Forrás: Climate change, ocean processes and ocean iron fertilization (2008) – https://doi.org/10.3354/meps07542
+Forrás: Efficiency of carbon removal per added iron in ocean iron fertilization (2008) – https://doi.org/10.3354/meps07548
+Lektorálva: igen
+--- technikai ---
+Keresés: ocean iron fertilization carbon sequestration potential PgC|iron fertilization model carbon export gigatons|ocean iron fertilization efficiency sequestration estimate
+Paraméter: szen_gtc
+Wikipédia: vastrágyázás óceán
+Wikipédia angolul: iron fertilization
+Áttekintő cikkek keresése: ocean iron fertilization review

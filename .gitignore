@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.godot/
+*.tmp
+
+# a játékos saját zenéje: nem része a játéknak
+AETHER_godot/sajat_zene/*.wav
+AETHER_godot/sajat_zene/*.mp3
+AETHER_godot/sajat_zene/*.ogg
+
+# Claude Code helyi beállítások (nem kerül a tárolóba)
+.claude/settings.local.json
+
+# a kiadott (exportált) játék csomagja
+kiadas/

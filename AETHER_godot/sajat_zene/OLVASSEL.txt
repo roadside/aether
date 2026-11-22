@@ -1,0 +1,4 @@
+Ide teheted a saját kezdőzenédet intro.wav néven (WAV, 16 bites).
+Ha itt van, a kezdőanimáció ezt játssza, a végét lehalkítva; ha nincs, a játék saját handpan dallama szól.
+Az itt lévő hangfájlok nem részei a játéknak és nem kerülnek fel a GitHubra:
+más szerző zenéjét csak az ő engedélyével szabad a játékkal együtt továbbadni.

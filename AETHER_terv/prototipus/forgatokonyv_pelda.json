@@ -1,0 +1,9 @@
+{
+  "nev": "Saját csomag: nettó zéró 2060 + metán -30%",
+  "leiras": "Példa forgatókönyv a 'modell' parancshoz.",
+  "co2_cel_ev": 2060,
+  "co2_cel_ertek": 0.0,
+  "metan_csokkentes_pct": 30,
+  "metan_cel_ev": 2035,
+  "cdr": {"erdosites": 1.0, "bioszen": 0.5}
+}

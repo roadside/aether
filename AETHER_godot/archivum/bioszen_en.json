@@ -1,0 +1,785 @@
+{
+ "publikacio": {
+  "aether_publikacio_verzio": 1,
+  "kerdes": "How much CO2 can biochar remove from the air?",
+  "terv": {
+   "kutatasi_kerdes_pontositva": "How much CO2 can biochar remove from the air?",
+   "angol_keresokifejezesek": [
+    "biochar carbon dioxide removal potential global",
+    "biochar soil carbon sequestration meta-analysis",
+    "negative emissions technologies potentials costs side effects"
+   ],
+   "keresett_parameterek": [
+    "cdr_potencial_gtco2_ev",
+    "cdr_koltseg_usd_tco2"
+   ],
+   "megjegyzes": "Előre összeállított kérdés."
+  },
+  "ai": "ollama:qwen3:8b",
+  "cikkek": {
+   "P1": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2940358366",
+    "title": "Responses of soil carbon sequestration to climate‐smart agriculture practices: A meta‐analysis",
+    "year": 2019,
+    "doi": "10.1111/gcb.14658",
+    "abstract": "Climate-smart agriculture (CSA) management practices (e.g., conservation tillage, cover crops, and biochar applications) have been widely adopted to enhance soil organic carbon (SOC) sequestration and to reduce greenhouse gas emissions while ensuring crop productivity. However, current measurements regarding the influences of CSA management practices on SOC sequestration diverge widely, making it difficult to derive conclusions about individual and combined CSA management effects and bringing large uncertainties in quantifying the potential of the agricultural sector to mitigate climate change. We conducted a meta-analysis of 3,049 paired measurements from 417 peer-reviewed articles to examine the effects of three common CSA management practices on SOC sequestration as well as the environmental controlling factors. We found that, on average, biochar applications represented the most effective approach for increasing SOC content (39%), followed by cover crops (6%) and conservation tillage (5%). Further analysis suggested that the effects of CSA management practices were more pronounced in areas with relatively warmer climates or lower nitrogen fertilizer inputs. Our meta-analysis demonstrated that, through adopting CSA practices, cropland could be an improved carbon sink. We also highlight the importance of considering local environmental factors (e.g., climate and soil conditions and their combination with other management practices) in identifying appropriate CSA practices for mitigating greenhouse gas emissions while ensuring crop productivity.",
+    "venue": "Global Change Biology",
+    "authors": [
+     "Xiongxiong Bai",
+     "Yawen Huang",
+     "Wei Ren",
+     "Mark S. Coyne",
+     "Pierre-André Jacinthe",
+     "Bo Tao",
+     "Dafeng Hui",
+     "Jian Yang",
+     "Chris J. Matocha"
+    ],
+    "cited_by": 583,
+    "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/gcb.14658",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "review",
+    "orszagok": [
+     "CN",
+     "US"
+    ],
+    "intezmenyek": {
+     "US": [
+      "University of Kentucky",
+      "Indiana University – Purdue University Indianapolis",
+      "Tennessee State University"
+     ],
+     "CN": [
+      "Henan Normal University"
+     ]
+    }
+   },
+   "P2": {
+    "source": "crossref",
+    "source_id": "10.3390/agronomy11122474",
+    "title": "Soil Organic Carbon Sequestration after Biochar Application: A Global Meta-Analysis",
+    "year": 2021,
+    "doi": "10.3390/agronomy11122474",
+    "abstract": "Biochar application to soil has the potential to sequester carbon in the long term because of its high stability and large-scale production potential. However, biochar technologies are still relatively new, and the global factors affecting the long-term fate of biochar in the environment are still poorly understood. To fill this important research gap, a global meta-analysis was conducted including 64 studies with 736 individual treatments. Field experiments covered experimental durations between 1 and 10 years with biochar application amounts between 1 and 100 Mg ha−1. They showed a mean increase in soil organic carbon (SOC) stocks by 13.0 Mg ha−1 on average, corresponding to 29%. Pot and incubation experiments ranged between 1 and 1278 days and biochar amounts between 5 g kg−1 and 200 g kg−1. They raised SOC by 6.3 g kg−1 on average, corresponding to 75%. More SOC was accumulated in long experimental durations of &gt;500 days in pot and incubation experiments and 6–10 years in field experiments than in shorter experimental durations. Organic fertilizer co-applications significantly further increased SOC. Biochar from plant material showed higher C sequestration potential than biochar from fecal matter, due to higher C/N ratio. SOC increases after biochar application were higher in medium to fine grain textured soils than in soils with coarse grain sizes. Our study clearly demonstrated the high C sequestration potential of biochar application to agricultural soils of varying site and soil characteristics.",
+    "venue": "Agronomy",
+    "authors": [
+     "Arthur Gross",
+     "Tobias Bromm",
+     "Bruno Glaser"
+    ],
+    "cited_by": 248,
+    "url": "https://doi.org/10.3390/agronomy11122474",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "journal-article",
+    "orszagok": [
+     "DE"
+    ],
+    "intezmenyek": {
+     "DE": [
+      "Martin Luther University Halle-Wittenberg"
+     ]
+    }
+   },
+   "P3": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2804406438",
+    "title": "Negative emissions—Part 2: Costs, potentials and side effects",
+    "year": 2018,
+    "doi": "10.1088/1748-9326/aabf9f",
+    "abstract": "The most recent IPCC assessment has shown an important role for negative emissions technologies (NETs) in limiting global warming to 2 °C cost-effectively. However, a bottom-up, systematic, reproducible, and transparent literature assessment of the different options to remove CO 2 from the atmosphere is currently missing. In part 1 of this three-part review on NETs, we assemble a comprehensive set of the relevant literature so far published, focusing on seven technologies: bioenergy with carbon capture and storage (BECCS), afforestation and reforestation, direct air carbon capture and storage (DACCS), enhanced weathering, ocean fertilisation, biochar, and soil carbon sequestration. In this part, part 2 of the review, we present estimates of costs, potentials, and side-effects for these technologies, and qualify them with the authors' assessment. Part 3 reviews the innovation and scaling challenges that must be addressed to realise NETs deployment as a viable climate mitigation strategy. Based on a systematic review of the literature, our best estimates for sustainable global NET potentials in 2050 are 0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation, 0.5–5 GtCO 2 yr −1 for BECCS, 0.5–2 GtCO 2 yr −1 for biochar, 2–4 GtCO 2 yr −1 for enhanced weathering, 0.5–5 GtCO 2 yr −1 for DACCS, and up to 5 GtCO 2 yr −1 for soil carbon sequestration. Costs vary widely across the technologies, as do their permanency and cumulative potentials beyond 2050. It is unlikely that a single NET will be able to sustainably meet the rates of carbon uptake described in integrated assessment pathways consistent with 1.5 °C of global warming.",
+    "venue": "Environmental Research Letters",
+    "authors": [
+     "Sabine Fuss",
+     "William F. Lamb",
+     "Max Callaghan",
+     "Jérôme Hilaire",
+     "Felix Creutzig",
+     "Thorben Amann",
+     "Tim Beringer",
+     "Wagner de Oliveira Garcia",
+     "Jens Hartmann",
+     "Tarun M. Khanna",
+     "Gunnar Luderer",
+     "Gregory F. Nemet",
+     "Joeri Rogelj",
+     "Pete Smith",
+     "José Luis Vicente‐Vicente",
+     "Jennifer L. Wilcox",
+     "Maria del Mar Zamora Dominguez",
+     "Jan Christoph Minx"
+    ],
+    "cited_by": 1853,
+    "url": "https://iopscience.iop.org/article/10.1088/1748-9326/aabf9f/pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "AT",
+     "CH",
+     "DE",
+     "GB",
+     "US"
+    ],
+    "intezmenyek": {
+     "DE": [
+      "Mercator Research Institute on Global Commons and Climate Change",
+      "Potsdam Institute for Climate Impact Research",
+      "Technische Universität Berlin",
+      "Universität Hamburg"
+     ],
+     "GB": [
+      "University of Leeds",
+      "University of Aberdeen"
+     ],
+     "US": [
+      "University of Wisconsin–Madison",
+      "Colorado School of Mines"
+     ],
+     "AT": [
+      "International Institute for Applied Systems Analysis"
+     ],
+     "CH": [
+      "ETH Zurich",
+      "Institute for Atmospheric and Climate Science"
+     ]
+    }
+   },
+   "P4": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W4403454523",
+    "title": "Biochar’s effect on the soil carbon cycle: a rapid review and meta-analysis",
+    "year": 2024,
+    "doi": "10.1007/s42773-024-00381-8",
+    "abstract": "Biochar offers opportunities for improving soil carbon (C) sequestration and reducing CO2 emissions to the atmosphere. It has emerged as a strategy for mitigating climate change and improving the soil carbon cycle (SCC). While previous review studies have primarily investigated the effects of biochar on greenhouse gas (GHG) emissions, a considerable research gap remains regarding its impact on the SCC. The present study aims to bridge this gap by examining the main SCC components: total CO2 flux, total microbial respiration, and C sequestration. We conducted a global meta-analysis which included 75 studies and 250 observations. The results show an average 11% increase in soil total CO2 flux from biochar, but the confidence interval (CI) slightly touches the no-effect line (CI [0%, 23%]). Total microbial respiration remains unchanged after the application (10%, CI [− 2%, 23%]). In contrast, soil C sequestration benefits from biochar by 61% (CI [36%, 90%]). Our analysis identified key predictors affecting SCC components: experimental design, continent, biochar application rate, feedstock type, and pyrolysis temperature. Incubation experiments reveal benefits for all SCC components. The Middle East, Europe, and Asia exhibit potential for enhancing C sequestration with biochar. Higher application rates amplify C sequestration and total microbial respiration. Manure biochar enhances total microbial respiration, while woody biochar influences total CO2 flux. Furthermore, lower pyrolysis temperatures show promise for improving C sequestration and total microbial respiration. In conclusion, while biochar holds promise for C sequestration, its impact on total microbial respiration and total CO2 flux remains inconclusive.",
+    "venue": "Biochar",
+    "authors": [
+     "Madina Bekchanova",
+     "Tom Emile Kuppens",
+     "Ann Cuypers",
+     "Marijke Jozefczak",
+     "Robert M. Malina"
+    ],
+    "cited_by": 100,
+    "url": "https://link.springer.com/content/pdf/10.1007/s42773-024-00381-8.pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "BE"
+    ],
+    "intezmenyek": {
+     "BE": [
+      "Hasselt University",
+      "Vrije Universiteit Brussel"
+     ]
+    }
+   },
+   "P5": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W3131956693",
+    "title": "Demand-side solutions to climate change mitigation consistent with high levels of well-being",
+    "year": 2021,
+    "doi": "10.1038/s41558-021-01219-y",
+    "abstract": "Mitigation solutions are often evaluated in terms of costs and greenhouse gas reduction potentials, missing out on the consideration of direct effects on human well-being. Here, we systematically assess the mitigation potential of demand-side options categorized into avoid, shift and improve, and their human well-being links. We show that these options, bridging socio-behavioural, infrastructural and technological domains, can reduce counterfactual sectoral emissions by 40–80% in end-use sectors. Based on expert judgement and an extensive literature database, we evaluate 306 combinations of well-being outcomes and demand-side options, finding largely beneficial effects in improvement in well-being (79% positive, 18% neutral and 3% negative), even though we find low confidence on the social dimensions of well-being. Implementing such nuanced solutions is based axiomatically on an understanding of malleable rather than fixed preferences, and procedurally on changing infrastructures and choice architectures. Results demonstrate the high mitigation potential of demand-side mitigation options that are synergistic with well-being.",
+    "venue": "Nature Climate Change",
+    "authors": [
+     "Felix Creutzig",
+     "Leila Niamir",
+     "Xuemei Bai",
+     "Max Callaghan",
+     "Jonathan M. Cullen",
+     "Julio Díaz‐José",
+     "Maria Josefina Figueroa",
+     "Arnulf Grübler",
+     "William F. Lamb",
+     "Adrian Leip",
+     "Eric R. Masanet",
+     "Érika Mata",
+     "Linus Mattauch",
+     "Jan Christoph Minx",
+     "Sebastian Mirasgedis",
+     "Yacob Mulugetta",
+     "Sudarmanto Budi Nugroho",
+     "Minal Pathak",
+     "Patrícia E. Perkins",
+     "Joyashree Roy",
+     "Stéphane de la Rue du Can",
+     "Yamina Saheb",
+     "Shreya Some",
+     "Linda Steg",
+     "Julia  K. Steinberger",
+     "Diána Ürge-Vorsatz"
+    ],
+    "cited_by": 785,
+    "url": "https://www.nature.com/articles/s41558-021-01219-y.pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "AT",
+     "AU",
+     "CA",
+     "CH",
+     "DE",
+     "DK",
+     "GB",
+     "GR",
+     "HU",
+     "IN",
+     "IT",
+     "JP",
+     "MX",
+     "NL",
+     "SE",
+     "TH",
+     "US"
+    ],
+    "intezmenyek": {
+     "DE": [
+      "Mercator Research Institute on Global Commons and Climate Change",
+      "Technische Universität Berlin",
+      "Potsdam Institute for Climate Impact Research"
+     ],
+     "AU": [
+      "Australian National University"
+     ],
+     "GB": [
+      "University of Leeds",
+      "University of Cambridge",
+      "University of Oxford",
+      "University College London"
+     ],
+     "MX": [
+      "Universidad Veracruzana"
+     ],
+     "DK": [
+      "Copenhagen Business School"
+     ],
+     "AT": [
+      "International Institute for Applied Systems Analysis"
+     ],
+     "IT": [
+      "Joint Research Centre"
+     ],
+     "US": [
+      "University of California, Santa Barbara",
+      "Lawrence Berkeley National Laboratory"
+     ],
+     "SE": [
+      "IVL Swedish Environmental Research Institute"
+     ],
+     "GR": [
+      "National Observatory of Athens"
+     ],
+     "JP": [
+      "Institute for Global Environmental Strategies"
+     ],
+     "IN": [
+      "Ahmedabad University",
+      "Jadavpur University"
+     ],
+     "CA": [
+      "York University"
+     ],
+     "TH": [
+      "Asian Institute of Technology"
+     ],
+     "CH": [
+      "University of Lausanne"
+     ],
+     "NL": [
+      "University of Groningen"
+     ],
+     "HU": [
+      "Central European University - Budapest Campus"
+     ]
+    }
+   },
+   "P6": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2108349259",
+    "title": "Response of soil carbon dioxide fluxes, soil organic carbon and microbial biomass carbon to biochar amendment: a meta‐analysis",
+    "year": 2015,
+    "doi": "10.1111/gcbb.12265",
+    "abstract": "Biochar as a carbon‐rich coproduct of pyrolyzing biomass, its amendment has been advocated as a potential strategy to soil carbon (C) sequestration. Updated data derived from 50 papers with 395 paired observations were reviewed using meta‐analysis procedures to examine responses of soil carbon dioxide (CO 2 ) fluxes, soil organic C (SOC), and soil microbial biomass C (MBC) contents to biochar amendment. When averaged across all studies, biochar amendment had no significant effect on soil CO 2 fluxes, but it significantly enhanced SOC content by 40% and MBC content by 18%. A positive response of soil CO 2 fluxes to biochar amendment was found in rice paddies, laboratory incubation studies, soils without vegetation, and unfertilized soils. Biochar amendment significantly increased soil MBC content in field studies, N‐fertilized soils, and soils with vegetation. Enhancement of SOC content following biochar amendment was the greatest in rice paddies among different land‐use types. Responses of soil CO 2 fluxes and MBC to biochar amendment varied with soil texture and pH. The use of biochar in combination with synthetic N fertilizer and waste compost fertilizer led to the greatest increases in soil CO 2 fluxes and MBC content, respectively. Both soil CO 2 fluxes and MBC responses to biochar amendment decreased with biochar application rate, pyrolysis temperature, or C/N ratio of biochar, while each increased SOC content enhancement. Among different biochar feedstock sources, positive responses of soil CO 2 fluxes and MBC were the highest for manure and crop residue feedstock sources, respectively. Soil CO 2 flux responses to biochar amendment decreased with pH of biochar, while biochars with pH of 8.1–9.0 had the greatest enhancement of SOC and MBC contents. Therefore, soil properties, land‐use type, agricultural practice, and biochar characteristics should be taken into account to assess the practical potential of biochar for mitigating climate change.",
+    "venue": "GCB Bioenergy",
+    "authors": [
+     "Shuwei Liu",
+     "Yaojun Zhang",
+     "Yajie Zong",
+     "Zhiqiang Hu",
+     "Shuang Wu",
+     "Jie Zhou",
+     "Yaguo Jin",
+     "Jianwen Zou"
+    ],
+    "cited_by": 531,
+    "url": "https://doi.org/10.1111/gcbb.12265",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "CN"
+    ],
+    "intezmenyek": {
+     "CN": [
+      "Nanjing Agricultural University"
+     ]
+    }
+   },
+   "P7": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W4311521018",
+    "title": "Meta-Analysis for Quantifying Carbon Sequestration and Greenhouse Gas Emission in Paddy Soils One Year after Biochar Application",
+    "year": 2022,
+    "doi": "10.3390/agronomy12123065",
+    "abstract": "The incorporation of biochar into soils has been recognized as a promising method to combat climate change. However, the full carbon reduction potential of biochar in paddy soils is still unclear. To give an overview of the quantified carbon reduction, a meta-analysis model of different carbon emission factors was established, and the life cycle-based carbon reduction of biochar was estimated. After one year of incorporation, biochar significantly increased the total soil carbon (by 27.2%) and rice production (by 11.3%); stimulated methane (CH4) and carbon dioxide (CO2) emissions by 13.6% and 1.41%, respectively, but having insignificant differences with no biochar amendment; and reduced nitrous oxide (N2O) emissions by 25.1%. The soil total carbon increase was mainly related to the biochar rate, whereas CH4 emissions were related to the nitrogen fertilizer application rate. Biochar pyrolysis temperature, soil type, and climate were the main factors to influence the rice yield. The total carbon reduction potential of biochar incorporation in Chinese paddy soils in 2020 ranged from 0.0066 to 2.0 Pg C using a biochar incorporation rate from 2 to 40 t ha−1. This study suggests that biochar application has high potential to reduce carbon emissions, thereby contributing to the carbon neutrality goal, but needs field-scale long-term trials to validate the predictions.",
+    "venue": "Agronomy",
+    "authors": [
+     "Fei Bu",
+     "Qiong Nan",
+     "Wushuang Li",
+     "Nanthi Sirangie Bolan",
+     "Binoy Sarkar",
+     "Jun Meng",
+     "Hailong Wang"
+    ],
+    "cited_by": 29,
+    "url": "https://www.mdpi.com/2073-4395/12/12/3065/pdf?version=1671437353",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "AU",
+     "CN"
+    ],
+    "intezmenyek": {
+     "CN": [
+      "Shenyang Agricultural University",
+      "Ministry of Agriculture and Rural Affairs",
+      "Zhejiang University",
+      "Zhejiang A & F University",
+      "Foshan University"
+     ],
+     "AU": [
+      "The University of Western Australia",
+      "University of South Australia"
+     ]
+    }
+   },
+   "P8": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W4224006942",
+    "title": "Characteristics and Applications of Biochar in Soil–Plant Systems: A Short Review of Benefits and Potential Drawbacks",
+    "year": 2022,
+    "doi": "10.3390/app12084051",
+    "abstract": "The available literary data suggest the general applicability and benefits of different biochar products in various soil–plant–environment systems. Due to its high porosity, biochar might generally improve the physicochemical and biological properties of supplemented soils. Among the direct and indirect effects are (i) improved water-retention capacity, (ii) enhanced soil organic matter content, (iii) pH increase, (iv) better N and P availability, and (v) greater potential uptake of meso- and micronutrients. These are connected to the advantage of an enhanced soil oxygen content. The large porous surface area of biochar might indirectly protect the survival of microorganisms, while the adsorbed organic materials may improve the growth of both bacteria and fungi. On the other hand, N2-fixing Rhizobium bacteria and P-mobilizing mycorrhiza fungi might respond negatively to biochar’s application. In arid circumstances with limited water and nutrient availability, a synergistic positive effect was found in biochar–microbial combined applications. Biochar seems to be a valuable soil supplement if its application is connected with optimized soil–plant–environment conditions. This work aims to give a general review of the potential benefits and drawbacks of biochar application to soil, highlighting its impacts on the soil–plant–microbe system.",
+    "venue": "Applied Sciences",
+    "authors": [
+     "Tamás Kocsis",
+     "Marianna Ringer",
+     "Borbála Bíró"
+    ],
+    "cited_by": 120,
+    "url": "https://www.mdpi.com/2076-3417/12/8/4051/pdf?version=1650252863",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "HU"
+    ],
+    "intezmenyek": {
+     "HU": [
+      "Magyar Agrár- és Élettudományi Egyetem",
+      "Geographical Institute",
+      "HUN-REN Research Centre for Astronomy and Earth Sciences"
+     ]
+    }
+   }
+  },
+  "ai_nyers_kivonat": {
+   "allitasok": [
+    {
+     "cikk_azonosito": "P3",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "afforestation and reforestation",
+     "ertek": 3.6,
+     "also": 0.5,
+     "felso": 3.6,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "globális",
+     "korlatok": "sustainable global NET potentials in 2050"
+    },
+    {
+     "cikk_azonosito": "P3",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "BECCS",
+     "ertek": 5,
+     "also": 0.5,
+     "felso": 5,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for BECCS",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "globális",
+     "korlatok": "sustainable global NET potentials in 2050"
+    },
+    {
+     "cikk_azonosito": "P3",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "biochar",
+     "ertek": 2,
+     "also": 0.5,
+     "felso": 2,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–2 GtCO 2 yr −1 for biochar",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "globális",
+     "korlatok": "sustainable global NET potentials in 2050"
+    },
+    {
+     "cikk_azonosito": "P3",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "enhanced weathering",
+     "ertek": 4,
+     "also": 2,
+     "felso": 4,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "2–4 GtCO 2 yr −1 for enhanced weathering",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "globális",
+     "korlatok": "sustainable global NET potentials in 2050"
+    },
+    {
+     "cikk_azonosito": "P3",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "DACCS",
+     "ertek": 5,
+     "also": 0.5,
+     "felso": 5,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for DACCS",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "globális",
+     "korlatok": "sustainable global NET potentials in 2050"
+    },
+    {
+     "cikk_azonosito": "P3",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "soil carbon sequestration",
+     "ertek": 5,
+     "also": 0,
+     "felso": 5,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "up to 5 GtCO 2 yr −1 for soil carbon sequestration",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "globális",
+     "korlatok": "sustainable global NET potentials in 2050"
+    }
+   ],
+   "osszegzes": "The study estimates the potential of various CO2 removal methods globally by 2050. Biochar could remove 0.5–2 GtCO2/yr. BECCS and DACCS have higher potential, up to 5 GtCO2/yr. Soil carbon sequestration also reaches 5 GtCO2/yr. Enhanced weathering is between 2–4 GtCO2/yr. Afforestation and reforestation are lower, at 0.5–3.6 GtCO2/yr. The study is a systematic review of existing literature.",
+   "ellentmondasok": "None. The study presents a range of estimates for different methods without contradicting itself."
+  },
+  "allitasok": [
+   {
+    "cikk_azonosito": "P3",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "afforestation and reforestation",
+    "ertek": 3.6,
+    "also": 0.5,
+    "felso": 3.6,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "globális",
+    "korlatok": "sustainable global NET potentials in 2050",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P3",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "BECCS",
+    "ertek": 5,
+    "also": 0.5,
+    "felso": 5,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for BECCS",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "globális",
+    "korlatok": "sustainable global NET potentials in 2050",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P3",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "biochar",
+    "ertek": 2,
+    "also": 0.5,
+    "felso": 2,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–2 GtCO 2 yr −1 for biochar",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "globális",
+    "korlatok": "sustainable global NET potentials in 2050",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P3",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "enhanced weathering",
+    "ertek": 4,
+    "also": 2,
+    "felso": 4,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "2–4 GtCO 2 yr −1 for enhanced weathering",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "globális",
+    "korlatok": "sustainable global NET potentials in 2050",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P3",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "DACCS",
+    "ertek": 5,
+    "also": 0.5,
+    "felso": 5,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for DACCS",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "globális",
+    "korlatok": "sustainable global NET potentials in 2050",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P3",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "soil carbon sequestration",
+    "ertek": 5,
+    "also": 0,
+    "felso": 5,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "up to 5 GtCO 2 yr −1 for soil carbon sequestration",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "globális",
+    "korlatok": "sustainable global NET potentials in 2050",
+    "statusz": "elutasitva",
+    "indokok": [
+     "A(z) alsó (0) nem szerepel az idézetben."
+    ],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   }
+  ],
+  "osszesitett_parameterek": {
+   "cdr_potencial_gtco2_ev:afforestation and reforestation": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "afforestation and reforestation",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 3.6,
+    "tartomany": [
+     0.5,
+     3.6
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:beccs": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "beccs",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 5.0,
+    "tartomany": [
+     0.5,
+     5
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:biochar": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "biochar",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 2.0,
+    "tartomany": [
+     0.5,
+     2
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:enhanced weathering": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "enhanced weathering",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 4.0,
+    "tartomany": [
+     2,
+     4
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:daccs": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "daccs",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 5.0,
+    "tartomany": [
+     0.5,
+     5
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   }
+  },
+  "ai_osszegzes": "The study estimates the potential of various CO2 removal methods globally by 2050. Biochar could remove 0.5–2 GtCO2/yr. BECCS and DACCS have higher potential, up to 5 GtCO2/yr. Soil carbon sequestration also reaches 5 GtCO2/yr. Enhanced weathering is between 2–4 GtCO2/yr. Afforestation and reforestation are lower, at 0.5–3.6 GtCO2/yr. The study is a systematic review of existing literature.",
+  "ellentmondasok": "None. The study presents a range of estimates for different methods without contradicting itself.",
+  "figyelmeztetes": "Ez egy játékon belüli, automatikusan összeállított irodalmi összefoglaló. Nem helyettesíti a szakértői lektorálást; minden számot az eredeti cikkben érdemes ellenőrizni.",
+  "azonosito": "AETHER-c4c0219c383dce90",
+  "letrehozva": "2026-11-22T16:33:48+00:00"
+ },
+ "javaslatok": [
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:afforestation and reforestation",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "afforestation and reforestation",
+   "ertek": 3.6,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    0.5,
+    3.6
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 3.6 billion tonnes of CO2 a year. That is about 9% of today's global emissions.",
+   "publikacio": "AETHER-c4c0219c383dce90",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "To use this in your plan, research its own topic: Afforestation.",
+   "alkategoria_nev": "Afforestation"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:beccs",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "beccs",
+   "ertek": 5.0,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    0.5,
+    5
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 5 billion tonnes of CO2 a year. That is about 12% of today's global emissions.",
+   "publikacio": "AETHER-c4c0219c383dce90",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "To use this in your plan, research its own topic: Bioenergy + carbon storage.",
+   "alkategoria_nev": "Bioenergy + carbon storage"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:biochar",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "biochar",
+   "ertek": 2.0,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    0.5,
+    2
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 2 billion tonnes of CO2 a year. That is about 5% of today's global emissions.",
+   "publikacio": "AETHER-c4c0219c383dce90",
+   "kar": "cdr:bioszen",
+   "kar_ertek": 2.0,
+   "kar_nev": "Biochar",
+   "megjegyzes": "",
+   "alkategoria_nev": "Biochar"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:enhanced weathering",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "enhanced weathering",
+   "ertek": 4.0,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    2,
+    4
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 4 billion tonnes of CO2 a year. That is about 9% of today's global emissions.",
+   "publikacio": "AETHER-c4c0219c383dce90",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "To use this in your plan, research its own topic: Enhanced rock weathering.",
+   "alkategoria_nev": "Enhanced rock weathering"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:daccs",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "daccs",
+   "ertek": 5.0,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    0.5,
+    5
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 5 billion tonnes of CO2 a year. That is about 12% of today's global emissions.",
+   "publikacio": "AETHER-c4c0219c383dce90",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "To use this in your plan, research its own topic: Direct air capture.",
+   "alkategoria_nev": "Direct air capture"
+  }
+ ],
+ "osszefoglalo": {
+  "cikkek": 8,
+  "allitasok": 6,
+  "ellenorizve": 5,
+  "elutasitva": 1,
+  "orszag": "HU",
+  "hazai": 2
+ },
+ "archivum": {
+  "datum": "2026-11-22",
+  "ai": "ollama qwen3:8b"
+ }
+}

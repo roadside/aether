@@ -1,0 +1,418 @@
+{
+ "tcre": {
+  "wiki": "szén-dioxid globális felmelegedés",
+  "wiki_en": "carbon budget"
+ },
+ "klimaerzekenyseg": {
+  "wiki": "klímaérzékenység",
+  "wiki_en": "climate sensitivity"
+ },
+ "aeroszol": {
+  "wiki": "aeroszol éghajlat",
+  "wiki_en": "aerosol"
+ },
+ "felhok": {
+  "wiki": "felhő éghajlat visszacsatolás",
+  "wiki_en": "cloud feedback"
+ },
+ "ocean_ho": {
+  "wiki": "óceán hőtartalom",
+  "wiki_en": "ocean heat content"
+ },
+ "amoc": {
+  "wiki": "Golf-áramlat",
+  "wiki_en": "Atlantic meridional overturning circulation"
+ },
+ "led": {
+  "wiki": "LED-lámpa",
+  "wiki_en": "LED lamp"
+ },
+ "kondenzcsik": {
+  "wiki": "kondenzcsík",
+  "wiki_en": "contrail"
+ },
+ "atomenergia": {
+  "wiki": "atomenergia",
+  "wiki_en": "nuclear power"
+ },
+ "hotarolas": {
+  "wiki": "hőtárolás",
+  "wiki_en": "thermal energy storage"
+ },
+ "fuzio": {
+  "wiki": "magfúzió",
+  "wiki_en": "fusion power"
+ },
+ "napernyo": {
+  "wiki": "napsugárzás-módosítás",
+  "wiki_en": "stratospheric aerosol injection"
+ },
+ "felho_fenyesites": {
+  "wiki": "felhőfényesítés",
+  "wiki_en": "marine cloud brightening"
+ },
+ "cirrus": {
+  "wiki": "pehelyfelhő",
+  "wiki_en": "cirrus cloud thinning"
+ },
+ "ocean_savasodas": {
+  "wiki": "óceánok savasodása",
+  "wiki_en": "ocean acidification"
+ },
+ "hulladek_metan": {
+  "wiki": "hulladéklerakó gáz",
+  "wiki_en": "landfill gas"
+ },
+ "hutokozeg": {
+  "wiki": "hűtőközeg",
+  "wiki_en": "hydrofluorocarbon"
+ },
+ "n2o_ipar": {
+  "wiki": "dinitrogén-oxid",
+  "wiki_en": "nitrous oxide"
+ },
+ "bioszen": {
+  "wiki": "bioszén",
+  "wiki_en": "biochar"
+ },
+ "mof": {
+  "wiki": "fémorganikus vázszerkezet",
+  "wiki_en": "metal–organic framework"
+ },
+ "akku_ujra": {
+  "wiki": "akkumulátor-újrahasznosítás",
+  "wiki_en": "battery recycling"
+ },
+ "hidrogen": {
+  "wiki": "vízbontás hidrogén",
+  "wiki_en": "electrolysis of water"
+ },
+ "uzemanyagcella": {
+  "wiki": "üzemanyagcella",
+  "wiki_en": "fuel cell"
+ },
+ "zold_ammonia": {
+  "wiki": "ammónia",
+  "wiki_en": "green ammonia"
+ },
+ "szintetikus_kerozin": {
+  "wiki": "szintetikus üzemanyag",
+  "wiki_en": "electrofuel"
+ },
+ "muanyag": {
+  "wiki": "műanyag újrahasznosítás",
+  "wiki_en": "plastic recycling"
+ },
+ "ocean_lugositas": {
+  "wiki": "óceán lúgosítás",
+  "wiki_en": "ocean alkalinity enhancement"
+ },
+ "ozon": {
+  "wiki": "montreali jegyzőkönyv",
+  "wiki_en": "Montreal Protocol"
+ },
+ "metan_bontas": {
+  "wiki": "metán lebomlás légkör",
+  "wiki_en": "atmospheric methane removal"
+ },
+ "perovszkit": {
+  "wiki": "perovszkit napelem",
+  "wiki_en": "perovskite solar cell"
+ },
+ "litium_akku": {
+  "wiki": "lítiumion-akkumulátor",
+  "wiki_en": "lithium-ion battery"
+ },
+ "szilard_akku": {
+  "wiki": "szilárdtest-akkumulátor",
+  "wiki_en": "solid-state battery"
+ },
+ "natrium_akku": {
+  "wiki": "nátriumion-akkumulátor",
+  "wiki_en": "sodium-ion battery"
+ },
+ "zold_acel": {
+  "wiki": "acélgyártás",
+  "wiki_en": "hydrogen direct reduced iron"
+ },
+ "cement": {
+  "wiki": "cement",
+  "wiki_en": "environmental impact of concrete"
+ },
+ "fa_epulet": {
+  "wiki": "faépítészet",
+  "wiki_en": "mass timber"
+ },
+ "napaktivitas": {
+  "wiki": "naptevékenység éghajlat",
+  "wiki_en": "solar activity and climate"
+ },
+ "kozmikus": {
+  "wiki": "kozmikus sugárzás felhő",
+  "wiki_en": "cosmic ray"
+ },
+ "metan_muhold": {
+  "wiki": "metán műhold",
+  "wiki_en": "atmospheric methane"
+ },
+ "muhold_erdo": {
+  "wiki": "erdőirtás",
+  "wiki_en": "deforestation"
+ },
+ "urbeli_napelem": {
+  "wiki": "űrbeli napenergia",
+  "wiki_en": "space-based solar power"
+ },
+ "urbeli_arnyekolo": {
+  "wiki": "űrbeli napernyő",
+  "wiki_en": "space sunshade"
+ },
+ "tengerszint": {
+  "wiki": "tengerszint-emelkedés",
+  "wiki_en": "sea level rise"
+ },
+ "gronland": {
+  "wiki": "grönlandi jégtakaró",
+  "wiki_en": "Greenland ice sheet"
+ },
+ "antarktisz": {
+  "wiki": "antarktiszi jégtakaró",
+  "wiki_en": "Antarctic ice sheet"
+ },
+ "gleccser": {
+  "wiki": "gleccser visszahúzódás",
+  "wiki_en": "retreat of glaciers since 1850"
+ },
+ "permafroszt": {
+  "wiki": "permafroszt",
+  "wiki_en": "permafrost carbon cycle"
+ },
+ "aszaly": {
+  "wiki": "aszály",
+  "wiki_en": "drought"
+ },
+ "felhoszakadas": {
+  "wiki": "szélsőséges időjárás csapadék",
+  "wiki_en": "extreme weather"
+ },
+ "erdotuz": {
+  "wiki": "erdőtűz",
+  "wiki_en": "wildfire"
+ },
+ "kozet": {
+  "wiki": "kőzetmállás szén-dioxid",
+  "wiki_en": "enhanced weathering"
+ },
+ "co2_tarolas": {
+  "wiki": "szén-dioxid tárolás föld alatt",
+  "wiki_en": "carbon sequestration"
+ },
+ "lap": {
+  "wiki": "láp",
+  "wiki_en": "peatland"
+ },
+ "vas_tenger": {
+  "wiki": "vastrágyázás óceán",
+  "wiki_en": "iron fertilization"
+ },
+ "beporzok": {
+  "wiki": "beporzás",
+  "wiki_en": "pollinator decline"
+ },
+ "korall": {
+  "wiki": "korallzátony kifehéredés",
+  "wiki_en": "coral bleaching"
+ },
+ "amazonas": {
+  "wiki": "amazóniai esőerdő",
+  "wiki_en": "Amazon rainforest"
+ },
+ "kerodzok_metan": {
+  "wiki": "kérődzők metán",
+  "wiki_en": "enteric fermentation"
+ },
+ "voros_alga": {
+  "wiki": "vörösmoszatok",
+  "wiki_en": "Asparagopsis taxiformis"
+ },
+ "erdo": {
+  "wiki": "erdősítés",
+  "wiki_en": "afforestation"
+ },
+ "erdo_magatol": {
+  "wiki": "erdő természetes felújulás",
+  "wiki_en": "natural regeneration"
+ },
+ "mangrove": {
+  "wiki": "mangrove",
+  "wiki_en": "mangrove"
+ },
+ "tengerifu": {
+  "wiki": "tengerifű",
+  "wiki_en": "seagrass"
+ },
+ "moszaterdo": {
+  "wiki": "barnamoszatok",
+  "wiki_en": "kelp forest"
+ },
+ "korall_ujra": {
+  "wiki": "korallzátony helyreállítása",
+  "wiki_en": "coral reef restoration"
+ },
+ "metan_gaz": {
+  "wiki": "földgáz metánszivárgás",
+  "wiki_en": "methane emissions"
+ },
+ "metan_szen": {
+  "wiki": "bányagáz metán",
+  "wiki_en": "coal mine methane"
+ },
+ "napelem": {
+  "wiki": "napelem",
+  "wiki_en": "photovoltaics"
+ },
+ "szelenergia": {
+  "wiki": "szélenergia",
+  "wiki_en": "wind power"
+ },
+ "geotermia": {
+  "wiki": "geotermikus energia",
+  "wiki_en": "geothermal energy"
+ },
+ "napkollektor": {
+  "wiki": "napkollektor",
+  "wiki_en": "solar water heating"
+ },
+ "novenyi_energia": {
+  "wiki": "biomassza szén-dioxid-tárolás",
+  "wiki_en": "bioenergy with carbon capture and storage"
+ },
+ "tengeri_szel": {
+  "wiki": "tengeri szélerőmű",
+  "wiki_en": "offshore wind power"
+ },
+ "vizi_tarolo": {
+  "wiki": "szivattyús energiatározó",
+  "wiki_en": "pumped-storage hydroelectricity"
+ },
+ "ipari_hoszivattyu": {
+  "wiki": "ipari hőszivattyú",
+  "wiki_en": "industrial heat pump"
+ },
+ "biogaz": {
+  "wiki": "biogáz",
+  "wiki_en": "biogas"
+ },
+ "hoszivattyu": {
+  "wiki": "hőszivattyú",
+  "wiki_en": "heat pump"
+ },
+ "hoszigeteles": {
+  "wiki": "hőszigetelés",
+  "wiki_en": "building insulation"
+ },
+ "villanyauto": {
+  "wiki": "elektromos autó",
+  "wiki_en": "electric car"
+ },
+ "vasut": {
+  "wiki": "vasúti közlekedés",
+  "wiki_en": "rail transport"
+ },
+ "kerekpar": {
+  "wiki": "kerékpáros közlekedés",
+  "wiki_en": "utility cycling"
+ },
+ "tavmunka": {
+  "wiki": "távmunka",
+  "wiki_en": "telecommuting"
+ },
+ "levegoszures": {
+  "wiki": "szén-dioxid-leválasztás levegőből",
+  "wiki_en": "direct air capture"
+ },
+ "gyari_co2": {
+  "wiki": "szén-dioxid-leválasztás",
+  "wiki_en": "carbon capture and storage"
+ },
+ "teherauto": {
+  "wiki": "elektromos teherautó",
+  "wiki_en": "electric truck"
+ },
+ "hajozas": {
+  "wiki": "hajózás kibocsátás",
+  "wiki_en": "environmental impact of shipping"
+ },
+ "termes": {
+  "wiki": "éghajlatváltozás mezőgazdaság",
+  "wiki_en": "effects of climate change on agriculture"
+ },
+ "kukorica": {
+  "wiki": "kukorica szárazságtűrés",
+  "wiki_en": "drought tolerance maize"
+ },
+ "metan_rizs": {
+  "wiki": "rizs metán",
+  "wiki_en": "alternate wetting and drying"
+ },
+ "mutragya": {
+  "wiki": "műtrágya",
+  "wiki_en": "fertilizer"
+ },
+ "tragya": {
+  "wiki": "trágya",
+  "wiki_en": "manure management"
+ },
+ "pazarlas": {
+  "wiki": "élelmiszer-pazarlás",
+  "wiki_en": "food loss and waste"
+ },
+ "etrend": {
+  "wiki": "növényi étrend",
+  "wiki_en": "environmental impact of meat production"
+ },
+ "ontozes": {
+  "wiki": "csepegtető öntözés",
+  "wiki_en": "drip irrigation"
+ },
+ "talaj": {
+  "wiki": "talaj szerves szén",
+  "wiki_en": "soil carbon"
+ },
+ "agroerdeszet": {
+  "wiki": "agrárerdészet",
+  "wiki_en": "agroforestry"
+ },
+ "hoseg_halal": {
+  "wiki": "hőhullám egészség",
+  "wiki_en": "heat wave"
+ },
+ "munkakepesseg": {
+  "wiki": "hőstressz munka",
+  "wiki_en": "occupational heat stress"
+ },
+ "legszennyezes": {
+  "wiki": "légszennyezés",
+  "wiki_en": "air pollution"
+ },
+ "varosi_fak": {
+  "wiki": "városi hősziget",
+  "wiki_en": "urban heat island"
+ },
+ "feher_teto": {
+  "wiki": "hűvös tető",
+  "wiki_en": "reflective surfaces climate engineering"
+ },
+ "zoldteto": {
+  "wiki": "zöldtető",
+  "wiki_en": "green roof"
+ },
+ "hoseg_riasztas": {
+  "wiki": "hőségriasztás",
+  "wiki_en": "heat health warning"
+ },
+ "korai_riasztas": {
+  "wiki": "korai előrejelző rendszer",
+  "wiki_en": "early warning system"
+ }
+}
