@@ -13,19 +13,19 @@ const Knowledge := preload("res://scripts/knowledge.gd")
 ## esely: alap + no * (melegedés − 1,2 °C); a vihardagálynál a tengerszint (m) számít.
 const DECK := [
 	{"id": "hoseg", "cim": "Hőhullám", "szoveg": "Hetekig tartó forróság a városokban.",
-	 "szin": "#ff8a3a", "alap": 0.10, "no": 0.22, "penz": 30, "bizalom": 3,
+	 "szin": "#ff8a3a", "alap": 0.05, "no": 0.11, "penz": 40, "bizalom": 2,
 	 "ved": ["hoseg_riasztas", "varosi_fak", "feher_teto", "zoldteto", "hoseg_halal"]},
 	{"id": "aszaly", "cim": "Aszály", "szoveg": "Kevés az eső, gyenge a termés.",
-	 "szin": "#e0a24a", "alap": 0.09, "no": 0.18, "penz": 35, "bizalom": 3,
+	 "szin": "#e0a24a", "alap": 0.045, "no": 0.09, "penz": 45, "bizalom": 2,
 	 "ved": ["kukorica", "ontozes", "aszaly", "talaj", "agroerdeszet", "termes"]},
 	{"id": "arviz", "cim": "Áradás", "szoveg": "Egy nap alatt egy hónapnyi eső esett.",
-	 "szin": "#4aa0e0", "alap": 0.08, "no": 0.16, "penz": 35, "bizalom": 2,
+	 "szin": "#4aa0e0", "alap": 0.04, "no": 0.08, "penz": 45, "bizalom": 1,
 	 "ved": ["felhoszakadas", "korai_riasztas", "vizes_part", "megemelt_haz", "zoldteto", "lap"]},
 	{"id": "tuz", "cim": "Erdőtűz", "szoveg": "Száraz, szeles időben ég az erdő.",
-	 "szin": "#ff5a3a", "alap": 0.07, "no": 0.16, "penz": 25, "bizalom": 2,
+	 "szin": "#ff5a3a", "alap": 0.035, "no": 0.08, "penz": 35, "bizalom": 1,
 	 "ved": ["erdotuz", "muhold_erdo", "erdo", "amazonas"]},
 	{"id": "dagaly", "cim": "Vihardagály", "szoveg": "A vihar a tengert a partra nyomta.",
-	 "szin": "#3fa8d8", "alap": 0.03, "no": 0.0, "tenger": 0.45, "penz": 40, "bizalom": 3,
+	 "szin": "#3fa8d8", "alap": 0.015, "no": 0, "tenger": 0.25, "penz": 55, "bizalom": 2,
 	 "ved": ["gatak", "vizes_part", "megemelt_haz", "tengerszint", "mangrove", "korai_riasztas", "tengerifu", "korall_ujra"]},
 ]
 ## Jó hírek (játékszabály): a tudás és a bizalom hozza őket.
@@ -72,7 +72,8 @@ static func draw(campaign, y: int) -> Array:
 			ev["vedett"] = known
 			ev["pajzs"] = shield
 			ev["kar_penz"] = int(round(float(e["penz"]) * (1.0 - shield)))
-			ev["kar_bizalom"] = int(round(float(e["bizalom"]) * (1.0 - shield)))
+			# aki felkészült (legalább két védő téma), annál nem vész el bizalom
+			ev["kar_bizalom"] = 0 if shield >= 0.5 else int(e["bizalom"])
 			out.append(ev)
 	for e in GOOD:
 		if e.get("terv", false) and campaign.timeline.is_empty():

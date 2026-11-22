@@ -20,6 +20,7 @@ const PathStrip := preload("res://scripts/path_strip.gd")
 const Milestones := preload("res://scripts/milestones.gd")
 const Finale := preload("res://scripts/finale.gd")
 const Events := preload("res://scripts/events.gd")
+const Daily := preload("res://scripts/daily.gd")
 
 const MISSION := [
 	["Nézd meg a mai Földet", "A bal oldali lista és a földgömb pöttyei valódi, friss jelentések. Kattints egyre!"],
@@ -78,6 +79,7 @@ var _plan                     # plan_panel.gd példány (megmarad a jóváhagyot
 var campaign                  # campaign.gd: telő idő, pénz, bizalom
 var _play_btn: Button
 var _path: Control                    # path_strip.gd: a jövő görbéje az alsó sávban
+var _daily_demo := false         # önteszt: a napi kérdés kártyája a képhez
 var _next_seed := -1            # „Ugyanez a Föld újra”: a következő új játék magja
 var _last_result: Dictionary = {}
 var _milestones                       # milestones.gd: a modell fordulópontjai
@@ -117,6 +119,7 @@ func _ready() -> void:
 	add_child(campaign)
 	if "--onteszt" in OS.get_cmdline_user_args():   # az önteszt nem nyúl a játékos mentéséhez
 		campaign.save_file = "aether_jatek_onteszt.json"
+		campaign.plain_world = true
 		campaign.new_game()
 	campaign.load_game()
 	campaign.year_passed.connect(_on_year_passed)
@@ -517,6 +520,7 @@ func _build_bottom_bar() -> void:
 	info_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_info = UI.label(L.t("Üdv az AETHER-ben! Kezdd a jobb oldali küldetéssel."), 16, UI.SOFT)
 	info_box.add_child(_info)
+	_info.visible = false   # a görbe fölött nincs szövegsor
 	_info_link = LinkButton.new()
 	_info_link.text = L.t("Forrás megnyitása")
 	_info_link.add_theme_color_override("font_color", UI.CYAN)
@@ -679,10 +683,13 @@ func _anomaly_failed() -> void:
 	_show_info(L.t("A hőmérséklet-térképet most nem sikerült letölteni. Van internet?"), "")
 
 
+## A görbe fölött nincs szövegsor (Zoltán, 2026-11-22): a szöveg csak megjegyződik,
+## a fontos visszajelzés felugró jelzésként (_toast) jön.
 func _show_info(text: String, link: String) -> void:
 	_info.text = text
 	_info_url = link
-	_info_link.visible = link != ""
+	_info.visible = false
+	_info_link.visible = false
 
 
 func _open_info_link() -> void:
@@ -789,6 +796,7 @@ func _render_mission() -> void:
 ## A bevezető után: küldetéslista csillagokkal; az aktuálisnál a cél és az utolsó eredmény.
 func _render_missions() -> void:
 	_mission_title.text = L.t("Küldetések")
+	_render_daily()
 	for i in Missions.LIST.size():
 		var m: Dictionary = Missions.LIST[i]
 		var st := Missions.stars_of(m["id"])
@@ -816,6 +824,37 @@ func _render_missions() -> void:
 				_mission_box.add_child(_go_button(L.t("Kutatás →"), _open_research))
 			else:
 				_mission_box.add_child(_go_button(L.t("A terved →"), _open_plan))
+
+
+## „A mai nap”: egy friss, valódi jelentés és a hozzá tartozó kutatási kérdés (naponta egy).
+func _render_daily() -> void:
+	if campaign == null or ("--onteszt" in OS.get_cmdline_user_args() and not _daily_demo):
+		return
+	if Daily.check(campaign):
+		_toast("★  " + L.t("A mai nap kérdése megvan!"), UI.GOLD)
+	var d: Dictionary = Daily.pick(world.get("esemenyek", []), campaign)
+	if d.is_empty():
+		return
+	var e: Dictionary = d["esemeny"]
+	var c := UI.card(UI.GOLD)
+	var head := L.t("A mai nap")
+	if Daily.stars() > 0:
+		head += "  ★ %d" % Daily.stars()
+	c.add_child(UI.label(head, 15, UI.GOLD, true, false))
+	var place := EventPanel.short_place(e)
+	var t := UI.label(EventPanel.display_title(e) + ((" · " + place) if place != "" else ""), 15, UI.TEXT)
+	t.max_lines_visible = 2
+	c.add_child(t)
+	if bool(d["kesz"]):
+		c.add_child(UI.label(L.t("✓ Megvan a mai csillag. Holnap új kérdés jön."), 15, UI.GREEN))
+	else:
+		c.add_child(UI.label(Knowledge.text(d["tema"], "cim"), 16, UI.CYAN, true))
+		var b := UI.button(L.t("Megnézem →"), true)
+		b.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		b.focus_mode = Control.FOCUS_NONE
+		b.pressed.connect(_open_research.bind(d["tema"]))
+		c.add_child(b)
+	_mission_box.add_child(UI.card_root(c))
 
 
 ## Kis „ugrás” gomb a küldetés alatt: egy kattintással a következő teendőhöz visz.
@@ -1121,8 +1160,9 @@ func _request_close() -> void:
 		_close_overlay()
 
 
-func _open_research() -> void:
+func _open_research(topic: Dictionary = {}) -> void:
 	var r = ResearchFlow.new()
+	r.start_topic = topic
 	r.bridge = bridge
 	r.campaign = campaign
 	r.closed.connect(_close_overlay)
@@ -1213,6 +1253,7 @@ class Confetti extends Control:
 
 
 func _on_learned(q: Dictionary) -> void:
+	_render_mission()   # ha ez volt a mai kérdés, jár a napi csillag
 	_toast("★  " + Knowledge.text(q, "cim"), UI.GREEN)
 	_show_info(L.t("Új tudás a tudásfán: ") + Knowledge.text(q, "cim"), "")
 
@@ -1376,6 +1417,7 @@ func _toggle_time() -> void:
 func _on_year_passed(y: int, note: String) -> void:
 	_year_slider.value = y   # rejtett: a földgömb színezését követi az év
 	_show_info(note, "")
+	_toast(note, UI.SOFT)   # az év rövid mérlege (bevétel, költség)
 	_milestones.on_year(y)
 	# az év eseményei (játékszabály): kár, ami ellen a kikutatott témák védenek
 	var evs: Array = Events.draw(campaign, y)
@@ -1524,6 +1566,31 @@ func _open_summary(k: Dictionary) -> void:
 	brow.add_child(again)
 	brow.add_child(same)
 	v.add_child(brow)
+	# Föld-kód: ugyanazt a Földet a barátod is megkaphatja (ugyanaz az érzékenység, ugyanazok az események)
+	var crow := UI.hbox(12)
+	var code_l := UI.label(L.t("Ennek a Földnek a kódja: %d") % seed_now, 16, UI.SOFT, false, false)
+	code_l.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	crow.add_child(code_l)
+	var code_in := LineEdit.new()
+	code_in.placeholder_text = L.t("Barátod Föld-kódja")
+	code_in.max_length = 7
+	code_in.custom_minimum_size = Vector2(230, 0)
+	code_in.add_theme_font_size_override("font_size", 16)
+	crow.add_child(code_in)
+	var code_go := UI.button(L.t("Ezt a Földet kérem"))
+	var code_fn := func() -> void:
+		var txt := code_in.text.strip_edges()
+		if not txt.is_valid_int() or int(txt) <= 0:
+			code_in.text = ""
+			code_in.placeholder_text = L.t("Csak számokból áll")
+			return
+		_close_overlay()
+		_next_seed = int(txt)
+		_reset_btn.text = L.t("Biztos? Kattints újra")
+		_reset_game()
+	code_go.pressed.connect(code_fn)
+	crow.add_child(code_go)
+	v.add_child(crow)
 	_place_overlay(p)
 	# csak akkora legyen, amekkora a tartalom (az X a sarokkal együtt mozog)
 	p.custom_minimum_size = Vector2(920, 0)
@@ -1622,7 +1689,7 @@ func _selftest() -> void:
 	# A játékos beállításait (küldetéscsillagok, bevezető, AI) az önteszt nem írhatja felül:
 	# elmentjük, és a végén visszaállítjuk.
 	var saved := {}
-	for key in ["kuldetesek", "bevezeto_kesz", "ai", "orszag"]:
+	for key in ["kuldetesek", "bevezeto_kesz", "ai", "orszag", "napi", "napi_csillag"]:
 		saved[key] = L.get_setting(key, "__nincs__")
 	_refresh_world()
 	var w := await _wait_tag("vilag")
@@ -1769,6 +1836,15 @@ func _selftest() -> void:
 			await _shot(dir, "6_esemeny_levego.png")
 			_close_overlay()
 			break
+	# 9d: „A mai nap” kártya a küldetések fölött (az öntesztben próbaeseménnyel, mert itt nincs letöltés)
+	if mission_step >= MISSION.size():
+		var keep_world := world
+		world = {"esemenyek": [{"cim": "ÖNTESZT próbaesemény (nem valódi jelentés)", "kategoria": "aszaly", "orszag": "–", "datum": Daily.today()}]}
+		_daily_demo = true
+		_render_mission()
+		await _shot(dir, "9d_mai_nap.png")
+		_daily_demo = false
+		world = keep_world
 	# 9c: a játék végi összegzés (pontszám, eddigi játékaid)
 	if not model.is_empty():
 		_last_result = campaign.record_result()   # az önteszt nem ír a játékos listájába

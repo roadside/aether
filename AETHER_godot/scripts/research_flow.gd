@@ -66,6 +66,8 @@ func _ready() -> void:
 	add_child(_poll)
 	bridge.finished.connect(_on_bridge_finished)
 	show_questions()
+	if not start_topic.is_empty():   # „A mai nap”: egyből a napi kérdés lapja
+		_show_topic(start_topic)
 
 
 func _header(title: String, step: int, help: String) -> void:
@@ -238,6 +240,7 @@ static func star_rule() -> String:
 ##  2. különben előbb AI nélkül (Wikipédia, 1–2 mp) jelenik meg valami,
 ##  3. az AI közben a háttérben dolgozik, és ha kész, lecseréli a részletesre.
 ## Ami egyszer elkészült, a gépen megmarad (user://aether_temak).
+var start_topic: Dictionary = {}   # ha meg van adva, a kutatás ablak ezzel a témával nyílik
 var _topic_out := ""
 var _topic_q: Dictionary = {}
 var _topic_ai := "none"

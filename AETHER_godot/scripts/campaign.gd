@@ -20,6 +20,8 @@ const START_MONEY := 200
 const START_TRUST := 50
 const RESEARCH_COST := 40
 const TRUST_PER_RESULT := 6          # ellenőrzött eredményenként a tervben
+const TRUST_PER_TOPIC := 1             # minden újonnan megismert téma
+const TRUST_DRIFT_CAP := 80            # a csökkenő kibocsátás eddig emeli magától a bizalmat
 const TRUST_STEP_BACK := 10          # visszalépés egy gyengébb tervre
 const SECONDS_PER_YEAR := [48.0, 48.0]  # egy év 48 másodperc (gyorsítás nincs)
 
@@ -57,6 +59,8 @@ var volcanoes: Array = []            # nagy vulkánkitörések évei ebben a vil
 const COAST_TOPICS := ["gatak", "vizes_part", "megemelt_haz", "tengerszint", "mangrove", "korai_riasztas", "tengerifu", "korall_ujra"]
 const COAST_COST_PER_M := 60.0       # évi partkár pénzben, a 2026 óta emelkedett tenger minden méterére
 var save_file := "aether_jatek.json"  # az önteszt külön fájlt használ
+var plain_world := false             # önteszt: a Föld mindig a sáv közepe, ingadozás nélkül
+var autosave := true                 # az egyensúly-mérés nem ír fájlt
 var _acc := 0.0
 
 
@@ -105,6 +109,8 @@ func load_game() -> void:
 
 
 func save() -> void:
+	if not autosave:
+		return
 	Bridge.write_json(save_path(), {"ev": year, "penz": money, "bizalom": trust, "idovonal": timeline,
 		"modell": model, "allomas": station, "epul": building, "kutatas_ev": research_this_year,
 		"tudas": done, "korszak": era, "karok": levers, "csillagok": stars,
@@ -129,7 +135,7 @@ func new_game(seed_value: int = -1) -> void:
 	fast = false
 	_acc = 0.0
 	history = []
-	roll_world(seed_value if seed_value >= 0 else (-1 if save_file == "aether_jatek.json" else 2026))
+	roll_world(seed_value if seed_value >= 0 else (2026 if plain_world else -1))
 	if save_file == "aether_jatek.json":   # az önteszt ne törölje a játékos küldetéscsillagait
 		L.set_setting("kuldetesek", {})   # a küldetések csillagai is alapra állnak
 	save()
@@ -177,7 +183,7 @@ func roll_world(seed_value: int = -1) -> void:
 			noise[i2 + 2] = snappedf(float(noise[i2 + 2]) - 0.15, 0.001)
 			i2 += 8
 		i2 += 1
-	if save_file != "aether_jatek.json":   # az önteszt Földje mindig a sáv közepe, ingadozás nélkül
+	if plain_world:   # az önteszt Földje mindig a sáv közepe, ingadozás nélkül
 		sens = 0.0
 		noise = []
 		volcanoes = []
@@ -300,12 +306,13 @@ func income() -> int:
 	return 40 + trust / 2 + knowledge_income()
 
 
-## A tudás hasznot hoz (játékszabály): minden kutatott téma évente +1 pénz, a ★★★ témák +2.
+## A tudás hasznot hoz (játékszabály): két kutatott téma évente +1 pénz, a ★★★ téma egymaga +1.
+## (Az egyensúly-mérés szerint a régi „témánként +1” a játék végére elértéktelenítette a pénzt.)
 func knowledge_income() -> int:
 	var n := 0
 	for id in done:
 		n += 2 if int(stars.get(str(id), 1)) >= 3 else 1
-	return n
+	return n / 2
 
 
 func advance() -> void:
@@ -320,6 +327,10 @@ func advance() -> void:
 	var note := L.t("%d: bevétel +%d.") % [year, inc]
 	if knowledge_income() > 0:
 		note = L.t("%d: bevétel +%d, ebből a tudásodból +%d.") % [year, inc, knowledge_income()]
+	var up := plan_upkeep()
+	if up > 0:
+		money = maxi(0, money - up)
+		note += " " + L.t("A terved költsége: −%d.") % up
 	var cc := coast_cost(year)
 	if cc > 0:
 		money = maxi(0, money - cc)
@@ -353,7 +364,9 @@ func _trust_drift() -> int:
 	var before := series_at("netto_co2", year - 1)
 	if is_nan(now) or is_nan(before):
 		return 0
-	return 1 if (now < before - 0.05 or now <= 1.0) else -1
+	if now < before - 0.05 or now <= 1.0:
+		return 1 if trust < TRUST_DRIFT_CAP else 0   # e fölött már csak a tudás és a jó hírek emelik
+	return -1
 
 
 # --- állomás ---------------------------------------------------------------
@@ -436,6 +449,14 @@ static func required_trust(sc: Dictionary) -> int:
 
 static func plan_cost(sc: Dictionary) -> int:
 	return 30 + required_trust(sc)
+
+
+## A bevezetett terv évi költsége (játékszabály): a kibocsátás csökkentése pénzbe kerül,
+## a merészebb terv többe. A bevezetés díjának negyede, minden évben.
+func plan_upkeep() -> int:
+	if timeline.is_empty():
+		return 0
+	return plan_cost(timeline[-1]["terv"]) / 4
 
 
 func start_year() -> int:
@@ -529,6 +550,7 @@ func mark_researched(id: String, n_stars: int = 1) -> void:
 		return
 	if not (id in done):
 		done.append(id)
+		trust = mini(100, trust + TRUST_PER_TOPIC)   # az emberek látják, hogy tanulsz
 	stars[id] = clampi(maxi(old, n_stars), 1, 3)
 	save()
 	changed.emit()

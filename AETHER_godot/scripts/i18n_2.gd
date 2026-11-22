@@ -111,4 +111,13 @@ const EN := {
 	"Ez egy átlagos Föld volt.": "This was an average Earth.",
 	"Ez a Föld érzékenyebb volt az átlagnál: nehezebb dolgod volt.": "This Earth was more sensitive than average: your job was harder.",
 	"Ez a Föld kevésbé volt érzékeny az átlagnál: könnyebb dolgod volt.": "This Earth was less sensitive than average: your job was easier.",
+	"A terved költsége: −%d.": "Cost of your plan: −%d.",
+	"A mai nap": "Today",
+	"A mai nap kérdése megvan!": "Today's question solved!",
+	"✓ Megvan a mai csillag. Holnap új kérdés jön.": "✓ You have today's star. A new question comes tomorrow.",
+	"Megnézem →": "Take a look →",
+	"Ennek a Földnek a kódja: %d": "This Earth's code: %d",
+	"Barátod Föld-kódja": "Your friend's Earth code",
+	"Ezt a Földet kérem": "Give me this Earth",
+	"Csak számokból áll": "Numbers only",
 }
