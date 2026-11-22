@@ -2,6 +2,31 @@ extends RefCounted
 ## További angol fordítások (kulcs: a magyar szöveg). Az i18n.gd t() függvénye ezt is nézi.
 
 const EN := {
+	# a jövő görbéje, fordulópontok, záró jelenet
+	"A klímamodell szerint. Arany: a te utad. Piros: ha semmi sem változik.": "According to the climate model. Gold: your path. Red: if nothing changes.",
+	"2100-ban": "In 2100",
+	"terv nélkül +%s °C": "without a plan +%s °C",
+	"Még nincs terved.": "You have no plan yet.",
+	"Átléptük a másfél fokot": "We passed one and a half degrees",
+	"A Föld 1,5 °C-kal melegebb, mint 150 éve.": "The Earth is 1.5 °C warmer than 150 years ago.",
+	"Átléptük a két fokot": "We passed two degrees",
+	"A Föld 2 °C-kal melegebb, mint 150 éve.": "The Earth is 2 °C warmer than 150 years ago.",
+	"Nulla lett a CO2-kibocsátás": "CO2 emissions reached zero",
+	"Ettől kezdve nem melegítjük tovább a Földet.": "From now on we stop heating the Earth further.",
+	"Megállt a melegedés": "The warming has stopped",
+	"A csúcs +%s °C volt.": "The peak was +%s °C.",
+	"Fél fokkal hűvösebb a Föld": "The Earth is half a degree cooler",
+	"Egy egész fokkal hűvösebb a Föld": "The Earth is a whole degree cooler",
+	"Ennyit ért eddig a terved.": "That is what your plan has achieved so far.",
+	"+%s °C. Még nincs terved.": "+%s °C. You have no plan yet.",
+	"+%s °C · terv nélkül +%s °C lenne": "+%s °C · without a plan it would be +%s °C",
+	"a klímamodell szerint": "according to the climate model",
+	"Tovább": "Continue",
+	"Terv nélkül": "Without a plan",
+	"A te Földed": "Your Earth",
+	"Nem volt terved. A Föld tovább melegedett.": "You had no plan. The Earth kept warming.",
+	"Két fok fölé ment.": "It went above two degrees.",
+	"A terved %s fokkal hűvösebb Földet hagyott az unokáidra.": "Your plan left your grandchildren an Earth %s degrees cooler.",
 	# kutatás
 	"Most nem lehet kutatni": "You can't research right now",
 	"Kutatás indul…": "Research starting…",
