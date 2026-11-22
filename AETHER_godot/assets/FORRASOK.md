@@ -22,5 +22,5 @@
   Forrás: NOAA ETOPO1, 1 ívperces globális domborzat („Ice Surface”), Amante & Eakins (2009), NOAA NGDC,
   5 ívperces ritkítással a NOAA ERDDAP szerveréről
   (https://coastwatch.pfeg.noaa.gov/erddap/griddap/etopo180.html). Licenc: szabadon használható és
-  továbbadható; nem jogi célra. A játékban a veszélyeztetett alacsony partok szemléltetésére szolgál,
-  nem előrejelzés.
+  továbbadható; nem jogi célra. A játékban a veszélyeztetett alacsony partok figyelmeztető kiemelésére szolgál,
+  nem azt mutatja, mi kerül víz alá.

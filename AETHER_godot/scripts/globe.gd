@@ -27,11 +27,11 @@ var time := 0.0
 var stations: Array = []             # [{name, lat, lon, color, me, locked}]
 var links: Array = []                # [[lat1, lon1, lat2, lon2], ...]
 var events: Array = []               # valós események (world_state.py): {cim, kategoria, lat, lon, link, ...}
-## Tengerszint-emelkedés szemléltetése (0–1): a veszélyeztetett alacsony partvidékek (a mai
-## tengerszint fölött legfeljebb 10 m, NOAA ETOPO1) fokozatosan vízszínt kapnak. Lásd a shadert.
+## Tengerszint-emelkedés (0–1): a veszélyeztetett alacsony partvidékek (a mai tengerszint fölött
+## legfeljebb 10 m, NOAA ETOPO1) figyelmeztető csíkozást kapnak, ami ezzel erősödik. Nem víz alá kerülést
+## jelent, hanem: „alacsony part, itt a legnagyobb a veszély”. Lásd a shadert.
 var sea_rise := 0.0
-## A szemléltetés léptéke: ennyi méter emelkedés (a mához képest) = a teljes ≤10 m-es partsáv
-## vízszínű. (2100-ra a tenger kb. 0,4–0,8 m-rel magasabb; gömbléptékben ez nem látszana.)
+## A kiemelés léptéke: ennyi méter emelkedés (a mához képest) = teljes erősségű figyelmeztetés.
 const SEA_FULL_M := 0.8
 
 
