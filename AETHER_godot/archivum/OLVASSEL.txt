@@ -1,0 +1,9 @@
+AETHER archívum: előre elvégzett, ellenőrzött kutatások
+
+Egy fájl = egy téma egy nyelven: <témaazonosító>_<hu|en>.json
+A tartalom pontosan az, amit egy valódi kutatás ír ki (eredmeny.json: publikacio, javaslatok,
+osszefoglalo), kiegészítve egy "archivum" mezővel: {"datum": "2026-11-22", "ai": "ollama qwen3:4b"}.
+
+Szabály: ide csak valódi kutatás eredménye kerülhet, amelyben a számokat a játék szó szerinti
+idézettel ellenőrizte. Kézzel számot beírni vagy módosítani tilos.
+A játék akkor használja, ha a játékos AI nélkül kutat (így AI és kulcs nélkül is játszható).

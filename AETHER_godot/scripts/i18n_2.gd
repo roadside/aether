@@ -2,6 +2,13 @@ extends RefCounted
 ## További angol fordítások (kulcs: a magyar szöveg). Az i18n.gd t() függvénye ezt is nézi.
 
 const EN := {
+	# archívum és tanulás olvasással
+	"Idén már eleget tanultál és kutattál. Jövőre folytathatod!": "You have learned and researched enough this year. Continue next year!",
+	"Az AETHER archívumából: ezt a kutatást egy AI már elvégezte (%s), a játék ellenőrizte.": "From the AETHER archive: an AI already did this research (%s) and the game verified it.",
+	"Elolvastam, értem  ★": "I read it, I get it  ★",
+	"Játékszabály: az összefoglaló elolvasása ★ tudást ad. Számot a tervedbe csak kutatás ad.": "Game rule: reading the summary gives ★ knowledge. Only research puts numbers into your plan.",
+	"Játékszabály: ★ elolvastad az összefoglalót vagy ellenőrzött számot találtál, ★★ legalább 2 cikk egyezik, ★★★ legalább 3 cikk, köztük összefoglaló elemzés.": "Game rule: ★ you read the summary or found a verified number, ★★ at least 2 papers agree, ★★★ at least 3 papers, including a review.",
+	"Ehhez a kérdéshez van kész, ellenőrzött kutatás az archívumban: azonnal megkapod.": "The archive has finished, verified research for this question: you get it instantly.",
 	# a jövő görbéje, fordulópontok, záró jelenet
 	"A klímamodell szerint. Arany: a te utad. Piros: ha semmi sem változik.": "According to the climate model. Gold: your path. Red: if nothing changes.",
 	"2100-ban": "In 2100",

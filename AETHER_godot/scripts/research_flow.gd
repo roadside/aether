@@ -3,6 +3,7 @@ extends PanelContainer
 ##   1. Mit kutassunk?  2. Ki kutasson?  3. (vár)  4. Mit találtunk?  5. Jóváhagyás
 
 signal approved(levers: Array)
+signal learned(q: Dictionary)
 signal results_shown(has_levers: bool)
 signal closed
 
@@ -228,7 +229,7 @@ func _question_card(q: Dictionary, is_done: bool) -> Control:
 
 ## A csillagok szabálya (játékszabály), a csillagok fölé húzott egérnél.
 static func star_rule() -> String:
-	return L.t("Játékszabály: ★ ellenőrzött szám, ★★ legalább 2 cikk egyezik, ★★★ legalább 3 cikk, köztük összefoglaló elemzés.")
+	return L.t("Játékszabály: ★ elolvastad az összefoglalót vagy ellenőrzött számot találtál, ★★ legalább 2 cikk egyezik, ★★★ legalább 3 cikk, köztük összefoglaló elemzés.")
 
 
 # --- „Mi ez, és mire jó?” ---------------------------------------------------
@@ -338,7 +339,14 @@ func _render_topic(r: Dictionary) -> void:
 	var back := UI.button(L.t("Vissza a kérdésekhez"))
 	back.pressed.connect(show_questions)
 	row.add_child(back)
-	var go := UI.button(L.t("Ezt kutatom"), true)
+	var tid := str(_topic_q.get("id", ""))
+	var known: bool = campaign != null and tid in campaign.done
+	if str(r.get("tipus", "")) == "fajl" and campaign != null and not known:
+		var learn := UI.button(L.t("Elolvastam, értem  ★"), true)
+		learn.tooltip_text = L.t("Játékszabály: az összefoglaló elolvasása ★ tudást ad. Számot a tervedbe csak kutatás ad.")
+		learn.pressed.connect(_learn.bind(_topic_q))
+		row.add_child(learn)
+	var go := UI.button(L.t("Ezt kutatom"), known or str(r.get("tipus", "")) != "fajl")
 	go.pressed.connect(_pick_question.bind(_topic_q))
 	row.add_child(go)
 	_body.add_child(row)
@@ -363,6 +371,7 @@ func _pick_question(q: Dictionary) -> void:
 
 var _quick := false
 var _force_choice := false
+var _from_archive := false       # az eredmény az archívumból jött (nem most kutattuk)
 
 
 func _saved_ai() -> String:
@@ -583,6 +592,8 @@ func _show_ai_choice() -> void:
 		rb.toggled.connect(pick_fn)
 		c.add_child(rb)
 		c.add_child(UI.label(L.t(ch["magyarazat"]), 16, UI.SOFT))
+		if id == "none" and not archive_of(_question).is_empty():
+			c.add_child(UI.label(L.t("Ehhez a kérdéshez van kész, ellenőrzött kutatás az archívumban: azonnal megkapod."), 15, UI.GREEN))
 		if id != "none" and not st.get("elerheto", false):  # csak ha valami hiányzik
 			c.add_child(UI.label(str(st.get("ok", "")), 15, UI.MUTE))
 		if id == "ollama":
@@ -693,6 +704,38 @@ func _on_dl_poll() -> void:
 
 
 # --- 3. Kutatás folyamatban -----------------------------------------------
+# --- Archívum: előre elvégzett, ellenőrzött kutatások (AI nélkül is játszható) ------
+## Az archívum egy-egy fájlja ugyanaz az eredmény, amit egy valódi kutatás ír (eredmeny.json):
+## valódi cikkek, szó szerinti idézetek, a játék által ellenőrzött számok. Egy „archivum” mező
+## mondja meg, mikor és milyen AI-val készült. Semmi sincs benne kézzel kitalálva.
+static func archive_path(q: Dictionary, lang: String) -> String:
+	return "res://archivum/%s_%s.json" % [str(q.get("id", "")), lang]
+
+
+static func archive_of(q: Dictionary) -> Dictionary:
+	for lang in [L.lang, "hu", "en"]:
+		var path := archive_path(q, lang)
+		if FileAccess.file_exists(path):
+			var d: Variant = Bridge.read_json(path)
+			if typeof(d) == TYPE_DICTIONARY and d.has("publikacio") and d.has("javaslatok") and d.has("osszefoglalo"):
+				return d
+	return {}
+
+
+## „Elolvastam, értem”: a lektorált összefoglaló elolvasása is tudás (★), AI nélkül.
+## Játékszabály: az évi kutatások közé számít, pénzbe nem kerül, számot nem ad a tervbe.
+func _learn(q: Dictionary) -> void:
+	if campaign == null:
+		return
+	if campaign.research_this_year >= campaign.research_limit():
+		_body.add_child(UI.label(L.t("Idén már eleget tanultál és kutattál. Jövőre folytathatod!"), 17, UI.EMBER))
+		return
+	campaign.research_this_year += 1
+	campaign.mark_researched(str(q["id"]), 1)
+	learned.emit(q)
+	show_questions()
+
+
 func _start_research() -> void:
 	if campaign != null:
 		var problem: String = campaign.research_problem()
@@ -701,6 +744,14 @@ func _start_research() -> void:
 			return
 		campaign.pay_research()
 	L.set_setting("ai", _ai)   # az események összefoglalója is ezt az AI-t használja
+	if _ai == "none":   # AI nélkül: ha van kész, ellenőrzött kutatás az archívumban, azt mutatjuk
+		var arch := archive_of(_question)
+		if not arch.is_empty():
+			_result = arch
+			_from_archive = true
+			_show_results()
+			return
+	_from_archive = false
 	_folder = str(bridge.work_dir("aether_kutatas")).path_join("kutatas_%d" % Time.get_unix_time_from_system())
 	DirAccess.make_dir_recursive_absolute(_folder)
 	_header(L.t("Kutatás folyamatban"), 3, L.t("Pár percig tarthat.") + " " + L.t("Kutató AI: ") + _ai_name(_ai)
@@ -804,6 +855,9 @@ func _show_results() -> void:
 	if int(o["allitasok"]) > 0:
 		s += L.t("%d szám ellenőrizve, %d elvetve.") % [int(o["ellenorizve"]), int(o["elutasitva"])]
 	_body.add_child(UI.label(s, 18, UI.TEXT))
+	if _from_archive:
+		var meta: Dictionary = _result.get("archivum", {})
+		_body.add_child(UI.label(L.t("Az AETHER archívumából: ezt a kutatást egy AI már elvégezte (%s), a játék ellenőrizte.") % str(meta.get("datum", "")), 15, UI.GOLD))
 	var summary := str(pub.get("ai_osszegzes", ""))
 	if summary != "":
 		var c := UI.card(UI.GOLD)

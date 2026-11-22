@@ -1123,6 +1123,7 @@ func _open_research() -> void:
 	r.closed.connect(_close_overlay)
 	r.results_shown.connect(_on_results_shown)
 	r.approved.connect(_on_approved)
+	r.learned.connect(_on_learned)
 	_place_overlay(r)
 	_advance(1)
 
@@ -1203,6 +1204,11 @@ class Confetti extends Control:
 		for p in _parts:
 			var s: float = p[3]
 			draw_rect(Rect2((p[0] as Vector2).snapped(Vector2(2, 2)), Vector2(s, s)), Color(p[2], a))
+
+
+func _on_learned(q: Dictionary) -> void:
+	_toast("★  " + Knowledge.text(q, "cim"), UI.GREEN)
+	_show_info(L.t("Új tudás a tudásfán: ") + Knowledge.text(q, "cim"), "")
 
 
 func _on_approved(levers: Array) -> void:
