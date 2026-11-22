@@ -218,6 +218,13 @@ func _say(text: String, sub: String = "") -> void:
 	tw.tween_property(_sub, "modulate:a", 1.0, 1.2)
 
 
+## A felirat (és az alsó sor) lágyan eltűnik.
+func _fade_caption(sec: float) -> void:
+	var tw := create_tween().set_parallel(true)
+	tw.tween_property(_caption, "modulate:a", 0.0, sec)
+	tw.tween_property(_sub, "modulate:a", 0.0, sec)
+
+
 func _process(delta: float) -> void:
 	_t += delta
 	if _mode != "":
@@ -341,9 +348,10 @@ func _play_full() -> void:
 	_end_mode()
 	# 7. A görbe elágazik: a jövő még nincs megírva (5,5 mp)
 	_dim_to(0.68, 1.0)
-	_say("")
 	_set_mode("jovo")
-	if not await _wait(2.0): return          # a felirat a görbe elágazásakor jön
+	if not await _wait(1.0): return          # „A tiéddel.” még 1 mp-ig a képernyőn marad
+	_fade_caption(0.6)
+	if not await _wait(1.0): return          # a felirat a görbe elágazásakor jön
 	_say(L.t("A jövő még nincs megírva."))
 	if not await _wait(2.5): return
 	await _shot("intro_10_jovo.png")
