@@ -78,6 +78,8 @@ var _plan                     # plan_panel.gd példány (megmarad a jóváhagyot
 var campaign                  # campaign.gd: telő idő, pénz, bizalom
 var _play_btn: Button
 var _path: Control                    # path_strip.gd: a jövő görbéje az alsó sávban
+var _next_seed := -1            # „Ugyanez a Föld újra”: a következő új játék magja
+var _last_result: Dictionary = {}
 var _milestones                       # milestones.gd: a modell fordulópontjai
 var _reset_btn: Button
 var _base_retry: Timer
@@ -1393,6 +1395,8 @@ func _on_game_over() -> void:
 	var k: Dictionary = model.get("osszegzes", {}).get("kozep", {})
 	if k.is_empty():
 		return
+	k = {"T2100": campaign.real_t2100(), "csucs": campaign.real_peak()}   # ami ezen a Földön tényleg történt
+	_last_result = campaign.record_result()
 	_show_info(L.t("2100: vége a játéknak. A Föld +%s °C-kal melegebb, a csúcs +%s °C volt. „Új játék”: próbáld meg jobban!") % [
 		UI.hu(float(k["T2100"]), 1), UI.hu(float(k["csucs"]), 1)], "")
 	_close_overlay()
@@ -1425,6 +1429,13 @@ func _open_summary(k: Dictionary) -> void:
 	var verdict := L.t("Másfél fok alatt maradt. Kiváló!") if t2100 < 1.5 else (
 		L.t("Két fok alatt maradt.") if t2100 < 2.0 else L.t("Két fok fölé ment. Próbáld korábbi CO2-nullával!"))
 	v.add_child(UI.label(verdict, 22, UI.GREEN if t2100 < 2.0 else UI.EMBER, true))
+	# a Föld rejtett tulajdonsága csak a végén derül ki
+	var earth := L.t("Ez egy átlagos Föld volt.")
+	if campaign.sens > 0.33:
+		earth = L.t("Ez a Föld érzékenyebb volt az átlagnál: nehezebb dolgod volt.")
+	elif campaign.sens < -0.33:
+		earth = L.t("Ez a Föld kevésbé volt érzékeny az átlagnál: könnyebb dolgod volt.")
+	v.add_child(UI.label(earth, 17, UI.SOFT))
 	var grid := GridContainer.new()
 	grid.columns = 3
 	grid.add_theme_constant_override("h_separation", 40)
@@ -1432,10 +1443,10 @@ func _open_summary(k: Dictionary) -> void:
 	var items := [
 		[L.t("Melegedés 2100-ban"), "+%s °C" % UI.hu(t2100, 1), UI.EMBER],
 		[L.t("Csúcs"), "+%s °C" % UI.hu(float(k.get("csucs", 0.0)), 1), UI.GOLD],
+		[L.t("Pontszám"), str(campaign.score()), UI.CYAN],
 		[L.t("Kutatott témák"), str(campaign.done.size()), UI.CYAN],
-		[L.t("Korszak"), Knowledge.era_name(campaign.era), UI.GOLD],
 		[L.t("Bizalom"), "%d%%" % campaign.trust, UI.GREEN],
-		[L.t("Pénz"), str(campaign.money), UI.GOLD],
+		[L.t("Korszak"), Knowledge.era_name(campaign.era), UI.GOLD],
 	]
 	for it in items:
 		var c := UI.vbox(2)
@@ -1443,13 +1454,47 @@ func _open_summary(k: Dictionary) -> void:
 		c.add_child(UI.label(it[1], 30, it[2], true, false))
 		grid.add_child(c)
 	v.add_child(grid)
-	var again := UI.button(L.t("Új játék"), true)
-	again.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	var again := UI.button(L.t("Új Föld"), true)
 	var again_fn := func() -> void:
 		_close_overlay()
+		_next_seed = -1
 		_reset_btn.text = L.t("Biztos? Kattints újra")   # egyből indul, nem kér megerősítést
 		_reset_game()
 	again.pressed.connect(again_fn)
+	var same := UI.button(L.t("Ugyanez a Föld újra"))
+	var seed_now: int = campaign.world_seed
+	var same_fn := func() -> void:
+		_close_overlay()
+		_next_seed = seed_now
+		_reset_btn.text = L.t("Biztos? Kattints újra")
+		_reset_game()
+	same.pressed.connect(same_fn)
+	# eddigi játékaid: a legjobb öt, a mostani kiemelve
+	var past: Array = campaign.results()
+	if past.is_empty() and not _last_result.is_empty():
+		past = [_last_result]
+	past.sort_custom(func(a, b): return int(a.get("pont", 0)) > int(b.get("pont", 0)))
+	if past.size() > 1 or not _last_result.is_empty():
+		v.add_child(UI.label(L.t("Eddigi játékaid"), 18, UI.GOLD, true))
+		var tbl := GridContainer.new()
+		tbl.columns = 4
+		tbl.add_theme_constant_override("h_separation", 34)
+		tbl.add_theme_constant_override("v_separation", 4)
+		var shown := 0
+		var marked := false
+		for r in past:
+			if shown >= 5:
+				break
+			shown += 1
+			var mine: bool = not marked and not _last_result.is_empty() and int(r.get("mag", 0)) == int(_last_result.get("mag", -1)) \
+				and int(r.get("pont", -1)) == int(_last_result.get("pont", -2))
+			marked = marked or mine
+			var col: Color = UI.GOLD if mine else UI.SOFT
+			tbl.add_child(UI.label("%d." % shown, 16, col, mine, false))
+			tbl.add_child(UI.label(L.t("%d pont") % int(r.get("pont", 0)), 16, col, mine, false))
+			tbl.add_child(UI.label("+%s °C" % UI.hu(float(r.get("T2100", 0.0)), 1), 16, col, mine, false))
+			tbl.add_child(UI.label(str(r.get("datum", "")), 16, UI.MUTE, false, false))
+		v.add_child(tbl)
 	# a küldetések csillagai összesen
 	var got := 0
 	var all := 0
@@ -1457,11 +1502,14 @@ func _open_summary(k: Dictionary) -> void:
 		got += Missions.stars_of(m["id"])
 		all += 1 if m["id"] == "alkalmazkodas" else 3
 	v.add_child(UI.label(L.t("Küldetések: %s  (%d/%d csillag)") % [Missions.star_text(got, all), got, all], 18, UI.GOLD, true))
-	v.add_child(again)
+	var brow := UI.hbox(12)
+	brow.add_child(again)
+	brow.add_child(same)
+	v.add_child(brow)
 	_place_overlay(p)
 	# csak akkora legyen, amekkora a tartalom (az X a sarokkal együtt mozog)
 	p.custom_minimum_size = Vector2(920, 0)
-	p.position.y = 200
+	p.position.y = 110
 	var fit := func() -> void:
 		if is_instance_valid(p):
 			p.size = Vector2(920, 0)   # a tartalom legkisebb magasságára zsugorodik
@@ -1477,7 +1525,8 @@ func _reset_game() -> void:
 		get_tree().create_timer(3.0).timeout.connect(back)
 		return
 	_reset_btn.text = L.t("Új játék")
-	campaign.new_game()
+	campaign.new_game(_next_seed)
+	_next_seed = -1
 	# a küldetések is elölről: csillagok törölve, az első küldetés az aktuális
 	L.set_setting("kuldetesek", {})
 	mission_idx = 0
@@ -1571,8 +1620,10 @@ func _selftest() -> void:
 		_open_help()
 		await _shot(dir, "1c_sugo.png")
 		_close_overlay()
+		_last_result = {"datum": "2026-11-22", "mag": 2026, "pont": 934, "T2100": 1.62}   # csak a kép kedvéért
 		_open_summary({"T2100": 1.62, "csucs": 1.66})
 		await _shot(dir, "1d_osszegzes.png")
+		_last_result = {}
 		_close_overlay()
 		# 1e: telő idő (évsáv és hónap a felső sávban), utána megáll
 		campaign.running = true
@@ -1700,6 +1751,14 @@ func _selftest() -> void:
 			await _shot(dir, "6_esemeny_levego.png")
 			_close_overlay()
 			break
+	# 9c: a játék végi összegzés (pontszám, eddigi játékaid)
+	if not model.is_empty():
+		_last_result = campaign.record_result()   # az önteszt nem ír a játékos listájába
+		_open_summary({"T2100": campaign.real_t2100(), "csucs": campaign.real_peak()})
+		await get_tree().create_timer(0.5).timeout
+		await _shot(dir, "9c_osszegzes.png")
+		_close_overlay()
+		_last_result = {}
 	# 10: a záró jelenet (két Föld), közben és a végén
 	if not model.is_empty():
 		_play_finale(model["osszegzes"]["kozep"])

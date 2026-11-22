@@ -20,13 +20,21 @@ const DECK := [
 	 "ved": ["kukorica", "ontozes", "aszaly", "talaj", "agroerdeszet", "termes"]},
 	{"id": "arviz", "cim": "Áradás", "szoveg": "Egy nap alatt egy hónapnyi eső esett.",
 	 "szin": "#4aa0e0", "alap": 0.08, "no": 0.16, "penz": 35, "bizalom": 2,
-	 "ved": ["felhoszakadas", "korai_riasztas", "zoldteto", "lap"]},
+	 "ved": ["felhoszakadas", "korai_riasztas", "vizes_part", "megemelt_haz", "zoldteto", "lap"]},
 	{"id": "tuz", "cim": "Erdőtűz", "szoveg": "Száraz, szeles időben ég az erdő.",
 	 "szin": "#ff5a3a", "alap": 0.07, "no": 0.16, "penz": 25, "bizalom": 2,
 	 "ved": ["erdotuz", "muhold_erdo", "erdo", "amazonas"]},
 	{"id": "dagaly", "cim": "Vihardagály", "szoveg": "A vihar a tengert a partra nyomta.",
 	 "szin": "#3fa8d8", "alap": 0.03, "no": 0.0, "tenger": 0.45, "penz": 40, "bizalom": 3,
-	 "ved": ["tengerszint", "mangrove", "korai_riasztas", "tengerifu", "korall_ujra"]},
+	 "ved": ["gatak", "vizes_part", "megemelt_haz", "tengerszint", "mangrove", "korai_riasztas", "tengerifu", "korall_ujra"]},
+]
+## Jó hírek (játékszabály): a tudás és a bizalom hozza őket.
+## esely: alap + tema * (kutatott témák száma) + biz * (bizalom / 100)
+const GOOD := [
+	{"id": "attores", "cim": "Áttörés a laborban", "szoveg": "Egy kutatócsoport a te eredményeidre épített.",
+	 "szin": "#5fe0c0", "alap": 0.0, "tema": 0.006, "biz": 0.0, "penz": 30, "bizalom": 2},
+	{"id": "osszefogas", "cim": "Összefogás", "szoveg": "Több ország csatlakozott a tervedhez.",
+	 "szin": "#8fd45a", "alap": 0.0, "tema": 0.0, "biz": 0.12, "penz": 20, "bizalom": 4, "terv": true},
 ]
 const SHIELD := 0.25          # minden ismert védő téma ennyivel csökkenti a kárt
 const SHIELD_MAX := 0.75
@@ -39,14 +47,8 @@ static func _rng(campaign, y: int) -> RandomNumberGenerator:
 
 
 static func _sea(campaign, y: int) -> float:
-	var sl: Variant = campaign.model.get("tengerszint", {})
-	var ys: Array = campaign.model.get("evek", [])
-	if typeof(sl) != TYPE_DICTIONARY or not sl.has("terv"):
-		return 0.0
-	for i in ys.size():
-		if int(ys[i]) == y:
-			return float(sl["terv"]["kozep"][i])
-	return 0.0
+	var v: float = campaign.sea_level(y)
+	return 0.0 if is_nan(v) else v
 
 
 ## Az adott év eseményei (legfeljebb 2). Tiszta függvény: nem módosít semmit.
@@ -72,12 +74,26 @@ static func draw(campaign, y: int) -> Array:
 			ev["kar_penz"] = int(round(float(e["penz"]) * (1.0 - shield)))
 			ev["kar_bizalom"] = int(round(float(e["bizalom"]) * (1.0 - shield)))
 			out.append(ev)
+	for e in GOOD:
+		if e.get("terv", false) and campaign.timeline.is_empty():
+			continue
+		var pg: float = float(e["alap"]) + float(e["tema"]) * campaign.done.size() + float(e["biz"]) * campaign.trust / 100.0
+		if rng.randf() < minf(pg, 0.25) and out.size() < 3:
+			var gv: Dictionary = e.duplicate()
+			gv["ev"] = y
+			gv["jo"] = true
+			out.append(gv)
+			break
 	return out
 
 
 ## Az események kára a játékra (pénz, bizalom), és bejegyzés a krónikába.
 static func apply(campaign, events: Array) -> void:
 	for ev in events:
+		if ev.get("jo", false):
+			campaign.money += int(ev["penz"])
+			campaign.trust = clampi(campaign.trust + int(ev["bizalom"]), 0, 100)
+			continue
 		campaign.money = maxi(0, campaign.money - int(ev["kar_penz"]))
 		campaign.trust = clampi(campaign.trust - int(ev["kar_bizalom"]), 0, 100)
 	if not events.is_empty() and not campaign.history.is_empty():
@@ -124,6 +140,10 @@ static func panel(campaign, events: Array, on_research: Callable, on_ok: Callabl
 		var c := UI.card(Color(str(ev["szin"])))
 		c.add_child(UI.label(L.t(ev["cim"]), 26, Color(str(ev["szin"])), true))
 		c.add_child(UI.label(L.t(ev["szoveg"]), 18, UI.TEXT))
+		if ev.get("jo", false):
+			c.add_child(UI.label(L.t("Nyereség: +%d pénz, +%d bizalom") % [int(ev["penz"]), int(ev["bizalom"])], 18, UI.GREEN, true))
+			v.add_child(UI.card_root(c))
+			continue
 		var loss := L.t("Kár: −%d pénz, −%d bizalom") % [int(ev["kar_penz"]), int(ev["kar_bizalom"])]
 		c.add_child(UI.label(loss, 18, UI.EMBER, true))
 		var known: Array = ev["vedett"]

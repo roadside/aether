@@ -93,16 +93,15 @@ func for_year(y: int) -> Array:
 			for step in [[0.5, L.t("Fél fokkal hűvösebb a Föld")], [1.0, L.t("Egy egész fokkal hűvösebb a Föld")]]:
 				if b - t >= float(step[0]) and b0 - t0 < float(step[0]):
 					out.append({"cim": step[1], "alcim": L.t("Ennyit ért eddig a terved."), "fajta": "jo"})
+	if y in campaign.volcanoes or float(y) in campaign.volcanoes:
+		out.append({"cim": L.t("Vulkánkitörés"), "alcim": L.t("A hamu egy-két évre hűti a Földet. A CO2 marad."), "fajta": "evtized"})
 	if out.is_empty() and y % 10 == 0 and y < 2100 and not is_nan(t):
 		var sub := L.t("+%s °C. Még nincs terved.") % UI.hu(t, 1)
 		if has_plan:
 			sub = L.t("+%s °C · terv nélkül +%s °C lenne") % [UI.hu(t, 1), UI.hu(b, 1)]
-		var sl: Variant = m.get("tengerszint", {})
-		if typeof(sl) == TYPE_DICTIONARY and sl.has("terv"):
-			var ys: Array = m.get("evek", [])
-			for i in ys.size():
-				if int(ys[i]) == y:
-					sub += " · " + L.t("a tenger +%d cm") % int(round(float(sl["terv"]["kozep"][i]) * 100.0))
+		var sea: float = campaign.sea_level(y)
+		if not is_nan(sea):
+			sub += " · " + L.t("a tenger +%d cm") % int(round(sea * 100.0))
 		out.append({"cim": str(y), "alcim": sub, "fajta": "evtized"})
 	return out
 

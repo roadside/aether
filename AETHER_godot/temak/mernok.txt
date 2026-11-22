@@ -166,6 +166,29 @@ Wikipédia: távmunka
 Wikipédia angolul: telecommuting
 Áttekintő cikkek keresése: telework energy review
 
+=== gatak ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyi kárt előz meg a gát és a viharkapu?
+Röviden: A gát és a zárható viharkapu kizárja a tengert a városból. Drága, és egyszer túl alacsony lehet.
+Ha kikutatod:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How much damage do dikes and storm surge barriers prevent?
+Röviden angolul: A dike and a closable storm surge barrier keep the sea out of the city. They are costly and may one day be too low.
+Ha kikutatod angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: coastal flood protection dikes avoided damage sea level rise|storm surge barrier effectiveness flood risk reduction|coastal adaptation costs benefits sea level rise
+Paraméter: kockazat_csokkentes_pct
+Wikipédia: árvízvédelmi gát
+Wikipédia angolul: flood barrier
+Áttekintő cikkek keresése: coastal flood protection adaptation review
+
 # ----- III. korszak: Átalakulás -----
 
 === levegoszures ===
@@ -271,3 +294,49 @@ Paraméter: kibocsatas_csokkentes_pct
 Wikipédia: hajózás kibocsátás
 Wikipédia angolul: environmental impact of shipping
 Áttekintő cikkek keresése: shipping decarbonization review
+
+=== vizes_part ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyire véd a parti mocsár és az ártér?
+Röviden: A parti mocsár és a folyónak visszaadott ártér felfogja a hullámot és az áradást.
+Ha kikutatod:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: How well do coastal marshes and floodplains protect?
+Röviden angolul: Coastal marshes and floodplains given back to the river absorb waves and floods.
+Ha kikutatod angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: salt marsh wave attenuation coastal protection|floodplain restoration flood peak reduction|nature-based solutions coastal flood risk reduction
+Paraméter: kockazat_csokkentes_pct
+Wikipédia: ártér
+Wikipédia angolul: floodplain restoration
+Áttekintő cikkek keresése: nature-based coastal flood protection review
+
+=== megemelt_haz ===
+Korszak: III. (Átalakulás)
+Kérdés: Megéri megemelni a házakat ott, ahol jön a víz?
+Röviden: A cölöpre emelt vagy úszó ház szárazon marad, amikor jön a víz.
+Ha kikutatod:
+Mire jó?:
+Mi a gond vele?:
+Mennyire bizonyított?:
+Kérdés angolul: Is it worth raising houses where the water comes?
+Röviden angolul: A house on stilts or a floating house stays dry when the water comes.
+Ha kikutatod angolul:
+Mire jó? angolul:
+Mi a gond vele? angolul:
+Mennyire bizonyított? angolul:
+Forrás:
+Lektorálva: nem
+--- technikai ---
+Keresés: building elevation flood damage reduction cost benefit|amphibious floating housing flood adaptation|flood-proofing buildings effectiveness
+Paraméter: kockazat_csokkentes_pct
+Wikipédia: úszó ház
+Wikipédia angolul: flood mitigation
+Áttekintő cikkek keresése: building flood-proofing elevation review

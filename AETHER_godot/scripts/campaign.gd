@@ -51,6 +51,11 @@ var sens := 0.0                      # a Föld rejtett érzékenysége: −1 (a 
 var noise: Array = []                # természetes évi ingadozás 2026-tól (°C), a magból előre kisorsolva
 var history: Array = []              # az évek krónikája: [{"ev", "T", "esemenyek": [...]}]
 var games_played := 0
+var volcanoes: Array = []            # nagy vulkánkitörések évei ebben a világban (a magból sorsolva)
+
+## Partvédelem (játékszabály): ezek a kutatások csökkentik az emelkedő tenger okozta kárt.
+const COAST_TOPICS := ["gatak", "vizes_part", "megemelt_haz", "tengerszint", "mangrove", "korai_riasztas", "tengerifu", "korall_ujra"]
+const COAST_COST_PER_M := 60.0       # évi partkár pénzben, a 2026 óta emelkedett tenger minden méterére
 var save_file := "aether_jatek.json"  # az önteszt külön fájlt használ
 var _acc := 0.0
 
@@ -92,6 +97,8 @@ func load_game() -> void:
 	noise = nz if typeof(nz) == TYPE_ARRAY else []
 	var hs: Variant = d.get("kronika", [])
 	history = hs if typeof(hs) == TYPE_ARRAY else []
+	var vk: Variant = d.get("vulkanok", [])
+	volcanoes = vk if typeof(vk) == TYPE_ARRAY else []
 	for id in done:   # régi mentés: a kutatott téma legalább 1 csillag
 		if not stars.has(str(id)):
 			stars[str(id)] = 1
@@ -101,10 +108,11 @@ func save() -> void:
 	Bridge.write_json(save_path(), {"ev": year, "penz": money, "bizalom": trust, "idovonal": timeline,
 		"modell": model, "allomas": station, "epul": building, "kutatas_ev": research_this_year,
 		"tudas": done, "korszak": era, "karok": levers, "csillagok": stars,
-		"mag": world_seed, "erzekenyseg": sens, "ingadozas": noise, "kronika": history})
+		"mag": world_seed, "erzekenyseg": sens, "ingadozas": noise, "kronika": history, "vulkanok": volcanoes})
 
 
-func new_game() -> void:
+## seed_value >= 0: ugyanaz a Föld újra (ugyanaz az érzékenység, ingadozás, események).
+func new_game(seed_value: int = -1) -> void:
 	year = START_YEAR
 	money = START_MONEY
 	trust = START_TRUST
@@ -121,7 +129,7 @@ func new_game() -> void:
 	fast = false
 	_acc = 0.0
 	history = []
-	roll_world(-1 if save_file == "aether_jatek.json" else 2026)
+	roll_world(seed_value if seed_value >= 0 else (-1 if save_file == "aether_jatek.json" else 2026))
 	if save_file == "aether_jatek.json":   # az önteszt ne törölje a játékos küldetéscsillagait
 		L.set_setting("kuldetesek", {})   # a küldetések csillagai is alapra állnak
 	save()
@@ -158,9 +166,21 @@ func roll_world(seed_value: int = -1) -> void:
 	for i in END_YEAR - START_YEAR + 1:
 		v = 0.5 * v + rng.randfn(0.0, 0.085)     # egymást követő évek hasonlítanak egymásra
 		noise.append(snappedf(clampf(v, -0.25, 0.25), 0.001))
+	# Nagy vulkánkitörés (játékszabály, valódi mintára: a Pinatubo 1991-es kitörése után a Föld
+	# átlaga egy-két évre néhány tized fokkal hűlt). Ritka, és csak átmeneti: a CO2 marad.
+	volcanoes = []
+	var i2 := 3
+	while i2 < noise.size() - 3:
+		if rng.randf() < 0.02:
+			volcanoes.append(START_YEAR + i2)
+			noise[i2 + 1] = snappedf(float(noise[i2 + 1]) - 0.30, 0.001)
+			noise[i2 + 2] = snappedf(float(noise[i2 + 2]) - 0.15, 0.001)
+			i2 += 8
+		i2 += 1
 	if save_file != "aether_jatek.json":   # az önteszt Földje mindig a sáv közepe, ingadozás nélkül
 		sens = 0.0
 		noise = []
+		volcanoes = []
 
 
 ## A valódi (ebben a játékban megvalósuló) érték a három modellpályából, ingadozás nélkül.
@@ -186,6 +206,86 @@ func measured_temp(y: int) -> float:
 	if is_nan(t) or i < 0 or i >= noise.size():
 		return t
 	return t + float(noise[i])
+
+
+## A tengerszint ebben a játékban (méter, 2005-höz képest; IPCC AR6 a modellből). A sávon belül
+## a Föld rejtett érzékenysége dönt (játékszabály: az érzékenyebb Földön a tenger is gyorsabban nő).
+func sea_level(y: int, group: String = "terv") -> float:
+	var sl: Variant = model.get("tengerszint", {})
+	var ys: Array = model.get("evek", [])
+	if typeof(sl) != TYPE_DICTIONARY or not sl.has(group):
+		return NAN
+	var g: Dictionary = sl[group]
+	for i in ys.size():
+		if int(ys[i]) == y:
+			var mid := float(g["kozep"][i])
+			var side := "felso" if sens > 0.0 else "also"
+			if not g.has(side):
+				return mid
+			return lerpf(mid, float(g[side][i]), absf(sens))
+	return NAN
+
+
+## A partvédelmi tudás ennyi részét fogja meg a tenger okozta kárnak (0–0,75).
+func coast_shield() -> float:
+	var n := 0
+	for id in COAST_TOPICS:
+		if id in done:
+			n += 1
+	return minf(0.75, 0.15 * n)
+
+
+## Évi partkár pénzben (játékszabály): a 2026 óta emelkedett tengerrel arányos.
+func coast_cost(y: int) -> int:
+	var now := sea_level(y)
+	var base := sea_level(START_YEAR)
+	if is_nan(now) or is_nan(base):
+		return 0
+	return int(round(maxf(0.0, now - base) * COAST_COST_PER_M * (1.0 - coast_shield())))
+
+
+## A 2100-as melegedés és a csúcs ezen a Földön (ingadozás nélkül).
+func real_t2100() -> float:
+	return world_value("terv", "homerseklet", END_YEAR)
+
+
+func real_peak() -> float:
+	var best := -99.0
+	for y in range(START_YEAR, END_YEAR + 1):
+		var t := world_value("terv", "homerseklet", y)
+		if not is_nan(t):
+			best = maxf(best, t)
+	return best
+
+
+## Pontszám (játékszabály): a hűvösebb Föld, a tudás és a bizalom ér pontot.
+func score() -> int:
+	var t := real_t2100()
+	if is_nan(t):
+		return 0
+	return maxi(0, int(round((4.0 - t) * 300.0))) + 10 * done.size() + 2 * trust
+
+
+# --- eddigi játékok (külön fájl: az új játék nem törli) -------------------------
+func results_path() -> String:
+	return OS.get_user_data_dir().path_join("aether_eredmenyek.json")
+
+
+func results() -> Array:
+	var d: Variant = Bridge.read_json(results_path())
+	return d if typeof(d) == TYPE_ARRAY else []
+
+
+## A befejezett játék bejegyzése. Az önteszt nem ír a játékos listájába.
+func record_result() -> Dictionary:
+	var e := {"datum": Time.get_date_string_from_system(), "mag": world_seed, "pont": score(),
+		"T2100": snappedf(real_t2100(), 0.0001), "csucs": snappedf(real_peak(), 0.0001),
+		"temak": done.size(), "bizalom": trust}
+	if save_file == "aether_jatek.json":
+		var all := results()
+		all.append(e)
+		Bridge.write_json(results_path(), all)
+	return e
 
 
 ## Technikai hibával leállt kutatás: a pénz és az évi kutatási hely visszajár.
@@ -220,6 +320,10 @@ func advance() -> void:
 	var note := L.t("%d: bevétel +%d.") % [year, inc]
 	if knowledge_income() > 0:
 		note = L.t("%d: bevétel +%d, ebből a tudásodból +%d.") % [year, inc, knowledge_income()]
+	var cc := coast_cost(year)
+	if cc > 0:
+		money = maxi(0, money - cc)
+		note += " " + L.t("Emelkedő tenger: partkár −%d.") % cc
 	if d > 0:
 		note += " " + L.t("A kibocsátás csökken: bizalom +%d.") % d
 	elif d < 0:
