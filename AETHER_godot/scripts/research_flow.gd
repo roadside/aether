@@ -557,7 +557,7 @@ func _show_ai_choice() -> void:
 	var why := UI.card(UI.GOLD)
 	why.add_child(UI.label(L.t("Miért kell AI?"), 17, UI.GOLD, true))
 	why.add_child(UI.label(L.t("Az AI a kutatód: cikkeket olvas és számokat keres. A játék mindet ellenőrzi."), 16, UI.SOFT))
-	why.add_child(UI.label(L.t("A ChatGPT, Claude vagy Gemini előfizetés nem elég, API-kulcs kell. Az Ollama ingyenes."), 15, UI.MUTE))
+	why.add_child(UI.label(L.t("A legegyszerűbb a gépeden futó, ingyenes AI (Ollama). A többihez külön, fizetős kulcs kell."), 15, UI.MUTE))
 	_body.add_child(UI.card_root(why))
 	var best := "none"
 	for id in ["ollama", "gemini", "openai", "claude"]:   # a legalaposabb elérhető
@@ -775,7 +775,7 @@ func _start_research() -> void:
 	_header(L.t("Kutatás folyamatban"), 3, L.t("Pár percig tarthat.") + " " + L.t("Kutató AI: ") + _ai_name(_ai)
 		+ (L.t(" · %d pénz") % campaign.research_cost() if campaign != null else ""))
 	_step_rows.clear()
-	var names := [L.t("Kérdés pontosítása"), L.t("Cikkek keresése 4 tudományos adatbázisban"), L.t("Fontos számok kiemelése"), L.t("Ellenőrzés: tényleg benne van a cikkben?")]
+	var names := [L.t("Kérdés pontosítása"), L.t("Cikkek keresése 4 tudományos adatbázisban"), L.t("Számok keresése a cikkekben"), L.t("Ellenőrzés: tényleg benne van a cikkben?")]
 	for n in names:
 		var l := UI.label("○  " + n, 18, UI.MUTE)
 		_step_rows.append([l, n])
@@ -895,7 +895,7 @@ func _show_results() -> void:
 	if int(o.get("hazai", 0)) > 0:   # a játékos országának kutatóintézeteiből
 		s = L.t("%d cikk (%d hazai). ") % [int(o["cikkek"]), int(o["hazai"])]
 	if int(o["allitasok"]) > 0:
-		s += L.t("%d szám ellenőrizve, %d elvetve.") % [int(o["ellenorizve"]), int(o["elutasitva"])]
+		s += L.t("%d számot megtaláltunk szó szerint a cikkekben, %d-et nem.") % [int(o["ellenorizve"]), int(o["elutasitva"])]
 	_body.add_child(UI.label(s, 18, UI.TEXT))
 	if _from_archive:
 		var meta: Dictionary = _result.get("archivum", {})
@@ -924,7 +924,7 @@ func _show_results() -> void:
 			_body.add_child(l)
 	if props.is_empty():
 		var why := L.t("AI nélkül csak cikklista készül, számok nem.") if _ai == "none" \
-			else L.t("Nem találtunk ellenőrizhető számot. Ez is eredmény.")
+			else L.t("Most nem találtunk olyan számot, ami szó szerint benne van a cikkekben. Ez is eredmény: a tudomány sem tud mindent pontosan.")
 		_body.add_child(UI.label(why, 17, UI.SOFT))
 	_body.add_child(_paper_list(pub))
 	var row := UI.hbox(12)

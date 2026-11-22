@@ -354,10 +354,8 @@ def javaslatok(pub: Dict, lang: str = "hu") -> List[Dict]:
             base.update(kar="alkalmazkodas", kar_ertek=round(min(max(med, 0.0), 100.0), 2),
                         kar_nev="Adaptation (drought-tolerant varieties)" if en
                         else "Alkalmazkodás (aszálytűrő fajták)",
-                        megjegyzes="Approximation: the yield advantage in drought is used to offset "
-                                   "the yield loss caused by warming." if en else
-                                   "Közelítés: az aszály alatti hozamelőnyt a melegedés okozta "
-                                   "hozamveszteség ellensúlyozásaként használjuk.")
+                        megjegyzes="The game uses it like this: this much less harvest is lost to warming." if en else
+                                   "A játék így számol vele: ennyivel kevesebb termés vész el a melegedés miatt.")
         if base["kar"] is None:
             base["megjegyzes"] = base["megjegyzes"] or (
                 "For information: this version does not put it into the model yet." if en
@@ -581,8 +579,8 @@ def model_series(data: Dict, lang: str = "hu") -> Dict:
     lo, hi = out["osszegzes"]["alacsony"]["T2100"], out["osszegzes"]["magas"]["T2100"]
     if is_en(lang):
         f = lambda x: f"{x:.1f}"  # noqa: E731
-        txt = (f"In 2100 the Earth is about {f(k['T2100'])} °C warmer than before the industrial revolution "
-               f"(uncertainty range: {f(lo)}–{f(hi)} °C). ")
+        txt = (f"In 2100 the Earth is about {f(k['T2100'])} °C warmer than 150 years ago (before factories and cars) "
+               f"– most likely between {f(lo)} and {f(hi)} °C. ")
         if diff >= 0.05:
             txt += f"That is {f(diff)} °C less than if nothing changed."
         elif diff <= -0.05:
@@ -591,8 +589,8 @@ def model_series(data: Dict, lang: str = "hu") -> Dict:
             txt += "That is practically the same as if nothing changed."
         out["jelentes"] = txt
         return out
-    txt = (f"2100-ban a Föld kb. {hu(k['T2100'], 1)} °C-kal melegebb, mint az ipari forradalom előtt "
-           f"(bizonytalansági sáv: {hu(lo, 1)}–{hu(hi, 1)} °C). ")
+    txt = (f"2100-ban a Föld kb. {hu(k['T2100'], 1)} °C-kal melegebb, mint 150 éve (a gyárak és autók kora előtt) "
+           f"– valószínűleg {hu(lo, 1)} és {hu(hi, 1)} °C között. ")
     if diff >= 0.05:
         txt += f"Ez {hu(diff, 1)} °C-kal kevesebb, mint ha semmi sem változna."
     elif diff <= -0.05:

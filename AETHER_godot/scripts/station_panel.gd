@@ -172,7 +172,7 @@ func _effect(mod: String, lvl: int) -> String:
 func _why(mod: String) -> String:
 	match mod:
 		"ai_mag":
-			return L.t("Nagyobb számítási kapacitás: több cikket olvas el, de egy kutatás tovább tart.")
+			return L.t("Erősebb AI: több cikket olvas el, de egy kutatás tovább tart.")
 		"archivum":
 			return L.t("Cikktár: a már letöltött cikkeket nem kell újra keresni.")
 		"uveghaz":

@@ -332,7 +332,7 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 	if problem == "" and campaign.is_step_back(sc):
 		_result_box.add_child(UI.label(L.t("Ez gyengébb a mostani tervednél: a bizalom csökken."), 15, UI.EMBER))
 	var adopt := UI.button(L.t("Bevezetem"), true)
-	adopt.tooltip_text = L.t("A pénz és a bizalom játékszabály, nem valós adat. A hőmérséklet a klímamodellből jön.")
+	adopt.tooltip_text = L.t("A pénz és a bizalom a játék része, nem valódi adat. A hőmérsékletet a játék számolja ki.")
 	if ch.is_empty() and not campaign.timeline.is_empty():
 		adopt.disabled = true
 	if problem != "":
@@ -403,4 +403,4 @@ func _show_control(c: Control) -> void:
 func _add_chart(res: Dictionary) -> void:
 	_result_box.add_child(_chart)
 	_chart.set_data(res)
-	_result_box.add_child(UI.label(L.t("Egyszerű oktatási modell: irányt mutat, nem jósol."), 14, UI.MUTE))
+	_result_box.add_child(UI.label(L.t("Ez egy egyszerű számítás: megmutatja az irányt, de nem jóslat."), 14, UI.MUTE))
