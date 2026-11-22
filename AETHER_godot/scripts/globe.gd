@@ -27,6 +27,9 @@ var time := 0.0
 var stations: Array = []             # [{name, lat, lon, color, me, locked}]
 var links: Array = []                # [[lat1, lon1, lat2, lon2], ...]
 var events: Array = []               # valós események (world_state.py): {cim, kategoria, lat, lon, link, ...}
+## Tengerszint-emelkedés szemléltetése (0–1): a veszélyeztetett alacsony partvidékek (a mai
+## tengerszint fölött legfeljebb 10 m, NOAA ETOPO1) fokozatosan vízszínt kapnak. Lásd a shadert.
+var sea_rise := 0.0
 var heat := 0.0                      # 0 = ma; 1 = kb. +2 °C a mához képest (csak szemléltetés)
 var highlight: Dictionary = {}       # a listában éppen rámutatott esemény: gyűrű jelöli
 var anomaly_mix := 0.0               # 0..1: a mai hőmérséklet-eltérés térkép áttűnése
@@ -56,6 +59,23 @@ var _rect: ColorRect
 var _mat: ShaderMaterial
 
 
+static var _low_tex: Texture2D
+
+
+## Az alacsony partok maszkja (tools/alacsony_partok.py). Ha a Godot még nem importálta, közvetlenül
+## a fájlból töltjük be; minden földgömb ugyanazt a textúrát használja.
+static func _low_map() -> Texture2D:
+	if _low_tex == null:
+		var path := "res://assets/earth_low.png"
+		if ResourceLoader.exists(path):
+			_low_tex = load(path)
+		else:
+			var img := Image.load_from_file(ProjectSettings.globalize_path(path))
+			if img != null:
+				_low_tex = ImageTexture.create_from_image(img)
+	return _low_tex
+
+
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	_rect = ColorRect.new()
@@ -67,6 +87,7 @@ func _ready() -> void:
 	_mat.set_shader_parameter("data_map", load("res://assets/earth_data.png"))
 	_mat.set_shader_parameter("night_map", load("res://assets/earth_night.png"))
 	_mat.set_shader_parameter("cloud_map", load("res://assets/earth_clouds.png"))
+	_mat.set_shader_parameter("low_map", _low_map())
 	_mat.set_shader_parameter("pixels", pixels)
 	_mat.set_shader_parameter("radius", radius_ratio)
 	_mat.set_shader_parameter("tilt", tilt)
@@ -130,6 +151,7 @@ func _process(delta: float) -> void:
 		_mat.set_shader_parameter("sun_dir", _sun_dir())
 	_mat.set_shader_parameter("cloud_drift", cloud_drift)
 	_mat.set_shader_parameter("heat", heat)
+	_mat.set_shader_parameter("sea_rise", sea_rise)
 	_mat.set_shader_parameter("anomaly_mix", anomaly_mix)
 	queue_redraw()
 

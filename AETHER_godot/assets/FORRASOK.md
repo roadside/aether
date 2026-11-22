@@ -14,3 +14,13 @@
   egyszerű visszhang).
 - `hang/intro.wav`: a bevezető másik, handpan hangzású saját zenéje (a `tools/intro_zene.py` állítja elő).
   Jelenleg a játék az `intro_handpan.wav`-ot játssza; a kettő közül Zoltán választ.
+
+# Domborzat (alacsony partok)
+
+- `earth_low.png`: a mai tengerszint fölött legfeljebb 10 méteren fekvő partvidékek maszkja a földgömbhöz
+  (255 = 0 m vagy alatta, 0 = 10 m vagy magasabb). A `tools/alacsony_partok.py` állítja elő.
+  Forrás: NOAA ETOPO1, 1 ívperces globális domborzat („Ice Surface”), Amante & Eakins (2009), NOAA NGDC,
+  5 ívperces ritkítással a NOAA ERDDAP szerveréről
+  (https://coastwatch.pfeg.noaa.gov/erddap/griddap/etopo180.html). Licenc: szabadon használható és
+  továbbadható; nem jogi célra. A játékban a veszélyeztetett alacsony partok szemléltetésére szolgál,
+  nem előrejelzés.

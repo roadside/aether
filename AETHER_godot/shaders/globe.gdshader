@@ -19,6 +19,8 @@ uniform vec3 atmosphere = vec3(0.39, 0.95, 0.89);
 uniform float zoom = 1.0;              // nagyítás (1 = egész gömb)
 uniform sampler2D anomaly_map : source_color, filter_linear, repeat_enable;  // mai hőmérséklet-eltérés (Climate Pulse)
 uniform float anomaly_mix = 0.0;       // 0 = normál Föld, 1 = eltérés-térkép
+uniform sampler2D low_map : filter_linear, repeat_enable;   // alacsony partvidék: 1 = 0 m, 0 = 10 m vagy magasabb
+uniform float sea_rise = 0.0;          // 0–1: a veszélyeztetett alacsony partok szemléltetése
 uniform float heat = 0.0;              // melegedés szemléltetése: 0 = ma, 1 = kb. +2 °C a mához képest
 
 const float BAYER[16] = float[16](0.0, 8.0, 2.0, 10.0, 12.0, 4.0, 14.0, 6.0, 3.0, 11.0, 1.0, 9.0, 15.0, 7.0, 13.0, 5.0);
@@ -128,6 +130,16 @@ void fragment() {
 				float keep = smoothstep(edge, edge + 0.06, alat + (nz - 0.5) * 0.14);
 				albedo = mix(vec3(0.08, 0.24, 0.42), albedo, keep);
 			}
+		}
+		// Tengerszint-emelkedés: a veszélyeztetett ALACSONY PARTOK szemléltetése. 2100-ig a tenger
+		// kb. 0,4–0,8 métert emelkedik (IPCC AR6), ami gömbléptékben nem látszana. Ezért itt a mai
+		// tengerszint fölött legfeljebb 10 m-en fekvő partvidékek kapnak vízszínt, fokozatosan:
+		// ezekre a helyekre ér el egyre gyakrabban a vihardagály és a dagály. NEM azt állítja,
+		// hogy mindez 2100-ra víz alá kerül. Forrás: NOAA ETOPO1 (tools/alacsony_partok.py).
+		if (sea_rise > 0.0 && data.r > 0.5) {
+			float low = texture(low_map, tex).r;
+			float wet = smoothstep(1.0 - sea_rise, 1.0 - sea_rise + 0.12, low) * step(0.02, low);
+			albedo = mix(albedo, vec3(0.15, 0.40, 0.55), wet * 0.8);
 		}
 		float ndl = dot(n, L);
 		float light = clamp(ndl * 0.95 + 0.12, 0.0, 1.0);
