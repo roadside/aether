@@ -1,0 +1,849 @@
+{
+ "publikacio": {
+  "aether_publikacio_verzio": 1,
+  "kerdes": "How much CO2 can machines filter from the air?",
+  "terv": {
+   "kutatasi_kerdes_pontositva": "How much CO2 can machines filter from the air?",
+   "angol_keresokifejezesek": [
+    "direct air capture carbon dioxide removal potential cost",
+    "direct air carbon capture and storage scale-up",
+    "negative emissions technologies potentials costs side effects"
+   ],
+   "keresett_parameterek": [
+    "cdr_potencial_gtco2_ev",
+    "cdr_koltseg_usd_tco2"
+   ],
+   "megjegyzes": "Előre összeállított kérdés."
+  },
+  "ai": "ollama:qwen3:8b",
+  "cikkek": {
+   "P1": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2996103904",
+    "title": "Scale‐up of electrospinning technology: Applications in the pharmaceutical industry",
+    "year": 2019,
+    "doi": "10.1002/wnan.1611",
+    "abstract": "Recently, electrospinning (ES) of fibers has been shown to be an attractive strategy for drug delivery. One of the main features of ES is that a wide variety of drugs can be loaded into the fibers to improve their bioavailability, to enhance dissolution, or to achieve controlled release. Besides, ES is a continuous technology with low energy consumption, which can make it a very economic production alternative to the widely used freeze drying and spray drying. However, the low production rate of laboratory-scaled ES has limited the industrial application of the technology so far. This article covers the various ES technologies developed for scaled-up fiber production with an emphasis on pharmaceutically relevant examples. The methods used for increasing the productivity are complied, which is followed by a review of specific examples from literature where these technologies are utilized to produce oral drug delivery systems. The different technologies are compared in terms of their basic principles, advantages, and limitations. Finally, the different downstream processing options to prepare tablets or capsules containing the electrospun drug are covered as well. This article is categorized under: Therapeutic Approaches and Drug Discovery > Emerging Technologies.",
+    "venue": "Wiley Interdisciplinary Reviews Nanomedicine and Nanobiotechnology",
+    "authors": [
+     "Panna Vass",
+     "Edina Szabó",
+     "András Domokos",
+     "Edit Hirsch",
+     "Dorián László Galata",
+     "Balázs Farkas",
+     "Balázs Démuth",
+     "Sune Klint Andersen",
+     "Tamás Vígh",
+     "Geert Verreck",
+     "György Marosi",
+     "Zsombor Kristóf Nagy"
+    ],
+    "cited_by": 266,
+    "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/wnan.1611",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "review",
+    "orszagok": [
+     "BE",
+     "HU"
+    ],
+    "intezmenyek": {
+     "HU": [
+      "Budapest University of Technology and Economics"
+     ],
+     "BE": [
+      "Janssen (Belgium)"
+     ]
+    }
+   },
+   "P2": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2804406438",
+    "title": "Negative emissions—Part 2: Costs, potentials and side effects",
+    "year": 2018,
+    "doi": "10.1088/1748-9326/aabf9f",
+    "abstract": "The most recent IPCC assessment has shown an important role for negative emissions technologies (NETs) in limiting global warming to 2 °C cost-effectively. However, a bottom-up, systematic, reproducible, and transparent literature assessment of the different options to remove CO 2 from the atmosphere is currently missing. In part 1 of this three-part review on NETs, we assemble a comprehensive set of the relevant literature so far published, focusing on seven technologies: bioenergy with carbon capture and storage (BECCS), afforestation and reforestation, direct air carbon capture and storage (DACCS), enhanced weathering, ocean fertilisation, biochar, and soil carbon sequestration. In this part, part 2 of the review, we present estimates of costs, potentials, and side-effects for these technologies, and qualify them with the authors' assessment. Part 3 reviews the innovation and scaling challenges that must be addressed to realise NETs deployment as a viable climate mitigation strategy. Based on a systematic review of the literature, our best estimates for sustainable global NET potentials in 2050 are 0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation, 0.5–5 GtCO 2 yr −1 for BECCS, 0.5–2 GtCO 2 yr −1 for biochar, 2–4 GtCO 2 yr −1 for enhanced weathering, 0.5–5 GtCO 2 yr −1 for DACCS, and up to 5 GtCO 2 yr −1 for soil carbon sequestration. Costs vary widely across the technologies, as do their permanency and cumulative potentials beyond 2050. It is unlikely that a single NET will be able to sustainably meet the rates of carbon uptake described in integrated assessment pathways consistent with 1.5 °C of global warming.",
+    "venue": "Environmental Research Letters",
+    "authors": [
+     "Sabine Fuss",
+     "William F. Lamb",
+     "Max Callaghan",
+     "Jérôme Hilaire",
+     "Felix Creutzig",
+     "Thorben Amann",
+     "Tim Beringer",
+     "Wagner de Oliveira Garcia",
+     "Jens Hartmann",
+     "Tarun M. Khanna",
+     "Gunnar Luderer",
+     "Gregory F. Nemet",
+     "Joeri Rogelj",
+     "Pete Smith",
+     "José Luis Vicente‐Vicente",
+     "Jennifer L. Wilcox",
+     "Maria del Mar Zamora Dominguez",
+     "Jan Christoph Minx"
+    ],
+    "cited_by": 1853,
+    "url": "https://iopscience.iop.org/article/10.1088/1748-9326/aabf9f/pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "AT",
+     "CH",
+     "DE",
+     "GB",
+     "US"
+    ],
+    "intezmenyek": {
+     "DE": [
+      "Mercator Research Institute on Global Commons and Climate Change",
+      "Potsdam Institute for Climate Impact Research",
+      "Technische Universität Berlin",
+      "Universität Hamburg"
+     ],
+     "GB": [
+      "University of Leeds",
+      "University of Aberdeen"
+     ],
+     "US": [
+      "University of Wisconsin–Madison",
+      "Colorado School of Mines"
+     ],
+     "AT": [
+      "International Institute for Applied Systems Analysis"
+     ],
+     "CH": [
+      "ETH Zurich",
+      "Institute for Atmospheric and Climate Science"
+     ]
+    }
+   },
+   "P3": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W3131956693",
+    "title": "Demand-side solutions to climate change mitigation consistent with high levels of well-being",
+    "year": 2021,
+    "doi": "10.1038/s41558-021-01219-y",
+    "abstract": "Mitigation solutions are often evaluated in terms of costs and greenhouse gas reduction potentials, missing out on the consideration of direct effects on human well-being. Here, we systematically assess the mitigation potential of demand-side options categorized into avoid, shift and improve, and their human well-being links. We show that these options, bridging socio-behavioural, infrastructural and technological domains, can reduce counterfactual sectoral emissions by 40–80% in end-use sectors. Based on expert judgement and an extensive literature database, we evaluate 306 combinations of well-being outcomes and demand-side options, finding largely beneficial effects in improvement in well-being (79% positive, 18% neutral and 3% negative), even though we find low confidence on the social dimensions of well-being. Implementing such nuanced solutions is based axiomatically on an understanding of malleable rather than fixed preferences, and procedurally on changing infrastructures and choice architectures. Results demonstrate the high mitigation potential of demand-side mitigation options that are synergistic with well-being.",
+    "venue": "Nature Climate Change",
+    "authors": [
+     "Felix Creutzig",
+     "Leila Niamir",
+     "Xuemei Bai",
+     "Max Callaghan",
+     "Jonathan M. Cullen",
+     "Julio Díaz‐José",
+     "Maria Josefina Figueroa",
+     "Arnulf Grübler",
+     "William F. Lamb",
+     "Adrian Leip",
+     "Eric R. Masanet",
+     "Érika Mata",
+     "Linus Mattauch",
+     "Jan Christoph Minx",
+     "Sebastian Mirasgedis",
+     "Yacob Mulugetta",
+     "Sudarmanto Budi Nugroho",
+     "Minal Pathak",
+     "Patrícia E. Perkins",
+     "Joyashree Roy",
+     "Stéphane de la Rue du Can",
+     "Yamina Saheb",
+     "Shreya Some",
+     "Linda Steg",
+     "Julia  K. Steinberger",
+     "Diána Ürge-Vorsatz"
+    ],
+    "cited_by": 785,
+    "url": "https://www.nature.com/articles/s41558-021-01219-y.pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "AT",
+     "AU",
+     "CA",
+     "CH",
+     "DE",
+     "DK",
+     "GB",
+     "GR",
+     "HU",
+     "IN",
+     "IT",
+     "JP",
+     "MX",
+     "NL",
+     "SE",
+     "TH",
+     "US"
+    ],
+    "intezmenyek": {
+     "DE": [
+      "Mercator Research Institute on Global Commons and Climate Change",
+      "Technische Universität Berlin",
+      "Potsdam Institute for Climate Impact Research"
+     ],
+     "AU": [
+      "Australian National University"
+     ],
+     "GB": [
+      "University of Leeds",
+      "University of Cambridge",
+      "University of Oxford",
+      "University College London"
+     ],
+     "MX": [
+      "Universidad Veracruzana"
+     ],
+     "DK": [
+      "Copenhagen Business School"
+     ],
+     "AT": [
+      "International Institute for Applied Systems Analysis"
+     ],
+     "IT": [
+      "Joint Research Centre"
+     ],
+     "US": [
+      "University of California, Santa Barbara",
+      "Lawrence Berkeley National Laboratory"
+     ],
+     "SE": [
+      "IVL Swedish Environmental Research Institute"
+     ],
+     "GR": [
+      "National Observatory of Athens"
+     ],
+     "JP": [
+      "Institute for Global Environmental Strategies"
+     ],
+     "IN": [
+      "Ahmedabad University",
+      "Jadavpur University"
+     ],
+     "CA": [
+      "York University"
+     ],
+     "TH": [
+      "Asian Institute of Technology"
+     ],
+     "CH": [
+      "University of Lausanne"
+     ],
+     "NL": [
+      "University of Groningen"
+     ],
+     "HU": [
+      "Central European University - Budapest Campus"
+     ]
+    }
+   },
+   "P4": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2964314984",
+    "title": "An inter-model assessment of the role of direct air capture in deep mitigation pathways",
+    "year": 2019,
+    "doi": "10.1038/s41467-019-10842-5",
+    "abstract": "The feasibility of large-scale biological CO 2 removal to achieve stringent climate targets remains unclear. Direct Air Carbon Capture and Storage (DACCS) offers an alternative negative emissions technology (NET) option. Here we conduct the first inter-model comparison on the role of DACCS in 1.5 and 2 °C scenarios, under a variety of techno-economic assumptions. Deploying DACCS significantly reduces mitigation costs, and it complements rather than substitutes other NETs. The key factor limiting DACCS deployment is the rate at which it can be scaled up. Our scenarios’ average DACCS scale-up rates of 1.5 GtCO 2 /yr would require considerable sorbent production and up to 300 EJ/yr of energy input by 2100. The risk of assuming that DACCS can be deployed at scale, and finding it to be subsequently unavailable, leads to a global temperature overshoot of up to 0.8 °C. DACCS should therefore be developed and deployed alongside, rather than instead of, other mitigation options.",
+    "venue": "Nature Communications",
+    "authors": [
+     "Giulia Realmonte",
+     "Laurent Drouet",
+     "Ajay Gambhir",
+     "James Denis Mc Glynn",
+     "Adam D. Hawkes",
+     "Alexandre C. Köberle",
+     "Massimo Tavoni"
+    ],
+    "cited_by": 642,
+    "url": "https://www.nature.com/articles/s41467-019-10842-5.pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "GB",
+     "IE",
+     "IT"
+    ],
+    "intezmenyek": {
+     "IT": [
+      "RFF-CMCC European Institute on Economics and the Environment",
+      "Politecnico di Milano"
+     ],
+     "GB": [
+      "Imperial College London"
+     ],
+     "IE": [
+      "University College Cork",
+      "SFI Research Centre for Energy, Climate and Marine"
+     ]
+    }
+   },
+   "P5": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2042831115",
+    "title": "Made-to-order metal-organic frameworks for trace carbon dioxide removal and air capture",
+    "year": 2014,
+    "doi": "10.1038/ncomms5228",
+    "abstract": "Direct air capture is regarded as a plausible alternate approach that, if economically practical, can mitigate the increasing carbon dioxide emissions associated with two of the main carbon polluting sources, namely stationary power plants and transportation. Here we show that metal-organic framework crystal chemistry permits the construction of an isostructural metal-organic framework (SIFSIX-3-Cu) based on pyrazine/copper(II) two-dimensional periodic 44 square grids pillared by silicon hexafluoride anions and thus allows further contraction of the pore system to 3.5 versus 3.84 Å for the parent zinc(II) derivative. This enhances the adsorption energetics and subsequently displays carbon dioxide uptake and selectivity at very low partial pressures relevant to air capture and trace carbon dioxide removal. The resultant SIFSIX-3-Cu exhibits uniformly distributed adsorption energetics and offers enhanced carbon dioxide physical adsorption properties, uptake and selectivity in highly diluted gas streams, a performance, to the best of our knowledge, unachievable with other classes of porous materials. The capture and removal of low-concentration carbon dioxide from air is appealing. Here, the authors report a metal-organic framework with a precisely tuned network of pores and optimal charge density, which is capable of carbon dioxide uptake at very low partial pressures relevant to direct air capture.",
+    "venue": "Nature Communications",
+    "authors": [
+     "Osama Shekhah",
+     "Youssef Belmabkhout",
+     "Zhijie Chen",
+     "Vincent Guillerm",
+     "Amy Cairns",
+     "Karim Adil",
+     "Mohamed Eddaoudi"
+    ],
+    "cited_by": 773,
+    "url": "https://www.nature.com/articles/ncomms5228.pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "SA"
+    ],
+    "intezmenyek": {
+     "SA": [
+      "King Abdullah University of Science and Technology"
+     ]
+    }
+   },
+   "P6": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W3140067034",
+    "title": "Life Cycle Assessment of Direct Air Carbon Capture and Storage with Low-Carbon Energy Sources",
+    "year": 2021,
+    "doi": "10.1021/acs.est.1c03263",
+    "abstract": "Direct air carbon capture and storage (DACCS) is an emerging carbon dioxide removal technology, which has the potential to remove large amounts of CO 2 from the atmosphere. We present a comprehensive life cycle assessment of different DACCS systems with low-carbon electricity and heat sources required for the CO 2 capture process, both stand-alone and grid-connected system configurations. The results demonstrate negative greenhouse gas (GHG) emissions for all eight selected locations and five system layouts, with the highest GHG removal potential in countries with low-carbon electricity supply and waste heat usage (up to 97%). Autonomous system layouts prove to be a promising alternative, with a GHG removal efficiency of 79–91%, at locations with high solar irradiation to avoid the consumption of fossil fuel-based grid electricity and heat. The analysis of environmental burdens other than GHG emissions shows some trade-offs associated with CO 2 removal, especially land transformation for system layouts with photovoltaics (PV) electricity supply. The sensitivity analysis reveals the importance of selecting appropriate locations for grid-coupled system layouts since the deployment of DACCS at geographic locations with CO 2 -intensive grid electricity mixes leads to net GHG emissions instead of GHG removal today.",
+    "venue": "Environmental Science & Technology",
+    "authors": [
+     "Tom Terlouw",
+     "Karin Treyer",
+     "Christian Bauer",
+     "Marco Mazzotti"
+    ],
+    "cited_by": 349,
+    "url": "https://pubs.acs.org/doi/pdf/10.1021/acs.est.1c03263",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "CH"
+    ],
+    "intezmenyek": {
+     "CH": [
+      "Paul Scherrer Institute",
+      "ETH Zurich",
+      "Institute of Energy and Process Engineering"
+     ]
+    }
+   },
+   "P7": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2626728311",
+    "title": "Continuous-flow electroreduction of carbon dioxide",
+    "year": 2017,
+    "doi": "10.1016/j.pecs.2017.05.005",
+    "abstract": "Solar fuel generation through electrochemical CO2 conversion offers an attractive avenue to store the energy of sunlight in the form of chemical bonds, with the simultaneous remediation of a greenhouse gas. While impressive progress has been achieved in developing novel nanostructured catalysts and understanding the mechanistic details of this process, limited knowledge has been gathered on continuous-flow electrochemical reactors for CO2 electroreduction. This is indeed surprising considering that this might be the only way to scale-up this fledgling technology for future industrial application. In this review article, we discuss the parameters that influence the performance of flow CO2 electrolyzers. This analysis spans the overall design of the electrochemical cell (microfluidic or membrane-based), the employed materials (catalyst, support, etc.), and the operational conditions (electrolyte, pressure, temperature, etc.). We highlight R&D avenues offering particularly promising development opportunities together with the intrinsic limitations of the different approaches. By collecting the most relevant characterization methods (together with the relevant descriptive parameters), we also present an assessment framework for benchmarking CO2 electrolyzers. Finally, we give a brief outlook on photoelectrochemical reactors where solar energy input is directly utilized.",
+    "venue": "Progress in Energy and Combustion Science",
+    "authors": [
+     "Balázs Endrődi",
+     "Gábor Bencsik",
+     "Ferenç Darvas",
+     "Richard V. Jones",
+     "Krishnan Rajeshwar",
+     "Csaba Janáky"
+    ],
+    "cited_by": 437,
+    "url": "https://www.sciencedirect.com/science/article/pii/S0360128517300333/pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "HU",
+     "US"
+    ],
+    "intezmenyek": {
+     "HU": [
+      "University of Szeged"
+     ],
+     "US": [
+      "The University of Texas at Arlington"
+     ]
+    }
+   },
+   "P8": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W4399366349",
+    "title": "Capturing carbon dioxide from air with charged-sorbents",
+    "year": 2024,
+    "doi": "10.1038/s41586-024-07449-2",
+    "abstract": "Emissions reduction and greenhouse gas removal from the atmosphere are both necessary to achieve net-zero emissions and limit climate change 1 . There is thus a need for improved sorbents for the capture of carbon dioxide from the atmosphere, a process known as direct air capture. In particular, low-cost materials that can be regenerated at low temperatures would overcome the limitations of current technologies. In this work, we introduce a new class of designer sorbent materials known as ‘charged-sorbents’. These materials are prepared through a battery-like charging process that accumulates ions in the pores of low-cost activated carbons, with the inserted ions then serving as sites for carbon dioxide adsorption. We use our charging process to accumulate reactive hydroxide ions in the pores of a carbon electrode, and find that the resulting sorbent material can rapidly capture carbon dioxide from ambient air by means of (bi)carbonate formation. Unlike traditional bulk carbonates, charged-sorbent regeneration can be achieved at low temperatures (90–100 °C) and the sorbent’s conductive nature permits direct Joule heating regeneration 2,3 using renewable electricity. Given their highly tailorable pore environments and low cost, we anticipate that charged-sorbents will find numerous potential applications in chemical separations, catalysis and beyond.",
+    "venue": "Nature",
+    "authors": [
+     "Huaiguang Li",
+     "Mary E. Zick",
+     "Teedhat Trisukhon",
+     "Matteo Signorile",
+     "Xinyu Liu",
+     "Helen Eastmond",
+     "Shivani Sharma",
+     "Tristan L. Spreng",
+     "Jack S. Taylor",
+     "Jamie W. Gittins",
+     "Cavan Farrow",
+     "Seng Lim",
+     "Valentina Crocellà",
+     "Phillip J. Milner",
+     "Alexander C. Forse"
+    ],
+    "cited_by": 226,
+    "url": "https://www.nature.com/articles/s41586-024-07449-2.pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "CN",
+     "GB",
+     "IT",
+     "US"
+    ],
+    "intezmenyek": {
+     "GB": [
+      "University of Cambridge"
+     ],
+     "CN": [
+      "Chinese University of Hong Kong, Shenzhen"
+     ],
+     "US": [
+      "Cornell University"
+     ],
+     "IT": [
+      "National Interuniversity Consortium of Materials Science and Technology",
+      "University of Turin"
+     ]
+    }
+   }
+  },
+  "ai_nyers_kivonat": {
+   "allitasok": [
+    {
+     "cikk_azonosito": "P2",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "afforestation and reforestation",
+     "ertek": 3.6,
+     "also": 0.5,
+     "felso": 3.6,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "globális",
+     "korlatok": "szisztematikus kritikus megközelítés"
+    },
+    {
+     "cikk_azonosito": "P2",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "BECCS",
+     "ertek": 5,
+     "also": 0.5,
+     "felso": 5,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for BECCS",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "globális",
+     "korlatok": "szisztematikus kritikus megközelítés"
+    },
+    {
+     "cikk_azonosito": "P2",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "biochar",
+     "ertek": 2,
+     "also": 0.5,
+     "felso": 2,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–2 GtCO 2 yr −1 for biochar",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "globális",
+     "korlatok": "szisztematikus kritikus megközelítés"
+    },
+    {
+     "cikk_azonosito": "P2",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "enhanced weathering",
+     "ertek": 4,
+     "also": 2,
+     "felso": 4,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "2–4 GtCO 2 yr −1 for enhanced weathering",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "globális",
+     "korlatok": "szisztematikus kritikus megközelítés"
+    },
+    {
+     "cikk_azonosito": "P2",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "DACCS",
+     "ertek": 5,
+     "also": 0.5,
+     "felso": 5,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for DACCS",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "globális",
+     "korlatok": "szisztematikus kritikus megközelítés"
+    },
+    {
+     "cikk_azonosito": "P2",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "soil carbon sequestration",
+     "ertek": 5,
+     "also": 0,
+     "felso": 5,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "up to 5 GtCO 2 yr −1 for soil carbon sequestration",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "globális",
+     "korlatok": "szisztematikus kritikus megközelítés"
+    },
+    {
+     "cikk_azonosito": "P4",
+     "parameter": "cdr_koltseg_usd_tco2",
+     "alkategoria": "DACCS",
+     "ertek": 300,
+     "also": 0,
+     "felso": 300,
+     "egyseg": "EJ/yr",
+     "szo_szerinti_idezet": "up to 300 EJ/yr of energy input by 2100",
+     "vizsgalat_tipusa": "modellezes",
+     "regio": "globális",
+     "korlatok": "inter-model comparison"
+    }
+   ],
+   "osszegzes": "The studies estimate the global potential for CO2 removal technologies like afforestation, BECCS, biochar, enhanced weathering, DACCS, and soil carbon sequestration to range from 0.5 to 5 GtCO2 per year. DACCS requires significant energy input, up to 300 EJ per year by 2100. These estimates are based on systematic reviews and inter-model comparisons. The studies do not provide cost per tonne of CO2 removed, only potential scales.",
+   "ellentmondasok": "No direct contradictions between the studies. The estimates are based on different methods (systematic review vs. inter-model comparison) and focus on potential scales rather than cost per tonne of CO2."
+  },
+  "allitasok": [
+   {
+    "cikk_azonosito": "P2",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "afforestation and reforestation",
+    "ertek": 3.6,
+    "also": 0.5,
+    "felso": 3.6,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "globális",
+    "korlatok": "szisztematikus kritikus megközelítés",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P2",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "BECCS",
+    "ertek": 5,
+    "also": 0.5,
+    "felso": 5,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for BECCS",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "globális",
+    "korlatok": "szisztematikus kritikus megközelítés",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P2",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "biochar",
+    "ertek": 2,
+    "also": 0.5,
+    "felso": 2,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–2 GtCO 2 yr −1 for biochar",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "globális",
+    "korlatok": "szisztematikus kritikus megközelítés",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P2",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "enhanced weathering",
+    "ertek": 4,
+    "also": 2,
+    "felso": 4,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "2–4 GtCO 2 yr −1 for enhanced weathering",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "globális",
+    "korlatok": "szisztematikus kritikus megközelítés",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P2",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "DACCS",
+    "ertek": 5,
+    "also": 0.5,
+    "felso": 5,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for DACCS",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "globális",
+    "korlatok": "szisztematikus kritikus megközelítés",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P2",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "soil carbon sequestration",
+    "ertek": 5,
+    "also": 0,
+    "felso": 5,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "up to 5 GtCO 2 yr −1 for soil carbon sequestration",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "globális",
+    "korlatok": "szisztematikus kritikus megközelítés",
+    "statusz": "elutasitva",
+    "indokok": [
+     "A(z) alsó (0) nem szerepel az idézetben."
+    ],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P4",
+    "parameter": "cdr_koltseg_usd_tco2",
+    "alkategoria": "DACCS",
+    "ertek": 300,
+    "also": 0,
+    "felso": 300,
+    "egyseg": "EJ/yr",
+    "szo_szerinti_idezet": "up to 300 EJ/yr of energy input by 2100",
+    "vizsgalat_tipusa": "modellezes",
+    "regio": "globális",
+    "korlatok": "inter-model comparison",
+    "statusz": "elutasitva",
+    "indokok": [
+     "A(z) alsó (0) nem szerepel az idézetben.",
+     "Az idézetben nincs a paraméter mértékegysége (USD/tCO2)."
+    ],
+    "forras": "Realmonte et al. (2019). An inter-model assessment of the role of direct air capture in deep mitigation pathways. Nature Communications. https://doi.org/10.1038/s41467-019-10842-5",
+    "preprint": false
+   }
+  ],
+  "osszesitett_parameterek": {
+   "cdr_potencial_gtco2_ev:afforestation and reforestation": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "afforestation and reforestation",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 3.6,
+    "tartomany": [
+     0.5,
+     3.6
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:beccs": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "beccs",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 5.0,
+    "tartomany": [
+     0.5,
+     5
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:biochar": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "biochar",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 2.0,
+    "tartomany": [
+     0.5,
+     2
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:enhanced weathering": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "enhanced weathering",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 4.0,
+    "tartomany": [
+     2,
+     4
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:daccs": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "daccs",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 5.0,
+    "tartomany": [
+     0.5,
+     5
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   }
+  },
+  "ai_osszegzes": "The studies estimate the global potential for CO2 removal technologies like afforestation, BECCS, biochar, enhanced weathering, DACCS, and soil carbon sequestration to range from 0.5 to 5 GtCO2 per year. These estimates are based on systematic reviews and inter-model comparisons. The studies do not provide cost per tonne of CO2 removed, only potential scales.",
+  "ellentmondasok": "No direct contradictions between the studies. The estimates are based on different methods (systematic review vs. inter-model comparison) and focus on potential scales rather than cost per tonne of CO2.",
+  "figyelmeztetes": "Ez egy játékon belüli, automatikusan összeállított irodalmi összefoglaló. Nem helyettesíti a szakértői lektorálást; minden számot az eredeti cikkben érdemes ellenőrizni.",
+  "azonosito": "AETHER-1e215e1caae10a36",
+  "letrehozva": "2026-11-22T17:14:55+00:00"
+ },
+ "javaslatok": [
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:afforestation and reforestation",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "afforestation and reforestation",
+   "ertek": 3.6,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    0.5,
+    3.6
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 3.6 billion tonnes of CO2 a year. That is about 9% of today's global emissions.",
+   "publikacio": "AETHER-1e215e1caae10a36",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "To use this in your plan, research its own topic: Afforestation.",
+   "alkategoria_nev": "Afforestation"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:beccs",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "beccs",
+   "ertek": 5.0,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    0.5,
+    5
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 5 billion tonnes of CO2 a year. That is about 12% of today's global emissions.",
+   "publikacio": "AETHER-1e215e1caae10a36",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "To use this in your plan, research its own topic: Bioenergy + carbon storage.",
+   "alkategoria_nev": "Bioenergy + carbon storage"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:biochar",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "biochar",
+   "ertek": 2.0,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    0.5,
+    2
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 2 billion tonnes of CO2 a year. That is about 5% of today's global emissions.",
+   "publikacio": "AETHER-1e215e1caae10a36",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "To use this in your plan, research its own topic: Biochar.",
+   "alkategoria_nev": "Biochar"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:enhanced weathering",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "enhanced weathering",
+   "ertek": 4.0,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    2,
+    4
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 4 billion tonnes of CO2 a year. That is about 9% of today's global emissions.",
+   "publikacio": "AETHER-1e215e1caae10a36",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "To use this in your plan, research its own topic: Enhanced rock weathering.",
+   "alkategoria_nev": "Enhanced rock weathering"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:daccs",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "daccs",
+   "ertek": 5.0,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    0.5,
+    5
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 5 billion tonnes of CO2 a year. That is about 12% of today's global emissions.",
+   "publikacio": "AETHER-1e215e1caae10a36",
+   "kar": "cdr:daccs",
+   "kar_ertek": 5.0,
+   "kar_nev": "Direct air capture",
+   "megjegyzes": "",
+   "alkategoria_nev": "Direct air capture"
+  }
+ ],
+ "osszefoglalo": {
+  "cikkek": 8,
+  "allitasok": 7,
+  "ellenorizve": 5,
+  "elutasitva": 2,
+  "orszag": "HU",
+  "hazai": 3
+ },
+ "archivum": {
+  "datum": "2026-11-22",
+  "ai": "ollama qwen3:8b"
+ }
+}

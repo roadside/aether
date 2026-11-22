@@ -442,6 +442,51 @@
    },
    "P6": {
     "source": "openalex",
+    "source_id": "https://openalex.org/W2916400484",
+    "title": "The mutual dependence of negative emission technologies and energy systems",
+    "year": 2019,
+    "doi": "10.1039/c8ee03682a",
+    "abstract": "While a rapid decommissioning of fossil fuel technologies deserves priority, most climate stabilization scenarios suggest that negative emission technologies (NETs) are required to keep global warming well below 2 °C.",
+    "venue": "Energy & Environmental Science",
+    "authors": [
+     "Felix Creutzig",
+     "Christian Breyer",
+     "Jérôme Hilaire",
+     "Jan Christoph Minx",
+     "Glen P. Peters",
+     "Robert H. Socolow"
+    ],
+    "cited_by": 254,
+    "url": "https://pubs.rsc.org/en/content/articlepdf/2019/ee/c8ee03682a",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "DE",
+     "FI",
+     "GB",
+     "US"
+    ],
+    "intezmenyek": {
+     "DE": [
+      "Mercator Research Institute on Global Commons and Climate Change",
+      "Technische Universität Berlin",
+      "Leibniz Association",
+      "Potsdam Institute for Climate Impact Research"
+     ],
+     "FI": [
+      "Lappeenranta-Lahti University of Technology"
+     ],
+     "GB": [
+      "University of Leeds"
+     ],
+     "US": [
+      "Princeton University"
+     ]
+    }
+   },
+   "P7": {
+    "source": "openalex",
     "source_id": "https://openalex.org/W3124285912",
     "title": "The Potential for Ocean-Based Climate Action: Negative Emissions Technologies and Beyond",
     "year": 2021,
@@ -486,7 +531,7 @@
      ]
     }
    },
-   "P7": {
+   "P8": {
     "source": "openalex",
     "source_id": "https://openalex.org/W4386020824",
     "title": "Challenges and opportunities for grassland restoration: A global perspective of best practices in the era of climate change",
@@ -568,127 +613,6 @@
       "Queensland University of Technology"
      ]
     }
-   },
-   "P8": {
-    "source": "openalex",
-    "source_id": "https://openalex.org/W4400985152",
-    "title": "Assisted tree migration can preserve the European forest carbon sink under climate change",
-    "year": 2024,
-    "doi": "10.1038/s41558-024-02080-5",
-    "abstract": "Climate change threatens the role of European forests as a long-term carbon sink. Assisted migration aims to increase the resilience of forest tree populations to climate change, using species-specific climatic limits and local adaptations through transferring seed provenances. We modelled assisted migration scenarios for seven main European tree species and analysed the effects of species and seed provenance selection, accounting for environmental and genetic variations, on the annual above-ground carbon sink of regrowing juvenile forests. To increase forest resilience, coniferous trees need to be replaced by deciduous species over large parts of their distribution. If local seed provenances are used, this would result in a decrease of the current carbon sink (40 TgC yr −1 ) by 34–41% by 2061–2080. However, if seed provenances adapted to future climates are used, current sinks could be maintained or even increased to 48–60 TgC yr −1 .",
-    "venue": "Nature Climate Change",
-    "authors": [
-     "Debojyoti Chakraborty",
-     "Albert Ciceu",
-     "Dalibor Ballian",
-     "Marta Benito Garzón",
-     "Andreas Bolte",
-     "Gregor Božič",
-     "Rafael Buchacher",
-     "Jaroslav J Čepl",
-     "Eva Cremer",
-     "Alexis Ducousso",
-     "Julian Gaviria",
-     "Jan‐Peter George",
-     "André Hardtke",
-     "Mladen Ivanković",
-     "Marcin Klisz",
-     "J. Kowalczyk",
-     "Antoine Kremer",
-     "Milan Lstibůrek",
-     "Roman Longauer",
-     "Georgeta Mihai",
-     "László Nagy",
-     "Krasimira Petkova",
-     "Emil Popov",
-     "Randolf Schirmer",
-     "Tore Skrøppa",
-     "Thomas Mørtvedt Solvin",
-     "Arne Steffenrem",
-     "Jan Stejskal",
-     "Srđan Stojnić",
-     "Katharina Volmer",
-     "Silvio Schueler"
-    ],
-    "cited_by": 126,
-    "url": "https://www.nature.com/articles/s41558-024-02080-5.pdf",
-    "peer_reviewed": true,
-    "is_retracted": false,
-    "work_type": "article",
-    "orszagok": [
-     "AT",
-     "BA",
-     "BG",
-     "CZ",
-     "DE",
-     "FI",
-     "FR",
-     "HR",
-     "HU",
-     "NO",
-     "PL",
-     "RO",
-     "RS",
-     "SI",
-     "SK"
-    ],
-    "intezmenyek": {
-     "AT": [
-      "Austrian Research Centre for Forests"
-     ],
-     "BA": [
-      "University of Sarajevo",
-      "Academy of Sciences and Arts of Bosnia and Herzegovina"
-     ],
-     "SI": [
-      "Slovenian Forestry Institute"
-     ],
-     "FR": [
-      "Université de Bordeaux",
-      "Institut National de Recherche pour l'Agriculture, l'Alimentation et l'Environnement",
-      "UMR BIOdiversity, GEnes & Communities"
-     ],
-     "DE": [
-      "Johann Heinrich von Thünen-Institut",
-      "Bayerische Akademie für Naturschutz und Landschaftspflege",
-      "Nordwestdeutsche Forstliche Versuchsanstalt"
-     ],
-     "CZ": [
-      "Czech University of Life Sciences Prague",
-      "Mendel University in Brno"
-     ],
-     "FI": [
-      "Natural Resources Institute Finland"
-     ],
-     "HR": [
-      "Croatian Forest Research Institute"
-     ],
-     "PL": [
-      "Instytut Badawczy Leśnictwa"
-     ],
-     "SK": [
-      "National Forest Centre"
-     ],
-     "RO": [
-      "National Institute for Research and Development in Forestry \"Marin Drăcea\""
-     ],
-     "HU": [
-      "Forest Research Institute",
-      "University of Sopron"
-     ],
-     "BG": [
-      "University of Forestry",
-      "Bulgarian Academy of Sciences",
-      "Forest Research Institute"
-     ],
-     "NO": [
-      "Norwegian Institute of Bioeconomy Research"
-     ],
-     "RS": [
-      "University of Novi Sad",
-      "Institute of Lowland Forestry and Environment"
-     ]
-    }
    }
   },
   "ai_nyers_kivonat": {
@@ -702,9 +626,9 @@
      "felso": 3.6,
      "egyseg": "GtCO2/év",
      "szo_szerinti_idezet": "0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation",
-     "vizsgalat_tipusa": "megfigyeles",
-     "regio": "globális",
-     "korlatok": "2050-ben"
+     "vizsgalat_tipusa": "egyeb",
+     "regio": "globalis",
+     "korlatok": "sustainable"
     },
     {
      "cikk_azonosito": "P2",
@@ -715,9 +639,9 @@
      "felso": 5,
      "egyseg": "GtCO2/év",
      "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for BECCS",
-     "vizsgalat_tipusa": "megfigyeles",
-     "regio": "globális",
-     "korlatok": "2050-ben"
+     "vizsgalat_tipusa": "egyeb",
+     "regio": "globalis",
+     "korlatok": "sustainable"
     },
     {
      "cikk_azonosito": "P2",
@@ -728,9 +652,9 @@
      "felso": 2,
      "egyseg": "GtCO2/év",
      "szo_szerinti_idezet": "0.5–2 GtCO 2 yr −1 for biochar",
-     "vizsgalat_tipusa": "megfigyeles",
-     "regio": "globális",
-     "korlatok": "2050-ben"
+     "vizsgalat_tipusa": "egyeb",
+     "regio": "globalis",
+     "korlatok": "sustainable"
     },
     {
      "cikk_azonosito": "P2",
@@ -741,9 +665,9 @@
      "felso": 4,
      "egyseg": "GtCO2/év",
      "szo_szerinti_idezet": "2–4 GtCO 2 yr −1 for enhanced weathering",
-     "vizsgalat_tipusa": "megfigyeles",
-     "regio": "globális",
-     "korlatok": "2050-ben"
+     "vizsgalat_tipusa": "egyeb",
+     "regio": "globalis",
+     "korlatok": "sustainable"
     },
     {
      "cikk_azonosito": "P2",
@@ -754,25 +678,25 @@
      "felso": 5,
      "egyseg": "GtCO2/év",
      "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for DACCS",
-     "vizsgalat_tipusa": "megfigyeles",
-     "regio": "globális",
-     "korlatok": "2050-ben"
+     "vizsgalat_tipusa": "egyeb",
+     "regio": "globalis",
+     "korlatok": "sustainable"
     },
     {
      "cikk_azonosito": "P2",
      "parameter": "cdr_potencial_gtco2_ev",
      "alkategoria": "soil carbon sequestration",
      "ertek": 5,
-     "also": 0.5,
+     "also": 0,
      "felso": 5,
      "egyseg": "GtCO2/év",
      "szo_szerinti_idezet": "up to 5 GtCO 2 yr −1 for soil carbon sequestration",
-     "vizsgalat_tipusa": "megfigyeles",
-     "regio": "globális",
-     "korlatok": "2050-ben"
+     "vizsgalat_tipusa": "egyeb",
+     "regio": "globalis",
+     "korlatok": "sustainable"
     }
    ],
-   "osszegzes": "A kutatás szerint az erdősítés 2050-re 0,5–3,6 GtCO2/év CO2-eltávolítási potenciáljára tehet számot. A BECCS a legnagyobb potenciálú, 0,5–5 GtCO2/év. A bioszén 0,5–2 GtCO2/év, a kőzetmállasztás 2–4 GtCO2/év. A talaj szénmegkötése 0,5–5 GtCO2/év. A cikkek nem mutatnak ellentmondásokat egymásnak.",
+   "osszegzes": "A kutatás szerint az erdősítés (afforestation and reforestation) globális CO2-eltávolítási potenciálja 0,5–3,6 GtCO2/év. Egyéb módszerek, mint a BECCS, a bioszén, a kőzetmállasztás, a DACCS és a talaj szénmegkötése is jelentős potenciált mutatnak, de a pontos határértékek változnak. A tanulmány nem ad információt a költségekről.",
    "ellentmondasok": "Nincs ellentmondás a cikkek között."
   },
   "allitasok": [
@@ -785,9 +709,9 @@
     "felso": 3.6,
     "egyseg": "GtCO2/év",
     "szo_szerinti_idezet": "0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation",
-    "vizsgalat_tipusa": "megfigyeles",
-    "regio": "globális",
-    "korlatok": "2050-ben",
+    "vizsgalat_tipusa": "egyeb",
+    "regio": "globalis",
+    "korlatok": "sustainable",
     "statusz": "ellenorizve",
     "indokok": [],
     "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
@@ -802,9 +726,9 @@
     "felso": 5,
     "egyseg": "GtCO2/év",
     "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for BECCS",
-    "vizsgalat_tipusa": "megfigyeles",
-    "regio": "globális",
-    "korlatok": "2050-ben",
+    "vizsgalat_tipusa": "egyeb",
+    "regio": "globalis",
+    "korlatok": "sustainable",
     "statusz": "ellenorizve",
     "indokok": [],
     "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
@@ -819,9 +743,9 @@
     "felso": 2,
     "egyseg": "GtCO2/év",
     "szo_szerinti_idezet": "0.5–2 GtCO 2 yr −1 for biochar",
-    "vizsgalat_tipusa": "megfigyeles",
-    "regio": "globális",
-    "korlatok": "2050-ben",
+    "vizsgalat_tipusa": "egyeb",
+    "regio": "globalis",
+    "korlatok": "sustainable",
     "statusz": "ellenorizve",
     "indokok": [],
     "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
@@ -836,9 +760,9 @@
     "felso": 4,
     "egyseg": "GtCO2/év",
     "szo_szerinti_idezet": "2–4 GtCO 2 yr −1 for enhanced weathering",
-    "vizsgalat_tipusa": "megfigyeles",
-    "regio": "globális",
-    "korlatok": "2050-ben",
+    "vizsgalat_tipusa": "egyeb",
+    "regio": "globalis",
+    "korlatok": "sustainable",
     "statusz": "ellenorizve",
     "indokok": [],
     "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
@@ -853,9 +777,9 @@
     "felso": 5,
     "egyseg": "GtCO2/év",
     "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for DACCS",
-    "vizsgalat_tipusa": "megfigyeles",
-    "regio": "globális",
-    "korlatok": "2050-ben",
+    "vizsgalat_tipusa": "egyeb",
+    "regio": "globalis",
+    "korlatok": "sustainable",
     "statusz": "ellenorizve",
     "indokok": [],
     "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
@@ -866,16 +790,16 @@
     "parameter": "cdr_potencial_gtco2_ev",
     "alkategoria": "soil carbon sequestration",
     "ertek": 5,
-    "also": 0.5,
+    "also": 0,
     "felso": 5,
     "egyseg": "GtCO2/év",
     "szo_szerinti_idezet": "up to 5 GtCO 2 yr −1 for soil carbon sequestration",
-    "vizsgalat_tipusa": "megfigyeles",
-    "regio": "globális",
-    "korlatok": "2050-ben",
+    "vizsgalat_tipusa": "egyeb",
+    "regio": "globalis",
+    "korlatok": "sustainable",
     "statusz": "elutasitva",
     "indokok": [
-     "A(z) alsó (0.5) nem szerepel az idézetben."
+     "A(z) alsó (0) nem szerepel az idézetben."
     ],
     "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
     "preprint": false
@@ -898,7 +822,7 @@
     "parameter": "cdr_potencial_gtco2_ev",
     "alkategoria": "beccs",
     "egyseg": "GtCO2/év",
-    "sulyozott_median": 5,
+    "sulyozott_median": 5.0,
     "tartomany": [
      0.5,
      5
@@ -910,7 +834,7 @@
     "parameter": "cdr_potencial_gtco2_ev",
     "alkategoria": "biochar",
     "egyseg": "GtCO2/év",
-    "sulyozott_median": 2,
+    "sulyozott_median": 2.0,
     "tartomany": [
      0.5,
      2
@@ -922,7 +846,7 @@
     "parameter": "cdr_potencial_gtco2_ev",
     "alkategoria": "enhanced weathering",
     "egyseg": "GtCO2/év",
-    "sulyozott_median": 4,
+    "sulyozott_median": 4.0,
     "tartomany": [
      2,
      4
@@ -934,7 +858,7 @@
     "parameter": "cdr_potencial_gtco2_ev",
     "alkategoria": "daccs",
     "egyseg": "GtCO2/év",
-    "sulyozott_median": 5,
+    "sulyozott_median": 5.0,
     "tartomany": [
      0.5,
      5
@@ -943,11 +867,11 @@
     "bizonyossag": "alacsony"
    }
   },
-  "ai_osszegzes": "A kutatás szerint az erdősítés 2050-re 0,5–3,6 milliárd tonna CO2/év CO2-eltávolítási potenciáljára tehet számot. A növényi energia a CO2 föld alá zárásával a legnagyobb potenciálú, 0,5–5 milliárd tonna CO2/év. A bioszén 0,5–2 milliárd tonna CO2/év, a kőzetmállasztás 2–4 milliárd tonna CO2/év. A talaj szénmegkötése 0,5–5 milliárd tonna CO2/év. A cikkek nem mutatnak ellentmondásokat egymásnak.",
+  "ai_osszegzes": "A kutatás szerint az erdősítés (erdősítés and újraerdősítés) globális CO2-eltávolítási potenciálja 0,5–3,6 milliárd tonna CO2/év. Egyéb módszerek, mint a növényi energia a CO2 föld alá zárásával, a bioszén, a kőzetmállasztás, a CO2-szűrés közvetlenül a levegőből és a talaj szénmegkötése is jelentős potenciált mutatnak, de a pontos határértékek változnak. A tanulmány nem ad információt a költségekről.",
   "ellentmondasok": "Nincs ellentmondás a cikkek között.",
   "figyelmeztetes": "Ez egy játékon belüli, automatikusan összeállított irodalmi összefoglaló. Nem helyettesíti a szakértői lektorálást; minden számot az eredeti cikkben érdemes ellenőrizni.",
-  "azonosito": "AETHER-cfff4e9bae1d1f3a",
-  "letrehozva": "2026-11-22T15:57:31+00:00"
+  "azonosito": "AETHER-def41983c1a5de5c",
+  "letrehozva": "2026-11-22T16:45:32+00:00"
  },
  "javaslatok": [
   {
@@ -965,7 +889,7 @@
    "forrasok_szama": 1,
    "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
    "jelentes": "Évente kb. 3,6 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 9%-a.",
-   "publikacio": "AETHER-cfff4e9bae1d1f3a",
+   "publikacio": "AETHER-def41983c1a5de5c",
    "kar": "cdr:erdosites",
    "kar_ertek": 3.6,
    "kar_nev": "Erdősítés",
@@ -976,7 +900,7 @@
    "kulcs": "cdr_potencial_gtco2_ev:beccs",
    "parameter": "cdr_potencial_gtco2_ev",
    "alkategoria": "beccs",
-   "ertek": 5,
+   "ertek": 5.0,
    "egyseg": "milliárd tonna CO2/év",
    "tartomany": [
     0.5,
@@ -987,18 +911,18 @@
    "forrasok_szama": 1,
    "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
    "jelentes": "Évente kb. 5 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 12%-a.",
-   "publikacio": "AETHER-cfff4e9bae1d1f3a",
-   "kar": "cdr:beccs",
-   "kar_ertek": 5,
-   "kar_nev": "Növényi energia, a CO2 föld alá zárásával",
-   "megjegyzes": "",
+   "publikacio": "AETHER-def41983c1a5de5c",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "A tervedbe akkor kerül, ha a saját témáját kutatod ki: Növényi energia, a CO2 föld alá zárásával.",
    "alkategoria_nev": "Növényi energia, a CO2 föld alá zárásával"
   },
   {
    "kulcs": "cdr_potencial_gtco2_ev:biochar",
    "parameter": "cdr_potencial_gtco2_ev",
    "alkategoria": "biochar",
-   "ertek": 2,
+   "ertek": 2.0,
    "egyseg": "milliárd tonna CO2/év",
    "tartomany": [
     0.5,
@@ -1009,18 +933,18 @@
    "forrasok_szama": 1,
    "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
    "jelentes": "Évente kb. 2 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 5%-a.",
-   "publikacio": "AETHER-cfff4e9bae1d1f3a",
-   "kar": "cdr:bioszen",
-   "kar_ertek": 2,
-   "kar_nev": "Bioszén a talajba",
-   "megjegyzes": "",
+   "publikacio": "AETHER-def41983c1a5de5c",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "A tervedbe akkor kerül, ha a saját témáját kutatod ki: Bioszén a talajba.",
    "alkategoria_nev": "Bioszén a talajba"
   },
   {
    "kulcs": "cdr_potencial_gtco2_ev:enhanced weathering",
    "parameter": "cdr_potencial_gtco2_ev",
    "alkategoria": "enhanced weathering",
-   "ertek": 4,
+   "ertek": 4.0,
    "egyseg": "milliárd tonna CO2/év",
    "tartomany": [
     2,
@@ -1031,18 +955,18 @@
    "forrasok_szama": 1,
    "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
    "jelentes": "Évente kb. 4 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 9%-a.",
-   "publikacio": "AETHER-cfff4e9bae1d1f3a",
-   "kar": "cdr:kozetmallasztas",
-   "kar_ertek": 4,
-   "kar_nev": "Kőzetpor a földekre (kőzetmállasztás)",
-   "megjegyzes": "",
+   "publikacio": "AETHER-def41983c1a5de5c",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "A tervedbe akkor kerül, ha a saját témáját kutatod ki: Kőzetpor a földekre (kőzetmállasztás).",
    "alkategoria_nev": "Kőzetpor a földekre (kőzetmállasztás)"
   },
   {
    "kulcs": "cdr_potencial_gtco2_ev:daccs",
    "parameter": "cdr_potencial_gtco2_ev",
    "alkategoria": "daccs",
-   "ertek": 5,
+   "ertek": 5.0,
    "egyseg": "milliárd tonna CO2/év",
    "tartomany": [
     0.5,
@@ -1053,11 +977,11 @@
    "forrasok_szama": 1,
    "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
    "jelentes": "Évente kb. 5 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 12%-a.",
-   "publikacio": "AETHER-cfff4e9bae1d1f3a",
-   "kar": "cdr:daccs",
-   "kar_ertek": 5,
-   "kar_nev": "CO2-szűrés közvetlenül a levegőből",
-   "megjegyzes": "",
+   "publikacio": "AETHER-def41983c1a5de5c",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "A tervedbe akkor kerül, ha a saját témáját kutatod ki: CO2-szűrés közvetlenül a levegőből.",
    "alkategoria_nev": "CO2-szűrés közvetlenül a levegőből"
   }
  ],
@@ -1067,7 +991,7 @@
   "ellenorizve": 5,
   "elutasitva": 1,
   "orszag": "HU",
-  "hazai": 4
+  "hazai": 3
  },
  "archivum": {
   "datum": "2026-11-22",

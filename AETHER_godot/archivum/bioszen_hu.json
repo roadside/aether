@@ -69,7 +69,7 @@
      "Tobias Bromm",
      "Bruno Glaser"
     ],
-    "cited_by": 247,
+    "cited_by": 248,
     "url": "https://doi.org/10.3390/agronomy11122474",
     "peer_reviewed": true,
     "is_retracted": false,
@@ -411,9 +411,9 @@
      "felso": 3.6,
      "egyseg": "GtCO2/év",
      "szo_szerinti_idezet": "0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation",
-     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "vizsgalat_tipusa": "terepkiserlet",
      "regio": "globális",
-     "korlatok": "sustainabele, 2050-ben"
+     "korlatok": "sustainably"
     },
     {
      "cikk_azonosito": "P3",
@@ -424,9 +424,9 @@
      "felso": 5,
      "egyseg": "GtCO2/év",
      "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for BECCS",
-     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "vizsgalat_tipusa": "terepkiserlet",
      "regio": "globális",
-     "korlatok": "sustainabele, 2050-ben"
+     "korlatok": "sustainably"
     },
     {
      "cikk_azonosito": "P3",
@@ -437,9 +437,9 @@
      "felso": 2,
      "egyseg": "GtCO2/év",
      "szo_szerinti_idezet": "0.5–2 GtCO 2 yr −1 for biochar",
-     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "vizsgalat_tipusa": "terepkiserlet",
      "regio": "globális",
-     "korlatok": "sustainabele, 2050-ben"
+     "korlatok": "sustainably"
     },
     {
      "cikk_azonosito": "P3",
@@ -450,9 +450,9 @@
      "felso": 4,
      "egyseg": "GtCO2/év",
      "szo_szerinti_idezet": "2–4 GtCO 2 yr −1 for enhanced weathering",
-     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "vizsgalat_tipusa": "terepkiserlet",
      "regio": "globális",
-     "korlatok": "sustainabele, 2050-ben"
+     "korlatok": "sustainably"
     },
     {
      "cikk_azonosito": "P3",
@@ -463,9 +463,9 @@
      "felso": 5,
      "egyseg": "GtCO2/év",
      "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for DACCS",
-     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "vizsgalat_tipusa": "terepkiserlet",
      "regio": "globális",
-     "korlatok": "sustainabele, 2050-ben"
+     "korlatok": "sustainably"
     },
     {
      "cikk_azonosito": "P3",
@@ -476,13 +476,13 @@
      "felso": 5,
      "egyseg": "GtCO2/év",
      "szo_szerinti_idezet": "up to 5 GtCO 2 yr −1 for soil carbon sequestration",
-     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "vizsgalat_tipusa": "terepkiserlet",
      "regio": "globális",
-     "korlatok": "sustainabele, 2050-ben"
+     "korlatok": "sustainably"
     }
    ],
-   "osszegzes": "A cikk szerint a bioszén globális potenciálja 0,5–2 GtCO2/év. A különböző CDR-módszerek potenciálja eltérő, például a DACCS 0,5–5 GtCO2/év, a talaj szénmegkötése pedig akár 5 GtCO2/év is lehet. A számok az összes lehetséges CDR-módszerre vonatkoznak, nemcsak a bioszénra. A költségekről nem szól a cikk.",
-   "ellentmondasok": "Nincs ellentmondás a cikkben, mivel minden adat a szisztematikus áttekintés alapján szerepel, és a bioszénra vonatkozó adatok egyértelműek."
+   "osszegzes": "A cikk szerint a bioszén (biochar) globális CO2-eltávolítási potenciálja 0,5–2 GtCO2/év, ami a BECCS-hez hasonlóan magas, de kevesebbet, mint a talaj szénmegkötése. A bioszén hatékonyabb, mint az erdősítés, de nem olyan hatékony, mint a DACCS. A költségeket nem vizsgálták. A cikkből nem derül ki, hogy a bioszén mennyit vonhat ki a levegőből, csak a globális potenciált. A bioszén az egyik legkisebb CO2-eltávolító módszer a felsoroltak közül.",
+   "ellentmondasok": "Nincs ellentmondás a cikkben."
   },
   "allitasok": [
    {
@@ -494,9 +494,9 @@
     "felso": 3.6,
     "egyseg": "GtCO2/év",
     "szo_szerinti_idezet": "0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation",
-    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "vizsgalat_tipusa": "terepkiserlet",
     "regio": "globális",
-    "korlatok": "sustainabele, 2050-ben",
+    "korlatok": "sustainably",
     "statusz": "ellenorizve",
     "indokok": [],
     "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
@@ -511,9 +511,9 @@
     "felso": 5,
     "egyseg": "GtCO2/év",
     "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for BECCS",
-    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "vizsgalat_tipusa": "terepkiserlet",
     "regio": "globális",
-    "korlatok": "sustainabele, 2050-ben",
+    "korlatok": "sustainably",
     "statusz": "ellenorizve",
     "indokok": [],
     "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
@@ -528,9 +528,9 @@
     "felso": 2,
     "egyseg": "GtCO2/év",
     "szo_szerinti_idezet": "0.5–2 GtCO 2 yr −1 for biochar",
-    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "vizsgalat_tipusa": "terepkiserlet",
     "regio": "globális",
-    "korlatok": "sustainabele, 2050-ben",
+    "korlatok": "sustainably",
     "statusz": "ellenorizve",
     "indokok": [],
     "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
@@ -545,9 +545,9 @@
     "felso": 4,
     "egyseg": "GtCO2/év",
     "szo_szerinti_idezet": "2–4 GtCO 2 yr −1 for enhanced weathering",
-    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "vizsgalat_tipusa": "terepkiserlet",
     "regio": "globális",
-    "korlatok": "sustainabele, 2050-ben",
+    "korlatok": "sustainably",
     "statusz": "ellenorizve",
     "indokok": [],
     "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
@@ -562,9 +562,9 @@
     "felso": 5,
     "egyseg": "GtCO2/év",
     "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for DACCS",
-    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "vizsgalat_tipusa": "terepkiserlet",
     "regio": "globális",
-    "korlatok": "sustainabele, 2050-ben",
+    "korlatok": "sustainably",
     "statusz": "ellenorizve",
     "indokok": [],
     "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
@@ -579,9 +579,9 @@
     "felso": 5,
     "egyseg": "GtCO2/év",
     "szo_szerinti_idezet": "up to 5 GtCO 2 yr −1 for soil carbon sequestration",
-    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "vizsgalat_tipusa": "terepkiserlet",
     "regio": "globális",
-    "korlatok": "sustainabele, 2050-ben",
+    "korlatok": "sustainably",
     "statusz": "elutasitva",
     "indokok": [
      "A(z) alsó (0) nem szerepel az idézetben."
@@ -652,11 +652,11 @@
     "bizonyossag": "alacsony"
    }
   },
-  "ai_osszegzes": "A cikk szerint a bioszén globális potenciálja 0,5–2 milliárd tonna CO2/év. A különböző CO2-kivonás-módszerek potenciálja eltérő, például a CO2-szűrés közvetlenül a levegőből 0,5–5 milliárd tonna CO2/év, a talaj szénmegkötése pedig akár 5 milliárd tonna CO2/év is lehet. A számok az összes lehetséges CO2-kivonás-módszerre vonatkoznak, nemcsak a bioszénra. A költségekről nem szól a cikk.",
-  "ellentmondasok": "Nincs ellentmondás a cikkben, mivel minden adat a szisztematikus áttekintés alapján szerepel, és a bioszénra vonatkozó adatok egyértelműek.",
+  "ai_osszegzes": "A cikk szerint a bioszén (bioszén) globális CO2-eltávolítási potenciálja 0,5–2 milliárd tonna CO2/év, ami a növényi energia a CO2 föld alá zárásával-hez hasonlóan magas, de kevesebbet, mint a talaj szénmegkötése. A bioszén hatékonyabb, mint az erdősítés, de nem olyan hatékony, mint a CO2-szűrés közvetlenül a levegőből. A költségeket nem vizsgálták. A cikkből nem derül ki, hogy a bioszén mennyit vonhat ki a levegőből, csak a globális potenciált. A bioszén az egyik legkisebb CO2-eltávolító módszer a felsoroltak közül.",
+  "ellentmondasok": "Nincs ellentmondás a cikkben.",
   "figyelmeztetes": "Ez egy játékon belüli, automatikusan összeállított irodalmi összefoglaló. Nem helyettesíti a szakértői lektorálást; minden számot az eredeti cikkben érdemes ellenőrizni.",
-  "azonosito": "AETHER-34d6ad316b4bd341",
-  "letrehozva": "2026-11-22T15:43:04+00:00"
+  "azonosito": "AETHER-66a599b039789ca8",
+  "letrehozva": "2026-11-22T16:30:50+00:00"
  },
  "javaslatok": [
   {
@@ -674,11 +674,11 @@
    "forrasok_szama": 1,
    "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
    "jelentes": "Évente kb. 3,6 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 9%-a.",
-   "publikacio": "AETHER-34d6ad316b4bd341",
-   "kar": "cdr:erdosites",
-   "kar_ertek": 3.6,
-   "kar_nev": "Erdősítés",
-   "megjegyzes": "",
+   "publikacio": "AETHER-66a599b039789ca8",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "A tervedbe akkor kerül, ha a saját témáját kutatod ki: Erdősítés.",
    "alkategoria_nev": "Erdősítés"
   },
   {
@@ -696,11 +696,11 @@
    "forrasok_szama": 1,
    "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
    "jelentes": "Évente kb. 5 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 12%-a.",
-   "publikacio": "AETHER-34d6ad316b4bd341",
-   "kar": "cdr:beccs",
-   "kar_ertek": 5.0,
-   "kar_nev": "Növényi energia, a CO2 föld alá zárásával",
-   "megjegyzes": "",
+   "publikacio": "AETHER-66a599b039789ca8",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "A tervedbe akkor kerül, ha a saját témáját kutatod ki: Növényi energia, a CO2 föld alá zárásával.",
    "alkategoria_nev": "Növényi energia, a CO2 föld alá zárásával"
   },
   {
@@ -718,7 +718,7 @@
    "forrasok_szama": 1,
    "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
    "jelentes": "Évente kb. 2 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 5%-a.",
-   "publikacio": "AETHER-34d6ad316b4bd341",
+   "publikacio": "AETHER-66a599b039789ca8",
    "kar": "cdr:bioszen",
    "kar_ertek": 2.0,
    "kar_nev": "Bioszén a talajba",
@@ -740,11 +740,11 @@
    "forrasok_szama": 1,
    "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
    "jelentes": "Évente kb. 4 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 9%-a.",
-   "publikacio": "AETHER-34d6ad316b4bd341",
-   "kar": "cdr:kozetmallasztas",
-   "kar_ertek": 4.0,
-   "kar_nev": "Kőzetpor a földekre (kőzetmállasztás)",
-   "megjegyzes": "",
+   "publikacio": "AETHER-66a599b039789ca8",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "A tervedbe akkor kerül, ha a saját témáját kutatod ki: Kőzetpor a földekre (kőzetmállasztás).",
    "alkategoria_nev": "Kőzetpor a földekre (kőzetmállasztás)"
   },
   {
@@ -762,11 +762,11 @@
    "forrasok_szama": 1,
    "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
    "jelentes": "Évente kb. 5 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 12%-a.",
-   "publikacio": "AETHER-34d6ad316b4bd341",
-   "kar": "cdr:daccs",
-   "kar_ertek": 5.0,
-   "kar_nev": "CO2-szűrés közvetlenül a levegőből",
-   "megjegyzes": "",
+   "publikacio": "AETHER-66a599b039789ca8",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "A tervedbe akkor kerül, ha a saját témáját kutatod ki: CO2-szűrés közvetlenül a levegőből.",
    "alkategoria_nev": "CO2-szűrés közvetlenül a levegőből"
   }
  ],

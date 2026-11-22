@@ -1,0 +1,1000 @@
+{
+ "publikacio": {
+  "aether_publikacio_verzio": 1,
+  "kerdes": "How much CO2 can new forests store?",
+  "terv": {
+   "kutatasi_kerdes_pontositva": "How much CO2 can new forests store?",
+   "angol_keresokifejezesek": [
+    "afforestation reforestation carbon dioxide removal potential global",
+    "global tree restoration potential carbon",
+    "negative emissions technologies potentials costs side effects"
+   ],
+   "keresett_parameterek": [
+    "cdr_potencial_gtco2_ev",
+    "cdr_koltseg_usd_tco2"
+   ],
+   "megjegyzes": "Előre összeállított kérdés."
+  },
+  "ai": "ollama:qwen3:8b",
+  "cikkek": {
+   "P1": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2955316307",
+    "title": "The global tree restoration potential",
+    "year": 2019,
+    "doi": "10.1126/science.aax0848",
+    "abstract": "The restoration of trees remains among the most effective strategies for climate change mitigation. We mapped the global potential tree coverage to show that 4.4 billion hectares of canopy cover could exist under the current climate. Excluding existing trees and agricultural and urban areas, we found that there is room for an extra 0.9 billion hectares of canopy cover, which could store 205 gigatonnes of carbon in areas that would naturally support woodlands and forests. This highlights global tree restoration as our most effective climate change solution to date. However, climate change will alter this potential tree coverage. We estimate that if we cannot deviate from the current trajectory, the global potential canopy cover may shrink by ~223 million hectares by 2050, with the vast majority of losses occurring in the tropics. Our results highlight the opportunity of climate change mitigation through global tree restoration but also the urgent need for action.",
+    "venue": "Science",
+    "authors": [
+     "Jean‐François Bastin",
+     "Yelena Finegold",
+     "Claude García",
+     "Danilo Mollicone",
+     "Marcelo Rezende",
+     "Devin Routh",
+     "Constantin M. Zohner",
+     "Thomas Ward Crowther"
+    ],
+    "cited_by": 2540,
+    "url": "https://openalex.org/W2955316307",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "CH",
+     "FR",
+     "IT"
+    ],
+    "intezmenyek": {
+     "CH": [
+      "ETH Zurich",
+      "Institute of Integrative Biology"
+     ],
+     "IT": [
+      "Food and Agriculture Organization of the United Nations"
+     ],
+     "FR": [
+      "Centre de Coopération Internationale en Recherche Agronomique pour le Développement",
+      "Forests and Societies"
+     ]
+    }
+   },
+   "P2": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2804406438",
+    "title": "Negative emissions—Part 2: Costs, potentials and side effects",
+    "year": 2018,
+    "doi": "10.1088/1748-9326/aabf9f",
+    "abstract": "The most recent IPCC assessment has shown an important role for negative emissions technologies (NETs) in limiting global warming to 2 °C cost-effectively. However, a bottom-up, systematic, reproducible, and transparent literature assessment of the different options to remove CO 2 from the atmosphere is currently missing. In part 1 of this three-part review on NETs, we assemble a comprehensive set of the relevant literature so far published, focusing on seven technologies: bioenergy with carbon capture and storage (BECCS), afforestation and reforestation, direct air carbon capture and storage (DACCS), enhanced weathering, ocean fertilisation, biochar, and soil carbon sequestration. In this part, part 2 of the review, we present estimates of costs, potentials, and side-effects for these technologies, and qualify them with the authors' assessment. Part 3 reviews the innovation and scaling challenges that must be addressed to realise NETs deployment as a viable climate mitigation strategy. Based on a systematic review of the literature, our best estimates for sustainable global NET potentials in 2050 are 0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation, 0.5–5 GtCO 2 yr −1 for BECCS, 0.5–2 GtCO 2 yr −1 for biochar, 2–4 GtCO 2 yr −1 for enhanced weathering, 0.5–5 GtCO 2 yr −1 for DACCS, and up to 5 GtCO 2 yr −1 for soil carbon sequestration. Costs vary widely across the technologies, as do their permanency and cumulative potentials beyond 2050. It is unlikely that a single NET will be able to sustainably meet the rates of carbon uptake described in integrated assessment pathways consistent with 1.5 °C of global warming.",
+    "venue": "Environmental Research Letters",
+    "authors": [
+     "Sabine Fuss",
+     "William F. Lamb",
+     "Max Callaghan",
+     "Jérôme Hilaire",
+     "Felix Creutzig",
+     "Thorben Amann",
+     "Tim Beringer",
+     "Wagner de Oliveira Garcia",
+     "Jens Hartmann",
+     "Tarun M. Khanna",
+     "Gunnar Luderer",
+     "Gregory F. Nemet",
+     "Joeri Rogelj",
+     "Pete Smith",
+     "José Luis Vicente‐Vicente",
+     "Jennifer L. Wilcox",
+     "Maria del Mar Zamora Dominguez",
+     "Jan Christoph Minx"
+    ],
+    "cited_by": 1853,
+    "url": "https://iopscience.iop.org/article/10.1088/1748-9326/aabf9f/pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "AT",
+     "CH",
+     "DE",
+     "GB",
+     "US"
+    ],
+    "intezmenyek": {
+     "DE": [
+      "Mercator Research Institute on Global Commons and Climate Change",
+      "Potsdam Institute for Climate Impact Research",
+      "Technische Universität Berlin",
+      "Universität Hamburg"
+     ],
+     "GB": [
+      "University of Leeds",
+      "University of Aberdeen"
+     ],
+     "US": [
+      "University of Wisconsin–Madison",
+      "Colorado School of Mines"
+     ],
+     "AT": [
+      "International Institute for Applied Systems Analysis"
+     ],
+     "CH": [
+      "ETH Zurich",
+      "Institute for Atmospheric and Climate Science"
+     ]
+    }
+   },
+   "P3": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W3131956693",
+    "title": "Demand-side solutions to climate change mitigation consistent with high levels of well-being",
+    "year": 2021,
+    "doi": "10.1038/s41558-021-01219-y",
+    "abstract": "Mitigation solutions are often evaluated in terms of costs and greenhouse gas reduction potentials, missing out on the consideration of direct effects on human well-being. Here, we systematically assess the mitigation potential of demand-side options categorized into avoid, shift and improve, and their human well-being links. We show that these options, bridging socio-behavioural, infrastructural and technological domains, can reduce counterfactual sectoral emissions by 40–80% in end-use sectors. Based on expert judgement and an extensive literature database, we evaluate 306 combinations of well-being outcomes and demand-side options, finding largely beneficial effects in improvement in well-being (79% positive, 18% neutral and 3% negative), even though we find low confidence on the social dimensions of well-being. Implementing such nuanced solutions is based axiomatically on an understanding of malleable rather than fixed preferences, and procedurally on changing infrastructures and choice architectures. Results demonstrate the high mitigation potential of demand-side mitigation options that are synergistic with well-being.",
+    "venue": "Nature Climate Change",
+    "authors": [
+     "Felix Creutzig",
+     "Leila Niamir",
+     "Xuemei Bai",
+     "Max Callaghan",
+     "Jonathan M. Cullen",
+     "Julio Díaz‐José",
+     "Maria Josefina Figueroa",
+     "Arnulf Grübler",
+     "William F. Lamb",
+     "Adrian Leip",
+     "Eric R. Masanet",
+     "Érika Mata",
+     "Linus Mattauch",
+     "Jan Christoph Minx",
+     "Sebastian Mirasgedis",
+     "Yacob Mulugetta",
+     "Sudarmanto Budi Nugroho",
+     "Minal Pathak",
+     "Patrícia E. Perkins",
+     "Joyashree Roy",
+     "Stéphane de la Rue du Can",
+     "Yamina Saheb",
+     "Shreya Some",
+     "Linda Steg",
+     "Julia  K. Steinberger",
+     "Diána Ürge-Vorsatz"
+    ],
+    "cited_by": 785,
+    "url": "https://www.nature.com/articles/s41558-021-01219-y.pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "AT",
+     "AU",
+     "CA",
+     "CH",
+     "DE",
+     "DK",
+     "GB",
+     "GR",
+     "HU",
+     "IN",
+     "IT",
+     "JP",
+     "MX",
+     "NL",
+     "SE",
+     "TH",
+     "US"
+    ],
+    "intezmenyek": {
+     "DE": [
+      "Mercator Research Institute on Global Commons and Climate Change",
+      "Technische Universität Berlin",
+      "Potsdam Institute for Climate Impact Research"
+     ],
+     "AU": [
+      "Australian National University"
+     ],
+     "GB": [
+      "University of Leeds",
+      "University of Cambridge",
+      "University of Oxford",
+      "University College London"
+     ],
+     "MX": [
+      "Universidad Veracruzana"
+     ],
+     "DK": [
+      "Copenhagen Business School"
+     ],
+     "AT": [
+      "International Institute for Applied Systems Analysis"
+     ],
+     "IT": [
+      "Joint Research Centre"
+     ],
+     "US": [
+      "University of California, Santa Barbara",
+      "Lawrence Berkeley National Laboratory"
+     ],
+     "SE": [
+      "IVL Swedish Environmental Research Institute"
+     ],
+     "GR": [
+      "National Observatory of Athens"
+     ],
+     "JP": [
+      "Institute for Global Environmental Strategies"
+     ],
+     "IN": [
+      "Ahmedabad University",
+      "Jadavpur University"
+     ],
+     "CA": [
+      "York University"
+     ],
+     "TH": [
+      "Asian Institute of Technology"
+     ],
+     "CH": [
+      "University of Lausanne"
+     ],
+     "NL": [
+      "University of Groningen"
+     ],
+     "HU": [
+      "Central European University - Budapest Campus"
+     ]
+    }
+   },
+   "P4": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2980684978",
+    "title": "Comment on “The global tree restoration potential”",
+    "year": 2019,
+    "doi": "10.1126/science.aay7976",
+    "abstract": "'s estimate (Reports, 5 July 2019, p. 76) that tree planting for climate change mitigation could sequester 205 gigatonnes of carbon is approximately five times too large. Their analysis inflated soil organic carbon gains, failed to safeguard against warming from trees at high latitudes and elevations, and considered afforestation of savannas, grasslands, and shrublands to be restoration.",
+    "venue": "Science",
+    "authors": [
+     "Joseph W. Veldman",
+     "Julie C. Aleman",
+     "Swanni T. Alvarado",
+     "T. Michael Anderson",
+     "Sally A. Archibald",
+     "William John Bond",
+     "Thomas W. Boutton",
+     "Nina Buchmann",
+     "Élise Buisson",
+     "Josep G. Canadell",
+     "Michele S. Dechoum",
+     "Milton H. Díaz‐Toribio",
+     "Giselda Durigan",
+     "John J. Ewel",
+     "Geraldo Wilson Fernandes",
+     "Alessandra Fidélis",
+     "Forrest D. Fleischman",
+     "Stephen Paul Good",
+     "Daniel M. Griffith",
+     "Julia‐Maria Hermann",
+     "William Arthur Hoffmann",
+     "Soizig Le Stradic",
+     "Caroline E. R. Lehmann",
+     "Grégory Mahy",
+     "Ashish N. Nerlekar",
+     "Jesse B. Nippert",
+     "Reed F. Noss",
+     "Colin P. Osborne",
+     "Gerhard E. Overbeck",
+     "Catherine L. Parr",
+     "Juli G. Pausas",
+     "R. Toby Pennington",
+     "Michael Philip Perring",
+     "Francis Edward Putz",
+     "Jayashree Ratnam",
+     "Mahesh Sankaran",
+     "Isabel Belloni Schmidt",
+     "Christine Brigitte Schmitt",
+     "Fernando A. O. Silveira",
+     "A. Carla Staver",
+     "Nicola Stevens",
+     "Christopher J. Still",
+     "Caroline A. E. Strömberg",
+     "Vicky M. Temperton",
+     "J. Morgan Varner",
+     "Nicholas P. Zaloumis"
+    ],
+    "cited_by": 406,
+    "url": "https://admin.research-repository.uwa.edu.au/en/publications/0dd761e0-7a86-41cb-ab73-6ff0bb133f57",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "AU",
+     "BE",
+     "BO",
+     "BR",
+     "CA",
+     "CH",
+     "DE",
+     "ES",
+     "FR",
+     "GB",
+     "IN",
+     "US",
+     "ZA"
+    ],
+    "intezmenyek": {
+     "BO": [
+      "Bolivian Forest Research Institute"
+     ],
+     "US": [
+      "Texas A&M University",
+      "Wake Forest University",
+      "University of Florida",
+      "University of Minnesota",
+      "Oregon State University",
+      "North Carolina State University",
+      "Kansas State University",
+      "Florida Institute for Conservation Science",
+      "Yale University",
+      "University of Washington",
+      "Burke Museum of Natural History and Culture",
+      "Tall Timbers Research Station and Land Conservancy"
+     ],
+     "CA": [
+      "Université de Montréal"
+     ],
+     "BR": [
+      "Universidade Estadual do Maranhão",
+      "Universidade Federal de Santa Catarina",
+      "Instituto Florestal",
+      "Universidade Federal de Minas Gerais",
+      "Universidade Estadual Paulista (Unesp)",
+      "Universidade Federal do Rio Grande do Sul",
+      "Universidade de Brasília"
+     ],
+     "ZA": [
+      "University of the Witwatersrand",
+      "University of Cape Town",
+      "University of Pretoria",
+      "Stellenbosch University"
+     ],
+     "CH": [
+      "ETH Zurich"
+     ],
+     "FR": [
+      "Centre National de la Recherche Scientifique",
+      "Aix-Marseille Université",
+      "Institut Méditerranéen de Biodiversité et d'Ecologie Marine et Continentale",
+      "Institut de Recherche pour le Développement"
+     ],
+     "AU": [
+      "CSIRO Oceans and Atmosphere",
+      "Commonwealth Scientific and Industrial Research Organisation",
+      "The University of Western Australia"
+     ],
+     "DE": [
+      "University of Regensburg",
+      "Technical University of Munich",
+      "University of Bonn",
+      "University of Freiburg",
+      "Leuphana University of Lüneburg"
+     ],
+     "GB": [
+      "Royal Botanic Garden Edinburgh",
+      "University of Edinburgh",
+      "University of Sheffield",
+      "University of Liverpool",
+      "University of Exeter",
+      "University of Leeds"
+     ],
+     "BE": [
+      "University of Liège",
+      "Gembloux Agro-Bio Tech",
+      "Ghent University"
+     ],
+     "ES": [
+      "Consejo Superior de Investigaciones Científicas",
+      "Centre d'Investigacions sobre Desertificació"
+     ],
+     "IN": [
+      "National Centre for Biological Sciences"
+     ]
+    }
+   },
+   "P5": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W3138913300",
+    "title": "The present and future of grassland restoration",
+    "year": 2021,
+    "doi": "10.1111/rec.13378",
+    "abstract": "Grasslands contribute greatly to biodiversity and human livelihoods; they support 70% of the world's agricultural area, but are heavily degraded by human land use. Grassland restoration research and management receives less attention than forests or freshwater habitats, although grasslands are critical for sustaining ecosystems multifunctionality and capacity to support biodiversity. In this article, we introduce a Special Issue which considers major trends and prospects in grassland restoration. We identified three key topics: First, restoration must confront widespread seed and site limitations, and new monitoring methods, including remote sensing techniques, are critical for restoration projects. Second, we highlight that restored grasslands typically require ongoing disturbance management and that research is required to determine optimal approaches for implementing this management during restoration. Third, global and regional restoration agendas should be harmonized with site‐level goals, and syntheses of current knowledge and research needs must guide grassland restoration across scales. We also identify research gaps to be filled, and challenges which grasslands face in the future: (1) a need for careful target vegetation selection and climate‐adaptive restoration; (2) lack of knowledge in dynamics and restoration of several regions and grassland types, including drylands and (sub)tropical regions; (3) increased importance of species arrival sequence, and high stochasticity of species establishment; and finally (4) issues of post‐restoration management to guarantee long‐term sustainability of restored sites. A new generation of research and restoration projects to bridge these gaps is necessary to mitigate environmental challenges spanning localities to the globe as we commence the UN Decade on Ecosystem Restoration.",
+    "venue": "Restoration Ecology",
+    "authors": [
+     "Péter Török",
+     "Lars A. Brudvig",
+     "Johannes Kollmann",
+     "Jodi N. Price",
+     "Béla Tóthmérész"
+    ],
+    "cited_by": 248,
+    "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/rec.13378",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "AU",
+     "DE",
+     "HU",
+     "US"
+    ],
+    "intezmenyek": {
+     "HU": [
+      "University of Debrecen"
+     ],
+     "US": [
+      "Michigan State University"
+     ],
+     "DE": [
+      "Technical University of Munich"
+     ],
+     "AU": [
+      "Charles Sturt University"
+     ]
+    }
+   },
+   "P6": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2916400484",
+    "title": "The mutual dependence of negative emission technologies and energy systems",
+    "year": 2019,
+    "doi": "10.1039/c8ee03682a",
+    "abstract": "While a rapid decommissioning of fossil fuel technologies deserves priority, most climate stabilization scenarios suggest that negative emission technologies (NETs) are required to keep global warming well below 2 °C.",
+    "venue": "Energy & Environmental Science",
+    "authors": [
+     "Felix Creutzig",
+     "Christian Breyer",
+     "Jérôme Hilaire",
+     "Jan Christoph Minx",
+     "Glen P. Peters",
+     "Robert H. Socolow"
+    ],
+    "cited_by": 254,
+    "url": "https://pubs.rsc.org/en/content/articlepdf/2019/ee/c8ee03682a",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "DE",
+     "FI",
+     "GB",
+     "US"
+    ],
+    "intezmenyek": {
+     "DE": [
+      "Mercator Research Institute on Global Commons and Climate Change",
+      "Technische Universität Berlin",
+      "Leibniz Association",
+      "Potsdam Institute for Climate Impact Research"
+     ],
+     "FI": [
+      "Lappeenranta-Lahti University of Technology"
+     ],
+     "GB": [
+      "University of Leeds"
+     ],
+     "US": [
+      "Princeton University"
+     ]
+    }
+   },
+   "P7": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W3124285912",
+    "title": "The Potential for Ocean-Based Climate Action: Negative Emissions Technologies and Beyond",
+    "year": 2021,
+    "doi": "10.3389/fclim.2020.575716",
+    "abstract": "The effectiveness, feasibility, duration of effects, co-benefits, disbenefits, cost effectiveness and governability of four ocean-based negative emissions technologies (NETs) are assessed in comparison to eight other ocean-based measures. Their role in revising UNFCCC Parties' future Nationally Determined Contributions is discussed in the broad context of ocean-based actions for both mitigation and ecological adaptation. All measures are clustered in three policy-relevant categories (Decisive, Low Regret, Concept Stage). None of the ocean-based NETs assessed are identified as Decisive at this stage. One is Low Regret ( Restoring and increasing coastal vegetation ), and three are at Concept Stage, one with low to moderate potential disbenefits ( Marine bioenergy with carbon capture and storage ) and two with potentially high disbenefits ( Enhancing open-ocean productivity and Enhancing weathering and alkalinization ). Ocean-based NETs are uncertain but potentially highly effective. They have high priority for research and development.",
+    "venue": "Frontiers in Climate",
+    "authors": [
+     "Jean‐Pierre Gattuso",
+     "Phillip C. Williamson",
+     "Carlos Manuel Duarte",
+     "Alexandre Magnan"
+    ],
+    "cited_by": 167,
+    "url": "https://www.frontiersin.org/articles/10.3389/fclim.2020.575716/pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "FR",
+     "GB",
+     "MC",
+     "SA"
+    ],
+    "intezmenyek": {
+     "FR": [
+      "Centre National de la Recherche Scientifique",
+      "Institut d'Etudes Politiques de Paris",
+      "Sorbonne Université",
+      "Institut du Développement Durable et des Relations Internationales",
+      "Laboratoire d’Océanographie de Villefranche",
+      "LIttoral ENvironnement et Sociétés",
+      "La Rochelle Université"
+     ],
+     "MC": [
+      "Prince Albert II of Monaco Foundation"
+     ],
+     "GB": [
+      "University of East Anglia"
+     ],
+     "SA": [
+      "King Abdullah University of Science and Technology"
+     ]
+    }
+   },
+   "P8": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W4386020824",
+    "title": "Challenges and opportunities for grassland restoration: A global perspective of best practices in the era of climate change",
+    "year": 2023,
+    "doi": "10.1016/j.gecco.2023.e02612",
+    "abstract": "Grasslands are ubiquitous globally, and their conservation and restoration are critical to combat both the biodiversity and climate crises. There is increasing interest in implementing effective multifunctional grassland restoration to restore biodiversity concomitant with above- and belowground carbon sequestration, delivery of carbon credits and/or integration with land dedicated to solar panels. Other common multifunctional restoration considerations include improved forage value, erosion control, water management, pollinator services, and wildlife habitat provisioning. In addition, many grasslands are global biodiversity hotspots. Nonetheless, relative to their impact, and as compared to forests, the importance of preservation, conservation, and restoration of grasslands has been widely overlooked due to their subtle physiognomy and underappreciated contributions to human and planetary well-being. Ultimately, the global success of carbon sequestration will depend on more complete and effective grassland ecosystem restoration. In this review, supported by examples from across the Western world, we call for more strenuous and unified development of best practices for grassland restoration in three areas of concern: initial site conditions and site preparation; implementation of restoration measures and management; and social context and sustainability. For each area, we identify the primary challenges to grassland restoration and highlight case studies with proven results to derive successful and generalizable solutions.",
+    "venue": "Global Ecology and Conservation",
+    "authors": [
+     "Kelly G. Lyons",
+     "Péter Török",
+     "Julia‐Maria Hermann",
+     "Kathrin Kiehl",
+     "Anita Kirmer",
+     "Johannes Kollmann",
+     "Gerhard E. Overbeck",
+     "Sabine Tischew",
+     "Edith B. Allen",
+     "Jonathan D. Bakker",
+     "Christy A. Brigham",
+     "Élise Buisson",
+     "Kerri M. Crawford",
+     "Peter W. Dunwiddie",
+     "Jennifer L. Firn",
+     "Devin M. Grobert",
+     "Karen Hickman",
+     "Soizig Le Stradic",
+     "Vicky M. Temperton"
+    ],
+    "cited_by": 143,
+    "url": "https://doi.org/10.1016/j.gecco.2023.e02612",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "AU",
+     "BR",
+     "DE",
+     "FR",
+     "HU",
+     "PL",
+     "US"
+    ],
+    "intezmenyek": {
+     "US": [
+      "Trinity University",
+      "University of California, Riverside",
+      "University of Washington",
+      "National Park Service",
+      "University of Houston",
+      "The University of Texas at Austin",
+      "Oklahoma State University"
+     ],
+     "HU": [
+      "University of Debrecen"
+     ],
+     "PL": [
+      "Polish Academy of Sciences Botanical Garden – Center for Biological Diversity Conservation in Powsin",
+      "Polish Academy of Sciences"
+     ],
+     "DE": [
+      "Technical University of Munich",
+      "Hochschule Osnabrück",
+      "Anhalt University of Applied Sciences",
+      "Leuphana University of Lüneburg"
+     ],
+     "BR": [
+      "Universidade Federal do Rio Grande do Sul"
+     ],
+     "FR": [
+      "Centre National de la Recherche Scientifique",
+      "Aix-Marseille Université",
+      "Institut Méditerranéen de Biodiversité et d'Ecologie Marine et Continentale",
+      "Institut de Recherche pour le Développement",
+      "Université de Bordeaux",
+      "Institut National de Recherche pour l'Agriculture, l'Alimentation et l'Environnement",
+      "UMR BIOdiversity, GEnes & Communities"
+     ],
+     "AU": [
+      "Queensland University of Technology"
+     ]
+    }
+   }
+  },
+  "ai_nyers_kivonat": {
+   "allitasok": [
+    {
+     "cikk_azonosito": "P2",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "afforestation and reforestation",
+     "ertek": 3.6,
+     "also": 0.5,
+     "felso": 3.6,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation",
+     "vizsgalat_tipusa": "megfigyeles",
+     "regio": "globális",
+     "korlatok": "sustainable global NET potentials in 2050"
+    },
+    {
+     "cikk_azonosito": "P2",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "BECCS",
+     "ertek": 5,
+     "also": 0.5,
+     "felso": 5,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for BECCS",
+     "vizsgalat_tipusa": "megfigyeles",
+     "regio": "globális",
+     "korlatok": "sustainable global NET potentials in 2050"
+    },
+    {
+     "cikk_azonosito": "P2",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "biochar",
+     "ertek": 2,
+     "also": 0.5,
+     "felso": 2,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–2 GtCO 2 yr −1 for biochar",
+     "vizsgalat_tipusa": "megfigyeles",
+     "regio": "globális",
+     "korlatok": "sustainable global NET potentials in 2050"
+    },
+    {
+     "cikk_azonosito": "P2",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "enhanced weathering",
+     "ertek": 4,
+     "also": 2,
+     "felso": 4,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "2–4 GtCO 2 yr −1 for enhanced weathering",
+     "vizsgalat_tipusa": "megfigyeles",
+     "regio": "globális",
+     "korlatok": "sustainable global NET potentials in 2050"
+    },
+    {
+     "cikk_azonosito": "P2",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "DACCS",
+     "ertek": 5,
+     "also": 0.5,
+     "felso": 5,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for DACCS",
+     "vizsgalat_tipusa": "megfigyeles",
+     "regio": "globális",
+     "korlatok": "sustainable global NET potentials in 2050"
+    },
+    {
+     "cikk_azonosito": "P2",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "soil carbon sequestration",
+     "ertek": 5,
+     "also": 0,
+     "felso": 5,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "up to 5 GtCO 2 yr −1 for soil carbon sequestration",
+     "vizsgalat_tipusa": "megfigyeles",
+     "regio": "globális",
+     "korlatok": "sustainable global NET potentials in 2050"
+    }
+   ],
+   "osszegzes": "The study estimates the potential of various CO2 removal methods by 2050. Afforestation and reforestation could store 0.5–3.6 GtCO2/yr, BECCS 0.5–5 GtCO2/yr, biochar 0.5–2 GtCO2/yr, enhanced weathering 2–4 GtCO2/yr, DACCS 0.5–5 GtCO2/yr, and soil carbon sequestration up to 5 GtCO2/yr. These are global estimates based on a systematic review of the literature. The study does not provide cost data for these methods.",
+   "ellentmondasok": "None"
+  },
+  "allitasok": [
+   {
+    "cikk_azonosito": "P2",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "afforestation and reforestation",
+    "ertek": 3.6,
+    "also": 0.5,
+    "felso": 3.6,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation",
+    "vizsgalat_tipusa": "megfigyeles",
+    "regio": "globális",
+    "korlatok": "sustainable global NET potentials in 2050",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P2",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "BECCS",
+    "ertek": 5,
+    "also": 0.5,
+    "felso": 5,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for BECCS",
+    "vizsgalat_tipusa": "megfigyeles",
+    "regio": "globális",
+    "korlatok": "sustainable global NET potentials in 2050",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P2",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "biochar",
+    "ertek": 2,
+    "also": 0.5,
+    "felso": 2,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–2 GtCO 2 yr −1 for biochar",
+    "vizsgalat_tipusa": "megfigyeles",
+    "regio": "globális",
+    "korlatok": "sustainable global NET potentials in 2050",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P2",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "enhanced weathering",
+    "ertek": 4,
+    "also": 2,
+    "felso": 4,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "2–4 GtCO 2 yr −1 for enhanced weathering",
+    "vizsgalat_tipusa": "megfigyeles",
+    "regio": "globális",
+    "korlatok": "sustainable global NET potentials in 2050",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P2",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "DACCS",
+    "ertek": 5,
+    "also": 0.5,
+    "felso": 5,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for DACCS",
+    "vizsgalat_tipusa": "megfigyeles",
+    "regio": "globális",
+    "korlatok": "sustainable global NET potentials in 2050",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P2",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "soil carbon sequestration",
+    "ertek": 5,
+    "also": 0,
+    "felso": 5,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "up to 5 GtCO 2 yr −1 for soil carbon sequestration",
+    "vizsgalat_tipusa": "megfigyeles",
+    "regio": "globális",
+    "korlatok": "sustainable global NET potentials in 2050",
+    "statusz": "elutasitva",
+    "indokok": [
+     "A(z) alsó (0) nem szerepel az idézetben."
+    ],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   }
+  ],
+  "osszesitett_parameterek": {
+   "cdr_potencial_gtco2_ev:afforestation and reforestation": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "afforestation and reforestation",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 3.6,
+    "tartomany": [
+     0.5,
+     3.6
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:beccs": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "beccs",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 5,
+    "tartomany": [
+     0.5,
+     5
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:biochar": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "biochar",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 2,
+    "tartomany": [
+     0.5,
+     2
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:enhanced weathering": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "enhanced weathering",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 4,
+    "tartomany": [
+     2,
+     4
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:daccs": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "daccs",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 5,
+    "tartomany": [
+     0.5,
+     5
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   }
+  },
+  "ai_osszegzes": "The study estimates the potential of various CO2 removal methods by 2050. Afforestation and reforestation could store 0.5–3.6 GtCO2/yr, BECCS 0.5–5 GtCO2/yr, biochar 0.5–2 GtCO2/yr, enhanced weathering 2–4 GtCO2/yr, DACCS 0.5–5 GtCO2/yr, and soil carbon sequestration up to 5 GtCO2/yr. These are global estimates based on a systematic review of the literature. The study does not provide cost data for these methods.",
+  "ellentmondasok": "None",
+  "figyelmeztetes": "Ez egy játékon belüli, automatikusan összeállított irodalmi összefoglaló. Nem helyettesíti a szakértői lektorálást; minden számot az eredeti cikkben érdemes ellenőrizni.",
+  "azonosito": "AETHER-ad6fe979c9416718",
+  "letrehozva": "2026-11-22T16:48:16+00:00"
+ },
+ "javaslatok": [
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:afforestation and reforestation",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "afforestation and reforestation",
+   "ertek": 3.6,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    0.5,
+    3.6
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 3.6 billion tonnes of CO2 a year. That is about 9% of today's global emissions.",
+   "publikacio": "AETHER-ad6fe979c9416718",
+   "kar": "cdr:erdosites",
+   "kar_ertek": 3.6,
+   "kar_nev": "Afforestation",
+   "megjegyzes": "",
+   "alkategoria_nev": "Afforestation"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:beccs",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "beccs",
+   "ertek": 5,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    0.5,
+    5
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 5 billion tonnes of CO2 a year. That is about 12% of today's global emissions.",
+   "publikacio": "AETHER-ad6fe979c9416718",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "To use this in your plan, research its own topic: Bioenergy + carbon storage.",
+   "alkategoria_nev": "Bioenergy + carbon storage"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:biochar",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "biochar",
+   "ertek": 2,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    0.5,
+    2
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 2 billion tonnes of CO2 a year. That is about 5% of today's global emissions.",
+   "publikacio": "AETHER-ad6fe979c9416718",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "To use this in your plan, research its own topic: Biochar.",
+   "alkategoria_nev": "Biochar"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:enhanced weathering",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "enhanced weathering",
+   "ertek": 4,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    2,
+    4
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 4 billion tonnes of CO2 a year. That is about 9% of today's global emissions.",
+   "publikacio": "AETHER-ad6fe979c9416718",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "To use this in your plan, research its own topic: Enhanced rock weathering.",
+   "alkategoria_nev": "Enhanced rock weathering"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:daccs",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "daccs",
+   "ertek": 5,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    0.5,
+    5
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 5 billion tonnes of CO2 a year. That is about 12% of today's global emissions.",
+   "publikacio": "AETHER-ad6fe979c9416718",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "To use this in your plan, research its own topic: Direct air capture.",
+   "alkategoria_nev": "Direct air capture"
+  }
+ ],
+ "osszefoglalo": {
+  "cikkek": 8,
+  "allitasok": 6,
+  "ellenorizve": 5,
+  "elutasitva": 1,
+  "orszag": "HU",
+  "hazai": 3
+ },
+ "archivum": {
+  "datum": "2026-11-22",
+  "ai": "ollama qwen3:8b"
+ }
+}

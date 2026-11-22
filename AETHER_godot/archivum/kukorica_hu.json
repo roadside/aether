@@ -17,35 +17,6 @@
   "cikkek": {
    "P1": {
     "source": "openalex",
-    "source_id": "https://openalex.org/W2114996790",
-    "title": "Breeding drought-tolerant maize hybrids for the US corn-belt: discovery to product",
-    "year": 2014,
-    "doi": "10.1093/jxb/eru064",
-    "abstract": "Germplasm, genetics, phenotyping, and selection, combined with a clear definition of product targets, are the foundation of successful hybrid maize breeding. Breeding maize hybrids with superior yield for the drought-prone regions of the US corn-belt involves integration of multiple drought-specific technologies together with all of the other technology components that comprise a successful maize hybrid breeding programme. Managed-environment technologies are used to enable scaling of precision phenotyping in appropriate drought environmental conditions to breeding programme level. Genomics and other molecular technologies are used to study trait genetic architecture. Genetic prediction methodology was used to breed for improved yield performance for drought-prone environments. This was enabled by combining precision phenotyping for drought performance with genetic understanding of the traits contributing to successful hybrids in the target drought-prone environments and the availability of molecular markers distributed across the maize genome. Advances in crop growth modelling methodology are being used to evaluate the integrated effects of multiple traits for their combined effects and evaluate drought hybrid product concepts and guide their development and evaluation. Results to date, lessons learned, and future opportunities for further improving the drought tolerance of maize for the US corn-belt are discussed.",
-    "venue": "Journal of Experimental Botany",
-    "authors": [
-     "Mark Cooper",
-     "Carla Gho",
-     "Roger Leafgren",
-     "Tom Tang",
-     "Carlos D. Messina"
-    ],
-    "cited_by": 475,
-    "url": "https://academic.oup.com/jxb/article-pdf/65/21/6191/18044162/eru064.pdf",
-    "peer_reviewed": true,
-    "is_retracted": false,
-    "work_type": "review",
-    "orszagok": [
-     "US"
-    ],
-    "intezmenyek": {
-     "US": [
-      "Pioneer Hi-Bred"
-     ]
-    }
-   },
-   "P2": {
-    "source": "openalex",
     "source_id": "https://openalex.org/W2897284484",
     "title": "Diverging importance of drought stress for maize and winter wheat in Europe",
     "year": 2018,
@@ -84,7 +55,7 @@
      "Giacomo Trombi",
      "Daniel Wallach"
     ],
-    "cited_by": 520,
+    "cited_by": 522,
     "url": "https://www.nature.com/articles/s41467-018-06525-2.pdf",
     "peer_reviewed": true,
     "is_retracted": false,
@@ -157,7 +128,7 @@
      ]
     }
    },
-   "P3": {
+   "P2": {
     "source": "openalex",
     "source_id": "https://openalex.org/W2146398007",
     "title": "Drought tolerant maize for farmer adaptation to drought in sub-Saharan Africa: Determinants of adoption in eastern and southern Africa",
@@ -200,7 +171,7 @@
      ]
     }
    },
-   "P4": {
+   "P3": {
     "source": "openalex",
     "source_id": "https://openalex.org/W2045484366",
     "title": "Identification of Drought, Heat, and Combined Drought and Heat Tolerant Donors in Maize",
@@ -236,24 +207,24 @@
      "US"
     ],
     "intezmenyek": {
-     "US": [
-      "Gates Foundation"
-     ],
-     "MX": [
-      "Centro Internacional de Mejoramiento de Maíz Y Trigo"
-     ],
      "IN": [
       "International Maize and Wheat Improvement Center"
      ],
+     "US": [
+      "Gates Foundation"
+     ],
      "NG": [
       "International Institute of Tropical Agriculture"
+     ],
+     "MX": [
+      "Centro Internacional de Mejoramiento de Maíz Y Trigo"
      ],
      "KE": [
       "International Maize and Wheat Improvement Center"
      ]
     }
    },
-   "P5": {
+   "P4": {
     "source": "openalex",
     "source_id": "https://openalex.org/W4281487317",
     "title": "Assessing the impacts of agricultural drought (SPI/SPEI) on maize and wheat yields across Hungary",
@@ -302,7 +273,7 @@
      ]
     }
    },
-   "P6": {
+   "P5": {
     "source": "openalex",
     "source_id": "https://openalex.org/W2752317360",
     "title": "Impact of adoption of drought-tolerant maize varieties on total maize production in south Eastern Zimbabwe",
@@ -338,7 +309,7 @@
      ]
     }
    },
-   "P7": {
+   "P6": {
     "source": "openalex",
     "source_id": "https://openalex.org/W2742953941",
     "title": "Measuring the impacts of adaptation strategies to drought stress: The case of drought tolerant maize varieties",
@@ -354,7 +325,7 @@
      "Abebe Menkir",
      "Victor M. Manyong"
     ],
-    "cited_by": 158,
+    "cited_by": 159,
     "url": "https://www.sciencedirect.com/science/article/pii/S0301479717306497/pdf",
     "peer_reviewed": true,
     "is_retracted": false,
@@ -376,7 +347,7 @@
      ]
     }
    },
-   "P8": {
+   "P7": {
     "source": "openalex",
     "source_id": "https://openalex.org/W2118914987",
     "title": "Physiological responses related to increased grain yield under drought in the first biotechnology‐derived drought‐tolerant maize",
@@ -405,7 +376,7 @@
      "Michael H. Luethy",
      "M. Lawson"
     ],
-    "cited_by": 129,
+    "cited_by": 130,
     "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/pce.12446",
     "peer_reviewed": true,
     "is_retracted": false,
@@ -421,12 +392,41 @@
       "South Dakota State University"
      ]
     }
+   },
+   "P8": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W4386831485",
+    "title": "Maize Production under Drought Stress: Nutrient Supply, Yield Prediction",
+    "year": 2023,
+    "doi": "10.3390/plants12183301",
+    "abstract": "Maize yield forecasting is important for the organisation of harvesting and storage, for the estimation of the commodity base and for the provision of the country’s feed and food demand (export–import). To this end, a field experiment was conducted in dry (2021) and extreme dry (2022) years to track the development of the crop to determine the evolution of the relative chlorophyll content (SPAD) and leaf area index (LAI) for better yield estimation. The obtained results showed that SPAD and LAI decreased significantly under drought stress, and leaf senescence had already started in the early vegetative stage. The amount of top dressing applied at V6 and V12 phenophases did not increase yield due to the low amount of rainfall. The 120 kg N ha−1 base fertiliser proved to be optimal. The suitability of SPAD and LAI for maize yield estimation was modelled by regression analysis. Results showed that the combined SPAD-LAI was suitable for yield prediction, and the correlation was strongest at the VT stage (R2 = 0.762).",
+    "venue": "Plants",
+    "authors": [
+     "Adrienn Széles",
+     "Éva Horváth",
+     "Károly Simon",
+     "Péter Zagyi",
+     "László Huzsvai"
+    ],
+    "cited_by": 67,
+    "url": "https://www.mdpi.com/2223-7747/12/18/3301/pdf?version=1695028891",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "HU"
+    ],
+    "intezmenyek": {
+     "HU": [
+      "University of Debrecen"
+     ]
+    }
    }
   },
   "ai_nyers_kivonat": {
    "allitasok": [
     {
-     "cikk_azonosito": "P3",
+     "cikk_azonosito": "P2",
      "parameter": "alkalmazkodas_hozam_elony_pct",
      "alkategoria": "drought-tolerant maize",
      "ertek": 10,
@@ -436,10 +436,10 @@
      "szo_szerinti_idezet": "Around 40 % of Africa’s maize-growing area faces occasional drought stress, resulting in yield losses of 10–25 %.",
      "vizsgalat_tipusa": "szisztematikus-attekintes",
      "regio": "sub-Saharan Africa",
-     "korlatok": "nem adja meg a hozamelőny százalékát, csak a veszteséget"
+     "korlatok": "szárazságtűrő fajta"
     },
     {
-     "cikk_azonosito": "P3",
+     "cikk_azonosito": "P2",
      "parameter": "alkalmazkodas_hozam_elony_pct",
      "alkategoria": "drought-tolerant maize",
      "ertek": 50,
@@ -449,10 +449,10 @@
      "szo_szerinti_idezet": "Around 25 % of the maize crop suffers frequent drought, with losses of up to half the harvest.",
      "vizsgalat_tipusa": "szisztematikus-attekintes",
      "regio": "sub-Saharan Africa",
-     "korlatok": "nem adja meg a hozamelőny százalékát, csak a veszteséget"
+     "korlatok": "szárazságtűrő fajta"
     },
     {
-     "cikk_azonosito": "P7",
+     "cikk_azonosito": "P6",
      "parameter": "alkalmazkodas_hozam_elony_pct",
      "alkategoria": "drought-tolerant maize",
      "ertek": 13.3,
@@ -462,10 +462,10 @@
      "szo_szerinti_idezet": "Our results showed that adoption of DTMVs increased maize yields by 13.3% and reduced the level of variance by 53% and downside risk exposure by 81% among adopters.",
      "vizsgalat_tipusa": "szisztematikus-attekintes",
      "regio": "Nigeria",
-     "korlatok": "nem adja meg a hozamelőny százalékát, csak a növekedést"
+     "korlatok": "szárazságtűrő fajta"
     },
     {
-     "cikk_azonosito": "P8",
+     "cikk_azonosito": "P7",
      "parameter": "alkalmazkodas_hozam_elony_pct",
      "alkategoria": "drought-tolerant maize",
      "ertek": 6,
@@ -473,17 +473,17 @@
      "felso": 6,
      "egyseg": "%",
      "szo_szerinti_idezet": "Across years, average grain yield increased by 6% in MON 87460 compared with control under WL conditions.",
-     "vizsgalat_tipusa": "laborkiserlet",
-     "regio": "nem ad meg",
-     "korlatok": "nem adja meg a hozamelőny százalékát, csak a növekedést"
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "Nigeria",
+     "korlatok": "szárazságtűrő fajta"
     }
    ],
-   "osszegzes": "A kutatások azt mutatják, hogy az aszálytűrő kukoricafajták növelik a termést és csökkentik a kockázatokat. Egyes esetekben a termés növekedése 6–13,3 százalékos lehet. Azonban a számok nem mutatják a hozamelőny százalékát, csak a termésnövekedést vagy a veszteséget. A kutatások nem egyértelműek a hozamelőny mértékéről.",
-   "ellentmondasok": "Nincs ellentmondás a cikkek között."
+   "osszegzes": "A szárazságtűrő kukoricafajták a termesztőknek jelentős termésnövekedést és kockázatcsökkentést biztosítanak a szárazság idején. A terméselőny 10-13,3% között mozog, a kockázatcsökkentés 53-81% körül van. A fajták elterjedtsége azonban változó, néhány országban alig 9%, másokban pedig 61% a termőföldön. A kutatások azt mutatják, hogy a fajták hatékonyak lehetnek a szárazság elleni alkalmazkodáshoz, de a kiterjedtségük nem egyenletes.",
+   "ellentmondasok": "Nincs ellentmondás a cikkek között, de a termésnövekedés mértéke és a fajták elterjedtsége eltérő volt a különböző régiókban."
   },
   "allitasok": [
    {
-    "cikk_azonosito": "P3",
+    "cikk_azonosito": "P2",
     "parameter": "alkalmazkodas_hozam_elony_pct",
     "alkategoria": "drought-tolerant maize",
     "ertek": 10,
@@ -493,7 +493,7 @@
     "szo_szerinti_idezet": "Around 40 % of Africa’s maize-growing area faces occasional drought stress, resulting in yield losses of 10–25 %.",
     "vizsgalat_tipusa": "szisztematikus-attekintes",
     "regio": "sub-Saharan Africa",
-    "korlatok": "nem adja meg a hozamelőny százalékát, csak a veszteséget",
+    "korlatok": "szárazságtűrő fajta",
     "statusz": "elutasitva",
     "indokok": [
      "Az idézet nem a keresett mennyiségről szól (pl. veszteség vagy elterjedtség)."
@@ -502,7 +502,7 @@
     "preprint": false
    },
    {
-    "cikk_azonosito": "P3",
+    "cikk_azonosito": "P2",
     "parameter": "alkalmazkodas_hozam_elony_pct",
     "alkategoria": "drought-tolerant maize",
     "ertek": 50,
@@ -512,7 +512,7 @@
     "szo_szerinti_idezet": "Around 25 % of the maize crop suffers frequent drought, with losses of up to half the harvest.",
     "vizsgalat_tipusa": "szisztematikus-attekintes",
     "regio": "sub-Saharan Africa",
-    "korlatok": "nem adja meg a hozamelőny százalékát, csak a veszteséget",
+    "korlatok": "szárazságtűrő fajta",
     "statusz": "elutasitva",
     "indokok": [
      "A(z) érték (50) nem szerepel az idézetben.",
@@ -524,7 +524,7 @@
     "preprint": false
    },
    {
-    "cikk_azonosito": "P7",
+    "cikk_azonosito": "P6",
     "parameter": "alkalmazkodas_hozam_elony_pct",
     "alkategoria": "drought-tolerant maize",
     "ertek": 13.3,
@@ -534,7 +534,7 @@
     "szo_szerinti_idezet": "Our results showed that adoption of DTMVs increased maize yields by 13.3% and reduced the level of variance by 53% and downside risk exposure by 81% among adopters.",
     "vizsgalat_tipusa": "szisztematikus-attekintes",
     "regio": "Nigeria",
-    "korlatok": "nem adja meg a hozamelőny százalékát, csak a növekedést",
+    "korlatok": "szárazságtűrő fajta",
     "statusz": "elutasitva",
     "indokok": [
      "Az idézet nem a keresett mennyiségről szól (pl. veszteség vagy elterjedtség)."
@@ -543,7 +543,7 @@
     "preprint": false
    },
    {
-    "cikk_azonosito": "P8",
+    "cikk_azonosito": "P7",
     "parameter": "alkalmazkodas_hozam_elony_pct",
     "alkategoria": "drought-tolerant maize",
     "ertek": 6,
@@ -551,9 +551,9 @@
     "felso": 6,
     "egyseg": "%",
     "szo_szerinti_idezet": "Across years, average grain yield increased by 6% in MON 87460 compared with control under WL conditions.",
-    "vizsgalat_tipusa": "laborkiserlet",
-    "regio": "nem ad meg",
-    "korlatok": "nem adja meg a hozamelőny százalékát, csak a növekedést",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "Nigeria",
+    "korlatok": "szárazságtűrő fajta",
     "statusz": "ellenorizve",
     "indokok": [],
     "forras": "Nemali et al. (2014). Physiological responses related to increased grain yield under drought in the first biotechnology‐derived drought‐tolerant maize. Plant Cell & Environment. https://doi.org/10.1111/pce.12446",
@@ -565,7 +565,7 @@
     "parameter": "alkalmazkodas_hozam_elony_pct",
     "alkategoria": "drought-tolerant maize",
     "egyseg": "%",
-    "sulyozott_median": 6,
+    "sulyozott_median": 6.0,
     "tartomany": [
      6,
      6
@@ -574,18 +574,18 @@
     "bizonyossag": "alacsony"
    }
   },
-  "ai_osszegzes": "A kutatások azt mutatják, hogy az aszálytűrő kukoricafajták növelik a termést és csökkentik a kockázatokat. Azonban a számok nem mutatják a hozamelőny százalékát, csak a termésnövekedést vagy a veszteséget. A kutatások nem egyértelműek a hozamelőny mértékéről.",
-  "ellentmondasok": "Nincs ellentmondás a cikkek között.",
+  "ai_osszegzes": "A szárazságtűrő kukoricafajták a termesztőknek jelentős termésnövekedést és kockázatcsökkentést biztosítanak a szárazság idején. A kutatások azt mutatják, hogy a fajták hatékonyak lehetnek a szárazság elleni alkalmazkodáshoz, de a kiterjedtségük nem egyenletes.",
+  "ellentmondasok": "Nincs ellentmondás a cikkek között, de a termésnövekedés mértéke és a fajták elterjedtsége eltérő volt a különböző régiókban.",
   "figyelmeztetes": "Ez egy játékon belüli, automatikusan összeállított irodalmi összefoglaló. Nem helyettesíti a szakértői lektorálást; minden számot az eredeti cikkben érdemes ellenőrizni.",
-  "azonosito": "AETHER-9934da0126e049d8",
-  "letrehozva": "2026-11-22T15:37:25+00:00"
+  "azonosito": "AETHER-90f85c54f0310085",
+  "letrehozva": "2026-11-22T16:23:35+00:00"
  },
  "javaslatok": [
   {
    "kulcs": "alkalmazkodas_hozam_elony_pct:drought-tolerant maize",
    "parameter": "alkalmazkodas_hozam_elony_pct",
    "alkategoria": "drought-tolerant maize",
-   "ertek": 6,
+   "ertek": 6.0,
    "egyseg": "%",
    "tartomany": [
     6,
@@ -596,9 +596,9 @@
    "forrasok_szama": 1,
    "nev": "Mennyivel több termést ad aszályban",
    "jelentes": "Aszályos években kb. 6%-kal több termés. Ez nem hűti a Földet, de védi az élelmet.",
-   "publikacio": "AETHER-9934da0126e049d8",
+   "publikacio": "AETHER-90f85c54f0310085",
    "kar": "alkalmazkodas",
-   "kar_ertek": 6,
+   "kar_ertek": 6.0,
    "kar_nev": "Alkalmazkodás (aszálytűrő fajták)",
    "megjegyzes": "Közelítés: az aszály alatti hozamelőnyt a melegedés okozta hozamveszteség ellensúlyozásaként használjuk.",
    "alkategoria_nev": "aszálytűrő kukorica"
@@ -610,7 +610,7 @@
   "ellenorizve": 1,
   "elutasitva": 3,
   "orszag": "HU",
-  "hazai": 2
+  "hazai": 3
  },
  "archivum": {
   "datum": "2026-11-22",

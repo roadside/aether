@@ -320,7 +320,7 @@
     "title": "Life Cycle Assessment of Direct Air Carbon Capture and Storage with Low-Carbon Energy Sources",
     "year": 2021,
     "doi": "10.1021/acs.est.1c03263",
-    "abstract": "High Resolution Image Download MS PowerPoint Slide Direct air carbon capture and storage (DACCS) is an emerging carbon dioxide removal technology, which has the potential to remove large amounts of CO 2 from the atmosphere. We present a comprehensive life cycle assessment of different DACCS systems with low-carbon electricity and heat sources required for the CO 2 capture process, both stand-alone and grid-connected system configurations. The results demonstrate negative greenhouse gas (GHG) emissions for all eight selected locations and five system layouts, with the highest GHG removal potential in countries with low-carbon electricity supply and waste heat usage (up to 97%). Autonomous system layouts prove to be a promising alternative, with a GHG removal efficiency of 79–91%, at locations with high solar irradiation to avoid the consumption of fossil fuel-based grid electricity and heat. The analysis of environmental burdens other than GHG emissions shows some trade-offs associated with CO 2 removal, especially land transformation for system layouts with photovoltaics (PV) electricity supply. The sensitivity analysis reveals the importance of selecting appropriate locations for grid-coupled system layouts since the deployment of DACCS at geographic locations with CO 2 -intensive grid electricity mixes leads to net GHG emissions instead of GHG removal today.",
+    "abstract": "Direct air carbon capture and storage (DACCS) is an emerging carbon dioxide removal technology, which has the potential to remove large amounts of CO 2 from the atmosphere. We present a comprehensive life cycle assessment of different DACCS systems with low-carbon electricity and heat sources required for the CO 2 capture process, both stand-alone and grid-connected system configurations. The results demonstrate negative greenhouse gas (GHG) emissions for all eight selected locations and five system layouts, with the highest GHG removal potential in countries with low-carbon electricity supply and waste heat usage (up to 97%). Autonomous system layouts prove to be a promising alternative, with a GHG removal efficiency of 79–91%, at locations with high solar irradiation to avoid the consumption of fossil fuel-based grid electricity and heat. The analysis of environmental burdens other than GHG emissions shows some trade-offs associated with CO 2 removal, especially land transformation for system layouts with photovoltaics (PV) electricity supply. The sensitivity analysis reveals the importance of selecting appropriate locations for grid-coupled system layouts since the deployment of DACCS at geographic locations with CO 2 -intensive grid electricity mixes leads to net GHG emissions instead of GHG removal today.",
     "venue": "Environmental Science & Technology",
     "authors": [
      "Tom Terlouw",
@@ -442,9 +442,9 @@
      "felso": 3.6,
      "egyseg": "GtCO2/év",
      "szo_szerinti_idezet": "0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation",
-     "vizsgalat_tipusa": "terepkiserlet",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
      "regio": "globális",
-     "korlatok": "sustainable"
+     "korlatok": "sustainably"
     },
     {
      "cikk_azonosito": "P2",
@@ -455,9 +455,9 @@
      "felso": 5,
      "egyseg": "GtCO2/év",
      "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for BECCS",
-     "vizsgalat_tipusa": "terepkiserlet",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
      "regio": "globális",
-     "korlatok": "sustainable"
+     "korlatok": "sustainably"
     },
     {
      "cikk_azonosito": "P2",
@@ -468,9 +468,9 @@
      "felso": 2,
      "egyseg": "GtCO2/év",
      "szo_szerinti_idezet": "0.5–2 GtCO 2 yr −1 for biochar",
-     "vizsgalat_tipusa": "terepkiserlet",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
      "regio": "globális",
-     "korlatok": "sustainable"
+     "korlatok": "sustainably"
     },
     {
      "cikk_azonosito": "P2",
@@ -481,9 +481,9 @@
      "felso": 4,
      "egyseg": "GtCO2/év",
      "szo_szerinti_idezet": "2–4 GtCO 2 yr −1 for enhanced weathering",
-     "vizsgalat_tipusa": "terepkiserlet",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
      "regio": "globális",
-     "korlatok": "sustainable"
+     "korlatok": "sustainably"
     },
     {
      "cikk_azonosito": "P2",
@@ -494,9 +494,9 @@
      "felso": 5,
      "egyseg": "GtCO2/év",
      "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for DACCS",
-     "vizsgalat_tipusa": "terepkiserlet",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
      "regio": "globális",
-     "korlatok": "sustainable"
+     "korlatok": "sustainably"
     },
     {
      "cikk_azonosito": "P2",
@@ -507,9 +507,9 @@
      "felso": 5,
      "egyseg": "GtCO2/év",
      "szo_szerinti_idezet": "up to 5 GtCO 2 yr −1 for soil carbon sequestration",
-     "vizsgalat_tipusa": "terepkiserlet",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
      "regio": "globális",
-     "korlatok": "sustainable"
+     "korlatok": "sustainably"
     },
     {
      "cikk_azonosito": "P4",
@@ -520,13 +520,13 @@
      "felso": 300,
      "egyseg": "EJ/yr",
      "szo_szerinti_idezet": "up to 300 EJ/yr of energy input by 2100",
-     "vizsgalat_tipusa": "terepkiserlet",
+     "vizsgalat_tipusa": "modellezes",
      "regio": "globális",
-     "korlatok": "modellezés"
+     "korlatok": "modell"
     }
    ],
-   "osszegzes": "A kutatások szerint a CO2-szűrés a levegőből (DACCS) 0,5–5 GtCO2/év potenciálú lehet, de nagy mennyiségű energia (300 EJ/év) szükséges. A bioszén, a talaj szénmegkötése és a kőzetmállasztás is jelentős potenciált mutatnak. A kérdés az, hogy ezek a módszerek valóban mennyire hatékonyak és költséghatékonyak. A cikkek nem mondják, hogy melyik módszer a legjobb, csak számokat adnak.",
-   "ellentmondasok": "Nincs ellentmondás a cikkek között, de a DACCS energiájának költsége nem szerepel a potenciálok között, csak az energiafogyasztás."
+   "osszegzes": "A cikkek azt mutatják, hogy a levegőből CO2-t eltávolító technológiák (pl. DACCS, afforestation) globális potenciálja 0,5–5 GtCO2/év között mozoghat. A DACCS technológia energiaigénye viszont jelentős, például 300 EJ/év lehet. A cikkek nem emelik ki a költségeket, csak potenciálokat. A potenciálok nagyban függenek a technológiai megoldásoktól és a környezeti korlátoktól.",
+   "ellentmondasok": "Nincs ellentmondás a cikkek között, mivel mind a potenciálokat, mind az energiaigényt külön-külön vizsgálják."
   },
   "allitasok": [
    {
@@ -538,9 +538,9 @@
     "felso": 3.6,
     "egyseg": "GtCO2/év",
     "szo_szerinti_idezet": "0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation",
-    "vizsgalat_tipusa": "terepkiserlet",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
     "regio": "globális",
-    "korlatok": "sustainable",
+    "korlatok": "sustainably",
     "statusz": "ellenorizve",
     "indokok": [],
     "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
@@ -555,9 +555,9 @@
     "felso": 5,
     "egyseg": "GtCO2/év",
     "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for BECCS",
-    "vizsgalat_tipusa": "terepkiserlet",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
     "regio": "globális",
-    "korlatok": "sustainable",
+    "korlatok": "sustainably",
     "statusz": "ellenorizve",
     "indokok": [],
     "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
@@ -572,9 +572,9 @@
     "felso": 2,
     "egyseg": "GtCO2/év",
     "szo_szerinti_idezet": "0.5–2 GtCO 2 yr −1 for biochar",
-    "vizsgalat_tipusa": "terepkiserlet",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
     "regio": "globális",
-    "korlatok": "sustainable",
+    "korlatok": "sustainably",
     "statusz": "ellenorizve",
     "indokok": [],
     "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
@@ -589,9 +589,9 @@
     "felso": 4,
     "egyseg": "GtCO2/év",
     "szo_szerinti_idezet": "2–4 GtCO 2 yr −1 for enhanced weathering",
-    "vizsgalat_tipusa": "terepkiserlet",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
     "regio": "globális",
-    "korlatok": "sustainable",
+    "korlatok": "sustainably",
     "statusz": "ellenorizve",
     "indokok": [],
     "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
@@ -606,9 +606,9 @@
     "felso": 5,
     "egyseg": "GtCO2/év",
     "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for DACCS",
-    "vizsgalat_tipusa": "terepkiserlet",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
     "regio": "globális",
-    "korlatok": "sustainable",
+    "korlatok": "sustainably",
     "statusz": "ellenorizve",
     "indokok": [],
     "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
@@ -623,9 +623,9 @@
     "felso": 5,
     "egyseg": "GtCO2/év",
     "szo_szerinti_idezet": "up to 5 GtCO 2 yr −1 for soil carbon sequestration",
-    "vizsgalat_tipusa": "terepkiserlet",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
     "regio": "globális",
-    "korlatok": "sustainable",
+    "korlatok": "sustainably",
     "statusz": "elutasitva",
     "indokok": [
      "A(z) alsó (0) nem szerepel az idézetben."
@@ -642,9 +642,9 @@
     "felso": 300,
     "egyseg": "EJ/yr",
     "szo_szerinti_idezet": "up to 300 EJ/yr of energy input by 2100",
-    "vizsgalat_tipusa": "terepkiserlet",
+    "vizsgalat_tipusa": "modellezes",
     "regio": "globális",
-    "korlatok": "modellezés",
+    "korlatok": "modell",
     "statusz": "elutasitva",
     "indokok": [
      "A(z) alsó (0) nem szerepel az idézetben.",
@@ -716,11 +716,11 @@
     "bizonyossag": "alacsony"
    }
   },
-  "ai_osszegzes": "A bioszén, a talaj szénmegkötése és a kőzetmállasztás is jelentős potenciált mutatnak. A kérdés az, hogy ezek a módszerek valóban mennyire hatékonyak és költséghatékonyak. A cikkek nem mondják, hogy melyik módszer a legjobb, csak számokat adnak.",
-  "ellentmondasok": "Nincs ellentmondás a cikkek között, de a CO2-szűrés közvetlenül a levegőből energiájának költsége nem szerepel a potenciálok között, csak az energiafogyasztás.",
+  "ai_osszegzes": "A cikkek azt mutatják, hogy a levegőből CO2-t eltávolító technológiák (pl. CO2-szűrés közvetlenül a levegőből, erdősítés) globális potenciálja 0,5–5 milliárd tonna CO2/év között mozoghat. A cikkek nem emelik ki a költségeket, csak potenciálokat. A potenciálok nagyban függenek a technológiai megoldásoktól és a környezeti korlátoktól.",
+  "ellentmondasok": "Nincs ellentmondás a cikkek között, mivel mind a potenciálokat, mind az energiaigényt külön-külön vizsgálják.",
   "figyelmeztetes": "Ez egy játékon belüli, automatikusan összeállított irodalmi összefoglaló. Nem helyettesíti a szakértői lektorálást; minden számot az eredeti cikkben érdemes ellenőrizni.",
-  "azonosito": "AETHER-4cd08aad4841b16c",
-  "letrehozva": "2026-11-22T16:08:39+00:00"
+  "azonosito": "AETHER-4d01c3d2f46a3cda",
+  "letrehozva": "2026-11-22T17:03:09+00:00"
  },
  "javaslatok": [
   {
@@ -738,11 +738,11 @@
    "forrasok_szama": 1,
    "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
    "jelentes": "Évente kb. 3,6 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 9%-a.",
-   "publikacio": "AETHER-4cd08aad4841b16c",
-   "kar": "cdr:erdosites",
-   "kar_ertek": 3.6,
-   "kar_nev": "Erdősítés",
-   "megjegyzes": "",
+   "publikacio": "AETHER-4d01c3d2f46a3cda",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "A tervedbe akkor kerül, ha a saját témáját kutatod ki: Erdősítés.",
    "alkategoria_nev": "Erdősítés"
   },
   {
@@ -760,11 +760,11 @@
    "forrasok_szama": 1,
    "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
    "jelentes": "Évente kb. 5 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 12%-a.",
-   "publikacio": "AETHER-4cd08aad4841b16c",
-   "kar": "cdr:beccs",
-   "kar_ertek": 5.0,
-   "kar_nev": "Növényi energia, a CO2 föld alá zárásával",
-   "megjegyzes": "",
+   "publikacio": "AETHER-4d01c3d2f46a3cda",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "A tervedbe akkor kerül, ha a saját témáját kutatod ki: Növényi energia, a CO2 föld alá zárásával.",
    "alkategoria_nev": "Növényi energia, a CO2 föld alá zárásával"
   },
   {
@@ -782,11 +782,11 @@
    "forrasok_szama": 1,
    "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
    "jelentes": "Évente kb. 2 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 5%-a.",
-   "publikacio": "AETHER-4cd08aad4841b16c",
-   "kar": "cdr:bioszen",
-   "kar_ertek": 2.0,
-   "kar_nev": "Bioszén a talajba",
-   "megjegyzes": "",
+   "publikacio": "AETHER-4d01c3d2f46a3cda",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "A tervedbe akkor kerül, ha a saját témáját kutatod ki: Bioszén a talajba.",
    "alkategoria_nev": "Bioszén a talajba"
   },
   {
@@ -804,11 +804,11 @@
    "forrasok_szama": 1,
    "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
    "jelentes": "Évente kb. 4 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 9%-a.",
-   "publikacio": "AETHER-4cd08aad4841b16c",
-   "kar": "cdr:kozetmallasztas",
-   "kar_ertek": 4.0,
-   "kar_nev": "Kőzetpor a földekre (kőzetmállasztás)",
-   "megjegyzes": "",
+   "publikacio": "AETHER-4d01c3d2f46a3cda",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "A tervedbe akkor kerül, ha a saját témáját kutatod ki: Kőzetpor a földekre (kőzetmállasztás).",
    "alkategoria_nev": "Kőzetpor a földekre (kőzetmállasztás)"
   },
   {
@@ -826,7 +826,7 @@
    "forrasok_szama": 1,
    "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
    "jelentes": "Évente kb. 5 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 12%-a.",
-   "publikacio": "AETHER-4cd08aad4841b16c",
+   "publikacio": "AETHER-4d01c3d2f46a3cda",
    "kar": "cdr:daccs",
    "kar_ertek": 5.0,
    "kar_nev": "CO2-szűrés közvetlenül a levegőből",

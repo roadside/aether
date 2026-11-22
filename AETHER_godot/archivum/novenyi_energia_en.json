@@ -1,0 +1,853 @@
+{
+ "publikacio": {
+  "aether_publikacio_verzio": 1,
+  "kerdes": "How much CO2 can plant-based energy lock underground?",
+  "terv": {
+   "kutatasi_kerdes_pontositva": "How much CO2 can plant-based energy lock underground?",
+   "angol_keresokifejezesek": [
+    "bioenergy with carbon capture and storage BECCS removal potential",
+    "BECCS land use sustainable potential",
+    "negative emissions technologies potentials costs side effects"
+   ],
+   "keresett_parameterek": [
+    "cdr_potencial_gtco2_ev",
+    "cdr_koltseg_usd_tco2"
+   ],
+   "megjegyzes": "Előre összeállított kérdés."
+  },
+  "ai": "ollama:qwen3:8b",
+  "cikkek": {
+   "P1": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2804406438",
+    "title": "Negative emissions—Part 2: Costs, potentials and side effects",
+    "year": 2018,
+    "doi": "10.1088/1748-9326/aabf9f",
+    "abstract": "The most recent IPCC assessment has shown an important role for negative emissions technologies (NETs) in limiting global warming to 2 °C cost-effectively. However, a bottom-up, systematic, reproducible, and transparent literature assessment of the different options to remove CO 2 from the atmosphere is currently missing. In part 1 of this three-part review on NETs, we assemble a comprehensive set of the relevant literature so far published, focusing on seven technologies: bioenergy with carbon capture and storage (BECCS), afforestation and reforestation, direct air carbon capture and storage (DACCS), enhanced weathering, ocean fertilisation, biochar, and soil carbon sequestration. In this part, part 2 of the review, we present estimates of costs, potentials, and side-effects for these technologies, and qualify them with the authors' assessment. Part 3 reviews the innovation and scaling challenges that must be addressed to realise NETs deployment as a viable climate mitigation strategy. Based on a systematic review of the literature, our best estimates for sustainable global NET potentials in 2050 are 0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation, 0.5–5 GtCO 2 yr −1 for BECCS, 0.5–2 GtCO 2 yr −1 for biochar, 2–4 GtCO 2 yr −1 for enhanced weathering, 0.5–5 GtCO 2 yr −1 for DACCS, and up to 5 GtCO 2 yr −1 for soil carbon sequestration. Costs vary widely across the technologies, as do their permanency and cumulative potentials beyond 2050. It is unlikely that a single NET will be able to sustainably meet the rates of carbon uptake described in integrated assessment pathways consistent with 1.5 °C of global warming.",
+    "venue": "Environmental Research Letters",
+    "authors": [
+     "Sabine Fuss",
+     "William F. Lamb",
+     "Max Callaghan",
+     "Jérôme Hilaire",
+     "Felix Creutzig",
+     "Thorben Amann",
+     "Tim Beringer",
+     "Wagner de Oliveira Garcia",
+     "Jens Hartmann",
+     "Tarun M. Khanna",
+     "Gunnar Luderer",
+     "Gregory F. Nemet",
+     "Joeri Rogelj",
+     "Pete Smith",
+     "José Luis Vicente‐Vicente",
+     "Jennifer L. Wilcox",
+     "Maria del Mar Zamora Dominguez",
+     "Jan Christoph Minx"
+    ],
+    "cited_by": 1853,
+    "url": "https://iopscience.iop.org/article/10.1088/1748-9326/aabf9f/pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "AT",
+     "CH",
+     "DE",
+     "GB",
+     "US"
+    ],
+    "intezmenyek": {
+     "DE": [
+      "Mercator Research Institute on Global Commons and Climate Change",
+      "Potsdam Institute for Climate Impact Research",
+      "Technische Universität Berlin",
+      "Universität Hamburg"
+     ],
+     "GB": [
+      "University of Leeds",
+      "University of Aberdeen"
+     ],
+     "US": [
+      "University of Wisconsin–Madison",
+      "Colorado School of Mines"
+     ],
+     "AT": [
+      "International Institute for Applied Systems Analysis"
+     ],
+     "CH": [
+      "ETH Zurich",
+      "Institute for Atmospheric and Climate Science"
+     ]
+    }
+   },
+   "P2": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2144147896",
+    "title": "Integrating Global Climate Change Mitigation Goals with Other Sustainability Objectives: A Synthesis",
+    "year": 2015,
+    "doi": "10.1146/annurev-environ-021113-095626",
+    "abstract": "Achieving a truly sustainable energy transition requires progress across multiple dimensions beyond climate change mitigation goals. This article reviews and synthesizes results from disparate strands of literature on the coeffects of mitigation to inform climate policy choices at different governance levels. The literature documents many potential cobenefits of mitigation for nonclimate objectives, such as human health and energy security, but little is known about their overall welfare implications. Integrated model studies highlight that climate policies as part of well-designed policy packages reduce the overall cost of achieving multiple sustainability objectives. The incommensurability and uncertainties around the quantification of coeffects become, however, increasingly pervasive the more the perspective shifts from sectoral and local to economy wide and global, the more objectives are analyzed, and the more the results are expressed in economic rather than nonmonetary terms. Different strings of evidence highlight the role and importance of energy demand reductions for realizing synergies across multiple sustainability objectives.",
+    "venue": "Annual Review of Environment and Resources",
+    "authors": [
+     "Christoph von Stechow",
+     "David L. McCollum",
+     "Keywan Riahi",
+     "Jan Christoph Minx",
+     "Elmar Kriegler",
+     "Detlef Peter van Vuuren",
+     "Jessica Jewell",
+     "Carmenza Robledo‐Abad",
+     "Edgar G. Hertwich",
+     "Massimo Tavoni",
+     "Sevastianos Mirasgedis",
+     "Oliver Lah",
+     "Joyashree Roy",
+     "Yacob Mulugetta",
+     "Navroz K. Dubash",
+     "Johannes Bollen",
+     "Diána Ürge-Vorsatz",
+     "Ottmar Edenhofer"
+    ],
+    "cited_by": 164,
+    "url": "https://www.annualreviews.org/doi/pdf/10.1146/annurev-environ-021113-095626",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "review",
+    "orszagok": [
+     "AT",
+     "CH",
+     "DE",
+     "GB",
+     "GR",
+     "HU",
+     "IN",
+     "IT",
+     "NL",
+     "NO",
+     "US"
+    ],
+    "intezmenyek": {
+     "DE": [
+      "Mercator Research Institute on Global Commons and Climate Change",
+      "Technische Universität Berlin",
+      "Potsdam Institute for Climate Impact Research",
+      "Hertie School",
+      "Wuppertal Institute for Climate, Environment and Energy"
+     ],
+     "AT": [
+      "International Institute for Applied Systems Analysis",
+      "Graz University of Technology",
+      "Central European University"
+     ],
+     "NL": [
+      "Netherlands Environmental Assessment Agency",
+      "Utrecht University",
+      "CPB Netherlands Bureau for Economic Policy Analysis"
+     ],
+     "CH": [
+      "ETH Zurich"
+     ],
+     "NO": [
+      "Norwegian University of Science and Technology"
+     ],
+     "US": [
+      "Princeton University",
+      "High Meadows Environmental Institute"
+     ],
+     "IT": [
+      "Fondazione Eni Enrico Mattei",
+      "Politecnico di Milano"
+     ],
+     "GR": [
+      "National Observatory of Athens"
+     ],
+     "IN": [
+      "Jadavpur University",
+      "Centre for Policy Research"
+     ],
+     "GB": [
+      "University College London"
+     ],
+     "HU": [
+      "Central European University - Budapest Campus"
+     ]
+    }
+   },
+   "P3": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W3131956693",
+    "title": "Demand-side solutions to climate change mitigation consistent with high levels of well-being",
+    "year": 2021,
+    "doi": "10.1038/s41558-021-01219-y",
+    "abstract": "Mitigation solutions are often evaluated in terms of costs and greenhouse gas reduction potentials, missing out on the consideration of direct effects on human well-being. Here, we systematically assess the mitigation potential of demand-side options categorized into avoid, shift and improve, and their human well-being links. We show that these options, bridging socio-behavioural, infrastructural and technological domains, can reduce counterfactual sectoral emissions by 40–80% in end-use sectors. Based on expert judgement and an extensive literature database, we evaluate 306 combinations of well-being outcomes and demand-side options, finding largely beneficial effects in improvement in well-being (79% positive, 18% neutral and 3% negative), even though we find low confidence on the social dimensions of well-being. Implementing such nuanced solutions is based axiomatically on an understanding of malleable rather than fixed preferences, and procedurally on changing infrastructures and choice architectures. Results demonstrate the high mitigation potential of demand-side mitigation options that are synergistic with well-being.",
+    "venue": "Nature Climate Change",
+    "authors": [
+     "Felix Creutzig",
+     "Leila Niamir",
+     "Xuemei Bai",
+     "Max Callaghan",
+     "Jonathan M. Cullen",
+     "Julio Díaz‐José",
+     "Maria Josefina Figueroa",
+     "Arnulf Grübler",
+     "William F. Lamb",
+     "Adrian Leip",
+     "Eric R. Masanet",
+     "Érika Mata",
+     "Linus Mattauch",
+     "Jan Christoph Minx",
+     "Sebastian Mirasgedis",
+     "Yacob Mulugetta",
+     "Sudarmanto Budi Nugroho",
+     "Minal Pathak",
+     "Patrícia E. Perkins",
+     "Joyashree Roy",
+     "Stéphane de la Rue du Can",
+     "Yamina Saheb",
+     "Shreya Some",
+     "Linda Steg",
+     "Julia  K. Steinberger",
+     "Diána Ürge-Vorsatz"
+    ],
+    "cited_by": 785,
+    "url": "https://www.nature.com/articles/s41558-021-01219-y.pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "AT",
+     "AU",
+     "CA",
+     "CH",
+     "DE",
+     "DK",
+     "GB",
+     "GR",
+     "HU",
+     "IN",
+     "IT",
+     "JP",
+     "MX",
+     "NL",
+     "SE",
+     "TH",
+     "US"
+    ],
+    "intezmenyek": {
+     "DE": [
+      "Mercator Research Institute on Global Commons and Climate Change",
+      "Technische Universität Berlin",
+      "Potsdam Institute for Climate Impact Research"
+     ],
+     "AU": [
+      "Australian National University"
+     ],
+     "GB": [
+      "University of Leeds",
+      "University of Cambridge",
+      "University of Oxford",
+      "University College London"
+     ],
+     "MX": [
+      "Universidad Veracruzana"
+     ],
+     "DK": [
+      "Copenhagen Business School"
+     ],
+     "AT": [
+      "International Institute for Applied Systems Analysis"
+     ],
+     "IT": [
+      "Joint Research Centre"
+     ],
+     "US": [
+      "University of California, Santa Barbara",
+      "Lawrence Berkeley National Laboratory"
+     ],
+     "SE": [
+      "IVL Swedish Environmental Research Institute"
+     ],
+     "GR": [
+      "National Observatory of Athens"
+     ],
+     "JP": [
+      "Institute for Global Environmental Strategies"
+     ],
+     "IN": [
+      "Ahmedabad University",
+      "Jadavpur University"
+     ],
+     "CA": [
+      "York University"
+     ],
+     "TH": [
+      "Asian Institute of Technology"
+     ],
+     "CH": [
+      "University of Lausanne"
+     ],
+     "NL": [
+      "University of Groningen"
+     ],
+     "HU": [
+      "Central European University - Budapest Campus"
+     ]
+    }
+   },
+   "P4": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W4220846212",
+    "title": "Carbon dioxide removal potential from decentralised bioenergy with carbon capture and storage (BECCS) and the relevance of operational choices",
+    "year": 2022,
+    "doi": "10.1016/j.biombioe.2022.106406",
+    "abstract": "Bioenergy with carbon capture and storage (BECCS) technology is expected to support net-zero targets by supplying low carbon energy while providing carbon dioxide removal (CDR). BECCS is estimated to deliver 20 to 70 MtCO2 annual negative emissions by 2050 in the UK, despite there are currently no BECCS operating facility. This research is modelling and demonstrating the flexibility, scalability and attainable immediate application of BECCS. The CDR potential for two out of three BECCS pathways considered by the Intergovernmental Panel on Climate Change (IPCC) scenarios were quantified (i) modular-scale CHP process with post-combustion CCS utilising wheat straw and (ii) hydrogen production in a small-scale gasifier with pre-combustion CCS utilising locally sourced waste wood. Process modelling and lifecycle assessment were used, including a whole supply chain analysis. The investigated BECCS pathways could annually remove between −0.8 and −1.4 tCO2e tbiomass−1 depending on operational decisions. Using all the available wheat straw and waste wood in the UK, a joint CDR capacity for both systems could reach about 23% of the UK's CDR minimum target set for BECCS. Policy frameworks prioritising carbon efficiencies can shape those operational decisions and strongly impact on the overall energy and CDR performance of a BECCS system, but not necessarily maximising the trade-offs between biomass use, energy performance and CDR. A combination of different BECCS pathways will be necessary to reach net-zero targets. Decentralised BECCS deployment could support flexible approaches allowing to maximise positive system trade-offs, enable regional biomass utilisation and provide local energy supply to remote areas.",
+    "venue": "Biomass and Bioenergy",
+    "authors": [
+     "Alberto Almena",
+     "Patricia Thornley",
+     "Katie Chong",
+     "Mirjam Röder"
+    ],
+    "cited_by": 393,
+    "url": "https://www.sciencedirect.com/science/article/pii/S0961953422000678/pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "GB"
+    ],
+    "intezmenyek": {
+     "GB": [
+      "Aston University"
+     ]
+    }
+   },
+   "P5": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W4401644379",
+    "title": "Biomass Energy and Biofuels: Perspective, Potentials, and Challenges in the Energy Transition",
+    "year": 2024,
+    "doi": "10.3390/su16167036",
+    "abstract": "Circular economy and sustainability are pivotal concepts in the discourse on the synergies between economic growth and environmental impact. As resource scarcity and environmental degradation intensify, advancements in energy conversion technologies become crucial for a sustainable economic model. Currently dependent on fossil fuels, the global economy must shift to a sustainable framework focused on bioenergy. Biomass, a renewable energy source, offers a promising solution by converting waste into valuable resources, reducing waste and environmental impact, and creating economic opportunities. Biofuels and bioproducts can meet energy needs while reducing greenhouse gas emissions and addressing global warming. Recent advances in biofuels, supported by initiatives and policies, promote more sustainable energy production. This paper aims to highlight the potential of biomass in meeting contemporary energy demand and provides an overview of biofuels and their production as a renewable alternative to fossil fuels. It also explores the future of agriculture and energy sectors, emphasizing global energy and environmental challenges and the competition between food and fuel feedstocks.",
+    "venue": "Sustainability",
+    "authors": [
+     "Debora Mignogna",
+     "Márta Szabó",
+     "Paolo Ceci",
+     "Pasquale Avino"
+    ],
+    "cited_by": 318,
+    "url": "https://www.mdpi.com/2071-1050/16/16/7036/pdf?version=1723801777",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "HU",
+     "IT"
+    ],
+    "intezmenyek": {
+     "HU": [
+      "Magyar Agrár- és Élettudományi Egyetem"
+     ],
+     "IT": [
+      "University of Molise",
+      "Institute of Atmospheric Pollution Research"
+     ]
+    }
+   },
+   "P6": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2604560350",
+    "title": "Can BECCS deliver sustainable and resource efficient negative emissions?",
+    "year": 2017,
+    "doi": "10.1039/c7ee00465f",
+    "abstract": "Negative emissions technologies (NETs) in general and bioenergy with CO 2 capture and storage (BECCS) in particular are commonly regarded as vital yet controversial to meeting our climate goals. In this contribution we show how the sustainability and carbon efficiency, or otherwise, of BECCS depends entirely on the choices made throughout the BECCS supply chain.",
+    "venue": "Energy & Environmental Science",
+    "authors": [
+     "Mathilde Fajardy",
+     "Niall Mac Dowell"
+    ],
+    "cited_by": 462,
+    "url": "https://pubs.rsc.org/en/content/articlepdf/2017/ee/c7ee00465f",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "GB"
+    ],
+    "intezmenyek": {
+     "GB": [
+      "Imperial College London"
+     ]
+    }
+   },
+   "P7": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2946015231",
+    "title": "Mitigation potential and environmental impact of centralized versus distributed BECCS with domestic biomass production in Great Britain",
+    "year": 2019,
+    "doi": "10.1111/gcbb.12630",
+    "abstract": "New contingency policy plans are expected to be published by the United Kingdom government to set out urgent actions, such as carbon capture and storage, greenhouse gas removal and the use of sustainable bioenergy to meet the greenhouse gas reduction targets of the 4th and 5th Carbon Budgets. In this study, we identify two plausible bioenergy production pathways for bioenergy with carbon capture and storage (BECCS) based on centralized and distributed energy systems to show what BECCS could look like if deployed by 2050 in Great Britain. The extent of agricultural land available to sustainably produce biomass feedstock in the centralized and distributed energy systems is about 0.39 and 0.5 Mha, providing approximately 5.7 and 7.3 MtDM/year of biomass respectively. If this land‐use change occurred, bioenergy crops would contribute to reduced agricultural soil GHG emission by 9 and 11 /year in the centralized and distributed energy systems respectively. In addition, bioenergy crops can contribute to reduce agricultural soil ammonia emissions and water pollution from soil nitrate leaching, and to increase soil organic carbon stocks. The technical mitigation potentials from BECCS lead to projected CO2 reductions of approximately 18 and 23 /year from the centralized and distributed energy systems respectively. This suggests that the domestic supply of sustainable biomass would not allow the emission reduction target of 50 /year from BECCS to be met. To meet that target, it would be necessary to produce solid biomass from forest systems on 0.59 or 0.49 Mha, or alternatively to import 8 or 6.6 MtDM/year of biomass for the centralized and distributed energy system respectively. The spatially explicit results of this study can serve to identify the regional differences in the potential capture of CO2 from BECCS, providing the basis for the development of onshore CO2 transport infrastructures.",
+    "venue": "GCB Bioenergy",
+    "authors": [
+     "Fabrizio Albanito",
+     "Astley Hastings",
+     "Nuala Fitton",
+     "Mark Richards",
+     "Mike Martin",
+     "Niall Mac Dowell",
+     "D. A. Bell",
+     "Simon C. Taylor",
+     "Isabela Butnar",
+     "Pei‐Hao Li",
+     "Raphael Slade",
+     "Pete Smith"
+    ],
+    "cited_by": 313,
+    "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/gcbb.12630",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "GB"
+    ],
+    "intezmenyek": {
+     "GB": [
+      "University of Aberdeen",
+      "Imperial College London",
+      "Loughborough University",
+      "University College London",
+      "Energy Institute"
+     ]
+    }
+   },
+   "P8": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2916400484",
+    "title": "The mutual dependence of negative emission technologies and energy systems",
+    "year": 2019,
+    "doi": "10.1039/c8ee03682a",
+    "abstract": "While a rapid decommissioning of fossil fuel technologies deserves priority, most climate stabilization scenarios suggest that negative emission technologies (NETs) are required to keep global warming well below 2 °C.",
+    "venue": "Energy & Environmental Science",
+    "authors": [
+     "Felix Creutzig",
+     "Christian Breyer",
+     "Jérôme Hilaire",
+     "Jan Christoph Minx",
+     "Glen P. Peters",
+     "Robert H. Socolow"
+    ],
+    "cited_by": 254,
+    "url": "https://pubs.rsc.org/en/content/articlepdf/2019/ee/c8ee03682a",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "DE",
+     "FI",
+     "GB",
+     "US"
+    ],
+    "intezmenyek": {
+     "DE": [
+      "Mercator Research Institute on Global Commons and Climate Change",
+      "Technische Universität Berlin",
+      "Leibniz Association",
+      "Potsdam Institute for Climate Impact Research"
+     ],
+     "FI": [
+      "Lappeenranta-Lahti University of Technology"
+     ],
+     "GB": [
+      "University of Leeds"
+     ],
+     "US": [
+      "Princeton University"
+     ]
+    }
+   }
+  },
+  "ai_nyers_kivonat": {
+   "allitasok": [
+    {
+     "cikk_azonosito": "P1",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "afforestation and reforestation",
+     "ertek": 3.6,
+     "also": 0.5,
+     "felso": 3.6,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "globális",
+     "korlatok": "sustainableness"
+    },
+    {
+     "cikk_azonosito": "P1",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "BECCS",
+     "ertek": 5,
+     "also": 0.5,
+     "felso": 5,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for BECCS",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "globális",
+     "korlatok": "sustainableness"
+    },
+    {
+     "cikk_azonosito": "P1",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "biochar",
+     "ertek": 2,
+     "also": 0.5,
+     "felso": 2,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–2 GtCO 2 yr −1 for biochar",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "globális",
+     "korlatok": "sustainableness"
+    },
+    {
+     "cikk_azonosito": "P1",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "enhanced weathering",
+     "ertek": 4,
+     "also": 2,
+     "felso": 4,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "2–4 GtCO 2 yr −1 for enhanced weathering",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "globális",
+     "korlatok": "sustainableness"
+    },
+    {
+     "cikk_azonosito": "P1",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "DACCS",
+     "ertek": 5,
+     "also": 0.5,
+     "felso": 5,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for DACCS",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "globális",
+     "korlatok": "sustainableness"
+    },
+    {
+     "cikk_azonosito": "P1",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "soil carbon sequestration",
+     "ertek": 5,
+     "also": 0,
+     "felso": 5,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "up to 5 GtCO 2 yr −1 for soil carbon sequestration",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "globális",
+     "korlatok": "sustainableness"
+    }
+   ],
+   "osszegzes": "The study estimates the potential of various CO2 removal methods globally. Afforestation and reforestation could remove 0.5–3.6 GtCO2/yr, BECCS 0.5–5 GtCO2/yr, biochar 0.5–2 GtCO2/yr, enhanced weathering 2–4 GtCO2/yr, DACCS 0.5–5 GtCO2/yr, and soil carbon sequestration up to 5 GtCO2/yr. These are all potential ranges, not guaranteed outcomes. The study does not provide cost data for these methods.",
+   "ellentmondasok": "No contradictions are reported in the study."
+  },
+  "allitasok": [
+   {
+    "cikk_azonosito": "P1",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "afforestation and reforestation",
+    "ertek": 3.6,
+    "also": 0.5,
+    "felso": 3.6,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "globális",
+    "korlatok": "sustainableness",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P1",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "BECCS",
+    "ertek": 5,
+    "also": 0.5,
+    "felso": 5,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for BECCS",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "globális",
+    "korlatok": "sustainableness",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P1",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "biochar",
+    "ertek": 2,
+    "also": 0.5,
+    "felso": 2,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–2 GtCO 2 yr −1 for biochar",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "globális",
+    "korlatok": "sustainableness",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P1",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "enhanced weathering",
+    "ertek": 4,
+    "also": 2,
+    "felso": 4,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "2–4 GtCO 2 yr −1 for enhanced weathering",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "globális",
+    "korlatok": "sustainableness",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P1",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "DACCS",
+    "ertek": 5,
+    "also": 0.5,
+    "felso": 5,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for DACCS",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "globális",
+    "korlatok": "sustainableness",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P1",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "soil carbon sequestration",
+    "ertek": 5,
+    "also": 0,
+    "felso": 5,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "up to 5 GtCO 2 yr −1 for soil carbon sequestration",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "globális",
+    "korlatok": "sustainableness",
+    "statusz": "elutasitva",
+    "indokok": [
+     "A(z) alsó (0) nem szerepel az idézetben."
+    ],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   }
+  ],
+  "osszesitett_parameterek": {
+   "cdr_potencial_gtco2_ev:afforestation and reforestation": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "afforestation and reforestation",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 3.6,
+    "tartomany": [
+     0.5,
+     3.6
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:beccs": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "beccs",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 5.0,
+    "tartomany": [
+     0.5,
+     5
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:biochar": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "biochar",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 2.0,
+    "tartomany": [
+     0.5,
+     2
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:enhanced weathering": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "enhanced weathering",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 4.0,
+    "tartomany": [
+     2,
+     4
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:daccs": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "daccs",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 5.0,
+    "tartomany": [
+     0.5,
+     5
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   }
+  },
+  "ai_osszegzes": "The study estimates the potential of various CO2 removal methods globally. Afforestation and reforestation could remove 0.5–3.6 GtCO2/yr, BECCS 0.5–5 GtCO2/yr, biochar 0.5–2 GtCO2/yr, enhanced weathering 2–4 GtCO2/yr, DACCS 0.5–5 GtCO2/yr, and soil carbon sequestration up to 5 GtCO2/yr. These are all potential ranges, not guaranteed outcomes. The study does not provide cost data for these methods.",
+  "ellentmondasok": "No contradictions are reported in the study.",
+  "figyelmeztetes": "Ez egy játékon belüli, automatikusan összeállított irodalmi összefoglaló. Nem helyettesíti a szakértői lektorálást; minden számot az eredeti cikkben érdemes ellenőrizni.",
+  "azonosito": "AETHER-6dfa51bfb8adb14b",
+  "letrehozva": "2026-11-22T17:17:57+00:00"
+ },
+ "javaslatok": [
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:afforestation and reforestation",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "afforestation and reforestation",
+   "ertek": 3.6,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    0.5,
+    3.6
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 3.6 billion tonnes of CO2 a year. That is about 9% of today's global emissions.",
+   "publikacio": "AETHER-6dfa51bfb8adb14b",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "To use this in your plan, research its own topic: Afforestation.",
+   "alkategoria_nev": "Afforestation"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:beccs",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "beccs",
+   "ertek": 5.0,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    0.5,
+    5
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 5 billion tonnes of CO2 a year. That is about 12% of today's global emissions.",
+   "publikacio": "AETHER-6dfa51bfb8adb14b",
+   "kar": "cdr:beccs",
+   "kar_ertek": 5.0,
+   "kar_nev": "Bioenergy + carbon storage",
+   "megjegyzes": "",
+   "alkategoria_nev": "Bioenergy + carbon storage"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:biochar",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "biochar",
+   "ertek": 2.0,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    0.5,
+    2
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 2 billion tonnes of CO2 a year. That is about 5% of today's global emissions.",
+   "publikacio": "AETHER-6dfa51bfb8adb14b",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "To use this in your plan, research its own topic: Biochar.",
+   "alkategoria_nev": "Biochar"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:enhanced weathering",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "enhanced weathering",
+   "ertek": 4.0,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    2,
+    4
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 4 billion tonnes of CO2 a year. That is about 9% of today's global emissions.",
+   "publikacio": "AETHER-6dfa51bfb8adb14b",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "To use this in your plan, research its own topic: Enhanced rock weathering.",
+   "alkategoria_nev": "Enhanced rock weathering"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:daccs",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "daccs",
+   "ertek": 5.0,
+   "egyseg": "GtCO2/yr",
+   "tartomany": [
+    0.5,
+    5
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Weak evidence: only one source. Worth researching further.",
+   "forrasok_szama": 1,
+   "nev": "How much CO2 it could remove from the air each year",
+   "jelentes": "It could remove about 5 billion tonnes of CO2 a year. That is about 12% of today's global emissions.",
+   "publikacio": "AETHER-6dfa51bfb8adb14b",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "To use this in your plan, research its own topic: Direct air capture.",
+   "alkategoria_nev": "Direct air capture"
+  }
+ ],
+ "osszefoglalo": {
+  "cikkek": 8,
+  "allitasok": 6,
+  "ellenorizve": 5,
+  "elutasitva": 1,
+  "orszag": "HU",
+  "hazai": 3
+ },
+ "archivum": {
+  "datum": "2026-11-22",
+  "ai": "ollama qwen3:8b"
+ }
+}

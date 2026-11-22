@@ -1,0 +1,1013 @@
+{
+ "publikacio": {
+  "aether_publikacio_verzio": 1,
+  "kerdes": "Mennyit segít a kőzetmállasztás?",
+  "terv": {
+   "kutatasi_kerdes_pontositva": "Mennyit segít a kőzetmállasztás?",
+   "angol_keresokifejezesek": [
+    "enhanced rock weathering carbon dioxide removal potential",
+    "enhanced weathering croplands global potential",
+    "negative emissions technologies potentials costs side effects"
+   ],
+   "keresett_parameterek": [
+    "cdr_potencial_gtco2_ev",
+    "cdr_koltseg_usd_tco2"
+   ],
+   "megjegyzes": "Előre összeállított kérdés."
+  },
+  "ai": "ollama:qwen3:8b",
+  "cikkek": {
+   "P1": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2804406438",
+    "title": "Negative emissions—Part 2: Costs, potentials and side effects",
+    "year": 2018,
+    "doi": "10.1088/1748-9326/aabf9f",
+    "abstract": "The most recent IPCC assessment has shown an important role for negative emissions technologies (NETs) in limiting global warming to 2 °C cost-effectively. However, a bottom-up, systematic, reproducible, and transparent literature assessment of the different options to remove CO 2 from the atmosphere is currently missing. In part 1 of this three-part review on NETs, we assemble a comprehensive set of the relevant literature so far published, focusing on seven technologies: bioenergy with carbon capture and storage (BECCS), afforestation and reforestation, direct air carbon capture and storage (DACCS), enhanced weathering, ocean fertilisation, biochar, and soil carbon sequestration. In this part, part 2 of the review, we present estimates of costs, potentials, and side-effects for these technologies, and qualify them with the authors' assessment. Part 3 reviews the innovation and scaling challenges that must be addressed to realise NETs deployment as a viable climate mitigation strategy. Based on a systematic review of the literature, our best estimates for sustainable global NET potentials in 2050 are 0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation, 0.5–5 GtCO 2 yr −1 for BECCS, 0.5–2 GtCO 2 yr −1 for biochar, 2–4 GtCO 2 yr −1 for enhanced weathering, 0.5–5 GtCO 2 yr −1 for DACCS, and up to 5 GtCO 2 yr −1 for soil carbon sequestration. Costs vary widely across the technologies, as do their permanency and cumulative potentials beyond 2050. It is unlikely that a single NET will be able to sustainably meet the rates of carbon uptake described in integrated assessment pathways consistent with 1.5 °C of global warming.",
+    "venue": "Environmental Research Letters",
+    "authors": [
+     "Sabine Fuss",
+     "William F. Lamb",
+     "Max Callaghan",
+     "Jérôme Hilaire",
+     "Felix Creutzig",
+     "Thorben Amann",
+     "Tim Beringer",
+     "Wagner de Oliveira Garcia",
+     "Jens Hartmann",
+     "Tarun M. Khanna",
+     "Gunnar Luderer",
+     "Gregory F. Nemet",
+     "Joeri Rogelj",
+     "Pete Smith",
+     "José Luis Vicente‐Vicente",
+     "Jennifer L. Wilcox",
+     "Maria del Mar Zamora Dominguez",
+     "Jan Christoph Minx"
+    ],
+    "cited_by": 1853,
+    "url": "https://iopscience.iop.org/article/10.1088/1748-9326/aabf9f/pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "AT",
+     "CH",
+     "DE",
+     "GB",
+     "US"
+    ],
+    "intezmenyek": {
+     "DE": [
+      "Mercator Research Institute on Global Commons and Climate Change",
+      "Potsdam Institute for Climate Impact Research",
+      "Technische Universität Berlin",
+      "Universität Hamburg"
+     ],
+     "GB": [
+      "University of Leeds",
+      "University of Aberdeen"
+     ],
+     "US": [
+      "University of Wisconsin–Madison",
+      "Colorado School of Mines"
+     ],
+     "AT": [
+      "International Institute for Applied Systems Analysis"
+     ],
+     "CH": [
+      "ETH Zurich",
+      "Institute for Atmospheric and Climate Science"
+     ]
+    }
+   },
+   "P2": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2605333753",
+    "title": "Potential of global croplands and bioenergy crops for climate change mitigation through deployment for enhanced weathering",
+    "year": 2017,
+    "doi": "10.1098/rsbl.2016.0714",
+    "abstract": "Conventional row crop agriculture for both food and fuel is a source of carbon dioxide (CO 2 ) and nitrous oxide (N 2 O) to the atmosphere, and intensifying production on agricultural land increases the potential for soil C loss and soil acidification due to fertilizer use. Enhanced weathering (EW) in agricultural soils—applying crushed silicate rock as a soil amendment—is a method for combating global climate change while increasing nutrient availability to plants. EW uses land that is already producing food and fuel to sequester carbon (C), and reduces N 2 O loss through pH buffering. As biofuel use increases, EW in bioenergy crops offers the opportunity to sequester CO 2 while reducing fossil fuel combustion. Uncertainties remain in the long-term effects and global implications of large-scale efforts to directly manipulate Earth's atmospheric CO 2 composition, but EW in agricultural lands is an opportunity to employ these soils to sequester atmospheric C while benefitting crop production and the global climate.",
+    "venue": "Biology Letters",
+    "authors": [
+     "I. B. Kantola",
+     "Michael D. Masters",
+     "David J. Beerling",
+     "Stephen P. Long",
+     "Evan H. DeLucia"
+    ],
+    "cited_by": 187,
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5414685/",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "review",
+    "orszagok": [
+     "GB",
+     "US"
+    ],
+    "intezmenyek": {
+     "GB": [
+      "University of Sheffield"
+     ],
+     "US": [
+      "University of Illinois Urbana-Champaign",
+      "Carl R. Woese Institute for Genomic Biology"
+     ]
+    }
+   },
+   "P3": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2276876089",
+    "title": "Biofuels and Their Co-Products as Livestock Feed: Global Economic and Environmental Implications",
+    "year": 2016,
+    "doi": "10.3390/molecules21030285",
+    "abstract": "This review studies biofuel expansion in terms of competition between conventional and advanced biofuels based on bioenergy potential. Production of advanced biofuels is generally more expensive than current biofuels because products are not yet cost competitive. What is overlooked in the discussion about biofuel is the contribution the industry makes to the global animal feed supply and land use for cultivation of feedstocks. The global ethanol industry produces 44 million metric tonnes of high-quality feed, however, the co-products of biodiesel production have a moderate impact on the feed market contributing to just 8-9 million tonnes of protein meal output a year. By economically displacing traditional feed ingredients co-products from biofuel production are an important and valuable component of the biofuels sector and the global feed market. The return of co-products to the feed market has agricultural land use (and GHG emissions) implications as well. The use of co-products generated from grains and oilseeds can reduce net land use by 11% to 40%. The proportion of global cropland used for biofuels is currently some 2% (30-35 million hectares). By adding co-products substituted for grains and oilseeds the land required for cultivation of feedstocks declines to 1.5% of the global crop area.",
+    "venue": "Molecules",
+    "authors": [
+     "József Popp",
+     "Mónika Harangi–Rákos",
+     "Zoltán Gabnai",
+     "Péter Balogh",
+     "Gabriella Antal",
+     "Attila Bai"
+    ],
+    "cited_by": 177,
+    "url": "https://www.mdpi.com/1420-3049/21/3/285/pdf?version=1461574507",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "review",
+    "orszagok": [
+     "HU"
+    ],
+    "intezmenyek": {
+     "HU": [
+      "University of Debrecen"
+     ]
+    }
+   },
+   "P4": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W4307027570",
+    "title": "Nano- to Global-Scale Uncertainties in Terrestrial Enhanced Weathering",
+    "year": 2022,
+    "doi": "10.1021/acs.est.2c03163",
+    "abstract": "Enhanced weathering (EW) is one of the most promising negative emissions technologies urgently needed to limit global warming to at least below 2 °C, a goal recently reaffirmed at the UN Global Climate Change conference (i.e., COP26). EW relies on the accelerated dissolution of crushed silicate rocks applied to soils and is considered a sustainable solution requiring limited technology. While EW has a high theoretical potential of sequestering CO 2, research is still needed to provide accurate estimates of carbon (C) sequestration when applying different silicate materials across distinct climates and major soil types in combination with a variety of plants. Here we elaborate on fundamental advances that must be addressed before EW can be extensively adopted. These include identifying the most suitable environmental conditions, improving estimates of field dissolution rates and efficacy of CO 2 removal, and identifying alternative sources of silicate materials to meet future EW demands. We conclude with considerations on the necessity of integrated modeling–experimental approaches to better coordinate future field experiments and measurements of CO 2 removal, as well as on the importance of seamlessly coordinating EW with cropland and forest management.",
+    "venue": "Environmental Science & Technology",
+    "authors": [
+     "Salvatore Calabrese",
+     "Bastien Wild",
+     "Matteo B. Bertagni",
+     "Ian C. Bourg",
+     "Claire Emily White",
+     "Felipe A. Aburto",
+     "Giuseppe Cipolla",
+     "Leonardo Noto",
+     "Amilcare M Porporato"
+    ],
+    "cited_by": 99,
+    "url": "https://iris.unipa.it/bitstream/10447/572129/3/acs.est.2c03163.pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "review",
+    "orszagok": [
+     "IT",
+     "US"
+    ],
+    "intezmenyek": {
+     "US": [
+      "Texas A&M University",
+      "Princeton University",
+      "High Meadows Environmental Institute"
+     ],
+     "IT": [
+      "University of Palermo"
+     ]
+    }
+   },
+   "P5": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W3131956693",
+    "title": "Demand-side solutions to climate change mitigation consistent with high levels of well-being",
+    "year": 2021,
+    "doi": "10.1038/s41558-021-01219-y",
+    "abstract": "Mitigation solutions are often evaluated in terms of costs and greenhouse gas reduction potentials, missing out on the consideration of direct effects on human well-being. Here, we systematically assess the mitigation potential of demand-side options categorized into avoid, shift and improve, and their human well-being links. We show that these options, bridging socio-behavioural, infrastructural and technological domains, can reduce counterfactual sectoral emissions by 40–80% in end-use sectors. Based on expert judgement and an extensive literature database, we evaluate 306 combinations of well-being outcomes and demand-side options, finding largely beneficial effects in improvement in well-being (79% positive, 18% neutral and 3% negative), even though we find low confidence on the social dimensions of well-being. Implementing such nuanced solutions is based axiomatically on an understanding of malleable rather than fixed preferences, and procedurally on changing infrastructures and choice architectures. Results demonstrate the high mitigation potential of demand-side mitigation options that are synergistic with well-being.",
+    "venue": "Nature Climate Change",
+    "authors": [
+     "Felix Creutzig",
+     "Leila Niamir",
+     "Xuemei Bai",
+     "Max Callaghan",
+     "Jonathan M. Cullen",
+     "Julio Díaz‐José",
+     "Maria Josefina Figueroa",
+     "Arnulf Grübler",
+     "William F. Lamb",
+     "Adrian Leip",
+     "Eric R. Masanet",
+     "Érika Mata",
+     "Linus Mattauch",
+     "Jan Christoph Minx",
+     "Sebastian Mirasgedis",
+     "Yacob Mulugetta",
+     "Sudarmanto Budi Nugroho",
+     "Minal Pathak",
+     "Patrícia E. Perkins",
+     "Joyashree Roy",
+     "Stéphane de la Rue du Can",
+     "Yamina Saheb",
+     "Shreya Some",
+     "Linda Steg",
+     "Julia  K. Steinberger",
+     "Diána Ürge-Vorsatz"
+    ],
+    "cited_by": 785,
+    "url": "https://www.nature.com/articles/s41558-021-01219-y.pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "AT",
+     "AU",
+     "CA",
+     "CH",
+     "DE",
+     "DK",
+     "GB",
+     "GR",
+     "HU",
+     "IN",
+     "IT",
+     "JP",
+     "MX",
+     "NL",
+     "SE",
+     "TH",
+     "US"
+    ],
+    "intezmenyek": {
+     "DE": [
+      "Mercator Research Institute on Global Commons and Climate Change",
+      "Technische Universität Berlin",
+      "Potsdam Institute for Climate Impact Research"
+     ],
+     "AU": [
+      "Australian National University"
+     ],
+     "GB": [
+      "University of Leeds",
+      "University of Cambridge",
+      "University of Oxford",
+      "University College London"
+     ],
+     "MX": [
+      "Universidad Veracruzana"
+     ],
+     "DK": [
+      "Copenhagen Business School"
+     ],
+     "AT": [
+      "International Institute for Applied Systems Analysis"
+     ],
+     "IT": [
+      "Joint Research Centre"
+     ],
+     "US": [
+      "University of California, Santa Barbara",
+      "Lawrence Berkeley National Laboratory"
+     ],
+     "SE": [
+      "IVL Swedish Environmental Research Institute"
+     ],
+     "GR": [
+      "National Observatory of Athens"
+     ],
+     "JP": [
+      "Institute for Global Environmental Strategies"
+     ],
+     "IN": [
+      "Ahmedabad University",
+      "Jadavpur University"
+     ],
+     "CA": [
+      "York University"
+     ],
+     "TH": [
+      "Asian Institute of Technology"
+     ],
+     "CH": [
+      "University of Lausanne"
+     ],
+     "NL": [
+      "University of Groningen"
+     ],
+     "HU": [
+      "Central European University - Budapest Campus"
+     ]
+    }
+   },
+   "P6": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2786586833",
+    "title": "Potential and costs of carbon dioxide removal by enhanced weathering of rocks",
+    "year": 2018,
+    "doi": "10.1088/1748-9326/aaa9c4",
+    "abstract": "The chemical weathering of rocks currently absorbs about 1.1 Gt CO 2 a −1 being mainly stored as bicarbonate in the ocean. An enhancement of this slow natural process could remove substantial amounts of CO 2 from the atmosphere, aiming to offset some unavoidable anthropogenic emissions in order to comply with the Paris Agreement, while at the same time it may decrease ocean acidification. We provide the first comprehensive assessment of economic costs, energy requirements, technical parameterization, and global and regional carbon removal potential. The crucial parameters defining this potential are the grain size and weathering rates. The main uncertainties about the potential relate to weathering rates and rock mass that can be integrated into the soil. The discussed results do not specifically address the enhancement of weathering through microbial processes, feedback of geogenic nutrient release, and bioturbation. We do not only assess dunite rock, predominantly bearing olivine (in the form of forsterite) as the mineral that has been previously proposed to be best suited for carbon removal, but focus also on basaltic rock to minimize potential negative side effects. Our results show that enhanced weathering is an option for carbon dioxide removal that could be competitive already at 60 US $ t −1 CO 2 removed for dunite, but only at 200 US $ t −1 CO 2 removed for basalt. The potential carbon removal on cropland areas could be as large as 95 Gt CO 2 a −1 for dunite and 4.9 Gt CO 2 a −1 for basalt. The best suited locations are warm and humid areas, particularly in India, Brazil, South-East Asia and China, where almost 75% of the global potential can be realized. This work presents a techno-economic assessment framework, which also allows for the incorporation of further processes.",
+    "venue": "Environmental Research Letters",
+    "authors": [
+     "Jessica Strefler",
+     "Thorben Amann",
+     "Nico Bauer",
+     "Elmar Kriegler",
+     "Jens Hartmann"
+    ],
+    "cited_by": 454,
+    "url": "https://iopscience.iop.org/article/10.1088/1748-9326/aaa9c4/pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "DE"
+    ],
+    "intezmenyek": {
+     "DE": [
+      "Potsdam Institute for Climate Impact Research",
+      "Universität Hamburg"
+     ]
+    }
+   },
+   "P7": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W4379981082",
+    "title": "Constraining the Capacity of Global Croplands to CO 2 Drawdown via Mineral Weathering",
+    "year": 2023,
+    "doi": "10.1021/acsearthspacechem.2c00374",
+    "abstract": "Terrestrial enhanced weathering of alkaline silicate minerals is a promising climate change mitigation strategy with the potential to limit the global temperature rise. The formation and accumulation of pedogenic carbonate and bicarbonate in soils/subsoils and groundwater offers a large sink for C storage; the amount of soil inorganic carbon (SIC) presently held within soils has been estimated to be 720–950 Gt of C. These values can be augmented by the addition of a variety of calcium and magnesium silicates via enhanced weathering. While the concept of the application of finely milled silicate rocks for faster weathering rates is well established, there has been limited discussion on the role of local climate, natural SIC content (i.e., the SIC innately present in the soil), and soil pH (among other important agronomic factors) on silicate weathering when applied to croplands, especially in view that the aim is to establish terrestrial enhanced weathering as a carbon dioxide removal (CDR) strategy on a global scale. In this work, we emphasized the importance of soil pH and soil temperature on silicate weathering and looked to estimate an upper limit of (i.e., constrain) the global capacity until the year 2100 for enhanced rock weathering (ERW) to draw down CO 2 in the form of accumulated pedogenic carbonate or soluble bicarbonate. We assessed the global spatial distribution of cropland soil pH, which serves as a proxy for local innate SIC; annual rate of pluvial (rainfall) precipitation; and soil temperature, and found that the potential CO 2 drawdown difference between faster and slower weathering silicates is narrower in Asia, Africa, and South America, while the gap is larger for Europe, North America, and Oceania.",
+    "venue": "ACS Earth and Space Chemistry",
+    "authors": [
+     "Fatima Haque",
+     "Reza Khalidy",
+     "Yi Wai Chiang",
+     "Rafael M. Santos"
+    ],
+    "cited_by": 29,
+    "url": "https://pubs.acs.org/doi/pdf/10.1021/acsearthspacechem.2c00374",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "review",
+    "orszagok": [
+     "CA",
+     "TW"
+    ],
+    "intezmenyek": {
+     "TW": [
+      "National Taiwan University"
+     ],
+     "CA": [
+      "University of Guelph"
+     ]
+    }
+   },
+   "P8": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W3000695158",
+    "title": "Enhanced Weathering and related element fluxes – a cropland mesocosm approach",
+    "year": 2020,
+    "doi": "10.5194/bg-17-103-2020",
+    "abstract": "The weathering of silicates is a major control on atmospheric CO 2 at geologic timescales. It was proposed to enhance this process to actively remove CO 2 from the atmosphere. While there are some studies that propose and theoretically analyze the application of rock powder to agricultural land, results from field experiments are still scarce. In order to evaluate the efficiency and side effects of Enhanced Weathering (EW), a mesocosm experiment was set up and agricultural soil from Belgium was amended with olivine-bearing dunite ground to two different grain sizes, while distinguishing setups with and without crops. Based on measurements of Mg, Si, pH, and DIC, the additional weathering effect of olivine could be confirmed. Calculated weathering rates are up to 3 orders of magnitude lower than found in other studies. The calculated CO 2 consumption by weathering based on the outlet water of the mesocosm systems was low with 2.3–4.9 tCO2km-2a-1 if compared with previous theoretical estimates. Suspected causes were the removal or dilution of Mg as a weathering product by processes like adsorption, mineralization, plant uptake, evapotranspiration, and/or preferential flow, not specifically addressed in previous EW experiments for CO 2 consumption. The observation that Mg concentrations in the upper soil layers were about 1 order of magnitude higher than in the outlet water indicates that a careful tracking of weathering indicators like Mg in the field is essential for a precise estimate of the CO 2 consumption potential of EW, specifically under global deployment scenarios with a high diversity of ecosystem settings. Porewater Mg∕Si molar ratios suggest that dissolved Si is reprecipitating, forming a cation-depleted Si layer on the reactive mineral surface of freshly ground rocks. The release of potentially harmful trace elements is an acknowledged side effect of EW. Primarily Ni and Cr are elevated in the soil solution, while Ni concentrations exceed the limits of drinking water quality. The use of olivine, rich in Ni and Cr, is not recommended, and alternative rock sources are suggested for the application.",
+    "venue": "Biogeosciences",
+    "authors": [
+     "Thorben Amann",
+     "Jens Hartmann",
+     "Eric Struyf",
+     "Wagner de Oliveira Garcia",
+     "Elke Kerstin Fischer",
+     "Ivan A. Janssens",
+     "Patrick M. Meire",
+     "Jonas Schoelynck"
+    ],
+    "cited_by": 205,
+    "url": "https://bg.copernicus.org/articles/17/103/2020/bg-17-103-2020.pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "BE",
+     "DE"
+    ],
+    "intezmenyek": {
+     "DE": [
+      "Universität Hamburg"
+     ],
+     "BE": [
+      "University of Antwerp"
+     ]
+    }
+   }
+  },
+  "ai_nyers_kivonat": {
+   "allitasok": [
+    {
+     "cikk_azonosito": "P1",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "afforestation and reforestation",
+     "ertek": 3.6,
+     "also": 0.5,
+     "felso": 3.6,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation",
+     "vizsgalat_tipusa": "terepkiserlet",
+     "regio": "globális",
+     "korlatok": "2050"
+    },
+    {
+     "cikk_azonosito": "P1",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "BECCS",
+     "ertek": 5,
+     "also": 0.5,
+     "felso": 5,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for BECCS",
+     "vizsgalat_tipusa": "terepkiserlet",
+     "regio": "globális",
+     "korlatok": "2050"
+    },
+    {
+     "cikk_azonosito": "P1",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "biochar",
+     "ertek": 2,
+     "also": 0.5,
+     "felso": 2,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–2 GtCO 2 yr −1 for biochar",
+     "vizsgalat_tipusa": "terepkiserlet",
+     "regio": "globális",
+     "korlatok": "2050"
+    },
+    {
+     "cikk_azonosito": "P1",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "enhanced weathering",
+     "ertek": 4,
+     "also": 2,
+     "felso": 4,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "2–4 GtCO 2 yr −1 for enhanced weathering",
+     "vizsgalat_tipusa": "terepkiserlet",
+     "regio": "globális",
+     "korlatok": "2050"
+    },
+    {
+     "cikk_azonosito": "P1",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "DACCS",
+     "ertek": 5,
+     "also": 0.5,
+     "felso": 5,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for DACCS",
+     "vizsgalat_tipusa": "terepkiserlet",
+     "regio": "globális",
+     "korlatok": "2050"
+    },
+    {
+     "cikk_azonosito": "P1",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "soil carbon sequestration",
+     "ertek": 5,
+     "also": 0,
+     "felso": 5,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "up to 5 GtCO 2 yr −1 for soil carbon sequestration",
+     "vizsgalat_tipusa": "terepkiserlet",
+     "regio": "globális",
+     "korlatok": "2050"
+    },
+    {
+     "cikk_azonosito": "P6",
+     "parameter": "cdr_koltseg_usd_tco2",
+     "alkategoria": "dunite",
+     "ertek": 60,
+     "also": 60,
+     "felso": 60,
+     "egyseg": "USD/tCO2",
+     "szo_szerinti_idezet": "60 US $ t −1 CO 2 removed for dunite",
+     "vizsgalat_tipusa": "terepkiserlet",
+     "regio": "globális",
+     "korlatok": "nem megadva"
+    },
+    {
+     "cikk_azonosito": "P6",
+     "parameter": "cdr_koltseg_usd_tco2",
+     "alkategoria": "basalt",
+     "ertek": 200,
+     "also": 200,
+     "felso": 200,
+     "egyseg": "USD/tCO2",
+     "szo_szerinti_idezet": "200 US $ t −1 CO 2 removed for basalt",
+     "vizsgalat_tipusa": "terepkiserlet",
+     "regio": "globális",
+     "korlatok": "nem megadva"
+    },
+    {
+     "cikk_azonosito": "P6",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "cropland areas (dunite)",
+     "ertek": 95,
+     "also": 95,
+     "felso": 95,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "95 Gt CO 2 a −1 for dunite",
+     "vizsgalat_tipusa": "terepkiserlet",
+     "regio": "globális",
+     "korlatok": "nem megadva"
+    },
+    {
+     "cikk_azonosito": "P6",
+     "parameter": "cdr_potencial_gtco2_ev",
+     "alkategoria": "cropland areas (basalt)",
+     "ertek": 4.9,
+     "also": 4.9,
+     "felso": 4.9,
+     "egyseg": "GtCO2/év",
+     "szo_szerinti_idezet": "4.9 Gt CO 2 a −1 for basalt",
+     "vizsgalat_tipusa": "terepkiserlet",
+     "regio": "globális",
+     "korlatok": "nem megadva"
+    }
+   ],
+   "osszegzes": "A kőzetmállasztás (enhanced weathering) a CO2-eltávolítás egy potenciális módja, amelynek globális potenciálja 4 GtCO2/év (2–4 GtCO2/év) lehet. A különböző kőzetek (pl. dunite, basalt) eltávolítási költsége különböző: 60 USD/tCO2 (dunite) és 200 USD/tCO2 (basalt). A mezőgazdasági területek (cropland) különösen nagy potenciálúak lehetnek, különösen a dunite esetén, amelynek 95 GtCO2/év lehet a globális potenciálja. A különböző régiókban a kőzetmállasztás hatékonysága eltérő lehet, különösen Európa, Észak-Amerika és Óceánia esetén. A kőzetmállasztás az egyik lehetséges eszköz a globális felmelegedés csökkentésére, de a költségek és a helyi körülmények nagy hatással vannak a hatékonyságra.",
+   "ellentmondasok": "Nincs ellentmondás a cikkek között."
+  },
+  "allitasok": [
+   {
+    "cikk_azonosito": "P1",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "afforestation and reforestation",
+    "ertek": 3.6,
+    "also": 0.5,
+    "felso": 3.6,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–3.6 GtCO 2 yr −1 for afforestation and reforestation",
+    "vizsgalat_tipusa": "terepkiserlet",
+    "regio": "globális",
+    "korlatok": "2050",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P1",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "BECCS",
+    "ertek": 5,
+    "also": 0.5,
+    "felso": 5,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for BECCS",
+    "vizsgalat_tipusa": "terepkiserlet",
+    "regio": "globális",
+    "korlatok": "2050",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P1",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "biochar",
+    "ertek": 2,
+    "also": 0.5,
+    "felso": 2,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–2 GtCO 2 yr −1 for biochar",
+    "vizsgalat_tipusa": "terepkiserlet",
+    "regio": "globális",
+    "korlatok": "2050",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P1",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "enhanced weathering",
+    "ertek": 4,
+    "also": 2,
+    "felso": 4,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "2–4 GtCO 2 yr −1 for enhanced weathering",
+    "vizsgalat_tipusa": "terepkiserlet",
+    "regio": "globális",
+    "korlatok": "2050",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P1",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "DACCS",
+    "ertek": 5,
+    "also": 0.5,
+    "felso": 5,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "0.5–5 GtCO 2 yr −1 for DACCS",
+    "vizsgalat_tipusa": "terepkiserlet",
+    "regio": "globális",
+    "korlatok": "2050",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P1",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "soil carbon sequestration",
+    "ertek": 5,
+    "also": 0,
+    "felso": 5,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "up to 5 GtCO 2 yr −1 for soil carbon sequestration",
+    "vizsgalat_tipusa": "terepkiserlet",
+    "regio": "globális",
+    "korlatok": "2050",
+    "statusz": "elutasitva",
+    "indokok": [
+     "A(z) alsó (0) nem szerepel az idézetben."
+    ],
+    "forras": "Fuss et al. (2018). Negative emissions—Part 2: Costs, potentials and side effects. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aabf9f",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P6",
+    "parameter": "cdr_koltseg_usd_tco2",
+    "alkategoria": "dunite",
+    "ertek": 60,
+    "also": 60,
+    "felso": 60,
+    "egyseg": "USD/tCO2",
+    "szo_szerinti_idezet": "60 US $ t −1 CO 2 removed for dunite",
+    "vizsgalat_tipusa": "terepkiserlet",
+    "regio": "globális",
+    "korlatok": "nem megadva",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Strefler et al. (2018). Potential and costs of carbon dioxide removal by enhanced weathering of rocks. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aaa9c4",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P6",
+    "parameter": "cdr_koltseg_usd_tco2",
+    "alkategoria": "basalt",
+    "ertek": 200,
+    "also": 200,
+    "felso": 200,
+    "egyseg": "USD/tCO2",
+    "szo_szerinti_idezet": "200 US $ t −1 CO 2 removed for basalt",
+    "vizsgalat_tipusa": "terepkiserlet",
+    "regio": "globális",
+    "korlatok": "nem megadva",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Strefler et al. (2018). Potential and costs of carbon dioxide removal by enhanced weathering of rocks. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aaa9c4",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P6",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "cropland areas (dunite)",
+    "ertek": 95,
+    "also": 95,
+    "felso": 95,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "95 Gt CO 2 a −1 for dunite",
+    "vizsgalat_tipusa": "terepkiserlet",
+    "regio": "globális",
+    "korlatok": "nem megadva",
+    "statusz": "elutasitva",
+    "indokok": [
+     "Az érték kívül esik a józan tartományon (0.0..15.0 GtCO2/év)."
+    ],
+    "forras": "Strefler et al. (2018). Potential and costs of carbon dioxide removal by enhanced weathering of rocks. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aaa9c4",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P6",
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "cropland areas (basalt)",
+    "ertek": 4.9,
+    "also": 4.9,
+    "felso": 4.9,
+    "egyseg": "GtCO2/év",
+    "szo_szerinti_idezet": "4.9 Gt CO 2 a −1 for basalt",
+    "vizsgalat_tipusa": "terepkiserlet",
+    "regio": "globális",
+    "korlatok": "nem megadva",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Strefler et al. (2018). Potential and costs of carbon dioxide removal by enhanced weathering of rocks. Environmental Research Letters. https://doi.org/10.1088/1748-9326/aaa9c4",
+    "preprint": false
+   }
+  ],
+  "osszesitett_parameterek": {
+   "cdr_potencial_gtco2_ev:afforestation and reforestation": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "afforestation and reforestation",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 3.6,
+    "tartomany": [
+     0.5,
+     3.6
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:beccs": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "beccs",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 5.0,
+    "tartomany": [
+     0.5,
+     5
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:biochar": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "biochar",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 2.0,
+    "tartomany": [
+     0.5,
+     2
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:enhanced weathering": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "enhanced weathering",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 4.0,
+    "tartomany": [
+     2,
+     4
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:daccs": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "daccs",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 5.0,
+    "tartomany": [
+     0.5,
+     5
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_koltseg_usd_tco2:dunite": {
+    "parameter": "cdr_koltseg_usd_tco2",
+    "alkategoria": "dunite",
+    "egyseg": "USD/tCO2",
+    "sulyozott_median": 60.0,
+    "tartomany": [
+     60,
+     60
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_koltseg_usd_tco2:basalt": {
+    "parameter": "cdr_koltseg_usd_tco2",
+    "alkategoria": "basalt",
+    "egyseg": "USD/tCO2",
+    "sulyozott_median": 200.0,
+    "tartomany": [
+     200,
+     200
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   },
+   "cdr_potencial_gtco2_ev:cropland areas (basalt)": {
+    "parameter": "cdr_potencial_gtco2_ev",
+    "alkategoria": "cropland areas (basalt)",
+    "egyseg": "GtCO2/év",
+    "sulyozott_median": 4.9,
+    "tartomany": [
+     4.9,
+     4.9
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   }
+  },
+  "ai_osszegzes": "A kőzetmállasztás (kőzetmállasztás) a CO2-eltávolítás egy potenciális módja, amelynek globális potenciálja 4 milliárd tonna CO2/év (2–4 milliárd tonna CO2/év) lehet. A különböző kőzetek (pl. dunite, basalt) eltávolítási költsége különböző: 60 dollár/tonna CO2 (dunite) és 200 dollár/tonna CO2 (basalt). A különböző régiókban a kőzetmállasztás hatékonysága eltérő lehet, különösen Európa, Észak-Amerika és Óceánia esetén. A kőzetmállasztás az egyik lehetséges eszköz a globális felmelegedés csökkentésére, de a költségek és a helyi körülmények nagy hatással vannak a hatékonyságra.",
+  "ellentmondasok": "Nincs ellentmondás a cikkek között.",
+  "figyelmeztetes": "Ez egy játékon belüli, automatikusan összeállított irodalmi összefoglaló. Nem helyettesíti a szakértői lektorálást; minden számot az eredeti cikkben érdemes ellenőrizni.",
+  "azonosito": "AETHER-8ff763de8294bae1",
+  "letrehozva": "2026-11-22T16:38:27+00:00"
+ },
+ "javaslatok": [
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:afforestation and reforestation",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "afforestation and reforestation",
+   "ertek": 3.6,
+   "egyseg": "milliárd tonna CO2/év",
+   "tartomany": [
+    0.5,
+    3.6
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Gyenge bizonyíték: csak egy forrás. Érdemes tovább kutatni.",
+   "forrasok_szama": 1,
+   "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
+   "jelentes": "Évente kb. 3,6 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 9%-a.",
+   "publikacio": "AETHER-8ff763de8294bae1",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "A tervedbe akkor kerül, ha a saját témáját kutatod ki: Erdősítés.",
+   "alkategoria_nev": "Erdősítés"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:beccs",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "beccs",
+   "ertek": 5.0,
+   "egyseg": "milliárd tonna CO2/év",
+   "tartomany": [
+    0.5,
+    5
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Gyenge bizonyíték: csak egy forrás. Érdemes tovább kutatni.",
+   "forrasok_szama": 1,
+   "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
+   "jelentes": "Évente kb. 5 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 12%-a.",
+   "publikacio": "AETHER-8ff763de8294bae1",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "A tervedbe akkor kerül, ha a saját témáját kutatod ki: Növényi energia, a CO2 föld alá zárásával.",
+   "alkategoria_nev": "Növényi energia, a CO2 föld alá zárásával"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:biochar",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "biochar",
+   "ertek": 2.0,
+   "egyseg": "milliárd tonna CO2/év",
+   "tartomany": [
+    0.5,
+    2
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Gyenge bizonyíték: csak egy forrás. Érdemes tovább kutatni.",
+   "forrasok_szama": 1,
+   "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
+   "jelentes": "Évente kb. 2 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 5%-a.",
+   "publikacio": "AETHER-8ff763de8294bae1",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "A tervedbe akkor kerül, ha a saját témáját kutatod ki: Bioszén a talajba.",
+   "alkategoria_nev": "Bioszén a talajba"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:enhanced weathering",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "enhanced weathering",
+   "ertek": 4.0,
+   "egyseg": "milliárd tonna CO2/év",
+   "tartomany": [
+    2,
+    4
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Gyenge bizonyíték: csak egy forrás. Érdemes tovább kutatni.",
+   "forrasok_szama": 1,
+   "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
+   "jelentes": "Évente kb. 4 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 9%-a.",
+   "publikacio": "AETHER-8ff763de8294bae1",
+   "kar": "cdr:kozetmallasztas",
+   "kar_ertek": 4.0,
+   "kar_nev": "Kőzetpor a földekre (kőzetmállasztás)",
+   "megjegyzes": "",
+   "alkategoria_nev": "Kőzetpor a földekre (kőzetmállasztás)"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:daccs",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "daccs",
+   "ertek": 5.0,
+   "egyseg": "milliárd tonna CO2/év",
+   "tartomany": [
+    0.5,
+    5
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Gyenge bizonyíték: csak egy forrás. Érdemes tovább kutatni.",
+   "forrasok_szama": 1,
+   "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
+   "jelentes": "Évente kb. 5 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 12%-a.",
+   "publikacio": "AETHER-8ff763de8294bae1",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "A tervedbe akkor kerül, ha a saját témáját kutatod ki: CO2-szűrés közvetlenül a levegőből.",
+   "alkategoria_nev": "CO2-szűrés közvetlenül a levegőből"
+  },
+  {
+   "kulcs": "cdr_koltseg_usd_tco2:dunite",
+   "parameter": "cdr_koltseg_usd_tco2",
+   "alkategoria": "dunite",
+   "ertek": 60.0,
+   "egyseg": "USD/tCO2",
+   "tartomany": [
+    60,
+    60
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Gyenge bizonyíték: csak egy forrás. Érdemes tovább kutatni.",
+   "forrasok_szama": 1,
+   "nev": "Mennyibe kerül egy tonna CO2 kivonása",
+   "jelentes": "Egy tonna CO2 kivonása kb. 60 dollárba kerülne.",
+   "publikacio": "AETHER-8ff763de8294bae1",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "Tájékoztató adat: ebben a változatban még nem kerül a modellbe.",
+   "alkategoria_nev": "dunite"
+  },
+  {
+   "kulcs": "cdr_koltseg_usd_tco2:basalt",
+   "parameter": "cdr_koltseg_usd_tco2",
+   "alkategoria": "basalt",
+   "ertek": 200.0,
+   "egyseg": "USD/tCO2",
+   "tartomany": [
+    200,
+    200
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Gyenge bizonyíték: csak egy forrás. Érdemes tovább kutatni.",
+   "forrasok_szama": 1,
+   "nev": "Mennyibe kerül egy tonna CO2 kivonása",
+   "jelentes": "Egy tonna CO2 kivonása kb. 200 dollárba kerülne.",
+   "publikacio": "AETHER-8ff763de8294bae1",
+   "kar": null,
+   "kar_ertek": null,
+   "kar_nev": "",
+   "megjegyzes": "Tájékoztató adat: ebben a változatban még nem kerül a modellbe.",
+   "alkategoria_nev": "basalt"
+  },
+  {
+   "kulcs": "cdr_potencial_gtco2_ev:cropland areas (basalt)",
+   "parameter": "cdr_potencial_gtco2_ev",
+   "alkategoria": "cropland areas (basalt)",
+   "ertek": 4.9,
+   "egyseg": "milliárd tonna CO2/év",
+   "tartomany": [
+    4.9,
+    4.9
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Gyenge bizonyíték: csak egy forrás. Érdemes tovább kutatni.",
+   "forrasok_szama": 1,
+   "nev": "Mennyi CO2-t vonhat ki a levegőből évente",
+   "jelentes": "Évente kb. 4,9 milliárd tonna CO2-t vonhatna ki. Ez a mai világkibocsátás kb. 12%-a.",
+   "publikacio": "AETHER-8ff763de8294bae1",
+   "kar": "cdr:kozetmallasztas",
+   "kar_ertek": 4.0,
+   "kar_nev": "Kőzetpor a földekre (kőzetmállasztás)",
+   "megjegyzes": "A cikkek értéke (4.9) nagyobb a fenntartható felső határnál (4, Fuss et al. 2018), ezért a játék 4-t használ.",
+   "alkategoria_nev": "Kőzetpor a földekre (kőzetmállasztás)"
+  }
+ ],
+ "osszefoglalo": {
+  "cikkek": 8,
+  "allitasok": 10,
+  "ellenorizve": 8,
+  "elutasitva": 2,
+  "orszag": "HU",
+  "hazai": 2
+ },
+ "archivum": {
+  "datum": "2026-11-22",
+  "ai": "ollama qwen3:8b"
+ }
+}
