@@ -879,7 +879,9 @@ func _apply_anomaly(path: String) -> void:
 	_anom_loaded = true
 	_anom_btn.modulate.a = 1.0
 	var d := "%s.%s.%s." % [_anom_date.left(4), _anom_date.substr(4, 2), _anom_date.substr(6, 2)]
-	_anom_link.text =L.t("%s · eltérés az 1991–2020-as átlagtól · Copernicus Climate Pulse (angol nyelvű)") % d
+	# rövid sor, hogy a sáv ne lógjon ki a képernyőről; a teljes magyarázat rámutatásra látszik
+	_anom_link.text = "%s · Copernicus Climate Pulse" % d
+	_anom_link.tooltip_text = L.t("%s · eltérés az 1991–2020-as átlagtól · Copernicus Climate Pulse (angol nyelvű)") % d
 	if _anom_btn.button_pressed:
 		globe.show_anomaly(true)
 		_anom_legend.visible = true
