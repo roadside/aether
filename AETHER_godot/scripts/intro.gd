@@ -66,6 +66,8 @@ var _mode := ""                # "jatekos" | "szamlalo" | "kep" | "jovo" | ""
 var _mode_t0 := 0.0            # az aktuális rajzolt jelenet kezdete (_t-ben)
 var _scene_idx := 0
 var _years: Array = []         # [[év, eltérés], ...] valódi adat; üres, ha még nincs letöltve
+var _today: Dictionary = {}    # Climate Pulse „ma”: dátum, eltérés (1991–2020 / iparosodás előtti)
+var _today_rank := 0           # a mai nap hányadik a mért években (1 = a legmelegebb ilyen nap)
 var _pre_industrial := false   # az eltérés az iparosodás előtti szinthez képest értendő-e
 var _vmin := 0.0
 var _vmax := 1.0
@@ -304,8 +306,8 @@ func _play_full() -> void:
 	create_tween().tween_property(g, "heat", 0.0, 1.0)
 	if main.anomaly_ready():
 		g.show_anomaly(true)
-	# a fenti évszámláló az 1991–2020-as átlaghoz mér; ez a szám az iparosodás előttihez
-	_say(L.t("%s. Melegebb, mint valaha.") % main.warming_text(), L.t("az iparosodás előtti (1850–1900) átlaghoz képest"))
+	var cap: Array = _today_caption()
+	_say(cap[0], cap[1])
 	if not await _wait(3.0): return
 	await _shot("intro_04_elteres.png")
 	if not await _wait(2.0): return
@@ -359,11 +361,36 @@ func _play_full() -> void:
 	if not await _wait(4.0): return
 
 
+## A hőtérkép snittjének felirata CSAK valódi mérésből (Copernicus Climate Pulse, „ma”):
+## az iparosodás előtti szinthez mért eltérés, ha van, különben az 1991–2020-as átlaghoz mért.
+## „Melegebb, mint valaha” csak akkor, ha a mai nap a valaha mért legmelegebb ilyen nap.
+## Ha nincs adat, nincs szám sem (a játék modelljének becslését itt nem mutatjuk).
+func _today_caption() -> Array:
+	var v: Variant = _today.get("elteres_ipar_elott")
+	var basis := L.t("az iparosodás előtti (1850–1900) átlaghoz képest")
+	if v == null:
+		v = _today.get("elteres_1991_2020")
+		basis = L.t("az 1991–2020-as átlaghoz képest")
+	if v == null:
+		return [L.t("Melegebb, mint valaha."), ""]
+	var num := _signed(float(v)) + " °C"
+	var date := str(_today.get("datum", ""))
+	if not L.is_en() and date.length() == 10:
+		date = date.replace("-", ". ") + "."
+	var sub := basis + (", " + date if date != "" else "") + " · Copernicus Climate Pulse"
+	if _today_rank == 1:
+		return [L.t("%s. Melegebb, mint valaha.") % num, sub]
+	return [num + ".", sub]
+
+
 ## A valódi éves eltérések a gépen lévő Climate Pulse-adatból. Ha nincs, vagy egy napnál
 ## régebbi, a háttérben frissítjük (a hídon át): a következő indításkor már ebből megy.
 func _load_data() -> void:
 	var path := pulse_path()
 	var d: Variant = Bridge.read_json(path)
+	if typeof(d) == TYPE_DICTIONARY and typeof(d.get("ma")) == TYPE_DICTIONARY:
+		_today = d["ma"]
+		_today_rank = int(d.get("rang", 0)) if d.get("rang") != null else 0
 	if typeof(d) == TYPE_DICTIONARY and typeof(d.get("evente")) == TYPE_ARRAY:
 		var rows: Array = d["evente"]
 		_pre_industrial = not rows.is_empty() and rows.all(func(r: Variant) -> bool: return r[2] != null)
