@@ -140,6 +140,9 @@ func show_questions() -> void:
 	var more_fn := func() -> void: box.visible = not box.visible
 	more.pressed.connect(more_fn)
 	_body.add_child(more)
+	var take := UI.button(L.t("Kutatás átvétele fájlból"))
+	take.pressed.connect(_import_dialog)
+	_body.add_child(take)
 	_body.add_child(box)
 
 
@@ -920,7 +923,16 @@ func _show_results() -> void:
 	if int(o["allitasok"]) > 0:
 		s += L.t("%d számot megtaláltunk szó szerint a cikkekben, %d-et nem.") % [int(o["ellenorizve"]), int(o["elutasitva"])]
 	_body.add_child(UI.label(s, 18, UI.TEXT))
-	if _from_archive:
+	if _from_archive and bool(Dictionary(_result.get("archivum", {})).get("atvett", false)):
+		var who := str(Dictionary(_result["archivum"]).get("nev", ""))
+		var sid := str(Dictionary(_result["archivum"]).get("azonosito", ""))
+		if sid != "":
+			who = (who + " · " + sid).trim_prefix(" · ")
+		var line := L.t("Átvett kutatás: a játék a számokat újra kikereste a cikkekből.")
+		if who != "":
+			line = L.t("Átvett kutatás (%s): a játék a számokat újra kikereste a cikkekből.") % who
+		_body.add_child(UI.label(line, 15, UI.GOLD))
+	elif _from_archive:
 		var meta: Dictionary = _result.get("archivum", {})
 		_body.add_child(UI.label(L.t("Az AETHER archívumából: ezt a kutatást egy AI már elvégezte (%s), a játék ellenőrizte.") % str(meta.get("datum", "")), 15, UI.GOLD))
 	var summary := str(pub.get("ai_osszegzes", ""))
@@ -958,8 +970,145 @@ func _show_results() -> void:
 		var ok := UI.button(L.t("Jóváhagyom, mehet a tervembe"), true)
 		ok.pressed.connect(_approve)
 		row.add_child(ok)
+	# saját, ellenőrzött számot adó kutatás megosztható (az átvett vagy archívumból jövő nem)
+	if not _from_archive and int(o.get("ellenorizve", 0)) > 0 and tid != "":
+		var share := UI.button(L.t("Megosztom"))
+		share.pressed.connect(_share_result)
+		row.add_child(share)
 	_body.add_child(row)
+	_share_box = UI.vbox(8)
+	_body.add_child(_share_box)
 	results_shown.emit(not _checks.is_empty())
+
+
+# --- kutatáscsere: megosztás fájlként, átvétel újraellenőrzéssel -----------------------
+var _share_box: VBoxContainer
+
+
+static func share_dir() -> String:
+	return OS.get_user_data_dir().path_join("megosztas")
+
+
+## A becenév csak betű, szám, szóköz és kötőjel lehet, legfeljebb 20 jel. Nem kötelező.
+static func clean_name(t: String) -> String:
+	var out := ""
+	for ch in t.strip_edges():
+		if out.length() < 20 and (ch == " " or ch == "-" or ch.to_lower() != ch.to_upper() or ch.is_valid_int()):
+			out += ch
+	return out.strip_edges()
+
+
+## A kész kutatás fájlba kerül (user://megosztas), és megnyílik a mappája: innen küldhető tovább.
+## A fogadó játék nem hisz a fájlnak: minden számot újra kikeres a frissen letöltött cikkekből.
+func _share_result() -> void:
+	UI.clear(_share_box)
+	var name_in := LineEdit.new()
+	name_in.placeholder_text = L.t("Beceneved (nem kötelező)")
+	name_in.text = str(L.get_setting("becenev", ""))
+	name_in.max_length = 20
+	name_in.custom_minimum_size = Vector2(260, 0)
+	name_in.add_theme_font_size_override("font_size", 16)
+	var row := UI.hbox(10)
+	row.add_child(name_in)
+	var go := UI.button(L.t("Fájl készítése"), true)
+	row.add_child(go)
+	_share_box.add_child(row)
+	var go_fn := func() -> void:
+		var nick := clean_name(name_in.text)
+		L.set_setting("becenev", nick)
+		var d: Dictionary = _result.duplicate(true)
+		d["archivum"] = {"datum": Time.get_date_string_from_system(), "ai": str(Dictionary(_result.get("publikacio", {})).get("ai", "")), "nev": nick}
+		DirAccess.make_dir_recursive_absolute(share_dir())
+		var path := share_dir().path_join("%s_%s.json" % [str(_question.get("id", "")), L.lang])
+		var ident = _identity()
+		if ident != null:      # a gépen tárolt kulccsal aláírva: más nem küldhet a nevedben
+			d = ident.sign_dict(d)
+		Bridge.write_json(path, d)
+		UI.clear(_share_box)
+		_share_box.add_child(UI.label(L.t("Kész. Küldd el ezt a fájlt a barátodnak: ő a „Kutatás átvétele” gombbal olvassa be."), 16, UI.GREEN))
+		_share_box.add_child(UI.label(path, 14, UI.MUTE))
+		OS.shell_open(share_dir())
+	go.pressed.connect(go_fn)
+
+
+## A játékos-azonosító (scripts/identity.gd): helyben tárolt kulcs, regisztráció nélkül.
+static func _identity():
+	var path := "res://scripts/identity.gd"
+	return load(path) if ResourceLoader.exists(path) else null
+
+
+var _import_signer := ""     # az átvett fájl érvényes aláírásának rövid azonosítója (vagy üres)
+
+
+## Fájlválasztó, majd a Python-oldal újraellenőrzése (archivum-atvetel). Saját hídon fut.
+func _import_dialog() -> void:
+	var fd := FileDialog.new()
+	fd.file_mode = FileDialog.FILE_MODE_OPEN_FILE
+	fd.access = FileDialog.ACCESS_FILESYSTEM
+	fd.use_native_dialog = true
+	fd.filters = PackedStringArray(["*.json"])
+	fd.title = L.t("Kutatás átvétele")
+	add_child(fd)
+	fd.file_selected.connect(_import_file)
+	fd.popup_centered(Vector2i(900, 600))
+
+
+func _import_file(path: String) -> void:
+	_header(L.t("Kutatás átvétele"), 0, L.t("Újra kikeresem a számokat a cikkekből…"))
+	_import_signer = ""
+	var src: Variant = Bridge.read_json(path)
+	var ident = _identity()
+	if ident != null and typeof(src) == TYPE_DICTIONARY and src.has("alairas") and bool(ident.verify_dict(src)):
+		_import_signer = str(Dictionary(src["alairas"]).get("azonosito", ""))
+	var out: String = str(bridge.work_dir("aether_atvetel")).path_join("atvetel.json")
+	if FileAccess.file_exists(out):
+		DirAccess.remove_absolute(out)
+	var b = Bridge.new()
+	add_child(b)
+	var done_fn := func(_tag: String, code: int, output: String) -> void:
+		b.queue_free()
+		var r: Variant = Bridge.read_json(out)
+		if typeof(r) != TYPE_DICTIONARY:
+			_show_python_error(code, output)
+			return
+		_import_done(r)
+	b.finished.connect(done_fn)
+	b.run("atvetel", ["archivum-atvetel", path, downloaded_archive_dir(), "--nyelv", L.lang, "--ki", out])
+
+
+func _import_done(r: Dictionary) -> void:
+	var back := UI.button(L.t("Vissza"))
+	back.pressed.connect(show_questions)
+	if not bool(r.get("ok", false)):
+		_header(L.t("Nem vettem át"), 0, str(r.get("hiba", "")))
+		_body.add_child(back)
+		return
+	var q: Dictionary = Knowledge.topic(str(r.get("tema", "")))
+	if _import_signer != "":     # érvényes aláírás: az azonosító a név mellé kerül
+		var saved: Variant = Bridge.read_json(str(r.get("fajl", "")))
+		if typeof(saved) == TYPE_DICTIONARY and saved.has("archivum"):
+			saved["archivum"]["azonosito"] = _import_signer
+			Bridge.write_json(str(r["fajl"]), saved)
+	var msg := L.t("%d számot megtaláltam a cikkekben.") % int(r.get("ellenorizve", 0))
+	if int(r.get("kiesett", 0)) > 0:
+		msg += " " + L.t("%d nem igazolódott, az kimaradt.") % int(r["kiesett"])
+	_header(L.t("Átvettem"), 0, msg)
+	_body.add_child(UI.label(Knowledge.text(q, "cim"), 19, UI.TEXT, true))
+	var row := UI.hbox(12)
+	var open := UI.button(L.t("Megnézem →"), true)
+	var open_fn := func() -> void:
+		var arch := archive_of(q)
+		if arch.is_empty():
+			show_questions()
+			return
+		_question = q
+		_result = arch
+		_from_archive = true
+		_show_results()
+	open.pressed.connect(open_fn)
+	row.add_child(open)
+	row.add_child(back)
+	_body.add_child(row)
 
 
 func _proposal_card(j: Dictionary, _pub: Dictionary) -> Control:
