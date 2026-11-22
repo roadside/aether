@@ -65,6 +65,7 @@ func _ready() -> void:
 	_poll.timeout.connect(_on_poll)
 	add_child(_poll)
 	bridge.finished.connect(_on_bridge_finished)
+	_refresh_archive()
 	show_questions()
 	if not start_topic.is_empty():   # „A mai nap”: egyből a napi kérdés lapja
 		_show_topic(start_topic)
@@ -729,14 +730,36 @@ static func archive_path(q: Dictionary, lang: String) -> String:
 	return "res://archivum/%s_%s.json" % [str(q.get("id", "")), lang]
 
 
+## A közös archívumból letöltött (újabb) fájlok helye a játékos gépén.
+static func downloaded_archive_dir() -> String:
+	return OS.get_user_data_dir().path_join("archivum")
+
+
+## Az archívum-eredmény: előbb a letöltött (frissebb) közös archívumot nézi, utána a játékkal érkezőt.
 static func archive_of(q: Dictionary) -> Dictionary:
 	for lang in [L.lang, "hu", "en"]:
-		var path := archive_path(q, lang)
-		if FileAccess.file_exists(path):
-			var d: Variant = Bridge.read_json(path)
-			if typeof(d) == TYPE_DICTIONARY and d.has("publikacio") and d.has("javaslatok") and d.has("osszefoglalo"):
-				return d
+		var name := "%s_%s.json" % [str(q.get("id", "")), lang]
+		for path in [downloaded_archive_dir().path_join(name), archive_path(q, lang)]:
+			if FileAccess.file_exists(path):
+				var d: Variant = Bridge.read_json(path)
+				if typeof(d) == TYPE_DICTIONARY and d.has("publikacio") and d.has("javaslatok") and d.has("osszefoglalo"):
+					return d
 	return {}
+
+
+## A közös archívum frissítése a háttérben, legfeljebb naponta egyszer. Saját hídon fut, így nem
+## foglalja a kutatásét. A Python-oldal minden fájlt ellenőriz (ujjlenyomat, ellenőrzött szám),
+## és csak az új vagy megváltozott fájlokat tölti le. Ha nincs internet, csendben kimarad.
+func _refresh_archive() -> void:
+	var last := float(L.get_setting("archivum_frissitve", 0.0))
+	var now := Time.get_unix_time_from_system()
+	if now - last < 86400.0 or "--onteszt" in OS.get_cmdline_user_args():
+		return
+	L.set_setting("archivum_frissitve", now)
+	var b = Bridge.new()
+	add_child(b)
+	b.finished.connect(func(_tag: String, _code: int, _out: String) -> void: b.queue_free())
+	b.run("archivum", ["archivum-frissites", downloaded_archive_dir()])
 
 
 ## „Elolvastam, értem”: a lektorált összefoglaló elolvasása is tudás (★), AI nélkül.
