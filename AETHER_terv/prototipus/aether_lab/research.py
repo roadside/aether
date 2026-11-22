@@ -101,7 +101,14 @@ def extract(provider: Provider, question: str, papers: Dict[str, Paper], params:
     if lang.startswith("en"):
         user += ("\n\nA játékos angolul játszik: az 'osszegzes' és az 'ellentmondasok' mezőt "
                  "ANGOLUL írd (write these two fields in plain English). A többi mező marad.")
-    return provider.json_call(ev.EXTRACTOR_SYSTEM, user, ev.EXTRACTION_SCHEMA, 16000)
+    system = ev.EXTRACTOR_SYSTEM
+    if lang.startswith("en"):
+        # A rendszerprompt magyar összefoglalót kér; angol játékosnál ezt kicseréljük, különben a
+        # helyi modell (pl. qwen3:8b) a végén lévő angol kérést figyelmen kívül hagyja.
+        system = system.replace("- Az 'osszegzes' magyarul,", "- Az 'osszegzes' ANGOLUL (in plain English),")
+        system = system.replace("Ne használj angol szót és megmagyarázatlan rövidítést; tizedesvesszőt írj (0,5).",
+                                "Write it in English; explain abbreviations; use a decimal point (0.5).")
+    return provider.json_call(system, user, ev.EXTRACTION_SCHEMA, 16000)
 
 
 def run_research(question: str, provider: Optional[Provider], n_papers: int = 12,

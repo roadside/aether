@@ -59,6 +59,22 @@ def bad_translation(res: dict, lang: str) -> str:
     return ""
 
 
+def bad_summary(res: dict, lang: str) -> str:
+    """Az összefoglaló nyelve és épsége: angol fájlban ne legyen magyar szöveg, és ne kezdődjön
+    mondattöredékkel (pl. ha a szűrő egy zárójeles „pl.” után vágott)."""
+    txt = str(res.get("publikacio", {}).get("ai_osszegzes", "")).strip()
+    if not txt:
+        return ""
+    if not (txt[0].isupper() or txt[0].isdigit()):
+        return f"töredékkel kezdődik: {txt[:40]}"
+    hu_chars = sum(txt.count(c) for c in "őűáéíóöüŐŰÁÉÍÓÖÜ")
+    if lang == "en" and hu_chars > 3:
+        return "az angol összefoglaló magyarul íródott"
+    if lang == "hu" and hu_chars == 0 and len(txt) > 60:
+        return "a magyar összefoglaló angolul íródott"
+    return ""
+
+
 def run_one(topic: dict, lang: str, model: str) -> dict:
     question = topic.get("cim_en") if lang == "en" and topic.get("cim_en") else topic["cim"]
     with tempfile.TemporaryDirectory() as d:
@@ -114,7 +130,7 @@ def main():
                     print(f"{out.name} ({n}. próba): hiba: {res['_hiba'][:120]}")
                     continue
                 ok = int(res.get("osszefoglalo", {}).get("ellenorizve", 0))
-                bad = bad_translation(res, lang)
+                bad = bad_translation(res, lang) or bad_summary(res, lang)
                 if ok < 1:
                     print(f"{out.name} ({n}. próba): nincs ellenőrzött szám")
                     continue

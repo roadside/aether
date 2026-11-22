@@ -1,0 +1,619 @@
+{
+ "publikacio": {
+  "aether_publikacio_verzio": 1,
+  "kerdes": "Segítenek-e az aszálytűrő kukoricafajták?",
+  "terv": {
+   "kutatasi_kerdes_pontositva": "Segítenek-e az aszálytűrő kukoricafajták?",
+   "angol_keresokifejezesek": [
+    "drought tolerant maize yield advantage under drought",
+    "drought tolerant maize varieties yield on-farm trials"
+   ],
+   "keresett_parameterek": [
+    "alkalmazkodas_hozam_elony_pct"
+   ],
+   "megjegyzes": "Előre összeállított kérdés."
+  },
+  "ai": "ollama:qwen3:8b",
+  "cikkek": {
+   "P1": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2114996790",
+    "title": "Breeding drought-tolerant maize hybrids for the US corn-belt: discovery to product",
+    "year": 2014,
+    "doi": "10.1093/jxb/eru064",
+    "abstract": "Germplasm, genetics, phenotyping, and selection, combined with a clear definition of product targets, are the foundation of successful hybrid maize breeding. Breeding maize hybrids with superior yield for the drought-prone regions of the US corn-belt involves integration of multiple drought-specific technologies together with all of the other technology components that comprise a successful maize hybrid breeding programme. Managed-environment technologies are used to enable scaling of precision phenotyping in appropriate drought environmental conditions to breeding programme level. Genomics and other molecular technologies are used to study trait genetic architecture. Genetic prediction methodology was used to breed for improved yield performance for drought-prone environments. This was enabled by combining precision phenotyping for drought performance with genetic understanding of the traits contributing to successful hybrids in the target drought-prone environments and the availability of molecular markers distributed across the maize genome. Advances in crop growth modelling methodology are being used to evaluate the integrated effects of multiple traits for their combined effects and evaluate drought hybrid product concepts and guide their development and evaluation. Results to date, lessons learned, and future opportunities for further improving the drought tolerance of maize for the US corn-belt are discussed.",
+    "venue": "Journal of Experimental Botany",
+    "authors": [
+     "Mark Cooper",
+     "Carla Gho",
+     "Roger Leafgren",
+     "Tom Tang",
+     "Carlos D. Messina"
+    ],
+    "cited_by": 475,
+    "url": "https://academic.oup.com/jxb/article-pdf/65/21/6191/18044162/eru064.pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "review",
+    "orszagok": [
+     "US"
+    ],
+    "intezmenyek": {
+     "US": [
+      "Pioneer Hi-Bred"
+     ]
+    }
+   },
+   "P2": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2897284484",
+    "title": "Diverging importance of drought stress for maize and winter wheat in Europe",
+    "year": 2018,
+    "doi": "10.1038/s41467-018-06525-2",
+    "abstract": "Understanding the drivers of yield levels under climate change is required to support adaptation planning and respond to changing production risks. This study uses an ensemble of crop models applied on a spatial grid to quantify the contributions of various climatic drivers to past yield variability in grain maize and winter wheat of European cropping systems (1984–2009) and drivers of climate change impacts to 2050. Results reveal that for the current genotypes and mix of irrigated and rainfed production, climate change would lead to yield losses for grain maize and gains for winter wheat. Across Europe, on average heat stress does not increase for either crop in rainfed systems, while drought stress intensifies for maize only. In low-yielding years, drought stress persists as the main driver of losses for both crops, with elevated CO 2 offering no yield benefit in these years.",
+    "venue": "Nature Communications",
+    "authors": [
+     "Heidi A. Webber",
+     "Frank A. Ewert",
+     "Jørgen Eivind Olesen",
+     "Christoph Müller",
+     "Stefan Fronzek",
+     "Alex C. Ruane",
+     "Maryse Bourgault",
+     "Pierre Martre",
+     "Behnam Ababaei",
+     "Marco Bindi",
+     "Roberto Ferrise",
+     "Robert Finger",
+     "Nándor Fodor",
+     "Clara Gabaldón‐Leal",
+     "Thomas Gaiser",
+     "Mohamed Jabloun",
+     "Kurt Christian Kersebaum",
+     "Jon I. Lizaso",
+     "Ignacio J. Lorite",
+     "Loic Manceau",
+     "Marco Moriondo",
+     "Claas Nendel",
+     "Alfredo Rodríguez",
+     "Margarita Ruiz‐Ramos",
+     "Mikhail A. Semenov",
+     "Stefan Siebert",
+     "Tommaso Stella",
+     "Pierre Stratonovitch",
+     "Giacomo Trombi",
+     "Daniel Wallach"
+    ],
+    "cited_by": 520,
+    "url": "https://www.nature.com/articles/s41467-018-06525-2.pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "AU",
+     "CH",
+     "DE",
+     "DK",
+     "ES",
+     "FI",
+     "FR",
+     "GB",
+     "HU",
+     "IT",
+     "US"
+    ],
+    "intezmenyek": {
+     "DE": [
+      "University of Bonn",
+      "Leibniz Centre for Agricultural Landscape Research",
+      "Leibniz Association",
+      "Potsdam Institute for Climate Impact Research",
+      "University of Göttingen"
+     ],
+     "DK": [
+      "Aarhus University"
+     ],
+     "FI": [
+      "Finnish Environment Institute"
+     ],
+     "US": [
+      "Goddard Institute for Space Studies",
+      "National Aeronautics and Space Administration",
+      "Montana State University"
+     ],
+     "FR": [
+      "Université de Montpellier",
+      "Institut Agro Montpellier",
+      "Institut National de Recherche pour l'Agriculture, l'Alimentation et l'Environnement",
+      "Laboratoire d'Ecophysiologie des Plantes sous Stress environnementaux",
+      "Limagrain (France)",
+      "AGroécologie, Innovations, teRritoires",
+      "Institut National de la Recherche Agronomique"
+     ],
+     "AU": [
+      "The University of Queensland"
+     ],
+     "IT": [
+      "University of Florence",
+      "Istituto di Biometeorologia"
+     ],
+     "CH": [
+      "ETH Zurich"
+     ],
+     "HU": [
+      "HUN-REN Centre for Agricultural Research",
+      "Agricultural Institute",
+      "Hungarian Academy of Sciences"
+     ],
+     "ES": [
+      "Andalusian Institute of Agricultural and Fisheries Research and Training",
+      "Universidad Politécnica de Madrid",
+      "University of Castilla-La Mancha"
+     ],
+     "GB": [
+      "University of Nottingham",
+      "Rothamsted Research",
+      "Biotechnology and Biological Sciences Research Council"
+     ]
+    }
+   },
+   "P3": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2146398007",
+    "title": "Drought tolerant maize for farmer adaptation to drought in sub-Saharan Africa: Determinants of adoption in eastern and southern Africa",
+    "year": 2015,
+    "doi": "10.1007/s10584-015-1459-2",
+    "abstract": "In sub-Saharan Africa (SSA), “maize is life,” due to its importance to food security and economic wellbeing. Around 40 % of Africa’s maize-growing area faces occasional drought stress, resulting in yield losses of 10–25 %. Around 25 % of the maize crop suffers frequent drought, with losses of up to half the harvest. To reduce vulnerability and improve food security, the Drought Tolerant Maize for Africa (DTMA) project has made releases of 160 drought tolerant (DT) maize varieties between 2007 and 2013. These have been tested in experimental and farmers’ fields, and disseminated to farmers in 13 African countries through national agricultural research systems and private seed companies. Yields of the new varieties are superior to those of currently available commercial maize varieties under both stress and optimum growing conditions. Although the benefits of DT maize for African farmers have been repeatedly predicted, realization of those benefits depends on farmer uptake, which has received limited empirical study. We use new plot-level data from surveys of 3,700 farm households in six countries (Ethiopia, Tanzania, Uganda, Malawi, Zambia, and Zimbabwe) to measure DT maize adoption rates and their determinants. The data reveal considerable inter-country variation in farmer uptake of DT maize, from 9 % of maize plots in Zimbabwe to 61 % in Malawi. The major barriers to adoption include unavailability of improved seed, inadequate information, lack of resources, high seed price, and perceived attributes of different varieties. Based on the results, we recommend that seed companies and agro-dealers ensure adequate supply of DT maize seed in local markets and sell seed in affordable micro-packs (1 or 2 kg). Furthermore, the DTMA project and partners should ramp up promotional efforts to ensure widespread awareness and understanding of the benefits of the new DT maize varieties.",
+    "venue": "Climatic Change",
+    "authors": [
+     "Monica Fisher",
+     "Tsedeke Abate",
+     "Rodney Lunduka",
+     "Woinishet Asnake",
+     "Yoseph Alemayehu",
+     "Ruth Madulu"
+    ],
+    "cited_by": 528,
+    "url": "https://link.springer.com/content/pdf/10.1007/s10584-015-1459-2.pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "ET",
+     "KE",
+     "TZ",
+     "US"
+    ],
+    "intezmenyek": {
+     "US": [
+      "Oregon State University"
+     ],
+     "KE": [
+      "International Maize and Wheat Improvement Center",
+      "World Agroforestry Centre"
+     ],
+     "ET": [
+      "International Maize and Wheat Improvement Center"
+     ],
+     "TZ": [
+      "Mikocheni Agricultural Research Institute"
+     ]
+    }
+   },
+   "P4": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2045484366",
+    "title": "Identification of Drought, Heat, and Combined Drought and Heat Tolerant Donors in Maize",
+    "year": 2013,
+    "doi": "10.2135/cropsci2012.09.0545",
+    "abstract": "Low maize ( Zea mays L.) yields and the impacts of climate change on maize production highlight the need to improve yields in eastern and southern Africa. Climate projections suggest higher temperatures within drought‐prone areas. Research in model species suggests that tolerance to combined drought and heat stress is genetically distinct from tolerance to either stress alone, but this has not been confirmed in maize. In this study we evaluated 300 maize inbred lines testcrossed to CML539. Experiments were conducted under optimal conditions, reproductive stage drought stress, heat stress, and combined drought and heat stress. Lines with high levels of tolerance to drought and combined drought and heat stress were identified. Significant genotype × trial interaction and very large plot residuals were observed; consequently, the repeatability of individual managed stress trials was low. Tolerance to combined drought and heat stress in maize was genetically distinct from tolerance to individual stresses, and tolerance to either stress alone did not confer tolerance to combined drought and heat stress. This finding has major implications for maize drought breeding. Many current drought donors and key inbreds used in widely grown African hybrids were susceptible to drought stress at elevated temperatures. Several donors tolerant to drought and combined drought and heat stress, notably La Posta Sequia C7‐F64‐2‐6‐2‐2 and DTPYC9‐F46‐1‐2‐1‐2, need to be incorporated into maize breeding pipelines.",
+    "venue": "Crop Science",
+    "authors": [
+     "Jill E. Cairns",
+     "José Luis Crossa",
+     "Pervez Haider Zaidi",
+     "Pichet Grudloyma",
+     "Ciro Sánchez",
+     "J. L. Araus",
+     "Suriphat Thaitad",
+     "Dan Makumbi",
+     "Cosmos Magorokosho",
+     "Marianne Bänziger",
+     "Abebe Menkir",
+     "Sarah Hearne",
+     "G. N. Atlin"
+    ],
+    "cited_by": 384,
+    "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.2135/cropsci2012.09.0545",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "IN",
+     "KE",
+     "MX",
+     "NG",
+     "US"
+    ],
+    "intezmenyek": {
+     "US": [
+      "Gates Foundation"
+     ],
+     "MX": [
+      "Centro Internacional de Mejoramiento de Maíz Y Trigo"
+     ],
+     "IN": [
+      "International Maize and Wheat Improvement Center"
+     ],
+     "NG": [
+      "International Institute of Tropical Agriculture"
+     ],
+     "KE": [
+      "International Maize and Wheat Improvement Center"
+     ]
+    }
+   },
+   "P5": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W4281487317",
+    "title": "Assessing the impacts of agricultural drought (SPI/SPEI) on maize and wheat yields across Hungary",
+    "year": 2022,
+    "doi": "10.1038/s41598-022-12799-w",
+    "abstract": "This study examined the physical properties of agricultural drought (i.e., intensity, duration, and severity) in Hungary from 1961 to 2010 based on the Standardized Precipitation Index (SPI) and the Standardized Precipitation Evapotranspiration Index (SPEI). The study analyzed the interaction between drought and crop yield for maize and wheat using standardized yield residual series (SYRS), and the crop-drought resilient factor (CDRF). The results of both SPI and SPEI (-3, -6) showed that the western part of Hungary has significantly more prone to agricultural drought than the eastern part of the country. Drought frequency analysis reveals that the eastern, northern, and central parts of Hungary were the most affected regions. Drought analysis also showed that drought was particularly severe in Hungary during 1970-1973, 1990-1995, 2000-2003, and 2007. The yield of maize was more adversely affected than wheat especially in the western and southern regions of Hungary (1961-2010). In general, maize and wheat yields were severely non-resilient (CDRF < 0.8) in the central and western part of the country. The results suggest that drought events are a threat to the attainment of the second Sustainable Development Goals (SDG-2). Therefore, to ensure food security in Hungary and in other parts of the world, drought resistant crop varieties need to be developed to mitigate the adverse effects of climate change on agricultural production.",
+    "venue": "Scientific Reports",
+    "authors": [
+     "Safwan Mohammed",
+     "Karam Alsafadi",
+     "Glory O. Enaruvbe",
+     "Bashar Bashir",
+     "Ahmed Elbeltagi",
+     "Adrienn Széles",
+     "Abdullah Alsalman",
+     "Endre Harsányi"
+    ],
+    "cited_by": 173,
+    "url": "https://www.nature.com/articles/s41598-022-12799-w.pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "CN",
+     "EG",
+     "HU",
+     "NG",
+     "SA"
+    ],
+    "intezmenyek": {
+     "HU": [
+      "University of Debrecen"
+     ],
+     "CN": [
+      "Nanjing University of Information Science and Technology"
+     ],
+     "NG": [
+      "African Regional Institute for Geospatial Information Science and Technology",
+      "Obafemi Awolowo University"
+     ],
+     "SA": [
+      "King Saud University"
+     ],
+     "EG": [
+      "Mansoura University"
+     ]
+    }
+   },
+   "P6": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2752317360",
+    "title": "Impact of adoption of drought-tolerant maize varieties on total maize production in south Eastern Zimbabwe",
+    "year": 2017,
+    "doi": "10.1080/17565529.2017.1372269",
+    "abstract": "Drought is a huge limiting factor in maize production, mainly in the rain-fed agriculture of sub-Saharan Africa. In response to this threat, drought-tolerant (DT) maize varieties have been developed with an aim to ensure maize production under mild drought conditions. We conducted a study to assess the impact of smallholder farmers' adoption of DT maize varieties on total maize production. Data for the study came from a survey of 200 randomly sampled households in two districts of Chiredzi and Chipinge in southeastern Zimbabwe. The study found that 93% of the households were growing improved maize varieties and that 30% of the sampled households were growing DT maize varieties. Total maize yield was 436.5 kg/ha for a household that did not grow DT maize varieties and 680.5 kg/ha for households that grew DT maize varieties. We control for the endogeneity of the DT adoption variable, by using the control function approach to estimate total maize production in a Cobb-Douglas model. The results show that households that grew DT maize varieties had 617 kg/ha more maize than households that did not grow the DT maize varieties. Given that almost all farmers buy their seeds in the market, a change in varieties to DT maize seeds gives an extra income of US$240/ha or more than nine months of food at no additional cost. This has huge implications in curbing food insecurity and simultaneously saving huge amounts of resources at the household and national levels, which are used to buy extra food during the lean season.",
+    "venue": "Climate and Development",
+    "authors": [
+     "Rodney Lunduka",
+     "Kumbirai Ivyne Mateva",
+     "Cosmos Magorokosho",
+     "Pepukai Manjeru"
+    ],
+    "cited_by": 178,
+    "url": "https://www.tandfonline.com/doi/pdf/10.1080/17565529.2017.1372269?needAccess=true",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "IN",
+     "KE",
+     "ZW"
+    ],
+    "intezmenyek": {
+     "KE": [
+      "International Maize and Wheat Improvement Center"
+     ],
+     "IN": [
+      "International Crops Research Institute for the Semi-Arid Tropics"
+     ],
+     "ZW": [
+      "Midlands State University"
+     ]
+    }
+   },
+   "P7": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2742953941",
+    "title": "Measuring the impacts of adaptation strategies to drought stress: The case of drought tolerant maize varieties",
+    "year": 2017,
+    "doi": "10.1016/j.jenvman.2017.06.058",
+    "abstract": "This study measured the impacts of drought tolerant maize varieties (DTMVs) on productivity, welfare, and risk exposure using household and plot-level data from rural Nigeria. The study employed an endogenous switching regression approach to control for both observed and unobserved sources of heterogeneity between adopters and non-adopters. Our results showed that adoption of DTMVs increased maize yields by 13.3% and reduced the level of variance by 53% and downside risk exposure by 81% among adopters. This suggests that adoption had a \"win-win\" outcome by increasing maize yields and reducing exposure to drought risk. The gains in productivity and risk reduction due to adoption led to a reduction of 12.9% in the incidence of poverty and of 83.8% in the probability of food scarcity among adopters. The paper concluded that adoption of DTMVs was not just a simple coping strategy against drought but also a productivity enhancing and welfare improving strategy. The results point to the need for policies and programs aimed at enhancing adoption as an adaptation strategy to drought stress in Nigeria and beyond.",
+    "venue": "Journal of Environmental Management",
+    "authors": [
+     "Tesfamicheal Wossen",
+     "Tahirou Abdoulaye",
+     "Arega D. Alene",
+     "Shiferaw Feleke",
+     "Abebe Menkir",
+     "Victor M. Manyong"
+    ],
+    "cited_by": 158,
+    "url": "https://www.sciencedirect.com/science/article/pii/S0301479717306497/pdf",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "NG",
+     "TZ",
+     "UG"
+    ],
+    "intezmenyek": {
+     "UG": [
+      "International Institute of Tropical Agriculture"
+     ],
+     "NG": [
+      "International Institute of Tropical Agriculture"
+     ],
+     "TZ": [
+      "International Institute of Tropical Agriculture"
+     ]
+    }
+   },
+   "P8": {
+    "source": "openalex",
+    "source_id": "https://openalex.org/W2118914987",
+    "title": "Physiological responses related to increased grain yield under drought in the first biotechnology‐derived drought‐tolerant maize",
+    "year": 2014,
+    "doi": "10.1111/pce.12446",
+    "abstract": "Maize (Zea mays ssp. mays L.) is highly susceptible to drought stress. This work focused on whole-plant physiological mechanisms by which a biotechnology-derived maize event expressing bacterial cold shock protein B (CspB), MON 87460, increased grain yield under drought. Plants of MON 87460 and a conventional control (hereafter 'control') were tested in the field under well-watered (WW) and water-limited (WL) treatments imposed during mid-vegetative to mid-reproductive stages during 2009-2011. Across years, average grain yield increased by 6% in MON 87460 compared with control under WL conditions. This was associated with higher soil water content at 0.5 m depth during the treatment phase, increased ear growth, decreased leaf area, leaf dry weight and sap flow rate during silking, increased kernel number and harvest index in MON 87460 than the control. No consistent differences were observed under WW conditions. This indicates that MON 87460 acclimated better under WL conditions than the control by lowering leaf growth which decreased water use during silking, thereby eliciting lower stress under WL conditions. These physiological responses in MON 87460 under WL conditions resulted in increased ear growth during silking, which subsequently increased the kernel number, harvest index and grain yield compared to the control.",
+    "venue": "Plant Cell & Environment",
+    "authors": [
+     "Krishna Nemali",
+     "Christopher P. Bonin",
+     "Frank G. Dohleman",
+     "MIKE STEPHENS",
+     "W Reeves",
+     "Donald E. Nelson",
+     "Paolo Castiglioni",
+     "JOY E. WHITSEL",
+     "Bernard Sammons",
+     "Rebecca A. Silady",
+     "Don C. Anstrom",
+     "Robert E. Sharp",
+     "O. Rahul Patharkar",
+     "David E. Clay",
+     "Marie Coffin",
+     "Margaret A. Nemeth",
+     "Mark Leibman",
+     "Michael H. Luethy",
+     "M. Lawson"
+    ],
+    "cited_by": 129,
+    "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/pce.12446",
+    "peer_reviewed": true,
+    "is_retracted": false,
+    "work_type": "article",
+    "orszagok": [
+     "US"
+    ],
+    "intezmenyek": {
+     "US": [
+      "Monsanto (United States)",
+      "Southern Connecticut State University",
+      "University of Missouri",
+      "South Dakota State University"
+     ]
+    }
+   }
+  },
+  "ai_nyers_kivonat": {
+   "allitasok": [
+    {
+     "cikk_azonosito": "P3",
+     "parameter": "alkalmazkodas_hozam_elony_pct",
+     "alkategoria": "drought-tolerant maize",
+     "ertek": 10,
+     "also": 10,
+     "felso": 25,
+     "egyseg": "%",
+     "szo_szerinti_idezet": "Around 40 % of Africa’s maize-growing area faces occasional drought stress, resulting in yield losses of 10–25 %.",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "sub-Saharan Africa",
+     "korlatok": "nem adja meg a hozamelőny százalékát, csak a veszteséget"
+    },
+    {
+     "cikk_azonosito": "P3",
+     "parameter": "alkalmazkodas_hozam_elony_pct",
+     "alkategoria": "drought-tolerant maize",
+     "ertek": 50,
+     "also": 0,
+     "felso": 50,
+     "egyseg": "%",
+     "szo_szerinti_idezet": "Around 25 % of the maize crop suffers frequent drought, with losses of up to half the harvest.",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "sub-Saharan Africa",
+     "korlatok": "nem adja meg a hozamelőny százalékát, csak a veszteséget"
+    },
+    {
+     "cikk_azonosito": "P7",
+     "parameter": "alkalmazkodas_hozam_elony_pct",
+     "alkategoria": "drought-tolerant maize",
+     "ertek": 13.3,
+     "also": 13.3,
+     "felso": 13.3,
+     "egyseg": "%",
+     "szo_szerinti_idezet": "Our results showed that adoption of DTMVs increased maize yields by 13.3% and reduced the level of variance by 53% and downside risk exposure by 81% among adopters.",
+     "vizsgalat_tipusa": "szisztematikus-attekintes",
+     "regio": "Nigeria",
+     "korlatok": "nem adja meg a hozamelőny százalékát, csak a növekedést"
+    },
+    {
+     "cikk_azonosito": "P8",
+     "parameter": "alkalmazkodas_hozam_elony_pct",
+     "alkategoria": "drought-tolerant maize",
+     "ertek": 6,
+     "also": 6,
+     "felso": 6,
+     "egyseg": "%",
+     "szo_szerinti_idezet": "Across years, average grain yield increased by 6% in MON 87460 compared with control under WL conditions.",
+     "vizsgalat_tipusa": "laborkiserlet",
+     "regio": "nem ad meg",
+     "korlatok": "nem adja meg a hozamelőny százalékát, csak a növekedést"
+    }
+   ],
+   "osszegzes": "A kutatások azt mutatják, hogy az aszálytűrő kukoricafajták növelik a termést és csökkentik a kockázatokat. Egyes esetekben a termés növekedése 6–13,3 százalékos lehet. Azonban a számok nem mutatják a hozamelőny százalékát, csak a termésnövekedést vagy a veszteséget. A kutatások nem egyértelműek a hozamelőny mértékéről.",
+   "ellentmondasok": "Nincs ellentmondás a cikkek között."
+  },
+  "allitasok": [
+   {
+    "cikk_azonosito": "P3",
+    "parameter": "alkalmazkodas_hozam_elony_pct",
+    "alkategoria": "drought-tolerant maize",
+    "ertek": 10,
+    "also": 10,
+    "felso": 25,
+    "egyseg": "%",
+    "szo_szerinti_idezet": "Around 40 % of Africa’s maize-growing area faces occasional drought stress, resulting in yield losses of 10–25 %.",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "sub-Saharan Africa",
+    "korlatok": "nem adja meg a hozamelőny százalékát, csak a veszteséget",
+    "statusz": "elutasitva",
+    "indokok": [
+     "Az idézet nem a keresett mennyiségről szól (pl. veszteség vagy elterjedtség)."
+    ],
+    "forras": "Fisher et al. (2015). Drought tolerant maize for farmer adaptation to drought in sub-Saharan Africa: Determinants of adoption in eastern and southern Africa. Climatic Change. https://doi.org/10.1007/s10584-015-1459-2",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P3",
+    "parameter": "alkalmazkodas_hozam_elony_pct",
+    "alkategoria": "drought-tolerant maize",
+    "ertek": 50,
+    "also": 0,
+    "felso": 50,
+    "egyseg": "%",
+    "szo_szerinti_idezet": "Around 25 % of the maize crop suffers frequent drought, with losses of up to half the harvest.",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "sub-Saharan Africa",
+    "korlatok": "nem adja meg a hozamelőny százalékát, csak a veszteséget",
+    "statusz": "elutasitva",
+    "indokok": [
+     "A(z) érték (50) nem szerepel az idézetben.",
+     "A(z) alsó (0) nem szerepel az idézetben.",
+     "A(z) felső (50) nem szerepel az idézetben.",
+     "Az idézet nem a keresett mennyiségről szól (pl. veszteség vagy elterjedtség)."
+    ],
+    "forras": "Fisher et al. (2015). Drought tolerant maize for farmer adaptation to drought in sub-Saharan Africa: Determinants of adoption in eastern and southern Africa. Climatic Change. https://doi.org/10.1007/s10584-015-1459-2",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P7",
+    "parameter": "alkalmazkodas_hozam_elony_pct",
+    "alkategoria": "drought-tolerant maize",
+    "ertek": 13.3,
+    "also": 13.3,
+    "felso": 13.3,
+    "egyseg": "%",
+    "szo_szerinti_idezet": "Our results showed that adoption of DTMVs increased maize yields by 13.3% and reduced the level of variance by 53% and downside risk exposure by 81% among adopters.",
+    "vizsgalat_tipusa": "szisztematikus-attekintes",
+    "regio": "Nigeria",
+    "korlatok": "nem adja meg a hozamelőny százalékát, csak a növekedést",
+    "statusz": "elutasitva",
+    "indokok": [
+     "Az idézet nem a keresett mennyiségről szól (pl. veszteség vagy elterjedtség)."
+    ],
+    "forras": "Wossen et al. (2017). Measuring the impacts of adaptation strategies to drought stress: The case of drought tolerant maize varieties. Journal of Environmental Management. https://doi.org/10.1016/j.jenvman.2017.06.058",
+    "preprint": false
+   },
+   {
+    "cikk_azonosito": "P8",
+    "parameter": "alkalmazkodas_hozam_elony_pct",
+    "alkategoria": "drought-tolerant maize",
+    "ertek": 6,
+    "also": 6,
+    "felso": 6,
+    "egyseg": "%",
+    "szo_szerinti_idezet": "Across years, average grain yield increased by 6% in MON 87460 compared with control under WL conditions.",
+    "vizsgalat_tipusa": "laborkiserlet",
+    "regio": "nem ad meg",
+    "korlatok": "nem adja meg a hozamelőny százalékát, csak a növekedést",
+    "statusz": "ellenorizve",
+    "indokok": [],
+    "forras": "Nemali et al. (2014). Physiological responses related to increased grain yield under drought in the first biotechnology‐derived drought‐tolerant maize. Plant Cell & Environment. https://doi.org/10.1111/pce.12446",
+    "preprint": false
+   }
+  ],
+  "osszesitett_parameterek": {
+   "alkalmazkodas_hozam_elony_pct:drought-tolerant maize": {
+    "parameter": "alkalmazkodas_hozam_elony_pct",
+    "alkategoria": "drought-tolerant maize",
+    "egyseg": "%",
+    "sulyozott_median": 6,
+    "tartomany": [
+     6,
+     6
+    ],
+    "forrasok_szama": 1,
+    "bizonyossag": "alacsony"
+   }
+  },
+  "ai_osszegzes": "A kutatások azt mutatják, hogy az aszálytűrő kukoricafajták növelik a termést és csökkentik a kockázatokat. Azonban a számok nem mutatják a hozamelőny százalékát, csak a termésnövekedést vagy a veszteséget. A kutatások nem egyértelműek a hozamelőny mértékéről.",
+  "ellentmondasok": "Nincs ellentmondás a cikkek között.",
+  "figyelmeztetes": "Ez egy játékon belüli, automatikusan összeállított irodalmi összefoglaló. Nem helyettesíti a szakértői lektorálást; minden számot az eredeti cikkben érdemes ellenőrizni.",
+  "azonosito": "AETHER-9934da0126e049d8",
+  "letrehozva": "2026-11-22T15:37:25+00:00"
+ },
+ "javaslatok": [
+  {
+   "kulcs": "alkalmazkodas_hozam_elony_pct:drought-tolerant maize",
+   "parameter": "alkalmazkodas_hozam_elony_pct",
+   "alkategoria": "drought-tolerant maize",
+   "ertek": 6,
+   "egyseg": "%",
+   "tartomany": [
+    6,
+    6
+   ],
+   "bizonyossag": "alacsony",
+   "bizonyossag_szoveg": "Gyenge bizonyíték: csak egy forrás. Érdemes tovább kutatni.",
+   "forrasok_szama": 1,
+   "nev": "Mennyivel több termést ad aszályban",
+   "jelentes": "Aszályos években kb. 6%-kal több termés. Ez nem hűti a Földet, de védi az élelmet.",
+   "publikacio": "AETHER-9934da0126e049d8",
+   "kar": "alkalmazkodas",
+   "kar_ertek": 6,
+   "kar_nev": "Alkalmazkodás (aszálytűrő fajták)",
+   "megjegyzes": "Közelítés: az aszály alatti hozamelőnyt a melegedés okozta hozamveszteség ellensúlyozásaként használjuk.",
+   "alkategoria_nev": "aszálytűrő kukorica"
+  }
+ ],
+ "osszefoglalo": {
+  "cikkek": 8,
+  "allitasok": 4,
+  "ellenorizve": 1,
+  "elutasitva": 3,
+  "orszag": "HU",
+  "hazai": 2
+ },
+ "archivum": {
+  "datum": "2026-11-22",
+  "ai": "ollama qwen3:8b"
+ }
+}
