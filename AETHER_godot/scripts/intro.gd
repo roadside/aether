@@ -4,18 +4,18 @@ extends Control
 ## a valódi éves eltéréssel, a mai hőmérséklet-eltérés térkép, a festett képek.
 ##
 ## Nyitány (0–11 mp): egy handpanen játszó, erdőben ülő alak (saját, festett pixeles figura,
-## nem valódi személy képmása); a keze a zene ütéseire mozdul. Utána jönnek az alábbi snittek
-## (az idők a nyitány végétől számítva, a rövidítések után kb. 55 mp):
-## Snittek (mp, a nyitány végétől):
-##   0–4        űr, „2026.” – egy fénypontból nő ki a Föld
-##   4–8,5      „Ez a Föld ma.”
-##   8,5–17     évszámláló 1940-től máig a VALÓDI éves eltéréssel, alul melegedési csíkok
+## nem valódi személy képmása); a keze a zene ütéseire mozdul. Utána jönnek az alábbi snittek.
+## Snittek (mp, a bevezető kezdetétől; a zene 65,9 mp):
+##   0–11       nyitány: a handpan-játékos az erdőben
+##   11–14      űr, „2026.” – egy fénypontból nő ki a Föld
+##   14–18,5    „Ez a Föld ma.”
+##   18,5–26    évszámláló 1940-től máig a VALÓDI éves eltéréssel, alul melegedési csíkok
 ##              (Copernicus Climate Pulse; ha még nincs letöltve, számok nélkül megy)
-##   17–22,5    a mai hőmérséklet-eltérés térkép
-##   22,5–38,5  négy festett pixeles kép (olvadó jég, aszály, árvíz, erdőtűz), 4–4 mp
-##   38,5–44,5  hívás: a játékos helyén fény gyúl, fényívek futnak a világ sok pontjára
-##   44,5–51    a görbe elágazik: „A jövő még nincs megírva.” (a jövő vonalai jelképek)
-##   51–55      a Föld, a cím halványan a csillagok között elrejtve; áttűnés a játékba
+##   26–31      a mai hőmérséklet-eltérés térkép
+##   31–47      négy festett pixeles kép (olvadó jég, aszály, árvíz, erdőtűz), 4–4 mp
+##   47–52      hívás: a játékos helyén fény gyúl, fényívek futnak a világ sok pontjára
+##   52–57,5    a görbe elágazik: „A jövő még nincs megírva.” (a jövő vonalai jelképek)
+##   57,5–65,5  a Föld, a cím halványan a csillagok között, az utolsó dallam alatt
 ## Zene: ha a játékos gépén ott van a saját zenefájl (sajat_zene/intro.wav a projektmappában,
 ## vagy user://sajat_zene/intro.wav), azt játssza; ez a fájl NEM része a játéknak és nem kerül
 ## fel a GitHubra (más szerző jogvédett felvétele lehet). Ha nincs, a saját, kódból előállított
@@ -34,8 +34,12 @@ const SCENE_LEN := 4.0         # egy festett kép ennyi mp
 const SCENE_SPEED := 0.55      # a festett képek mozgása ennyivel lassabb (nyugodtabb)
 
 const PRELUDE := 11.0          # a handpan-játékos nyitány hossza
-const MUSIC_FADE_AT := 60.0    # innen halkul a zene (a vége előtt)
-const MUSIC_FADE_LEN := 6.0
+## A zene ne érjen véget a cím előtt: a darab vége előtt (CONT_BEFORE mp-cel) lágyan
+## újraindul egy nyugodt pontjáról (CONT_FROM), és a bevezető után is szól még egy kicsit,
+## a játék elején lassan (END_FADE mp alatt) halkul el.
+const CONT_BEFORE := 5.0
+const CONT_FROM := 12.0
+const END_FADE := 9.0
 const OWN_MUSIC := ["res://sajat_zene/intro.wav", "user://sajat_zene/intro.wav"]
 ## A nyitány ütései (mp) a saját zenefájl első 11 másodpercéből kimérve: [idő, kéz (0 bal, 1 jobb), hangmező]
 const HITS := [[3.09, 1, 0], [3.36, 0, 3], [4.18, 1, 2], [4.46, 0, 1], [5.61, 1, 4], [5.90, 0, 5],
@@ -56,7 +60,8 @@ var _music: AudioStreamPlayer  # lágy handpan-zene (tools/intro_zene_handpan.py
 var _dim: ColorRect            # a gömb shadere nem veszi figyelembe a modulate-et: ezzel sötétítünk
 var _fx: Control               # rajzolt előtér: évszámláló, festett képek, elágazó görbe
 var _t := 0.0                  # az intro kezdete óta eltelt idő
-var _music_fading := false
+var _music2: AudioStreamPlayer # a zene folytatása (ugyanaz a darab, egy nyugodt pontjáról)
+var _natural_end := false      # a bevezető magától ért véget (nem átugrották)
 var _mode := ""                # "jatekos" | "szamlalo" | "kep" | "jovo" | ""
 var _mode_t0 := 0.0            # az aktuális rajzolt jelenet kezdete (_t-ben)
 var _scene_idx := 0
@@ -149,14 +154,33 @@ func _start_music() -> void:
 	_music.play()
 
 
-func _stop_music() -> void:
-	if _music == null or not is_instance_valid(_music):
+## A darab vége előtt a folytatás lágyan beúszik (az eredeti közben magától lecseng).
+func _continue_music() -> void:
+	if _music2 != null or _music == null or not is_instance_valid(_music) or not _music.playing:
 		return
-	var m := _music
+	var length := _music.stream.get_length()
+	if length <= CONT_FROM + CONT_BEFORE or _music.get_playback_position() < length - CONT_BEFORE:
+		return
+	_music2 = AudioStreamPlayer.new()
+	_music2.stream = _music.stream
+	_music2.volume_db = -30.0
+	main.add_child(_music2)
+	_music2.play(CONT_FROM)
+	_music2.create_tween().tween_property(_music2, "volume_db", -4.0, 3.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+
+## Átugráskor gyorsan (2 mp), a bevezető természetes végén lassan (END_FADE) halkul el,
+## így a zene a játék elején még szól egy kicsit.
+func _stop_music() -> void:
+	var fade := END_FADE if _natural_end else 2.0
+	for m in [_music, _music2]:
+		if m == null or not is_instance_valid(m):
+			continue
+		var tw: Tween = m.create_tween()
+		tw.tween_property(m, "volume_db", -45.0, fade).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+		tw.tween_callback(m.queue_free)
 	_music = null
-	var tw := m.create_tween()
-	tw.tween_property(m, "volume_db", -40.0, 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-	tw.tween_callback(m.queue_free)
+	_music2 = null
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -196,9 +220,7 @@ func _process(delta: float) -> void:
 	_t += delta
 	if _mode != "":
 		_fx.queue_redraw()
-	if _t >= MUSIC_FADE_AT and not _music_fading and _music != null and is_instance_valid(_music):
-		_music_fading = true      # a zene vége lágyan elhalkul
-		_music.create_tween().tween_property(_music, "volume_db", -45.0, MUSIC_FADE_LEN).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	_continue_music()
 
 
 func _wait(sec: float) -> bool:
@@ -236,6 +258,7 @@ func _play() -> void:
 	g.position = Vector2((W - g.size.x) / 2.0, 60)
 	_globe_center = g.position
 	await _play_full()
+	_natural_end = not _done
 	_finish()
 
 
@@ -249,37 +272,40 @@ func _play_full() -> void:
 	await _shot("intro_00_jatekos.png")
 	if not await _wait(PRELUDE - 7.0): return
 	_end_mode()
-	# 1. Csillagos űr, egy fénypont nő: a Föld (4 mp)
-	create_tween().tween_property(_black, "color:a", 0.0, 1.5)
+	# Időrend (a zene 65,9 mp; az utolsó dallam 56–61,5 mp között szól, a cím ez alatt jön fel):
+	#   nyitány 11 · űr 3 · Föld 4,5 · évszámláló 7,5 · eltérés 5 · festett képek 16 ·
+	#   hívás 5 · jövő 5,5 → a cím 57,5 mp-nél, és 8 mp-ig marad (65,5 mp).
+	# 1. Csillagos űr, egy fénypont nő: a Föld (3 mp)
+	create_tween().tween_property(_black, "color:a", 0.0, 1.2)
 	_say("2026.")
-	_globe_to(0.35, 3.6)
-	if not await _wait(2.0): return
+	_globe_to(0.35, 2.8)
+	if not await _wait(1.5): return
 	await _shot("intro_01_ur.png")
-	if not await _wait(2.0): return
-	# 2. Ez a Föld ma (valódi Nap-állás, városfények) (6 mp)
+	if not await _wait(1.5): return
+	# 2. Ez a Föld ma (valódi Nap-állás, városfények) (4,5 mp)
 	_say(L.t("Ez a Föld ma."))
 	_globe_to(1.0, 3.0)
 	create_tween().tween_property(g, "spin", g.spin + 0.14, 8.0)
 	if not await _wait(3.0): return
 	await _shot("intro_02_fold.png")
 	if not await _wait(1.5): return
-	# 3. Évszámláló: 1940-től máig, a gömb közben „melegszik” (8,5 mp)
+	# 3. Évszámláló: 1940-től máig, a gömb közben „melegszik” (7,5 mp)
 	_say(L.t("Egyre melegebb..."))
 	create_tween().tween_property(g, "position:x", _globe_center.x - 230.0, 1.5).set_trans(Tween.TRANS_SINE)
 	_globe_to(0.9, 1.5)
 	_set_mode("szamlalo")
-	if not await _wait(5.0): return
+	if not await _wait(4.5): return
 	await _shot("intro_03_szamlalo.png")
-	if not await _wait(3.5): return
+	if not await _wait(3.0): return
 	_end_mode()
-	# 4. A mai hőmérséklet-eltérés (Copernicus Climate Pulse), ha betöltött (6 mp)
+	# 4. A mai hőmérséklet-eltérés (Copernicus Climate Pulse), ha betöltött (5 mp)
 	create_tween().tween_property(g, "position:x", _globe_center.x, 1.2).set_trans(Tween.TRANS_SINE)
 	_globe_to(1.0, 1.2)
 	create_tween().tween_property(g, "heat", 0.0, 1.0)
 	if main.anomaly_ready():
 		g.show_anomaly(true)
 	_say(L.t("%s. Melegebb, mint valaha.") % main.warming_text())
-	if not await _wait(3.5): return
+	if not await _wait(3.0): return
 	await _shot("intro_04_elteres.png")
 	if not await _wait(2.0): return
 	# 5. Négy festett kép, 4–4 mp, puha sötét áttűnéssel (16 mp)
@@ -299,7 +325,7 @@ func _play_full() -> void:
 		await _shot("intro_%02d_kep_%s.png" % [5 + i, cats[i]])
 		if not await _wait(SCENE_LEN * 0.4): return
 	_end_mode()
-	# 6. Hívás (6 mp): a gömb a játékos helyére fordul, ott kigyullad egy fény, és tőle
+	# 6. Hívás (5 mp): a gömb a játékos helyére fordul, ott kigyullad egy fény, és tőle
 	#    fényívek indulnak a világ sok pontjára, ahol sorra új fények gyúlnak:
 	#    egy kérdésből sokak munkája lesz.
 	g.home()
@@ -307,27 +333,27 @@ func _play_full() -> void:
 	_dim_to(0.25, 1.0)
 	_say(L.t("Minden változás egyetlen kérdéssel kezdődik."))
 	_set_mode("hivas")
-	if not await _wait(3.4): return
+	if not await _wait(3.1): return
 	_say(L.t("A tiéddel."))
-	if not await _wait(1.4): return
-	await _shot("intro_09_hivas.png")
 	if not await _wait(1.2): return
+	await _shot("intro_09_hivas.png")
+	if not await _wait(0.7): return
 	_end_mode()
-	# 7. A görbe elágazik: a jövő még nincs megírva (6,5 mp)
+	# 7. A görbe elágazik: a jövő még nincs megírva (5,5 mp)
 	_dim_to(0.68, 1.0)
 	_say(L.t("A jövő még nincs megírva."))
 	_set_mode("jovo")
-	if not await _wait(5.3): return
+	if not await _wait(4.5): return
 	await _shot("intro_10_jovo.png")
-	if not await _wait(1.2): return
+	if not await _wait(1.0): return
 	_end_mode()
-	# 8. A Föld, a cím halványan a csillagok között (4 mp)
+	# 8. A Föld, a cím halványan a csillagok között (8 mp, az utolsó dallam alatt)
 	_dim_to(0.0, 1.2)
-	_globe_to(0.8, 2.0)
+	_globe_to(0.8, 2.5)
 	_show_logo()
-	if not await _wait(2.6): return
+	if not await _wait(4.0): return
 	await _shot("intro_11_vege.png")
-	if not await _wait(1.4): return
+	if not await _wait(4.0): return
 
 
 ## A valódi éves eltérések a gépen lévő Climate Pulse-adatból. Ha nincs, vagy egy napnál
@@ -392,8 +418,8 @@ func _show_logo() -> void:
 	by.size = Vector2(440, 26)
 	_logo.add_child(by)
 	var tw := create_tween()
-	tw.tween_interval(0.6)
-	tw.tween_property(_logo, "modulate:a", 0.42, 1.6).set_trans(Tween.TRANS_SINE)
+	tw.tween_interval(0.8)
+	tw.tween_property(_logo, "modulate:a", 0.42, 2.8).set_trans(Tween.TRANS_SINE)
 	# két halk pislákolás, mint egy csillag
 	tw.tween_property(_logo, "modulate:a", 0.25, 0.5)
 	tw.tween_property(_logo, "modulate:a", 0.42, 0.5)
@@ -463,8 +489,8 @@ func _draw_fx() -> void:
 ## Évszámláló a valódi éves eltéréssel, alul a „melegedési csíkok” (minden év egy csík).
 ## A gömb közben fokozatosan „melegszik” (csak szemléltetés).
 func _draw_counter(lt: float) -> void:
-	var pos := _ss(0.8, 7.2, lt)
-	var a := _win(lt, 0.0, 8.5, 0.6)
+	var pos := _ss(0.8, 6.4, lt)
+	var a := _win(lt, 0.0, 7.5, 0.6)
 	main.globe.heat = 0.75 * (_norm(_value_at(pos)) if not _years.is_empty() else pos)
 	if _years.is_empty():
 		return
@@ -702,7 +728,7 @@ func _globe_screen(lat: float, lon: float) -> Vector3:
 
 
 func _draw_call(lt: float) -> void:
-	var a := _win(lt, 0.0, 6.0, 0.6)
+	var a := _win(lt, 0.0, 5.0, 0.6)
 	var home := Vector2(800, 450)
 	for s in main.globe.stations:
 		if s.get("me", false):
@@ -724,7 +750,7 @@ func _draw_call(lt: float) -> void:
 		var dst := Vector2(t.x, t.y)
 		if dst.distance_to(home) < 30.0:
 			continue
-		var t0 := 1.3 + k * 0.17
+		var t0 := 1.0 + k * 0.14
 		k += 1
 		var p := clampf((lt - t0) / 1.1, 0.0, 1.0)
 		if p <= 0.0:
@@ -751,14 +777,14 @@ func _draw_call(lt: float) -> void:
 
 # --- a jövő: a görbe elágazik --------------------------------------------------
 func _draw_future(lt: float) -> void:
-	var a := _win(lt, 0.0, 6.5, 0.6)
+	var a := _win(lt, 0.0, 5.5, 0.6)
 	var x0 := 150.0
 	var xn := 900.0
 	var now := Vector2(xn, 420.0)
 	var pts := PackedVector2Array()
 	if not _years.is_empty():      # a múlt: a valódi éves eltérések
 		var n := _years.size()
-		var show := int(ceil(_ss(0.4, 2.6, lt) * float(n)))
+		var show := int(ceil(_ss(0.3, 2.0, lt) * float(n)))
 		for i in show:
 			pts.append(Vector2(lerpf(x0, xn, float(i) / float(n - 1)), lerpf(640.0, 420.0, _norm(_years[i][1]))))
 		for i in pts.size() - 1:
@@ -766,7 +792,7 @@ func _draw_future(lt: float) -> void:
 		if show >= n:
 			now = pts[n - 1]
 		_fx.draw_string(UI.font_bold, Vector2(x0, 690.0), str(_years[0][0]), HORIZONTAL_ALIGNMENT_LEFT, -1, 24, Color(UI.MUTE, a))
-	var f := _ss(2.6, 5.4, lt)
+	var f := _ss(2.0, 4.6, lt)
 	if f > 0.0:
 		var red := PackedVector2Array()
 		var green := PackedVector2Array()
@@ -785,7 +811,7 @@ func _draw_future(lt: float) -> void:
 				_fx.draw_circle(head, r, Color(UI.GREEN, 0.20 * a))
 			_fx.draw_circle(head, 9.0, Color(UI.GREEN, a))
 	var pulse := 1.0 + 0.25 * sin(_t * 5.0)
-	var na := a * _ss(2.3, 2.8, lt) if not _years.is_empty() else a
+	var na := a * _ss(1.8, 2.3, lt) if not _years.is_empty() else a
 	_fx.draw_circle(now, 20.0 * pulse, Color(UI.GOLD, 0.25 * na))
 	_fx.draw_circle(now, 10.0, Color(UI.GOLD, na))
 	_fx.draw_string(UI.font_bold, now + Vector2(-40.0, -30.0), str(_year_now), HORIZONTAL_ALIGNMENT_CENTER, 80.0, 26, Color(UI.GOLD, na))
