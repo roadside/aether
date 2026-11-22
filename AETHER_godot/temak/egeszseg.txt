@@ -15,20 +15,20 @@ Korszak: I. (Felismerés)
 Kérdés: A hőség okozta halálesetek mekkora része jön a melegedésből?
 Röviden: A forró napokon több idős és beteg ember hal meg. A melegedéssel ez nő.
 Ha kikutatod:
-Mire jó?: Ez a téma fontos, mert segíthet megérteni, hogy milyen mértékben járul hozzá a hőség a halálesetekhez, és milyen intézkedéseket lehet tenni a veszélyek csökkentésére.
-Mi a gond vele?: A források nem mondják meg pontosan, hogy mennyire járul hozzá a melegedés a hőség okozta halálesetekhez, csak arra utalnak, hogy a legnagyobb veszély az idősekre és a gazdasági helyzetre utaló csoportokra vonatkozik.
-Mennyire bizonyított?: A tudományos források szerint a hőség okozta halálesetek valamely része a melegedésből származik, de pontos számok nem állnak rendelkezésre.
+Mire jó?: Ez a téma fontos, mert segíthet megérteni, hogy milyen mértékben járul hozzá a hőség a halálesetekhez, és milyen intézkedéseket lehet tenni a kockázatok csökkentésére.
+Mi a gond vele?: A források nem mondják meg pontosan, hogy mennyire járul hozzá a melegedés a hőség okozta halálesetekhez, csak arra utalnak, hogy a legnagyobb veszély az idősekre és a rosszabb társadalmi-gazdasági helyzetű csoportokra vonatkozik.
+Mennyire bizonyított?: A tudományos források szerint a hőség okozta halálesetek egy része a melegedésből származik, de pontos számok nem állnak rendelkezésre.
 Kérdés angolul: What share of heat deaths is caused by warming?
 Röviden angolul: On hot days more elderly and sick people die. Warming makes this worse.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: This topic is important because it can help us understand to what extent heat contributes to deaths and what measures can be taken to reduce the risks.
+Mi a gond vele? angolul: The sources do not say exactly how much warming contributes to heat-related deaths, only indicating that the greatest risk applies to the elderly and socioeconomic groups.
+Mennyire bizonyított? angolul: According to scientific sources, some share of heat-related deaths comes from warming, though exact figures are not available.
 Forrás: Wikipédia: Heat wave (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Heat_wave
 Forrás: Heat-related mortality: a review and exploration of heterogeneity (2009) – https://doi.org/10.1136/jech.2009.087999
 Forrás: Review Article: Vulnerability to Heat-related Mortality (2015) – https://doi.org/10.1097/ede.0000000000000375
 Forrás: Is planned adaptation to heat reducing heat-related mortality and illness? A systematic review (2014) – https://doi.org/10.1186/1471-2458-14-1112
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: heat-related mortality attributable to climate change|heat wave mortality temperature|temperature mortality association multi-country
 Paraméter: reszarany_pct
@@ -41,20 +41,20 @@ Korszak: I. (Felismerés)
 Kérdés: Mennyi munkaidőt visz el a hőség?
 Röviden: Nagy melegben kint dolgozni veszélyes, ezért kevesebbet lehet dolgozni.
 Ha kikutatod:
-Mire jó?: Tudni kell, mennyi munkaidőt vesz el a hőség, hogy megelőzzük a munkavállalók egészségét és biztonságát, valamint csökkentsük a munkaerőveszteséget.
-Mi a gond vele?: A hőség miatt a munkavállalók gyakran fáradjanak, hibákat követhetnek el, és súlyos egészségügyi problémákra is számíthatunk, például hőájulásra vagy hőmérgezésre.
-Mennyire bizonyított?: A tudományos vizsgálatok bizonyítják, hogy a hőség káros hatással lehet a munkavállalókra, különösen a mezőgazdaságban és a konstrukcióban dolgozókra.
+Mire jó?: Tudni kell, mennyi munkaidőt vesz el a hőség, hogy megvédjük a munkavállalók egészségét és biztonságát, valamint csökkentsük a munkaerő-kiesést.
+Mi a gond vele?: A hőség miatt a munkavállalók gyakran elfáradnak, hibákat követhetnek el, és súlyos egészségügyi problémákra is számíthatunk, például hőguta vagy hőstressz formájában.
+Mennyire bizonyított?: A tudományos vizsgálatok bizonyítják, hogy a hőség káros hatással lehet a munkavállalókra, különösen a mezőgazdaságban és az építőiparban dolgozókra.
 Kérdés angolul: How much working time does heat take away?
 Röviden angolul: Working outdoors in great heat is dangerous, so less work gets done.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: We need to know how much working time heat takes away so we can protect workers' health and safety and reduce labor loss.
+Mi a gond vele? angolul: Because of heat, workers often get tired, can make mistakes, and serious health problems can also occur, such as heatstroke or heat stress.
+Mennyire bizonyított? angolul: Scientific studies show that heat can have harmful effects on workers, especially those working in agriculture and construction.
 Forrás: Wikipédia: Occupational heat stress (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Occupational_heat_stress
 Forrás: Occupational Heat Stress, DNA damage and Heat Shock Protein - A Review (2018) – https://doi.org/10.18103/mra.v6i1.1631
 Forrás: Occupational heat stress, heat-related effects and the related social and economic loss: a scoping literature review (2023) – https://doi.org/10.3389/fpubh.2023.1173553
 Forrás: Occupational Heat Stress, Thermal Comfort, and Cognitive Performance in the OR: An Integrative Review (2020) – https://doi.org/10.1002/aorn.13009
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: heat stress labour productivity loss climate change|occupational heat exposure labor capacity|heat stress outdoor workers productivity
 Paraméter: csokkenes_pct
@@ -67,20 +67,20 @@ Korszak: I. (Felismerés)
 Kérdés: Hány életet ment, ha kevesebb szenet és olajat égetünk?
 Röviden: A kémények és kipufogók füstje betegséget okoz. A tisztább levegő a klímának is jó.
 Ha kikutatod:
-Mire jó?: Ha kevesebb szenet és olajat égetünk, kevesebb káros szennyező anyag kerül a levegőbe, ezért kevesebb embert ölhet meg a levegőszennyezés, és jobb lehet az egészségünk, valamint a természet is.
-Mi a gond vele?: A szén és olaj csökkentése nem mindig egyszerű, mert sok gazdasági tevékenység függ ezektől, és a váltás más forrásokra költségeket is okozhat.
-Mennyire bizonyított?: A tudomány bizonyítja, hogy a levegőszennyezés több millió embert évente megölni tud, és hogy a szén és olaj csökkentése csökkenti ezt a számot.
+Mire jó?: Ha kevesebb szenet és olajat égetünk, kevesebb káros szennyező anyag kerül a levegőbe, ezért kevesebb embert ölhet meg a légszennyezés, és jobb lehet az egészségünk, valamint a természet is.
+Mi a gond vele?: A szén és az olaj csökkentése nem mindig egyszerű, mert sok gazdasági tevékenység függ ezektől, és a más energiaforrásokra való átállás költségekkel is járhat.
+Mennyire bizonyított?: A tudomány bizonyítja, hogy a légszennyezés több millió ember halálához járulhat hozzá évente, és hogy a szén és az olaj használatának csökkentése csökkenti ezt a számot.
 Kérdés angolul: How many lives are saved by burning less coal and oil?
 Röviden angolul: Smoke from chimneys and exhausts causes disease. Cleaner air also helps the climate.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: If we burn less coal and oil, fewer harmful pollutants enter the air, so air pollution can kill fewer people, and our health as well as nature can be better.
+Mi a gond vele? angolul: Reducing coal and oil is not always simple because many economic activities depend on them, and switching to other sources can also involve costs.
+Mennyire bizonyított? angolul: Science shows that air pollution can contribute to millions of deaths annually, and that reducing coal and oil lowers this number.
 Forrás: Wikipédia: Air pollution (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Air_pollution
 Forrás: Measuring and valuing the health co-benefits of climate change mitigation: a scoping review (2024) – https://doi.org/10.1016/s2542-5196(24)00095-0
 Forrás: A scoping review of the health co-benefits of climate mitigation strategies in South America (2023) – https://doi.org/10.1016/j.lana.2023.100602
 Forrás: Assessing Greenhouse Gas Emissions and Health Co-Benefits: A Structured Review of Lifestyle-Related Climate Change Mitigation Strategies (2017) – https://doi.org/10.3390/ijerph14050468
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: air quality health co-benefits of climate mitigation|fossil fuel air pollution premature deaths|PM2.5 mortality fossil fuel combustion
 Paraméter: kockazat_csokkentes_pct
@@ -101,14 +101,14 @@ Mennyire bizonyított?: A tudomány bizonyítja, hogy a fák hűtik a várost, d
 Kérdés angolul: How much cooler is the city under trees?
 Röviden angolul: Tree shade and evaporation cool the street in summer.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Trees help cities become cooler, so they can reduce the impact of heat on people and wildlife.
+Mi a gond vele? angolul: Trees cannot cool at all times, and there is little space for large trees in cities, so they only have a partial effect.
+Mennyire bizonyított? angolul: Science shows that trees cool the city, though the exact extent depends on tree size, location, and climate.
 Forrás: Wikipédia: Urban heat island (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Urban_heat_island
 Forrás: Critical review on the cooling effect of urban blue-green space: A threshold-size perspective (2020) – https://doi.org/10.1016/j.ufug.2020.126630
 Forrás: The cooling effect of urban green spaces as nature-based solutions for mitigating urban heat: insights from a decade-long systematic review (2025) – https://doi.org/10.1016/j.crm.2025.100731
 Forrás: A Review of Research on the Urban Green Space Cooling Effect (2013) – https://openalex.org/W2376924377
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: urban trees cooling effect air temperature|urban greening heat island mitigation meta-analysis|street trees land surface temperature
 Paraméter: lehules_c
@@ -121,20 +121,20 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyit hűtenek a világos tetők?
 Röviden: A fehér tető visszaveri a napfényt, ezért kevésbé melegszik fel a ház.
 Ha kikutatod:
-Mire jó?: A világos tetők csökkentik a városi melegsziget hatását, csökkentik a hűtési energiafogyasztást, és így csökkentik a klímaváltozás okozta hőmérsékletnövekedést.
-Mi a gond vele?: A világos tetők hatása kicsi a globális hőmérséklet csökkentésére, és nagyobb területen való alkalmazása drága lehet.
-Mennyire bizonyított?: A világos tetők hatása részben bizonyított, mivel több tanulmány mutatja, hogy csökkentik a városi melegsziget hatását és a hűtési energiafogyasztást, de a globális hőmérséklet csökkentésére való hatásuk még nem teljesen bizonyított.
+Mire jó?: A világos tetők csökkentik a városi hősziget-hatást, csökkentik a hűtési energiafogyasztást, és így mérséklik a hőmérséklet-emelkedést.
+Mi a gond vele?: A világos tetők hatása kicsi a globális hőmérséklet csökkentésére, és nagyobb területen való alkalmazásuk drága lehet.
+Mennyire bizonyított?: A világos tetők hatása részben bizonyított, mivel több tanulmány mutatja, hogy csökkentik a városi hősziget-hatást és a hűtési energiafogyasztást, de a globális hőmérséklet csökkentésére gyakorolt hatásuk még nem teljesen bizonyított.
 Kérdés angolul: How much do light-coloured roofs cool?
 Röviden angolul: A white roof reflects sunlight, so the house heats up less.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Light-coloured roofs reduce the urban heat island effect, reduce cooling energy consumption, and thus moderate temperature rise.
+Mi a gond vele? angolul: The effect of light-coloured roofs on reducing global temperature is small, and applying them over a larger area can be expensive.
+Mennyire bizonyított? angolul: The effect of light-coloured roofs is partially proven, as several studies show they reduce the urban heat island effect and cooling energy consumption, though their effect on reducing global temperature is not yet fully proven.
 Forrás: Wikipédia: Reflective surfaces (climate engineering) (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Reflective_surfaces_%28climate_engineering%29
 Forrás: A study on the comparative review of cool roof thermal performance in various regions (2021) – https://doi.org/10.1016/j.enbenv.2021.03.001
 Forrás: A REVIEW ON COOLING ROOF TILE MATERIALS (2020) – https://doi.org/10.31838/jcr.07.13.08
 Forrás: A Literature Review of Cooling Center, Misting Station, Cool Pavement, and Cool Roof Intervention Evaluations (2022) – https://doi.org/10.3390/atmos13071103
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: cool roofs high albedo urban temperature reduction|reflective roofs cooling energy savings
 Paraméter: lehules_c
@@ -147,20 +147,20 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyit hűt a zöldtető?
 Röviden: A növényekkel borított tető hűti az épületet, és visszatartja az esővizet.
 Ha kikutatod:
-Mire jó?: A zöldtető hűtést nyújt az épületnek, csökkentheti a hőmérsékletet, és csökkenti a csapadékvizek mennyiségét a városokban.
-Mi a gond vele?: A zöldtetők hatása függ a növényfajoktól, a talajtól és a helyi időjárásától, ezért nem minden esetben biztos, hogy ugyanúgy működnek.
+Mire jó?: A zöldtető hűtést nyújt az épületnek, csökkentheti a hőmérsékletet, és mérsékli a csapadékvizek lefolyását a városokban.
+Mi a gond vele?: A zöldtetők hatása függ a növényfajoktól, a talajtól és a helyi időjárástól, ezért nem minden esetben biztos, hogy ugyanúgy működnek.
 Mennyire bizonyított?: A zöldtetők hatása részben bizonyított, de további kutatásokra van szükség, hogy pontosan megértsék, hogyan működnek különböző körülmények között.
 Kérdés angolul: How much does a green roof cool?
 Röviden angolul: A roof covered in plants cools the building and holds back rainwater.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: A green roof provides cooling to the building, can reduce temperature, and reduces stormwater runoff in cities.
+Mi a gond vele? angolul: The effect of green roofs depends on plant species, soil, and local weather, so it is not always certain that they work the same way.
+Mennyire bizonyított? angolul: The effect of green roofs is partially proven, though further research is needed to understand exactly how they work under different conditions.
 Forrás: Wikipédia: Zöldtető- és zöldfalépítők Országos Szövetsége (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Z%C3%B6ldtet%C5%91-_%C3%A9s_z%C3%B6ldfal%C3%A9p%C3%ADt%C5%91k_Orsz%C3%A1gos_Sz%C3%B6vets%C3%A9ge
 Forrás: Integration of photovoltaic panels and green roofs: review and predictions of effects on electricity production and plant communities (2016) – https://doi.org/10.1080/15659801.2015.1048617
 Forrás: Green roof hydrologic performance and modeling: a review (2013) – https://doi.org/10.2166/wst.2013.770
 Forrás: Green roof substrates—A literature review (2022) – https://doi.org/10.3389/fbuil.2022.1019362
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: green roof cooling effect building energy|green roofs urban heat island temperature reduction
 Paraméter: lehules_c
@@ -179,14 +179,14 @@ Mennyire bizonyított?: A tudomány bizonyítja, hogy a hőségriasztás csökke
 Kérdés angolul: How many lives do heat warnings save?
 Röviden angolul: Warnings, cool rooms and help for the elderly during heatwaves.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Heat warnings help protect people from the harms of heat, especially the elderly and disadvantaged.
+Mi a gond vele? angolul: The effect of heat warnings is not always certain because not everyone receives them and protection does not work well everywhere.
+Mennyire bizonyított? angolul: Science shows that heat warnings can reduce the harms of heat, though how effective they are exactly needs further study.
 Forrás: Wikipédia: Hőségriasztás (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/H%C5%91s%C3%A9griaszt%C3%A1s
 Forrás: A Difference-in-Differences Approach to Assess the Effect of a Heat Action Plan on Heat-Related Mortality, and Differences in Effectiveness According to Sex, Age, and Socioeconomic Status (Montreal, Quebec) (2016) – https://doi.org/10.1289/ehp203
 Forrás: Message Sent, Now What? A Critical Analysis of the Heat Action Plan in Ahmedabad, India (2020) – https://doi.org/10.3390/urbansci4040053
 Forrás: Effective Community-Based Interventions for the Prevention and Management of Heat-Related Illnesses: A Scoping Review (2021) – https://doi.org/10.3390/ijerph18168362
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: heat health warning system mortality reduction|heat action plan effectiveness mortality
 Paraméter: kockazat_csokkentes_pct
@@ -205,14 +205,14 @@ Mennyire bizonyított?: A tudományos kutatások szerint ezek a rendszerek haté
 Kérdés angolul: How many lives do flood and storm warnings save?
 Röviden angolul: With warnings in time, people can flee and protect their homes.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: These systems help people prepare in time, so fewer life-threatening situations can arise and they can reduce damage.
+Mi a gond vele? angolul: Such systems do not always work well because warnings do not reach everyone and disasters can occur suddenly, so people cannot always react in time.
+Mennyire bizonyított? angolul: Scientific research indicates that these systems can be effective, though in practice they still have limitations, so further development is needed.
 Forrás: Wikipédia: Early warning system (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Early_warning_system
 Forrás: Effectiveness of early warning systems in the detection of infectious diseases outbreaks: a systematic review (2022) – https://doi.org/10.1186/s12889-022-14625-4
 Forrás: Flash Flood Early Warning Systems: A Critical Review of Their Effectiveness in Reducing Disaster Risks (2023) – https://doi.org/10.4018/978-1-6684-8771-6.ch004
 Forrás: Validity and effectiveness of paediatric early warning systems and track and trigger tools for identifying and reducing clinical deterioration in hospitalised children: a systematic review (2019) – https://doi.org/10.1136/bmjopen-2018-022105
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: early warning systems disaster mortality reduction|flood early warning effectiveness|tropical cyclone early warning mortality
 Paraméter: kockazat_csokkentes_pct

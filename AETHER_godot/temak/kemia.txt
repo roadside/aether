@@ -15,20 +15,20 @@ Korszak: I. (Felismerés)
 Kérdés: Mennyire savasodik az óceán?
 Röviden: A tenger elnyeli a CO2 egy részét, és ettől savasabb lesz. Ez árt a kagylóknak és a koralloknak.
 Ha kikutatod:
-Mire jó?: A tenger savasodása az életet fenyegető folyamat, mert bizonyos tengeri élőlények, mint a kagylók és a korallok, nehezebben tudnak kalciumkarbonátból testüket építeni, ami az élelmezési láncot és a tengeri környezetet veszélyeztetheti.
-Mi a gond vele?: A tenger savasodása a globális felmelegedéshez hasonlóan nem megoldható rövid távon, és a tengeri élet sok részére káros hatással lehet, különösen a kisebb méretű, könnyebben oldható kalciumkarbonátot használó élőlényekre.
-Mennyire bizonyított?: A tenger savasodásának mértéke és hatása számos tudományos tanulmány alátámasztja, és a szén-dioxid-kibocsátások növekedése a fő ok, amit a kibocsátási adatok is bizonyítanak.
+Mire jó?: A tenger savasodásának megértése fontos, mert bizonyos tengeri élőlények – mint a kagylók és a korallok – nehezebben tudnak kalciumkarbonátból vázat vagy héjat építeni, ami a táplálékláncot és a tengeri ökoszisztémát is veszélyeztetheti.
+Mi a gond vele?: A tenger savasodása a globális felmelegedéshez hasonlóan nem oldható meg rövid távon, és a tengeri élővilág sok részére káros hatással lehet, különösen a kisebb méretű, könnyebben oldódó kalciumkarbonátot használó élőlényekre.
+Mennyire bizonyított?: A tenger savasodásának mértékét és hatását számos tudományos tanulmány alátámasztja, és a szén-dioxid-kibocsátások növekedése a fő ok, amit a kibocsátási adatok is bizonyítanak.
 Kérdés angolul: How acidic is the ocean becoming?
 Röviden angolul: The sea absorbs part of the CO2 and becomes more acidic. This harms shellfish and corals.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Understanding ocean acidification is important because certain marine organisms—such as shellfish and corals—have a harder time building shells or skeletons from calcium carbonate, which can threaten the food chain and marine ecosystem.
+Mi a gond vele? angolul: Ocean acidification, like global warming, cannot be solved in the short term and can have harmful effects on many parts of marine life, especially smaller organisms that use more easily soluble calcium carbonate.
+Mennyire bizonyított? angolul: The extent and impact of ocean acidification are supported by numerous scientific studies, and rising carbon dioxide emissions are the main cause, as confirmed by emissions data.
 Forrás: Wikipédia: Ocean acidification (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Ocean_acidification
 Forrás: A Review and Meta-Analysis of Potential Impacts of Ocean Acidification on Marine Calcifiers From the Southern Ocean (2021) – https://doi.org/10.3389/fmars.2021.584445
 Forrás: Reviews and Syntheses: Ocean acidification and its potential impacts on marine ecosystems (2016) – https://doi.org/10.5194/bg-13-1767-2016
 Forrás: Reviews and Syntheses: Responses of coccolithophores to ocean acidification: a meta-analysis (2015) – https://doi.org/10.5194/bg-12-1671-2015
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: ocean acidification pH decline observations|ocean acidification impacts marine calcifiers meta-analysis
 Paraméter: ph_valtozas
@@ -44,19 +44,19 @@ Kérdés: Mennyi metán fogható fel a szeméttelepeken?
 Röviden: A lerakott ételmaradék és papír rothadás közben metánt termel.
 Ha kikutatod:
 Mire jó?: A metán nagyon erősen melegíti a Földet, ezért a szeméttelepeken keletkező gáz kezelése segíthet a klímaváltozás lassításában.
-Mi a gond vele?: A gáz kezelése nem mindig hatékony, és a metán továbbra is kiszorulhat a légkörbe, ha nem jól kezelik.
-Mennyire bizonyított?: A tudomány bizonyítja, hogy a szeméttelepeken keletkező gáz jelentős metán-tartalmú, de a teljes mennyiség pontosan nem ismert.
+Mi a gond vele?: A gáz kezelése nem mindig hatékony, és a metán továbbra is kijuthat a légkörbe, ha nem kezelik megfelelően.
+Mennyire bizonyított?: A tudomány bizonyítja, hogy a szeméttelepeken keletkező gáz jelentős metántartalmú, de a teljes kibocsátás pontos mennyisége nem ismert.
 Kérdés angolul: How much methane can landfills capture?
 Röviden angolul: Dumped food waste and paper produce methane as they rot.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Methane warms the Earth very strongly, so managing gas produced in landfills can help slow climate change.
+Mi a gond vele? angolul: Gas management is not always effective, and methane can still escape into the atmosphere if not managed properly.
+Mennyire bizonyított? angolul: Science shows that gas produced in landfills has a significant methane content, though the exact total amount of emissions is not known.
 Forrás: Wikipédia: Landfill gas (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Landfill_gas
 Forrás: Biotic systems to mitigate landfill methane emissions (2008) – https://doi.org/10.1177/0734242x07087977
 Forrás: Methane Oxidation in Landfill Cover Soils: A Review (2014) – https://doi.org/10.5572/ajae.2014.8.1.001
 Forrás: Methane Mitigation: Methods to Reduce Emissions, on the Path to the Paris Agreement (2020) – https://doi.org/10.1029/2019rg000675
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: landfill methane emissions mitigation potential|landfill gas capture efficiency|landfill methane oxidation cover
 Paraméter: metan_csokkentes_pct
@@ -69,20 +69,20 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyi melegedést előz meg a hűtőgázok cseréje?
 Röviden: A hűtőgépek egyes gázai, ha kiszöknek, akár ezerszer erősebben melegítenek, mint a CO2.
 Ha kikutatod:
-Mire jó?: A hűtőgázok cseréje csökkenti a klímaváltozás sebességét, mivel az új gázok kevesebben melegítik a Földet, így segít a globális felmelegedés ellen.
-Mi a gond vele?: A hűtőgázok cseréje nem szünteti meg teljesen a klímaváltozást, mert az új gázok is hozzájárulnak a felmelegedéshez, csak kevesebben. A cseréhez idő és pénz is kell.
+Mire jó?: A hűtőgázok cseréje csökkenti a felmelegedés ütemét, mivel az új gázok kevésbé melegítik a Földet, így segít a globális felmelegedés ellen.
+Mi a gond vele?: A hűtőgázok cseréje nem szünteti meg teljesen a klímaváltozást, mert az új gázok is hozzájárulnak a felmelegedéshez, csak kisebb mértékben. A cseréhez idő és pénz is kell.
 Mennyire bizonyított?: A hűtőgázok cseréjének hatása jól tanulmányozott, és a Kigali Megállapodás keretében is elterjedt, de a pontos hatásokat továbbra is kutatják.
 Kérdés angolul: How much warming does replacing cooling gases prevent?
 Röviden angolul: When they leak, some gases in cooling machines warm the Earth up to a thousand times more than CO2.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Replacing cooling gases reduces the rate of warming because the new gases warm the Earth less, helping against global warming.
+Mi a gond vele? angolul: Replacing cooling gases does not completely stop climate change because the new gases also contribute to warming, just to a lesser extent. Replacement also takes time and money.
+Mennyire bizonyított? angolul: The effect of replacing cooling gases is well studied and widely pursued under the Kigali Amendment, though exact effects are still being researched.
 Forrás: Wikipédia: Hűtőközeg (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/H%C5%B1t%C5%91k%C3%B6zeg
 Forrás: The estimated schedule and mitigation potential for hydrofluorocarbons phase-down in China (2019) – https://doi.org/10.1016/j.accre.2019.10.002
 Forrás: Impacts of the Kigali Amendment to phase-down hydrofluorocarbons (HFCs) in Asia (2018) – http://pure.iiasa.ac.at/id/eprint/15274/1/Impacts%2520of%2520the%2520Kigali%2520Amendment.pdf
 Forrás: A review of bottom-up and top-down emission estimates of hydrofluorocarbons (HFCs) in different parts of the world (2021) – https://doi.org/10.1016/j.chemosphere.2021.131208
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: Kigali Amendment avoided warming 2100|hydrofluorocarbon phase-down avoided global warming|HFC emissions scenarios warming contribution
 Paraméter: elkerult_melegedes_c
@@ -95,20 +95,20 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyi kéjgáz szűrhető ki a vegyi gyárakban?
 Röviden: A salétromsav és a nejlon alapanyagának gyártása dinitrogén-oxidot (kéjgázt) enged ki, ami erősen melegít.
 Ha kikutatod:
-Mire jó?: A kéjgáz segíthet a klímában, mert a légkörben üvegházhatású gáz, ami melegíti a Földet, de ez a hatás káros, ezért fontos, hogy csökkentsék a kibocsátását.
-Mi a gond vele?: A kéjgáz káros a klímára, mert a globális felmelegedést okozza, és a növényekre is hat, mert a levegőben marad és a talajba kerülhet.
-Mennyire bizonyított?: A források szerint a kéjgáz kibocsátása valóban a globális felmelegedés egyik fő okozója, de pontosan mennyit szűrhetnek ki a gyárakból, arról nem szólnak.
+Mire jó?: A kéjgáz üvegházhatású gáz, amely melegíti a Földet, ezért fontos, hogy a kibocsátását csökkentsék a klímaváltozás mérséklése érdekében.
+Mi a gond vele?: A kéjgáz káros a klímára, mert hozzájárul a globális felmelegedéshez, és a környezetre is hat, mert a légkörben marad és a talajba juthat.
+Mennyire bizonyított?: A források szerint a kéjgáz kibocsátása valóban hozzájárul a globális felmelegedéshez, de arról nem szólnak részletesen, hogy pontosan mennyit lehet kiszűrni a gyárakból.
 Kérdés angolul: How much laughing gas can chemical plants filter out?
 Röviden angolul: Making nitric acid and a raw material for nylon releases nitrous oxide (laughing gas), which warms strongly.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Laughing gas is a greenhouse gas that warms the Earth, so it is important to reduce its emissions to mitigate climate change.
+Mi a gond vele? angolul: Laughing gas is harmful to the climate because it contributes to global warming, and it also affects the environment because it stays in the atmosphere and can enter the soil.
+Mennyire bizonyított? angolul: According to the sources, laughing gas emissions do contribute to global warming, though they do not state in detail exactly how much can be filtered out in plants.
 Forrás: Wikipédia: Dinitrogén-oxid (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Dinitrog%C3%A9n-oxid
 Forrás: Novel biotechnologies for nitrous oxide abatement (2018) – https://doi.org/10.35376/10324/28662
 Forrás: Cost-effective abatement of industrial sources of nitrous oxide with methane for urgent climate mitigation (2026) – https://doi.org/10.1038/s41467-026-75982-x
 Forrás: Advancements in nitrous oxide abatement: a review of direct catalytic decomposition and selective catalytic reduction (2026) – https://doi.org/10.1039/d5cy01360g
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: nitric acid adipic acid N2O abatement|industrial nitrous oxide emissions reduction|catalytic N2O decomposition nitric acid plants
 Paraméter: kibocsatas_csokkentes_pct
@@ -123,20 +123,20 @@ Korszak: III. (Átalakulás)
 Kérdés: Mennyi CO2-t vonhat ki a levegőből a bioszén?
 Röviden: A bioszén elszenesített növényi hulladék. A talajba keverve hosszú ideig tárolja a szenet.
 Ha kikutatod: Bioszén a tervedben.
-Mire jó?: A bioszén segíthet a talaj szénképződésében, csökkentheti a növénytermesztés során kibocsátott szén-dioxid mennyiségét, és javíthatja a talaj minőségét.
-Mi a gond vele?: A bioszén túl sok használata károsíthatja a talaj mikrobiális életét, csökkentheti a talaj pH-ját, és növelheti a sótartalmat.
-Mennyire bizonyított?: A tudományos vizsgálatok alátámasztják a bioszén szénképződési képességét, de a hatások mértéke attól függ, hogyan készül és milyen talajt használnak.
+Mire jó?: A bioszén segíthet a talaj szénmegkötésében, csökkentheti a növénytermesztés során kibocsátott szén-dioxid mennyiségét, és javíthatja a talaj minőségét.
+Mi a gond vele?: A bioszén túlzott használata károsíthatja a talaj mikrobiális életét, csökkentheti a talaj pH-ját, és növelheti a sótartalmat.
+Mennyire bizonyított?: A tudományos vizsgálatok alátámasztják a bioszén szénmegkötő képességét, de a hatások mértéke attól függ, hogyan készül és milyen talajt használnak.
 Kérdés angolul: How much CO2 can biochar remove from the air?
 Röviden angolul: Biochar is charred plant waste. Mixed into soil, it stores carbon for a long time.
 Ha kikutatod angolul: Biochar in your plan.
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Biochar can help with soil carbon sequestration, reduce the amount of carbon dioxide emitted during crop production, and improve soil quality.
+Mi a gond vele? angolul: Excessive use of biochar can harm microbial life in the soil, lower soil pH, and increase salinity.
+Mennyire bizonyított? angolul: Scientific studies support biochar's carbon sequestration capacity, though the extent of effects depends on how it is made and what soil is used.
 Forrás: Wikipédia: Biochar (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Biochar
 Forrás: Potential Role of Biochar on Capturing Soil Nutrients, Carbon Sequestration and Managing Environmental Challenges: A Review (2023) – https://doi.org/10.3390/su15032527
 Forrás: Review of the Effects of Biochar Amendment on Soil Properties and Carbon Sequestration (2015) – https://doi.org/10.1061/(asce)hz.2153-5515.0000293
 Forrás: The impacts of biochar on carbon sequestration, soil processes, and microbial communities: a review (2025) – https://doi.org/10.1007/s42773-025-00499-3
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: biochar carbon dioxide removal potential global|biochar soil carbon sequestration meta-analysis|negative emissions technologies potentials costs side effects
 Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
@@ -149,20 +149,20 @@ Korszak: III. (Átalakulás)
 Kérdés: Megköthetik-e a CO2-t a lyukacsos, fémtartalmú kristályok?
 Röviden: Ezeknek a kristályoknak apró pórusai vannak, amelyek megkötik a gázokat, akár a levegőből is.
 Ha kikutatod:
-Mire jó?: Ezek a kristályok segíthetnek a CO2 elnyelésében, így csökkenthetik a légkörben lévő szén-dioxid mennyiségét, ami a klímaváltozást lassíthatja.
-Mi a gond vele?: A CO2 elnyelése nem mindig hatékony, mert a kristályok néha nem tudják tartósan tartani a gázt, és bizonyos körülmények között elszivároghat.
-Mennyire bizonyított?: A tudomány jelenleg nagyon biztos benne, hogy ezek a kristályok hatékonyan tudják elnyelni a CO2-t, de még mindig kutatnak, hogyan lehet ezeket a folyamatokat még hatékonyabbá tenni.
+Mire jó?: Ezek a kristályok segíthetnek a CO2 megkötésében, így csökkenthetik a légkörben lévő szén-dioxid mennyiségét, ami lassíthatja a klímaváltozást.
+Mi a gond vele?: A CO2 megkötése nem mindig hatékony, mert a kristályok néha nem tudják tartósan megőrizni a gázt, és bizonyos körülmények között elszivároghat.
+Mennyire bizonyított?: A tudomány jelenleg eléggé biztos abban, hogy ezek a kristályok hatékonyan tudják megkötni a CO2-t, de még mindig kutatják, hogyan lehet ezeket a folyamatokat még hatékonyabbá tenni.
 Kérdés angolul: Can porous metal-containing crystals capture CO2?
 Röviden angolul: These crystals have tiny pores that trap gases, even from the air.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: These crystals can help capture CO2, thereby reducing the amount of carbon dioxide in the atmosphere, which can slow climate change.
+Mi a gond vele? angolul: Capturing CO2 is not always effective because the crystals sometimes cannot retain the gas over the long term and it can leak under certain conditions.
+Mennyire bizonyított? angolul: Science is currently fairly confident that these crystals can effectively capture CO2, though researchers are still studying how to make these processes even more efficient.
 Forrás: Wikipédia: Metal–organic framework (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Metal%E2%80%93organic_framework
 Forrás: Recent Advances of Carbon Capture in Metal–Organic Frameworks: A Comprehensive Review (2024) – https://doi.org/10.1002/smll.202402783
 Forrás: Metal–Organic Frameworks for Water Harvesting and Concurrent Carbon Capture: A Review for Hygroscopic Materials (2023) – https://doi.org/10.1002/adma.202209073
 Forrás: Metal-organic framework hybrid adsorbents for carbon capture – A review (2023) – https://doi.org/10.1016/j.jece.2023.109291
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: metal-organic frameworks CO2 capture performance|MOF direct air capture sorbent|metal-organic framework carbon capture humid conditions
 Paraméter: megkotes_mmol_g
@@ -175,20 +175,20 @@ Korszak: III. (Átalakulás)
 Kérdés: Mennyi fém nyerhető vissza a régi akkumulátorokból?
 Röviden: A lítium, a kobalt és a nikkel újra felhasználható, ha visszanyerik.
 Ha kikutatod:
-Mire jó?: A fémek visszanyerése fontos, mert így megakadályozzuk a környezeti károsodást és megspórolhatjuk a természeti erőforrások kimerülését.
-Mi a gond vele?: A fémek visszanyerése nem mindig hatékony, mert a fémek elszórtak lehetnek az akkumulátorokban, és a feldolgozás komplex és költséges lehet.
+Mire jó?: A fémek visszanyerése fontos, mert így csökkenthető a környezeti terhelés és mérsékelhető a természeti erőforrások kimerülése.
+Mi a gond vele?: A fémek visszanyerése nem mindig hatékony, mert a fémek elszórtan lehetnek az akkumulátorokban, és a feldolgozás összetett és költséges lehet.
 Mennyire bizonyított?: A tudományos források szerint az akkumulátorokból számos fém visszanyerhető, de a pontos arányok nem mindig ismertek.
 Kérdés angolul: How much metal can be recovered from old batteries?
 Röviden angolul: Lithium, cobalt and nickel can be used again if they are recovered.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Recovering metals is important because it reduces environmental impact and mitigates the depletion of natural resources.
+Mi a gond vele? angolul: Recovering metals is not always effective because metals can be dispersed in batteries and processing can be complex and costly.
+Mennyire bizonyított? angolul: According to scientific sources, many metals can be recovered from batteries, though exact proportions are not always known.
 Forrás: Wikipédia: Akkumulátor-újrahasznosítás (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Akkumul%C3%A1tor-%C3%BAjrahasznos%C3%ADt%C3%A1s
 Forrás: Recycling of Spent Lithium-Ion Battery: A Critical Review (2014) – https://doi.org/10.1080/10643389.2013.763578
 Forrás: A review on recycling of spent lithium-ion batteries (2023) – https://doi.org/10.1016/j.egyr.2023.05.264
 Forrás: A brief review on hydrometallurgical technologies for recycling spent lithium‐ion batteries (2013) – https://doi.org/10.1002/jctb.4053
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: lithium-ion battery recycling recovery efficiency|hydrometallurgical battery recycling|direct recycling lithium-ion cathode
 Paraméter: hatasfok_pct
@@ -201,20 +201,20 @@ Korszak: III. (Átalakulás)
 Kérdés: Milyen hatékonyan lesz vízből hidrogén?
 Röviden: Árammal a víz hidrogénre és oxigénre bontható. A hidrogén tiszta üzemanyag lehet.
 Ha kikutatod:
-Mire jó?: A vízbontás környezetbarát, mert nem okoz szén-dioxidot, így segíthet a klímaváltozás ellen.
-Mi a gond vele?: A vízbontás energiát igényel, és a jelenlegi technológiák még nem hatékonyak, így drágább, mint a fosszilis szénhidrogén.
-Mennyire bizonyított?: A vízbontás tudományosan bizonyított, de a hatékonyság és az ár csökkentése még kutatás alatt áll.
+Mire jó?: A vízbontás környezetbarát, ha tiszta árammal működik, így segíthet a klímaváltozás ellen.
+Mi a gond vele?: A vízbontás energiát igényel, és a jelenlegi technológiák még nem eléggé hatékonyak vagy olcsók ahhoz, hogy mindenhol versenyezzenek a fosszilis tüzelőanyagokkal.
+Mennyire bizonyított?: A vízbontás tudományosan bizonyított, de a hatékonyság növelése és a költségek csökkentése még kutatás alatt áll.
 Kérdés angolul: How efficiently can water be turned into hydrogen?
 Röviden angolul: Electricity can split water into hydrogen and oxygen. Hydrogen can be a clean fuel.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Water splitting is environmentally friendly when powered by clean electricity, so it can help against climate change.
+Mi a gond vele? angolul: Water splitting requires energy, and current technologies are not yet efficient or cheap enough to compete everywhere with fossil fuels.
+Mennyire bizonyított? angolul: Water splitting is scientifically proven, though increasing efficiency and reducing cost are still under research.
 Forrás: Wikipédia: Electrolysis of water (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Electrolysis_of_water
 Forrás: Hydrogen production by PEM water electrolysis – A review (2019) – https://doi.org/10.1016/j.mset.2019.03.002
 Forrás: Hydrogen production by water electrolysis technologies: A review (2023) – https://doi.org/10.1016/j.rineng.2023.101426
 Forrás: Hydrogen production by water electrolysis driven by a photovoltaic source: A review (2024) – https://doi.org/10.1016/j.prime.2024.100608
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: water electrolysis efficiency PEM alkaline|green hydrogen production electrolyzer efficiency|solid oxide electrolysis efficiency
 Paraméter: hatasfok_pct
@@ -228,19 +228,19 @@ Kérdés: Milyen hatásfokú az üzemanyagcella?
 Röviden: Az üzemanyagcella hidrogénből égés nélkül állít elő áramot, csak víz keletkezik.
 Ha kikutatod:
 Mire jó?: Segíthet a klímaváltozás ellen, mert kevesebb szén-dioxidot bocsát ki, vagy egyáltalán nem.
-Mi a gond vele?: Nem tud gyorsan változó munkához (pl. fékezéshez) alkalmazkodni, és nagyobb költségekkel jár, mert például platina anyagokat használ.
-Mennyire bizonyított?: A tudomány bizonyítja, hogy hatékonyabb, mint a hagyományos motorok, de még mindig fejlesztés alatt áll, hogy teljesen hatékony és olcsó legyen.
+Mi a gond vele?: Nem tud mindig elég gyorsan alkalmazkodni a hirtelen terhelésváltozásokhoz, és magasabb költségekkel jár, például a felhasznált platina miatt.
+Mennyire bizonyított?: A tudomány bizonyítja, hogy hatékony lehet, de még fejlesztés alatt áll, hogy tartósabb és olcsóbb legyen.
 Kérdés angolul: How efficient is a fuel cell?
 Röviden angolul: A fuel cell makes electricity from hydrogen without burning; only water is produced.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: It can help against climate change because it emits less carbon dioxide, or none at all.
+Mi a gond vele? angolul: It cannot always adapt quickly enough to sudden load changes and involves higher costs, for example due to the platinum used.
+Mennyire bizonyított? angolul: Science shows it can be efficient, though it is still under development to become more durable and cheaper.
 Forrás: Wikipédia: Üzemanyagcella (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/%C3%9Czemanyagcella
 Forrás: Hydrogen and Fuel Cells: Review of National R&D Programs (2004) – https://doi.org/10.1787/9789264108844-en
 Forrás: MICROBIAL FUEL CELL-REVIEW (2019) – https://openalex.org/W2950581749
 Forrás: Platinum utilization in proton exchange membrane fuel cell and direct methanol fuel cell - Review (2019) – https://doi.org/10.5599/jese.665
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: fuel cell efficiency review|proton exchange membrane fuel cell efficiency durability|solid oxide fuel cell efficiency
 Paraméter: hatasfok_pct
@@ -253,20 +253,20 @@ Korszak: III. (Átalakulás)
 Kérdés: Gyártható-e műtrágya kibocsátás nélkül?
 Röviden: Az ammóniát ma földgázból gyártják. Tiszta hidrogénnel kibocsátás nélkül is lehetne.
 Ha kikutatod:
-Mire jó?: Az ammónia kibocsátása környezeti hatásokat okozhat, de a klímaváltozás elleni küzdelem során fontos megérteni, hogyan hat a természetben és milyen megoldásokat kínál a klímavédelemhez.
-Mi a gond vele?: Az ammónia kibocsátása káros a környezetre, és a természetben sokszor káros hatásokkal járhat, különösen a levegő és a talaj szennyezésére. A klímaváltozás elleni küzdelem során ez a kibocsátás a legnagyobb veszély lehet.
-Mennyire bizonyított?: A források alapján az ammónia kibocsátása a klímaváltozás egyik fontos tényezője, de a pontos hatások és a megoldások még nem teljesen bizonyítottak.
+Mire jó?: Az ammónia fontos alapanyag, és a klímaváltozás elleni küzdelem szempontjából lényeges megérteni a környezeti hatásait és a tisztább előállítási lehetőségeit.
+Mi a gond vele?: Az ammónia kibocsátása káros lehet a környezetre, különösen a levegő és a talaj szennyezésén keresztül, a klímaváltozás elleni küzdelemben pedig a hagyományos gyártás kibocsátása jelent gondot.
+Mennyire bizonyított?: A források alapján az ammónia gyártása és kibocsátása fontos környezeti tényező, de a pontos hatások és a széles körű megoldások még további vizsgálatra szorulnak.
 Kérdés angolul: Can fertiliser be made without emissions?
 Röviden angolul: Ammonia is made from natural gas today. With clean hydrogen it could be made without emissions.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Ammonia is an important feedstock, and from the perspective of fighting climate change it is essential to understand its environmental impacts and cleaner production options.
+Mi a gond vele? angolul: Ammonia emissions can harm the environment, especially through air and soil pollution, and in fighting climate change emissions from conventional production pose a problem.
+Mennyire bizonyított? angolul: According to the sources, ammonia production and emissions are an important environmental factor, though exact impacts and widespread solutions need further study.
 Forrás: Wikipédia: Ammónia (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Amm%C3%B3nia
 Forrás: Green ammonia as a spatial energy vector: a review (2021) – https://doi.org/10.1039/d1se00345c
 Forrás: A Review of the Latest Trends in the Use of Green Ammonia as an Energy Carrier in Maritime Industry (2022) – https://doi.org/10.3390/en15041453
 Forrás: Sustainable pathways to ammonia: a comprehensive review of green production approaches (2024) – https://doi.org/10.1093/ce/zkae002
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: green ammonia production emissions|electrochemical ammonia synthesis decarbonization|renewable ammonia life cycle assessment
 Paraméter: kibocsatas_csokkentes_pct
@@ -279,20 +279,20 @@ Korszak: III. (Átalakulás)
 Kérdés: Repülhetünk-e áramból és CO2-ből gyártott üzemanyaggal?
 Röviden: Hidrogénből és a levegő CO2-jéből szintetikus repülőgép-üzemanyag készülhet.
 Ha kikutatod:
-Mire jó?: Ez a üzemanyag segíthet csökkenteni a klímaváltozás okozta kibocsátásokat, mivel a CO2-t újrahasznosítják, és a tüzelés során ugyanannyi CO2 kerül a levegőbe, mint amennyi a gyártás során felhasználják.
-Mi a gond vele?: Ez a üzemanyag drága, különösen ha az áram nem olcsó, és a CO2-t kinyeréséhez nagy mennyiségű energia kell. Emellett a gyártás és a használat környezeti hatásai továbbra is léteznek.
-Mennyire bizonyított?: A tudományos ismeretek szerint ez a megoldás részben bizonyított, de a gyakorlatban még nem minden területen teljesen hatékony, különösen a költségek és a CO2 kinyerése terén.
+Mire jó?: Ez az üzemanyag segíthet csökkenteni a klímaváltozás okozta kibocsátásokat, mivel a CO2-t újrahasznosítják, és a zártabb körforgás révén kevesebb új szén kerülhet a légkörbe, ha megújuló forrásból származik az energia.
+Mi a gond vele?: Ez az üzemanyag drága, különösen ha az áram nem olcsó, és a CO2 leválasztásához nagy mennyiségű energia kell. Emellett a gyártás és a használat környezeti hatásai továbbra is fennállnak.
+Mennyire bizonyított?: A tudományos ismeretek szerint ez a megoldás részben bizonyított, de a gyakorlatban még nem minden területen teljesen hatékony, különösen a költségek és a CO2 leválasztása terén.
 Kérdés angolul: Can we fly on fuel made from electricity and CO2?
 Röviden angolul: Synthetic jet fuel can be made from hydrogen and CO2 from the air.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: This fuel can help reduce climate-related emissions because CO2 is recycled, and through a more closed cycle less new carbon may enter the atmosphere if the energy comes from renewable sources.
+Mi a gond vele? angolul: This fuel is expensive, especially if electricity is not cheap, and capturing CO2 requires large amounts of energy. In addition, environmental impacts from production and use still exist.
+Mennyire bizonyított? angolul: According to scientific knowledge, this solution is partially proven, though in practice it is not yet completely effective in every area, especially regarding costs and CO2 capture.
 Forrás: Wikipédia: Electrofuel (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Electrofuel
 Forrás: Sustainable Aviation Fuel: Review of Technical Pathways (2020) – https://doi.org/10.2172/1660415
 Forrás: Sustainable Aviation Fuel: Review of Technical Pathways (2020) – https://doi.org/10.5281/zenodo.20834328
 Forrás: Use of Sustainable Fuels in Aviation—A Review (2022) – https://doi.org/10.3390/en15072440
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: power-to-liquid synthetic kerosene aviation emissions|electrofuels aviation life cycle emissions|sustainable aviation fuel greenhouse gas reduction
 Paraméter: kibocsatas_csokkentes_pct
@@ -305,20 +305,20 @@ Korszak: III. (Átalakulás)
 Kérdés: Mennyit spórol a műanyag újrahasznosítása?
 Röviden: Az új műanyag kőolajból készül. Az újrahasznosítás ennek egy részét kiválthatja.
 Ha kikutatod:
-Mire jó?: Az újrahasznosítás csökkenti a műanyag hulladékot, kevésbé károsodik a környezet, és kevesebb szén-dioxid jut a levegőbe.
-Mi a gond vele?: A műanyag újrahasznosítása nem mindig hatékony, mert a feldolgozás költséges, és a műanyag minősége csökkenhet, ami a termékek minőségét is megromba.
-Mennyire bizonyított?: A tudományos bizonyítékok szerint a műanyag újrahasznosítása hatékony, de továbbra is fejlesztésre szorul, különösen a technológiai és gazdasági aspektusokban.
+Mire jó?: Az újrahasznosítás csökkenti a műanyaghulladékot, kisebb a környezeti terhelés, és kevesebb szén-dioxid jut a levegőbe.
+Mi a gond vele?: A műanyag újrahasznosítása nem mindig hatékony, mert a feldolgozás költséges, és a műanyag minősége romolhat, ami a termékek minőségét is rontja.
+Mennyire bizonyított?: A tudományos bizonyítékok szerint a műanyag újrahasznosítása hasznos lehet, de továbbra is fejlesztésre szorul, különösen a technológiai és gazdasági szempontok terén.
 Kérdés angolul: How much does recycling plastic save?
 Röviden angolul: New plastic is made from oil. Recycling can replace part of it.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Recycling reduces plastic waste, lowers environmental burden, and releases less carbon dioxide into the air.
+Mi a gond vele? angolul: Recycling plastic is not always effective because processing is costly and plastic quality can degrade, which also worsens product quality.
+Mennyire bizonyított? angolul: According to scientific evidence, recycling plastic can be useful, though it still needs development, especially in technological and economic aspects.
 Forrás: Wikipédia: Plastic recycling (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Plastic_recycling
 Forrás: Plastic Recycling: A Review on Life Cycle, Methods, Misconceptions, and Techno‐Economic Analysis (2023) – https://doi.org/10.1002/adsu.202200471
 Forrás: Life Cycle Assessment Approaches of Plastic Recycling with Multiple Cycles: Mini Review (2022) – https://doi.org/10.3303/cet2294014
 Forrás: Life Cycle Assessment of Recycled Plastic: Review on Methodological Choices (2026) – https://doi.org/10.1007/s43615-026-01203-8
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: plastic recycling greenhouse gas emissions savings|chemical recycling plastics life cycle assessment|mechanical recycling plastics emissions
 Paraméter: kibocsatas_csokkentes_pct
@@ -333,19 +333,19 @@ Korszak: IV. (Helyreállítás)
 Kérdés: Vonhat-e ki több CO2-t a tenger, ha lúgosabbá tesszük?
 Röviden: Ásványi port juttatnak a tengerbe, így a víz több CO2-t nyel el a levegőből.
 Ha kikutatod:
-Mire jó?: A tenger lúgosabbá tétele segíthet a klímaváltozás ellen, mert a lúgos víz jobban képes elnyelni a CO2-t, így kevesebb szén-dioxid marad a levegőben.
-Mi a gond vele?: A tenger lúgosabbá tétele nem biztos, hogy hatékony, mert a laboratóriumi kísérletek nem bizonyítják, hogy működne nagy méretekben. Ezenkívül a lúgosság növelése a tengeri életre is hatással lehet, például a planktonra.
-Mennyire bizonyított?: A tudomány nem teljesen biztos abban, hogy a tenger lúgosabbá tétele hatékony lenne, mert a nagyobb kísérletek még nem végzettek, és a laboratóriumi eredmények nem bizonyítják a valós helyzetet.
+Mire jó?: A tenger lúgosabbá tétele segíthet a klímaváltozás ellen, mert a lúgosabb víz jobban képes megkötni a CO2-t, így kevesebb szén-dioxid marad a levegőben.
+Mi a gond vele?: A tenger lúgosabbá tétele nem biztos, hogy hatékony, mert a laboratóriumi kísérletek nem bizonyítják, hogy nagy léptékben is működne. Ezenkívül a lúgosság növelése a tengeri élővilágra is hatással lehet, például a planktonokra.
+Mennyire bizonyított?: A tudomány nem teljesen biztos abban, hogy a tenger lúgosabbá tétele hatékony lenne, mert a nagyobb kísérletek még nem zárultak le, és a laboratóriumi eredmények nem helyettesítik a valós körülményeket.
 Kérdés angolul: Can the sea take up more CO2 if we make it more alkaline?
 Röviden angolul: Mineral powder is added to the sea, so the water absorbs more CO2 from the air.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Making the sea more alkaline can help against climate change because more alkaline water can bind CO2 better, leaving less carbon dioxide in the air.
+Mi a gond vele? angolul: Making the sea more alkaline is not certain to be effective because laboratory experiments do not prove it would work at large scale. In addition, increasing alkalinity can also affect marine life, such as plankton.
+Mennyire bizonyított? angolul: Science is not completely certain that making the sea more alkaline would be effective because larger experiments have not yet been completed and laboratory results do not replace real-world conditions.
 Forrás: Review and syntheses: Ocean alkalinity enhancement and carbon dioxide removal through marine enhanced rock weathering using olivine (2025) – https://doi.org/10.5194/bg-22-355-2025
 Forrás: Reviews and syntheses: Experimental evidence of phytoplankton responses to Ocean Alkalinity Enhancement (2026) – https://doi.org/10.5194/egusphere-2026-4055
 Forrás: (In review) Expert identification of key processes and uncertainties in marine atmospheric carbon dioxide removal via ocean alkalinity enhancement (2026) – https://doi.org/10.5281/zenodo.21908411
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: ocean alkalinity enhancement carbon dioxide removal potential|ocean alkalinity enhancement side effects|negative emissions technologies potentials costs side effects
 Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
@@ -358,20 +358,20 @@ Korszak: IV. (Helyreállítás)
 Kérdés: Mennyi melegedést előzött meg az ózonréteg védelme?
 Röviden: A régi hűtőgázok az ózont bontották, és a Földet is melegítették. A betiltásuk mindkettőn segített.
 Ha kikutatod:
-Mire jó?: Az ózonréteg védelme megakadályozza, hogy a napsugárzás káros hatásait a Földön érezze az emberek, így csökkenti a bőr betegségek és más UV-sugárzásból származó veszélyek kockázatát.
-Mi a gond vele?: A CFC-k csökkentése nem teljesen hatékony volt, mert néhány gazdasági és technológiai korlát akadályozza a teljes kibocsátás csökkentését.
-Mennyire bizonyított?: A tudományos bizonyítékok alapján az ózonréteg védelme hatékony volt, és már 2013-ban is jelentős előnyt hozott az ózonréteg és a napsugárzás védelmében.
+Mire jó?: Az ózonréteg védelme megakadályozza, hogy a napsugárzás káros hatásait a Földön érezze az emberiség, így csökkenti a bőrbetegségek és más UV-sugárzásból származó veszélyek kockázatát.
+Mi a gond vele?: A CFC-k csökkentése nem volt minden szempontból zökkenőmentes, mert egyes gazdasági és technológiai tényezők befolyásolták az átállást.
+Mennyire bizonyított?: A tudományos bizonyítékok alapján az ózonréteg védelme hatékony volt, és jelentős előnyt hozott az ózonréteg és az UV-sugárzás elleni védelemben.
 Kérdés angolul: How much warming did protecting the ozone layer prevent?
 Röviden angolul: Old refrigerant gases destroyed ozone and also warmed the Earth. Banning them helped both.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Protecting the ozone layer prevents humanity from experiencing harmful effects of solar radiation on Earth, thus reducing the risk of skin diseases and other hazards from UV radiation.
+Mi a gond vele? angolul: Reducing CFCs was not smooth in every respect because certain economic and technological factors influenced the transition.
+Mennyire bizonyított? angolul: Based on scientific evidence, protecting the ozone layer was effective and brought significant benefits in protecting the ozone layer and guarding against UV radiation.
 Forrás: Wikipédia: Montréali jegyzőkönyv (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Montr%C3%A9ali_jegyz%C5%91k%C3%B6nyv
 Forrás: Quantifying the ozone and ultraviolet benefits already achieved by the Montreal Protocol (2015) – https://doi.org/10.1038/ncomms8233
 Forrás: Montreal Protocol's impact on the ozone layer and climate (2023) – https://doi.org/10.5194/acp-23-5135-2023
 Forrás: Ensuring the climate benefits of the Montreal Protocol: Global governance architecture for cooling efficiency and alternative refrigerants (2021) – https://doi.org/10.1016/j.erss.2021.102068
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: Montreal Protocol avoided global warming|ozone layer recovery climate benefit|CFC phase-out avoided climate change
 Paraméter: elkerult_melegedes_c
@@ -384,19 +384,19 @@ Korszak: IV. (Helyreállítás)
 Kérdés: Lebontható-e a metán közvetlenül a levegőből?
 Röviden: Kísérleti módszerek a levegőben lévő metánt gyorsabban bontanák le, mint a természet.
 Ha kikutatod:
-Mire jó?: Ez a módszer segíthet csökkenteni a klímaváltozás mértékét, mivel a metán nagyon erősen melegíti a Földet, és ha nem tudjuk elnyomni, további melegedést okozhat.
-Mi a gond vele?: A metán eltávolítása még nem teljesen bizonyított, és több módszer is kísérleti szakaszban van, továbbá bizonyos eljárások potenciálisan kockázatokat jelenthetnek a egészségre.
+Mire jó?: Ez a módszer segíthet csökkenteni a klímaváltozás mértékét, mivel a metán nagyon erősen melegíti a Földet, és ha nem csökkentjük, további melegedést okozhat.
+Mi a gond vele?: A metán eltávolítása még nem teljesen bizonyított, és több módszer is kísérleti szakaszban van, továbbá bizonyos eljárások potenciális kockázatokat jelenthetnek az egészségre.
 Mennyire bizonyított?: A metán eltávolításának módjai még nem teljesen bizonyítottak, de a tudományos vizsgálatok ezt a területet vizsgálják, és egyes módszerek már kísérleti szakaszban vannak.
 Kérdés angolul: Can methane be broken down directly in the air?
 Röviden angolul: Experimental methods would break down methane in the air faster than nature does.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: This method can help reduce the extent of climate change because methane warms the Earth very strongly, and if we do not reduce it, it can cause further warming.
+Mi a gond vele? angolul: Removing methane is not yet completely proven and several methods are at an experimental stage; in addition, certain procedures can pose potential risks to health.
+Mennyire bizonyított? angolul: Ways to remove methane are not yet completely proven, though scientific studies are investigating this area and some methods are already at an experimental stage.
 Forrás: Perspectives on removal of atmospheric methane (2022) – https://doi.org/10.1016/j.adapen.2022.100085
 Forrás: Atmospheric methane removal: a research agenda (2021) – https://doi.org/10.1098/rsta.2020.0454
 Forrás: Atmospheric removal of methane by enhancing the natural hydroxyl radical sink (2022) – https://doi.org/10.1002/ghg.2191
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: atmospheric methane removal technologies|methane removal photocatalysis|iron salt aerosol methane oxidation
 Paraméter: metan_csokkentes_pct

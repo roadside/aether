@@ -15,20 +15,20 @@ Korszak: I. (Felismerés)
 Kérdés: Okozhatja-e a Nap a mai melegedést?
 Röviden: A Nap fénye kicsit ingadozik. A mérések megmutatják, mennyit számít ez.
 Ha kikutatod:
-Mire jó?: A Nap hatása az időjárásra és a hosszú távú klímaváltozásokra is igaz, de az utóbbi évszázadban a emberi tevékenységek, mint a földgáz és a ipari füstölés, a fő okok.
-Mi a gond vele?: A Nap hatása a klímaváltozásra nem elég erős ahhoz, hogy magyarázza az utóbbi évtizedekben bekövetkezett globális melegedést, mert a Nap aktivitása nem változott jelentősen.
-Mennyire bizonyított?: A tudományos bizonyítékok alapján a Nap nem a fő okozója a jelenlegi melegedésnek, de hosszú távú klímaváltozásokban is szerepet játszhat.
+Mire jó?: A Nap hatása az időjárásra és a hosszú távú éghajlatváltozásokra is megfigyelhető, de az elmúlt évszázadban az emberi tevékenységek – például a fosszilis tüzelőanyagok használata és az ipari kibocsátások – a fő okok.
+Mi a gond vele?: A Nap hatása az éghajlatra nem elég erős ahhoz, hogy megmagyarázza az elmúlt évtizedekben bekövetkezett globális felmelegedést, mert a Nap aktivitása nem változott jelentősen.
+Mennyire bizonyított?: A tudományos bizonyítékok alapján a Nap nem a fő okozója a jelenlegi felmelegedésnek, bár hosszú távú éghajlatváltozásokban is szerepet játszhat.
 Kérdés angolul: Could the Sun be causing today's warming?
 Röviden angolul: The Sun's output varies a little. Measurements show how much that matters.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: The Sun's effect on weather and long-term climate changes is observable, but over the past century human activities—such as fossil fuel use and industrial emissions—are the main causes.
+Mi a gond vele? angolul: The Sun's effect on climate is not strong enough to explain the global warming of recent decades because solar activity has not changed significantly.
+Mennyire bizonyított? angolul: Based on scientific evidence, the Sun is not the main cause of current warming, though it can also play a role in long-term climate changes.
 Forrás: Wikipédia: Solar activity and climate (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Solar_activity_and_climate
 Forrás: Solar Influence on Global and Regional Climates (2012) – https://doi.org/10.1007/s10712-012-9181-3
 Forrás: SOLAR INFLUENCES ON CLIMATE (2010) – https://doi.org/10.1029/2009rg000282
 Forrás: Correction to “Solar influences on climate” (2012) – https://doi.org/10.1029/2011rg000387
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: solar irradiance variability contribution to global warming|total solar irradiance trend climate|solar forcing twentieth century temperature
 Paraméter: sugarzasi_kenyszer_w_m2
@@ -41,20 +41,20 @@ Korszak: I. (Felismerés)
 Kérdés: Befolyásolják-e a kozmikus sugarak a felhőket?
 Röviden: Egy régi ötlet szerint a világűrből jövő sugárzás felhőket kelt. Mit mutatnak a mérések?
 Ha kikutatod:
-Mire jó?: A kozmikus sugarak hatása a felhők és a klímaváltozásra kis mértékben hat, de ez a kapcsolat nem bizonyított.
-Mi a gond vele?: A kozmikus sugarak hatása a felhők és a klímára nem határozott, és a tudományos bizonyítékok nem egyértelműek.
-Mennyire bizonyított?: A kozmikus sugarak és a klímaváltozás kapcsolata nem teljesen bizonyított, de bizonyos összefüggéseket találtak.
+Mire jó?: A kozmikus sugaraknak a felhőkre és az éghajlatra gyakorolt hatása legfeljebb csekély mértékű lehet, és ez a kapcsolat nem egyértelműen bizonyított.
+Mi a gond vele?: A kozmikus sugarak felhőkre és éghajlatra gyakorolt hatása nem határozott, és a tudományos bizonyítékok nem egyértelműek.
+Mennyire bizonyított?: A kozmikus sugarak és a klímaváltozás kapcsolata nem egyértelműen bizonyított, bár bizonyos összefüggéseket vizsgáltak.
 Kérdés angolul: Do cosmic rays affect clouds?
 Röviden angolul: An old idea says radiation from space creates clouds. What do measurements show?
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Any effect of cosmic rays on clouds and climate is at most minor, and this link is not clearly proven.
+Mi a gond vele? angolul: The effect of cosmic rays on clouds and climate is not definite, and scientific evidence is not clear-cut.
+Mennyire bizonyított? angolul: The link between cosmic rays and climate change is not clearly proven, though certain relationships have been studied.
 Forrás: Wikipédia: Cosmic ray (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Cosmic_ray
 Forrás: Cosmic Rays and Clouds Variations Effect on the Climate is Insignificantly (2018) – https://doi.org/10.5539/apr.v10n4p81
 Forrás: LINK BETWEEN COSMIC RAYS AND CLOUDS ON DIFFERENT TIME SCALES (2010) – https://doi.org/10.1142/9789812707185_0026
 Forrás: Investigating the link between cosmic rays and Earth's climate: the CLOUD experiment at CERN (2011) – https://openalex.org/W2181923640
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: cosmic rays cloud formation climate|galactic cosmic rays cloud condensation nuclei|CLOUD experiment ion-induced nucleation
 Paraméter: valtozas_pct
@@ -67,20 +67,20 @@ Korszak: I. (Felismerés)
 Kérdés: Megtalálják-e a műholdak a nagy metánszivárgásokat?
 Röviden: Az űrből mért adatokkal kiderül, hol szökik a legtöbb metán a levegőbe.
 Ha kikutatod:
-Mire jó?: A műholdak segíthetnek a metán-kibocsátások meghatározásában, különösen nagy forrásoknál, de a kis vízterek esetében még nincs elegendő adat.
-Mi a gond vele?: A kis vízterek metán-kibocsátásai nem jól mérhetők a műholdak által, mert ezek a kis területek a műholdak nagy pixeljeibe kerülnek, így nem tudják különíteni a metánt a környezetétől.
-Mennyire bizonyított?: A műholdak képesek mérni a metánt, de a kis vízterek esetében még nem bizonyított, hogy képesek lennének pontosan mérni a kibocsátásokat.
+Mire jó?: A műholdak segíthetnek a metánkibocsátások azonosításában, különösen a nagy forrásoknál, bár a kis vízterek esetében még kevesebb az adat.
+Mi a gond vele?: A kis vízterek metánkibocsátásai nehezebben mérhetők műholddal, mert ezek a kis területek a műholdak nagyobb képpontjaiba esnek, így nehezebb elkülöníteni a kibocsátást a környezettől.
+Mennyire bizonyított?: A műholdak képesek mérni a légköri metánt, de a kis vízterek kibocsátásának pontos mérésére még további vizsgálatok szükségesek.
 Kérdés angolul: Can satellites find large methane leaks?
 Röviden angolul: Data measured from space reveal where the most methane escapes into the air.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Satellites can help identify methane emissions, especially from large sources, though data for small water bodies are still more limited.
+Mi a gond vele? angolul: Methane emissions from small water bodies are harder to measure by satellite because these small areas fall within larger satellite pixels, making it harder to separate emissions from their surroundings.
+Mennyire bizonyított? angolul: Satellites can measure atmospheric methane, though further studies are needed for accurate measurement of emissions from small water bodies.
 Forrás: Wikipédia: Atmospheric methane (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Atmospheric_methane
 Forrás: Reviews and syntheses: Bridging Limnology and Satellite Methane Observations for Small Water Bodies (2026) – https://doi.org/10.5194/egusphere-2026-3707
 Forrás: Satellite observations of atmospheric methane and their value for quantifying methane emissions (2016) – https://doi.org/10.5194/acp-16-14371-2016
 Forrás: Quantifying methane emissions from the global scale down to point sources using satellite observations of atmospheric methane (2022) – https://doi.org/10.5194/acp-22-9617-2022
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: satellite detection of methane super-emitters|TROPOMI methane emissions point sources|satellite methane plume detection oil and gas
 Paraméter: reszarany_pct
@@ -93,20 +93,20 @@ Korszak: I. (Felismerés)
 Kérdés: Mennyi erdő tűnik el évente a műholdképek szerint?
 Röviden: Az űrfelvételekből évről évre látszik, hol vágják ki vagy égetik fel az erdőt.
 Ha kikutatod:
-Mire jó?: A műholdképek segítenek megtalálni, mennyi erdőt veszítünk évente, így jobban érthetjük a klímaváltozást és a természet károsodását.
-Mi a gond vele?: A műholdképek nem mindig pontosak, mert a felvétel időpontja és a technológia korlátaik lehetnek.
-Mennyire bizonyított?: A műholdképek segítenek, de a pontos adatokhoz további kutatások is szükségesek.
+Mire jó?: A műholdképek segítenek felmérni, mennyi erdőt veszítünk évente, így jobban érthető az erdőirtás és a klímaváltozás kapcsolata.
+Mi a gond vele?: A műholdképek nem mindig egyformán pontosak, mert a felvételek időpontja, a felhőzet és a technológia is korlátokat jelenthet.
+Mennyire bizonyított?: A műholdas megfigyelés hasznos eszköz az erdőváltozások követésére, de a pontos adatok értelmezéséhez további elemzések is szükségesek.
 Kérdés angolul: How much forest disappears each year, according to satellites?
 Röviden angolul: Satellite images show year by year where forests are cut or burned.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Satellite images help assess how much forest is lost each year, making the link between deforestation and climate change easier to understand.
+Mi a gond vele? angolul: Satellite images are not always equally accurate because image timing, cloud cover, and technology can pose limitations.
+Mennyire bizonyított? angolul: Satellite observation is a useful tool for tracking forest changes, though further analyses are also needed to interpret exact figures.
 Forrás: Wikipédia: Erdőirtás (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Erd%C5%91irt%C3%A1s
 Forrás: A Comprehensive Review of Deforestation Monitoring Using Remote Sensing Imagery (2026) – https://doi.org/10.30955/gnj.08268
 Forrás: Remote Sensing Proxies for Deforestation and Soil Degradation in Landslide Mapping: A Review (2013) – https://doi.org/10.1111/gec3.12050
 Forrás: Review of: "Open-Source Remote Sensing Determination of Carbon Emissions From Tropical Deforestation Scenarios in Southeast Nigeria" (2024) – https://doi.org/10.32388/f96eyz
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: global tree cover loss million hectares per year|tropical primary forest loss Mha satellite|Landsat global forest change annual loss hectares
 Paraméter: terulet_mha_ev
@@ -121,20 +121,20 @@ Korszak: III. (Átalakulás)
 Kérdés: Küldhetnek-e áramot a Földre napelemek a világűrből?
 Röviden: Az űrben mindig süt a Nap. Az áramot rádióhullámokkal sugároznák le a Földre.
 Ha kikutatod:
-Mire jó?: Ez a technológia több napon át áramot tud biztosítani, mert a Föld légkörének és éjszakájának hatását kerüli meg, így hatékonyabb lehet a klímavédelemhez és a fogyasztói áramellátáshoz.
-Mi a gond vele?: A technológia még nem készen áll, mert a világűrből való áramellátás drága, és a földi vételre szolgáló berendezések kockázatokat is hordoznak.
-Mennyire bizonyított?: A tudományos kutatások bizonyítják, hogy a technológia elméletileg lehetséges, de a gyakorlati alkalmazás még nem készen áll.
+Mire jó?: Ez a technológia folyamatosabb áramellátást tehet lehetővé, mert a légkör és az éjszaka hatását mérsékelve segítheti a tiszta energiaellátást és a klímavédelmet.
+Mi a gond vele?: A technológia még nem áll készen a széles körű alkalmazásra, mert a világűrből történő energiatermelés és -átvitel költséges, és a földi vevőberendezéseknek is vannak kockázatai.
+Mennyire bizonyított?: A tudományos kutatások szerint a technológia elméletileg megvalósítható, de gyakorlati bevezetése még fejlesztés és vizsgálat alatt áll.
 Kérdés angolul: Could solar panels in space send power to Earth?
 Röviden angolul: In space the Sun always shines. The power would be beamed down to Earth by radio waves.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
-Forrás: Wikipédia: Space-based solar power (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Space-based_solar_power
+Mire jó? angolul: This technology could enable more continuous power supply because, by reducing the effects of the atmosphere and night, it could support clean energy supply and climate protection.
+Mi a gond vele? angolul: The technology is not yet ready for wide deployment because generating and transmitting energy from space is costly, and ground receiving equipment also carries risks.
+Mennyire bizonyított? angolul: According to scientific research, the technology is theoretically feasible, though its practical implementation is still under development and investigation.
+Forrás: Wikipédia: Space-based solar power (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Space_based_solar_power
 Forrás: A Review on Space Based Solar Power (2021) – https://doi.org/10.46610/jotes.2021.v06i01.003
 Forrás: Towards net zero: A technological review on the potential of space-based solar power and wireless power transmission (2024) – https://doi.org/10.1016/j.heliyon.2024.e29996
 Forrás: A Short Review on Space-based Solar Power Applications for Desert Irrigation (2021) – https://doi.org/10.1109/ssd52085.2021.9429344
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: space-based solar power feasibility|space solar power wireless power transmission efficiency
 Paraméter: hatasfok_pct
@@ -149,20 +149,20 @@ Korszak: IV. (Helyreállítás)
 Kérdés: Hűthetné-e a Földet egy árnyékoló a világűrben?
 Röviden: Egy óriási árnyékoló a Nap és a Föld között kevesebb napfényt engedne át.
 Ha kikutatod: Csak megérted: a játékban nem vezethető be.
-Mire jó?: Ez a megoldás segíthet a klímaváltozás lassításában, ha a Földet kevésbé melegíti a napsugárzás, így csökkenthető a globális felmelegedés hatása.
-Mi a gond vele?: A tervezett árnyékoló kialakítása és üzemeltetése hihetetlenül drága, több triliónyi dollárba kerülhet, és a Föld körül való elhelyezése hosszú időt vesz igénybe. Emellett a Naptól való távolság miatt a helyzet fenntartása nehéz, mivel a Föld gravitációs hatása miatt a helyzet megbomlhat.
-Mennyire bizonyított?: A tudományos kutatások szerint az árnyékoló elvén alapuló megoldások elméletileg működhetnek, de még nem lettek kipróbálva, és a valóságos alkalmazásuk nagyon bonyolult, drága és hosszú távú folyamat.
+Mire jó?: Ez a megoldás segíthet a klímaváltozás mérséklésében, ha a Földet kevésbé melegíti a napsugárzás, így csökkenthető a globális felmelegedés hatása.
+Mi a gond vele?: A tervezett árnyékoló kialakítása és üzemeltetése rendkívül költséges lehet, és a világűrben való elhelyezése hosszú időt vesz igénybe. Emellett a pálya és a pozíció fenntartása is összetett feladat, mivel gravitációs és egyéb erők hatnak rá.
+Mennyire bizonyított?: A tudományos kutatások szerint az árnyékoló elvén alapuló elképzelések elméletileg működhetnek, de még nem valósították meg őket, és a gyakorlati alkalmazásuk nagyon összetett, költséges és hosszú távú folyamat.
 Kérdés angolul: Could a sunshade in space cool the Earth?
 Röviden angolul: A giant shade between the Sun and the Earth would let less sunlight through.
 Ha kikutatod angolul: Understanding only: it cannot be deployed in the game.
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: This solution can help mitigate climate change if the Earth is warmed less by solar radiation, thereby reducing the impact of global warming.
+Mi a gond vele? angolul: Designing and operating the proposed sunshade can be extremely costly, and placing it in space takes a long time. In addition, maintaining its orbit and position is a complex task because gravitational and other forces act on it.
+Mennyire bizonyított? angolul: According to scientific research, concepts based on a sunshade could work in theory, but they have not yet been implemented, and their practical application is a very complex, costly, and long-term process.
 Forrás: Wikipédia: Space sunshade (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Space_sunshade
 Forrás: Solar Geoengineering and Democracy (2018) – https://doi.org/10.1162/glep_a_00466
 Forrás: An overview of the Earth system science of solar geoengineering (2016) – https://doi.org/10.1002/wcc.423
 Forrás: Solar Geoengineering in the Polar Regions: A Review (2023) – https://doi.org/10.1029/2023ef003679
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: space sunshade solar radiation management Lagrange point|space-based geoengineering sunshade
 Paraméter: sugarzasi_kenyszer_w_m2

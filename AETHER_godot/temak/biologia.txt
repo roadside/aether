@@ -16,19 +16,19 @@ Kérdés: Mit okoz a melegedés a beporzó rovaroknak?
 Röviden: A méhek és más beporzók nélkül sok gyümölcs és zöldség nem terem.
 Ha kikutatod:
 Mire jó?: A beporzó rovarok szerepe kulcsfontosságú a növények szaporodásában, így a melegedés következményeinek megértése segít a természet védelmében és az élelmiszertermelés biztonságában.
-Mi a gond vele?: A melegedés megváltoztatja a növények és a rovarok életciklusának időpontját, ami a beporzást zavarhatja. A globális felmelegedés növeli a környezeti stresszt, ami a rovarpopulációk számát csökkentheti.
-Mennyire bizonyított?: A tudományos bizonyítékok szerint a melegedés valóban kockázatot jelent a beporzó rovarok számára, de a pontos hatások továbbra is vizsgálásra várnak.
+Mi a gond vele?: A melegedés megváltoztatja a növények és a rovarok életciklusának időzítését, ami zavarhatja a beporzást. A globális felmelegedés növeli a környezeti stresszt, ami csökkentheti a rovarpopulációk számát.
+Mennyire bizonyított?: A tudományos bizonyítékok szerint a melegedés valóban kockázatot jelent a beporzó rovarok számára, de a pontos hatások további vizsgálatra várnak.
 Kérdés angolul: What does warming do to pollinating insects?
 Röviden angolul: Without bees and other pollinators, many fruits and vegetables do not grow.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: The role of pollinating insects is crucial for plant reproduction, so understanding the consequences of warming helps protect nature and food production security.
+Mi a gond vele? angolul: Warming changes the timing of plant and insect life cycles, which can disrupt pollination. Global warming increases environmental stress, which can reduce insect population sizes.
+Mennyire bizonyított? angolul: According to scientific evidence, warming does pose a risk to pollinating insects, though the exact effects remain to be studied.
 Forrás: Wikipédia: Pollinator decline (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Pollinator_decline
 Forrás: Studying plant–pollinator interactions in a changing climate: A review of approaches (2017) – https://doi.org/10.3732/apps.1700012
 Forrás: Climate Change and Insect Pollination: A Review of Consequences for Pollination Services and Food Security (2025) – https://doi.org/10.55446/ije.2025.2966
 Forrás: Forest insect pollination ecosystem services and climate change: A review (2023) – https://doi.org/10.22271/j.ento.2023.v11.i4a.9210
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: climate change effects on pollinators bumblebee decline|pollinator decline climate warming|climate change plant pollinator mismatch
 Paraméter: csokkenes_pct
@@ -41,20 +41,20 @@ Korszak: I. (Felismerés)
 Kérdés: Túlélik-e a korallzátonyok a melegedést?
 Röviden: A túl meleg víz kifehéríti, majd megöli a korallokat.
 Ha kikutatod:
-Mire jó?: A korallzátonyok védelme fontos, mert sok állat és ember életét támogatják, és a tengeri élet sokféleségét biztosítják.
+Mire jó?: A korallzátonyok védelme fontos, mert sok állat és ember életét támogatják, és fenntartják a tengeri élővilág sokféleségét.
 Mi a gond vele?: A melegedés és a klímaváltozás kockázatot jelent a korallzátonyok számára, és a károsodás gyorsan terjedhet.
-Mennyire bizonyított?: A tudományos adatok szerint a melegedés gyakorlatilag biztosan káros a korallzátonyok számára.
+Mennyire bizonyított?: A tudományos adatok szerint a melegedés gyakorlatilag biztosan káros a korallzátonyokra.
 Kérdés angolul: Can coral reefs survive warming?
 Röviden angolul: Water that is too warm bleaches corals and then kills them.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Protecting coral reefs is important because they support the lives of many animals and people and maintain the diversity of marine life.
+Mi a gond vele? angolul: Warming and climate change pose a risk to coral reefs, and damage can spread quickly.
+Mennyire bizonyított? angolul: According to scientific data, warming is virtually certain to harm coral reefs.
 Forrás: Wikipédia: Coral bleaching (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Coral_bleaching
 Forrás: Coral‐bleaching responses to climate change across biological scales (2022) – https://doi.org/10.1111/gcb.16192
 Forrás: Effects Of Climate-Induced Coral Bleaching On Coral-Reef Fishes ‚Äî Ecological And Economic Consequences (2008) – https://doi.org/10.1201/9781420065756-8
 Forrás: The Evolution of Coral Reef under Changing Climate: A Scientometric Review (2023) – https://doi.org/10.3390/ani13050949
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: coral reef bleaching warming thresholds|mass coral bleaching events frequency|coral reefs under 1.5 degrees warming
 Paraméter: csokkenes_pct
@@ -67,20 +67,20 @@ Korszak: I. (Felismerés)
 Kérdés: Közel van-e az Amazonas esőerdő az átbillenéshez?
 Röviden: Ha az esőerdő túl sokat szárad és ritkul, szavannává alakulhat.
 Ha kikutatod:
-Mire jó?: Az Amazonas esőerdő a világ legnagyobb növénytani kincse, ahol milliárdok számára növények élnek, és a szél és a víz körképzésében is fontos szerepet játszik a klímában.
-Mi a gond vele?: A folyamatos feldolgozás és a tűzveszély miatt az Amazonas esőerdő veszélyeztetett, és a klímaváltozás is növeli a kockázatot.
-Mennyire bizonyított?: A tudományos tanulmányok és a szakértők álláspontja szerint az Amazonas esőerdő körülbelül 2050-ig kockázatban van, de a jövőbeli környezeti tettek megakadályozhatják a katasztrófát.
+Mire jó?: Az Amazonas esőerdő a világ egyik legnagyobb élővilágbeli kincse, ahol növény- és állatfajok milliói élnek, és a szél és a víz körforgásában is fontos szerepet játszik a klímarendszerben.
+Mi a gond vele?: A folyamatos erdőirtás és a tűzveszély miatt az Amazonas esőerdő veszélyeztetett, és a klímaváltozás is növeli a kockázatot.
+Mennyire bizonyított?: A tudományos tanulmányok és a szakértők álláspontja szerint az Amazonas esőerdő már 2050 előtt komoly kockázatnak lehet kitéve, de a jövőbeli környezetvédelmi lépések megakadályozhatják a súlyos átbillenést.
 Kérdés angolul: Is the Amazon rainforest near a tipping point?
 Röviden angolul: If the rainforest dries and thins too much, it could turn into savanna.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: The Amazon rainforest is one of the world's greatest biological treasures, home to millions of plant and animal species, and it also plays an important role in wind and water circulation within the climate system.
+Mi a gond vele? angolul: Continuous deforestation and fire risk make the Amazon rainforest vulnerable, and climate change also increases the risk.
+Mennyire bizonyított? angolul: According to scientific studies and experts, the Amazon rainforest could face serious risk even before 2050, though future environmental actions can prevent severe tipping.
 Forrás: Wikipédia: Amazon rainforest (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Amazon_rainforest
 Forrás: Critical transitions in the Amazon forest system (2024) – https://doi.org/10.1038/s41586-023-06970-0
 Forrás: Amazon tipping point: Last chance for action (2019) – https://doi.org/10.1126/sciadv.aba2949
 Forrás: Interactions among Amazon land use, forests and climate: prospects for a near-term forest tipping point (2008) – https://doi.org/10.1098/rstb.2007.0036
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: Amazon rainforest tipping point dieback|Amazon forest resilience loss|Amazon deforestation drought carbon sink
 Paraméter: csokkenes_pct
@@ -93,22 +93,22 @@ Wikipédia angolul: Amazon rainforest
 === kerodzok_metan ===
 Korszak: II. (Mérséklés)
 Kérdés: Csökkenthető-e a tehenek metánja takarmánnyal?
-Röviden: A kérődzők emésztés közben metánt böfögnek. Egyes takarmány-kiegészítők ezt csökkentik.
+Röviden: A kérődzők emésztés közben metánt bocsátanak ki. Egyes takarmány-kiegészítők ezt csökkentik.
 Ha kikutatod:
-Mire jó?: A metán kevesebb mennyiségben jelenik meg, de sokkal hatásosabb a klímaváltozásra, mint a szén-dioxid. A metán csökkentése segíthet a klímavédelem és a tehenek termelési hatékonyságának növelésében.
-Mi a gond vele?: A metán csökkentése a takarmány megváltoztatásával vagy mikrobák módosításával lehetséges, de ezek a módszerek még nem minden esetben biztonságosak, hatékonyak vagy elterjedtek.
-Mennyire bizonyított?: A tudomány már bizonyította, hogy a takarmány módosítása csökkentheti a metánt, és bizonyos esetekben a metán csökkentése 30-80%-kal is elérhető.
+Mire jó?: A metán kisebb mennyiségben van jelen a légkörben, de sokkal erősebben hat a klímaváltozásra, mint a szén-dioxid. A metán csökkentése segíthet a klímavédelemben és a tehenek takarmányhasznosításának javításában.
+Mi a gond vele?: A metán csökkentése a takarmány megváltoztatásával vagy a bélmikrobák befolyásolásával lehetséges, de ezek a módszerek még nem minden esetben biztonságosak, hatékonyak vagy elterjedtek.
+Mennyire bizonyított?: A tudomány már bizonyította, hogy a takarmány módosítása csökkentheti a metánt, és bizonyos esetekben a metánkibocsátás 30–80%-kal is csökkenthető.
 Kérdés angolul: Can feed reduce methane from cows?
-Röviden angolul: Ruminants burp methane as they digest. Some feed additives reduce it.
+Röviden angolul: Ruminants release methane during digestion. Some feed additives reduce it.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Methane is present in smaller amounts in the atmosphere, but it has a much stronger effect on climate change than carbon dioxide. Reducing methane can help protect the climate and improve feed efficiency in cows.
+Mi a gond vele? angolul: Reducing methane by changing feed or influencing gut microbes is possible, but these methods are not yet always safe, effective, or widespread.
+Mennyire bizonyított? angolul: Science has already shown that modifying feed can reduce methane, and in certain cases methane emissions can be cut by 30–80%.
 Forrás: Wikipédia: Enteric fermentation (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Enteric_fermentation
 Forrás: SPECIAL TOPICS — Mitigation of methane and nitrous oxide emissions from animal operations: I. A review of enteric methane mitigation options1 (2013) – https://doi.org/10.2527/jas.2013-6583
 Forrás: Ruminant enteric methane mitigation: a review (2011) – https://doi.org/10.1071/an10163
 Forrás: A Review of 3-Nitrooxypropanol for Enteric Methane Mitigation from Ruminant Livestock (2021) – https://doi.org/10.3390/ani11123540
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: enteric methane mitigation feed additives meta-analysis|3-nitrooxypropanol methane reduction dairy cows|enteric methane mitigation strategies ruminants
 Paraméter: metan_csokkentes_pct
@@ -118,23 +118,24 @@ Wikipédia angolul: enteric fermentation
 
 === voros_alga ===
 Korszak: II. (Mérséklés)
+Korszak angolul: II. (Mitigation)
 Kérdés: Tényleg csökkenti-e egy tengeri alga a tehenek metánját?
 Röviden: Egy vörös tengeri alga kis adagban a takarmányban erősen csökkentheti a metánt.
 Ha kikutatod:
-Mire jó?: A metán a legnagyobb klímaváltozásra ható gázak egyike, ezért csökkentése segíthet a klímaváltozás ellen. Ha a tehenek kevesebb metánt bocsátanak ki, kevesebb káros hatásuk van a klímára.
-Mi a gond vele?: Ez az alga nem mindig hatékony, mert bizonyos esetekben csökkenti a tehenek étkezését, és van olyan, hogy a metán csökkentésekor más káros hatások is felléphetnek, például a környezeti kockázatok.
-Mennyire bizonyított?: A tudomány bizonyítja, hogy az Asparagopsis csökkentheti a metánt, de még nem teljesen megértették, hogy mennyire hatásos hosszú távon, és milyen hatásai lehetnek az állatok egészségére.
+Mire jó?: A metán az egyik legerősebb üvegházhatású gáz, ezért csökkentése segít a klímaváltozás mérséklésében. Ha a tehenek kevesebb metánt bocsátanak ki, kisebb a klímahatásuk.
+Mi a gond vele?: Ez az alga nem mindig hatékony, mert bizonyos esetekben csökkenti a tehenek takarmányfelvételét, és előfordulhat, hogy a metán csökkentésekor más káros hatások – például környezeti kockázatok – is fellépnek.
+Mennyire bizonyított?: A tudomány bizonyítja, hogy az Asparagopsis csökkentheti a metánt, de még nem teljesen tisztázott, mennyire hatásos hosszú távon, és milyen hatásai lehetnek az állatok egészségére.
 Kérdés angolul: Does a seaweed really cut cattle methane?
 Röviden angolul: A red seaweed, in small amounts in feed, may strongly reduce methane.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Methane is one of the strongest greenhouse gases, so reducing it helps mitigate climate change. When cows emit less methane, their climate impact is smaller.
+Mi a gond vele? angolul: This seaweed is not always effective because in some cases it reduces feed intake in cows, and when methane is reduced, other harmful effects—such as environmental risks—can also occur.
+Mennyire bizonyított? angolul: Science shows that Asparagopsis can reduce methane, though it is not yet fully clear how effective it is in the long term or what effects it may have on animal health.
 Forrás: Wikipédia: Vörösmoszatok (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6smoszatok
 Forrás: Role of Polysaccharides from Marine Seaweed as Feed Additives for Methane Mitigation in Ruminants: A Critical Review (2023) – https://doi.org/10.3390/polym15153153
 Forrás: Graduate Student Literature Review: Limitations in feeding red seaweed Asparagopsis species for enteric methane mitigation in ruminants (2025) – https://doi.org/10.3168/jds.2025-26915
 Forrás: Benefits and risks of including the bromoform containing seaweed Asparagopsis in feed for the reduction of methane production from ruminants (2022) – https://doi.org/10.1016/j.algal.2022.102673
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: Asparagopsis seaweed enteric methane reduction|red seaweed cattle methane|Asparagopsis taxiformis beef cattle methane
 Paraméter: metan_csokkentes_pct
@@ -149,20 +150,20 @@ Korszak: IV. (Helyreállítás)
 Kérdés: Mennyi CO2-t köthet meg az erdősítés?
 Röviden: Új erdők telepítése: a fák növekedés közben szenet építenek be.
 Ha kikutatod: Erdősítés a tervedben.
-Mire jó?: Az erdősítés segíthet a klímaváltozás ellen, mert a fák elnyelnek szén-dioxidot, és megakadályozzák a talaj elmosódását, a szél hatását, valamint növelik az esőzést.
-Mi a gond vele?: Az erdősítés nem mindig segít a környezet védelmében, mert a fák telepítése károsíthatja a természetes életöveket, és a szén-dioxid elnyelése nem mindig biztos.
-Mennyire bizonyított?: A tudományos kutatások szerint az erdősítés segíthet a klímaváltozás ellen, de van viták a hatékonyságáról és a környezeti hatásairól.
+Mire jó?: Az erdősítés segíthet a klímaváltozás ellen, mert a fák szén-dioxidot kötnek meg, és megakadályozzák a talajeróziót és a szélkárokat, valamint befolyásolják a vízkörforgást.
+Mi a gond vele?: Az erdősítés nem mindig segít a környezet védelmében, mert a fák telepítése károsíthatja a természetes élőhelyeket, és a szénmegkötés mértéke nem mindig biztos.
+Mennyire bizonyított?: A tudományos kutatások szerint az erdősítés segíthet a klímaváltozás ellen, de viták vannak a hatékonyságáról és a környezeti hatásairól.
 Kérdés angolul: How much CO2 can new forests store?
 Röviden angolul: Planting new forests: trees build carbon into themselves as they grow.
 Ha kikutatod angolul: Afforestation in your plan.
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Afforestation can help against climate change because trees capture carbon dioxide and help prevent soil erosion and wind damage, while also influencing the water cycle.
+Mi a gond vele? angolul: Afforestation does not always help protect the environment because planting trees can damage natural habitats, and the amount of carbon sequestration is not always certain.
+Mennyire bizonyított? angolul: Scientific research indicates that afforestation can help against climate change, though there are debates about its effectiveness and environmental impacts.
 Forrás: Wikipédia: Afforestation (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Afforestation
 Forrás: Pine afforestation on degraded lands: a global review of carbon sequestration potential (2025) – https://doi.org/10.3389/ffgc.2025.1648094
 Forrás: [Greenhouse gas emissions, carbon leakage and net carbon sequestration from afforestation and forest management: A review.] (2017) – https://doi.org/10.13287/j.1001-9332.201702.004
 Forrás: Economics of afforestation for carbon sequestration in western Canada (2000) – https://doi.org/10.5558/tfc76165-1
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: afforestation reforestation carbon dioxide removal potential global|global tree restoration potential carbon|negative emissions technologies potentials costs side effects
 Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
@@ -175,19 +176,19 @@ Korszak: IV. (Helyreállítás)
 Kérdés: Mennyi szenet köt meg az erdő, ha hagyjuk magától visszanőni?
 Röviden: Az elhagyott földeken az erdő ültetés nélkül is visszanőhet.
 Ha kikutatod:
-Mire jó?: Az erdők újra nőni képesek, így segíthetnek a klímaváltozás ellen, és megőrizhetik az élővilág sokféleségét.
-Mi a gond vele?: Az erdők nem nőnek mindenhová, és a növekedés lassú lehet, különösen ha a talaj nem megfelelő.
-Mennyire bizonyított?: A tudományos vizsgálatok szerint az erdők képesek újra nőni, de a hatékonyság függ a helyi körülményektől.
+Mire jó?: Az erdők magától is képesek visszanőni, így segíthetnek a klímaváltozás ellen, és megőrizhetik az élővilág sokféleségét.
+Mi a gond vele?: Az erdők nem nőnek ki mindenhol, és a növekedés lassú lehet, különösen, ha a talaj nem megfelelő.
+Mennyire bizonyított?: A tudományos vizsgálatok szerint az erdők képesek maguktól visszanőni, de a hatékonyság függ a helyi körülményektől.
 Kérdés angolul: How much carbon does a forest store if left to regrow by itself?
 Röviden angolul: On abandoned land, forest can grow back without planting.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Forests can regrow on their own, so they can help against climate change and preserve biodiversity.
+Mi a gond vele? angolul: Forests do not grow back everywhere, and growth can be slow, especially if the soil is unsuitable.
+Mennyire bizonyított? angolul: Scientific studies show that forests can regrow on their own, though effectiveness depends on local conditions.
 Forrás: Cost-effectiveness of natural forest regeneration and plantations for climate mitigation (2024) – https://doi.org/10.1038/s41558-024-02068-1
 Forrás: Agricultural fallows are the main driver of natural forest regeneration in Tanzania (2023) – https://doi.org/10.1088/1748-9326/accbd6
 Forrás: Fostering natural forest regeneration on former agricultural land through economic and policy interventions (2020) – https://doi.org/10.1088/1748-9326/ab79e6
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: natural forest regrowth carbon accumulation rates|natural regeneration versus tree planting carbon|secondary forest carbon sequestration
 Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
@@ -200,20 +201,20 @@ Korszak: IV. (Helyreállítás)
 Kérdés: Mennyi szenet tárolnak a mangroveerdők?
 Röviden: A trópusi partok mangroveerdői sok szenet zárnak a sáros talajba, és védik a partot.
 Ha kikutatod:
-Mire jó?: A mangroveerdők nagy mennyiségű szent tárolnak, ami segíthet csökkenteni a légkörben lévő széngázok mennyiségét, így csökkenthetik a globális felmelegedést.
-Mi a gond vele?: A mangroveerdők szén-tároló képessége csökkenhet az emberek által okozott környezeti változtatások, például a földhasználat változásai miatt, ami a szénkészlet csökkenését okozhatja.
-Mennyire bizonyított?: A tudományos vizsgálatok alapján ismert, hogy a mangroveerdők szén-tároló képessége csökkenhet a környezeti változtatások hatására, de a pontos mennyiség és a változás mértéke továbbra is kutatás alatt áll.
+Mire jó?: A mangroveerdők nagy mennyiségű szenet tárolnak, ami segíthet csökkenteni a légkörben lévő szén-dioxidot, így mérsékelhetik a globális felmelegedést.
+Mi a gond vele?: A mangroveerdők széntároló képessége csökkenhet az emberek által okozott környezeti változások, például a földhasználat megváltozása miatt, ami a szénkészlet csökkenését okozhatja.
+Mennyire bizonyított?: A tudományos vizsgálatok alapján ismert, hogy a mangroveerdők széntároló képessége csökkenhet a környezeti változások hatására, de a pontos mennyiség és a változás mértéke továbbra is kutatás alatt áll.
 Kérdés angolul: How much carbon do mangrove forests store?
 Röviden angolul: Mangrove forests on tropical coasts lock a lot of carbon in their muddy soil and protect the shore.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Mangrove forests store large amounts of carbon, which can help reduce carbon dioxide in the atmosphere and thus mitigate global warming.
+Mi a gond vele? angolul: The carbon storage capacity of mangrove forests can decrease due to human-caused environmental changes, such as changes in land use, which can cause a reduction in carbon stocks.
+Mennyire bizonyított? angolul: Based on scientific studies, it is known that the carbon storage capacity of mangrove forests can decrease due to environmental changes, though the exact amount and rate of change remain under research.
 Forrás: Wikipédia: Mangrove (egyértelműsítő lap) (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Mangrove_%28egy%C3%A9rtelm%C5%B1s%C3%ADt%C5%91_lap%29
 Forrás: Effect of land‐use and land‐cover change on mangrove blue carbon: A systematic review (2019) – https://doi.org/10.1111/gcb.14774
 Forrás: Monitoring mangrove-based blue carbon ecosystems using UAVs: a review (2024) – https://doi.org/10.1080/10106049.2024.2405123
 Forrás: A Review of Remote Sensing Approaches for Monitoring Blue Carbon Ecosystems: Mangroves, Seagrassesand Salt Marshes during 2010–2018 (2019) – https://doi.org/10.3390/s19081933
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: mangrove blue carbon sequestration rate|mangrove restoration carbon|mangrove soil carbon stocks
 Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
@@ -226,20 +227,20 @@ Korszak: IV. (Helyreállítás)
 Kérdés: Mennyi szenet köt meg a tengerifű?
 Röviden: A sekély tengerek fűmezői szenet raktároznak az aljzatban.
 Ha kikutatod:
-Mire jó?: A tengerifű a tengeri élet számára fontos, mert a halak és más állatoknak étel és búvóhely, valamint a talajt tartja meg a víz alatt.
-Mi a gond vele?: A tengerifű károsodhat egy penész miatt, ami csökkenti az állományát, és így csökken a növények és az állatok száma is.
-Mennyire bizonyított?: A források szerint a tengerifű jelentőségét és károsodását ismerték, de a pontos hatásairól és a megelőzésről nem szólnak részletesen.
+Mire jó?: A tengerifű fontos a tengeri élővilág számára, mert a halaknak és más állatoknak táplálékot és búvóhelyet nyújt, valamint megköti a víz alatti üledéket.
+Mi a gond vele?: A tengerifű károsodhat egy betegség vagy kártevő miatt, ami csökkenti az állományát, és így csökken a rá épülő élővilág is.
+Mennyire bizonyított?: A források szerint a tengerifű jelentősége és károsodása ismert, de a pontos hatásairól és a megelőzésről további kutatások szükségesek.
 Kérdés angolul: How much carbon does seagrass store?
 Röviden angolul: Meadows of seagrass in shallow seas store carbon in the seabed.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Seagrass is important for marine life because it provides food and shelter for fish and other animals and stabilizes underwater sediment.
+Mi a gond vele? angolul: Seagrass can be damaged by a disease or pest, which reduces its population and therefore also reduces the wildlife that depends on it.
+Mennyire bizonyított? angolul: According to the sources, the importance and damage of seagrass are known, though further research is needed on its exact effects and prevention.
 Forrás: Wikipédia: Tengerifű (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Tengerif%C5%B1
 Forrás: How can blue carbon burial in seagrass meadows increase long-term, net sequestration of carbon? A critical review (2022) – https://doi.org/10.1088/1748-9326/ac8ab4
 Forrás: Diving into Blue Carbon : A Review on Carbon Sequestration by Mangrove Forests, Seagrass Meadows and Salt Marshes, and Their Capacity to Act as Global Carbon Sinks (2019) – http://urn.kb.se/resolve?urn=urn:nbn:se:uu:diva-384028
 Forrás: Biodiversity-Centered Blue Carbon Management in Vegetated Coastal Wetlands: A Review of Conservation, Restoration, Monitoring, and Climate Adaptation Across Mangroves, Seagrass Beds, and Salt Marshes (2026) – https://doi.org/10.3390/d18070388
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: seagrass blue carbon sequestration|seagrass meadow restoration carbon|seagrass sediment carbon stocks
 Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
@@ -252,20 +253,20 @@ Korszak: IV. (Helyreállítás)
 Kérdés: Megköthet-e szenet a tengeri moszaterdő?
 Röviden: A nagy barna moszatok gyorsan nőnek. Ha a mélybe süllyednek, a szén ott maradhat.
 Ha kikutatod:
-Mire jó?: A tengeri moszaterdők segíthetnek a klímaváltozás ellen, mivel CO₂-t vesznek fel a levegőből, így csökkenthetik a légkörben lévő szén-dioxid mennyiségét. Ez a folyamat a 'kék szén' (blue carbon) része.
-Mi a gond vele?: A tengeri moszaterdők nem biztos, hogy hosszú távon megőrizzék a felvett CO₂-t, mert a biomasszájuk gyorsan elszállhat, és a környezeti tényezők (pl. hőmérséklet, salinitás) befolyásolhatják a szénfelvétel hatékonyságát.
-Mennyire bizonyított?: A tudomány bizonyos mértékig támogatja a tengeri moszaterdők szénfelvételét, de a pontos mennyiség és hosszú távú hatások még nem teljesen bizonyítottak, mivel a tengeri környezet dinamikus és bonyolult.
+Mire jó?: A tengeri moszaterdők segíthetnek a klímaváltozás ellen, mivel CO2-t vesznek fel a levegőből, így csökkenthetik a légkörben lévő szén-dioxid mennyiségét. Ez a folyamat a kék szén (blue carbon) része.
+Mi a gond vele?: A tengeri moszaterdők nem biztos, hogy hosszú távon megőrzik a felvett CO2-t, mert a biomasszájuk gyorsan lebomolhat vagy elsodródhat, és a környezeti tényezők (pl. hőmérséklet, sótartalom) befolyásolhatják a szénfelvétel hatékonyságát.
+Mennyire bizonyított?: A tudomány bizonyos mértékig támogatja a tengeri moszaterdők szénfelvételét, de a pontos mennyiség és a hosszú távú hatások még nem teljesen bizonyítottak, mivel a tengeri környezet dinamikus és összetett.
 Kérdés angolul: Can kelp forests store carbon?
 Röviden angolul: Large brown seaweeds grow fast. If they sink to the deep, the carbon can stay there.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Kelp forests can help against climate change because they take up CO2 from the air, thus reducing the amount of carbon dioxide in the atmosphere. This process is part of blue carbon.
+Mi a gond vele? angolul: Kelp forests may not retain captured CO2 over the long term because their biomass can quickly decompose or drift away, and environmental factors (such as temperature and salinity) can affect the efficiency of carbon uptake.
+Mennyire bizonyított? angolul: Science supports carbon uptake by kelp forests to some extent, but the exact amounts and long-term effects are not yet fully proven because the marine environment is dynamic and complex.
 Forrás: Wikipédia: Barnamoszatok (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Barnamoszatok
 Forrás: The Role of Seaweed in Carbon Sequestration and Climate Change Mitigation: A Review of Blue Carbon Potential (2026) – https://doi.org/10.55927/ijaea.v5i1.16017
 Forrás: Forensic carbon accounting: Assessing the role of seaweeds for carbon sequestration (2022) – https://doi.org/10.1111/jpy.13249
 Forrás: Cultivated seaweed carbon sequestration capacity (2019) – https://doi.org/10.1088/1755-1315/370/1/012017
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: kelp forest carbon sequestration|macroalgae cultivation carbon dioxide removal|seaweed carbon export deep ocean
 Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
@@ -278,20 +279,20 @@ Korszak: IV. (Helyreállítás)
 Kérdés: Megmenthetők-e a korallzátonyok ültetéssel?
 Röviden: Korallokat nevelnek és telepítenek vissza, köztük olyanokat, amelyek jobban bírják a meleget.
 Ha kikutatod:
-Mire jó?: A korallültetés segíthet a korallzátonyok helyreállításában, amelyek fontosak a tengeri élet számára, a tengerparti közösségek gazdaságához, és az oxigénkibocsátáshoz is.
-Mi a gond vele?: A korallültetés nem garantálja a teljes helyreállítást, mert a klímaváltozás, a hőmérséklet-emelkedés és a szennyezés továbbra is veszélyezteti a korallokat. A feldolgozott korallrészek is kockázatot jelenthetnek az ökoszisztémában.
-Mennyire bizonyított?: A korallültetés hatékony, de nem teljesen bizonyított, hogy hosszú távon milyen mértékben segíthet a korallzátonyok megóvásában, mivel a klímaváltozás továbbra is fennáll.
+Mire jó?: A korallültetés segíthet a korallzátonyok helyreállításában, amelyek fontosak a tengeri élővilág számára, a tengerparti közösségek megélhetéséhez és a partvédelemhez.
+Mi a gond vele?: A korallültetés nem garantálja a teljes helyreállítást, mert a klímaváltozás, a hőmérséklet-emelkedés és a szennyezés továbbra is veszélyezteti a korallokat. A kihelyezett koralltelepek pusztulása vagy betegségei is kockázatot jelenthetnek az ökoszisztémában.
+Mennyire bizonyított?: A korallültetés bizonyos esetekben eredményes, de nem teljesen bizonyított, hogy hosszú távon milyen mértékben segíthet a korallzátonyok megóvásában, mivel a klímaváltozás továbbra is fennáll.
 Kérdés angolul: Can coral reefs be saved by replanting?
 Röviden angolul: Corals are grown and replanted, including ones that cope better with heat.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Coral planting can help restore coral reefs, which are important for marine life, coastal communities' livelihoods, and coastal protection.
+Mi a gond vele? angolul: Coral planting does not guarantee full recovery because climate change, rising temperatures, and pollution continue to threaten corals. Mortality or diseases in outplanted coral colonies can also pose a risk in the ecosystem.
+Mennyire bizonyított? angolul: Coral planting is effective in certain cases, though it is not yet fully proven to what extent it can help protect coral reefs in the long term because climate change is ongoing.
 Forrás: Wikipédia: Coral reef restoration (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Coral_reef_restoration
 Forrás: Coral reef restoration in Indonesia: A review of policies and projects (2022) – https://doi.org/10.1016/j.marpol.2021.104940
 Forrás: Coral propagation: a review of techniques for ornamental trade and reef restoration (2015) – https://doi.org/10.1111/raq.12135
 Forrás: A review of coral reef restoration techniques (2015) – https://edepot.wur.nl/333153
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: coral reef restoration effectiveness survival|assisted evolution heat tolerant corals|coral gardening outplanting survival
 Paraméter: reszarany_pct

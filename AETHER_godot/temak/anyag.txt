@@ -15,20 +15,20 @@ Korszak: III. (Átalakulás)
 Kérdés: Lehet-e jobb napelemet gyártani perovszkitból?
 Röviden: A perovszkit egy kristályszerkezet. Vékony rétege a szilíciummal együtt több fényt alakít áramra.
 Ha kikutatod:
-Mire jó?: A perovszkit napelemek hatékonyabbak, olcsóbbak és könnyebben gyártottak, így lehetővé teszik, hogy több energiát állítsanak elő ugyanazon napsütés mellett.
-Mi a gond vele?: A perovszkit napelemek bizonyos esetekben kevesebb ideig tartanak, és az ólomtartalmuk egészségügyi kockázatot jelenthet.
-Mennyire bizonyított?: A perovszkit napelemek hatékonyságuk és előállítási módjuk számos tanulmány alátámasztja, de a hosszú távú stabilitásuk még további kutatásokra szorul.
+Mire jó?: A perovszkit napelemek hatékonyabbak, olcsóbbak és könnyebben gyárthatók, így lehetővé teszik, hogy ugyanannyi napsütés mellett több energiát termeljenek.
+Mi a gond vele?: A perovszkit napelemek élettartama lényegesen rövidebb, és az ólomtartalmuk egészségügyi és környezeti kockázatot jelenthet.
+Mennyire bizonyított?: A perovszkit napelemek hatékonyságát és előállítási módját számos tanulmány alátámasztja, de a hosszú távú stabilitásuk még további kutatásokra szorul. A legfrissebb kutatások biztatóak.
 Kérdés angolul: Can perovskite make better solar cells?
 Röviden angolul: Perovskite is a crystal structure. A thin layer of it on silicon turns more light into electricity.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Perovskite solar cells are more efficient, cheaper, and easier to manufacture, allowing them to generate more energy from the same amount of sunlight.
+Mi a gond vele? angolul: Perovskite solar cells have a significantly shorter lifespan, and their lead content can pose health and environmental risks.
+Mennyire bizonyított? angolul: Numerous studies support the efficiency and manufacturing methods of perovskite solar cells, though their long-term stability still requires further research. The latest research is promising.
 Forrás: Wikipédia: Perovszkit napelemek (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Perovszkit_napelemek
 Forrás: Pathways toward high-performance perovskite solar cells: review of recent advances in organo-metal halide perovskites for photovoltaic applications (2016) – https://doi.org/10.1117/1.jpe.6.022001
 Forrás: PEROVSKITE SOLAR CELLS (REVIEW ARTICLE) (2015) – https://openalex.org/W2612520901
 Forrás: A Review of Perovskites Solar Cell Stability (2019) – https://doi.org/10.1002/adfm.201808843
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: perovskite silicon tandem solar cell efficiency|perovskite solar cell stability degradation|perovskite solar cell efficiency record
 Paraméter: hatasfok_pct
@@ -41,20 +41,20 @@ Korszak: III. (Átalakulás)
 Kérdés: Mennyi energiát tárolnak a mai akkumulátorok?
 Röviden: A lítiumion-akkumulátor hajtja a villanyautókat, és tárolja a napenergiát.
 Ha kikutatod:
-Mire jó?: Akkumulátorok segítenek az elektronikában, mert az energiát később is elérhetővé teszik, így ne kelljen mindig csatlakozni a hálózathoz.
-Mi a gond vele?: Az akkumulátorok energiát csak bizonyos mértékig tudnak tárolni, és egy idő után kevesebbet tudnak adni. A túltöltés vagy hő is károsíthatja őket.
-Mennyire bizonyított?: A tudományos források szerint az akkumulátorok működése jól ismert, de a pontos energiatartalom és a teljesítmény idővel csökkenhet.
+Mire jó?: Az akkumulátorok segítenek az elektronikában, mert az energiát később is elérhetővé teszik, így nem kell mindig a hálózathoz csatlakozni.
+Mi a gond vele?: Az akkumulátorok az energiát csak bizonyos mértékig tudják tárolni, és egy idő után egyre kevesebbet tudnak leadni. A túltöltés vagy a hő is károsíthatja őket.
+Mennyire bizonyított?: A tudományos források szerint az akkumulátorok működése jól ismert, és a kutatások folyamatosak. Az olcsóbb és biztonságosabb lítium-vasfoszfát (LFP) akkumulátorok mára kiszorították a nikkelalapú (NMC) típusokat a tömegpiacról, miközben a nátrium-ion és a szilárdtest-akkumulátorok tömeggyártásának felfuttatása is megkezdődött.
 Kérdés angolul: How much energy do today's batteries store?
 Röviden angolul: Lithium-ion batteries power electric cars and store solar energy.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Batteries help in electronics by making energy available later, so devices do not always need to stay connected to the grid.
+Mi a gond vele? angolul: Batteries can only store energy up to a certain limit, and over time they can deliver less. Overcharging or heat can also damage them.
+Mennyire bizonyított? angolul: According to scientific sources, how batteries work is well understood, and research is ongoing. Cheaper and safer lithium iron phosphate (LFP) batteries have displaced nickel-based (NMC) types in the mass market, while scaling up mass production of sodium-ion and solid-state batteries has also begun.
 Forrás: Wikipédia: Lítiumion-akkumulátor (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/L%C3%ADtiumion-akkumul%C3%A1tor
 Forrás: SoC Estimation for Lithium-ion Batteries: Review and Future Challenges (2017) – https://doi.org/10.3390/electronics6040102
 Forrás: New electrode materials for lithium-ion batteries (Review) (2013) – https://doi.org/10.1134/s1023193513010102
 Forrás: New lithium salts in electrolytes for lithium-ion batteries (Review) (2017) – https://doi.org/10.1134/s1023193517070035
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: lithium-ion battery energy density progress|lithium-ion battery cathode energy density|high nickel cathode lithium-ion energy density
 Paraméter: energiasuruseg_wh_kg
@@ -64,23 +64,23 @@ Wikipédia angolul: lithium-ion battery
 
 === szilard_akku ===
 Korszak: III. (Átalakulás)
-Kérdés: Jobb lesz-e a szilárd elektrolitos akkumulátor?
-Röviden: Ebben folyadék helyett szilárd anyag vezeti az áramot. Biztonságosabb lehet, és többet tárolhat.
+Kérdés: Jobb lesz-e a szilárdtest-akkumulátor?
+Röviden: Ebben folyadék helyett szilárd anyag vezeti az áramot. Biztonságosabb lehet, és több energiát tárolhat.
 Ha kikutatod:
-Mire jó?: Ez a technológia biztonságosabb, mivel nem égnek el, és több energiát tárolhat, így autókban, eszközökben használhatók.
-Mi a gond vele?: A szilárd elektrolitok kisebb ionelektromos vezetőképességgel bírnak, és nehéz megfelelni a gyártási költségeknek és méretezésnek.
-Mennyire bizonyított?: A tudományos kutatások bizonyítják, hogy a szilárd elektrolitos akkumulátorok lehetővé teszik a magas energiasűrűséget, de még nem teljesen készek a piacra.
+Mire jó?: Ez a technológia biztonságosabb, mivel nem gyúlékony, és több energiát tud tárolni, így autókban és elektronikai eszközökben is használható.
+Mi a gond vele?: A szilárd elektrolitok ionvezető képessége kisebb lehet, és nehéz megfelelni a gyártási költségeknek, valamint a tömeggyártás skálázásának.
+Mennyire bizonyított?: A tudományos kutatások bizonyítják, hogy a szilárdtest-akkumulátor lehetővé teszi a magas energiasűrűséget, de tömeges elterjedését jelenleg még a bonyolult gyártástechnológia és a magas előállítási költségek akadályozzák, így szélesebb körben várhatóan csak a 2020-as évek végén jelenik meg a piacon.
 Kérdés angolul: Will solid-state batteries be better?
 Röviden angolul: In these, a solid material carries the current instead of a liquid. They may be safer and store more.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: This technology is safer because it is not flammable, and it can store more energy, so it can also be used in cars and electronic devices.
+Mi a gond vele? angolul: Solid electrolytes can have lower ionic conductivity, and it is hard to meet manufacturing cost targets and scale up production.
+Mennyire bizonyított? angolul: Scientific research shows that solid-state batteries enable high energy density, but their widespread adoption is still hindered by complex manufacturing technology and high production costs, so they are expected to reach the broader market around the late 2020s.
 Forrás: Wikipédia: Solid-state battery (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Solid-state_battery
 Forrás: New challenges for lithium fluoride: From dosimeter to solid-state batteries (review) (2025) – https://doi.org/10.1016/j.nxmate.2025.100548
 Forrás: A comprehensive review of solid-state batteries (2025) – https://doi.org/10.1016/j.apenergy.2025.125546
 Forrás: Building Better Batteries in the Solid State: A Review (2019) – https://doi.org/10.3390/ma12233892
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: solid-state lithium metal battery energy density|solid electrolyte battery review|sulfide solid electrolyte all-solid-state battery
 Paraméter: energiasuruseg_wh_kg
@@ -93,20 +93,20 @@ Korszak: III. (Átalakulás)
 Kérdés: Kiválthatja-e a nátrium a lítiumot az akkumulátorban?
 Röviden: A nátrium olcsó, és bőven van belőle, például a konyhasóban.
 Ha kikutatod:
-Mire jó?: A nátrium-ion akkumulátorok olcsóbbak és környezetbarátabbak, mivel a nátrium gyakori anyag, és nem igényel ritka anyagokat, mint a litium-ion akkumulátorok.
-Mi a gond vele?: A nátriumionok nagyobb méretűek, így lassabbak a töltéshez és kisajátításhoz, és a nátrium-ion akkumulátorok kisebb kapacitásúak lehetnek, mint a litium-ion akkumulátorok.
+Mire jó?: A nátrium-ion akkumulátorok olcsóbbak és környezetbarátabbak, mivel a nátrium gyakori anyag, és nem igényel ritka anyagokat, mint a lítiumion-akkumulátorok.
+Mi a gond vele?: A nátriumionok nagyobb méretűek, így lassabb a töltés és a kisütés, ráadásul a nátrium-ion akkumulátoroknak kisebb lehet a kapacitása, mint a lítiumion-akkumulátoroknak.
 Mennyire bizonyított?: A nátrium-ion akkumulátorok technológiája már több évtizede ismert, és a tudományos kutatások szerint hatékonyak lehetnek, de továbbra is fejlesztés alatt állnak.
 Kérdés angolul: Can sodium replace lithium in batteries?
 Röviden angolul: Sodium is cheap and plentiful, for example in table salt.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Sodium-ion batteries are cheaper and more environmentally friendly because sodium is a common material and does not require rare materials like lithium-ion batteries do.
+Mi a gond vele? angolul: Sodium ions are larger, so charging and discharging are slower, and sodium-ion batteries can have a lower capacity than lithium-ion batteries.
+Mennyire bizonyított? angolul: Sodium-ion battery technology has been known for decades, and scientific research indicates they can be effective, though they remain under development.
 Forrás: Wikipédia: Sodium-ion battery (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Sodium-ion_battery
 Forrás: Nanocomposite Materials for the Sodium–Ion Battery: A Review (2017) – https://doi.org/10.1002/smll.201702514
 Forrás: Sodium‐Ion Battery Materials and Electrochemical Properties Reviewed (2018) – https://doi.org/10.1002/aenm.201800079
 Forrás: Sodium-Ion Batteries (a Review) (2018) – https://doi.org/10.1134/s1023193518020076
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: sodium-ion battery energy density cost|sodium-ion battery cathode materials|sodium-ion battery commercialization
 Paraméter: energiasuruseg_wh_kg
@@ -119,20 +119,20 @@ Korszak: III. (Átalakulás)
 Kérdés: Gyártható-e acél szén helyett hidrogénnel?
 Röviden: Az acélgyártás az egyik legnagyobb kibocsátó. A hidrogén kiválthatja a kokszot.
 Ha kikutatod:
-Mire jó?: Ez a módszer csökkentheti a klímaváltozás okozta kárt, mivel a szén gyártásához nagy mennyiségű széndioxid jelenik meg, míg a hidrogén kevesebb kibocsátást okoz.
-Mi a gond vele?: A hidrogén gyártása nagy mennyiségű energiát és esetleges kibocsátást igényel, és a jelenlegi technológiák még nem elég hatékonyak ahhoz, hogy a teljes acélgyártást hidrogénnel helyettesítsék.
-Mennyire bizonyított?: A tudományos vizsgálatok szerint a hidrogén alapú acélgyártás lehetséges, de még nem teljesen bizonyított, hogy ez a módszer hatékonyan és környezetbarátan működik a jelenlegi technológiák keretein belül.
+Mire jó?: Ez a módszer csökkentheti a klímaváltozás okozta károkat, mivel a szén használatakor nagy mennyiségű szén-dioxid keletkezik, míg a hidrogén kevesebb kibocsátással jár.
+Mi a gond vele?: A hidrogén előállítása nagy mennyiségű energiát és esetleg kibocsátást igényel, és a jelenlegi technológiák még nem elég hatékonyak ahhoz, hogy a teljes acélgyártást hidrogénnel helyettesítsék.
+Mennyire bizonyított?: A tudományos vizsgálatok szerint a hidrogénalapú acélgyártás lehetséges, de még nem teljesen bizonyított, hogy ez a módszer hatékonyan és környezetbarátan működik a jelenlegi technológiák keretein belül.
 Kérdés angolul: Can steel be made with hydrogen instead of coal?
 Röviden angolul: Steelmaking is one of the largest emitters. Hydrogen can replace coke.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: This method can reduce damage from climate change because using coal produces large amounts of carbon dioxide, whereas hydrogen involves lower emissions.
+Mi a gond vele? angolul: Producing hydrogen requires large amounts of energy and potentially emissions, and current technologies are not yet efficient enough to replace all steelmaking with hydrogen.
+Mennyire bizonyított? angolul: Scientific studies indicate that hydrogen-based steelmaking is possible, but it is not yet fully proven that this method works efficiently and in an environmentally friendly way within current technologies.
 Forrás: Wikipédia: Acélgyártás (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Ac%C3%A9lgy%C3%A1rt%C3%A1s
 Forrás: Decarbonizing the iron and steel industry: A systematic review of sociotechnical systems, technological innovations, and policy options (2022) – https://doi.org/10.1016/j.erss.2022.102565
 Forrás: Green Hydrogen for Steel Decarbonization: A Comparative Review Between Asia and Brazil (2026) – https://doi.org/10.3390/hydrogen7040182
 Forrás: Energy saving technologies and mass-thermal network optimization for decarbonized iron and steel industry: A review (2020) – https://doi.org/10.1016/j.jclepro.2020.122997
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: hydrogen direct reduction steel emissions reduction|green steel decarbonization|hydrogen-based steelmaking life cycle
 Paraméter: kibocsatas_csokkentes_pct
@@ -143,22 +143,22 @@ Wikipédia angolul: hydrogen direct reduced iron
 === cement ===
 Korszak: III. (Átalakulás)
 Kérdés: Mennyivel csökkenthető a cementgyártás kibocsátása?
-Röviden: A cementgyártás a mészkő hevítésekor is CO2-t enged ki, nem csak az égetéstől.
+Röviden: A cementgyártás a mészkő hevítésekor is CO2-t enged ki, nem csak az égetéskor.
 Ha kikutatod:
-Mire jó?: A cementgyártás kibocsátásának csökkentése segíthet a klímaváltozás ellen, mert a cement gyártása jelentős CO2-kibocsátást okoz. A csökkentés megakadályozhatja a globális felmelegedést.
-Mi a gond vele?: A cementgyártás kibocsátásának csökkentése technikailag és gazdaságilag kihívásokkal jár, például a technológiai fejlesztések és a megfelelő energiaforrások szükségessége.
+Mire jó?: A cementgyártás kibocsátásának csökkentése segíthet a klímaváltozás ellen, mert a cement gyártása jelentős CO2-kibocsátást okoz. A csökkentés mérsékelheti a globális felmelegedést.
+Mi a gond vele?: A cementgyártás kibocsátásának csökkentése technikailag és gazdaságilag kihívásokkal jár, például a technológiai fejlesztések és a megfelelő energiaforrások szükségessége miatt.
 Mennyire bizonyított?: A cementgyártás kibocsátásának csökkentése tudományosan alapozott, de további kutatások és fejlesztések szükségesek a hatékony megoldások kidolgozásához.
 Kérdés angolul: How much can cement emissions be cut?
 Röviden angolul: Making cement releases CO2 when limestone is heated, not only from burning fuel.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Cutting cement emissions can help against climate change because making cement causes significant CO2 emissions. Reducing them can moderate global warming.
+Mi a gond vele? angolul: Cutting cement emissions involves technical and economic challenges, such as the need for technological developments and suitable energy sources.
+Mennyire bizonyított? angolul: Cutting cement emissions is scientifically grounded, but further research and development are needed to work out effective solutions.
 Forrás: Wikipédia: Cement (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Cement
 Forrás: Towards decarbonization of cement industry: a critical review of electrification technologies for sustainable cement production (2025) – https://doi.org/10.1038/s44296-025-00068-6
 Forrás: Decarbonizing the cementitious materials cycle: A whole‐systems review of measures to decarbonize the cement supply chain in the UK and European contexts (2021) – https://doi.org/10.1111/jiec.13105
 Forrás: Decarbonizing the cement and concrete industry: A systematic review of socio-technical systems, technological innovations, and policy options (2023) – https://doi.org/10.1016/j.rser.2023.113291
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: cement clinker substitution CO2 emissions reduction|low carbon cement limestone calcined clay|cement industry decarbonization pathways
 Paraméter: kibocsatas_csokkentes_pct
@@ -169,21 +169,21 @@ Wikipédia angolul: environmental impact of concrete
 === fa_epulet ===
 Korszak: III. (Átalakulás)
 Kérdés: Mennyi CO2-t spórol, ha fából építünk beton helyett?
-Röviden: A fa építés után is tárolja a szenet, és kiválthatja a betont és az acélt.
+Röviden: A fa beépítés után is tárolja a szenet, és kiválthatja a betont és az acélt.
 Ha kikutatod:
-Mire jó?: A fával való építkezés segíthet csökkenteni a klímaváltozás hatásait, mert a fa tárolja a kibocsátott CO2-t, és kevesebb kibocsátást okoz a gyártás során.
-Mi a gond vele?: A CO2-szellőzés mennyisége nagyon változhat, attól függően, hogy milyen anyagokat használnak, milyen területen építenek, és milyen számítási módszert alkalmaznak.
-Mennyire bizonyított?: A tudományos vizsgálatok szerint a fával való építkezés valamelyest csökkentheti a CO2-kibocsátást, de a pontos számok változóak, és a különböző tanulmányok eredményei eltérőek.
+Mire jó?: A fával való építkezés segíthet csökkenteni a klímaváltozás hatásait, mert a fa tárolja a megkötött CO2-t, és kevesebb kibocsátással jár a gyártása.
+Mi a gond vele?: A CO2-megtakarítás mértéke nagyon változhat attól függően, hogy milyen anyagokat használnak, milyen környezetben építenek, és milyen számítási módszert alkalmaznak.
+Mennyire bizonyított?: A tudományos vizsgálatok szerint a fával való építkezés valamelyest csökkentheti a CO2-kibocsátást, de a pontos számok változók, és a különböző tanulmányok eredményei eltérőek.
 Kérdés angolul: How much CO2 is saved by building with wood instead of concrete?
 Röviden angolul: Wood keeps storing carbon after it is built in, and can replace concrete and steel.
 Ha kikutatod angolul:
-Mire jó? angolul:
-Mi a gond vele? angolul:
-Mennyire bizonyított? angolul:
+Mire jó? angolul: Building with wood can help reduce the effects of climate change because wood stores captured CO2 and its production involves fewer emissions.
+Mi a gond vele? angolul: The amount of CO2 savings can vary greatly depending on what materials are used, what environment is built in, and what calculation method is applied.
+Mennyire bizonyított? angolul: Scientific studies indicate that building with wood can somewhat reduce CO2 emissions, but exact numbers vary and the results of different studies differ.
 Forrás: Carbon Footprint Variability in Engineered Wood Products for Timber Buildings: A Systematic Review of Carbon Accounting Methodologies (2025) – https://doi.org/10.3390/su17114804
 Forrás: Timber as a low-carbon material strategy: A systematic review of substitution effects and mitigation potential in building systems (2026) – https://doi.org/10.15287/afr.2026.4342
 Forrás: Embodied Carbon of Mass Timber Buildings in the United States: A Systematic Review of Life-Cycle Assessment (LCA) Evidence (2026) – https://doi.org/10.15377/2409-9821.2026.13.3
-Lektorálva: nem
+Lektorálva: igen
 --- technikai ---
 Keresés: mass timber buildings embodied carbon compared to concrete|cross-laminated timber life cycle emissions|wood construction substitution effect
 Paraméter: kibocsatas_csokkentes_pct
