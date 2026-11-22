@@ -294,8 +294,8 @@ CDR_KULCSSZAVAK = [
     ("bioszen", ["biochar", "bioszén", "bioszen"]),
     ("kozetmallasztas", ["weathering", "mállasztás", "mallasztas", "basalt", "bazalt", "olivine"]),
     ("erdosites", ["afforest", "reforest", "forest", "erdő", "erdo", "tree"]),
-    ("daccs", ["direct air", "dac", "levegőből"]),
-    ("beccs", ["beccs", "bioenergy", "növényi energia"]),
+    ("daccs", ["direct air", "dac", "levegőből", "machines filter", "filter from the air"]),
+    ("beccs", ["beccs", "bioenergy", "növényi energia", "plant-based energy"]),
     ("talajszen", ["soil", "talaj"]),
 ]
 
