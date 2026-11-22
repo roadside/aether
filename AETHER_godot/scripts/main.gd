@@ -23,6 +23,29 @@ const MISSION := [
 	["Készítsd el a terved", "Nyomd meg „A terved” gombot, állítsd be a csúszkákat, és nézd meg, mi lesz 2100-ban."],
 ]
 
+## Halkan pislákoló pixel-csillagok a háttér fölött (csak díszítés, nem takar semmit).
+class Twinkle extends Control:
+	var _stars: Array = []
+	var _t := 0.0
+
+	func _ready() -> void:
+		var rng := RandomNumberGenerator.new()
+		rng.seed = 2026
+		for i in 140:
+			_stars.append([Vector2(rng.randf() * 1600.0, rng.randf() * 900.0).snapped(Vector2(2, 2)),
+				rng.randf_range(0.6, 2.2), rng.randf() * TAU, 2.0 if rng.randf() < 0.15 else 1.0])
+
+	func _process(delta: float) -> void:
+		_t += delta
+		queue_redraw()
+
+	func _draw() -> void:
+		for s in _stars:
+			var a: float = 0.25 + 0.55 * (0.5 + 0.5 * sin(_t * float(s[1]) + float(s[2])))
+			var sz: float = float(s[3]) * 2.0
+			draw_rect(Rect2(s[0], Vector2(sz, sz)), Color(0.85, 0.92, 1.0, a))
+
+
 var globe                     # globe.gd példány
 var bridge                    # lab_bridge.gd példány
 var world: Dictionary = {}
@@ -65,6 +88,10 @@ func _ready() -> void:
 	bg.stretch_mode = TextureRect.STRETCH_SCALE
 	bg.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(bg)
+	var stars := Twinkle.new()
+	stars.set_anchors_preset(Control.PRESET_FULL_RECT)
+	stars.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(stars)
 
 	bridge = Bridge.new()
 	add_child(bridge)
@@ -544,7 +571,15 @@ func _go_button(text: String, fn: Callable) -> Button:
 	b.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	b.focus_mode = Control.FOCUS_NONE
 	b.pressed.connect(fn)
+	_pulse(b)
 	return b
+
+
+## Finom, ismétlődő felvillanás: ez a következő teendő. Magától leáll, ha az elem eltűnik.
+func _pulse(c: CanvasItem) -> void:
+	var tw := c.create_tween().set_loops()
+	tw.tween_property(c, "modulate", Color(1.35, 1.35, 1.35), 0.7).set_trans(Tween.TRANS_SINE)
+	tw.tween_property(c, "modulate", Color.WHITE, 0.7).set_trans(Tween.TRANS_SINE)
 
 
 func _select_mission(i: int) -> void:
@@ -610,6 +645,9 @@ func _render_world() -> void:
 		_events_box.add_child(UI.label(L.t("Nem sikerült jelentést letölteni. Van internet?"), 16, UI.SOFT))
 	for e in _pick_events(events, 4):
 		_events_box.add_child(_event_card(e))
+	# az első lépésnél az első kártya finoman lüktet: ide kell kattintani
+	if mission_step == 0 and _events_box.get_child_count() > 0:
+		_pulse(_events_box.get_child(0))
 	for m in world.get("meresek", []):
 		var key := ""
 		var txt := ""
