@@ -46,7 +46,7 @@ var _caption: Label
 var _sub: Label
 var _hint: Label
 var _black: ColorRect
-var _logo: Label
+var _logo: Control
 var _done := false
 var _hidden: Array = []        # az intro alatt elrejtett felületelemek
 var _globe_pos: Vector2
@@ -160,7 +160,8 @@ func _stop_music() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _done:
+	# képkészítő próbafutásnál nem lehet átugrani (egy véletlen kattintás ne szakítsa meg)
+	if _done or shots_dir != "":
 		return
 	var skip := false
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode in [KEY_ESCAPE, KEY_SPACE, KEY_ENTER]:
@@ -175,6 +176,8 @@ func _unhandled_input(event: InputEvent) -> void:
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and not _done:
 		accept_event()
+		if shots_dir != "":
+			return
 		_finish()
 
 
@@ -371,12 +374,23 @@ func _shot(name: String) -> void:
 func _show_logo() -> void:
 	_caption.text = ""
 	_sub.text = ""
-	_logo = UI.label("A E T H E R", 30, UI.CYAN, false, false)
-	_logo.add_theme_font_override("font", UI.font_pixel)
-	_logo.position = Vector2(1180, 120)
-	_logo.size = Vector2(320, 40)
+	# a cím és alatta kisebben a szerző, együtt úsznak be és pislákolnak
+	_logo = Control.new()
+	_logo.position = Vector2(1060, 100)
+	_logo.size = Vector2(440, 90)
+	_logo.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_logo.modulate.a = 0.0
 	add_child(_logo)
+	var title := UI.label("A E T H E R", 38, UI.CYAN, false, false)
+	title.add_theme_font_override("font", UI.font_pixel)
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.size = Vector2(440, 52)
+	_logo.add_child(title)
+	var by := UI.label("by Zoltán Németh", 17, UI.SOFT, false, false)
+	by.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	by.position = Vector2(0, 54)
+	by.size = Vector2(440, 26)
+	_logo.add_child(by)
 	var tw := create_tween()
 	tw.tween_interval(0.6)
 	tw.tween_property(_logo, "modulate:a", 0.42, 1.6).set_trans(Tween.TRANS_SINE)
