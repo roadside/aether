@@ -16,6 +16,7 @@ const Knowledge := preload("res://scripts/knowledge.gd")
 const StationPanel := preload("res://scripts/station_panel.gd")
 const NalunkPanel := preload("res://scripts/nalunk_panel.gd")
 const Intro := preload("res://scripts/intro.gd")
+const Tour := preload("res://scripts/tour.gd")
 const PathStrip := preload("res://scripts/path_strip.gd")
 const Milestones := preload("res://scripts/milestones.gd")
 const Finale := preload("res://scripts/finale.gd")
@@ -204,6 +205,49 @@ func _play_intro(shots: bool) -> void:
 	if shots:
 		print("INTRO kész")
 		get_tree().quit()
+		return
+	if not bool(L.get_setting("bemutato_kesz", false)):
+		_start_tour()
+
+
+var _tour: Control
+var _left_panel: Control
+var _right_panel: Control
+var _btn_research: Button
+var _btn_plan: Button
+
+
+## Rámutatós bemutató a képernyő részeiről (első indításkor, és a „?” ablakból bármikor).
+func _start_tour() -> void:
+	if _tour != null:
+		return
+	_close_overlay()
+	var was_blocked: bool = campaign.blocked
+	campaign.blocked = true      # a bemutató alatt áll az idő
+	_tour = Tour.new()
+	var both := func(a: Control, b: Control) -> Rect2:
+		return a.get_global_rect().merge(b.get_global_rect())
+	_tour.steps = [
+		{"rect": func() -> Rect2: return Rect2(480, 105, 640, 640),
+			"cim": "A Föld ma", "szoveg": "A pöttyök valódi, friss jelentések. Az egérrel megforgathatod."},
+		{"rect": func() -> Rect2: return Rect2(0, 0, 640, 74),
+			"cim": "Hol tartasz?", "szoveg": "Itt látod az évet, a pénzed, a bizalmat és a melegedést."},
+		{"rect": func() -> Rect2: return _left_panel.get_global_rect(),
+			"cim": "Mi történik most?", "szoveg": "Valódi hírek a világból. Kattints egyre, és megtudod, mi köze a klímához."},
+		{"rect": func() -> Rect2: return _btn_research.get_global_rect(),
+			"cim": "Kutatás", "szoveg": "Itt kérdezel. A válasz valódi tudományos cikkekből jön."},
+		{"rect": func() -> Rect2: return _btn_plan.get_global_rect(),
+			"cim": "A terved", "szoveg": "Itt döntöd el, mit tegyen a világ. Rögtön látod, mi lesz 2100-ban."},
+		{"rect": func() -> Rect2: return both.call(_play_btn, _path),
+			"cim": "Telik az idő", "szoveg": "Ha végeztél, zárd le az évet. A görbe mutatja, merre tart a melegedés."},
+		{"rect": func() -> Rect2: return _right_panel.get_global_rect(),
+			"cim": "Küldetések", "szoveg": "Innen indulj! A küldetés lépésről lépésre vezet."},
+	]
+	add_child(_tour)
+	await _tour.finished
+	_tour = null
+	campaign.blocked = was_blocked
+	L.set_setting("bemutato_kesz", true)
 
 
 ## Az intro alatt is látszó elemek: háttér, csillagok, földgömb.
@@ -325,8 +369,8 @@ func _stat(parent: Control, key: String, caption: String, value: String, color: 
 ## F11: teljes képernyő be/ki. (A felület 1600×900-as tervből bármekkora
 ## kijelzőre élesen felnagyul, a betűk a valódi felbontáson rajzolódnak.)
 func _unhandled_input(event: InputEvent) -> void:
-	if _intro != null:
-		return   # az intro alatt csak az átugrás működik (azt az intro kezeli)
+	if _intro != null or _tour != null:
+		return   # az intro és a bemutató alatt csak a saját gombjaik működnek
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ESCAPE and _overlay != null:
 		_request_close()
 		return
@@ -441,6 +485,7 @@ func _build_top_bar() -> void:
 
 func _build_left_panel() -> void:
 	var v := _panel(Vector2(18, 90), 400)
+	_left_panel = v.get_parent()
 	v.add_child(UI.heading(L.t("Mi történik most?"), 24))
 	_world_note = UI.label(L.t("Valós jelentések betöltése…"), 14, UI.MUTE)
 	v.add_child(_world_note)
@@ -468,6 +513,7 @@ func _build_left_panel() -> void:
 
 func _build_right_panel() -> void:
 	var v := _panel(Vector2(1212, 90), 370)
+	_right_panel = v.get_parent()
 	_mission_title = UI.heading(L.t("Első küldetés"), 24)
 	v.add_child(_mission_title)
 	_mission_box = UI.vbox(8)
@@ -491,11 +537,13 @@ func _build_bottom_bar() -> void:
 	research.tooltip_text = L.t("Válassz kérdést, a válasz valódi cikkekből jön. Gyorsbillentyű: K")
 	research.pressed.connect(_open_research)
 	h.add_child(research)
+	_btn_research = research
 	var plan := UI.button(L.t("A terved"))
 	plan.custom_minimum_size = Vector2(150, 0)
 	plan.tooltip_text = L.t("Állítsd be, mit tegyen a világ, és nézd meg, mi lesz 2100-ig. Gyorsbillentyű: T")
 	plan.pressed.connect(_open_plan)
 	h.add_child(plan)
+	_btn_plan = plan
 	var station := UI.button(L.t("Állomás"))
 	station.custom_minimum_size = Vector2(130, 0)
 	station.tooltip_text = L.t("A kutatóállomásod: modulok építése és fejlesztése. Gyorsbillentyű: A")
@@ -728,6 +776,11 @@ func _open_help() -> void:
 	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(UI.scroll_pad(v))
 	v.add_child(UI.heading(L.t("Hogyan játssz?")))
+	var tour_btn := UI.button(L.t("Bemutató újra"), true)
+	tour_btn.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	tour_btn.focus_mode = Control.FOCUS_NONE
+	tour_btn.pressed.connect(_start_tour)
+	v.add_child(tour_btn)
 	var steps := [
 		[L.t("1. Nézz körül"), L.t("A bal oldali lista és a földgömb pöttyei valódi, mai jelentések.")],
 		[L.t("2. Kutass"), L.t("Válassz kérdést: a válasz valódi tudományos cikkekből jön.")],
@@ -1403,7 +1456,7 @@ func _update_stats() -> void:
 	if not is_nan(t):
 		var ml: Label = _stats["melegedes"]
 		ml.text = "+%s °C" % UI.hu(t, 2)
-		ml.tooltip_text = L.t("A játék Földjének hőmérséklete %d-ben: a klímamodell pályája és a természetes évi ingadozás. (Valódi mérés 2024-ben: +1,36 °C, Forster és mtsai 2025.)") % campaign.year
+		ml.tooltip_text = L.t("A játék Földjének hőmérséklete %d-ben (klímamodell). Valódi mérés 2024-ben: +1,36 °C, Forster és mtsai 2025.") % campaign.year
 	if not model.is_empty():
 		var k: Dictionary = model["osszegzes"]["kozep"]
 		(_stats["jovo"] as Label).text = "2100: +%s °C" % UI.hu(float(k["T2100"]), 1)
@@ -1741,6 +1794,17 @@ func _selftest() -> void:
 	var w := await _wait_tag("vilag")
 	print("ONTESZT világ: kód=", w[1], " események=", world.get("esemenyek", []).size(), " források=", world.get("forrasok", {}))
 	await _shot(dir, "1_mai_fold.png")
+	# 1t: a rámutatós bemutató lépései (a beállítást nem írja át: a végén visszaáll)
+	var tour_done: Variant = L.get_setting("bemutato_kesz", false)
+	_start_tour()
+	for ti in 7:
+		await get_tree().create_timer(0.8).timeout
+		if ti in [0, 3, 5, 6]:
+			await _shot(dir, "1t_bemutato_%d.png" % (ti + 1))
+		if _tour != null:
+			_tour._next()
+	await get_tree().create_timer(0.3).timeout
+	L.set_setting("bemutato_kesz", tour_done)
 	# 1b: egy esemény kijelölése a listából (gyűrű a gömbön, odafordulás); 1c súgó; 1d játék vége
 	var evs: Array = world.get("esemenyek", [])
 	if not evs.is_empty():
