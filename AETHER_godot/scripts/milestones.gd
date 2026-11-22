@@ -94,6 +94,12 @@ func for_year(y: int) -> Array:
 		var sub := L.t("+%s °C. Még nincs terved.") % UI.hu(t, 1)
 		if has_plan:
 			sub = L.t("+%s °C · terv nélkül +%s °C lenne") % [UI.hu(t, 1), UI.hu(b, 1)]
+		var sl: Variant = m.get("tengerszint", {})
+		if typeof(sl) == TYPE_DICTIONARY and sl.has("terv"):
+			var ys: Array = m.get("evek", [])
+			for i in ys.size():
+				if int(ys[i]) == y:
+					sub += " · " + L.t("a tenger +%d cm") % int(round(float(sl["terv"]["kozep"][i]) * 100.0))
 		out.append({"cim": str(y), "alcim": sub, "fajta": "evtized"})
 	return out
 

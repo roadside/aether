@@ -117,6 +117,15 @@ func _temp(series: Array, yf: float) -> float:
 	return lerpf(float(series[a]), float(series[b]), f - floor(f))
 
 
+## Tengerszint (m, az 1995–2014-es átlaghoz képest) az adott évben, ha a modell eredményében van.
+func _sea(group: String, yf: float) -> float:
+	var sl: Variant = campaign.model.get("tengerszint", {})
+	if typeof(sl) != TYPE_DICTIONARY or not sl.has(group):
+		return NAN
+	var series: Array = sl[group].get("kozep", [])
+	return NAN if series.is_empty() else _temp(series, yf)
+
+
 func _year_f() -> float:
 	return lerpf(Y0, Y1, _ss(T_TITLE, T_COUNT, _t))
 
@@ -172,6 +181,10 @@ func _draw() -> void:
 		draw_string(UI.font_pixel, Vector2(xs[i], 150), names[i], HORIZONTAL_ALIGNMENT_CENTER, 420, 34,
 			Color(UI.SOFT if i == 0 else UI.GOLD, show))
 		draw_string(UI.font_bold, Vector2(xs[i], 660), "+%s °C" % UI.hu(temps[i], 1), HORIZONTAL_ALIGNMENT_CENTER, 420, 64, Color(cols[i], show))
+		var sea := _sea("alapeset" if i == 0 else "terv", yf)
+		if not is_nan(sea):   # IPCC AR6, 9.9 táblázat, a 2100-as melegedés szerint
+			draw_string(UI.font_body, Vector2(xs[i], 694), L.t("a tenger %d cm-rel magasabb") % int(round(sea * 100.0)),
+				HORIZONTAL_ALIGNMENT_CENTER, 420, 20, Color(Color("#7fc8f0"), show))
 	# a két út középen, ahogy az évek telnek
 	var gx0 := 640.0
 	var gx1 := 960.0

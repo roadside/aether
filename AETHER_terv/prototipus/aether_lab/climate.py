@@ -349,3 +349,54 @@ def builtin_scenarios() -> List[Scenario]:
                  leiras="8 Tg SO2/év 2035-től, kibocsátás változatlan, 2070-ben hirtelen leállítás (\"termination shock\").",
                  sai_tg_so2=8.0, sai_kezdes=2035, sai_leallitas=2070),
     ]
+
+
+# ---------------------------------------------------------------------------
+# Tengerszint (IPCC AR6 WG1, 9.9 táblázat: Fox-Kemper és mtsai 2021)
+# ---------------------------------------------------------------------------
+# Globális átlagos tengerszint-emelkedés az 1995–2014-es átlaghoz képest, méterben:
+# (medián, valószínű sáv alja, teteje) 2050-re és 2100-ra, öt kibocsátási pályára.
+# A pályákhoz tartozó melegedés 2081–2100-ra (legjobb becslés, IPCC AR6 WG1 SPM.1 táblázat).
+SEA_LEVEL_AR6 = [
+    # melegedés °C, 2050: (medián, alsó, felső), 2100: (medián, alsó, felső)
+    (1.4, (0.18, 0.15, 0.23), (0.38, 0.28, 0.55)),   # SSP1-1.9
+    (1.8, (0.19, 0.16, 0.25), (0.44, 0.32, 0.62)),   # SSP1-2.6
+    (2.7, (0.20, 0.17, 0.26), (0.56, 0.44, 0.76)),   # SSP2-4.5
+    (3.6, (0.22, 0.18, 0.27), (0.68, 0.55, 0.90)),   # SSP3-7.0
+    (4.4, (0.23, 0.20, 0.29), (0.77, 0.63, 1.01)),   # SSP5-8.5
+]
+SEA_LEVEL_FORRAS = "IPCC AR6 WG1, 9.9 táblázat (Fox-Kemper és mtsai 2021)"
+
+
+def _sea_level_points(t2100: float) -> Tuple[Tuple[float, float, float], Tuple[float, float, float]]:
+    """A 2050-es és 2100-as érték a 2100-as melegedés szerint, a táblázat sorai között
+    egyenesen közelítve. A táblázat szélein kívül a szélső sor értéke marad (nem találunk ki
+    a táblázaton túli számot)."""
+    rows = SEA_LEVEL_AR6
+    if t2100 <= rows[0][0]:
+        return rows[0][1], rows[0][2]
+    if t2100 >= rows[-1][0]:
+        return rows[-1][1], rows[-1][2]
+    for (ta, a50, a100), (tb, b50, b100) in zip(rows, rows[1:]):
+        if ta <= t2100 <= tb:
+            f = (t2100 - ta) / (tb - ta)
+            mix = lambda x, y: tuple(round(u + (v - u) * f, 4) for u, v in zip(x, y))  # noqa: E731
+            return mix(a50, b50), mix(a100, b100)
+    return rows[-1][1], rows[-1][2]
+
+
+def sea_level_series(t2100: float, years: List[int]) -> Dict[str, List[float]]:
+    """Tengerszint évenként (m, az 1995–2014-es átlaghoz képest): sima görbe a 2005-ös nullán,
+    a 2050-es és a 2100-as táblázati értéken át. Közelítés: a pályát a 2100-as melegedés
+    választja ki; a tenger a valóságban lassabban követi a hőmérsékletet, és 2100 után is emelkedik."""
+    p50, p100 = _sea_level_points(t2100)
+    out = {"kozep": [], "also": [], "felso": []}
+    for i, key in enumerate(("kozep", "also", "felso")):
+        a, b = p50[i], p100[i]
+        # másodfokú görbe: h(x) = c1*x + c2*x^2, x = év − 2005; h(45) = a, h(95) = b
+        c2 = (b / 95.0 - a / 45.0) / (95.0 - 45.0)
+        c1 = a / 45.0 - c2 * 45.0
+        for y in years:
+            x = y - 2005
+            out[key].append(round(c1 * x + c2 * x * x, 3))
+    return out

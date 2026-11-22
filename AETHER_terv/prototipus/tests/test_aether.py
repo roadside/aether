@@ -260,3 +260,15 @@ def test_osszegzesbol_kimarad_a_nem_ellenorzott_szam():
     assert "30%" not in out and "83.8" not in out
     assert ev.only_verified_numbers("Csak 99 százalék.", claims) == ""
     assert ev.only_verified_numbers("", claims) == ""
+
+
+def test_tengerszint_az_ipcc_tablazat_szerint():
+    from aether_lab import climate as cl
+    years = list(range(2025, 2101))
+    s = cl.sea_level_series(1.8, years)          # SSP1-2.6 sora
+    assert abs(s["kozep"][-1] - 0.44) < 0.002 and abs(s["also"][-1] - 0.32) < 0.002 and abs(s["felso"][-1] - 0.62) < 0.002
+    assert abs(s["kozep"][years.index(2050)] - 0.19) < 0.002
+    hot = cl.sea_level_series(2.7, years)["kozep"][-1]
+    assert abs(hot - 0.56) < 0.002 and hot > s["kozep"][-1]
+    assert cl.sea_level_series(9.0, years)["kozep"][-1] == cl.sea_level_series(4.4, years)["kozep"][-1]   # a táblázaton túl nem találunk ki számot
+    assert all(b >= a for a, b in zip(s["kozep"], s["kozep"][1:]))   # 2100-ig végig emelkedik

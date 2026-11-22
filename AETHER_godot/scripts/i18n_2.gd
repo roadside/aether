@@ -2,6 +2,8 @@ extends RefCounted
 ## További angol fordítások (kulcs: a magyar szöveg). Az i18n.gd t() függvénye ezt is nézi.
 
 const EN := {
+	"a tenger %d cm-rel magasabb": "the sea is %d cm higher",
+	"a tenger +%d cm": "sea +%d cm",
 	"Saját AI beállítása": "Set up your own AI",
 	# archívum és tanulás olvasással
 	"Idén már eleget tanultál és kutattál. Jövőre folytathatod!": "You have learned and researched enough this year. Continue next year!",

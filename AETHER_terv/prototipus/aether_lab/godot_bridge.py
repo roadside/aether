@@ -568,6 +568,10 @@ def model_series(data: Dict, lang: str = "hu") -> Dict:
         out["terv"][e] = {"homerseklet": r.temp, "kukorica_pct": r.crop_change_pct["kukorica"], "netto_co2": r.co2_net}
         out["alapeset"][e] = {"homerseklet": b.temp}
     k, kb = out["osszegzes"]["kozep"], out["alapeset_osszegzes"]["kozep"]
+    # tengerszint a 2100-as melegedés szerint (IPCC AR6, 9.9 táblázat), a tervre és terv nélkül
+    out["tengerszint"] = {"terv": cl.sea_level_series(float(k["T2100"]), out["evek"]),
+                          "alapeset": cl.sea_level_series(float(kb["T2100"]), out["evek"]),
+                          "forras": cl.SEA_LEVEL_FORRAS, "viszonyitas": "1995–2014"}
     diff = kb["T2100"] - k["T2100"]
     lo, hi = out["osszegzes"]["alacsony"]["T2100"], out["osszegzes"]["magas"]["T2100"]
     if is_en(lang):
