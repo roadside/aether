@@ -334,7 +334,13 @@ def javaslatok(pub: Dict, lang: str = "hu") -> List[Dict]:
             m = _cdr_method(a["alkategoria"]) or _cdr_method(question)
             if m:   # a kártyán a módszer köznapi neve, nem a nyers (angol) alkategória
                 base["alkategoria_nev"] = (CDR_NEV_EN if en else CDR_NEV)[m]
-            if m:
+            qm = _cdr_method(question)
+            if m and qm and m != qm:
+                # Játékszabály: egy téma csak a saját módszerét nyitja meg a tervben. A másik
+                # módszer adata látszik, de a tervbe a saját témája kikutatása után kerül.
+                base["megjegyzes"] = (f"To use this in your plan, research its own topic: {CDR_NEV_EN[m]}." if en
+                                      else f"A tervedbe akkor kerül, ha a saját témáját kutatod ki: {CDR_NEV[m]}.")
+            elif m:
                 hi = cl.CDR_LIMITS[m][1]
                 base.update(kar=f"cdr:{m}", kar_ertek=round(min(med, hi), 3), kar_nev=(CDR_NEV_EN if en else CDR_NEV)[m])
                 if med > hi and en:

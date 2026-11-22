@@ -272,3 +272,10 @@ def test_tengerszint_az_ipcc_tablazat_szerint():
     assert abs(hot - 0.56) < 0.002 and hot > s["kozep"][-1]
     assert cl.sea_level_series(9.0, years)["kozep"][-1] == cl.sea_level_series(4.4, years)["kozep"][-1]   # a táblázaton túl nem találunk ki számot
     assert all(b >= a for a, b in zip(s["kozep"], s["kozep"][1:]))   # 2100-ig végig emelkedik
+
+
+def test_split_sentences_keeps_parentheses_and_abbreviations():
+    from aether_lab.evidence import split_sentences
+    t = "A kőzetpor (pl. dunite vagy basalt) szenet köt meg. A költség kb. magas. Vége."
+    assert split_sentences(t) == ["A kőzetpor (pl. dunite vagy basalt) szenet köt meg.",
+                                  "A költség kb. magas.", "Vége."]

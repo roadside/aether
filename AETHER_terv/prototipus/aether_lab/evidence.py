@@ -391,6 +391,24 @@ def hungarianize(text: str) -> str:
 # ---------------------------------------------------------------------------
 _NUM_RE = re.compile(r"(?<![\w.,])[-+−–]?\d+(?:[.,]\d+)?")
 _SENT_RE = re.compile(r"(?<=[.!?])\s+")
+_ABBREV = ("pl.", "kb.", "ill.", "stb.", "ún.", "vö.", "e.g.", "i.e.", "etc.", "vs.", "ca.", "cf.",
+           "approx.", "fig.", "al.", "mtsai.", "max.", "min.", "sz.")
+
+
+def split_sentences(text: str) -> List[str]:
+    """Mondatokra bont, de nem vág zárójelen belül és rövidítés (pl., kb., e.g.) után."""
+    out: List[str] = []
+    cur = ""
+    for part in _SENT_RE.split(text.strip()):
+        cur = (cur + " " + part) if cur else part
+        low = cur.lower()
+        if cur.count("(") > cur.count(")") or low.endswith(_ABBREV):
+            continue
+        out.append(cur)
+        cur = ""
+    if cur:
+        out.append(cur)
+    return out
 
 
 def only_verified_numbers(text: str, claims: List[Claim]) -> str:
@@ -407,7 +425,7 @@ def only_verified_numbers(text: str, claims: List[Claim]) -> str:
             if v is not None:
                 allowed.add(round(abs(float(v)), 6))
     kept = []
-    for sent in _SENT_RE.split(text.strip()):
+    for sent in split_sentences(text):
         ok = True
         for m in _NUM_RE.finditer(sent):
             raw = m.group(0).lstrip("+-−–").replace(",", ".")
