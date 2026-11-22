@@ -90,7 +90,6 @@ var _last_result: Dictionary = {}
 var _milestones                       # milestones.gd: a modell fordulópontjai
 var _reset_btn: Button
 var _base_retry: Timer
-var _toasts := 0                      # egyszerre látható értesítések (egymás alá kerülnek)
 var _year_bar: ProgressBar             # az év telése a felső sávban
 var _month_label: Label
 const MONTHS := ["jan.", "febr.", "márc.", "ápr.", "máj.", "jún.", "júl.", "aug.", "szept.", "okt.", "nov.", "dec."]
@@ -134,8 +133,8 @@ func _ready() -> void:
 	campaign.era_reached.connect(_on_era_reached)
 
 	globe = Globe.new()
-	globe.position = Vector2(440, 74)
-	globe.size = Vector2(720, 720)
+	globe.position = Vector2(400, 44)
+	globe.size = Vector2(800, 800)
 	globe.stations = [{"name": L.t("Te · Budapest"), "lat": 47.5, "lon": 19.0, "color": UI.GOLD, "me": true}]
 	globe.station_clicked.connect(_on_station)
 	globe.event_clicked.connect(_show_event)
@@ -146,6 +145,8 @@ func _ready() -> void:
 	_build_right_panel()
 	_build_bottom_bar()
 	_build_anomaly_toggle()
+	_build_menu()
+	_mark_next()
 
 	_milestones = Milestones.new()
 	_milestones.campaign = campaign
@@ -177,6 +178,9 @@ func _ready() -> void:
 	_load_world_cache()
 	_ensure_model()
 	var args := OS.get_cmdline_user_args()
+	for sw in ["--onteszt", "--intro-kepek", "--korszak-kepek", "--gomb-kepek"]:
+		if sw in args:      # az ellenőrző futások ablakban mennek, a játék teljes képernyőn
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	if "--onteszt" in args:
 		_selftest()
 	elif world.is_empty() or _world_age() > 3600:
@@ -257,9 +261,11 @@ func _start_tour() -> void:
 	var both := func(a: Control, b: Control) -> Rect2:
 		return a.get_global_rect().merge(b.get_global_rect())
 	var stat := func(key: String) -> Rect2:
+		if key == "korszak":     # a korszak az év alatt áll, kis betűvel: csak azt a sort emeljük ki
+			return (_stats[key] as Control).get_global_rect().grow(6)
 		return ((_stats[key] as Control).get_parent() as Control).get_global_rect().grow(6)
 	_tour.steps = [
-		{"rect": func() -> Rect2: return Rect2(480, 105, 640, 640),
+		{"rect": func() -> Rect2: return Rect2(440, 84, 720, 720),
 			"cim": "A Föld ma", "szoveg": "A pöttyök valódi, friss jelentések. A játékban az egérrel forgathatod a Földet."},
 		{"rect": func() -> Rect2: return stat.call("ev"),
 			"cim": "Év", "szoveg": "2026-ból indulsz, és 2100-ig játszol. Minden évben tudományágak szerint kutathatsz és dönthetsz."},
@@ -443,42 +449,38 @@ func _unhandled_input(event: InputEvent) -> void:
 # Felület
 # ---------------------------------------------------------------------------
 func _build_top_bar() -> void:
+	# Négy szám van fent: év (alatta a korszak), pénz, bizalom, melegedés (alatta a 2100-as érték).
+	# Minden más (új játék, súgó, nyelv, mai eltérés-térkép, frissítés) a sarokban lévő menüben van.
 	var p := PanelContainer.new()
 	p.custom_minimum_size = Vector2(1600, 70)
+	var bare := StyleBoxEmpty.new()
+	bare.content_margin_left = 26
+	bare.content_margin_right = 22
+	bare.content_margin_top = 8
+	bare.content_margin_bottom = 4
+	p.add_theme_stylebox_override("panel", bare)
 	add_child(p)
-	var h := UI.hbox(26)
+	var h := UI.hbox(44)
 	p.add_child(h)
 	var logo := UI.label("AETHER", 32, UI.CYAN, false, false)
 	logo.add_theme_font_override("font", UI.font_pixel)
+	logo.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	h.add_child(logo)
 	_stat(h, "ev", L.t("Év"), str(campaign.year), UI.TEXT)
-	# telő idő: az év alatt egy vékony sáv töltődik, mellette a hónap – így látszik, hogy halad
 	var ev_box: VBoxContainer = (_stats["ev"] as Label).get_parent()
+	ev_box.add_theme_constant_override("separation", -3)
+	# (rejtett) évsáv és hónap: a körökre osztott években nem látszik, de más részek hivatkoznak rá
 	_year_bar = ProgressBar.new()
-	_year_bar.show_percentage = false
-	_year_bar.custom_minimum_size = Vector2(70, 5)
 	_year_bar.max_value = 1.0
-	_year_bar.step = 0.001
-	var bg := StyleBoxFlat.new()
-	bg.bg_color = Color(1, 1, 1, 0.08)
-	var fg := StyleBoxFlat.new()
-	fg.bg_color = UI.CYAN
-	_year_bar.add_theme_stylebox_override("background", bg)
-	_year_bar.add_theme_stylebox_override("fill", fg)
-	_year_bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	var yrow := UI.hbox(6)
-	yrow.add_child(_year_bar)
-	yrow.visible = false   # körökre osztott évek: nincs telő idő, az évet a játékos zárja le
+	_year_bar.visible = false
+	add_child(_year_bar)
 	_month_label = UI.label("", 11, UI.CYAN, false, false)
-	_month_label.custom_minimum_size = Vector2(38, 0)
-	yrow.add_child(_month_label)
-	yrow.custom_minimum_size = Vector2(0, 0)
-	ev_box.add_child(yrow)
-	# az évszám és a sáv közötti hely ne nyújtsa meg a felső sávot
-	ev_box.add_theme_constant_override("separation", -2)
-	_stat(h, "korszak", L.t("Korszak"), Knowledge.era_name(campaign.era), UI.GOLD)
-	(_stats["korszak"] as Label).mouse_filter = Control.MOUSE_FILTER_PASS
-	(_stats["korszak"] as Label).tooltip_text = L.t("A kikutatott témák új korszakot, új témákat és új tervlehetőségeket nyitnak ki.")
+	_month_label.visible = false
+	add_child(_month_label)
+	var era_l := UI.label(Knowledge.era_name(campaign.era), 14, UI.GOLD, false, false)
+	era_l.tooltip_text = L.t("A kikutatott témák új korszakot, új témákat és új tervlehetőségeket nyitnak ki.")
+	ev_box.add_child(era_l)
+	_stats["korszak"] = era_l
 	_stat(h, "penz", L.t("Pénz"), str(campaign.money), UI.GOLD)
 	_stat(h, "bizalom", L.t("Bizalom"), "%d%%" % campaign.trust, UI.GREEN)
 	var tips := {"penz": L.t("Pénz: a kutatásokhoz és a tervek bevezetéséhez szükséges; évente kapsz."),
@@ -488,74 +490,116 @@ func _build_top_bar() -> void:
 		sl.mouse_filter = Control.MOUSE_FILTER_PASS
 		sl.tooltip_text = tips[k]
 	_stat(h, "melegedes", L.t("Melegedés"), "+%s °C" % L.num(1.36, 2), UI.EMBER, "https://doi.org/10.5194/essd-17-2641-2025")
-	_stat(h, "co2", L.t("CO2 a levegőben"), L.t("letöltés…"), UI.GOLD)
-	_stat(h, "jeg", L.t("Északi-sarki tengeri jég"), L.t("letöltés…"), Color("#a9dcea"))
-	_stat(h, "jovo", L.t("A terved szerint"), L.t("még nincs terv"), UI.CYAN)
-	# egy kattintás: a korszakról a kutatáshoz (tudásfa), a tervről a tervhez
+	var heat_box: VBoxContainer = (_stats["melegedes"] as Label).get_parent()
+	heat_box.add_theme_constant_override("separation", -3)
+	var future := UI.label("", 14, UI.SOFT, false, false)
+	heat_box.add_child(future)
+	_stats["jovo"] = future
+	# a két mért adat (CO2, tengeri jég) a bal oldali lista alján áll
+	_stats["co2"] = UI.label(L.t("letöltés…"), 15, UI.GOLD, true, false)
+	_stats["jeg"] = UI.label(L.t("letöltés…"), 15, Color("#a9dcea"), true, false)
+	# egy kattintás: a korszakról a kutatáshoz (tudásfa), a 2100-as értékről a tervhez
 	_click_stat("korszak", _open_research)
 	_click_stat("jovo", _open_plan)
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(spacer)
-	# a 2100-as érték már az alsó sáv görbéjén látszik nagyban: itt nem ismételjük
-	(_stats["jovo"] as Label).get_parent().visible = false
-	# Új játék: fent, a súgó mellett, távol az időgombtól (két kattintás kell hozzá)
-	_reset_btn = UI.button(L.t("Új játék"))
-	_reset_btn.tooltip_text = L.t("Elölről kezdi a játékot 2026-tól.")
-	_reset_btn.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	_reset_btn.focus_mode = Control.FOCUS_NONE
-	_reset_btn.pressed.connect(_reset_game)
-	h.add_child(_reset_btn)
-	# Súgó: egy rövid lap a négy lépésről és a gyorsbillentyűkről (F1 is).
-	var help_btn := UI.button("?")
-	help_btn.tooltip_text = L.t("Hogyan játssz? (F1)")
-	help_btn.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	help_btn.focus_mode = Control.FOCUS_NONE
-	help_btn.pressed.connect(_open_help)
-	h.add_child(help_btn)
+	_menu_btn = UI.button(L.t("Menü"))
+	_menu_btn.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	_menu_btn.focus_mode = Control.FOCUS_NONE
+	_menu_btn.pressed.connect(func() -> void: _show_menu(not _menu.visible))
+	h.add_child(_menu_btn)
+
+
+var _menu_btn: Button
+var _menu: PanelContainer
+var _menu_catch: Control
+
+
+## A sarokmenü: ritkán kellő gombok egy helyen (mai eltérés-térkép, súgó, frissítés, nyelv, új játék).
+func _build_menu() -> void:
+	_menu_catch = Control.new()            # a menün kívülre kattintva a menü bezárul
+	_menu_catch.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_menu_catch.mouse_filter = Control.MOUSE_FILTER_STOP
+	_menu_catch.visible = false
+	var catch_fn := func(ev: InputEvent) -> void:
+		if ev is InputEventMouseButton and ev.pressed:
+			_show_menu(false)
+	_menu_catch.gui_input.connect(catch_fn)
+	add_child(_menu_catch)
+	_menu = PanelContainer.new()
+	_menu.custom_minimum_size = Vector2(300, 0)
+	_menu.position = Vector2(1600 - 18 - 300, 64)
+	_menu.z_index = 8
+	_menu.visible = false
+	add_child(_menu)
+	var v := UI.vbox(8)
+	_menu.add_child(v)
+	v.add_child(_anom_btn)
+	var help_btn := UI.button(L.t("Hogyan játssz? (F1)"))
+	help_btn.pressed.connect(func() -> void:
+		_show_menu(false)
+		_open_help())
+	v.add_child(help_btn)
+	_refresh_btn = UI.button(L.t("Frissítés valós adatokkal"))
+	_refresh_btn.pressed.connect(_refresh_world)
+	v.add_child(_refresh_btn)
 	# Nyelvváltó: a másik nyelvre vált, elmenti, és újraépíti a képernyőt.
-	var lang_btn := UI.button("EN" if not L.is_en() else "HU")
-	lang_btn.tooltip_text = "Switch to English" if not L.is_en() else "Váltás magyarra"
-	lang_btn.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var lang_btn := UI.button("English" if not L.is_en() else "Magyar")
 	var lang_fn := func() -> void:
 		L.set_lang("hu" if L.is_en() else "en")
 		get_tree().reload_current_scene()
 	lang_btn.pressed.connect(lang_fn)
-	h.add_child(lang_btn)
+	v.add_child(lang_btn)
+	# Új játék: két kattintás kell hozzá
+	_reset_btn = UI.button(L.t("Új játék"))
+	_reset_btn.tooltip_text = L.t("Elölről kezdi a játékot 2026-tól.")
+	_reset_btn.pressed.connect(_reset_game)
+	v.add_child(_reset_btn)
+	# Kilépés: a játék teljes képernyős, ablaksáv nélkül, ezért innen lehet kilépni. Előtte ment.
+	var quit_btn := UI.button(L.t("Kilépés a játékból"))
+	quit_btn.pressed.connect(func() -> void:
+		campaign.save()
+		get_tree().quit())
+	v.add_child(quit_btn)
+	for b in v.get_children():
+		(b as Button).focus_mode = Control.FOCUS_NONE
+
+
+func _show_menu(on: bool) -> void:
+	if _menu == null:
+		return
+	_menu.visible = on
+	_menu_catch.visible = on
 
 
 func _build_left_panel() -> void:
-	var v := _panel(Vector2(18, 90), 400)
+	# Keskeny lista: csak a friss jelentések címei. Kattintásra nyílik a részletes lap.
+	var v := _panel(Vector2(18, 92), 286)
+	v.add_theme_constant_override("separation", 6)
 	_left_panel = v.get_parent()
-	v.add_child(UI.heading(L.t("Mi történik most?"), 24))
-	_world_note = UI.label(L.t("Valós jelentések betöltése…"), 14, UI.MUTE)
+	v.add_child(UI.heading(L.t("Mi történik most?"), 20))
+	_world_note = UI.label(L.t("Valós jelentések betöltése…"), 13, UI.MUTE)
 	v.add_child(_world_note)
-	# A két mért adat (CO2, tengeri jég) ide kerül a felső sávból: fent így kevesebb a szám.
-	var real := UI.hbox(22)
-	for k in ["co2", "jeg"]:
-		var box: Control = (_stats[k] as Label).get_parent()
-		box.get_parent().remove_child(box)
-		real.add_child(box)
-		(_stats[k] as Label).add_theme_font_size_override("font_size", 17)
-	v.add_child(real)
-	# A kártyák görgethető, rögzített magasságú dobozban vannak, így a frissítés
-	# gomb mindig a képernyőn marad (az alsó sáv fölött).
 	var scroll := ScrollContainer.new()
-	scroll.custom_minimum_size = Vector2(0, 418)
+	scroll.custom_minimum_size = Vector2(0, 468)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	v.add_child(scroll)
-	_events_box = UI.vbox(8)
+	_events_box = UI.vbox(6)
 	_events_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(UI.scroll_pad(_events_box, 16))
-	_refresh_btn = UI.button(L.t("Frissítés valós adatokkal"))
-	_refresh_btn.pressed.connect(_refresh_world)
-	v.add_child(_refresh_btn)
+	scroll.add_child(UI.scroll_pad(_events_box, 14))
+	# A két mért adat (CO2, tengeri jég) a lista alján, kis betűvel.
+	for pair in [["co2", L.t("CO2 a levegőben")], ["jeg", L.t("Északi-sarki tengeri jég")]]:
+		var box := UI.vbox(-2)
+		box.add_child(UI.label(pair[1], 13, UI.MUTE, false, false))
+		box.add_child(_stats[pair[0]])
+		v.add_child(box)
 
 
 func _build_right_panel() -> void:
-	var v := _panel(Vector2(1212, 90), 370)
+	var v := _panel(Vector2(1260, 92), 322)
 	_right_panel = v.get_parent()
-	_mission_title = UI.heading(L.t("Első küldetés"), 24)
+	_mission_title = UI.heading(L.t("Első küldetés"), 20)
 	v.add_child(_mission_title)
 	_mission_box = UI.vbox(8)
 	_mission_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -567,50 +611,48 @@ func _build_right_panel() -> void:
 
 
 func _build_bottom_bar() -> void:
-	var p := PanelContainer.new()
-	p.position = Vector2(18, 772)
-	p.custom_minimum_size = Vector2(1564, 112)
-	add_child(p)
-	var h := UI.hbox(16)
-	p.add_child(h)
-	var research := UI.button(L.t("Kutatás"), true)
-	research.custom_minimum_size = Vector2(150, 0)
+	# Nincs keret: bal oldalt az öt gomb (a következő lépés kiemelve), jobb oldalt a jövő görbéje.
+	var h := UI.hbox(12)
+	h.position = Vector2(26, 800)
+	h.size = Vector2(1548, 86)
+	h.alignment = BoxContainer.ALIGNMENT_BEGIN
+	add_child(h)
+	var research := UI.button(L.t("Kutatás"))
 	research.tooltip_text = L.t("Válassz kérdést, a válasz valódi cikkekből jön. Gyorsbillentyű: K")
 	research.pressed.connect(_open_research)
-	h.add_child(research)
 	_btn_research = research
 	var plan := UI.button(L.t("A terved"))
-	plan.custom_minimum_size = Vector2(150, 0)
 	plan.tooltip_text = L.t("Állítsd be, mit tegyen a világ, és nézd meg, mi lesz 2100-ig. Gyorsbillentyű: T")
 	plan.pressed.connect(_open_plan)
-	h.add_child(plan)
 	_btn_plan = plan
 	var station := UI.button(L.t("Állomás"))
-	station.custom_minimum_size = Vector2(130, 0)
 	station.tooltip_text = L.t("A kutatóállomásod: modulok építése és fejlesztése. Gyorsbillentyű: A")
 	station.pressed.connect(_open_station)
-	h.add_child(station)
 	var home := UI.button(L.t("Nálunk"))
-	home.custom_minimum_size = Vector2(120, 0)
 	home.tooltip_text = L.t("Mit jelent a melegedés nálunk: forró napok és nyári eső, mért adatokból és a terved szerint. Gyorsbillentyű: N")
 	home.pressed.connect(_open_nalunk)
-	h.add_child(home)
-	var tbox := UI.vbox(6)
-	var trow := UI.hbox(6)
 	_play_btn = UI.button(L.t("Év lezárása") + "  ▶")
-	_play_btn.custom_minimum_size = Vector2(170, 0)
-	_play_btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	trow.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_play_btn.tooltip_text = L.t("Ha idén már mindent megtettél, zárd le az évet. Jön a következő. (Szóköz)")
 	_play_btn.pressed.connect(_toggle_time)
-	trow.add_child(_play_btn)
-	tbox.add_child(trow)
 	# Az idő csak indítható és megállítható (nincs gyorsítás és évugrás).
 	campaign.fast = false
-	h.add_child(tbox)
-	# A gombok ne tartsák meg a fókuszt: így a szóköz az időt indítja, nem az utoljára nyomott gombot.
-	for b in [research, plan, station, home, _play_btn, _reset_btn]:
-		(b as Button).focus_mode = Control.FOCUS_NONE
+	_step_btns = {"kutatas": research, "terv": plan, "ev": _play_btn}
+	for pair in [[research, 150], [plan, 140], [station, 130], [home, 120], [_play_btn, 180]]:
+		var b: Button = pair[0]
+		b.custom_minimum_size = Vector2(pair[1], 54)
+		# A gombok ne tartsák meg a fókuszt: így a szóköz az évet zárja le, nem az utoljára nyomott gombot.
+		b.focus_mode = Control.FOCUS_NONE
+		var col := UI.vbox(3)
+		col.alignment = BoxContainer.ALIGNMENT_END
+		var tag := UI.label(L.t("Következő lépés"), 13, UI.CYAN, false, false)
+		tag.modulate.a = 0.0
+		col.add_child(tag)
+		col.add_child(b)
+		b.set_meta("tag", tag)
+		h.add_child(col)
+	var gap := Control.new()
+	gap.custom_minimum_size = Vector2(250, 0)
+	h.add_child(gap)
 	var info_box := UI.vbox(2)
 	info_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_info = UI.label(L.t("Üdv az AETHER-ben! Kezdd a jobb oldali küldetéssel."), 16, UI.SOFT)
@@ -646,6 +688,50 @@ func _build_bottom_bar() -> void:
 	h.add_child(info_box)
 
 
+var _step_btns: Dictionary = {}
+
+
+## Mi a következő lépés? Előbb kutatás, aztán terv, utána évente egy kutatás, végül az év lezárása.
+func _next_step() -> String:
+	if mission_step < MISSION.size():
+		return "terv" if mission_step == 3 else "kutatas"
+	if campaign.year >= Campaign.END_YEAR:
+		return ""
+	if campaign.levers.is_empty():
+		return "kutatas"
+	if campaign.timeline.is_empty():
+		return "terv"
+	if campaign.research_this_year == 0 and campaign.can_research():
+		return "kutatas"
+	return "ev"
+
+
+## A kiemelt gomb mindig a következő lépés; a többi gomb egyszerű.
+func _mark_next() -> void:
+	if _step_btns.is_empty():
+		return
+	var next := _next_step()
+	for k in _step_btns:
+		var b: Button = _step_btns[k]
+		var on: bool = k == next
+		(b.get_meta("tag") as Label).modulate.a = 1.0 if on else 0.0
+		if on:
+			var sb := StyleBoxFlat.new()
+			sb.bg_color = Color("#1f6f66")
+			sb.border_color = UI.CYAN
+			sb.set_border_width_all(3)
+			sb.set_content_margin_all(12)
+			b.add_theme_stylebox_override("normal", sb)
+			var sh: StyleBoxFlat = sb.duplicate()
+			sh.bg_color = Color("#2a8a7f")
+			b.add_theme_stylebox_override("hover", sh)
+			b.add_theme_color_override("font_color", Color.WHITE)
+		else:
+			b.remove_theme_stylebox_override("normal")
+			b.remove_theme_stylebox_override("hover")
+			b.remove_theme_color_override("font_color")
+
+
 # ---------------------------------------------------------------------------
 # Mai hőmérséklet-eltérés a földgömbön (Copernicus Climate Pulse, ERA5, napi térkép)
 # ---------------------------------------------------------------------------
@@ -664,9 +750,7 @@ func _build_anomaly_toggle() -> void:
 	_anom_btn.toggle_mode = true
 	_anom_btn.focus_mode = Control.FOCUS_NONE
 	_anom_btn.tooltip_text = L.t("Hol melegebb és hol hidegebb ma, mint az 1991–2020-as átlag. Forrás: Copernicus Climate Pulse (ERA5). Gyorsbillentyű: M")
-	_anom_btn.position = Vector2(540, 706)
 	_anom_btn.toggled.connect(_toggle_anomaly)
-	add_child(_anom_btn)
 	# jelmagyarázat: kék = hidegebb, piros = melegebb (a Climate Pulse színskálája)
 	var panel := PanelContainer.new()
 	var psb := StyleBoxFlat.new()
@@ -674,7 +758,7 @@ func _build_anomaly_toggle() -> void:
 	psb.set_corner_radius_all(6)
 	psb.set_content_margin_all(8)
 	panel.add_theme_stylebox_override("panel", psb)
-	panel.position = Vector2(800, 700)
+	panel.position = Vector2(1262, 716)
 	panel.visible = false
 	var box := UI.vbox(2)
 	panel.add_child(box)
@@ -876,39 +960,38 @@ func _fit_missions() -> void:
 	if _mission_scroll == null:
 		return
 	for i in 2:      # a tördelt feliratok magassága csak elrendezés után ismert
-		_mission_scroll.custom_minimum_size.y = minf(590.0, _mission_box.get_combined_minimum_size().y)
+		_mission_scroll.custom_minimum_size.y = minf(520.0, _mission_box.get_combined_minimum_size().y)
 		await get_tree().process_frame
+
+
+var _all_missions := false      # a jobb oldalon alapból csak a mostani küldetés látszik
 
 
 func _render_mission() -> void:
 	UI.clear(_mission_box)
 	_fit_missions.call_deferred()
+	_mark_next()
 	if mission_step >= MISSION.size():
 		_render_missions()
 		return
-	for i in MISSION.size():
-		var done := i < mission_step
-		var current := i == mission_step
-		var mark := "✓" if done else ("●" if current else "○")
-		var col: Color = UI.GREEN if done else (UI.GOLD if current else UI.MUTE)
-		_mission_box.add_child(UI.label("%s  %d. %s" % [mark, i + 1, L.t(MISSION[i][0])], 18, col, current))
-		if current:
-			_mission_box.add_child(UI.label(L.t(MISSION[i][1]), 15, UI.SOFT))
-			# egy kattintással oda, ahol a lépést el kell végezni
-			# a következő lépés mindig látszik: akkor is, ha még töltenek a jelentések,
-			# vagy ha a játékos jóváhagyás nélkül zárta be az eredményt
-			if i <= 2:
-				_mission_box.add_child(_go_button(L.t("Kutatás →"), _open_research))
-			elif i == 3:
-				_mission_box.add_child(_go_button(L.t("A terved →"), _open_plan))
+	# a bevezető: mindig csak a mostani lépés látszik, egy gombbal oda, ahol el kell végezni
+	var i := mission_step
+	_mission_box.add_child(UI.label("%d/%d  %s" % [i + 1, MISSION.size(), L.t(MISSION[i][0])], 18, UI.GOLD, true))
+	_mission_box.add_child(UI.label(L.t(MISSION[i][1]), 15, UI.SOFT))
+	if i <= 2:
+		_mission_box.add_child(_go_button(L.t("Kutatás →"), _open_research))
+	elif i == 3:
+		_mission_box.add_child(_go_button(L.t("A terved →"), _open_plan))
 
 
-## A bevezető után: küldetéslista csillagokkal; az aktuálisnál a cél és az utolsó eredmény.
+## A bevezető után: a mostani küldetés a céljával és egy gombbal; a teljes lista egy kattintásra nyílik.
 func _render_missions() -> void:
-	_mission_title.text = L.t("Küldetések")
+	_mission_title.text = L.t("Küldetés") if not _all_missions else L.t("Küldetések")
 	_render_daily()
 	for m2 in Missions.check_journey(campaign):     # az út küldetései: a játék állapotából
 		_toast("%s  %s" % [Missions.star_text(Missions.stars_of(m2["id"]), Missions.max_stars(m2)), L.t(m2["cim"])], UI.GOLD)
+	var n_all := 0
+	var n_done := 0
 	for i in Missions.LIST.size():
 		var m: Dictionary = Missions.LIST[i]
 		if not Missions.shown(m, campaign):
@@ -916,6 +999,11 @@ func _render_missions() -> void:
 		var st := Missions.stars_of(m["id"])
 		var of := Missions.max_stars(m)
 		var current := i == mission_idx
+		n_all += 1
+		if st > 0:
+			n_done += 1
+		if not current and not _all_missions:
+			continue
 		var b := Button.new()
 		b.flat = true
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -951,6 +1039,16 @@ func _render_missions() -> void:
 				_mission_box.add_child(_go_button(L.t("Kutatás →"), _open_research))
 			else:
 				_mission_box.add_child(_go_button(L.t("A terved →"), _open_plan))
+	var more := LinkButton.new()
+	more.text = (L.t("Minden küldetés (%d/%d)") % [n_done, n_all] + " →") if not _all_missions else L.t("Csak a mostani küldetés")
+	more.add_theme_font_size_override("font_size", 15)
+	more.add_theme_color_override("font_color", UI.CYAN)
+	more.underline = LinkButton.UNDERLINE_MODE_ON_HOVER
+	more.focus_mode = Control.FOCUS_NONE
+	more.pressed.connect(func() -> void:
+		_all_missions = not _all_missions
+		_render_mission())
+	_mission_box.add_child(more)
 
 
 ## „A mai nap”: egy friss, valódi jelentés és a hozzá tartozó kutatási kérdés (naponta egy).
@@ -1139,12 +1237,20 @@ func _event_card(e: Dictionary) -> Control:
 	var accent: Color = Globe.EVENT_COLORS.get(str(e.get("kategoria", "")), UI.EDGE)
 	var row := UI.card(accent)
 	var place := EventPanel.short_place(e)
-	row.add_child(UI.label(L.category(str(e.get("kategoria", ""))) + (" · " + place if place != "" else ""), 14, UI.MUTE, false))
-	var t := UI.label(EventPanel.display_title(e), 16, UI.TEXT, true)
-	t.max_lines_visible = 3
+	row.add_theme_constant_override("separation", 1)
+	var head := UI.label(L.category(str(e.get("kategoria", ""))) + (" · " + place if place != "" else ""), 12, UI.MUTE, false, false)
+	head.clip_text = true
+	row.add_child(head)
+	var t := UI.label(EventPanel.display_title(e), 14, UI.TEXT, true)
+	t.max_lines_visible = 2
 	row.add_child(t)
-	row.add_child(UI.label("%s · %s" % [str(e.get("datum", "")), L.field(e, "forras")], 13, UI.MUTE, false))
 	var root := UI.card_root(row)
+	var csb: StyleBoxFlat = (root.get_theme_stylebox("panel") as StyleBoxFlat).duplicate()
+	csb.set_content_margin_all(7)
+	csb.content_margin_left = 11
+	csb.border_width_left = 4
+	root.add_theme_stylebox_override("panel", csb)
+	root.tooltip_text = "%s · %s" % [str(e.get("datum", "")), L.field(e, "forras")]
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	var click_fn := func(ev: InputEvent) -> void:
@@ -1204,6 +1310,7 @@ func _close_overlay() -> void:
 func _place_overlay(c: Control) -> void:
 	_close_overlay()
 	campaign.blocked = true
+	_show_menu(false)
 	_dim = ColorRect.new()
 	_dim.color = Color(0.0, 0.0, 0.02, 0.72)
 	_dim.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -1255,38 +1362,50 @@ func _place_close_x() -> void:
 
 ## Rövid, magától eltűnő értesítés a felső sáv alatt (pl. új korszak, kész modul, csillag).
 func _toast(text: String, color: Color = UI.GOLD) -> void:
-	var p := PanelContainer.new()
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color("#101a2c")
-	sb.border_color = color
-	sb.set_border_width_all(2)
-	sb.set_corner_radius_all(6)
-	sb.set_content_margin_all(12)
-	sb.content_margin_left = 22
-	sb.content_margin_right = 22
-	sb.shadow_color = Color(0, 0, 0, 0.6)
-	sb.shadow_size = 12
-	p.add_theme_stylebox_override("panel", sb)
-	var l := UI.label(text, 19, color, true, false)
-	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	p.add_child(l)
-	p.z_index = 30
-	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(p)
-	await get_tree().process_frame
-	if not is_instance_valid(p):
-		return
-	# nyitott ablaknál a (sötétített) felső sávba kerül, hogy ne takarja az ablak címét
-	var top := 84.0 if _overlay == null else 800.0   # nyitott ablaknál az alsó (sötétített) sávra
-	p.position = Vector2((1600 - p.size.x) / 2.0, top + 58 * _toasts)
-	_toasts += 1
-	p.modulate.a = 0.0
-	var tw := create_tween()
-	tw.tween_property(p, "modulate:a", 1.0, 0.25)
-	tw.tween_interval(3.2)
-	tw.tween_property(p, "modulate:a", 0.0, 0.6)
-	tw.tween_callback(p.queue_free)
-	tw.tween_callback(func() -> void: _toasts = maxi(0, _toasts - 1))
+	_toast_queue.append([text, color])
+	if not _toast_busy:
+		_run_toasts()
+
+
+var _toast_queue: Array = []
+var _toast_busy := false
+
+
+## Egyszerre egy értesítés látszik; a többi sorban vár (ha sok van, rövidebb ideig látszanak).
+func _run_toasts() -> void:
+	_toast_busy = true
+	while not _toast_queue.is_empty():
+		var item: Array = _toast_queue.pop_front()
+		var color: Color = item[1]
+		var p := PanelContainer.new()
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color("#101a2c")
+		sb.border_color = color
+		sb.set_border_width_all(2)
+		sb.set_corner_radius_all(6)
+		sb.set_content_margin_all(12)
+		sb.content_margin_left = 22
+		sb.content_margin_right = 22
+		sb.shadow_color = Color(0, 0, 0, 0.6)
+		sb.shadow_size = 12
+		p.add_theme_stylebox_override("panel", sb)
+		var l := UI.label(str(item[0]), 19, color, true, false)
+		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		p.add_child(l)
+		p.z_index = 30
+		p.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		p.modulate.a = 0.0
+		add_child(p)
+		await get_tree().process_frame
+		# nyitott ablaknál az alsó (sötétített) sávra kerül, hogy ne takarja az ablak címét
+		p.position = Vector2((1600 - p.size.x) / 2.0, 84.0 if _overlay == null else 800.0)
+		var tw := create_tween()
+		tw.tween_property(p, "modulate:a", 1.0, 0.25)
+		tw.tween_interval(3.0 if _toast_queue.is_empty() else 1.7)
+		tw.tween_property(p, "modulate:a", 0.0, 0.45)
+		await tw.finished
+		p.queue_free()
+	_toast_busy = false
 
 
 ## Az X és az Esc: az ablak saját bezárását hívja (pl. a kutatás leállítja a figyelést).
@@ -1504,10 +1623,11 @@ func _update_stats() -> void:
 		ml.tooltip_text = L.t("A játék Földjének hőmérséklete %d-ben (klímamodell). Valódi mérés 2024-ben: +1,36 °C, Forster és mtsai 2025.") % campaign.year
 	if not model.is_empty():
 		var k: Dictionary = model["osszegzes"]["kozep"]
-		(_stats["jovo"] as Label).text = "2100: +%s °C" % UI.hu(float(k["T2100"]), 1)
+		(_stats["jovo"] as Label).text = L.t("2100-ban: +%s °C") % UI.hu(float(k["T2100"]), 1)
 	if _play_btn != null:
 		_play_btn.text = L.t("Év lezárása") + "  ▶"
 		_play_btn.disabled = campaign.year >= Campaign.END_YEAR
+	_mark_next()
 
 
 func _click_stat(key: String, fn: Callable) -> void:
@@ -1952,6 +2072,12 @@ func _selftest() -> void:
 	var w := await _wait_tag("vilag")
 	print("ONTESZT világ: kód=", w[1], " események=", world.get("esemenyek", []).size(), " források=", world.get("forrasok", {}))
 	await _shot(dir, "1_mai_fold.png")
+	_show_menu(true)
+	_anom_legend.visible = true
+	await get_tree().create_timer(0.3).timeout
+	await _shot(dir, "1m_menu.png")
+	_show_menu(false)
+	_anom_legend.visible = false
 	# 1t: a rámutatós bemutató lépései (a beállítást nem írja át: a végén visszaáll)
 	var tour_done: Variant = L.get_setting("bemutato_kesz", false)
 	_start_tour()
