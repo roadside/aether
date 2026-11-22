@@ -444,7 +444,7 @@ const EN := {
 	"Narancs: mért évek. Türkiz: becslés a terved szerint.": "Orange: measured years. Teal: estimate under your plan.",
 	"Mennyi eső esik nyáron (június–augusztus)?": "How much rain falls in summer (June–August)?",
 	"kb. %s–%s mm": "about %s–%s mm",
-	"A múlt: időjárási mérésekből, egy kb. 25 km-es területre (a város belsejében melegebb). A jövő: a 2006–2025 között mért napokat annyival melegítjük, amennyit 34 klímamodell átlagosan vár a térségben. Ez nem időjárás-jelentés.": "The past: from weather measurements, for an area about 25 km across (the city centre is warmer). The future: we warm the days measured in 2006–2025 by as much as 34 climate models expect on average for the region. This is not a weather forecast.",
+	"A múlt: időjárási mérésekből, egy kb. 25 km-es területre (a város belsejében melegebb van). A jövő: a 2006–2025 között mért napokat annyival melegítjük, amennyit 34 klímamodell átlagosan vár a térségben. Ez nem időjárás-jelentés.": "The past: from weather measurements, for an area about 25 km across (the city centre is warmer). The future: we warm the days measured in 2006–2025 by as much as 34 climate models expect on average for the region. This is not a weather forecast.",
 	"ERA5 (Copernicus/ECMWF) az Open-Meteón keresztül": "ERA5 (Copernicus/ECMWF) via Open-Meteo",
 	"IPCC AR6 Interaktív Atlasz, CMIP6 (Iturbide et al. 2021)": "IPCC AR6 Interactive Atlas, CMIP6 (Iturbide et al. 2021)",
 	"Forster et al. 2025, globális melegedés": "Forster et al. 2025, global warming",

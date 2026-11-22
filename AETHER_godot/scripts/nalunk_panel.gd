@@ -188,6 +188,6 @@ func _render(r: Dictionary) -> void:
 			L.t("kb. %s–%s mm") % [UI.hu(float(f2100["csapadek_also"]), 0), UI.hu(float(f2100["csapadek_felso"]), 0)], UI.CYAN)
 	p.add_child(prow)
 	_body.add_child(UI.card_root(p))
-	_body.add_child(UI.label(L.t("A múlt: időjárási mérésekből, egy kb. 25 km-es területre (a város belsejében melegebb). A jövő: a 2006–2025 között mért napokat annyival melegítjük, amennyit 34 klímamodell átlagosan vár a térségben. Ez nem időjárás-jelentés."), 14, UI.MUTE))
+	_body.add_child(UI.label(L.t("A múlt: időjárási mérésekből, egy kb. 25 km-es területre (a város belsejében melegebb van). A jövő: a 2006–2025 között mért napokat annyival melegítjük, amennyit 34 klímamodell átlagosan vár a térségben. Ez nem időjárás-jelentés."), 14, UI.MUTE))
 	for s in r.get("forrasok", []):
 		_body.add_child(UI.text_link(L.t(str(s["nev"])) + Knowledge.lang_note(str(s["link"])), str(s["link"])))
