@@ -1,5 +1,5 @@
 extends Control
-## Kezdő animáció (kb. 30 mp; ismételt indításkor rövid, kb. 9 mp).
+## Kezdő animáció (kb. 45 mp; ismételt indításkor rövid, kb. 15 mp).
 ## A főképernyő saját elemeiből készül, valós idejű: a földgömb (valódi Nap-állás),
 ## a mai hőmérséklet-eltérés térkép, a valós események és a festett kutatóállomás.
 ## Esc, szóköz, Enter vagy kattintás: azonnal átugorja.
@@ -8,6 +8,10 @@ extends Control
 ##          5. kutatóállomás → 6. AETHER logó, áttűnés a játékba.
 
 signal finished
+
+## Tempó: minden snitt-idő ennyiszerese (1 = eredeti, gyors vágás). A zene is ehhez készül
+## (tools/intro_zene_handpan.py, PACE) – ha itt változik, ott is át kell írni és újragenerálni.
+const PACE := 1.6
 
 const UI := preload("res://scripts/ui.gd")
 const L := preload("res://scripts/i18n.gd")
@@ -79,7 +83,7 @@ func _start_music() -> void:
 	_music.volume_db = -6.0
 	main.add_child(_music)
 	# a rövid változat a dallam közepéről indul (események + zárás)
-	_music.play(13.8 if short else 0.0)
+	_music.play(13.8 * PACE if short else 0.0)
 
 
 func _stop_music() -> void:
@@ -118,12 +122,12 @@ func _say(text: String, sub: String = "") -> void:
 	_caption.modulate.a = 0.0
 	_sub.modulate.a = 0.0
 	var tw := create_tween().set_parallel(true)
-	tw.tween_property(_caption, "modulate:a", 1.0, 0.5)
-	tw.tween_property(_sub, "modulate:a", 1.0, 0.7)
+	tw.tween_property(_caption, "modulate:a", 1.0, 0.9)
+	tw.tween_property(_sub, "modulate:a", 1.0, 1.2)
 
 
 func _wait(sec: float) -> bool:
-	await get_tree().create_timer(sec).timeout
+	await get_tree().create_timer(sec * PACE).timeout
 	return not _done
 
 
@@ -139,7 +143,7 @@ func _shot(name: String) -> void:
 func _globe_to(scale_f: float, sec: float) -> void:
 	var g = main.globe
 	g.pivot_offset = g.size * 0.5
-	create_tween().tween_property(g, "scale", Vector2.ONE * scale_f, sec).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	create_tween().tween_property(g, "scale", Vector2.ONE * scale_f, sec * PACE).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 
 func _play() -> void:
@@ -169,7 +173,7 @@ func _play_full() -> void:
 	# 2. Ez a Föld ma (valódi Nap-állás, városfények)
 	_say(L.t("Ez a Föld ma."), L.t("Valódi napfény, valódi adatok."))
 	_globe_to(1.0, 2.5)
-	create_tween().tween_property(g, "spin", g.spin + 0.12, 5.0)
+	create_tween().tween_property(g, "spin", g.spin + 0.12, 5.0 * PACE)
 	if not await _wait(3.0): return
 	await _shot("intro_2_fold.png")
 	if not await _wait(2.0): return

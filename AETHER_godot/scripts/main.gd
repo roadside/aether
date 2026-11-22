@@ -169,7 +169,7 @@ func _ready() -> void:
 		_selftest()
 	elif world.is_empty() or _world_age() > 3600:
 		_refresh_world()   # a régi (egy óránál régebbi) jelentések helyett frissek
-	# Kezdő animáció: első indításkor a teljes (~30 mp), utána a rövid (~9 mp). Esc: átugrás.
+	# Kezdő animáció: első indításkor a teljes (~45 mp), utána a rövid (~15 mp). Esc: átugrás.
 	if not ("--onteszt" in args):
 		_play_intro("--intro-kepek" in args)
 	# óránként magától frissül a „Mi történik most?” lista

@@ -3,7 +3,7 @@
 Nem felvétel és nem minta: minden hang matematikailag készül (szinusz-részhangok
 lecsengéssel, enyhe lebegéssel, rövid "kézütés" zajjal, majd egyszerű tér-visszhang).
 Hangsor: D kurd (D3 A3 B♭3 C4 D4 E4 F4 G4 A4), ahogy a legtöbb handpan.
-A dallam a snittekhez igazodik (kb. 28 mp + lecsengés).
+A dallam a snittekhez igazodik (kb. 28 mp × PACE + lecsengés).
 
 Futtatás (csak a Python standard könyvtára kell):
     py tools/intro_zene_handpan.py
@@ -16,7 +16,8 @@ import struct
 import wave
 
 SR = 22050
-LENGTH = 32.0
+PACE = 1.6            # ugyanaz, mint az intro.gd PACE-e: a snittek ennyivel lassabbak
+LENGTH = 28.0 * PACE + 5.0
 N = int(SR * LENGTH)
 
 NOTE = {"D3": 146.83, "A3": 220.00, "Bb3": 233.08, "C4": 261.63, "D4": 293.66,
@@ -24,7 +25,7 @@ NOTE = {"D3": 146.83, "A3": 220.00, "Bb3": 233.08, "C4": 261.63, "D4": 293.66,
 PAN = {"D3": 0.0, "A3": -0.35, "Bb3": 0.35, "C4": -0.5, "D4": 0.5,
        "E4": -0.25, "F4": 0.25, "G4": -0.4, "A4": 0.4}
 
-# (idő mp, hang, erősség) – snittenként
+# (idő mp PACE = 1 mellett, hang, erősség) – snittenként
 SCORE = [
     # 1. űr
     (0.20, "D3", 0.90), (1.90, "A3", 0.50), (2.90, "D4", 0.40),
@@ -104,12 +105,12 @@ def main():
     L = [0.0] * N
     R = [0.0] * N
     for t, n, v in SCORE:
-        t += rnd.uniform(-0.015, 0.015)          # emberi időzítés
+        t = t * PACE + rnd.uniform(-0.015, 0.015)          # emberi időzítés
         handpan(NOTE[n], v, L, R, max(0, int(t * SR)), PAN[n])
     # nagyon halk, meleg alapzúgás (D2 + A2), hogy ne legyen „üres” a tér
     for i in range(N):
         t = i / SR
-        env = min(1.0, max(0.0, (t - 2.0) / 4.0)) * min(1.0, max(0.0, (29.5 - t) / 2.5))
+        env = min(1.0, max(0.0, (t - 3.0) / 5.0)) * min(1.0, max(0.0, (LENGTH - 2.5 - t) / 3.0))
         d = 0.018 * env * (math.sin(2 * math.pi * 73.42 * t) + 0.6 * math.sin(2 * math.pi * 110.0 * t + 0.4 * math.sin(0.3 * t)))
         L[i] += d
         R[i] += d
