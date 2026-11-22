@@ -778,7 +778,6 @@ func _build_anomaly_toggle() -> void:
 	ico.draw.connect(ico_fn)
 	_anom_btn.add_child(ico)
 	add_child(_anom_btn)
-	_anom_btn.tooltip_text = L.t("Hol melegebb és hol hidegebb ma, mint az 1991–2020-as átlag. Forrás: Copernicus Climate Pulse (ERA5). Gyorsbillentyű: M")
 	_anom_btn.toggled.connect(_toggle_anomaly)
 	# jelmagyarázat: kék = hidegebb, piros = melegebb (a Climate Pulse színskálája)
 	var panel := PanelContainer.new()
