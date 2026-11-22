@@ -778,7 +778,9 @@ func _render_mission() -> void:
 		if current:
 			_mission_box.add_child(UI.label(L.t(MISSION[i][1]), 15, UI.SOFT))
 			# egy kattintással oda, ahol a lépést el kell végezni
-			if i == 1:
+			# a következő lépés mindig látszik: akkor is, ha még töltenek a jelentések,
+			# vagy ha a játékos jóváhagyás nélkül zárta be az eredményt
+			if i <= 2:
 				_mission_box.add_child(_go_button(L.t("Kutatás →"), _open_research))
 			elif i == 3:
 				_mission_box.add_child(_go_button(L.t("A terved →"), _open_plan))
@@ -1132,7 +1134,8 @@ func _open_research() -> void:
 
 
 func _on_results_shown(has_levers: bool) -> void:
-	_advance(3)
+	# ha van mit jóváhagyni, a „terved” lépés csak a jóváhagyás után jön (Esc-nél ne ugorjon előre)
+	_advance(2 if has_levers else 3)
 	# csak akkor ünneplünk, ha a kutatás talált is valamit
 	var found := 0
 	if _overlay != null and "_result" in _overlay and typeof(_overlay._result) == TYPE_DICTIONARY:
