@@ -34,7 +34,7 @@ const EN := {
 	"Ez ugyanaz, mint a mostani terved. Húzz el egy csúszkát!": "This is the same as your current plan. Move a slider!",
 	"Ha bevezeted:": "If you bring it in:",
 	"Föld, %d.": "Earth, %d.",
-	"Egyre melegebb.": "Getting warmer.",
+	"Egyre melegebb...": "Getting warmer...",
 	"A jövő még nincs megírva.": "The future is not written yet.",
 	"Esc: átugrás": "Esc: skip",
 	"az iparosodás előtti szinthez képest": "compared with pre-industrial levels",

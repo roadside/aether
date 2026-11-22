@@ -1,22 +1,21 @@
 extends Control
 ## Kezdő animáció (kb. 66 mp), minden indításkor. Esc, szóköz, Enter vagy kattintás átugorja.
 ## A főképernyő saját elemeiből készül, valós idejű: a földgömb (valódi Nap-állás), az évszámláló
-## a valódi éves eltéréssel, a mai hőmérséklet-eltérés térkép, a festett képek, a kutatóállomás.
+## a valódi éves eltéréssel, a mai hőmérséklet-eltérés térkép, a festett képek.
 ##
 ## Nyitány (0–11 mp): egy handpanen játszó, erdőben ülő alak (saját, festett pixeles figura,
 ## nem valódi személy képmása); a keze a zene ütéseire mozdul. Utána jönnek az alábbi snittek
 ## (az idők a nyitány végétől számítva, a rövidítések után kb. 55 mp):
-## Snittek (mp):
-##   0–5        űr, „2026.” – egy fénypontból nő ki a Föld
-##   5–11       „Ez a Föld ma.”
-##   11–19,5    évszámláló 1940-től máig a VALÓDI éves eltéréssel, alul melegedési csíkok
+## Snittek (mp, a nyitány végétől):
+##   0–4        űr, „2026.” – egy fénypontból nő ki a Föld
+##   4–8,5      „Ez a Föld ma.”
+##   8,5–17     évszámláló 1940-től máig a VALÓDI éves eltéréssel, alul melegedési csíkok
 ##              (Copernicus Climate Pulse; ha még nincs letöltve, számok nélkül megy)
-##   19,5–25,5  a mai hőmérséklet-eltérés térkép
-##   25,5–41,5  négy festett pixeles kép (olvadó jég, aszály, árvíz, erdőtűz), 4–4 mp,
-##              alattuk egy-egy valódi friss hír, ha van ilyen kategóriájú
-##   41,5–48    a kutatóállomás (a játékos saját moduljaival)
-##   48–54,5    a görbe elágazik: „A jövő még nincs megírva.” (a jövő vonalai jelképek)
-##   54,5–58,5  a Föld, a cím halványan a csillagok között elrejtve; áttűnés a játékba
+##   17–22,5    a mai hőmérséklet-eltérés térkép
+##   22,5–38,5  négy festett pixeles kép (olvadó jég, aszály, árvíz, erdőtűz), 4–4 mp
+##   38,5–44,5  hívás: a játékos helyén fény gyúl, fényívek futnak a világ sok pontjára
+##   44,5–51    a görbe elágazik: „A jövő még nincs megírva.” (a jövő vonalai jelképek)
+##   51–55      a Föld, a cím halványan a csillagok között elrejtve; áttűnés a játékba
 ## Zene: ha a játékos gépén ott van a saját zenefájl (sajat_zene/intro.wav a projektmappában,
 ## vagy user://sajat_zene/intro.wav), azt játssza; ez a fájl NEM része a játéknak és nem kerül
 ## fel a GitHubra (más szerző jogvédett felvétele lehet). Ha nincs, a saját, kódból előállított
@@ -47,7 +46,6 @@ var _caption: Label
 var _sub: Label
 var _hint: Label
 var _black: ColorRect
-var _station: Control
 var _logo: Label
 var _done := false
 var _hidden: Array = []        # az intro alatt elrejtett felületelemek
@@ -75,7 +73,6 @@ static func pulse_path() -> String:
 
 
 func _ready() -> void:
-	set_anchors_preset(Control.PRESET_FULL_RECT)
 	# a szülő mérete nem mindig ismert: kifejezetten a teljes (1600×900-as) képre feszül
 	position = Vector2.ZERO
 	size = Vector2(W, H)
@@ -257,14 +254,14 @@ func _play_full() -> void:
 	await _shot("intro_01_ur.png")
 	if not await _wait(2.0): return
 	# 2. Ez a Föld ma (valódi Nap-állás, városfények) (6 mp)
-	_say(L.t("Ez a Föld ma."), L.t("Valódi napfény, valódi adatok."))
+	_say(L.t("Ez a Föld ma."))
 	_globe_to(1.0, 3.0)
 	create_tween().tween_property(g, "spin", g.spin + 0.14, 8.0)
 	if not await _wait(3.0): return
 	await _shot("intro_02_fold.png")
-	if not await _wait(2.0): return
+	if not await _wait(1.5): return
 	# 3. Évszámláló: 1940-től máig, a gömb közben „melegszik” (8,5 mp)
-	_say(L.t("Egyre melegebb."))
+	_say(L.t("Egyre melegebb..."))
 	create_tween().tween_property(g, "position:x", _globe_center.x - 230.0, 1.5).set_trans(Tween.TRANS_SINE)
 	_globe_to(0.9, 1.5)
 	_set_mode("szamlalo")
@@ -278,10 +275,10 @@ func _play_full() -> void:
 	create_tween().tween_property(g, "heat", 0.0, 1.0)
 	if main.anomaly_ready():
 		g.show_anomaly(true)
-	_say(L.t("%s – melegebb, mint valaha.") % main.warming_text(), L.t("Piros: ma melegebb, mint az 1991–2020-as átlag."))
+	_say(L.t("%s. Melegebb, mint valaha.") % main.warming_text())
 	if not await _wait(3.5): return
 	await _shot("intro_04_elteres.png")
-	if not await _wait(2.5): return
+	if not await _wait(2.0): return
 	# 5. Négy festett kép, 4–4 mp, puha sötét áttűnéssel (16 mp)
 	var words := [L.t("Olvadó jég."), L.t("Aszály."), L.t("Árvizek."), L.t("Erdőtüzek.")]
 	var cats := ["jeg", "aszaly", "arviz", "tuz"]
@@ -294,22 +291,25 @@ func _play_full() -> void:
 		text += ("" if text == "" else " ") + str(words[i])
 		_caption.text = text
 		_caption.modulate.a = 1.0
-		_sub.text = _short(_headline(cats[i]), 90)
-		_sub.modulate.a = 0.0
-		create_tween().tween_property(_sub, "modulate:a", 1.0, 0.8)
+		_sub.text = ""
 		if not await _wait(SCENE_LEN * 0.6): return
 		await _shot("intro_%02d_kep_%s.png" % [5 + i, cats[i]])
 		if not await _wait(SCENE_LEN * 0.4): return
 	_end_mode()
-	# 6. A kutatóállomás (6,5 mp)
+	# 6. Hívás (6 mp): a gömb a játékos helyére fordul, ott kigyullad egy fény, és tőle
+	#    fényívek indulnak a világ sok pontjára, ahol sorra új fények gyúlnak:
+	#    egy kérdésből sokak munkája lesz.
 	g.home()
-	_dim_to(0.5, 1.0)
-	_say(L.t("Itt kezdődik a kutatásod."))
-	_show_station()
-	if not await _wait(3.5): return
-	await _shot("intro_09_allomas.png")
-	if not await _wait(1.5): return
-	_hide_station()
+	_globe_to(1.05, 1.5)
+	_dim_to(0.25, 1.0)
+	_say(L.t("Minden változás egyetlen kérdéssel kezdődik."))
+	_set_mode("hivas")
+	if not await _wait(3.4): return
+	_say(L.t("A tiéddel."))
+	if not await _wait(1.4): return
+	await _shot("intro_09_hivas.png")
+	if not await _wait(1.2): return
+	_end_mode()
 	# 7. A görbe elágazik: a jövő még nincs megírva (6,5 mp)
 	_dim_to(0.68, 1.0)
 	_say(L.t("A jövő még nincs megírva."))
@@ -325,14 +325,6 @@ func _play_full() -> void:
 	if not await _wait(2.6): return
 	await _shot("intro_11_vege.png")
 	if not await _wait(1.4): return
-
-
-## Egy valódi friss hír címe az adott kategóriából (a „Mi történik most?” listából), vagy üres.
-func _headline(cat: String) -> String:
-	for e in main.world.get("esemenyek", []):
-		if str(e.get("kategoria", "")) == cat:
-			return str(e.get("cim", ""))
-	return ""
 
 
 ## A valódi éves eltérések a gépen lévő Climate Pulse-adatból. Ha nincs, vagy egy napnál
@@ -372,57 +364,6 @@ func _shot(name: String) -> void:
 		await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png(shots_dir.path_join(name))
 	print("INTRO kép: ", shots_dir.path_join(name))
-
-
-## Rövid felirat: szóhatáron vágja, „…”-tel jelzi a vágást.
-func _short(s: String, n: int) -> String:
-	if s.length() <= n:
-		return s
-	var cut := s.left(n)
-	var sp := cut.rfind(" ")
-	return (cut.left(sp) if sp > n / 2 else cut).strip_edges() + "…"
-
-
-func _show_station() -> void:
-	var holder := Control.new()
-	var bg: Texture2D = load("res://assets/allomas/hatter.png")
-	var sc := 3.0
-	holder.size = Vector2(bg.get_width(), bg.get_height()) * sc
-	holder.position = Vector2((1600 - holder.size.x) / 2.0, 150)
-	for name in ["hatter.png"] + _module_files():
-		var t := TextureRect.new()
-		t.texture = load("res://assets/allomas/" + name)
-		t.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		t.stretch_mode = TextureRect.STRETCH_SCALE
-		var pos := Vector2.ZERO
-		if name != "hatter.png":
-			pos = {"ai_mag": Vector2(22, 32), "archivum": Vector2(72, 32), "uveghaz": Vector2(122, 32)}[name.get_slice("_", 0) if not name.begins_with("ai_mag") else "ai_mag"] * sc
-		t.position = pos
-		t.size = Vector2(t.texture.get_width(), t.texture.get_height()) * sc
-		holder.add_child(t)
-	var frame := ReferenceRect.new()
-	frame.border_color = UI.GOLD
-	frame.border_width = 3
-	frame.editor_only = false
-	frame.size = holder.size
-	holder.add_child(frame)
-	holder.modulate.a = 0.0
-	add_child(holder)
-	move_child(holder, _fx.get_index())   # a sötétítés fölött
-	_station = holder
-	create_tween().tween_property(holder, "modulate:a", 1.0, 0.8)
-
-
-## A játékos állomásának modulképei (legalább 1. szintű AI-mag, hogy legyen mit látni).
-func _module_files() -> Array:
-	var st: Dictionary = main.campaign.station
-	return ["ai_mag_%d.png" % maxi(1, int(st.get("ai_mag", 0))),
-		"archivum_%d.png" % int(st.get("archivum", 0)), "uveghaz_%d.png" % int(st.get("uveghaz", 0))]
-
-
-func _hide_station() -> void:
-	if _station != null:
-		create_tween().tween_property(_station, "modulate:a", 0.0, 0.6)
 
 
 ## Záró kép: nincs szlogen, csak a játék címe – kicsiben, halványan a csillagok
@@ -501,6 +442,8 @@ func _draw_fx() -> void:
 			_fx.draw_rect(Rect2(0, 735, W, 135), Color(0.02, 0.03, 0.07, 0.55))
 		"jovo":
 			_draw_future(lt)
+		"hivas":
+			_draw_call(lt)
 
 
 ## Évszámláló a valódi éves eltéréssel, alul a „melegedési csíkok” (minden év egy csík).
@@ -725,6 +668,71 @@ func _scene_fire(lt: float) -> void:
 		var ex := _h(i + 50.0) * 320.0 + sin(life * 6.0 + i) * 8.0 + life * 14.0
 		_r(ex, 150.0 - life * 140.0, 1.0 + float(i % 2), 1.0 + float(i % 2), Color(1.0, 0.75 - life * 0.4, 0.25, 1.0 - life))
 	_fx.draw_rect(Rect2(0, 0, W, H), Color(1.0, 0.35, 0.1, 0.05 + 0.03 * sin(lt * 9.0)))
+
+
+# --- hívás: a játékos fénye, és ahogy a fény szétterjed a Földön ------------------
+## Kutatóhelyek a világon, ahová a fényívek futnak (csak a látható oldaliak rajzolódnak ki).
+const CALL_PLACES := [
+	[64.1, -21.9], [38.7, -9.1], [40.4, -3.7], [59.3, 18.1], [69.6, 18.9], [55.8, 37.6],
+	[41.0, 29.0], [30.0, 31.2], [24.7, 46.7], [6.5, 3.4], [14.7, -17.5], [-4.3, 15.3],
+	[-1.3, 36.8], [-33.9, 18.4], [28.6, 77.2], [43.2, 76.9], [23.8, 90.4], [-22.9, -43.2],
+	[9.0, 38.7], [33.6, -7.6], [52.5, 13.4], [60.2, 24.9], [-18.9, 47.5], [35.7, 51.4]]
+
+
+## A gömb egy pontja képernyő-koordinátában (Vector3: x, y, látszik-e).
+func _globe_screen(lat: float, lon: float) -> Vector3:
+	var g = main.globe
+	var p: Vector3 = g.project(lat, lon)
+	var q: Vector2 = g.get_global_transform() * Vector2(p.x, p.y)
+	return Vector3(q.x, q.y, p.z)
+
+
+func _draw_call(lt: float) -> void:
+	var a := _win(lt, 0.0, 6.0, 0.6)
+	var home := Vector2(800, 450)
+	for s in main.globe.stations:
+		if s.get("me", false):
+			var h := _globe_screen(float(s["lat"]), float(s["lon"]))
+			home = Vector2(h.x, h.y)
+	var center: Vector2 = main.globe.get_global_transform() * (main.globe.size * 0.5)
+	# 1. a játékos fénye: lassan kigyúl, lüktet
+	var glow := _ss(0.2, 1.4, lt)
+	var beat := 1.0 + 0.18 * sin(_t * 4.0)
+	for r in [90.0, 60.0, 38.0, 22.0]:
+		_fx.draw_circle(home, r * glow * beat, Color(1.0, 0.85, 0.45, 0.10 * a))
+	_fx.draw_circle(home, 9.0 * glow, Color(1.0, 0.96, 0.82, a))
+	# 2. fényívek indulnak sorban, a végükön új fények gyúlnak
+	var k := 0
+	for pl in CALL_PLACES:
+		var t := _globe_screen(pl[0], pl[1])
+		if t.z < 0.5:
+			continue
+		var dst := Vector2(t.x, t.y)
+		if dst.distance_to(home) < 30.0:
+			continue
+		var t0 := 1.3 + k * 0.17
+		k += 1
+		var p := clampf((lt - t0) / 1.1, 0.0, 1.0)
+		if p <= 0.0:
+			continue
+		var mid := (home + dst) * 0.5
+		var lift := (mid - center).normalized() * home.distance_to(dst) * 0.32
+		var ctrl := mid + lift
+		var e := 1.0 - pow(1.0 - p, 2.0)
+		var pts := PackedVector2Array()
+		var steps := 24
+		for i in int(e * steps) + 1:
+			var u := float(i) / steps
+			pts.append(home.lerp(ctrl, u).lerp(ctrl.lerp(dst, u), u))
+		if pts.size() > 1:
+			_fx.draw_polyline(pts, Color(1.0, 0.82, 0.40, 0.55 * a), 3.0)
+			_fx.draw_circle(pts[pts.size() - 1], 4.0, Color(1.0, 0.95, 0.75, a))
+		if p >= 1.0:   # megérkezett: új fény gyúl, egy pillanatra gyűrű fut ki belőle
+			var q := clampf((lt - t0 - 1.1) / 0.9, 0.0, 1.0)
+			_fx.draw_circle(dst, 16.0 * (0.6 + 0.4 * sin(_t * 3.0 + k)), Color(1.0, 0.85, 0.45, 0.16 * a))
+			_fx.draw_circle(dst, 5.0, Color(1.0, 0.93, 0.70, a))
+			if q < 1.0:
+				_fx.draw_arc(dst, 6.0 + q * 34.0, 0.0, TAU, 32, Color(1.0, 0.9, 0.6, (1.0 - q) * a), 2.0)
 
 
 # --- a jövő: a görbe elágazik --------------------------------------------------

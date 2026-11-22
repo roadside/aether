@@ -503,10 +503,9 @@ const EN := {
 	# kezdő animáció
 	"Esc: átugrás": "Esc: skip",
 	"Ez a Föld ma.": "This is Earth today.",
-	"Valódi napfény, valódi adatok.": "Real sunlight, real data.",
-	"%s – melegebb, mint valaha.": "%s – warmer than ever.",
-	"Piros: ma melegebb, mint az 1991–2020-as átlag.": "Red: warmer today than the 1991–2020 average.",
-	"Itt kezdődik a kutatásod.": "Your research starts here.",
+	"%s. Melegebb, mint valaha.": "%s. Warmer than ever.",
+	"Minden változás egyetlen kérdéssel kezdődik.": "Every change begins with a single question.",
+	"A tiéddel.": "Yours.",
 	"Viharok.": "Storms.",
 	"Aszály.": "Drought.",
 	"Olvadó jég.": "Melting ice.",
