@@ -850,8 +850,9 @@ func _on_bridge_finished(tag: String, code: int, output: String) -> void:
 ## A kutatás technikai hiba miatt leállt: a pénz és a kutatási hely visszajár, és a játékos
 ## érthető mondatot kap (nem Python-telepítést, hacsak tényleg nem a Python hiányzik).
 func _research_failed(code: int, output: String) -> void:
-	if campaign != null and _paid > 0:
-		campaign.refund_research(_paid)
+	# a visszatérítést a campaign végzi (pénz + idei kutatási hely)
+	if campaign != null and _paid > 0 and campaign.has_method("refund_research"):
+		campaign.refund_research()
 	var refunded := _paid
 	_paid = 0
 	if code == -1 or code == 9009:
