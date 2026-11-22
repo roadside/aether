@@ -39,8 +39,8 @@ const MUSIC_FADE_AT := 60.0    # innen halkul a zene (a vége előtt)
 const MUSIC_FADE_LEN := 6.0
 const OWN_MUSIC := ["res://sajat_zene/intro.wav", "user://sajat_zene/intro.wav"]
 ## A nyitány ütései (mp) a saját zenefájl első 11 másodpercéből kimérve: [idő, kéz (0 bal, 1 jobb), hangmező]
-const HITS := [[3.09, 1, 0], [3.37, 0, 3], [4.46, 1, 2], [5.07, 0, 1], [5.61, 1, 4], [6.44, 0, 5],
-	[6.70, 1, 0], [6.87, 0, 3], [7.57, 1, 6], [7.85, 0, 1], [9.20, 1, 2], [9.75, 0, 5], [10.30, 1, 0]]
+const HITS := [[3.09, 1, 0], [3.36, 0, 3], [4.18, 1, 2], [4.46, 0, 1], [5.61, 1, 4], [5.90, 0, 5],
+	[6.17, 1, 0], [6.45, 0, 3], [6.70, 1, 6], [7.56, 0, 1], [7.85, 1, 2], [8.41, 0, 5]]
 var main                       # main.gd példány (földgömb, világállapot, eltérés-térkép)
 var shots_dir := ""            # ha nem üres: minden snittről képernyőkép (ellenőrzéshez)
 var _caption: Label
@@ -486,7 +486,7 @@ func _draw_fx() -> void:
 	var lt := _t - _mode_t0
 	match _mode:
 		"jatekos":
-			_scene_player(lt)
+			_scene_player(_music_time(lt))
 		"szamlalo":
 			_draw_counter(lt)
 		"kep":
@@ -775,7 +775,7 @@ func _draw_future(lt: float) -> void:
 ## ütései vezérlik: fent lebeg -> félúton -> a hangmezőn -> vissza.
 const P := 2.5                  # a nyitány egy „pixele” a képernyőn (640×360 -> 1600×900)
 const PAN := Vector2(322, 262)  # a hangszer közepe a képen
-const HIT_SPOT := [Vector2(-22, 5), Vector2(22, 5)]   # ahová a bal és a jobb kéz üt (a hangszer közepéhez képest)
+const HIT_SPOT := [Vector2(-24, -2), Vector2(24, -2)]   # ahová a bal és a jobb kéz üt (a hangszer közepéhez képest)
 var _tex := {}
 
 
@@ -795,6 +795,17 @@ func _img(name: String) -> Texture2D:
 	return t
 
 
+## A nyitány ideje a zene tényleges lejátszási helyéből (a hangkártya késését levonva),
+## hogy a kéz pontosan akkor érjen a hangszerhez, amikor a hang megszólal.
+func _music_time(lt: float) -> float:
+	if _music == null or not is_instance_valid(_music) or not _music.playing:
+		return lt
+	var mt: float = _music.get_playback_position() + AudioServer.get_time_since_last_mix() - AudioServer.get_output_latency()
+	if absf(mt - lt) > 0.5:       # ha a zene és a kép nagyon elcsúszna, marad a kép saját órája
+		return lt
+	return maxf(mt, 0.0)
+
+
 ## A kar mozgásfázisa (0 fent, 1 félúton, 2 a hangmezőn) a zene ütéseiből.
 func _arm_phase(side: int, lt: float) -> int:
 	var ph := 0
@@ -802,9 +813,9 @@ func _arm_phase(side: int, lt: float) -> int:
 		if int(h[1]) != side:
 			continue
 		var dt := lt - float(h[0])
-		if dt >= -0.07 and dt < 0.10:
+		if dt >= -0.03 and dt < 0.12:
 			return 2
-		if (dt >= -0.16 and dt < -0.07) or (dt >= 0.10 and dt < 0.22):
+		if (dt >= -0.12 and dt < -0.03) or (dt >= 0.12 and dt < 0.24):
 			ph = 1
 	return ph
 
