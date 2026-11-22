@@ -227,21 +227,31 @@ func _start_tour() -> void:
 	_tour = Tour.new()
 	var both := func(a: Control, b: Control) -> Rect2:
 		return a.get_global_rect().merge(b.get_global_rect())
+	var stat := func(key: String) -> Rect2:
+		return ((_stats[key] as Control).get_parent() as Control).get_global_rect().grow(6)
 	_tour.steps = [
 		{"rect": func() -> Rect2: return Rect2(480, 105, 640, 640),
-			"cim": "A Föld ma", "szoveg": "A pöttyök valódi, friss jelentések. Az egérrel megforgathatod."},
-		{"rect": func() -> Rect2: return Rect2(0, 0, 640, 74),
-			"cim": "Hol tartasz?", "szoveg": "Itt látod az évet, a pénzed, a bizalmat és a melegedést."},
+			"cim": "A Föld ma", "szoveg": "A pöttyök valódi, friss jelentések. A játékban az egérrel forgathatod a Földet."},
+		{"rect": func() -> Rect2: return stat.call("ev"),
+			"cim": "Év", "szoveg": "2026-ban indulsz, és 2100-ig játszol. Minden évben kutathatsz és dönthetsz."},
+		{"rect": func() -> Rect2: return stat.call("korszak"),
+			"cim": "Korszak", "szoveg": "Négy korszak van. Ha eleget kutattál, jön a következő, új témákkal és új lehetőségekkel."},
+		{"rect": func() -> Rect2: return stat.call("penz"),
+			"cim": "Pénz", "szoveg": "Ebből fizeted a kutatást, az állomásod építését és a terved. Minden évben kapsz hozzá."},
+		{"rect": func() -> Rect2: return stat.call("bizalom"),
+			"cim": "Bizalom", "szoveg": "Ennyire hisznek neked az emberek. Merész tervhez sok bizalom kell. Ellenőrzött kutatással nő, bajban csökken."},
+		{"rect": func() -> Rect2: return stat.call("melegedes"),
+			"cim": "Melegedés", "szoveg": "Ennyivel melegebb a Föld, mint az ipar előtti időkben. A célod, hogy 2100-ra minél kisebb legyen."},
 		{"rect": func() -> Rect2: return _left_panel.get_global_rect(),
-			"cim": "Mi történik most?", "szoveg": "Valódi hírek a világból. Kattints egyre, és megtudod, mi köze a klímához."},
+			"cim": "Mi történik most?", "szoveg": "Valódi hírek a világból. A játékban bármelyikre rákattinthatsz: megtudod, mi köze a klímához."},
 		{"rect": func() -> Rect2: return _btn_research.get_global_rect(),
-			"cim": "Kutatás", "szoveg": "Itt kérdezel. A válasz valódi tudományos cikkekből jön."},
+			"cim": "Kutatás", "szoveg": "Itt teszel fel kérdést. A válasz valódi tudományos cikkekből jön, és tudást, bizalmat ad."},
 		{"rect": func() -> Rect2: return _btn_plan.get_global_rect(),
 			"cim": "A terved", "szoveg": "Itt döntöd el, mit tegyen a világ. Rögtön látod, mi lesz 2100-ban."},
 		{"rect": func() -> Rect2: return both.call(_play_btn, _path),
-			"cim": "Telik az idő", "szoveg": "Ha végeztél, zárd le az évet. A görbe mutatja, merre tart a melegedés."},
+			"cim": "Telik az idő", "szoveg": "Ha idén már mindent megtettél, zárd le az évet. A görbe mutatja, merre tart a melegedés."},
 		{"rect": func() -> Rect2: return _right_panel.get_global_rect(),
-			"cim": "Küldetések", "szoveg": "Innen indulj! A küldetés lépésről lépésre vezet."},
+			"cim": "Küldetések", "szoveg": "Innen indulj! A küldetés lépésről lépésre vezet, és csillagot ad."},
 	]
 	add_child(_tour)
 	await _tour.finished
@@ -1797,9 +1807,9 @@ func _selftest() -> void:
 	# 1t: a rámutatós bemutató lépései (a beállítást nem írja át: a végén visszaáll)
 	var tour_done: Variant = L.get_setting("bemutato_kesz", false)
 	_start_tour()
-	for ti in 7:
+	for ti in 11:
 		await get_tree().create_timer(0.8).timeout
-		if ti in [0, 3, 5, 6]:
+		if ti in [0, 3, 4, 6, 9]:
 			await _shot(dir, "1t_bemutato_%d.png" % (ti + 1))
 		if _tour != null:
 			_tour._next()
