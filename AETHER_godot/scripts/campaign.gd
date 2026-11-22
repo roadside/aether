@@ -54,6 +54,7 @@ var noise: Array = []                # természetes évi ingadozás 2026-tól (�
 var history: Array = []              # az évek krónikája: [{"ev", "T", "esemenyek": [...]}]
 var games_played := 0
 var prep: Dictionary = {}            # felkészülés eseménytípusonként (0–2): a döntéseidből, tartós védelem
+var pledges: Dictionary = {}         # klímacsúcs-vállalások (summit.gd): csúcs éve -> {fajta, cel, hatarido, allapot}
 var debated: Array = []              # a már lezajlott viták (tévhitek) azonosítói
 var volcanoes: Array = []            # nagy vulkánkitörések évei ebben a világban (a magból sorsolva)
 
@@ -109,6 +110,8 @@ func load_game() -> void:
 	debated = db if typeof(db) == TYPE_ARRAY else []
 	var pr: Variant = d.get("felkeszules", {})
 	prep = pr if typeof(pr) == TYPE_DICTIONARY else {}
+	var pl: Variant = d.get("vallalasok", {})
+	pledges = pl if typeof(pl) == TYPE_DICTIONARY else {}
 	for id in done:   # régi mentés: a kutatott téma legalább 1 csillag
 		if not stars.has(str(id)):
 			stars[str(id)] = 1
@@ -121,7 +124,7 @@ func save() -> void:
 		"modell": model, "allomas": station, "epul": building, "kutatas_ev": research_this_year,
 		"tudas": done, "korszak": era, "karok": levers, "csillagok": stars,
 		"mag": world_seed, "erzekenyseg": sens, "ingadozas": noise, "kronika": history, "vulkanok": volcanoes,
-		"felkeszules": prep, "vitak": debated})
+		"felkeszules": prep, "vitak": debated, "vallalasok": pledges})
 
 
 ## seed_value >= 0: ugyanaz a Föld újra (ugyanaz az érzékenység, ingadozás, események).
@@ -143,6 +146,7 @@ func new_game(seed_value: int = -1) -> void:
 	_acc = 0.0
 	history = []
 	prep = {}
+	pledges = {}
 	debated = []
 	roll_world(seed_value if seed_value >= 0 else (2026 if plain_world else -1))
 	if save_file == "aether_jatek.json":   # az önteszt ne törölje a játékos küldetéscsillagait
@@ -595,6 +599,8 @@ func era_conditions(target: int) -> Array:
 	var need := int(e.get("kell", 0))
 	var have := mini(need, Knowledge.count_done(done, target - 1))
 	out.append([L.t("Kutatott téma a(z) %s korszakból: %d/%d") % [Knowledge.era_name(target - 1), have, need], have >= need])
+	if e.has("ev"):   # játékszabály: a korszakok a század során sorban nyílnak meg, nem az első években
+		out.append([L.t("Legkorábban %d-ben") % int(e["ev"]), year >= int(e["ev"])])
 	if bool(e.get("terv", false)):
 		out.append([L.t("Bevezetett terv"), not timeline.is_empty()])
 	if e.has("bizalom"):

@@ -36,11 +36,11 @@ const LABELS := [
 ## A további feltételeket (bevezetett terv, bizalom, csökkenő kibocsátás) a campaign.gd nézi.
 const ERAS := [
 	{"nev": "Felismerés", "tema": "Mérés és megértés: a melegedés, a jég, a tenger, az élővilág és a termés."},
-	{"nev": "Mérséklés", "tema": "Takarékosság, metán, alkalmazkodás. Megnyílik a metán a tervedben.", "kell": 2},
+	{"nev": "Mérséklés", "tema": "Takarékosság, metán, alkalmazkodás. Megnyílik a metán a tervedben.", "kell": 2, "ev": 2030},
 	{"nev": "Átalakulás", "tema": "Új energia, új anyagok, és a CO2 kivonása a levegőből.", "kell": 2,
-	 "terv": true, "bizalom": 50},
+	 "terv": true, "bizalom": 50, "ev": 2040},
 	{"nev": "Helyreállítás", "tema": "Erdők, vizek, talaj, és a legkockázatosabb ötletek megértése.", "kell": 2,
-	 "csokkeno_co2": true},
+	 "csokkeno_co2": true, "ev": 2055},
 ]
 const ROMAN := ["I.", "II.", "III.", "IV."]
 

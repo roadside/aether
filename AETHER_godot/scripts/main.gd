@@ -21,6 +21,7 @@ const Debate := preload("res://scripts/debate.gd")
 const PathStrip := preload("res://scripts/path_strip.gd")
 const Milestones := preload("res://scripts/milestones.gd")
 const Finale := preload("res://scripts/finale.gd")
+const Summit := preload("res://scripts/summit.gd")
 const EraAnim := preload("res://scripts/era_anim.gd")
 const Events := preload("res://scripts/events.gd")
 const Daily := preload("res://scripts/daily.gd")
@@ -1179,6 +1180,8 @@ func _close_overlay() -> void:
 		_dim = null
 	if campaign != null and _mission_box != null:
 		_journey_tick()   # a „Nálunk” megnyitása vagy egy átvett kutatás is csillagot érhet
+	if not _pending_summit.is_empty():
+		_try_summit.call_deferred()   # az eseménylap (vagy az onnan nyitott kutatás) után jön a csúcs
 
 
 ## A megnyitott ablak mögött elsötétített háttér: így az ablak jól kiemelkedik.
@@ -1542,6 +1545,17 @@ func _on_year_passed(y: int, note: String) -> void:
 	_show_info(note, "")
 	_toast(note, UI.SOFT)   # az év rövid mérlege (bevétel, költség)
 	var selftest := "--onteszt" in OS.get_cmdline_user_args()
+	# klímacsúcs (játékszabály): a lejárt vállalások elszámolása, és ötévente egy új kérés
+	var sn: String = Summit.check(campaign, y)
+	if sn != "":
+		_show_info(sn, "")
+		_toast(sn, UI.GOLD)
+		_update_stats()
+	var sd: Dictionary = Summit.pick(campaign, y)
+	if not sd.is_empty() and selftest:
+		Summit.accept(campaign, sd)
+		sd = {}
+	_pending_summit = sd
 	# fordulópontok: a nagyok rövid festett jelenetet kapnak, a többi sávot
 	for ms in _milestones.for_year(y):
 		if ms.has("kep") and not selftest:
@@ -1563,11 +1577,42 @@ func _on_year_passed(y: int, note: String) -> void:
 			_open_year_events(evs)
 		else:
 			Events.settle(campaign, evs, "segit")
+	elif not _pending_summit.is_empty():
+		_try_summit()
 	elif not ("--onteszt" in OS.get_cmdline_user_args()):
 		# csendes évben jöhet egy vita: egy gyakori tévhit, amit a saját kutatásod cáfol
 		var deb: Dictionary = Debate.pick(campaign, y)
 		if not deb.is_empty():
 			_open_debate(deb)
+
+
+var _pending_summit: Dictionary = {}
+
+
+## A várakozó klímacsúcs ablaka, ha éppen nincs más ablak nyitva (az eseménylap után jön).
+func _try_summit() -> void:
+	if _pending_summit.is_empty() or _overlay != null:
+		return
+	var sd := _pending_summit
+	_pending_summit = {}
+	var to_plan := func() -> void:
+		_close_overlay()
+		_open_plan()
+	var p: Control = Summit.panel(campaign, sd, _close_overlay, to_plan)
+	_place_overlay(p)
+	# ha a játékos döntés nélkül zárja be az ablakot, az „nem vállalom”
+	var undecided := func() -> void:
+		if not campaign.pledges.has(str(sd["ev"])):
+			_toast(Summit.decline(campaign, sd), UI.EMBER)
+			_update_stats()
+	p.tree_exited.connect(undecided)
+	p.custom_minimum_size = Vector2(760, 0)
+	p.position = Vector2(420, 150)
+	var fit := func() -> void:
+		if is_instance_valid(p):
+			p.size = Vector2(760, 0)
+			p.position.y = maxf(16.0, (900.0 - p.size.y) / 2.0)
+	fit.call_deferred()
 
 
 func _open_debate(deb: Dictionary) -> void:

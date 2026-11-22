@@ -397,7 +397,7 @@ func _play_full() -> void:
 ## majd három mondat egymás után, mindegyik sötétből jön és sötétbe megy.
 const PRO_LINES := [
 	["A játékban minden adat, grafikon és hír valós.", 3.6],
-	["Minden tudományos cikket forrásmegjelöléssel mellékelek, így bárki elolvashatja.", 4.8],
+	["Minden tudományos cikk forrásmegjelöléssel megtalálható, így bárki elolvashatja.", 4.8],
 	["Talán köztük van a megoldás...", 3.6],
 ]
 ## A cím feloldása (a játékterv szerint); a páros indexű darabok a kiemelt kezdőbetűk.
