@@ -30,7 +30,7 @@ const EN := {
 	"Az AETHER archívumából: ezt a kutatást egy AI már elvégezte (%s), a játék ellenőrizte.": "From the AETHER archive: an AI already did this research (%s) and the game verified it.",
 	"Elolvastam, értem  ★": "I read it, I get it  ★",
 	"Játékszabály: az összefoglaló elolvasása ★ tudást ad. Számot a tervedbe csak kutatás ad.": "Game rule: reading the summary gives ★ knowledge. Only research puts numbers into your plan.",
-	"Játékszabály: ★ elolvastad az összefoglalót vagy ellenőrzött számot találtál, ★★ legalább 2 cikk egyezik, ★★★ legalább 3 cikk, köztük összefoglaló elemzés.": "Game rule: ★ you read the summary or found a verified number, ★★ at least 2 papers agree, ★★★ at least 3 papers, including a review.",
+	"Csillagok: ★ elolvastad, vagy találtál egy számot a cikkben; ★★ két cikk ugyanazt mondja; ★★★ legalább három cikk, köztük egy, amely sok kutatást összegez.": "Stars: ★ you read it, or found a number in a paper; ★★ two papers say the same; ★★★ at least three papers, including one that sums up many studies.",
 	"Ehhez a kérdéshez van kész, ellenőrzött kutatás az archívumban: azonnal megkapod.": "The archive has finished, verified research for this question: you get it instantly.",
 	# a jövő görbéje, fordulópontok, záró jelenet
 	"A klímamodell szerint. Arany: a te utad. Piros: ha semmi sem változik.": "According to the climate model. Gold: your path. Red: if nothing changes.",

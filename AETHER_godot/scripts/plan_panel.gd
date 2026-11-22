@@ -132,7 +132,7 @@ func rebuild() -> void:
 	_co2 = _slider_row(L.t("Mikorra csökkenjen nullára a CO2-kibocsátás?"),
 		L.t("A melegedés fő oka. Minél hamarabb nulla, annál jobb."),
 		min_y, NEVER, 5, maxi(min_y, co2_now), year_fmt,
-		L.t("IPCC AR6: a melegedés a kibocsátott CO2 összmennyiségével arányos"))
+		L.t("IPCC AR6: minél több CO2 jut összesen a levegőbe, annál melegebb lesz"))
 	if mission.has("co2_ev"):   # ebben a küldetésben a világ nem tud gyorsabban
 		_co2.value = int(mission["co2_ev"])
 		_co2.editable = false
@@ -151,7 +151,7 @@ func rebuild() -> void:
 			_lever_row(k, cur, false)
 	if levers.is_empty():
 		var c := UI.card(UI.EDGE)
-		c.add_child(UI.label(L.t("Zárolva: CO2-kivonás és alkalmazkodás"), 17, UI.MUTE, true))
+		c.add_child(UI.label(L.t("Még zárva: CO2 kivonása a levegőből és alkalmazkodás"), 17, UI.MUTE, true))
 		c.add_child(UI.label(L.t("Ezeket előbb ki kell kutatnod."), 15, UI.MUTE))
 		_body.add_child(UI.card_root(c))
 

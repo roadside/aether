@@ -231,7 +231,7 @@ func _question_card(q: Dictionary, is_done: bool) -> Control:
 
 ## A csillagok szabálya (játékszabály), a csillagok fölé húzott egérnél.
 static func star_rule() -> String:
-	return L.t("Játékszabály: ★ elolvastad az összefoglalót vagy ellenőrzött számot találtál, ★★ legalább 2 cikk egyezik, ★★★ legalább 3 cikk, köztük összefoglaló elemzés.")
+	return L.t("Csillagok: ★ elolvastad, vagy találtál egy számot a cikkben; ★★ két cikk ugyanazt mondja; ★★★ legalább három cikk, köztük egy, amely sok kutatást összegez.")
 
 
 # --- „Mi ez, és mire jó?” ---------------------------------------------------
@@ -976,7 +976,7 @@ func _paper_link(p: Dictionary) -> Control:
 		if typeof(inst) == TYPE_DICTIONARY and inst.has(L.country()):
 			home = L.t("Hazai intézmény: %s") % ", ".join(PackedStringArray(Array(inst[L.country()]).slice(0, 3))) + "\n"
 	if typeof(p.get("peer_reviewed")) == TYPE_BOOL and p.get("peer_reviewed") == false:
-		t += L.t("  [preprint, nem lektorált]")
+		t += L.t("  [még nem ellenőrizték más tudósok]")
 	var url := ""
 	var doi: Variant = p.get("doi")
 	var plain: Variant = p.get("url")
