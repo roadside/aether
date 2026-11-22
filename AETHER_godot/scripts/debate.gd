@@ -14,17 +14,17 @@ const LOSE_TRUST := 1
 
 ## tema: ennek a témának a lektorált szövege a válasz.
 const CLAIMS := [
-	{"id": "nap", "tema": "napaktivitas", "allitas": "A Nap okozza a melegedést, nem az ember."},
-	{"id": "kozmikus", "tema": "kozmikus", "allitas": "A kozmikus sugarak okozzák a melegedést."},
-	{"id": "gronland", "tema": "gronland", "allitas": "Grönland jege nem fogy."},
+	{"id": "nap", "tema": "napaktivitas", "allitas": "A Nap okozza a felmelegedést, nem az ember."},
+	{"id": "kozmikus", "tema": "kozmikus", "allitas": "A kozmikus sugarak okozzák a felmelegedést."},
+	{"id": "gronland", "tema": "gronland", "allitas": "Grönland jege nem olvad."},
 	{"id": "tenger", "tema": "tengerszint", "allitas": "A tenger szintje nem fog emelkedni."},
 	{"id": "villanyauto", "tema": "villanyauto", "allitas": "A villanyautó több CO2-t okoz, mint a benzines."},
 	{"id": "napelem", "tema": "napelem", "allitas": "A napelem nem csökkenti a CO2-kibocsátást."},
-	{"id": "felhok", "tema": "felhok", "allitas": "A felhők majd megállítják a melegedést."},
+	{"id": "felhok", "tema": "felhok", "allitas": "A felhők majd megállítják a felmelegedést."},
 	{"id": "korall", "tema": "korall", "allitas": "A korallok jól bírják a melegebb vizet."},
-	{"id": "termes", "tema": "termes", "allitas": "A melegedéstől több lesz a termés."},
-	{"id": "atom", "tema": "atomenergia", "allitas": "Az atomerőmű árama sok CO2-vel jár."},
-	{"id": "szel", "tema": "szelenergia", "allitas": "A szélerőmű árama sok CO2-vel jár."},
+	{"id": "termes", "tema": "termes", "allitas": "A felmelegedéstől több lesz a termés."},
+	{"id": "atom", "tema": "atomenergia", "allitas": "Az atomerőmű áramtermelése sok CO2 kibocsátással jár."},
+	{"id": "szel", "tema": "szelenergia", "allitas": "A szélerőmű árama sok CO2 kibocsátással jár."},
 	{"id": "savasodas", "tema": "ocean_savasodas", "allitas": "Az óceán savasodásának semmi köze a CO2-höz."},
 ]
 

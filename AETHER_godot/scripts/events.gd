@@ -254,7 +254,7 @@ static func panel(campaign, events: Array, on_research: Callable, on_ok: Callabl
 				if b.disabled:
 					b.tooltip_text = L.t("Erre most nincs elég pénzed.")
 				elif o["id"] == "felkeszul":
-					b.tooltip_text = L.t("Játékszabály: ez az eseményfajta ezután negyedével kisebb kárt okoz. Kétszer lehet.")
+					b.tooltip_text = L.t("Ez az eseményfajta ezután negyedével kisebb kárt okoz. Kétszer használhatod.")
 				var pick := func() -> void:
 					choose(campaign, ev, str(o["id"]))
 					redraw_all.call()
@@ -267,7 +267,7 @@ static func panel(campaign, events: Array, on_research: Callable, on_ok: Callabl
 			if not (id in campaign.done):
 				missing.append(id)
 		if not missing.is_empty() and float(ev["pajzs"]) < SHIELD_MAX:
-			c.add_child(UI.label(L.t("Legközelebb negyedével kisebb a kár, ha ezt kikutatod:"), 15, UI.GOLD, true))
+			c.add_child(UI.label(L.t("Legközelebb negyedével kisebb lesz a kár, ha ezt kikutatod:"), 15, UI.GOLD, true))
 			c.add_child(UI.label(_topic_names(missing, 1), 15, UI.SOFT))
 			if first_missing.is_empty():
 				first_missing.append(str(missing[0]))
