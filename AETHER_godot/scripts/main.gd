@@ -444,10 +444,18 @@ func _build_left_panel() -> void:
 	v.add_child(UI.heading(L.t("Mi történik most?"), 24))
 	_world_note = UI.label(L.t("Valós jelentések betöltése…"), 14, UI.MUTE)
 	v.add_child(_world_note)
+	# A két mért adat (CO2, tengeri jég) ide kerül a felső sávból: fent így kevesebb a szám.
+	var real := UI.hbox(22)
+	for k in ["co2", "jeg"]:
+		var box: Control = (_stats[k] as Label).get_parent()
+		box.get_parent().remove_child(box)
+		real.add_child(box)
+		(_stats[k] as Label).add_theme_font_size_override("font_size", 17)
+	v.add_child(real)
 	# A kártyák görgethető, rögzített magasságú dobozban vannak, így a frissítés
 	# gomb mindig a képernyőn marad (az alsó sáv fölött).
 	var scroll := ScrollContainer.new()
-	scroll.custom_minimum_size = Vector2(0, 470)
+	scroll.custom_minimum_size = Vector2(0, 418)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	v.add_child(scroll)
 	_events_box = UI.vbox(8)
@@ -1166,7 +1174,7 @@ func _celebrate(text: String) -> void:
 	await get_tree().process_frame
 	if not is_instance_valid(p):
 		return
-	p.position = Vector2((1600 - p.size.x) / 2.0, 360)
+	p.position = Vector2((1600 - p.size.x) / 2.0, 690)   # az ablak alatt: nem takarja az eredményt
 	p.pivot_offset = p.size * 0.5
 	p.scale = Vector2(0.6, 0.6)
 	var tw := create_tween()

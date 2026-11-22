@@ -152,6 +152,9 @@ def run_research(question: str, provider: Optional[Provider], n_papers: int = 12
     log(m("4/4 Determinisztikus ellenőrzés...", "4/4 Deterministic check..."))
     claims = ev.verify(claims, papers)
     agg = ev.aggregate(claims)
+    # az AI szabad szövegéből kimarad minden mondat, amelyben nem ellenőrzött szám áll
+    summary = ev.only_verified_numbers(summary, claims)
+    contradictions = ev.only_verified_numbers(contradictions, claims)
     ok = sum(c.statusz.startswith("ellenorizve") for c in claims)
     log(m(f"    {ok}/{len(claims)} állítás ment át az ellenőrzésen.", f"    {ok}/{len(claims)} claims passed the check."))
 

@@ -384,3 +384,42 @@ def hungarianize(text: str) -> str:
     for pat, hu in HU_ABBR:
         text = re.sub(pat, hu, text)
     return re.sub(r"(?<=\d)\.(?=\d)", ",", text)
+
+
+# ---------------------------------------------------------------------------
+# Az AI szabad szövegében (összegzés) csak ellenőrzött szám maradhat
+# ---------------------------------------------------------------------------
+_NUM_RE = re.compile(r"(?<![\w.,])[-+−–]?\d+(?:[.,]\d+)?")
+_SENT_RE = re.compile(r"(?<=[.!?])\s+")
+
+
+def only_verified_numbers(text: str, claims: List[Claim]) -> str:
+    """Kihagyja a szövegből azokat a mondatokat, amelyekben olyan szám áll, amit az ellenőrzés
+    nem igazolt. Az alapelv: a játék csak azt a számot mutatja, ami szó szerint benne van egy
+    cikkben. Évszám (1800–2100) maradhat. Ha semmi sem marad, üres szöveget ad."""
+    if not text:
+        return ""
+    allowed = set()
+    for c in claims:
+        if not str(getattr(c, "statusz", "")).startswith("ellenorizve"):
+            continue
+        for v in (c.ertek, c.also, c.felso):
+            if v is not None:
+                allowed.add(round(abs(float(v)), 6))
+    kept = []
+    for sent in _SENT_RE.split(text.strip()):
+        ok = True
+        for m in _NUM_RE.finditer(sent):
+            raw = m.group(0).lstrip("+-−–").replace(",", ".")
+            try:
+                v = float(raw)
+            except ValueError:
+                continue
+            if "." not in raw and 1800 <= v <= 2100:
+                continue          # évszám
+            if round(v, 6) not in allowed:
+                ok = False
+                break
+        if ok and sent.strip():
+            kept.append(sent.strip())
+    return " ".join(kept)

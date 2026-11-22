@@ -562,6 +562,7 @@ func _show_ai_choice() -> void:
 	if _saved_ai() != "" and _ai_status.get(_saved_ai(), {}).get("elerheto", false):
 		best = _saved_ai()   # amit legutóbb választott
 	var group := ButtonGroup.new()
+	var adv := UI.vbox(10)
 	var key_box := UI.vbox(6)
 	var key_label := UI.label("", 16, UI.SOFT)
 	var key := LineEdit.new()
@@ -598,8 +599,20 @@ func _show_ai_choice() -> void:
 			c.add_child(UI.label(str(st.get("ok", "")), 15, UI.MUTE))
 		if id == "ollama":
 			_add_hardware_info(c, st)
-		_body.add_child(UI.card_root(c))
+		# ami most nem használható (nincs kulcs, nem fut), az a „Saját AI beállítása” mögé kerül
+		if id != "none" and not st.get("elerheto", false) and id != best:
+			adv.add_child(UI.card_root(c))
+		else:
+			_body.add_child(UI.card_root(c))
 	_ai = best
+	if adv.get_child_count() > 0:
+		adv.visible = false
+		var adv_btn := UI.button(L.t("Saját AI beállítása"))
+		adv_btn.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		var adv_fn := func() -> void: adv.visible = not adv.visible
+		adv_btn.pressed.connect(adv_fn)
+		_body.add_child(adv_btn)
+		_body.add_child(adv)
 	# API-kulcs megadása: csak erre a futásra kerül a környezetbe, sehova nem mentjük
 	key_box.visible = false
 	key_box.add_child(key_label)

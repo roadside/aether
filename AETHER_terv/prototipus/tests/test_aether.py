@@ -243,3 +243,20 @@ def test_redact_hides_keys():
     from aether_lab.literature import redact
     s = redact("Nem sikerült lekérni: https://api.openalex.org/works?search=x&api_key=ABC123&mailto=a@b.hu (HTTP 429)")
     assert "ABC123" not in s and "a@b.hu" not in s and "search=x" in s and "api_key=REJTETT" in s
+
+
+def test_osszegzesbol_kimarad_a_nem_ellenorzott_szam():
+    from aether_lab import evidence as ev
+
+    class C:
+        def __init__(self, ertek, also=None, felso=None, statusz="ellenorizve"):
+            self.ertek, self.also, self.felso, self.statusz = ertek, also, felso, statusz
+
+    claims = [C(13.3), C(30.0, statusz="elutasitva")]
+    text = ("Az aszálytűrő kukorica 13,3%-kal többet terem. Más cikk 30%-ot ír. "
+            "Egy 2018-as áttekintés szerint az előny valós. A hatás 83.8 százalék is lehet!")
+    out = ev.only_verified_numbers(text, claims)
+    assert "13,3" in out and "2018" in out
+    assert "30%" not in out and "83.8" not in out
+    assert ev.only_verified_numbers("Csak 99 százalék.", claims) == ""
+    assert ev.only_verified_numbers("", claims) == ""
