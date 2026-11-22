@@ -148,6 +148,11 @@ func _process(delta: float) -> void:
 		g.heat = clampf((_temp(pair[1], yf) - now) / 2.0, 0.0, 1.0)
 		var grp := "alapeset" if g == _g_base else "terv"
 		g.sea_rise = Globe.sea_rise_of(_sea(grp, Y0), _sea(grp, yf))   # veszélyeztetett partok
+		# a terved hatása: a terv nélküli Földön marad a pára és a meleg városfény
+		if g == _g_plan and _has_plan:
+			g.set_plan_look(Globe.clean_of(campaign.model, int(yf)))
+		else:
+			g.set_plan_look({"smog": 1.0, "clean": 0.0, "regrow": 0.0})
 		g._mat.set_shader_parameter("atmosphere", Vector3(0.39, 0.95, 0.89).lerp(Vector3(1.0, 0.50, 0.28), g.heat))
 	_btn.modulate.a = _ss(T_VERDICT + 1.5, T_VERDICT + 2.5, _t)
 	_btn.disabled = _t < T_VERDICT + 1.5

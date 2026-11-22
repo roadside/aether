@@ -182,6 +182,21 @@ func _ready() -> void:
 	elif world.is_empty() or _world_age() > 3600:
 		_refresh_world()   # a régi (egy óránál régebbi) jelentések helyett frissek
 	# Kezdő animáció (~58 mp), minden indításkor. Esc: átugrás.
+	if "--gomb-kepek" in args:         # ellenőrzés: a terv hatása a gömbön (pára, városfény, zöldülés)
+		var gd := str(bridge.work_dir("aether_onteszt"))
+		for c in get_children():
+			if c is CanvasItem and c != globe and not (c in _bg_nodes):
+				c.visible = false
+		var looks := {"ma": {"smog": 1.0, "clean": 0.0, "regrow": 0.0}, "fele": {"smog": 0.5, "clean": 0.5, "regrow": 0.0},
+			"nulla": {"smog": 0.0, "clean": 1.0, "regrow": 0.0}, "kivonas": {"smog": 0.0, "clean": 1.0, "regrow": 1.0}}
+		for side in [0.0, 0.5]:
+			for k in looks:
+				globe.set_plan_look(looks[k])
+				globe.spin = 0.12 + side
+				await get_tree().create_timer(0.4).timeout
+				await _shot(gd, "gomb_%s_%d.png" % [k, int(side * 2.0)])
+		get_tree().quit()
+		return
 	if "--korszak-kepek" in args:      # ellenőrzés: a három korszakváltó jelenet képei, utána kilép
 		var kd := str(bridge.work_dir("aether_onteszt"))
 		for e in [2, 3, 4]:
@@ -1444,6 +1459,8 @@ func _on_year(v: float) -> void:
 	globe.heat = clampf((t - now) / 2.0, 0.0, 1.0)
 	# a veszélyeztetett alacsony partok a modell tengerszintje szerint (szemléltetés, lásd globe.gd)
 	globe.sea_rise = Globe.sea_rise_of(_sea_at(2026), _sea_at(y))
+	# a terved hatása (szemléltetés): tisztuló pára, fehérebb városfény, zöldülő táj
+	globe.set_plan_look(Globe.clean_of(model, y))
 
 
 ## A terved szerinti tengerszint (m) az adott évben, a modellből; ha nincs, NAN.
@@ -1862,6 +1879,7 @@ func _reset_game() -> void:
 	model = {}
 	_year_row.visible = false
 	globe.heat = 0.0
+	globe.set_plan_look({})
 	globe.home()
 	_ensure_model()
 	_show_info(L.t("Új játék, új Föld. Kutass, készíts tervet, aztán zárd le az évet!"), "")

@@ -40,6 +40,49 @@ static func sea_rise_of(meters_now: float, meters_then: float) -> float:
 	if is_nan(meters_now) or is_nan(meters_then):
 		return 0.0
 	return clampf((meters_then - meters_now) / SEA_FULL_M, 0.0, 1.0)
+
+
+## A terved hatása a gömbön (csak szemléltetés, a modell nettó CO2-sorából):
+## smog: pára a lakott vidékek fölött, a mai kibocsátáshoz mérten (1 = mai szint, 0 = nulla);
+## clean: a városfény a narancsos mai energiától a tiszta, hideg fényig (0 = ma, 1 = nulla kibocsátás);
+## regrow: nettó CO2-kivonásnál (negatív kibocsátás) a növényzet visszazöldül (0–1).
+var smog := 0.0
+var clean := 0.0
+var regrow := 0.0
+## A nettó kivonás léptéke: ha a világ a mai kibocsátás ennyiszeresét vonja ki évente, teljes a zöldülés.
+const REGROW_FULL := 0.25
+
+
+## {"smog", "clean", "regrow"} az adott évre a modell eredményéből (model["terv"]["kozep"]["netto_co2"]).
+## Ha nincs terv-sor (pl. terv nélküli alapeset), a mai állapot: pára van, a fény meleg.
+static func clean_of(model: Dictionary, year: int) -> Dictionary:
+	var out := {"smog": 1.0, "clean": 0.0, "regrow": 0.0}
+	var ys: Array = model.get("evek", [])
+	var t: Variant = model.get("terv", {})
+	if typeof(t) != TYPE_DICTIONARY or not t.has("kozep"):
+		return out
+	var co2: Array = Dictionary(t["kozep"]).get("netto_co2", [])
+	if co2.is_empty() or ys.is_empty():
+		return out
+	var base := float(co2[0])
+	if base <= 0.0:
+		return out
+	var v := base
+	for i in mini(ys.size(), co2.size()):
+		if int(ys[i]) <= year:
+			v = float(co2[i])
+	var ratio := v / base
+	out["smog"] = clampf(ratio, 0.0, 1.0)
+	out["clean"] = clampf(1.0 - ratio, 0.0, 1.0)
+	out["regrow"] = clampf(-ratio / REGROW_FULL, 0.0, 1.0)
+	return out
+
+
+## Egy lépésben beállítja a három értéket (clean_of eredményéből).
+func set_plan_look(d: Dictionary) -> void:
+	smog = float(d.get("smog", 0.0))
+	clean = float(d.get("clean", 0.0))
+	regrow = float(d.get("regrow", 0.0))
 var heat := 0.0                      # 0 = ma; 1 = kb. +2 °C a mához képest (csak szemléltetés)
 var highlight: Dictionary = {}       # a listában éppen rámutatott esemény: gyűrű jelöli
 var anomaly_mix := 0.0               # 0..1: a mai hőmérséklet-eltérés térkép áttűnése
@@ -162,6 +205,9 @@ func _process(delta: float) -> void:
 	_mat.set_shader_parameter("cloud_drift", cloud_drift)
 	_mat.set_shader_parameter("heat", heat)
 	_mat.set_shader_parameter("sea_rise", sea_rise)
+	_mat.set_shader_parameter("smog", smog)
+	_mat.set_shader_parameter("clean", clean)
+	_mat.set_shader_parameter("regrow", regrow)
 	_mat.set_shader_parameter("anomaly_mix", anomaly_mix)
 	queue_redraw()
 
