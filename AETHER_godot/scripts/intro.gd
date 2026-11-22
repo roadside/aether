@@ -386,7 +386,7 @@ func _show_logo() -> void:
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.size = Vector2(440, 52)
 	_logo.add_child(title)
-	var by := UI.label("by Zoltán Németh", 17, UI.SOFT, false, false)
+	var by := UI.label("by Zoltán Németh", 18, UI.TEXT, false, false)
 	by.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	by.position = Vector2(0, 54)
 	by.size = Vector2(440, 26)
