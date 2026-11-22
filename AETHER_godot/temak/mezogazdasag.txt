@@ -15,19 +15,19 @@ Korszak: I. (Felismerés)
 Kérdés: Mennyit csökken a termés, ha melegszik a Föld?
 Röviden: A búza, a kukorica és a rizs érzékeny a hőségre. Mennyit veszít egy fok melegedéstől?
 Ha kikutatod: Megérted, miért kell alkalmazkodni is.
-Mire jó?: Tudni kell, mert a termés csökkenése veszélyeztetheti az élelmezés biztonságát, és segíthet a megfelelő gazdálkodási módszerek kialakításában.
-Mi a gond vele?: A termés csökkenése nem biztos, hogy minden területen jelentkezik, és a jövőbeni előrejelzések nem mindig pontosak.
-Mennyire bizonyított?: A tudományos bizonyítékok alapján valamennyire bizonyított, hogy a melegedés csökkentheti a termést, de a pontos mérték nem egyértelmű.
+Mire jó?: Fontos tudni, mert ha a termés kevesebb lesz, több embert érinthet a szomjúság, és kénytelenek lesznek más módon élelni.
+Mi a gond vele?: A melegedés nem csak a termésre, hanem a növények minőségére is hat, és a termeléshez szükséges víz és talaj is veszélyeztetett lehet.
+Mennyire bizonyított?: A tudomány már sok éve tanulmányozza ezt a témát, és számos tanulmány igazolja, hogy a melegedés csökkenti a termést.
 Kérdés angolul: How much do harvests fall as the Earth warms?
 Röviden angolul: Wheat, maize and rice are sensitive to heat. How much do they lose per degree of warming?
 Ha kikutatod angolul: You understand why we must adapt too.
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
+Forrás: Wikipédia: Effects of climate change on agriculture (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Effects_of_climate_change_on_agriculture
 Forrás: Effect of Climate Change on the Yield of Cereal Crops: A Review (2018) – https://doi.org/10.3390/cli6020041
 Forrás: Climate change impacts on crop yield, crop water productivity and food security – A review (2009) – https://doi.org/10.1016/j.pnsc.2009.08.001
 Forrás: A method review of the climate change impact on crop yield (2023) – https://doi.org/10.3389/ffgc.2023.1198186
-Forrás: Impacts of Climate Change on Crop Yield in Ethiopia, Review (2023) – https://doi.org/10.20944/preprints202306.1653.v1
 Lektorálva: nem
 --- technikai ---
 Keresés: crop yield change per degree of warming meta-analysis|temperature increase reduces global yields of major crops|maize wheat rice yield sensitivity to temperature
@@ -41,9 +41,9 @@ Korszak: I. (Felismerés)
 Kérdés: Segítenek-e az aszálytűrő kukoricafajták?
 Röviden: Ez nem hűti a Földet, de megvédheti a termést a forró, száraz években.
 Ha kikutatod: Aszálytűrő fajták a tervedben.
-Mire jó?: Az aszálytűrő kukoricafajták segíthetnek növelni a természetes aszályok idején a termés mennyiségét, így biztosíthatják a termelők jövedelmét.
-Mi a gond vele?: A források nem szólnak a korlátairól, de az aszálytűrő fajták nem biztosítanak teljes védekezést minden aszályi körülmény ellen.
-Mennyire bizonyított?: A tudományos vizsgálatok alapján a fajták hatékonysága bizonyított, de további kutatások szükségesek a teljes hatások megértéséhez.
+Mire jó?: Ezek a fajták segítenek a gazdálkodóknak, mert növelik a termésüket, különösen a száraz évszakokban.
+Mi a gond vele?: A fajták hatékonysága függ a talajtól és a gazdálkodási módszertől, és nem minden területen hatékonyak.
+Mennyire bizonyított?: A tudományos kutatások bizonyítják, hogy ezek a fajták növelik a termést, de további kutatások szükségesek a teljes hatás megértéséhez.
 Kérdés angolul: Do drought-tolerant maize varieties help?
 Röviden angolul: This does not cool the Earth, but it can protect harvests in hot, dry years.
 Ha kikutatod angolul: Drought-tolerant varieties in your plan.
@@ -53,7 +53,6 @@ Mennyire bizonyított? angolul:
 Forrás: Review on the Development of Drought Tolerant Maize Genotypes in Iraq (2021) – https://doi.org/10.1088/1755-1315/904/1/012010
 Forrás: Two decades of creating drought tolerant maize and underpinning prediction technologies in the US corn-belt: Review and perspectives on the future of crop design (2020) – https://doi.org/10.1101/2020.10.29.361337
 Forrás: Adoption Rates and Yield Improvements of Drought-Tolerant Maize Varieties among Smallholder Farmers in Eastern Uganda: A Systematic Literature Review (2005) – https://doi.org/10.5281/zenodo.18817261
-Forrás: Effects of Climate Change and Drought Tolerance on Maize Growth (2023) – https://doi.org/10.3390/plants12203548
 Lektorálva: nem
 --- technikai ---
 Keresés: drought tolerant maize yield advantage under drought|drought tolerant maize varieties yield on-farm trials
@@ -69,19 +68,19 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyi metán spórolható meg a rizsföldeken?
 Röviden: Az elárasztott rizsföld metánt enged a levegőbe. Ha időnként lecsapolják, kevesebbet.
 Ha kikutatod: Megérted, hol lehet gyorsan metánt spórolni.
-Mire jó?: A metán kibocsátás csökkentése segíthet a klímaváltozás lassításában, miközben továbbra is termelhető rizs.
-Mi a gond vele?: A metán kibocsátás csökkentése a rizsföldeken nem mindig biztosítja a termés minőségét, és bizonyos megoldások nem hatékonyak minden környezetben.
-Mennyire bizonyított?: A metán kibocsátás csökkentése a rizsföldeken részben bizonyított, de további kutatások szükségesek a hatékony megoldások kialakításához.
+Mire jó?: Ez a módszer csökkenti a metán-kibocsátást, ami a klímaváltozás ellenére is megmaradó rizs-termesztést tesz lehetővé, miközben csökkenti a vízfogyasztást és a termelés költségeit.
+Mi a gond vele?: A metán-kibocsátás csökkentése során a növények növekedése és a termés minősége kockázatba kerülhet, ha a szárazság időtartama túl hosszú.
+Mennyire bizonyított?: A tudományos tanulmányok bizonyítják, hogy a metán-kibocsátás csökkenthető ezzel a módszerrel, de a hatások függhetnek a talajtól, a növényfajtától és a helyi körülményektől.
 Kérdés angolul: How much methane can rice fields save?
 Röviden angolul: Flooded rice fields release methane. Draining them from time to time releases less.
 Ha kikutatod angolul: You understand where methane can be cut quickly.
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
+Forrás: Wikipédia: Alternate wetting and drying (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Alternate_wetting_and_drying
 Forrás: Methane Emissions from Paddy Rice Fields: Strategies towards Achieving A Win-Win Sustainability Scenario between Rice Production and Methane Emission Reduction (2011) – https://doi.org/10.5539/jsd.v4n6p188
 Forrás: Methane Emission from Paddy Fields and its Mitigation Options on a Field Scale (2006) – https://doi.org/10.1264/jsme2.21.135
 Forrás: Characteristics of Methane Emissions and Practical Mitigation Strategies in Rice Paddy Fields (2025) – https://doi.org/10.4491/ksee.2025.47.6.387
-Forrás: Rice plant-mediated methane emissions in paddy fields: a review (2026) – https://doi.org/10.1360/ssv-2025-0253
 Lektorálva: nem
 --- technikai ---
 Keresés: alternate wetting and drying rice methane emission reduction meta-analysis|rice paddy methane mitigation practices
@@ -95,19 +94,19 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyi kéjgáz spórolható a műtrágya okosabb használatával?
 Röviden: A túl sok nitrogénműtrágyából a talajban dinitrogén-oxid lesz, ami erős üvegházgáz.
 Ha kikutatod:
-Mire jó?: A kéjgáz kevesebb mennyiségben jelenik meg a levegőben, mint a szén-dioxid, de hatására a klímaváltozás gyorsabban halad. A műtrágya okosabb használata csökkentheti ezt a kibocsátást.
-Mi a gond vele?: A kéjgáz kibocsátása nem egyenletes, így nehéz pontosan mérni és a nagyobb területekre kiterjeszteni a csökkentési módokat. A műtrágya használatának optimalizálása is kockázatokat hordozhat, például a növények termelésének csökkenését.
-Mennyire bizonyított?: A tudományos vizsgálatok alapján a műtrágya okosabb használata hatékonyan csökkentheti a kéjgáz kibocsátását, de a pontos hatások függenek a talajtípusától, a növényfajtától és a környezeti viszonyoktól.
+Mire jó?: A műtrágyázás segíthet a talaj megjavulásában, növelheti a természetes erdők és rétek megőrzését, és csökkentheti az üvegházhatást a növényzet oxigén termelésének köszönhetően.
+Mi a gond vele?: A műtrágyázás káros hatásokat is okozhat, ha túl sok műtrágyát adunk, vagy nem megfelelően alkalmazzuk, például ha egy tápanyag hiányzik a talajban, vagy a műtrágya káros anyagokat tartalmaz.
+Mennyire bizonyított?: A műtrágyázás hatása és kockázata bizonyított, de a hatékony és környezetbarát alkalmazása függ a megfelelő technikáktól és a talaj állapotától.
 Kérdés angolul: How much laughing gas can smarter fertiliser use save?
 Röviden angolul: Too much nitrogen fertiliser turns into nitrous oxide in soil, a strong greenhouse gas.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
+Forrás: Wikipédia: Műtrágyázás (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/M%C5%B1tr%C3%A1gy%C3%A1z%C3%A1s
 Forrás: Nitrous oxide emission from Australian agricultural lands and mitigation options: a review (2003) – https://doi.org/10.1071/sr02064
 Forrás: Methane and nitrous oxide emissions from agricultural fields in Japan and mitigation options: a review (2024) – https://doi.org/10.1080/00380768.2023.2298782
 Forrás: Agronomical interventions to mitigate nitrous oxide (N2O) emission in agriculture - A comprehensive review (2025) – https://doi.org/10.14719/pst.8265
-Forrás: Nitrous oxide mitigation in UK agriculture (2013) – https://doi.org/10.1080/00380768.2012.733869
 Lektorálva: nem
 --- technikai ---
 Keresés: nitrogen fertilizer nitrous oxide emissions reduction|nitrification inhibitors N2O mitigation meta-analysis|nitrogen use efficiency nitrous oxide
@@ -121,19 +120,19 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyi metán spórolható a trágya kezelésével?
 Röviden: A trágyatárolókból metán és kéjgáz száll fel. Lefedve vagy erjesztve kevesebb.
 Ha kikutatod:
-Mire jó?: A trágya kezelése segíthet csökkenteni a metánt és a nitrogén-dioxidot, amelyek a klímaváltozás fő okai közé tartoznak.
-Mi a gond vele?: A trágya kezelésének hatása függ az állatok típusától, a trágya összetételétől és a környezeti feltételektől, ezért nem minden esetben hatékony.
-Mennyire bizonyított?: A trágya kezelésének klímaváltozás csökkentő hatása részben bizonyított, de további kutatások szükségesek a pontos határoztatásához.
+Mire jó?: A trágya kezelése segíthet a metán és nitrogén-oxid kibocsátás csökkentésében, így csökkentheti a klímaváltozás hatásait.
+Mi a gond vele?: A trágya kezelése nem mindig hatékony, mert a kibocsátás csökkentése függ a talajtípusától, a klímától és a kezelési módszertől.
+Mennyire bizonyított?: A trágya kezelésének hatása kísérleti és modellezési adatok alapján bizonyított, de teljesen pontosan nem ismert minden esetben.
 Kérdés angolul: How much methane can manure management save?
 Röviden angolul: Manure stores release methane and laughing gas. Covered or digested, they release less.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
+Forrás: Wikipédia: Trágya (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Tr%C3%A1gya
 Forrás: Manure management for greenhouse gas mitigation (2013) – https://doi.org/10.1017/s1751731113000736
 Forrás: Manure Management as a Potential Mitigation Tool to Eliminate Greenhouse Gas Emissions in Livestock Systems (2025) – https://doi.org/10.3390/su17020586
 Forrás: Mitigating Greenhouse Gas Emissions from Crop Production and Management Practices, and Livestock: A Review (2023) – https://doi.org/10.3390/su152215889
-Forrás: Mitigation of greenhouse gas emissions in livestock production - A review of technical options for non-CO2 emissions (2013) – http://www.fao.org/docrep/018/i3288e/i3288e.pdf
 Lektorálva: nem
 --- technikai ---
 Keresés: manure management methane emissions mitigation|anaerobic digestion manure methane reduction|slurry storage methane mitigation
@@ -147,19 +146,19 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyi kibocsátás jön a kidobott ételből?
 Röviden: Az élelmiszer egy része a földtől az asztalig elvész, vagy a szemétbe kerül.
 Ha kikutatod:
-Mire jó?: A kidobott étel jelentős mennyiségű klímaváltozásra gyakorolt hatást okoz, ezért csökkentése segíthet a környezetvédelem és a klímavédelem szempontjából.
-Mi a gond vele?: A kidobott étel kibocsátása nemcsak a klímaváltozást okozza, de a természetes erőforrásokat is kimeríti, és a hulladékkezelésben is kockázatokat hordoz.
-Mennyire bizonyított?: A kidobott étel kibocsátásáról a tudományos kutatások egyértelműen szólnak, de a pontos mennyiségek és hatások továbbra is vizsgálásra szorulnak.
+Mire jó?: A kidobott étel nagy mennyiségű környezeti károsodást okoz, például klímaváltozást és természetvédelmi kárt, ezért csökkentése fontos a környezet védelméhez.
+Mi a gond vele?: A kidobott étel jelentős mennyiségű szén-dioxid-karbon-dioxid egyenlő (CO₂-e) kibocsátást okoz, ami a klímaváltozás egyik fő oka, és a természetes erőforrásokat is veszélyezteti.
+Mennyire bizonyított?: A tudományos bizonyítékok alapján a kidobott étel körülbelül 8 százaléka a globális klímaváltozás egyik fő okozója, és ez egyértelműen bizonyított.
 Kérdés angolul: How much emission comes from wasted food?
 Röviden angolul: Part of our food is lost between field and table, or thrown away.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
+Forrás: Wikipédia: Food loss and waste (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Food_loss_and_waste
 Forrás: Food waste reduction efforts in reducing greenhouse gas emissions and the impact of climate change: A review (2025) – https://doi.org/10.1016/j.scca.2025.100152
 Forrás: Food waste matters - A systematic review of household food waste practices and their policy implications (2018) – https://doi.org/10.1016/j.jclepro.2018.02.030
 Forrás: Microplastics in composts, digestates, and food wastes: A review (2023) – https://doi.org/10.1002/jeq2.20450
-Forrás: Assessing food procurement greenhouse gas emissions and food waste in UK fine dining (2026) – https://doi.org/10.1016/j.clfs.2025.100010
 Lektorálva: nem
 --- technikai ---
 Keresés: food loss and waste greenhouse gas emissions|food waste reduction emissions mitigation potential
@@ -173,9 +172,9 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyit számít, ha kevesebb húst eszünk?
 Röviden: A hús, főleg a marhahús előállítása sok földet és sok kibocsátást igényel.
 Ha kikutatod:
-Mire jó?: Kevesebb húsfogyasztás csökkentheti a klímaváltozás okozta kibocsátásokat, mivel a hús előállítása nagyobb környezeti terhelést jelent.
-Mi a gond vele?: A klímaváltozás csökkentéséhez a húsfogyasztás csökkentése nem elég, mert más élelmiszerek is környezeti terhelést okoznak. A megfelelő étrendek kialakítása bonyolult, mert minden ország különböző körülmények között van.
-Mennyire bizonyított?: A tudományos bizonyítékok alapján kevesebb húsfogyasztás clímaváltozás csökkentésére hatékony, de a legjobb megoldások az országonkénti körülményekhez igazított étrendek kialakítása.
+Mire jó?: Ha kevesebb húst eszünk, kevesebb környezeti károsodás keletkezik, mert a hús termelése sok szén-dioxidot és víztartalékot fogyaszt. Ezzel segíthetünk a klímaváltozás ellen és a vízhiány megelőzésében.
+Mi a gond vele?: A húskevésbé fogyasztás nem mindig oldja meg minden problémát, mert a hús nélkül is lehet környezeti károsodás, például a növényi termesztés során. Ezenkívül a húskevésbé fogyasztás nem mindenképpen egészséges, különösen ha a növényi termékek nem megfelelően kiegyensúlyozottak.
+Mennyire bizonyított?: A tudományos bizonyítékok azt mutatják, hogy a húskevésbé fogyasztás segíthet a klímaváltozás ellen, de ez nem teljesen bizonyított minden környezeti hatásra. A kutatások szerint a húskevésbé fogyasztás a legtöbb esetben bizonyított, de bizonyos környezeti hatásokra nem teljesen kielégítő a bizonyíték.
 Kérdés angolul: How much does eating less meat matter?
 Röviden angolul: Producing meat, especially beef, takes a lot of land and causes a lot of emissions.
 Ha kikutatod angolul:
@@ -185,7 +184,6 @@ Mennyire bizonyított? angolul:
 Forrás: Climate Change Mitigation Potential in Dietary Guidelines: A Global Review (2023) – https://doi.org/10.1016/j.spc.2023.07.015
 Forrás: Climate change mitigation through dietary change: a systematic review of empirical and modelling studies on the environmental footprints and health effects of ‘sustainable diets’ (2020) – https://doi.org/10.1088/1748-9326/abc2f7
 Forrás: Country-specific dietary shifts to mitigate climate and water crises (2019) – https://doi.org/10.1016/j.gloenvcha.2019.05.010
-Forrás: Reducing our foodprint: Encouraging dietary change for climate change mitigation in Canada (2019) – https://openalex.org/W3003145742
 Lektorálva: nem
 --- technikai ---
 Keresés: dietary change greenhouse gas emissions reduction plant-based|shift to plant-based diets mitigation potential|diet greenhouse gas emissions meta-analysis
@@ -199,19 +197,19 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyi vizet takarít meg a csepegtető öntözés?
 Röviden: A csepegtető cső a vizet egyenesen a növény gyökeréhez juttatja.
 Ha kikutatod: Megérted, hogyan védhető a víz aszályban.
-Mire jó?: A csepegtető öntözés megtakarítja a vizet, növeli a termés minőségét és mennyiségét, különösen száraz vidéken.
-Mi a gond vele?: A csepegtető öntözés nem hatékony, ha a talaj nem megfelelő, és a szűrők nem működnek jól, ami a rendszer blokkolásához vezethet.
-Mennyire bizonyított?: A csepegtető öntözés hatékonysága bizonyított, de a teljes hatás függ a talajtól és a szűrők minőségétől.
+Mire jó?: A csepegtető öntözés megtakarítja a vizet, mivel a víz kizárólag a növények gyökereihez jut, így kevesebb párolgás történik, és a növények hatékonyabban használják a vizet.
+Mi a gond vele?: A csepegtető öntözés nem mindig hatékony, ha nem megfelelően van kialakítva, mert a vízcsatornák könnyen elzáródhatnak, és a rendszer karbantartása időigényes.
+Mennyire bizonyított?: A tudományos tanulmányok igazolják, hogy a csepegtető öntözés hatékony víztakarítást biztosít, különösen a növénytermesztésben.
 Kérdés angolul: How much water does drip irrigation save?
 Röviden angolul: A drip line delivers water straight to the plant's roots.
 Ha kikutatod angolul: You understand how to protect water in a drought.
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
+Forrás: Wikipédia: Drip irrigation (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Drip_irrigation
 Forrás: Contemporary Perspective of Drip Irrigation: A Review of Water Saving Crop Production (2017) – https://doi.org/10.9734/arja/2017/31865
 Forrás: Review of Filter and Its Performance Testing in Agricultural Efficient Water-saving Drip Irrigation System (2020) – https://doi.org/10.1088/1755-1315/474/7/072032
 Forrás: Water-Saving Potential of Subsurface Drip Irrigation For Winter Wheat (2019) – https://doi.org/10.3390/su11102978
-Forrás: Drip Irrigation as a Potential Alternative to Traditional Irrigation Method for Saline Water Usage in Vegetable Crops- A Review (2022) – https://doi.org/10.23910/2/2022.0440c
 Lektorálva: nem
 --- technikai ---
 Keresés: drip irrigation water saving compared to flood irrigation meta-analysis|drip irrigation water use efficiency yield
@@ -227,19 +225,19 @@ Korszak: IV. (Helyreállítás)
 Kérdés: Mennyi szenet köthet meg újra a talaj?
 Röviden: Takarónövényekkel és kíméletes műveléssel a talaj több szenet tarthat meg.
 Ha kikutatod: Több szén a talajban a tervedben.
-Mire jó?: A talaj képes csökkenteni a légkörben lévő széngázhányadot, így segíthet a klímaváltozás lassításában.
-Mi a gond vele?: A talaj nem minden esetben tud megkötni elegendő szént, és a hatások hosszú idő alatt láthatók.
-Mennyire bizonyított?: A tudományos kutatások alapján a talaj képes szént tárolni, de a hatékonysága függ a talajtípus és a környezeti feltételektől.
+Mire jó?: A talaj szén segíthet a klímaváltozás csökkentésében, mivel a talaj képes CO2-t tárolni, így kevesebb szén kerül a levegőbe. A talaj szén fontos a növények növekedéséhez és a talaj szerkezetéhez.
+Mi a gond vele?: A talaj szén tárolása nem egyenletes a világon, néhány területen kevés adat van. A globális felmelegedés és a mezőgazdasági tevékenységek csökkenthetik a talaj szén tartalmát.
+Mennyire bizonyított?: A talaj szén tárolása jól ismert, de a pontos mennyiség és a változások nem minden területen egyértelműek. A tudományos kutatások alátámasztják a talaj szén fontosságát a klímaváltozás megelőzésében.
 Kérdés angolul: How much carbon can soil store again?
 Röviden angolul: With cover crops and gentle tillage, soil can hold more carbon.
 Ha kikutatod angolul: More carbon in soil in your plan.
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
+Forrás: Wikipédia: Soil carbon (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Soil_carbon
 Forrás: Soil Carbon Sequestration in the Context of Climate Change Mitigation: A Review (2023) – https://doi.org/10.3390/soilsystems7030064
 Forrás: Carbon sequestration in soils-A Review (2015) – https://doi.org/10.5958/0976-0741.2015.00011.2
 Forrás: Carbon sequestration and soil responses to soil amendments – A review (2025) – https://doi.org/10.1016/j.hazadv.2025.100714
-Forrás: Soil carbon sequestration in sub-Saharan Africa: a review (2005) – https://doi.org/10.1002/ldr.644
 Lektorálva: nem
 --- technikai ---
 Keresés: soil carbon sequestration global potential croplands|soil organic carbon sequestration practices meta-analysis|negative emissions technologies potentials costs side effects
@@ -253,19 +251,19 @@ Korszak: IV. (Helyreállítás)
 Kérdés: Mennyi szenet köt meg a fákkal tarkított szántó és legelő?
 Röviden: Fák a szántók és legelők között: árnyék, szén és termés egyszerre.
 Ha kikutatod:
-Mire jó?: A fák segítenek a klímaváltozás ellen, mert elnyelnek és tárolják a széntartalmat, ami csökkenti a légkörben lévő szén-dioxid mennyiségét. Ez segíthet a talaj és a növényzet állagának javításában is.
-Mi a gond vele?: A kutatások szerint a talajban tárolt szén mennyisége még nem teljesen ismert, és a szén-kibocsátás kockázata is van bizonyos fákkal tarkított területeken.
-Mennyire bizonyított?: A tudományos ismeretek alapján a fákkal tarkított szántó és legelők szén-tároló képessége bizonyított, de a pontos mennyiség és a hatások mértéke további kutatásra szorul.
+Mire jó?: Ezek a rendszerek segítenek a klímaváltozás ellen, mert a fák elnyelnek karbon-dioxidot, és megvédik a talajt.
+Mi a gond vele?: A fák növekedése hosszabb időt vesz igénybe, és nem mindig tudják elnyelni az összes karbon-dioxidot.
+Mennyire bizonyított?: A tudomány már bizonyította, hogy ezek a rendszerek segítenek a klímaváltozás ellen, de további kutatásokra van szükség.
 Kérdés angolul: How much carbon do fields and pastures with trees store?
 Röviden angolul: Trees among fields and pastures: shade, carbon and harvest at once.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
+Forrás: Wikipédia: Agroforestry (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Agroforestry
 Forrás: Agroforestry's contribution to livelihoods and carbon sequestration in East Africa: A systematic review (2023) – https://doi.org/10.1016/j.tfp.2023.100432
 Forrás: CARBON STOCKS AND STOCK CHANGES IN AGROFORESTRY PRACTICES: A REVIEW (2017) – https://doi.org/10.56369/tsaes.2291
 Forrás: Carbon Sequestration Potential through Agroforestry: A Review (2017) – https://doi.org/10.20546/ijcmas.2017.608.029
-Forrás: The role of agroforestry in carbon sequestration and climate adaptation: A review (2025) – https://doi.org/10.33545/2618060x.2025.v8.i2e.2592
 Lektorálva: nem
 --- technikai ---
 Keresés: agroforestry carbon sequestration rate Mg C ha-1 yr-1|silvopasture carbon accumulation per hectare|agroforestry soil and biomass carbon meta-analysis

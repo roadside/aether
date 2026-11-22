@@ -15,19 +15,19 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyi metánszivárgás szüntethető meg a gáziparban?
 Röviden: A földgáz főleg metán. A szivárgó kutakból és csövekből sok jut a levegőbe.
 Ha kikutatod: Megérted, hol lehet gyorsan metánt spórolni.
-Mire jó?: A metán szivárgás csökkentése segíthet a klímaváltozás lassításában, mivel a metán nagyon erősen melegíti a levegőt. A hatékony csökkentés segíthet a gáziparban is megtakarítani pénzt.
-Mi a gond vele?: A szivárgás csökkentése nehéz, mert a metán szivárgása sokféle helyen és időben jelentkezhet, és a technológiák még nem mindig hatékonyak vagy pontosak.
-Mennyire bizonyított?: A metán szivárgás csökkentése már bizonyított, de a legjobb módszerek és technológiák még nem teljesen tisztázottak, így további kutatások szükségesek.
+Mire jó?: A metán csökkentése segíthet a klímaváltozás lassításában, és gazdasági előnyök is lehetnek a gáziparban.
+Mi a gond vele?: A metán szivárgásának csökkentése nehéz, mert sok különböző forrásból származik, és bizonyos esetekben drága a megoldás.
+Mennyire bizonyított?: A metán szivárgásának csökkentése nagyon bizonyított, de a pontos mennyiség és a hatékonyság további kutatásra szorul.
 Kérdés angolul: How much methane leakage can the gas industry stop?
 Röviden angolul: Natural gas is mostly methane. Leaking wells and pipes release a lot of it into the air.
 Ha kikutatod angolul: You understand where methane can be cut quickly.
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
+Forrás: Wikipédia: Methane emissions (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Methane_emissions
 Forrás: A review of close-range and screening technologies for mitigating fugitive methane emissions in upstream oil and gas (2019) – https://doi.org/10.1088/1748-9326/ab0cc3
 Forrás: Methane emissions from the oil and gas supply chain: Characteristics and mitigation (2025) – https://doi.org/10.1016/j.ynexs.2025.100087
 Forrás: Global assessment of oil and gas methane ultra-emitters (2022) – https://doi.org/10.1126/science.abj4351
-Forrás: Invited review: Current enteric methane mitigation options (2022) – https://doi.org/10.3168/jds.2022-22091
 Lektorálva: nem
 --- technikai ---
 Keresés: oil and gas methane emissions abatement potential|methane leak detection and repair emission reduction|fossil fuel methane mitigation potential
@@ -41,9 +41,9 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyi metán fogható fel a szénbányákban?
 Röviden: A szénrétegekből metán szabadul fel a bányákban, a bezárt bányákból is.
 Ha kikutatod:
-Mire jó?: A metán hasznosítása csökkenti a klímaváltozás veszélyét, és biztonságosabbá teszi a bányákat.
-Mi a gond vele?: A metán kibocsátása a bányákban bizonytalan, mert a mérés nehéz, és a környezeti tényezők befolyásolják a mérési eredményeket.
-Mennyire bizonyított?: A metán kibocsátásának mérése technológiai fejlődés alatt áll, így a tudományos bizonyosság még nem teljes.
+Mire jó?: A metán fogásával csökkenthetők a klímaváltozás kockázatai, és energiát is lehet belőle előállítani.
+Mi a gond vele?: A metán fogásához speciális technológiákat és berendezéseket kell használni, amelyek drágák és nem mindenhonnan elérhetők.
+Mennyire bizonyított?: A metán fogásának lehetőségei és előnyei már bizonyítottak, de a hatékony és gazdaságos kivitelezése még fejlődő folyamat.
 Kérdés angolul: How much methane can coal mines capture?
 Röviden angolul: Coal seams release methane in mines, even in closed ones.
 Ha kikutatod angolul:
@@ -53,7 +53,6 @@ Mennyire bizonyított? angolul:
 Forrás: Satellite-Derived Approaches for Coal Mine Methane Estimation: A Review (2025) – https://doi.org/10.3390/rs17213652
 Forrás: Management of methane emission in coal mines using artificial neural networks: A systematic review (2024) – https://doi.org/10.30574/ijsra.2024.11.2.0579
 Forrás: REVIEW OF METHANE RECOVERY METHODS FROM HARD COAL MINES (2025) – https://doi.org/10.5604/01.3001.0055.5444
-Forrás: A Review of Advancements in Metal Oxide Semiconductor Gas Sensors for Methane and Carbon Monoxide Towards Coal Mine Safety (2026) – https://doi.org/10.3390/ma19173808
 Lektorálva: nem
 --- technikai ---
 Keresés: coal mine methane emissions mitigation|coal mine methane capture utilization|abandoned coal mine methane emissions
@@ -67,19 +66,19 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyi CO2-t spórol a napelem?
 Röviden: A szilícium napelem a napfényt közvetlenül árammá alakítja. Gyártása is jár kibocsátással.
 Ha kikutatod:
-Mire jó?: A napelemek segítenek a klímaváltozás ellen, mert kevesebb CO2-t szabadítanak fel, mint a hagyományos energiaforrások, így csökkentik a levegő környezeti terhelését.
-Mi a gond vele?: A napelemek gyártása és üzemeltetése még mindig kibocsátást okoz, különösen a szilícium feldolgozása során, és a teljes élettartamuk során is van környezeti hatása.
-Mennyire bizonyított?: A tudományos tanulmányok alapján bizonyított, hogy a napelemek kevesebb CO2-t bocsátanak ki, mint a hagyományos energiaforrások, de a pontos mennyiség függ a gyártási módtól és a helyi körülményektől.
+Mire jó?: A napelem segít megújuló energiát használni, így kevesebb CO2-t szabadít ki a légkörbe.
+Mi a gond vele?: A napelemek telepítési költsége magas, a teljesítményük függ a napsütéstől és az időjárástól, valamint az áramok tárolása nehéz.
+Mennyire bizonyított?: A tudományos tanulmányok azt mutatják, hogy a napelemek kibocsátásukkal kevesebb CO2-t szabadítanak ki, de a pontos mennyisége függ a gyártási folyamattól és a használati helytől.
 Kérdés angolul: How much CO2 do solar panels save?
 Röviden angolul: A silicon solar panel turns sunlight straight into electricity. Making it also causes emissions.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
+Forrás: Wikipédia: Napelem (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Napelem
 Forrás: Review on Life Cycle Assessment of Solar Photovoltaic Panels (2020) – https://doi.org/10.3390/en13010252
 Forrás: A Review of the Energy Performance and Life-Cycle Assessment of Building-Integrated Photovoltaic (BIPV) Systems (2018) – https://doi.org/10.3390/en11113157
 Forrás: Life-cycle Assessment Applied to Photovoltaic Energy: A Review (2016) – https://doi.org/10.9790/1676-1105010613
-Forrás: Life Cycle Assessment pada Solar Photovoltaics: Review (2022) – https://doi.org/10.23917/saintek.v1i1.560
 Lektorálva: nem
 --- technikai ---
 Keresés: photovoltaic life cycle greenhouse gas emissions|solar PV carbon payback time|crystalline silicon photovoltaic life cycle assessment
@@ -93,19 +92,19 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyi CO2-vel jár a szélerőművi áram?
 Röviden: A szélturbinák a szél mozgási energiáját alakítják árammá.
 Ha kikutatod:
-Mire jó?: A szélenergia kibocsátást nem okoz, így környezetvédelmi előnyt jelent, és segíthet a klímaváltozás elleni küzdelemben.
-Mi a gond vele?: A szélenergia termelése nem mindig biztos, mert a szél erősségétől függ, és a berendezések költségei magasak lehetnek.
-Mennyire bizonyított?: A szélenergia potenciálja és előnyei jól bizonyítottak, de a teljes kibocsátási csökkentéshez további kutatások és fejlesztések szükségesek.
+Mire jó?: A szélerőművi áram környezetkímélő, mert nem bocsájt ki szén-dioxidot, így segít csökkenteni a klímaváltozást.
+Mi a gond vele?: A szélturbinák építése és működtetése környezeti károsodásokat okozhat, például a környezet zavarását vagy a vadon élő állatok mozgásterét.
+Mennyire bizonyított?: A szélerőművi áram kibocsátása nélkül is bizonyított, de a teljes élettartamot figyelembe vevő tanulmányok szerint a környezeti hatások is vannak.
 Kérdés angolul: How much CO2 comes with wind electricity?
 Röviden angolul: Wind turbines turn the energy of moving air into electricity.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
-Forrás: A Review of Onshore and Offshore Wind Energy Potential in Nigeria (2018) – https://doi.org/10.1088/1757-899x/413/1/012039
-Forrás: Review on feasibility of wind energy potential for India (2014) – https://doi.org/10.1109/iconce.2014.6808707
-Forrás: A Review of Wind Energy and its Potential in Nigeria (2024) – https://doi.org/10.1109/seb4sdg60871.2024.10630419
-Forrás: A WIND ENERGY POTENTIAL, PROGRESS AND CHALLENGES IN BANGLADESH: A REVIEW (2024) – https://doi.org/10.22452/ijrer.vol14no1.2
+Forrás: Wikipédia: Szélenergia (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Sz%C3%A9lenergia
+Forrás: Are the Winds of Change Sustainable? : Exploring Mitigation Measures for Reindeer Husbandry Affected by Wind Power and Wind Power Life Cycle Assessments (2025) – https://uu.diva-portal.org/smash/get/diva2:1980348/FULLTEXT01
+Forrás: Life cycle thinking methodologies for sustainability assessment of offshore wind power production (2026) – https://lutpub.lut.fi/bitstream/10024/171416/1/Mastersthesis_Wimalarathne_Shadika.pdf
+Forrás: Conversion of biomass to biofuels and life cycle assessment: a review (2021) – https://doi.org/10.1007/s10311-021-01273-0
 Lektorálva: nem
 --- technikai ---
 Keresés: wind turbine life cycle greenhouse gas emissions gCO2/kWh|onshore wind life cycle assessment carbon footprint|wind power carbon intensity harmonization
@@ -119,19 +118,19 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyi fűtést és áramot adhat a föld hője?
 Röviden: A föld mélyének hője fűtésre és áramtermelésre is használható. Magyarországon különösen sok van belőle.
 Ha kikutatod:
-Mire jó?: A föld hője segíthet a klímaváltozás ellen, mert kibocsátás nélkül termel energiát, így kevesebb szén-dioxidot okoz. Ezzel csökkenthetjük a globális felmelegedést.
-Mi a gond vele?: A föld hőjének használatához különleges technológiákra van szükség, és a jelenlegi tudás szerint ezek a technológiák még nem elég hatékonyak. Emellett a földhő használata környezeti hatásokat is okozhat, például a vízszintes hőcsere rendszerek esetén a grout anyagok hatása.
-Mennyire bizonyított?: A föld hőjének használata már bizonyított, hogy segíthet a klímaváltozás ellen, de a teljes kibontakozása és a hatékony technológiák kifejlesztése még folyamatban van.
+Mire jó?: A föld hője segíthet melegíteni otthonokat, üvegházakat, ipari létesítményeket, és akár áramot is termelni, így csökkentheti a klímaváltozás okozta káros anyagok kibocsátását.
+Mi a gond vele?: A föld hőjének használatához különleges berendezések szükségesek, és a víz utánpótlásának hiánya idővel csökkentheti az energiatermelést. A technológiák további fejlesztése szükséges a hatékonyabb használat érdekében.
+Mennyire bizonyított?: A tudományos kutatások alapján a föld hőjének használatának előnyei és korlátai jól ismertek, de a technológia további fejlesztése szükséges a teljes potenciál kibontakoztatásához.
 Kérdés angolul: How much heat and power can the Earth's heat provide?
 Röviden angolul: Heat from deep underground can be used for heating and electricity. Hungary has a great deal of it.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
+Forrás: Wikipédia: Geotermikus energia (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Geotermikus_energia
 Forrás: Geothermal energy use in hydrogen production: A review (2019) – https://doi.org/10.1002/er.4778
 Forrás: A review of grout materials in geothermal energy applications (2021) – https://doi.org/10.1016/j.ijft.2021.100070
 Forrás: A comprehensive review of geothermal energy evolution and development (2019) – https://doi.org/10.1080/15435075.2019.1650047
-Forrás: Exploring geothermal energy as a sustainable source of energy: A systemic review (2025) – https://doi.org/10.1016/j.uncres.2025.100149
 Lektorálva: nem
 --- technikai ---
 Keresés: geothermal energy potential emissions reduction|geothermal district heating potential|geothermal power life cycle emissions
@@ -145,19 +144,19 @@ Korszak: II. (Mérséklés)
 Kérdés: Mennyi energiát spórol a napkollektor?
 Röviden: A napkollektor a napfénnyel melegíti a vizet, áram nélkül.
 Ha kikutatod:
-Mire jó?: Tudni, mennyi energiát spórol a napkollektor, segít a klímaváltozás ellen, mert kevesebb fosszilis energiát használunk.
-Mi a gond vele?: A források nem szólnak arról, hogy pontosan mennyi energiát spórol a napkollektor.
-Mennyire bizonyított?: A források nem adnak pontos számokat, de a napkollektorok általában energiát spórolnak, ezért ezt a téma részben bizonyítottnak tekinthető.
+Mire jó?: A napkollektor segít meghatározni, hogy egy adott helyen mennyi energiát lehet megbecsülni a napsugárzásból, így csökkenthető az elektromos vagy földgáz fogyasztás.
+Mi a gond vele?: A napkollektor hatékonysága függ a napsütéstől, így nem minden időben hasznos. A hőtől függően is szükség lehet más rendszerekre, például fűtésre.
+Mennyire bizonyított?: A napkollektor működése és hatékonysága jól vizsgált, de a pontos energiaveszteségek és hatékonysági számítások a helyi napsugárzásra függenek.
 Kérdés angolul: How much energy does a solar water heater save?
 Röviden angolul: A solar collector heats water with sunlight, without electricity.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
+Forrás: Wikipédia: Napkollektor (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Napkollektor
 Forrás: Nanofluids in Solar Thermal Collectors: Review and Limitations (2020) – https://doi.org/10.1007/s10765-020-02737-1
 Forrás: Review of materials for solar thermal collectors (2005) – https://doi.org/10.1108/00035590510603210
 Forrás: A review of solar hybrid photovoltaic-thermal (PV-T) collectors and systems (2023) – https://doi.org/10.1016/j.pecs.2023.101072
-Forrás: “Performance analysis of solar thermal collectors: A comprehensive review” (2025) – https://doi.org/10.1016/j.meaene.2025.100059
 Lektorálva: nem
 --- technikai ---
 Keresés: solar water heating energy savings emissions|solar thermal collectors domestic hot water performance|solar thermal heating life cycle assessment
@@ -173,19 +172,19 @@ Korszak: III. (Átalakulás)
 Kérdés: Mennyi CO2-t zárhat a föld alá a növényi energia?
 Röviden: Növényeket égetnek energiáért, a keletkező CO2-t pedig a föld alá zárják.
 Ha kikutatod: Növényi energia CO2-tárolással a tervedben.
-Mire jó?: A növényi energia segíthet csökkenteni a CO2-kibocsátást, mert a biomassza növekedése során CO2-t is felvett, amit később újra tárolhatunk a föld alá, így negatív kibocsátást hozhat létre.
-Mi a gond vele?: A növényi energia alkalmazása korlátozott, mert a CO2-tárolás költsége magas lehet, és a föld alá való zárás technológiája még nem teljesen biztos, továbbá a növényi biomassza termelése is környezeti hatásokat okozhat.
-Mennyire bizonyított?: A növényi energia és a CO2-tárolás kombinációja a tudományos szempontból bizonyított, de a gyakorlatban még nem teljesen kifejlesztett, és a költségek és a technológiai kihívások miatt nem minden esetben hatékony.
+Mire jó?: A növényi energia segíthet a klímaváltozás ellen, mivel a CO2-t elkapják, így csökkenthetik a légkörben lévő széndioxid mennyiségét, ami a globális felmelegedést csökkentheti.
+Mi a gond vele?: A növényi energia használata kockázatokat hordoz, például a természetes erőforrások elhasználódását, a mezőgazdasági termelés csökkenését és az állatvilág veszélyeztetését okozhatja.
+Mennyire bizonyított?: A tudományos bizonyítékok alapján a növényi energia használata a CO2 elkapására nézve megbízható, de a gyakorlatban a költségek és a környezeti hatások továbbra is kérdésesek.
 Kérdés angolul: How much CO2 can plant-based energy lock underground?
 Röviden angolul: Plants are burned for energy, and the resulting CO2 is stored underground.
 Ha kikutatod angolul: Plant energy with CO2 storage in your plan.
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
+Forrás: Wikipédia: Bioenergy with carbon capture and storage (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Bioenergy_with_carbon_capture_and_storage
 Forrás: The Value of BECCS in IAMs: a Review (2019) – https://doi.org/10.1007/s40518-019-00142-3
 Forrás: A Review of Criticisms of Integrated Assessment Models and Proposed Approaches to Address These, through the Lens of BECCS (2019) – https://doi.org/10.3390/en12091747
 Forrás: Bioenergy with Carbon Capture and Storage (BECCS) in Brazil: A Review (2023) – https://doi.org/10.3390/en16042021
-Forrás: A comprehensive review of biomass based thermochemical conversion technologies integrated with CO2 capture and utilisation within BECCS networks (2021) – https://doi.org/10.1016/j.resconrec.2021.105734
 Lektorálva: nem
 --- technikai ---
 Keresés: bioenergy with carbon capture and storage BECCS removal potential|BECCS land use sustainable potential|negative emissions technologies potentials costs side effects
@@ -199,19 +198,19 @@ Korszak: III. (Átalakulás)
 Kérdés: Mennyi CO2-vel jár a tengeri szélerőművi áram?
 Röviden: A tengeren erősebb és egyenletesebb a szél, mint a szárazföldön.
 Ha kikutatod:
-Mire jó?: A tengeri szélenergia kibocsátást vált ki, ami a klímaváltozás ellenére is segíthet a megújuló energiák fejlesztésében.
-Mi a gond vele?: A források nem szólnak a kibocsátás mennyiségéről.
-Mennyire bizonyított?: A források nem szólnak a kibocsátás mennyiségéről.
+Mire jó?: A tengeri szélerőművi áram nagy mennyiségű CO2-kibocsátást csökkenthet, mivel a tengeri szél erősebb, így kevesebb energiát kell termelni ugyanazt a mennyiséget elérnihez.
+Mi a gond vele?: A tengeri szélerőművi áram gyártása nagy mennyiségű CO2-t és más kibocsátást okozhat a fémek, beton és üveg gyártásában, valamint a telepítés során.
+Mennyire bizonyított?: A tudományos vizsgálatok azt mutatják, hogy a tengeri szélerőművi áram kibocsátása alacsonyabb, mint a földi szélerőműveké, de a teljes élettartam-kibocsátás még nem teljesen bizonyított.
 Kérdés angolul: How much CO2 comes with offshore wind electricity?
 Röviden angolul: At sea the wind is stronger and steadier than on land.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
-Forrás: Offshore Wind Energy - Review of the State-of-the-Art (2002) – https://openalex.org/W2463477590
-Forrás: Offshore Wind Energy in Europe— A Review of the State‐of‐the‐Art (2003) – https://doi.org/10.1002/we.82
-Forrás: Offshore green hydrogen production from wind energy: Critical review and perspective (2024) – https://doi.org/10.1016/j.rser.2024.114320
-Forrás: The sustainable worldwide offshore wind energy potential: A systematic review (2017) – https://doi.org/10.1063/1.5009948
+Forrás: Wikipédia: Offshore wind power (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Offshore_wind_power
+Forrás: Life cycle assessment of floating offshore wind anchors: A state-of-the-art review (2026) – https://doi.org/10.1016/j.rser.2026.117664
+Forrás: Life cycle thinking methodologies for sustainability assessment of offshore wind power production (2026) – https://lutpub.lut.fi/bitstream/10024/171416/1/Mastersthesis_Wimalarathne_Shadika.pdf
+Forrás: Life cycle assessment of a floating offshore wind farm in Italy (2023) – https://doi.org/10.1016/j.spc.2023.05.006
 Lektorálva: nem
 --- technikai ---
 Keresés: offshore wind life cycle assessment gCO2/kWh|offshore wind farm carbon footprint|floating offshore wind life cycle emissions
@@ -225,19 +224,19 @@ Korszak: III. (Átalakulás)
 Kérdés: Milyen hatékony az energiatárolás víztározókkal?
 Röviden: Ha sok az áram, vizet szivattyúznak fel. Ha kevés, leengedik, és turbinát hajt.
 Ha kikutatod:
-Mire jó?: A víztározók hatékonyak hosszú távú energiatárolásra, például napi vagy heti időszakokra, és segítenek az energiarendszer stabilizálásában.
-Mi a gond vele?: A víztározók építése drága, és csak bizonyos terepet lehet használni, például folyók mellett. A környezeti hatások is fontosak lehetnek.
-Mennyire bizonyított?: A víztározók technológiája már régóta használatos, és a tudományos kutatások szerint hatékonyak és megbízhatók a hosszú távú energiatárolásra.
+Mire jó?: Ez a módszer segít az energiát az időszakok között elosztani, így azokkal a napokkal, amikor sok energia van, és amikor kevesebb van, is biztosítani lehet a hálózatot.
+Mi a gond vele?: A víztározók építése drága és hosszú ideig tart, továbbá környezeti hatásokat is okozhatnak a vízterekre.
+Mennyire bizonyított?: A víztározók működése jól ismert, de a környezeti hatások és a különböző helyeken való alkalmazhatóság további kutatásra szorul.
 Kérdés angolul: How efficient is energy storage with reservoirs?
 Röviden angolul: When power is plentiful, water is pumped up. When it is scarce, it flows down and drives a turbine.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
+Forrás: Wikipédia: Avče szivattyús energiatározó (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Av%C4%8De_szivatty%C3%BAs_energiat%C3%A1roz%C3%B3
 Forrás: A review of pumped hydro energy storage (2021) – https://doi.org/10.1088/2516-1083/abeb5b
 Forrás: A Review of Pumped Hydro Storage Systems (2023) – https://doi.org/10.3390/en16114516
 Forrás: Drivers and barriers to the deployment of pumped hydro energy storage applications: Systematic literature review (2021) – https://doi.org/10.1016/j.clet.2021.100281
-Forrás: Low-head pumped hydro storage: A review of applicable technologies for design, grid integration, control and modelling (2022) – https://doi.org/10.1016/j.rser.2022.112119
 Lektorálva: nem
 --- technikai ---
 Keresés: pumped hydro energy storage round-trip efficiency|pumped storage hydropower potential|closed-loop pumped hydro storage
@@ -251,9 +250,9 @@ Korszak: III. (Átalakulás)
 Kérdés: Mennyit spórolhat a gyárakban a hőszivattyú?
 Röviden: Sok gyár forró vizet és gőzt használ. Ipari hőszivattyú is előállíthatja áramból.
 Ha kikutatod:
-Mire jó?: A gyárakban a hőszivattyúk segíthetnek energiát spórolni, így csökkenthetik a költségeiket és a kibocsátásukat.
-Mi a gond vele?: A hőszivattyúk alkalmazása a gyártérenként nagyon bonyolult, mert különleges tervezést és magas kezdőköltséget igényelnek.
-Mennyire bizonyított?: A hőszivattyúk hatékonyságáról és spórolási lehetőségeiről már sok tudás áll rendelkezésre, de a gyakorlatban való alkalmazás még nem teljesen megoldott.
+Mire jó?: A gyárakban a hőszivattyúk segíthetnek csökkenteni a fűtési költségeket, mivel kevesebb fosszilis energiát igényelnek, és a hőt újrahasznosítják, így csökkentik a klímaváltozás kockázatát.
+Mi a gond vele?: A hőszivattyúk alkalmazása a gyárakban még nem elterjedt, mert magas a kezdőköltség, és a rendszerhez különleges tervezés szükséges. Ezenkívül a hőszivattyúk hatékony működéséhez bizonyos feltételek is kellenek, például megfelelő hőforrások.
+Mennyire bizonyított?: A hőszivattyúk hatékonyságáról és az ipari alkalmazásukról már sok tudományos tanulmány szól, de a pontos költségspórolás és a hatékonyság mértéke attól függ, milyen körülmények között alkalmazzák őket.
 Kérdés angolul: How much can heat pumps save in factories?
 Röviden angolul: Many factories use hot water and steam. Industrial heat pumps can make it from electricity.
 Ha kikutatod angolul:
@@ -263,7 +262,6 @@ Mennyire bizonyított? angolul:
 Forrás: Energy flexible heat pumps in industrial energy systems: A review (2023) – https://doi.org/10.1016/j.egyr.2022.12.110
 Forrás: Review of Business Models for Industrial Heat Pumps (2023) – https://doi.org/10.52202/069564-0068
 Forrás: Defining an industrial heat pump: A review & synthesis (2025) – https://doi.org/10.1016/j.ecmx.2025.101442
-Forrás: Heat Pump Integration by Pinch Analysis for Industrial Applications: A Review (2019) – https://doi.org/10.3303/cet1976002
 Lektorálva: nem
 --- technikai ---
 Keresés: industrial heat pumps decarbonization potential process heat|high temperature heat pump industrial applications
@@ -277,19 +275,19 @@ Korszak: III. (Átalakulás)
 Kérdés: Mennyi kibocsátást spórol a biogáz?
 Röviden: A trágya és az ételmaradék erjesztésekor éghető gáz keletkezik.
 Ha kikutatod:
-Mire jó?: A biogáz használata csökkenti a kibocsátást, így segít a klímaváltozás ellen és kevesebb környezeti károsodást okoz.
-Mi a gond vele?: A biogáz kibocsátásának csökkentése nem mindig hatékony, mert a feldolgozás költségei és a technológiai korlátok miatt nem minden esetben érhető el.
-Mennyire bizonyított?: A tudományos vizsgálatok alapján a biogáz kibocsátásának csökkentése bizonyítottan hatékony, de a pontos hatások függhetnek a helyi feltételektől.
+Mire jó?: A biogáz energiát tud nyújtani, például főzéshez, melegvíz előállításához, vagy villamos energiává alakítható, így csökkentheti a földgáz függőséget.
+Mi a gond vele?: A biogáz nem teljesen tisztított formájában káros anyagokat is tartalmazhat, amelyek környezeti károsodást okozhatnak, és a tisztítás költséges lehet.
+Mennyire bizonyított?: A tudomány bizonyítja, hogy a biogáz energiatermelésre használható, de a tisztítási módszerek és hatásuk továbbra is vizsgálás alatt állnak.
 Kérdés angolul: How much emission does biogas save?
 Röviden angolul: Fermenting manure and food waste produces a gas that can be burned.
 Ha kikutatod angolul:
 Mire jó? angolul:
 Mi a gond vele? angolul:
 Mennyire bizonyított? angolul:
+Forrás: Wikipédia: Biogáz (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Biog%C3%A1z
 Forrás: Biogas-to-biomethane upgrading: A comparative review and assessment in a life cycle perspective (2020) – https://doi.org/10.1016/j.rser.2020.110588
 Forrás: Life cycle assessment of electricity from biogas: A systematic literature review (2018) – https://doi.org/10.1002/ep.13133
 Forrás: A Review of the Life Cycle Analysis of a Solar Biogas Hybrid System for Power Generation (2025) – https://doi.org/10.21203/rs.3.rs-6606830/v1
-Forrás: Integrating life cycle assessment into biogas policy and practice: a systematic review and pathways for sustainable anaerobic digestion in Uganda (2025) – https://doi.org/10.1080/19397038.2025.2602991
 Lektorálva: nem
 --- technikai ---
 Keresés: biogas anaerobic digestion greenhouse gas emissions savings|biomethane life cycle emissions|anaerobic digestion food waste life cycle assessment
