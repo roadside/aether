@@ -1024,6 +1024,68 @@ func _on_game_over() -> void:
 		return
 	_show_info(L.t("2100: vége a játéknak. A Föld +%s °C-kal melegebb, a csúcs +%s °C volt. „Új játék”: próbáld meg jobban!") % [
 		UI.hu(float(k["T2100"]), 1), UI.hu(float(k["csucs"]), 1)], "")
+	_open_summary(k)
+
+
+## A játék vége: néhány nagy szám egy lapon, és egy gomb az új játékhoz.
+func _open_summary(k: Dictionary) -> void:
+	var p := PanelContainer.new()
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = UI.PANEL_BG
+	sb.border_color = UI.GOLD
+	sb.set_border_width_all(3)
+	sb.shadow_color = Color(0, 0, 0, 0.7)
+	sb.shadow_size = 28
+	sb.set_content_margin_all(28)
+	p.add_theme_stylebox_override("panel", sb)
+	var v := UI.vbox(18)
+	p.add_child(v)
+	v.add_child(UI.heading(L.t("2100 – így alakult")))
+	var t2100 := float(k.get("T2100", 0.0))
+	var verdict := L.t("Másfél fok alatt maradt. Kiváló!") if t2100 < 1.5 else (
+		L.t("Két fok alatt maradt.") if t2100 < 2.0 else L.t("Két fok fölé ment. Próbáld korábbi CO2-nullával!"))
+	v.add_child(UI.label(verdict, 22, UI.GREEN if t2100 < 2.0 else UI.EMBER, true))
+	var grid := GridContainer.new()
+	grid.columns = 3
+	grid.add_theme_constant_override("h_separation", 40)
+	grid.add_theme_constant_override("v_separation", 14)
+	var items := [
+		[L.t("Melegedés 2100-ban"), "+%s °C" % UI.hu(t2100, 1), UI.EMBER],
+		[L.t("Csúcs"), "+%s °C" % UI.hu(float(k.get("csucs", 0.0)), 1), UI.GOLD],
+		[L.t("Kutatott témák"), str(campaign.done.size()), UI.CYAN],
+		[L.t("Korszak"), Knowledge.era_name(campaign.era), UI.GOLD],
+		[L.t("Bizalom"), "%d%%" % campaign.trust, UI.GREEN],
+		[L.t("Pénz"), str(campaign.money), UI.GOLD],
+	]
+	for it in items:
+		var c := UI.vbox(2)
+		c.add_child(UI.label(it[0], 15, UI.MUTE, false, false))
+		c.add_child(UI.label(it[1], 30, it[2], true, false))
+		grid.add_child(c)
+	v.add_child(grid)
+	var again := UI.button(L.t("Új játék"), true)
+	again.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	var again_fn := func() -> void:
+		_close_overlay()
+		_reset_btn.text = L.t("Biztos? Kattints újra")   # egyből indul, nem kér megerősítést
+		_reset_game()
+	again.pressed.connect(again_fn)
+	# a küldetések csillagai összesen
+	var got := 0
+	var all := 0
+	for m in Missions.LIST:
+		got += Missions.stars_of(m["id"])
+		all += 1 if m["id"] == "alkalmazkodas" else 3
+	v.add_child(UI.label(L.t("Küldetések: %s  (%d/%d csillag)") % [Missions.star_text(got, all), got, all], 18, UI.GOLD, true))
+	v.add_child(again)
+	_place_overlay(p)
+	# csak akkora legyen, amekkora a tartalom (az X a sarokkal együtt mozog)
+	p.custom_minimum_size = Vector2(920, 0)
+	p.position.y = 200
+	var fit := func() -> void:
+		if is_instance_valid(p):
+			p.size = Vector2(920, 0)   # a tartalom legkisebb magasságára zsugorodik
+	fit.call_deferred()
 
 
 func _reset_game() -> void:
@@ -1097,16 +1159,18 @@ func _selftest() -> void:
 	var w := await _wait_tag("vilag")
 	print("ONTESZT világ: kód=", w[1], " események=", world.get("esemenyek", []).size(), " források=", world.get("forrasok", {}))
 	await _shot(dir, "1_mai_fold.png")
-	# 1b: egy esemény kijelölése a listából (gyűrű a gömbön, odafordulás) és egy értesítés
+	# 1b: egy esemény kijelölése a listából (gyűrű a gömbön, odafordulás); 1c súgó; 1d játék vége
 	var evs: Array = world.get("esemenyek", [])
 	if not evs.is_empty():
 		globe.highlight = evs[0]
 		globe.look_at_event(evs[0])
-		_toast(L.t("Új korszak: %s") % Knowledge.era_name(2), UI.GOLD)
 		await get_tree().create_timer(1.0).timeout
 		await _shot(dir, "1b_kiemeles.png")
 		_open_help()
 		await _shot(dir, "1c_sugo.png")
+		_close_overlay()
+		_open_summary({"T2100": 1.62, "csucs": 1.66})
+		await _shot(dir, "1d_osszegzes.png")
 		_close_overlay()
 		globe.highlight = {}
 		globe.home()
