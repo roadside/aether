@@ -304,7 +304,8 @@ func _play_full() -> void:
 	create_tween().tween_property(g, "heat", 0.0, 1.0)
 	if main.anomaly_ready():
 		g.show_anomaly(true)
-	_say(L.t("%s. Melegebb, mint valaha.") % main.warming_text())
+	# a fenti évszámláló az 1991–2020-as átlaghoz mér; ez a szám az iparosodás előttihez
+	_say(L.t("%s. Melegebb, mint valaha.") % main.warming_text(), L.t("az iparosodás előtti (1850–1900) átlaghoz képest"))
 	if not await _wait(3.0): return
 	await _shot("intro_04_elteres.png")
 	if not await _wait(2.0): return
@@ -341,9 +342,11 @@ func _play_full() -> void:
 	_end_mode()
 	# 7. A görbe elágazik: a jövő még nincs megírva (5,5 mp)
 	_dim_to(0.68, 1.0)
-	_say(L.t("A jövő még nincs megírva."))
+	_say("")
 	_set_mode("jovo")
-	if not await _wait(4.5): return
+	if not await _wait(2.0): return          # a felirat a görbe elágazásakor jön
+	_say(L.t("A jövő még nincs megírva."))
+	if not await _wait(2.5): return
 	await _shot("intro_10_jovo.png")
 	if not await _wait(1.0): return
 	_end_mode()

@@ -504,6 +504,7 @@ const EN := {
 	"Esc: átugrás": "Esc: skip",
 	"Ez a Föld ma.": "This is Earth today.",
 	"%s. Melegebb, mint valaha.": "%s. Warmer than ever.",
+	"az iparosodás előtti (1850–1900) átlaghoz képest": "compared with the pre-industrial (1850–1900) average",
 	"Minden változás egyetlen kérdéssel kezdődik.": "Every change begins with a single question.",
 	"A tiéddel.": "Yours.",
 	"Viharok.": "Storms.",
