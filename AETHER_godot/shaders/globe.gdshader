@@ -92,20 +92,25 @@ void fragment() {
 		// napcsillogás a vízen
 		if (data.r < 0.5) {
 			vec3 h = normalize(L + vec3(0.0, 0.0, 1.0));
-			col += vec3(1.0, 0.95, 0.84) * pow(max(dot(n, h), 0.0), 140.0) * 1.1 * step(0.0, ndl);
+			// visszafogott csillogás: a tavak a Nap alatt ne világítsanak hófehéren
+			col += vec3(1.0, 0.95, 0.84) * pow(max(dot(n, h), 0.0), 140.0) * 0.55 * step(0.0, ndl);
 		}
 
 		// felhők és árnyékuk
 		vec2 ctex = vec2(fract(tex.x + cloud_drift), tex.y);
-		float c = texture(cloud_map, ctex).r;
+		// finomabb részlet: a nagy felhőfoltok szélét egy sűrűbb, elmozdított minta tördeli,
+		// így nem egyszínű „papírkivágás”, hanem gomolyos, festményszerű felhő lesz
+		float fine = texture(cloud_map, fract(ctex * vec2(3.0, 2.0) + vec2(0.37, 0.11))).r;
+		float c = texture(cloud_map, ctex).r * 0.78 + fine * 0.22;
 		float cs = texture(cloud_map, ctex + vec2(0.006, 0.004)).r;
-		if (cs > 0.55 && c <= 0.55) {
-			col *= 0.72;
+		if (cs > 0.55 && c <= 0.52) {
+			col *= 0.78;
 		}
-		float cv = clamp((c - 0.52) / 0.12, 0.0, 1.0);
-		vec3 cloud_col = vec3(0.9, 0.95, 1.0) * max(0.1, light);
-		// 4 lépcsős, ditherelt felhőszél: lágyabb, de pixeles marad (nem „papírkivágás”)
-		col = mix(col, cloud_col, min(1.0, floor(cv * 4.0 + d) / 4.0) * 0.92);
+		float cv = clamp((c - 0.48) / 0.18, 0.0, 1.0);
+		// vastagabb felhő fehérebb, a vékony széle kékesebb és áttetszőbb
+		vec3 cloud_col = mix(vec3(0.70, 0.79, 0.90), vec3(0.94, 0.97, 1.0), cv) * max(0.1, light);
+		// 5 lépcsős, ditherelt felhőszél: lágy, de pixeles marad
+		col = mix(col, cloud_col, min(1.0, floor(cv * 5.0 + d) / 5.0) * 0.9);
 
 		// naplemente-sáv és perem-pára
 		// keskeny, halvány alkonysáv a nappal-éjszaka határán

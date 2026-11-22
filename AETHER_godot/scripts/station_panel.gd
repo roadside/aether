@@ -139,9 +139,9 @@ func _card(mod: String) -> Control:
 		var build_fn := func() -> void:
 			built.emit(campaign.build(mod))
 		b.pressed.connect(build_fn)
+		if problem != "":   # az ok a gomb fölött, hogy görgetés nélkül is látsszon
+			c.add_child(UI.label(problem, 14, UI.EMBER))
 		c.add_child(b)
-		if problem != "":
-			c.add_child(UI.label(problem, 13, UI.EMBER))
 	else:
 		c.add_child(UI.label(L.t("Kész, legmagasabb szint."), 15, UI.GOLD))
 	return UI.card_root(c)
