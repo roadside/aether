@@ -546,7 +546,10 @@ func _render_world() -> void:
 		if srcs[k].get("ok", false):
 			ok += 1
 	var when := str(world.get("letoltve", "")).replace("T", " ").left(16)
-	_world_note.text = L.t("Valós jelentések, letöltve: %s (UTC). %d/%d forrás elérhető.") % [when, ok, srcs.size()]
+	# röviden; a részletek rámutatásra
+	_world_note.text = L.t("Friss: %s · %d/%d forrás") % [when, ok, srcs.size()]
+	_world_note.mouse_filter = Control.MOUSE_FILTER_PASS
+	_world_note.tooltip_text = L.t("Valós jelentések, letöltve: %s (UTC). %d/%d forrás elérhető.") % [when, ok, srcs.size()]
 	if events.is_empty():
 		_events_box.add_child(UI.label(L.t("Nem sikerült jelentést letölteni. Van internet?"), 16, UI.SOFT))
 	for e in _pick_events(events, 4):
@@ -844,10 +847,10 @@ func _ensure_model() -> void:
 func _update_stats() -> void:
 	if _stats.is_empty():
 		return
-	(_stats["ev"] as Label).text = str(campaign.year)
-	(_stats["korszak"] as Label).text = Knowledge.era_name(campaign.era)
-	(_stats["penz"] as Label).text = str(campaign.money)
-	(_stats["bizalom"] as Label).text = "%d%%" % campaign.trust
+	_set_stat("ev", str(campaign.year))
+	_set_stat("korszak", Knowledge.era_name(campaign.era))
+	_set_stat("penz", str(campaign.money))
+	_set_stat("bizalom", "%d%%" % campaign.trust)
 	var t: float = campaign.temp_now()
 	if not is_nan(t):
 		var ml: Label = _stats["melegedes"]
@@ -859,6 +862,23 @@ func _update_stats() -> void:
 	if _play_btn != null:
 		_play_btn.text = L.t("Szünet") if campaign.running else L.t("Idő indítása")
 		_play_btn.disabled = campaign.year >= Campaign.END_YEAR
+
+
+## A felső sáv értéke; ha változott, röviden felvillan (így látszik, mi történt).
+func _set_stat(key: String, value: String) -> void:
+	var l: Label = _stats[key]
+	if l.text == value:
+		return
+	var first := l.text == ""
+	l.text = value
+	if first or not is_inside_tree():
+		return
+	l.pivot_offset = l.size * 0.5
+	var tw := create_tween()
+	tw.tween_property(l, "scale", Vector2(1.18, 1.18), 0.12)
+	tw.parallel().tween_property(l, "modulate", Color(1.6, 1.6, 1.6), 0.12)
+	tw.tween_property(l, "scale", Vector2.ONE, 0.25)
+	tw.parallel().tween_property(l, "modulate", Color.WHITE, 0.35)
 
 
 func _toggle_time() -> void:
