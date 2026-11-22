@@ -122,6 +122,9 @@ func _process(delta: float) -> void:
 		_cur = _queue.pop_front()
 		_t = 0.0
 		_sound({"jo": "jel_jo", "rossz": "jel_rossz"}.get(str(_cur["fajta"]), "jel_evtized"))
+	if blocked.is_valid() and blocked.call():   # nyitott ablak alatt a sáv eltűnik és vár
+		queue_redraw()
+		return
 	_t += delta
 	if _t >= SHOW:
 		_cur = {}
@@ -129,7 +132,7 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
-	if _cur.is_empty():
+	if _cur.is_empty() or (blocked.is_valid() and blocked.call()):
 		return
 	var kind := str(_cur["fajta"])
 	var col: Color = {"jo": UI.GREEN, "rossz": UI.EMBER}.get(kind, UI.GOLD)
