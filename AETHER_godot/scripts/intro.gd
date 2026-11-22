@@ -41,10 +41,6 @@ const OWN_MUSIC := ["res://sajat_zene/intro.wav", "user://sajat_zene/intro.wav"]
 ## A nyitány ütései (mp) a saját zenefájl első 11 másodpercéből kimérve: [idő, kéz (0 bal, 1 jobb), hangmező]
 const HITS := [[3.09, 1, 0], [3.37, 0, 3], [4.46, 1, 2], [5.07, 0, 1], [5.61, 1, 4], [6.44, 0, 5],
 	[6.70, 1, 0], [6.87, 0, 3], [7.57, 1, 6], [7.85, 0, 1], [9.20, 1, 2], [9.75, 0, 5], [10.30, 1, 0]]
-## A handpan hangmezői a közepéhez képest (a 640×360-as képen; egyezzen a tools/intro_erdo.py-jal): 0 a középső „ding”
-const FIELDS := [Vector2(0, -8), Vector2(-50, -6), Vector2(-32, -22), Vector2(4, -27), Vector2(38, -20),
-	Vector2(52, -3), Vector2(28, 12), Vector2(-26, 13)]
-
 var main                       # main.gd példány (földgömb, világállapot, eltérés-térkép)
 var shots_dir := ""            # ha nem üres: minden snittről képernyőkép (ellenőrzéshez)
 var _caption: Label
@@ -774,115 +770,85 @@ func _draw_future(lt: float) -> void:
 
 
 # --- nyitány: handpan-játékos az erdőben -----------------------------------------
-## A háttér, a törzs és a hangszer festett pixeles kép (tools/intro_erdo.py, 640×360);
-## a karokat és a kezeket itt rajzoljuk, és a zene ütéseire mozgatjuk.
-const P := 2.5                 # a nyitány egy „pixele” a képernyőn (640×360 -> 1600×900)
-const PAN := Vector2(300, 250) # a hangszer közepe a képen
-var _tex_forest: Texture2D
-var _tex_player: Texture2D
-var _tex_pan: Texture2D
+## Festett pixeles képekből áll (640×360): az erdő (tools/intro_erdo.py), a játékos, a hangszer
+## és a két kar három-három mozgásfázisa (tools/intro_jatekos.py). A karok fázisát a zene
+## ütései vezérlik: fent lebeg -> félúton -> a hangmezőn -> vissza.
+const P := 2.5                  # a nyitány egy „pixele” a képernyőn (640×360 -> 1600×900)
+const PAN := Vector2(322, 262)  # a hangszer közepe a képen
+const HIT_SPOT := [Vector2(-22, 12), Vector2(8, -2)]   # ahová a bal és a jobb kéz üt (a hangszer közepéhez képest)
+var _tex := {}
 
 
-## Kétcsontos kar: a könyök helye a váll és a kéz között, kifelé hajlítva.
-static func _elbow(sh: Vector2, hand: Vector2, l1: float, l2: float, out: float) -> Vector2:
-	var d := hand - sh
-	var dist := clampf(d.length(), 1.0, l1 + l2 - 0.5)
-	var a := (l1 * l1 - l2 * l2 + dist * dist) / (2.0 * dist)
-	var h := sqrt(maxf(l1 * l1 - a * a, 0.0))
-	var dir := d.normalized()
-	return sh + dir * a + Vector2(-dir.y, dir.x) * h * out
+## Kép betöltése; ha a Godot még nem importálta (új fájl, szerkesztő nélkül), közvetlenül a fájlból.
+func _img(name: String) -> Texture2D:
+	if _tex.has(name):
+		return _tex[name]
+	var path := "res://assets/intro/%s.png" % name
+	var t: Texture2D = null
+	if ResourceLoader.exists(path):
+		t = load(path)
+	if t == null:
+		var im := Image.load_from_file(ProjectSettings.globalize_path(path))
+		if im != null:
+			t = ImageTexture.create_from_image(im)
+	_tex[name] = t
+	return t
 
 
-## A kéz helye: a hangmező fölött lebeg, az ütés előtt lecsap, utána visszarugózik.
-func _hand(side: int, lt: float) -> Vector2:
-	var hover := PAN + (Vector2(-34, -30) if side == 0 else Vector2(40, -34))
-	hover += Vector2(sin(lt * 0.9 + side * 2.0) * 2.0, sin(lt * 1.3 + side * 2.0) * 2.0)
-	var pos := hover
+## A kar mozgásfázisa (0 fent, 1 félúton, 2 a hangmezőn) a zene ütéseiből.
+func _arm_phase(side: int, lt: float) -> int:
+	var ph := 0
 	for h in HITS:
 		if int(h[1]) != side:
 			continue
 		var dt := lt - float(h[0])
-		var target: Vector2 = PAN + FIELDS[int(h[2])] + Vector2(0, -4)
-		if dt > -0.24 and dt <= 0.0:
-			var k := 1.0 + dt / 0.24
-			pos = hover.lerp(target, k * k) + Vector2(0, -8.0 * sin(k * PI) * (1.0 - k))
-		elif dt > 0.0 and dt < 0.42:
-			var k2 := dt / 0.42
-			pos = target.lerp(hover, 1.0 - pow(1.0 - k2, 2.0))
-	return pos
-
-
-func _limb(a: Vector2, b: Vector2, w: float, col: Color) -> void:
-	_fx.draw_line(a * P, b * P, col, w * P)
-	_fx.draw_circle(a * P, w * P * 0.5, col)
-	_fx.draw_circle(b * P, w * P * 0.5, col)
-
-
-func _arm(side: int, lt: float) -> void:
-	var lit := side == 0                      # a fény balról-fentről jön
-	var skin := Color("#b28464") if lit else Color("#8f6649")
-	var dark := Color("#6f4c38") if lit else Color("#5a3d2d")
-	var sh := Vector2(300, 124) if side == 0 else Vector2(402, 124)
-	var hand := _hand(side, lt)
-	var el := _elbow(sh, hand, 70.0, 64.0, 1.0 if side == 0 else -1.0)
-	var off := Vector2(2.5, 3.0)
-	_limb(sh + off, el + off, 21.0, dark)     # árnyékos szél
-	_limb(el + off, hand + off, 16.0, dark)
-	_limb(sh, el, 19.0, skin)
-	_limb(el, hand, 14.0, skin)
-	_fx.draw_line((sh + Vector2(-4, -3)) * P, (el + Vector2(-4, -3)) * P, skin.lightened(0.14), 4.0 * P)
-	# kézfej és ujjak a hangszer felé
-	var dir := (hand - el).normalized()
-	var side_v := Vector2(-dir.y, dir.x)
-	_limb(hand, hand + dir * 9.0, 15.0, skin)
-	for f in 4:
-		var base := hand + dir * 10.0 + side_v * (f - 1.5) * 4.2
-		_limb(base, base + dir * (9.0 + (1.5 - absf(f - 1.5)) * 2.0) + Vector2(0, 3.0), 3.6, skin if f % 2 == 0 else skin.darkened(0.10))
-	var thumb := hand + dir * 3.0 + side_v * (9.0 if side == 0 else -9.0)
-	_limb(thumb, thumb + dir * 7.0 + side_v * (3.0 if side == 0 else -3.0), 4.2, skin.darkened(0.06))
+		if dt >= -0.07 and dt < 0.10:
+			return 2
+		if (dt >= -0.16 and dt < -0.07) or (dt >= 0.10 and dt < 0.22):
+			ph = 1
+	return ph
 
 
 func _scene_player(lt: float) -> void:
-	if _tex_forest == null:
-		_tex_forest = load("res://assets/intro/erdo.png")
-		_tex_player = load("res://assets/intro/jatekos.png")
-		_tex_pan = load("res://assets/intro/handpan.png")
 	# lassú közelítés a kép közepe felé
-	var z := lerpf(1.0, 1.05, lt / PRELUDE)
+	var z := lerpf(1.0, 1.06, lt / PRELUDE)
 	var c := Vector2(W, H) * 0.5
-	_fx.draw_set_transform(c - c * z, 0.0, Vector2(z, z))
+	var base := c - c * z
+	_fx.draw_set_transform(base, 0.0, Vector2(z, z))
 	var full := Rect2(0, 0, W, H)
-	_fx.draw_texture_rect(_tex_forest, full, false)
+	for name in ["erdo", "jatekos", "handpan"]:
+		var t := _img(name)
+		if t != null:
+			_fx.draw_texture_rect(t, full, false)
 	# fénypászmák a lombon át
 	for i in 4:
 		var lx := 140.0 + i * 330.0 + sin(lt * 0.22 + i) * 10.0
 		_fx.draw_colored_polygon(PackedVector2Array([Vector2(lx, 0), Vector2(lx + 70, 0), Vector2(lx + 300, 700), Vector2(lx + 150, 700)]),
 			Color(0.75, 0.95, 0.65, 0.030 + 0.012 * sin(lt * 0.6 + i * 2.0)))
-	# lélegzés: a törzs alig észrevehetően emelkedik-süllyed
-	var breath := sin(lt * 1.1) * 1.2
-	_fx.draw_texture_rect(_tex_player, Rect2(0, breath, W, H), false)
-	_fx.draw_texture_rect(_tex_pan, full, false)
 	# a megütött hangmező felfénylik
 	for h in HITS:
 		var d := lt - float(h[0])
 		if d >= 0.0 and d < 0.5:
-			var fp: Vector2 = (PAN + FIELDS[int(h[2])]) * P
-			_fx.draw_set_transform(c - c * z + fp * z, 0.0, Vector2(z, z * 0.45))
-			_fx.draw_circle(Vector2.ZERO, 12.0 * P, Color(1.0, 0.97, 0.85, 0.45 * (1.0 - d / 0.5)))
-			_fx.draw_set_transform(c - c * z, 0.0, Vector2(z, z))
-	_arm(1, lt)
-	_arm(0, lt)
+			var fp: Vector2 = (PAN + HIT_SPOT[int(h[1])]) * P
+			_fx.draw_set_transform(base + fp * z, 0.0, Vector2(z, z * 0.45))
+			_fx.draw_circle(Vector2.ZERO, 16.0 * P, Color(1.0, 0.97, 0.85, 0.40 * (1.0 - d / 0.5)))
+			_fx.draw_set_transform(base, 0.0, Vector2(z, z))
+	# a karok: a jobb (árnyékos) hátul, a bal elöl
+	for side in [1, 0]:
+		var t2 := _img("kar_%s_%d" % ["b" if side == 0 else "j", _arm_phase(side, lt)])
+		if t2 != null:
+			_fx.draw_texture_rect(t2, full, false)
 	# a hangból táguló, halvány fénygyűrűk
 	for h in HITS:
 		var d2 := lt - float(h[0])
 		if d2 >= 0.0 and d2 < 1.8:
 			var k3 := d2 / 1.8
-			var rc: Vector2 = (PAN + FIELDS[int(h[2])]) * P
-			_fx.draw_set_transform(c - c * z + rc * z, 0.0, Vector2(z, z * 0.42))
+			var rc: Vector2 = (PAN + HIT_SPOT[int(h[1])]) * P
+			_fx.draw_set_transform(base + rc * z, 0.0, Vector2(z, z * 0.42))
 			for ring in 2:
 				var rr := (30.0 + 420.0 * k3) * (1.0 - ring * 0.35)
-				_fx.draw_arc(Vector2.ZERO, rr, 0.0, TAU, 64, Color(0.80, 0.97, 0.88, 0.32 * (1.0 - k3) * (1.0 - ring * 0.4)), 4.0)
-			_fx.draw_set_transform(c - c * z, 0.0, Vector2(z, z))
+				_fx.draw_arc(Vector2.ZERO, rr, 0.0, TAU, 64, Color(0.80, 0.97, 0.88, 0.30 * (1.0 - k3) * (1.0 - ring * 0.4)), 4.0)
+			_fx.draw_set_transform(base, 0.0, Vector2(z, z))
 	# szálló fénypontok
 	for i in 60:
 		var life := fposmod(_h(i + 700.0) + lt * (0.03 + _h(i + 720.0) * 0.05), 1.0)
@@ -892,9 +858,9 @@ func _scene_player(lt: float) -> void:
 		var sz := P * (1.0 + float(i % 2))
 		_fx.draw_rect(Rect2(Vector2(mx, my).snappedf(P), Vector2(sz, sz)), Color(0.85, 1.0, 0.6, maxf(a, 0.0)))
 	_fx.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
-	# a zene szerzője (jobbra lent)
+	# a zene szerzője (jobbra lent), Zoltán kérése szerinti szöveggel
 	var ca := _win(lt, 3.0, PRELUDE - 0.9, 1.0)
-	_fx.draw_string(UI.font_bold, Vector2(W - 520.0, H - 78.0), "Malte Marten", HORIZONTAL_ALIGNMENT_RIGHT, 500.0, 24, Color(UI.TEXT, ca))
+	_fx.draw_string(UI.font_bold, Vector2(W - 520.0, H - 78.0), "Music: Malte Marten", HORIZONTAL_ALIGNMENT_RIGHT, 500.0, 24, Color(UI.TEXT, ca))
 	_fx.draw_string(UI.font_body, Vector2(W - 520.0, H - 54.0), "www.maltemarten.com", HORIZONTAL_ALIGNMENT_RIGHT, 500.0, 16, Color(UI.SOFT, ca))
 	# lassú beúszás a sötétből, a végén vissza a sötétbe
 	var dark := maxf(1.0 - _ss(0.8, 4.2, lt), _ss(PRELUDE - 0.9, PRELUDE - 0.05, lt))

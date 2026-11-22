@@ -5,9 +5,7 @@ erdőben, mohos sziklák és páfrányok között ülő, ujjatlan vászoninges j
 ölében a hangszerrel. A karokat és a kezeket a játék rajzolja és mozgatja (scripts/intro.gd).
 
 Kimenet (640×360, a játék 2,5-szeresre nagyítja):
-  assets/intro/erdo.png      a háttér
-  assets/intro/jatekos.png   a törzs, a fej és a térdek (átlátszó háttérrel)
-  assets/intro/handpan.png   a hangszer (átlátszó háttérrel)
+  assets/intro/erdo.png      a háttér (a játékost és a hangszert a tools/intro_jatekos.py festi)
 
 Kell hozzá: Pillow és numpy.   Használat:  python tools/intro_erdo.py
 """
@@ -99,9 +97,6 @@ def background():
     fern_bush(d, 28, 330, 120, (36, 92, 46), (54, 124, 58), count=7, spread=2.2)
     fern_bush(d, 618, 180, 90, (38, 96, 48), (56, 128, 60), count=6, spread=2.0)
     fern_bush(d, 160, 300, 70, (32, 84, 42), (48, 112, 54), count=6, spread=2.3)
-    for _ in range(26):                                                     # vékony fűszálak
-        x, y = rnd.uniform(380, 470), rnd.uniform(60, 200)
-        d.line([x, y + 60, x + rnd.uniform(-6, 6), y], fill=(46, 96, 50), width=1)
     # 5. talaj: sötét avar, borostyán- és lóherelevelek
     px = np.asarray(far).astype("float32")
     yy = np.linspace(0, 1, H)[:, None]
@@ -129,8 +124,9 @@ def background():
     px *= 0.42 + 0.78 * light
     px[..., 2] *= 1.08
     px[..., 0] *= 0.94
-    img = Image.fromarray(px.clip(0, 255).astype("uint8"))
-    return img.quantize(colors=64, method=Image.MEDIANCUT, dither=Image.NONE).convert("RGB")
+    px = px * 0.93 + np.array([7.0, 14.0, 10.0])          # a legsötétebb részek se legyenek koromfeketék
+    img = Image.fromarray(px.clip(0, 255).astype("uint8")).filter(ImageFilter.GaussianBlur(0.5))
+    return img.quantize(colors=160, method=Image.MEDIANCUT, dither=Image.NONE).convert("RGB")
 
 
 def shade_fill(img, mask_draw, base, light_dir=(-0.6, -0.6), strength=0.35, seed=1, grain=0.06):
@@ -247,6 +243,4 @@ def quant(img, colors):
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
     background().save(OUT / "erdo.png")
-    player().save(OUT / "jatekos.png")
-    handpan().save(OUT / "handpan.png")
-    print("kész:", OUT)
+    print("kész:", OUT / "erdo.png", "(a játékos és a hangszer: tools/intro_jatekos.py)")
