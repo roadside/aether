@@ -147,7 +147,7 @@ const EN := {
 	"A kozmikus sugarak okozzák a felmelegedést.": "Cosmic rays cause the warming.",
 	"Grönland jege nem olvad.": "Greenland's ice is not melting.",
 	"A tenger szintje nem fog emelkedni.": "Sea level will not rise.",
-	"A villanyautó a teljes élete alatt több CO2-t okoz, mint a benzines.": "Over its whole life, an electric car causes more CO2 than a petrol car.",
+	"A villanyautó a teljes élete alatt több CO2 kibocsájtással jár, mint egy benzinesé.": "Over its whole life, an electric car produces more CO2 emissions than a petrol car.",
 	"A napelem nem csökkenti a CO2-kibocsátást.": "Solar panels do not cut CO2 emissions.",
 	"A felhők majd megállítják a felmelegedést.": "Clouds will stop the warming.",
 	"A korallok jól bírják a melegebb vizet.": "Corals cope well with warmer water.",

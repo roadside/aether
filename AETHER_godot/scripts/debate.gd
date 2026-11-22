@@ -18,7 +18,7 @@ const CLAIMS := [
 	{"id": "kozmikus", "tema": "kozmikus", "allitas": "A kozmikus sugarak okozzák a felmelegedést."},
 	{"id": "gronland", "tema": "gronland", "allitas": "Grönland jege nem olvad."},
 	{"id": "tenger", "tema": "tengerszint", "allitas": "A tenger szintje nem fog emelkedni."},
-	{"id": "villanyauto", "tema": "villanyauto", "allitas": "A villanyautó a teljes élete alatt több CO2-t okoz, mint a benzines."},
+	{"id": "villanyauto", "tema": "villanyauto", "allitas": "A villanyautó a teljes élete alatt több CO2 kibocsájtással jár, mint egy benzinesé."},
 	{"id": "napelem", "tema": "napelem", "allitas": "A napelem nem csökkenti a CO2-kibocsátást."},
 	{"id": "felhok", "tema": "felhok", "allitas": "A felhők majd megállítják a felmelegedést."},
 	{"id": "korall", "tema": "korall", "allitas": "A korallok jól bírják a melegebb vizet."},
