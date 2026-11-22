@@ -65,7 +65,7 @@ def candidate_sentences(abstract: str, params: List[str]) -> List[str]:
 
 
 EXAMPLE = """Példa. Mondat: "Potentials are 0.5–2 GtCO2 yr−1 for biochar and up to 5 GtCO2 yr−1 for soil carbon
-sequestration." Ha a bioszén a téma: parameter=cdr_potencial_gtco2_ev, alkategoria=bioszén, also=0.5,
+sequestration." Ha a bioszén a téma: parameter=cdr_potencial_gtco2_ev, alkategoria=biochar, also=0.5,
 felso=2, ertek=2 (az 'ertek' mindig egy szám az idézetből), idézet: "0.5–2 GtCO2 yr−1 for biochar".
 Az 5-ös szám egy másik módszeré (talaj szénmegkötés): azt külön állításként, a saját alkategóriájával add meg."""
 
@@ -143,6 +143,11 @@ def run_research(question: str, provider: Optional[Provider], n_papers: int = 12
         raw = extract(provider, plan["kutatasi_kerdes_pontositva"], papers, plan["keresett_parameterek"], lang, log)
         raw_extraction = raw   # hibakereséshez: az AI nyers válasza a publikációba kerül
         claims = [ev.Claim(**c) for c in raw.get("allitasok", [])]
+        for c in claims:   # félrefordított alkategória (pl. "asztal" a "DT maize" helyett) ne jelenjen meg
+            pp = papers.get(c.cikk_azonosito)
+            if not ev.plausible_subcategory(c.alkategoria, c.szo_szerinti_idezet,
+                                            pp.title if pp else "", pp.abstract if pp else ""):
+                c.alkategoria = ""
         summary, contradictions = raw.get("osszegzes", ""), raw.get("ellentmondasok", "")
         if not lang.startswith("en"):   # angol szakszó és rövidítés helyett köznapi magyar
             summary, contradictions = ev.hungarianize(summary), ev.hungarianize(contradictions)

@@ -143,6 +143,9 @@ Csak a megadott absztraktokból dolgozhatsz. Szabályok:
 - A szám arra a módszerre vonatkozzon, amelyet az 'alkategoria' megnevez, és ez a módszer
   szerepeljen az idézetben (pl. "for biochar"). Ha egy mondat több módszer számát sorolja fel,
   mindegyikhez külön állítást adj.
+- Az 'alkategoria' az idézetben szereplő módszer vagy fajta EREDETI szava legyen, ahogy a cikkben áll
+  (pl. "biochar", "drought-tolerant maize"). NE fordítsd le, és a rövidítést (pl. DT, BECCS) se
+  fordítsd: a játék maga cseréli köznapi magyarra.
 - Ha az absztrakt nem tartalmaz számszerű eredményt az adott paraméterhez, NE találj ki semmit.
 - Ne használd a saját háttértudásodat számokhoz. Ha bizonytalan vagy, hagyd ki.
 - Az 'osszegzes' magyarul, 3-5 rövid, hétköznapi mondatban írja le, mit mutatnak a cikkek és mit NEM.
@@ -360,6 +363,9 @@ HU_GLOSSARY = [
     (r"afforestation", "erdősítés"),
     (r"reforestation", "újraerdősítés"),
     (r"meta-?analys[ie]s", "metaanalízis"),
+    (r"drought[\s-]+toleran(?:t|ce)\s+(?:maize|corn)", "aszálytűrő kukorica"),
+    (r"drought[\s-]+toleran(?:t|ce)", "aszálytűrő"),
+    (r"\bmaize\b|\bcorn\b", "kukorica"),
 ]
 HU_ABBR = [
     (r"\bBECCS\b", "növényi energia a CO2 föld alá zárásával"),
@@ -369,9 +375,22 @@ HU_ABBR = [
     (r"\bCDR\b", "CO2-kivonás"),
     (r"\bEW\b|\bERW\b", "kőzetmállasztás"),
     (r"\bSCS\b", "talaj szénmegkötése"),
+    (r"\bDT\s+(?:maize|corn)\b", "aszálytűrő kukorica"),
+    (r"\bDT\b", "aszálytűrő"),
     (r"GtCO2\s*/\s*(?:év|yr|year)", "milliárd tonna CO2/év"),
     (r"\bUSD\s*/\s*t\s*CO2\b", "dollár/tonna CO2"),
 ]
+
+
+def plausible_subcategory(sub: str, *texts: str) -> bool:
+    """Az AI által megnevezett alkategória (módszer, fajta) legalább egy jelentős szava szerepel-e
+    az idézetben vagy a cikkben. Ha nem, valószínűleg félrefordítás (pl. "DT maize" -> "asztal"),
+    és nem szabad megjeleníteni."""
+    words = [w for w in re.findall(r"[^\W\d_]+", (sub or "").lower()) if len(w) >= 3]
+    if not words:
+        return True
+    hay = " ".join(t or "" for t in texts).lower()
+    return any(w in hay for w in words)
 
 
 def hungarianize(text: str) -> str:
