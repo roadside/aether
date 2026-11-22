@@ -68,13 +68,15 @@ func for_year(y: int) -> Array:
 		return out
 	var k: Dictionary = m["osszegzes"]["kozep"]
 	var has_plan: bool = not campaign.timeline.is_empty()
-	var t := _at("terv", "homerseklet", y)
-	var b := _at("alapeset", "homerseklet", y)
+	# ami ebben a játékban tényleg történik: a Föld rejtett érzékenysége szerinti pálya
+	var t: float = campaign.world_value("terv", "homerseklet", y)
+	var b: float = campaign.world_value("alapeset", "homerseklet", y)
+	var t_prev: float = campaign.world_value("terv", "homerseklet", y - 1)
 	if is_nan(b):
 		b = t
-	if _year_of(k.get("1.5C_atlepes")) == y:
+	if not is_nan(t) and not is_nan(t_prev) and t >= 1.5 and t_prev < 1.5:
 		out.append({"cim": L.t("Átléptük a másfél fokot"), "alcim": L.t("A Föld 1,5 °C-kal melegebb, mint 150 éve."), "fajta": "rossz"})
-	if _year_of(k.get("2.0C_atlepes")) == y:
+	if not is_nan(t) and not is_nan(t_prev) and t >= 2.0 and t_prev < 2.0:
 		out.append({"cim": L.t("Átléptük a két fokot"), "alcim": L.t("A Föld 2 °C-kal melegebb, mint 150 éve."), "fajta": "rossz"})
 	if has_plan:
 		var n1 := _at("terv", "netto_co2", y)
@@ -84,8 +86,8 @@ func for_year(y: int) -> Array:
 		var peak_y := _year_of(k.get("csucs_ev"))
 		if peak_y == y and y < 2095 and float(k.get("T2100", 99.0)) <= float(k.get("csucs", 0.0)) + 0.005:
 			out.append({"cim": L.t("Megállt a melegedés"), "alcim": L.t("A csúcs +%s °C volt.") % UI.hu(float(k["csucs"]), 2), "fajta": "jo"})
-		var b0 := _at("alapeset", "homerseklet", y - 1)
-		var t0 := _at("terv", "homerseklet", y - 1)
+		var b0: float = campaign.world_value("alapeset", "homerseklet", y - 1)
+		var t0: float = t_prev
 		if not is_nan(b0) and not is_nan(t0) and not is_nan(t):
 			for step in [[0.5, L.t("Fél fokkal hűvösebb a Föld")], [1.0, L.t("Egy egész fokkal hűvösebb a Föld")]]:
 				if b - t >= float(step[0]) and b0 - t0 < float(step[0]):

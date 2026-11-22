@@ -2,6 +2,13 @@ extends RefCounted
 ## További angol fordítások (kulcs: a magyar szöveg). Az i18n.gd t() függvénye ezt is nézi.
 
 const EN := {
+	"Év lezárása": "End the year",
+	"Ha idén már mindent megtettél, zárd le az évet. Jön a következő. (Szóköz)": "When you have done everything for this year, end it. The next one comes. (Space)",
+	"Még nincs terved: a kibocsátás nem csökken.": "You have no plan yet: emissions are not falling.",
+	"Melegedés": "Warming",
+	"A játék Földjének hőmérséklete %d-ben: a klímamodell pályája és a természetes évi ingadozás. (Valódi mérés 2024-ben: +1,36 °C, Forster és mtsai 2025.)": "The temperature of the game's Earth in %d: the climate model's path plus natural year-to-year variation. (Real measurement in 2024: +1.36 °C, Forster et al. 2025.)",
+	"Új játék, új Föld. Kutass, készíts tervet, aztán zárd le az évet!": "New game, new Earth. Research, make a plan, then end the year!",
+	"A klímamodell szerint. Arany: a te utad, a sávval, amin belül a Föld járhat. Piros: ha semmi sem változik. Fehér: ami eddig történt.": "According to the climate model. Gold: your path, with the band the Earth may stay within. Red: if nothing changes. White: what has happened so far.",
 	"a tenger %d cm-rel magasabb": "the sea is %d cm higher",
 	"a tenger +%d cm": "sea +%d cm",
 	"Saját AI beállítása": "Set up your own AI",

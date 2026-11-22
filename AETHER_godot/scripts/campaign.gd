@@ -46,6 +46,11 @@ var done: Array = []                 # tudásfa: a kutatott témák azonosítói
 var stars: Dictionary = {}           # tudásfa: téma -> 1–3 csillag (a legjobb kutatás ereje)
 var era := 1                         # korszak (1–4), csak nő
 var levers: Dictionary = {}          # jóváhagyott tervkarok: kar -> javaslat (a kutatásokból)
+var world_seed := 0                   # ennek a játéknak a „világa”: ebből jön minden véletlen
+var sens := 0.0                      # a Föld rejtett érzékenysége: −1 (a sáv alja) … +1 (a sáv teteje)
+var noise: Array = []                # természetes évi ingadozás 2026-tól (°C), a magból előre kisorsolva
+var history: Array = []              # az évek krónikája: [{"ev", "T", "esemenyek": [...]}]
+var games_played := 0
 var save_file := "aether_jatek.json"  # az önteszt külön fájlt használ
 var _acc := 0.0
 
@@ -81,6 +86,12 @@ func load_game() -> void:
 	if typeof(cs) == TYPE_DICTIONARY:
 		for k in cs:
 			stars[str(k)] = clampi(int(cs[k]), 1, 3)
+	world_seed = int(d.get("mag", 0))
+	sens = clampf(float(d.get("erzekenyseg", 0.0)), -1.0, 1.0)
+	var nz: Variant = d.get("ingadozas", [])
+	noise = nz if typeof(nz) == TYPE_ARRAY else []
+	var hs: Variant = d.get("kronika", [])
+	history = hs if typeof(hs) == TYPE_ARRAY else []
 	for id in done:   # régi mentés: a kutatott téma legalább 1 csillag
 		if not stars.has(str(id)):
 			stars[str(id)] = 1
@@ -89,7 +100,8 @@ func load_game() -> void:
 func save() -> void:
 	Bridge.write_json(save_path(), {"ev": year, "penz": money, "bizalom": trust, "idovonal": timeline,
 		"modell": model, "allomas": station, "epul": building, "kutatas_ev": research_this_year,
-		"tudas": done, "korszak": era, "karok": levers, "csillagok": stars})
+		"tudas": done, "korszak": era, "karok": levers, "csillagok": stars,
+		"mag": world_seed, "erzekenyseg": sens, "ingadozas": noise, "kronika": history})
 
 
 func new_game() -> void:
@@ -108,32 +120,80 @@ func new_game() -> void:
 	running = false
 	fast = false
 	_acc = 0.0
+	history = []
+	roll_world(-1 if save_file == "aether_jatek.json" else 2026)
 	if save_file == "aether_jatek.json":   # az önteszt ne törölje a játékos küldetéscsillagait
 		L.set_setting("kuldetesek", {})   # a küldetések csillagai is alapra állnak
 	save()
 	changed.emit()
 
 
-# --- idő -------------------------------------------------------------------
-func _process(delta: float) -> void:
-	if not running or blocked or year >= END_YEAR:
-		return
-	_acc += delta
-	if _acc >= SECONDS_PER_YEAR[1 if fast else 0]:
-		_acc = 0.0
-		advance()
-
-
-## Hol tart az idő az éven belül (0–1): a felső sáv ebből mutatja a hónapot és a csíkot.
+# --- idő: körökre osztott évek ------------------------------------------------
+## Az év addig tart, amíg a játékos kutat, épít és dönt; az „Év lezárása” lépteti tovább.
+## (A `running`, `fast`, `blocked` a régi, valós idejű menetből maradt; már semmi sem használja.)
 func year_progress() -> float:
-	if not running:
-		return 0.0
-	return clampf(_acc / float(SECONDS_PER_YEAR[1 if fast else 0]), 0.0, 1.0)
+	return 0.0
 
 
-## Az aktuális hónap (1–12), amíg az idő fut.
 func month() -> int:
-	return clampi(int(year_progress() * 12.0) + 1, 1, 12)
+	return 1
+
+
+# --- a világ véletlene (játékszabály, a tudományos bizonytalanságon belül) ---------
+## Minden új játék más Föld. A klímamodell három pályát számol (a sáv alja, közepe, teteje),
+## mert a tudomány nem tudja pontosan, mennyire érzékeny a Föld a CO2-re. A játék ebből a
+## sávból sorsol egy rejtett értéket: a játékos csak az évek múlásával látja, melyik Földet kapta.
+## Erre jön a természetes évi ingadozás (meleg és hűvös évek, pl. El Niño): átlagosan 0,1 °C körül.
+func roll_world(seed_value: int = -1) -> void:
+	var rng := RandomNumberGenerator.new()
+	if seed_value < 0:
+		rng.randomize()
+		world_seed = int(rng.randi() % 900000) + 100000
+	else:
+		world_seed = seed_value
+	rng.seed = world_seed
+	sens = clampf(rng.randfn(0.0, 0.5), -1.0, 1.0)
+	noise = []
+	var v := 0.0
+	for i in END_YEAR - START_YEAR + 1:
+		v = 0.5 * v + rng.randfn(0.0, 0.085)     # egymást követő évek hasonlítanak egymásra
+		noise.append(snappedf(clampf(v, -0.25, 0.25), 0.001))
+	if save_file != "aether_jatek.json":   # az önteszt Földje mindig a sáv közepe, ingadozás nélkül
+		sens = 0.0
+		noise = []
+
+
+## A valódi (ebben a játékban megvalósuló) érték a három modellpályából, ingadozás nélkül.
+func world_value(group: String, key: String, y: int) -> float:
+	var ys: Array = model.get("evek", [])
+	var g: Variant = model.get(group, {})
+	if typeof(g) != TYPE_DICTIONARY or not g.has("kozep") or not g["kozep"].has(key):
+		return NAN
+	for i in ys.size():
+		if int(ys[i]) == y:
+			var mid := float(g["kozep"][key][i])
+			var side := "magas" if sens > 0.0 else "alacsony"
+			if not g.has(side) or not g[side].has(key):
+				return mid
+			return lerpf(mid, float(g[side][key][i]), absf(sens))
+	return NAN
+
+
+## Az adott év „mért” hőmérséklete ebben a játékban: a valódi pálya + természetes ingadozás.
+func measured_temp(y: int) -> float:
+	var t := world_value("terv", "homerseklet", y)
+	var i := y - START_YEAR
+	if is_nan(t) or i < 0 or i >= noise.size():
+		return t
+	return t + float(noise[i])
+
+
+## Technikai hibával leállt kutatás: a pénz és az évi kutatási hely visszajár.
+func refund_research() -> void:
+	money += research_cost()
+	research_this_year = maxi(0, research_this_year - 1)
+	save()
+	changed.emit()
 
 
 func income() -> int:
@@ -173,6 +233,7 @@ func advance() -> void:
 		station[mod] = int(station[mod]) + 1
 		building = {}
 		note += " " + L.t("Elkészült: %s, %d. szint.") % [L.t(MODULES[mod]["nev"]), station[mod]]
+	history.append({"ev": year, "T": snappedf(measured_temp(year), 0.01)})
 	save()
 	year_passed.emit(year, note)
 	check_era()
@@ -252,7 +313,7 @@ func series_at(key: String, y: int, ens: String = "kozep") -> float:
 
 
 func temp_now() -> float:
-	return series_at("homerseklet", year)
+	return measured_temp(year)
 
 
 # --- terv ------------------------------------------------------------------

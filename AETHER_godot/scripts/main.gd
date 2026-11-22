@@ -88,17 +88,7 @@ const MONTHS_EN := ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep
 
 
 func _process(_delta: float) -> void:
-	if _year_bar == null or campaign == null:
-		return
-	var per: float = Campaign.SECONDS_PER_YEAR[1 if campaign.fast else 0]
-	var f: float = clampf(campaign._acc / per, 0.0, 1.0) if campaign.running else 0.0
-	_year_bar.value = f
-	_year_bar.modulate.a = 1.0 if campaign.running and not campaign.blocked else 0.35
-	if campaign.running:
-		var m := int(f * 12.0) % 12
-		_month_label.text = (MONTHS_EN if L.is_en() else MONTHS)[m] + ("" if not campaign.blocked else "  ⏸")
-	else:
-		_month_label.text = ""
+	pass
 
 
 func _ready() -> void:
@@ -384,6 +374,7 @@ func _build_top_bar() -> void:
 	_year_bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	var yrow := UI.hbox(6)
 	yrow.add_child(_year_bar)
+	yrow.visible = false   # körökre osztott évek: nincs telő idő, az évet a játékos zárja le
 	_month_label = UI.label("", 11, UI.CYAN, false, false)
 	_month_label.custom_minimum_size = Vector2(38, 0)
 	yrow.add_child(_month_label)
@@ -402,7 +393,7 @@ func _build_top_bar() -> void:
 		var sl: Label = _stats[k]
 		sl.mouse_filter = Control.MOUSE_FILTER_PASS
 		sl.tooltip_text = tips[k]
-	_stat(h, "melegedes", L.t("Melegedés (modell)"), "+%s °C" % L.num(1.36, 2), UI.EMBER, "https://doi.org/10.5194/essd-17-2641-2025")
+	_stat(h, "melegedes", L.t("Melegedés"), "+%s °C" % L.num(1.36, 2), UI.EMBER, "https://doi.org/10.5194/essd-17-2641-2025")
 	_stat(h, "co2", L.t("CO2 a levegőben"), L.t("letöltés…"), UI.GOLD)
 	_stat(h, "jeg", L.t("Északi-sarki tengeri jég"), L.t("letöltés…"), Color("#a9dcea"))
 	_stat(h, "jovo", L.t("A terved szerint"), L.t("még nincs terv"), UI.CYAN)
@@ -504,11 +495,11 @@ func _build_bottom_bar() -> void:
 	h.add_child(home)
 	var tbox := UI.vbox(6)
 	var trow := UI.hbox(6)
-	_play_btn = UI.button("▶  " + L.t("Idő indítása"))
+	_play_btn = UI.button(L.t("Év lezárása") + "  ▶")
 	_play_btn.custom_minimum_size = Vector2(170, 0)
 	_play_btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	trow.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	_play_btn.tooltip_text = L.t("Az évek telnek. Ha egy ablak nyitva van, az idő megáll.")
+	_play_btn.tooltip_text = L.t("Ha idén már mindent megtettél, zárd le az évet. Jön a következő. (Szóköz)")
 	_play_btn.pressed.connect(_toggle_time)
 	trow.add_child(_play_btn)
 	tbox.add_child(trow)
@@ -1304,12 +1295,12 @@ func _update_stats() -> void:
 	if not is_nan(t):
 		var ml: Label = _stats["melegedes"]
 		ml.text = "+%s °C" % UI.hu(t, 2)
-		ml.tooltip_text = L.t("A klímamodell becslése erre az évre: %d. (2024-ben mért érték: +1,36 °C, Forster és mtsai 2025.)") % campaign.year
+		ml.tooltip_text = L.t("A játék Földjének hőmérséklete %d-ben: a klímamodell pályája és a természetes évi ingadozás. (Valódi mérés 2024-ben: +1,36 °C, Forster és mtsai 2025.)") % campaign.year
 	if not model.is_empty():
 		var k: Dictionary = model["osszegzes"]["kozep"]
 		(_stats["jovo"] as Label).text = "2100: +%s °C" % UI.hu(float(k["T2100"]), 1)
 	if _play_btn != null:
-		_play_btn.text = ("❚❚  " + L.t("Szünet")) if campaign.running else ("▶  " + L.t("Idő indítása"))
+		_play_btn.text = L.t("Év lezárása") + "  ▶"
 		_play_btn.disabled = campaign.year >= Campaign.END_YEAR
 
 
@@ -1340,11 +1331,24 @@ func _set_stat(key: String, value: String) -> void:
 	tw.parallel().tween_property(l, "modulate", Color.WHITE, 0.35)
 
 
+## Körökre osztott évek: a gomb lezárja az évet. Rövid átmenet (a Föld fordul egyet), aztán
+## jön az új év: bevétel, a világ hírei, fordulópontok.
+var _ending_year := false
+
+
 func _toggle_time() -> void:
-	campaign.running = not campaign.running and campaign.year < Campaign.END_YEAR
+	if _ending_year or _overlay != null or campaign.year >= Campaign.END_YEAR:
+		return
+	_ending_year = true
+	_play_btn.disabled = true
+	var tw := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tw.tween_property(globe, "spin", globe.spin + 1.0, 1.1)
+	await tw.finished
+	_ending_year = false
+	campaign.advance()
 	_update_stats()
-	if campaign.running and campaign.timeline.is_empty():
-		_show_info(L.t("Telik az idő, de még nincs terved: a kibocsátás nem csökken. Nyisd meg „A terved” ablakot!"), "")
+	if campaign.timeline.is_empty() and campaign.year < Campaign.END_YEAR:
+		_show_info(str(_info.text) + " " + L.t("Még nincs terved: a kibocsátás nem csökken."), "")
 
 
 func _on_year_passed(y: int, note: String) -> void:
@@ -1464,7 +1468,7 @@ func _reset_game() -> void:
 	globe.heat = 0.0
 	globe.home()
 	_ensure_model()
-	_show_info(L.t("Új játék 2026-tól. Kutass, készíts tervet, és indítsd el az időt!"), "")
+	_show_info(L.t("Új játék, új Föld. Kutass, készíts tervet, aztán zárd le az évet!"), "")
 
 
 func _on_bridge_finished(tag: String, code: int, output: String) -> void:

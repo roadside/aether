@@ -39,10 +39,14 @@ func _ready() -> void:
 	z_index = 50
 	var m: Dictionary = campaign.model
 	_years = m.get("evek", [])
-	_plan = m.get("terv", {}).get("kozep", {}).get("homerseklet", [])
-	_base = m.get("alapeset", {}).get("kozep", {}).get("homerseklet", _plan)
-	if _base.size() != _plan.size():
-		_base = _plan
+	# ami ebben a játékban tényleg történt: a Föld rejtett érzékenysége szerinti két pálya
+	_plan = []
+	_base = []
+	for y in _years:
+		var tp: float = campaign.world_value("terv", "homerseklet", int(y))
+		var tb: float = campaign.world_value("alapeset", "homerseklet", int(y))
+		_plan.append(tp)
+		_base.append(tp if is_nan(tb) else tb)
 	_has_plan = not campaign.timeline.is_empty()
 	for i in _years.size():
 		if int(_years[i]) == Y0:

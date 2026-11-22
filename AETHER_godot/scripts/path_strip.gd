@@ -17,7 +17,7 @@ func _ready() -> void:
 	custom_minimum_size = Vector2(0, 78)
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	mouse_filter = Control.MOUSE_FILTER_PASS
-	tooltip_text = L.t("A klímamodell szerint. Arany: a te utad. Piros: ha semmi sem változik.")
+	tooltip_text = L.t("A klímamodell szerint. Arany: a te utad, a sávval, amin belül a Föld járhat. Piros: ha semmi sem változik. Fehér: ami eddig történt.")
 
 
 func _process(delta: float) -> void:
@@ -88,7 +88,6 @@ func _draw() -> void:
 		var dx: float = px.call(float(dec))
 		draw_line(Vector2(dx, y0), Vector2(dx, y0 + 3), Color(1, 1, 1, 0.35), 1.0)
 		draw_string(UI.font_body, Vector2(dx - (26 if dec == 2100 else 14), size.y - 1), str(dec), HORIZONTAL_ALIGNMENT_LEFT, -1, 11, UI.MUTE)
-	var now: float = float(campaign.year) + campaign.year_progress()
 	var pts_base := PackedVector2Array()
 	var pts_plan := PackedVector2Array()
 	var band_top := PackedVector2Array()
@@ -115,12 +114,18 @@ func _draw() -> void:
 		# a két út közti rés a végén: ennyit számít a terved
 		var ex := x1 - 1.0
 		draw_line(Vector2(ex, pts_base[-1].y + 3), Vector2(ex, pts_plan[-1].y - 3), Color(1, 1, 1, 0.5), 1.0)
-	# a mostani év: lüktető pont azon az úton, amin járunk
-	var fi := clampf(now - Y0, 0.0, float(Y1 - Y0))
-	var ia := i0 + int(floor(fi))
-	var ib := mini(ia + 1, years.size() - 1)
-	var tn: float = lerpf(float(plan[ia]), float(plan[ib]), fi - floor(fi))
-	var np := Vector2(px.call(clampf(now, Y0, Y1)), py.call(tn))
+	# ami eddig történt ebben a játékban (a „mért” évek): fehér vonal
+	var hist := PackedVector2Array()
+	hist.append(Vector2(px.call(float(Y0)), py.call(float(plan[i0]))))
+	for h in campaign.history:
+		hist.append(Vector2(px.call(float(h["ev"])), py.call(float(h["T"]))))
+	if hist.size() > 1:
+		draw_polyline(hist, Color(1, 1, 1, 0.9), 2.0, true)
+	# a mostani év: lüktető pont
+	var tn: float = campaign.measured_temp(campaign.year)
+	if is_nan(tn):
+		tn = float(plan[i0])
+	var np := Vector2(px.call(clampf(float(campaign.year), Y0, Y1)), py.call(tn))
 	draw_line(Vector2(np.x, y1), Vector2(np.x, y0), Color(1, 1, 1, 0.18), 1.0)
 	var pulse := 0.5 + 0.5 * sin(_t * 3.0)
 	draw_circle(np, 7.0 + 3.0 * pulse, Color(1, 1, 1, 0.16))
