@@ -33,4 +33,11 @@ const EN := {
 	"%s: %s mrd t CO2/év kivonás 2050-re": "%s: %s billion t CO2/year removed by 2050",
 	"Ez ugyanaz, mint a mostani terved. Húzz el egy csúszkát!": "This is the same as your current plan. Move a slider!",
 	"Ha bevezeted:": "If you bring it in:",
+	"Föld, %d.": "Earth, %d.",
+	"Egyre melegebb.": "Getting warmer.",
+	"A jövő még nincs megírva.": "The future is not written yet.",
+	"Esc: átugrás": "Esc: skip",
+	"az iparosodás előtti szinthez képest": "compared with pre-industrial levels",
+	"az 1991–2020-as átlaghoz képest": "compared with the 1991–2020 average",
+	"Adat: Copernicus Climate Pulse": "Data: Copernicus Climate Pulse",
 }
