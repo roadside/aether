@@ -507,7 +507,6 @@ const EN := {
 	"%s – melegebb, mint valaha.": "%s – warmer than ever.",
 	"Piros: ma melegebb, mint az 1991–2020-as átlag.": "Red: warmer today than the 1991–2020 average.",
 	"Itt kezdődik a kutatásod.": "Your research starts here.",
-	"A tudomány a te kezedben.": "Science is in your hands.",
 	"Viharok.": "Storms.",
 	"Aszály.": "Drought.",
 	"Olvadó jég.": "Melting ice.",

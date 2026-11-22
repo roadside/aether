@@ -278,26 +278,23 @@ func _hide_station() -> void:
 		create_tween().tween_property(_station, "modulate:a", 0.0, 0.6)
 
 
+## Záró kép: nincs szlogen, csak a játék címe – kicsiben, halványan a csillagok
+## között „elrejtve”, ahol a figyelmes néző észreveszi.
 func _show_logo() -> void:
 	_caption.text = ""
 	_sub.text = ""
-	_logo = UI.label("AETHER", 120, UI.CYAN, false, false)
+	_logo = UI.label("A E T H E R", 30, UI.CYAN, false, false)
 	_logo.add_theme_font_override("font", UI.font_pixel)
-	_logo.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_logo.position = Vector2(0, 330)
-	_logo.size = Vector2(1600, 160)
-	_logo.add_theme_color_override("font_shadow_color", Color(0.1, 0.9, 0.8, 0.5))
-	_logo.add_theme_constant_override("shadow_offset_x", 0)
-	_logo.add_theme_constant_override("shadow_offset_y", 6)
-	_logo.visible_ratio = 0.0
+	_logo.position = Vector2(1180, 120)
+	_logo.size = Vector2(320, 40)
+	_logo.modulate.a = 0.0
 	add_child(_logo)
-	create_tween().tween_property(_logo, "visible_ratio", 1.0, 1.0)   # betűnként épül fel
-	_say("", "")
-	_caption.text = L.t("A tudomány a te kezedben.")
-	_caption.modulate.a = 0.0
 	var tw := create_tween()
-	tw.tween_interval(0.9)
-	tw.tween_property(_caption, "modulate:a", 1.0, 0.6)
+	tw.tween_interval(0.6)
+	tw.tween_property(_logo, "modulate:a", 0.42, 1.6).set_trans(Tween.TRANS_SINE)
+	# két halk pislákolás, mint egy csillag
+	tw.tween_property(_logo, "modulate:a", 0.25, 0.5)
+	tw.tween_property(_logo, "modulate:a", 0.42, 0.5)
 
 
 func _finish() -> void:
