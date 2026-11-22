@@ -163,8 +163,22 @@ func _ready() -> void:
 	_ensure_model()
 	if "--onteszt" in OS.get_cmdline_user_args():
 		_selftest()
-	elif world.is_empty():
-		_refresh_world()
+	elif world.is_empty() or _world_age() > 3600:
+		_refresh_world()   # a régi (egy óránál régebbi) jelentések helyett frissek
+	# óránként magától frissül a „Mi történik most?” lista
+	var hourly := Timer.new()
+	hourly.wait_time = 3600.0
+	hourly.autostart = not ("--onteszt" in OS.get_cmdline_user_args())
+	hourly.timeout.connect(_refresh_world)
+	add_child(hourly)
+
+
+## Hány másodperce töltöttük le utoljára a világállapotot (a fájl ideje alapján).
+func _world_age() -> float:
+	var p := _world_path()
+	if not FileAccess.file_exists(p):
+		return 1e9
+	return Time.get_unix_time_from_system() - float(FileAccess.get_modified_time(p))
 
 
 # ---------------------------------------------------------------------------
@@ -322,13 +336,15 @@ func _build_top_bar() -> void:
 	ev_box.add_theme_constant_override("separation", -2)
 	_stat(h, "korszak", L.t("Korszak"), Knowledge.era_name(campaign.era), UI.GOLD)
 	(_stats["korszak"] as Label).mouse_filter = Control.MOUSE_FILTER_PASS
-	(_stats["korszak"] as Label).tooltip_text = L.t("Tudásfa (játékszabály): a kutatott témák új korszakot, új témákat és új tervlehetőségeket nyitnak. Kutatás gomb.")
+	(_stats["korszak"] as Label).tooltip_text = L.t("A kikutatott témák új korszakot, új témákat és új tervlehetőségeket nyitnak ki.")
 	_stat(h, "penz", L.t("Pénz"), str(campaign.money), UI.GOLD)
 	_stat(h, "bizalom", L.t("Bizalom"), "%d%%" % campaign.trust, UI.GREEN)
-	for k in ["penz", "bizalom"]:
+	var tips := {"penz": L.t("Pénz: a kutatásokhoz és a tervek bevezetéséhez szükséges; évente kapsz."),
+		"bizalom": L.t("Bizalom: a tervekhez szükséges; ellenőrzött kutatással és csökkenő kibocsátással növelhető.")}
+	for k in tips:
 		var sl: Label = _stats[k]
 		sl.mouse_filter = Control.MOUSE_FILTER_PASS
-		sl.tooltip_text = L.t("Játékszabály, nem valós adat. Pénz: kutatás és tervek bevezetése; évente kapsz. Bizalom: a gyors tervekhez kell; ellenőrzött kutatással és csökkenő kibocsátással nő.")
+		sl.tooltip_text = tips[k]
 	_stat(h, "melegedes", L.t("Melegedés (modell)"), "+%s °C" % L.num(1.36, 2), UI.EMBER, "https://doi.org/10.5194/essd-17-2641-2025")
 	_stat(h, "co2", L.t("CO2 a levegőben"), L.t("letöltés…"), UI.GOLD)
 	_stat(h, "jeg", L.t("Északi-sarki tengeri jég"), L.t("letöltés…"), Color("#a9dcea"))
@@ -416,7 +432,7 @@ func _build_bottom_bar() -> void:
 	var trow := UI.hbox(6)
 	_play_btn = UI.button(L.t("Idő indítása"))
 	_play_btn.custom_minimum_size = Vector2(150, 0)
-	_play_btn.tooltip_text = L.t("Az évek telnek. Ha egy ablak nyitva van, az idő áll. Gyorsbillentyű: szóköz")
+	_play_btn.tooltip_text = L.t("Az évek telnek. Ha egy ablak nyitva van, az idő megáll.")
 	_play_btn.pressed.connect(_toggle_time)
 	trow.add_child(_play_btn)
 	tbox.add_child(trow)
@@ -425,7 +441,7 @@ func _build_bottom_bar() -> void:
 	var trow2 := UI.hbox(6)
 	_reset_btn = UI.button(L.t("Új játék"))
 	_reset_btn.custom_minimum_size = Vector2(150, 0)
-	_reset_btn.tooltip_text = L.t("Elölről kezdi 2026-tól. A küldetések csillagai megmaradnak.")
+	_reset_btn.tooltip_text = L.t("Mindent elölről kezd 2026-tól, a küldetésekkel együtt.")
 	_reset_btn.pressed.connect(_reset_game)
 	trow2.add_child(_reset_btn)
 	tbox.add_child(trow2)
@@ -679,7 +695,7 @@ func _render_world() -> void:
 	_world_note.tooltip_text = L.t("Valós jelentések, letöltve: %s (UTC). %d/%d forrás elérhető.") % [when, ok, srcs.size()]
 	if events.is_empty():
 		_events_box.add_child(UI.label(L.t("Nem sikerült jelentést letölteni. Van internet?"), 16, UI.SOFT))
-	for e in _pick_events(events, 4):
+	for e in _pick_events(events, 12):
 		_events_box.add_child(_event_card(e))
 	# az első lépésnél az első kártya finoman lüktet: ide kell kattintani
 	if mission_step == 0 and _events_box.get_child_count() > 0:
@@ -768,7 +784,7 @@ func _show_event(e: Dictionary) -> void:
 	# Röviden lent, részletesen (összefoglaló, ábrák, forráslink) külön ablakban.
 	var place := EventPanel.short_place(e)
 	_show_info("%s%s (%s). %s" % [EventPanel.display_title(e), (" · " + place) if place != "" else "",
-		str(e.get("datum", "")), L.t("A részletek a megnyílt ablakban.")], "")
+		str(e.get("datum", "")), L.t("Részletek a megnyitott ablakban.")], "")
 	var p = EventPanel.new()
 	p.bridge = bridge
 	p.event = e
@@ -811,9 +827,9 @@ func _place_overlay(c: Control) -> void:
 			_close_overlay()
 	_dim.gui_input.connect(dim_fn)
 	add_child(_dim)
-	c.position = Vector2(340, 84)
-	c.custom_minimum_size = Vector2(920, 680)
-	c.size = Vector2(920, 680)
+	c.position = Vector2(340, 24)
+	c.custom_minimum_size = Vector2(920, 740)   # magasabb: a legtöbb tartalom görgetés nélkül elfér
+	c.size = Vector2(920, 740)
 	c.z_index = 11
 	_overlay = c
 	add_child(c)
@@ -874,7 +890,7 @@ func _toast(text: String, color: Color = UI.GOLD) -> void:
 	if not is_instance_valid(p):
 		return
 	# nyitott ablaknál a (sötétített) felső sávba kerül, hogy ne takarja az ablak címét
-	var top := 84.0 if _overlay == null else 8.0
+	var top := 84.0 if _overlay == null else 800.0   # nyitott ablaknál az alsó (sötétített) sávra
 	p.position = Vector2((1600 - p.size.x) / 2.0, top + 58 * _toasts)
 	_toasts += 1
 	p.modulate.a = 0.0
@@ -1135,6 +1151,14 @@ func _reset_game() -> void:
 		return
 	_reset_btn.text = L.t("Új játék")
 	campaign.new_game()
+	# a küldetések is elölről: csillagok törölve, az első küldetés az aktuális
+	L.set_setting("kuldetesek", {})
+	mission_idx = 0
+	_mission_note = ""
+	if mission_step >= MISSION.size():
+		_plan.set_mission(Missions.LIST[0])
+	_render_mission()
+	_close_overlay()
 	model = {}
 	_year_row.visible = false
 	globe.heat = 0.0
@@ -1192,6 +1216,11 @@ func _shot(dir: String, name: String) -> void:
 func _selftest() -> void:
 	var dir: String = bridge.work_dir("aether_onteszt")
 	print("ONTESZT indul, képek: ", dir)
+	# A játékos beállításait (küldetéscsillagok, bevezető, AI) az önteszt nem írhatja felül:
+	# elmentjük, és a végén visszaállítjuk.
+	var saved := {}
+	for key in ["kuldetesek", "bevezeto_kesz", "ai", "orszag"]:
+		saved[key] = L.get_setting(key, "__nincs__")
 	_refresh_world()
 	var w := await _wait_tag("vilag")
 	print("ONTESZT világ: kód=", w[1], " események=", world.get("esemenyek", []).size(), " források=", world.get("forrasok", {}))
@@ -1299,5 +1328,8 @@ func _selftest() -> void:
 			await _shot(dir, "6_esemeny_levego.png")
 			_close_overlay()
 			break
+	for key in saved:
+		# ha előtte nem volt ilyen kulcs, a null érték törli
+		L.set_setting(key, null if str(saved[key]) == "__nincs__" else saved[key])
 	print("ONTESZT kész")
 	get_tree().quit()

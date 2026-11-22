@@ -486,4 +486,10 @@ const EN := {
 	"Csúcs": "Peak",
 	"Kutatott témák": "Topics researched",
 	"Küldetések: %s  (%d/%d csillag)": "Missions: %s  (%d/%d stars)",
+	"A kikutatott témák új korszakot, új témákat és új tervlehetőségeket nyitnak ki.": "Researched topics unlock new eras, new topics and new plan options.",
+	"Pénz: a kutatásokhoz és a tervek bevezetéséhez szükséges; évente kapsz.": "Money: needed for research and for putting plans into effect; you get some every year.",
+	"Bizalom: a tervekhez szükséges; ellenőrzött kutatással és csökkenő kibocsátással növelhető.": "Trust: needed for plans; grows with verified research and falling emissions.",
+	"Az évek telnek. Ha egy ablak nyitva van, az idő megáll.": "Years pass. While a window is open, time stops.",
+	"Mindent elölről kezd 2026-tól, a küldetésekkel együtt.": "Starts everything over from 2026, missions included.",
+	"Részletek a megnyitott ablakban.": "Details in the open window.",
 }
