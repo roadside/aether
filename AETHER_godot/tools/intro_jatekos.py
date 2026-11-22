@@ -26,7 +26,7 @@ SHIRT = (206, 192, 164)
 TROUSERS = (98, 88, 62)
 PAN_C = (322, 262)
 # a hangmezők a hangszer közepéhez képest (x, y, félszélesség); az első a középső „ding”
-FIELDS = [(0, -6, 17), (-60, -6, 13), (-38, -22, 12), (4, -28, 12), (46, -20, 12), (64, -2, 13), (34, 14, 14), (-30, 15, 14)]
+FIELDS = [(0, -24, 16), (-58, -21, 11), (-21, -34, 10), (21, -34, 10), (58, -21, 11), (60, -6, 12), (22, 5, 13), (-22, 5, 13), (-60, -6, 12)]
 
 
 def sc(pts):
@@ -118,7 +118,7 @@ def body():
         part(c, lambda d, sx=sx: d.ellipse(sc([(sx - 17, 114), (sx + 17, 148)]), fill=255), SKIN, round_r=10, k=1.0, seed=5)
     # ujjatlan vászoning: laza, a mellkasnál szélesebb, lent a hangszer mögé fut
     shirt_pts = [(294, 110), (310, 116), (330, 132), (350, 116), (366, 110), (378, 126), (386, 156), (396, 196), (394, 250),
-                 (388, 300), (272, 300), (266, 250), (264, 196), (274, 156), (282, 126)]
+                 (388, 284), (272, 284), (266, 250), (264, 196), (274, 156), (282, 126)]
     sm = part(c, lambda d: d.polygon(sc(shirt_pts), fill=255), SHIRT, round_r=16, k=1.0, seed=6, grain=0.06, shadow=0.25, ambient=0.78)
     for pts, a in (([(286, 150), (292, 204), (288, 280)], 60), ([(312, 156), (318, 220), (314, 290)], 50), ([(356, 150), (364, 214), (360, 286)], 60),
                    ([(378, 176), (384, 236), (380, 296)], 70), ([(332, 140), (336, 196)], 45), ([(300, 124), (304, 152)], 45)):
@@ -147,23 +147,30 @@ def body():
 
 
 def pan():
+    """A handpan: két lapos, lencse alakú héj a peremnél összeillesztve, enyhén felülről nézve."""
     c = new()
     px, py = PAN_C
-    rx, ry = 96, 36
-    # alsó héj (bronzos), felső kupola (acél), perem
-    part(c, lambda d: d.chord(sc([(px - rx, py - 40), (px + rx, py + 66)]), 0, 180, fill=255), (156, 104, 68), round_r=16, k=1.2, seed=11, ambient=0.62)
-    dome = part(c, lambda d: d.ellipse(sc([(px - rx, py - ry), (px + rx, py + ry - 6)]), fill=255), (148, 156, 158), round_r=20, k=1.3, seed=12,
-                grain=0.03, ambient=0.86)
-    tint(c, lambda d: d.arc(sc([(px - rx, py - ry), (px + rx, py + ry - 6)]), 8, 172, fill=(70, 52, 40, 255), width=2 * S), blur=0.5)
-    tint(c, lambda d: d.arc(sc([(px - rx + 2, py - ry + 2), (px + rx - 2, py + ry - 8)]), 196, 300, fill=(236, 240, 238, 200), width=int(1.5 * S)), blur=0.8, clip=dome)
-    tint(c, lambda d: d.ellipse(sc([(px - 70, py - 30), (px - 10, py - 12)]), fill=(240, 244, 240, 60)), blur=6, clip=dome)     # fényfolt
+    rx = 98
+    # alsó héj: lapos, árnyékban van, csak egy keskeny ív látszik belőle a perem alatt
+    part(c, lambda d: d.chord(sc([(px - rx + 3, py - 30), (px + rx - 3, py + 30)]), 0, 180, fill=255), (120, 92, 70), round_r=10, k=0.9,
+         seed=11, ambient=0.50)
+    # felső héj: a perem (döntött kör) és a fölé domborodó lapos kupola
+    def dome_shape(d):
+        d.ellipse(sc([(px - rx, py - 17), (px + rx, py + 17)]), fill=255)
+        d.chord(sc([(px - rx, py - 44), (px + rx, py + 44)]), 180, 360, fill=255)
+    dome = part(c, dome_shape, (150, 158, 160), round_r=18, k=1.25, seed=12, grain=0.03, ambient=0.86)
+    # a perem: sötét illesztés elöl, fölötte vékony csillanás
+    tint(c, lambda d: d.arc(sc([(px - rx, py - 17), (px + rx, py + 17)]), 4, 176, fill=(58, 50, 44, 255), width=int(1.6 * S)), blur=0.4)
+    tint(c, lambda d: d.arc(sc([(px - rx + 1, py - 19), (px + rx - 1, py + 14)]), 12, 168, fill=(222, 228, 228, 200), width=S), blur=0.5, clip=dome)
+    tint(c, lambda d: d.arc(sc([(px - rx + 2, py - 42), (px + rx - 2, py + 40)]), 200, 300, fill=(238, 242, 240, 190), width=int(1.4 * S)), blur=0.8, clip=dome)
+    tint(c, lambda d: d.ellipse(sc([(px - 74, py - 36), (px - 14, py - 20)]), fill=(240, 244, 240, 55)), blur=6, clip=dome)        # fényfolt
     for i, (fx, fy, rw) in enumerate(FIELDS):
-        x, y, rh = px + fx, py + fy, rw * 0.42
-        tint(c, lambda d: d.ellipse(sc([(x - rw, y - rh), (x + rw, y + rh)]), fill=(70, 78, 82, 150)), blur=0.8, clip=dome)     # bemélyedés
+        x, y, rh = px + fx, py + fy, rw * 0.40
+        tint(c, lambda d: d.ellipse(sc([(x - rw, y - rh), (x + rw, y + rh)]), fill=(70, 78, 82, 150)), blur=0.8, clip=dome)        # bemélyedés
         tint(c, lambda d: d.arc(sc([(x - rw, y - rh), (x + rw, y + rh)]), 190, 350, fill=(52, 58, 62, 255), width=int(1.3 * S)), blur=0.4, clip=dome)
         tint(c, lambda d: d.arc(sc([(x - rw, y - rh), (x + rw, y + rh)]), 20, 160, fill=(226, 232, 232, 220), width=int(1.2 * S)), blur=0.4, clip=dome)
         if i == 0:
-            tint(c, lambda d: d.ellipse(sc([(x - 7, y - 4), (x + 7, y + 3)]), fill=(214, 220, 220, 230)), blur=0.8, clip=dome)   # a „ding” púpja
+            tint(c, lambda d: d.ellipse(sc([(x - 7, y - 4), (x + 7, y + 3)]), fill=(214, 220, 220, 230)), blur=0.8, clip=dome)      # a „ding” púpja
         else:
             tint(c, lambda d: d.ellipse(sc([(x - rw * 0.4, y - rh * 0.4), (x + rw * 0.4, y + rh * 0.4)]), fill=(56, 62, 66, 200)), blur=0.6, clip=dome)
     return finish(c, 40)

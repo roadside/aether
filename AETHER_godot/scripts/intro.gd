@@ -775,7 +775,7 @@ func _draw_future(lt: float) -> void:
 ## ütései vezérlik: fent lebeg -> félúton -> a hangmezőn -> vissza.
 const P := 2.5                  # a nyitány egy „pixele” a képernyőn (640×360 -> 1600×900)
 const PAN := Vector2(322, 262)  # a hangszer közepe a képen
-const HIT_SPOT := [Vector2(-22, 12), Vector2(8, -2)]   # ahová a bal és a jobb kéz üt (a hangszer közepéhez képest)
+const HIT_SPOT := [Vector2(-22, 5), Vector2(22, 5)]   # ahová a bal és a jobb kéz üt (a hangszer közepéhez képest)
 var _tex := {}
 
 
