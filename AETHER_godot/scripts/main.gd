@@ -812,6 +812,8 @@ func _build_anomaly_toggle() -> void:
 	box.add_child(lab)
 	var src := LinkButton.new()
 	src.add_theme_font_size_override("font_size", 12)
+	src.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS   # a doboz soha ne legyen szélesebb a színsávnál
+	src.custom_minimum_size = Vector2(300, 0)
 	src.add_theme_color_override("font_color", UI.MUTE)
 	src.pressed.connect(func() -> void: OS.shell_open(PULSE_PAGE))
 	box.add_child(src)
