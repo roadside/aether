@@ -231,6 +231,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_SPACE: _toggle_time()
 			KEY_RIGHT: campaign.advance()
 			KEY_H: globe.home()
+			KEY_F1: _open_help()
 			_: handled = false
 		if handled:
 			get_viewport().set_input_as_handled()
@@ -272,6 +273,13 @@ func _build_top_bar() -> void:
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(spacer)
+	# Súgó: egy rövid lap a négy lépésről és a gyorsbillentyűkről (F1 is).
+	var help_btn := UI.button("?")
+	help_btn.tooltip_text = L.t("Hogyan játssz? (F1)")
+	help_btn.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	help_btn.focus_mode = Control.FOCUS_NONE
+	help_btn.pressed.connect(_open_help)
+	h.add_child(help_btn)
 	# Nyelvváltó: a másik nyelvre vált, elmenti, és újraépíti a képernyőt.
 	var lang_btn := UI.button("EN" if not L.is_en() else "HU")
 	lang_btn.tooltip_text = "Switch to English" if not L.is_en() else "Váltás magyarra"
@@ -411,6 +419,51 @@ func _on_station(s: Dictionary) -> void:
 		_open_station()
 	else:
 		_show_info(L.t("Kutatóállomás: ") + str(s["name"]), "")
+
+
+## Rövid súgó: mit csinálj (4 lépés), és mely billentyűkkel megy gyorsan. Kevés szöveg.
+func _open_help() -> void:
+	var p := PanelContainer.new()
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = UI.PANEL_BG
+	sb.border_color = UI.CYAN
+	sb.set_border_width_all(3)
+	sb.shadow_color = Color(0, 0, 0, 0.7)
+	sb.shadow_size = 28
+	sb.set_content_margin_all(28)
+	p.add_theme_stylebox_override("panel", sb)
+	var scroll := ScrollContainer.new()
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	p.add_child(scroll)
+	var v := UI.vbox(14)
+	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(UI.scroll_pad(v))
+	v.add_child(UI.heading(L.t("Hogyan játssz?")))
+	var steps := [
+		[L.t("1. Nézz körül"), L.t("A bal oldali lista és a földgömb pöttyei valódi, mai jelentések.")],
+		[L.t("2. Kutass"), L.t("Válassz kérdést: a válasz valódi tudományos cikkekből jön.")],
+		[L.t("3. Tervezz"), L.t("A kutatott megoldásokat tedd a tervedbe, és nézd meg, mi lesz 2100-ig.")],
+		[L.t("4. Indítsd az időt"), L.t("Telnek az évek, nő a pénz és a bizalom. Fejleszd az állomásod.")],
+	]
+	for st in steps:
+		var c := UI.card(UI.GOLD)
+		c.add_child(UI.label(st[0], 18, UI.TEXT, true))
+		c.add_child(UI.label(st[1], 15, UI.SOFT))
+		v.add_child(UI.card_root(c))
+	v.add_child(UI.label(L.t("Gyorsbillentyűk"), 18, UI.CYAN, true))
+	var keys := [["K", L.t("Kutatás")], ["T", L.t("A terved")], ["A", L.t("Állomás")], ["N", L.t("Nálunk")],
+		[L.t("Szóköz"), L.t("idő indítása / szünet")], ["→", L.t("+1 év")], ["H", L.t("földgömb: vissza a helyedre")],
+		["Esc", L.t("ablak bezárása")], ["F11", L.t("teljes képernyő")]]
+	var grid := GridContainer.new()
+	grid.columns = 2
+	grid.add_theme_constant_override("h_separation", 18)
+	grid.add_theme_constant_override("v_separation", 6)
+	for k in keys:
+		grid.add_child(UI.label(k[0], 16, UI.GOLD, true, false))
+		grid.add_child(UI.label(k[1], 16, UI.TEXT, false, false))
+	v.add_child(grid)
+	v.add_child(UI.label(L.t("A földgömb egérrel forgatható, görgővel nagyítható; dupla kattintás: vissza a helyedre."), 14, UI.MUTE))
+	_place_overlay(p)
 
 
 func _open_nalunk() -> void:
@@ -746,7 +799,9 @@ func _toast(text: String, color: Color = UI.GOLD) -> void:
 	await get_tree().process_frame
 	if not is_instance_valid(p):
 		return
-	p.position = Vector2((1600 - p.size.x) / 2.0, 84 + 58 * _toasts)
+	# nyitott ablaknál a (sötétített) felső sávba kerül, hogy ne takarja az ablak címét
+	var top := 84.0 if _overlay == null else 8.0
+	p.position = Vector2((1600 - p.size.x) / 2.0, top + 58 * _toasts)
 	_toasts += 1
 	p.modulate.a = 0.0
 	var tw := create_tween()
@@ -946,6 +1001,7 @@ func _reset_game() -> void:
 	model = {}
 	_year_row.visible = false
 	globe.heat = 0.0
+	globe.home()
 	_ensure_model()
 	_show_info(L.t("Új játék 2026-tól. Kutass, készíts tervet, és indítsd el az időt!"), "")
 
@@ -1011,6 +1067,9 @@ func _selftest() -> void:
 		_toast(L.t("Új korszak: %s") % Knowledge.era_name(2), UI.GOLD)
 		await get_tree().create_timer(1.0).timeout
 		await _shot(dir, "1b_kiemeles.png")
+		_open_help()
+		await _shot(dir, "1c_sugo.png")
+		_close_overlay()
 		globe.highlight = {}
 		globe.home()
 		await get_tree().create_timer(0.8).timeout
