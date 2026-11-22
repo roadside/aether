@@ -17,6 +17,7 @@ const StationPanel := preload("res://scripts/station_panel.gd")
 const NalunkPanel := preload("res://scripts/nalunk_panel.gd")
 const Intro := preload("res://scripts/intro.gd")
 const Tour := preload("res://scripts/tour.gd")
+const Debate := preload("res://scripts/debate.gd")
 const PathStrip := preload("res://scripts/path_strip.gd")
 const Milestones := preload("res://scripts/milestones.gd")
 const Finale := preload("res://scripts/finale.gd")
@@ -1536,6 +1537,23 @@ func _on_year_passed(y: int, note: String) -> void:
 			_open_year_events(evs)
 		else:
 			Events.settle(campaign, evs, "segit")
+	elif not ("--onteszt" in OS.get_cmdline_user_args()):
+		# csendes évben jöhet egy vita: egy gyakori tévhit, amit a saját kutatásod cáfol
+		var deb: Dictionary = Debate.pick(campaign, y)
+		if not deb.is_empty():
+			_open_debate(deb)
+
+
+func _open_debate(deb: Dictionary) -> void:
+	var p: Control = Debate.panel(campaign, deb, _close_overlay)
+	_place_overlay(p)
+	p.custom_minimum_size = Vector2(760, 0)
+	p.position = Vector2(420, 150)
+	var fit := func() -> void:
+		if is_instance_valid(p):
+			p.size = Vector2(760, 0)
+			p.position.y = maxf(16.0, (900.0 - p.size.y) / 2.0)
+	fit.call_deferred()
 
 
 func _open_year_events(evs: Array) -> void:
@@ -1906,6 +1924,16 @@ func _selftest() -> void:
 			_open_year_events(demo)
 			await get_tree().create_timer(7.0).timeout   # a gyors évek felugró jelzései eltűnnek
 			await _shot(dir, "5e_esemenyek.png")
+			_close_overlay()
+		# 5f: vita egy gyakori tévhitről (a válasz a téma lektorált szövege)
+		for tid in ["napaktivitas", "tengerszint", "villanyauto"]:
+			campaign.mark_researched(tid)
+		var deb: Dictionary = Debate.pick(campaign, 2040, true)
+		if not deb.is_empty():
+			_open_debate(deb)
+			await get_tree().create_timer(0.6).timeout
+			await _shot(dir, "5f_vita.png")
+			Debate.answer(campaign, deb, str(deb["tema"]))
 			_close_overlay()
 		campaign.world_seed = 2026
 		# 5c: fordulópont-sáv a földgömb előtt (a modellből), 5d: évtized
