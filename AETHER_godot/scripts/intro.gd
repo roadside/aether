@@ -314,15 +314,12 @@ func _play_full() -> void:
 	# 5. Négy festett kép, 4–4 mp, puha sötét áttűnéssel (16 mp)
 	var words := [L.t("Olvadó jég."), L.t("Aszály."), L.t("Árvizek."), L.t("Erdőtüzek.")]
 	var cats := ["jeg", "aszaly", "arviz", "tuz"]
-	var text := ""
 	for i in 4:
 		_scene_idx = i
 		_set_mode("kep")
 		if i == 0:
 			g.show_anomaly(false)
-		text += ("" if text == "" else " ") + str(words[i])
-		_caption.text = text
-		_caption.modulate.a = 1.0
+		_say(str(words[i]))          # minden képnél csak a saját szava, külön-külön
 		_sub.text = ""
 		if not await _wait(SCENE_LEN * 0.6): return
 		await _shot("intro_%02d_kep_%s.png" % [5 + i, cats[i]])
