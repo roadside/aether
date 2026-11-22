@@ -53,6 +53,7 @@ var sens := 0.0                      # a Föld rejtett érzékenysége: −1 (a 
 var noise: Array = []                # természetes évi ingadozás 2026-tól (°C), a magból előre kisorsolva
 var history: Array = []              # az évek krónikája: [{"ev", "T", "esemenyek": [...]}]
 var games_played := 0
+var prep: Dictionary = {}            # felkészülés eseménytípusonként (0–2): a döntéseidből, tartós védelem
 var volcanoes: Array = []            # nagy vulkánkitörések évei ebben a világban (a magból sorsolva)
 
 ## Partvédelem (játékszabály): ezek a kutatások csökkentik az emelkedő tenger okozta kárt.
@@ -103,6 +104,8 @@ func load_game() -> void:
 	history = hs if typeof(hs) == TYPE_ARRAY else []
 	var vk: Variant = d.get("vulkanok", [])
 	volcanoes = vk if typeof(vk) == TYPE_ARRAY else []
+	var pr: Variant = d.get("felkeszules", {})
+	prep = pr if typeof(pr) == TYPE_DICTIONARY else {}
 	for id in done:   # régi mentés: a kutatott téma legalább 1 csillag
 		if not stars.has(str(id)):
 			stars[str(id)] = 1
@@ -114,7 +117,8 @@ func save() -> void:
 	Bridge.write_json(save_path(), {"ev": year, "penz": money, "bizalom": trust, "idovonal": timeline,
 		"modell": model, "allomas": station, "epul": building, "kutatas_ev": research_this_year,
 		"tudas": done, "korszak": era, "karok": levers, "csillagok": stars,
-		"mag": world_seed, "erzekenyseg": sens, "ingadozas": noise, "kronika": history, "vulkanok": volcanoes})
+		"mag": world_seed, "erzekenyseg": sens, "ingadozas": noise, "kronika": history, "vulkanok": volcanoes,
+		"felkeszules": prep})
 
 
 ## seed_value >= 0: ugyanaz a Föld újra (ugyanaz az érzékenység, ingadozás, események).
@@ -135,6 +139,7 @@ func new_game(seed_value: int = -1) -> void:
 	fast = false
 	_acc = 0.0
 	history = []
+	prep = {}
 	roll_world(seed_value if seed_value >= 0 else (2026 if plain_world else -1))
 	if save_file == "aether_jatek.json":   # az önteszt ne törölje a játékos küldetéscsillagait
 		L.set_setting("kuldetesek", {})   # a küldetések csillagai is alapra állnak

@@ -74,7 +74,11 @@ func _play(kind: String, seed_value: int, base: Dictionary, plan: Dictionary) ->
 		for e in evs:
 			if not e.get("jo", false):
 				st["esemeny"] += 1
-				st["kar"] += int(e["kar_penz"])
+				var m0: int = c.money
+				# döntés: a lusta nem tesz semmit, az átlagos segít, a szorgalmas felkészül, ha telik rá
+				var pick := "semmi" if kind == "lusta" else ("segit" if kind == "atlagos" else ("felkeszul" if c.money > 250 else "segit"))
+				Events.settle(c, [e], pick)
+				st["kar"] += m0 - c.money
 		if c.money <= 0:
 			st["nulla_ev"] += 1
 		st["min_bizalom"] = mini(int(st["min_bizalom"]), c.trust)
@@ -99,6 +103,10 @@ func _q(vals: Array, f: float) -> float:
 
 func _init() -> void:
 	var a := OS.get_cmdline_user_args()
+	if a.size() < 2:
+		print("Használat: godot --headless --path . -s tools/egyensuly.gd -- <alap_modell.json> <terv_modell.json> [N]")
+		quit(1)
+		return
 	var base: Variant = Bridge.read_json(a[0])
 	var plan: Variant = Bridge.read_json(a[1])
 	var n: int = int(a[2]) if a.size() > 2 else 200

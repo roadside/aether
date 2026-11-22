@@ -1534,19 +1534,27 @@ func _on_year_passed(y: int, note: String) -> void:
 		_update_stats()
 		if not ("--onteszt" in OS.get_cmdline_user_args()):
 			_open_year_events(evs)
+		else:
+			Events.settle(campaign, evs, "segit")
 
 
 func _open_year_events(evs: Array) -> void:
-	var to_research := func() -> void:
+	var to_research := func(topic_id: String) -> void:
 		_close_overlay()
-		_open_research()
+		_open_research(Knowledge.topic(topic_id) if topic_id != "" else {})
 	var p: Control = Events.panel(campaign, evs, to_research, _close_overlay)
 	_place_overlay(p)
+	# ha a játékos döntés nélkül zárja be az ablakot, az „nem teszek semmit”
+	var settle_fn := func() -> void:
+		Events.settle(campaign, evs)
+		_update_stats()
+	p.tree_exited.connect(settle_fn)
 	p.custom_minimum_size = Vector2(760, 0)
 	p.position = Vector2(420, 150)
 	var fit := func() -> void:
 		if is_instance_valid(p):
 			p.size = Vector2(760, 0)
+			p.position.y = maxf(16.0, (900.0 - p.size.y) / 2.0)   # két eseménynél is elférjen
 	fit.call_deferred()
 
 
@@ -1887,15 +1895,16 @@ func _selftest() -> void:
 		# 5e: évzáró eseménylap (játékszabály), egy ismert védő témával
 		campaign.world_seed = 424242
 		campaign.mark_researched("hoseg_riasztas")
+		campaign.mark_researched("ontozes")
 		var demo: Array = []
-		for yy in range(2037, 2100):
+		for yy in range(2037, 2100):  # két eseményes év
 			demo = Events.draw(campaign, yy)
 			if demo.size() >= 2:
 				break
 		print("ONTESZT események: ", demo.map(func(e): return [e["ev"], e["id"], e["kar_penz"], e["pajzs"]]))
 		if not demo.is_empty():
 			_open_year_events(demo)
-			await get_tree().create_timer(0.6).timeout
+			await get_tree().create_timer(7.0).timeout   # a gyors évek felugró jelzései eltűnnek
 			await _shot(dir, "5e_esemenyek.png")
 			_close_overlay()
 		campaign.world_seed = 2026
