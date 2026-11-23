@@ -292,7 +292,24 @@ func _build_top() -> void:
 	h.add_child(mb)
 
 
+var _land_frame := 0
+
+
+## A kártyák tájképei élnek: a szélkerekek forognak, az eső esik.
+func _tick_landscapes() -> void:
+	_land_frame = 1 - _land_frame
+	for gid in _group_cards:
+		var g: Dictionary = world.group(gid)
+		if not g.is_empty():
+			(_group_cards[gid]["taj"] as TextureRect).texture = Landscape.texture(gid, int(g["cel"]) > 0, _land_frame)
+
+
 func _build_groups() -> void:
+	var lt := Timer.new()
+	lt.wait_time = 0.6
+	lt.autostart = true
+	lt.timeout.connect(_tick_landscapes)
+	add_child(lt)
 	for i in world.groups.size():
 		var g: Dictionary = world.groups[i]
 		var b := Button.new()
@@ -344,7 +361,7 @@ func _fill_group(g: Dictionary) -> void:
 	var v: VBoxContainer = _group_cards[g["id"]]["doboz"]
 	UI.clear(v)
 	var col := Color(str(g["szin"]))
-	(_group_cards[g["id"]]["taj"] as TextureRect).texture = Landscape.texture(str(g["id"]), int(g["cel"]) > 0)
+	(_group_cards[g["id"]]["taj"] as TextureRect).texture = Landscape.texture(str(g["id"]), int(g["cel"]) > 0, _land_frame)
 	var name_l := UI.label(L.field(g, "nev"), 20, col, true, false)
 	v.add_child(name_l)
 	v.add_child(_lbl(L.t("A világ CO2-kibocsátásának %s%%-a") % L.num_short(float(g["co2_resz"]) * 100.0, 0), 13, UI.MUTE))

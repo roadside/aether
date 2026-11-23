@@ -30,8 +30,9 @@ static var _images: Dictionary = {}
 
 
 ## clean: a csoport már vállalt célt, ezért szélkerekek és napelemek állnak a tájban (játékbeli jelzés).
-static func texture(id: String, clean: bool = false) -> Texture2D:
-	var key := id + ("_z" if clean else "")
+## frame: 0 vagy 1 – a szélkerék lapátjai és az eső két állása, ettől él a kép.
+static func texture(id: String, clean: bool = false, frame: int = 0) -> Texture2D:
+	var key := id + ("_z" if clean else "") + ("_2" if frame == 1 else "")
 	if _cache.has(key):
 		return _cache[key]
 	if not SPEC.has(id):
@@ -80,7 +81,7 @@ static func texture(id: String, clean: bool = false) -> Texture2D:
 				_disc(img, int(c[0]), int(c[1]), int(c[2]) - 3, Color("#7d8fa0"))
 				_disc(img, int(c[0]) + 4, int(c[1]) + 2, int(c[2]) - 4, Color("#93a3b0"))
 			for i in 26:                             # ferde esőcsíkok
-				var x0 := (i * 17) % W
+				var x0 := (i * 17 + frame * 4) % W
 				var y0 := 10 + (i * 5) % 14
 				for k in 3:
 					_px(img, x0 - k, y0 + k * 2, Color(0.85, 0.9, 0.95, 0.5))
@@ -108,7 +109,7 @@ static func texture(id: String, clean: bool = false) -> Texture2D:
 	if clean:
 		for t in CLEAN.get(id, []):
 			if str(t[0]) == "sz":
-				_turbine(img, int(t[1]), int(t[2]))
+				_turbine(img, int(t[1]), int(t[2]), frame)
 			else:
 				_solar(img, int(t[1]), int(t[2]))
 	_images[key] = img
@@ -145,16 +146,14 @@ static func _pine(img: Image, x: int, y: int, c: Color) -> void:
 	_px(img, x, y, Color("#4a3524"))
 
 
-static func _turbine(img: Image, x: int, y: int) -> void:
+static func _turbine(img: Image, x: int, y: int, frame: int = 0) -> void:
 	var c := Color("#f2f4f8")
-	for k in 9:
+	for k in 10:
 		_px(img, x, y - k, c)
-	for k in range(1, 4):
-		_px(img, x - k, y - 9 - k, c)
-		_px(img, x + k, y - 9 - k / 2, c)
-		_px(img, x, y - 9 + k, Color(c, 0.0))
-	_px(img, x + 1, y - 8, c)
-	_px(img, x + 2, y - 7, c)
+	var hy := y - 9
+	var m := 1 if frame == 0 else -1               # a második állás az első tükörképe: ettől forog
+	for b in [[-1, -1], [-2, -2], [-3, -3], [1, 0], [2, -1], [3, -1], [1, 1], [2, 2], [2, 3]]:
+		_px(img, x + int(b[0]) * m, hy + int(b[1]), c)
 
 
 static func _solar(img: Image, x: int, y: int) -> void:
