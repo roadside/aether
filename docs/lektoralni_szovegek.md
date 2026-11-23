@@ -336,7 +336,7 @@ Csak ezek újak. Küldetések, döntési helyzetek, tudáspróba, a Kockázatos 
 - A mai Föld: %d napja játszod egymás után.
 - Biztos? Kattints még egyszer!
 
-## 10. Új szövegek (2026-11-23, 21 óra 30 után) – még nem lektorált
+## 10. Új szövegek (2026-11-23, 21 óra 30 után)
 
 Csak ezek újak: a telő idő és a Földön felvillanó pillanatok szövegei.
 
