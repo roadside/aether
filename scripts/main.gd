@@ -66,11 +66,26 @@ class Twinkle extends Control:
 			_stars.append([Vector2(rng.randf() * 1600.0, rng.randf() * 900.0).snapped(Vector2(2, 2)),
 				rng.randf_range(0.6, 2.2), rng.randf() * TAU, 2.0 if rng.randf() < 0.15 else 1.0])
 
+	var _met_at := 14.0          # mikor jön a következő hullócsillag (másodperc)
+	var _met_from := Vector2.ZERO
+	var _met_dir := Vector2.ZERO
+
 	func _process(delta: float) -> void:
 		_t += delta
+		if _t > _met_at + 0.9:   # ritkán, 20–45 másodpercenként egy halvány hullócsillag
+			_met_at = _t + randf_range(20.0, 45.0)
+			_met_from = Vector2(randf_range(200.0, 1400.0), randf_range(20.0, 300.0))
+			_met_dir = Vector2(1.0 if randf() < 0.5 else -1.0, randf_range(0.35, 0.6)).normalized()
 		queue_redraw()
 
 	func _draw() -> void:
+		var k := (_t - _met_at) / 0.9
+		if k > 0.0 and k < 1.0 and _met_dir != Vector2.ZERO:
+			var head := _met_from + _met_dir * 260.0 * k
+			var fade := sin(k * PI)
+			for i in 14:
+				var p := (head - _met_dir * float(i) * 4.0).snapped(Vector2(2, 2))
+				draw_rect(Rect2(p, Vector2(2, 2)), Color(0.9, 0.95, 1.0, fade * 0.75 * (1.0 - float(i) / 14.0)))
 		for s in _stars:
 			var a: float = 0.12 + 0.50 * (0.5 + 0.5 * sin(_t * float(s[1]) + float(s[2])))
 			var sz: float = float(s[3]) * 2.0
