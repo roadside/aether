@@ -218,4 +218,5 @@ const EN := {
 	"Melyik kártyádon áll ez? Ha eltalálod, ebben a körben eggyel több lépésed van.": "Which of your cards says this? Get it right and you have one extra move this round.",
 	"Eltaláltad! Ebben a körben eggyel több lépésed van.": "Correct! You have one extra move this round.",
 	"Nem ez volt. A helyes válasz:": "Not that one. The right answer:",
+	"A mai Föld: %d napja játszod egymás után.": "Today's Earth: you have played %d days in a row.",
 }

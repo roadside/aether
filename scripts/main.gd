@@ -519,6 +519,21 @@ func _build_menu() -> void:
 
 
 ## A mai nap Föld-kódja (ééhhnn): aznap mindenki ugyanazt a Földet kapja.
+## Csillagok a 2100-as melegedés szerint (a jelvények határaival): +2 °C alatt egy, +1,7 alatt kettő, +1,6 alatt három.
+static func _stars(t: float) -> String:
+	var n := 3 if t < 1.6 else (2 if t < 1.7 else (1 if t < 2.0 else 0))
+	return "★".repeat(n) + "☆".repeat(3 - n)
+
+
+## Hány egymást követő napon játszottad végig „A mai Föld”-et (a mai vagy a tegnapi nappal bezárólag).
+func _daily_streak() -> int:
+	var ds: Variant = L.get_setting("napi_sorozat", {})
+	if typeof(ds) != TYPE_DICTIONARY or not ds.has("nap"):
+		return 0
+	var today := int(Time.get_unix_time_from_system() / 86400.0)
+	return int(ds.get("db", 0)) if today - int(ds["nap"]) <= 1 else 0
+
+
 func _daily_code() -> int:
 	var d := Time.get_date_dict_from_system()
 	return (int(d["year"]) % 100) * 10000 + int(d["month"]) * 100 + int(d["day"])
@@ -878,6 +893,13 @@ func _finish_game(r: Dictionary) -> Dictionary:
 		var key := str(world.seed_v)
 		if not db.has(key) or t < float(db[key]):
 			L.set_setting("napi_legjobb", {key: t})       # csak a mai napot őrizzük
+		var today := int(Time.get_unix_time_from_system() / 86400.0)
+		var ds: Variant = L.get_setting("napi_sorozat", {})
+		if typeof(ds) != TYPE_DICTIONARY:
+			ds = {}
+		var last := int(ds.get("nap", -9))
+		if last != today:
+			L.set_setting("napi_sorozat", {"nap": today, "db": int(ds.get("db", 0)) + 1 if today - last == 1 else 1})
 	var past: Variant = L.get_setting("foldek", [])
 	if typeof(past) != TYPE_ARRAY:
 		past = []
@@ -934,6 +956,8 @@ func _open_collection() -> void:
 	var games := int(L.get_setting("jatekok", 0))
 	if games > 0:
 		body.add_child(UI.label(L.t("Befejezett játékok: %d · A legjobb Földed: +%s °C") % [games, L.num(float(L.get_setting("legjobb", 0.0)), 2)], 17, UI.GREEN))
+	if _daily_streak() >= 2:
+		body.add_child(UI.label(L.t("A mai Föld: %d napja játszod egymás után.") % _daily_streak(), 17, UI.GREEN))
 	var mdone := int(L.get_setting("kuldetesek", 0))
 	if mdone > 0:
 		body.add_child(UI.label(L.t("Teljesített küldetések: %d") % mdone, 17, UI.GREEN))
@@ -952,7 +976,7 @@ func _open_collection() -> void:
 			var e: Dictionary = past[i]
 			var date := ("%d-%02d-%02d" if L.is_en() else "%d. %02d. %02d.") % [int(e["ev"]), int(e["ho"]), int(e["nap"])]
 			var level: String = L.t({3: "Nehéz", 4: "Közepes", 5: "Könnyű"}.get(int(e.get("lepes", 4)), "Közepes"))
-			(colv[0 if i < half else 1] as Control).add_child(UI.label("%s · +%s °C · %s · %s: %d" % [date, L.num(float(e["T"]), 2), level, L.t("Föld-kód"), int(e["mag"])], 15, UI.SOFT))
+			(colv[0 if i < half else 1] as Control).add_child(UI.label("%s  %s · +%s °C · %s · %s: %d" % [_stars(float(e["T"])), date, L.num(float(e["T"]), 2), level, L.t("Föld-kód"), int(e["mag"])], 15, UI.SOFT))
 	var have := _badges()
 	body.add_child(UI.label(L.t("Jelvények: %d / %d") % [have.size(), BADGES.size()], 19, UI.GOLD, true, false))
 	var bg := GridContainer.new()
@@ -1620,7 +1644,7 @@ func _open_end() -> void:
 		gl.sea_rise = clampf((float(side[1]) - M.T_START) / 2.0, 0.0, 1.0)
 		gl.spin = 0.05
 		v.add_child(gl)
-		var a := UI.label(side[0], 20, side[3], true, false)
+		var a := UI.label(str(side[0]) + ("   " + _stars(float(side[1])) if side[4] > 0.5 else ""), 20, side[3], true, false)
 		a.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		v.add_child(a)
 		var b := UI.label("+%s °C" % L.num(float(side[1]), 2), 34, side[3], true, false)
