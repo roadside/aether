@@ -1,0 +1,116 @@
+{
+ "forras": "Armstrong McKay és mtsai 2022, Science 377, eabn7950",
+ "link": "https://doi.org/10.1126/science.abn7950",
+ "elemek": [
+  {
+   "id": "gronland",
+   "nev": "Grönland jégtakarója",
+   "nev_en": "Greenland ice sheet",
+   "lat": 72,
+   "lon": -40,
+   "also": 0.8,
+   "kozep": 1.5,
+   "felso": 3.0
+  },
+  {
+   "id": "nyugat_antarktisz",
+   "nev": "Nyugat-Antarktisz jégtakarója",
+   "nev_en": "West Antarctic ice sheet",
+   "lat": -78,
+   "lon": -110,
+   "also": 1.0,
+   "kozep": 1.5,
+   "felso": 3.0
+  },
+  {
+   "id": "labrador",
+   "nev": "A Labrador-tenger áramlása",
+   "nev_en": "Labrador Sea convection",
+   "lat": 58,
+   "lon": -52,
+   "also": 1.1,
+   "kozep": 1.8,
+   "felso": 3.8
+  },
+  {
+   "id": "amoc",
+   "nev": "Az Atlanti-óceán nagy áramlása",
+   "nev_en": "Atlantic overturning circulation",
+   "lat": 45,
+   "lon": -30,
+   "also": 1.4,
+   "kozep": 4.0,
+   "felso": 8.0
+  },
+  {
+   "id": "amazonas",
+   "nev": "Az Amazonas esőerdeje",
+   "nev_en": "Amazon rainforest",
+   "lat": -5,
+   "lon": -62,
+   "also": 2.0,
+   "kozep": 3.5,
+   "felso": 6.0
+  },
+  {
+   "id": "permafroszt_osszeomlas",
+   "nev": "Az északi fagyott talaj (összeomlás)",
+   "nev_en": "Boreal permafrost (collapse)",
+   "lat": 68,
+   "lon": 120,
+   "also": 3.0,
+   "kozep": 4.0,
+   "felso": 6.0
+  },
+  {
+   "id": "permafroszt_olvadas",
+   "nev": "Az északi fagyott talaj (hirtelen olvadás)",
+   "nev_en": "Boreal permafrost (abrupt thaw)",
+   "lat": 65,
+   "lon": -150,
+   "also": 1.0,
+   "kozep": 1.5,
+   "felso": 2.3
+  },
+  {
+   "id": "korall",
+   "nev": "A trópusi korallzátonyok",
+   "nev_en": "Tropical coral reefs",
+   "lat": -18,
+   "lon": 147,
+   "also": 1.0,
+   "kozep": 1.5,
+   "felso": 2.0
+  },
+  {
+   "id": "barents",
+   "nev": "A Barents-tenger jege",
+   "nev_en": "Barents Sea ice",
+   "lat": 76,
+   "lon": 40,
+   "also": 1.5,
+   "kozep": 1.6,
+   "felso": 1.7
+  },
+  {
+   "id": "sarki_teli_jeg",
+   "nev": "Az Északi-sark téli tengerjege",
+   "nev_en": "Arctic winter sea ice",
+   "lat": 86,
+   "lon": 0,
+   "also": 4.5,
+   "kozep": 6.3,
+   "felso": 8.7
+  },
+  {
+   "id": "gleccserek",
+   "nev": "A hegyi gleccserek",
+   "nev_en": "Mountain glaciers",
+   "lat": 30,
+   "lon": 85,
+   "also": 1.5,
+   "kozep": 2.0,
+   "felso": 3.0
+  }
+ ]
+}

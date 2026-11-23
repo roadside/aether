@@ -1,0 +1,145 @@
+{
+ "verzio": 1,
+ "fajlok": [
+  {
+   "fajl": "bioszen_en.json",
+   "tema": "bioszen",
+   "nyelv": "en",
+   "sha256": "68ec9a66e6f2e2351b953bd9ba2af5e0bb7afbf68a3960530daea11cba8ff359",
+   "meret": 36816,
+   "datum": "2026-11-22",
+   "ai": "ollama qwen3:8b",
+   "ellenorizve": 5
+  },
+  {
+   "fajl": "bioszen_hu.json",
+   "tema": "bioszen",
+   "nyelv": "hu",
+   "sha256": "d858229ac034a6d383277f8e3a61d898691576a63c34e7030384ce07a930fc64",
+   "meret": 36629,
+   "datum": "2026-11-22",
+   "ai": "ollama qwen3:8b",
+   "ellenorizve": 5
+  },
+  {
+   "fajl": "erdo_en.json",
+   "tema": "erdo",
+   "nyelv": "en",
+   "sha256": "4593a76781798758a9f4afe7a98748daa23331afe64348723cc15ec895572745",
+   "meret": 38963,
+   "datum": "2026-11-22",
+   "ai": "ollama qwen3:8b",
+   "ellenorizve": 5
+  },
+  {
+   "fajl": "erdo_hu.json",
+   "tema": "erdo",
+   "nyelv": "hu",
+   "sha256": "b02c3e65807d5286a588062e49f5c8f906c71d9d1f4b106acd9246c3c5c8a33e",
+   "meret": 38774,
+   "datum": "2026-11-22",
+   "ai": "ollama qwen3:8b",
+   "ellenorizve": 5
+  },
+  {
+   "fajl": "kozet_en.json",
+   "tema": "kozet",
+   "nyelv": "en",
+   "sha256": "597fe3692317829e1692601ba39399c1a2bd6ef8395905a26789a22887243302",
+   "meret": 41178,
+   "datum": "2026-11-22",
+   "ai": "ollama qwen3:8b",
+   "ellenorizve": 6
+  },
+  {
+   "fajl": "kozet_hu.json",
+   "tema": "kozet",
+   "nyelv": "hu",
+   "sha256": "9a6e10f355c0bdd854548731354612733b09e14aebb0ef5cce1ee40f3a697d56",
+   "meret": 44119,
+   "datum": "2026-11-22",
+   "ai": "ollama qwen3:8b",
+   "ellenorizve": 8
+  },
+  {
+   "fajl": "kukorica_en.json",
+   "tema": "kukorica",
+   "nyelv": "en",
+   "sha256": "515e355c5ec6091176c7c705a275b171f640a144582492584e38a7a59cd1b281",
+   "meret": 30783,
+   "datum": "2026-11-22",
+   "ai": "ollama qwen3:8b",
+   "ellenorizve": 1
+  },
+  {
+   "fajl": "kukorica_hu.json",
+   "tema": "kukorica",
+   "nyelv": "hu",
+   "sha256": "07473f003b024e861b3b42b7e95f5e5401194de19456998124964671012e8109",
+   "meret": 31012,
+   "datum": "2026-11-22",
+   "ai": "ollama qwen3:8b",
+   "ellenorizve": 1
+  },
+  {
+   "fajl": "levegoszures_en.json",
+   "tema": "levegoszures",
+   "nyelv": "en",
+   "sha256": "0cca1a4cd350386a047213dbc6b09e1be49819a1ecc9afaceadca9ce9d8d9e12",
+   "meret": 36983,
+   "datum": "2026-11-22",
+   "ai": "ollama qwen3:8b",
+   "ellenorizve": 5
+  },
+  {
+   "fajl": "levegoszures_hu.json",
+   "tema": "levegoszures",
+   "nyelv": "hu",
+   "sha256": "6f0211dec1ee080dc84549aa8ede98499502c7e770c30e1e3fef16c7e5edfe4c",
+   "meret": 36629,
+   "datum": "2026-11-22",
+   "ai": "ollama qwen3:8b",
+   "ellenorizve": 5
+  },
+  {
+   "fajl": "novenyi_energia_en.json",
+   "tema": "novenyi_energia",
+   "nyelv": "en",
+   "sha256": "d6602e7538487a279a2682f77a14a3ca7be272718fb87ecca1cca025ea8aadcb",
+   "meret": 35239,
+   "datum": "2026-11-22",
+   "ai": "ollama qwen3:8b",
+   "ellenorizve": 5
+  },
+  {
+   "fajl": "novenyi_energia_hu.json",
+   "tema": "novenyi_energia",
+   "nyelv": "hu",
+   "sha256": "e4ef2c09aafb483cf74783adfec893d06c0a23d18d46842b7f2f8228bc934b1f",
+   "meret": 35678,
+   "datum": "2026-11-22",
+   "ai": "ollama qwen3:8b",
+   "ellenorizve": 5
+  },
+  {
+   "fajl": "talaj_en.json",
+   "tema": "talaj",
+   "nyelv": "en",
+   "sha256": "55dc7d0bcf99fa12425c0ce724664e73a556d098289cd5ebeba506c9e0fb6d05",
+   "meret": 36604,
+   "datum": "2026-11-22",
+   "ai": "ollama qwen3:8b",
+   "ellenorizve": 5
+  },
+  {
+   "fajl": "talaj_hu.json",
+   "tema": "talaj",
+   "nyelv": "hu",
+   "sha256": "be384ef6633204fc6ca0ace48bb99421340b056087a68593dd79d3b1707b02a0",
+   "meret": 36059,
+   "datum": "2026-11-22",
+   "ai": "ollama qwen3:8b",
+   "ellenorizve": 5
+  }
+ ]
+}

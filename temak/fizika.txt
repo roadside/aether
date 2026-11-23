@@ -1,0 +1,381 @@
+# AETHER kutatási témák · Fizika
+#
+# Lektorálás: a "Kérdés", "Röviden", "Ha kikutatod", "Mire jó?", "Mi a gond vele?" és
+# "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
+# Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
+# A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet).
+# A "technikai" vonal alatti sorokkal keres a kutatás: csak akkor módosítsd, ha biztos vagy benne.
+# Új téma: másolj le egy blokkot, és adj neki új, ékezet nélküli azonosítót (=== uj_tema ===).
+# A játék induláskor olvassa ezt a fájlt: mentés után indítsd újra a játékot.
+
+# ----- I. korszak: Felismerés -----
+
+=== tcre ===
+Korszak: I. (Felismerés)
+Kérdés: Mennyit melegít a kibocsátott CO2?
+Röviden: Minden elégetett tonna szén-dioxid melegít. Mennyit, ha összeadjuk?
+Ha kikutatod: Megérted, miért számít minden tonna.
+Mire jó?: A CO2-kibocsátás meghatározza, hogy mennyire nőhet a globális melegedés, így segít a klímavédelem és a jövőbeli kockázatok megértésében.
+Mi a gond vele?: A hatás becslése nem teljesen pontos, mert a CO2-válasz időben és helyben változhat, és a jövőbeli folyamatokat nehéz előre jelezni.
+Mennyire bizonyított?: A tudományos bizonyítékok alapján a CO2-kibocsátás melegítő hatását jól meg tudjuk becsülni, de bizonyos tényezők még mindig bizonytalanok.
+Kérdés angolul: How much does emitted CO2 warm the Earth?
+Röviden angolul: Every tonne of carbon dioxide burned warms the Earth. How much, added up?
+Ha kikutatod angolul: You understand why every tonne counts.
+Mire jó? angolul: CO2 emissions determine how much global warming can increase, so this helps in understanding climate protection and future risks.
+Mi a gond vele? angolul: Estimating the effect is not completely exact because the CO2 response can vary over time and by location, and future processes are hard to predict.
+Mennyire bizonyított? angolul: Based on scientific evidence, we can estimate the warming effect of CO2 emissions well, though certain factors remain uncertain.
+Forrás: Wikipédia: Carbon budget (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Carbon_budget
+Forrás: Focus on cumulative emissions, global carbon budgets and the implications for climate mitigation targets (2018) – https://doi.org/10.1088/1748-9326/aa98c9
+Forrás: The cumulative carbon budget and its implications (2016) – https://doi.org/10.1093/oxrep/grw009
+Forrás: Emergent constraints on carbon budgets as a function of global warming (2024) – https://doi.org/10.1038/s41467-024-46137-7
+Lektorálva: igen
+--- technikai ---
+Keresés: transient climate response to cumulative CO2 emissions estimate|remaining carbon budget warming per 1000 GtCO2|TCRE observational constraint
+Paraméter: tcre_c_per_1000gtco2
+Wikipédia: szén-dioxid globális felmelegedés
+Wikipédia angolul: carbon budget
+Áttekintő cikkek keresése: carbon budget cumulative emissions warming review
+
+=== klimaerzekenyseg ===
+Korszak: I. (Felismerés)
+Kérdés: Mennyit melegszik a Föld, ha kétszer annyi lesz a CO2?
+Röviden: Ez a klímaérzékenység: ebből látszik, mekkora melegedés vár ránk.
+Ha kikutatod:
+Mire jó?: Ez segít megérteni, hogy mennyire változhat a világ hőmérséklete a jövőben, ha több CO2 van a levegőben.
+Mi a gond vele?: A pontos melegedés nem ismert, mert a klímaváltozás hatásai összetettek és bizonytalanok lehetnek.
+Mennyire bizonyított?: A tudományos ismeretek alapján a melegedés mértéke valószínűleg 1,5–4,5 °C között van, de a pontos érték még pontosításra szorul.
+Kérdés angolul: How much does Earth warm if CO2 doubles?
+Röviden angolul: This is climate sensitivity: it tells us how much warming lies ahead.
+Ha kikutatod angolul:
+Mire jó? angolul: This helps us understand how much the world's temperature could change in the future if there is more CO2 in the air.
+Mi a gond vele? angolul: The exact warming is not known because the effects of climate change are complex and can be uncertain.
+Mennyire bizonyított? angolul: Based on scientific knowledge, the amount of warming is likely between 1.5–4.5 °C, though the exact value still needs refinement.
+Forrás: Wikipédia: Climate sensitivity (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Climate_sensitivity
+Forrás: How hot will the greenhouse world be? —A brief review of equilibrium climate sensitivity (2016) – https://doi.org/10.1360/n972015-01333
+Forrás: Review of “Equilibrium state and sensitivity of the simulated middle-to-late Eocene climate” (2018) – https://doi.org/10.5194/cp-2018-43-rc1
+Forrás: Prospects for narrowing bounds on Earth's equilibrium climate sensitivity (2016) – https://doi.org/10.1002/2016ef000376
+Lektorálva: igen
+--- technikai ---
+Keresés: equilibrium climate sensitivity assessment multiple lines of evidence|equilibrium climate sensitivity estimate paleoclimate|effective climate sensitivity observational constraint
+Paraméter: klimaerzekenyseg_c
+Wikipédia: klímaérzékenység
+Wikipédia angolul: climate sensitivity
+Áttekintő cikkek keresése: equilibrium climate sensitivity review
+
+=== aeroszol ===
+Korszak: I. (Felismerés)
+Kérdés: Mennyit hűt a levegő szennyezése?
+Röviden: A füst és a kénes szennyezés apró részecskéi visszaverik a napfényt, és elfedik a melegedés egy részét.
+Ha kikutatod:
+Mire jó?: A légszennyezésnek lehet éghajlatot hűtő hatása, mert az apró részecskék visszaverik a napfényt, így csökkentik a Földre jutó sugárzást.
+Mi a gond vele?: A légszennyezés káros az egészségre, mert légzőszervi betegségeket okozhat, és a klímaváltozást is befolyásolhatja.
+Mennyire bizonyított?: A légszennyezés éghajlati hatása részben bizonyított, de a pontos mértéke és hatásmechanizmusa továbbra is kutatás alatt áll.
+Kérdés angolul: How much does air pollution cool the Earth?
+Röviden angolul: Tiny particles of smoke and sulphur pollution reflect sunlight and hide part of the warming.
+Ha kikutatod angolul:
+Mire jó? angolul: Air pollution can have a climate-cooling effect because tiny particles reflect sunlight, thus reducing radiation reaching the Earth.
+Mi a gond vele? angolul: Air pollution is harmful to health because it can cause respiratory diseases, and it can also influence climate change.
+Mennyire bizonyított? angolul: The climate effect of air pollution is partially proven, though its exact extent and mechanism of action remain under research.
+Forrás: Wikipédia: Aerosol (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Aerosol
+Forrás: A review of measurement-based assessments of the aerosol direct radiative effect and forcing (2006) – https://doi.org/10.5194/acp-6-613-2006
+Forrás: Estimates of the direct and indirect radiative forcing due to tropospheric aerosols: A review (2000) – https://doi.org/10.1029/1999rg000078
+Forrás: Aerosol Direct Radiative Forcing: A Review (2012) – https://doi.org/10.5772/50248
+Lektorálva: igen
+--- technikai ---
+Keresés: aerosol effective radiative forcing estimate|aerosol cloud interactions radiative forcing|anthropogenic aerosol forcing observational constraint
+Paraméter: aeroszol_erf_w_m2
+Wikipédia: aeroszol éghajlat
+Wikipédia angolul: aerosol
+Áttekintő cikkek keresése: aerosol radiative forcing review
+
+=== felhok ===
+Korszak: I. (Felismerés)
+Kérdés: Erősítik vagy fékezik a felhők a melegedést?
+Röviden: A melegedés megváltoztatja a felhőket, és ez visszahat a hőmérsékletre.
+Ha kikutatod:
+Mire jó?: A felhők megértése fontos a klímaváltozás hatásának megismeréséhez. Ha a felhők hűtik a Földet, lassíthatják a melegedést; ha melegítik, gyorsíthatják.
+Mi a gond vele?: A felhők hatásának pontos megértése nehéz, mert a modellek különböző eredményeket adnak. A felhők viselkedése nem teljesen ismert, és a megfigyelések is korlátozottak.
+Mennyire bizonyított?: A tudomány magas bizonyossággal állítja, hogy a felhők hatása összetett, de az összes felhőhatás eredője melegítő hatású. Azonban a részletes mechanizmusok még nem teljesen ismertek.
+Kérdés angolul: Do clouds amplify or slow warming?
+Röviden angolul: Warming changes clouds, and that feeds back on temperature.
+Ha kikutatod angolul:
+Mire jó? angolul: Understanding clouds is important for knowing the impact of climate change. If clouds cool the Earth, they can slow warming; if they warm it, they can speed it up.
+Mi a gond vele? angolul: Understanding the exact effect of clouds is difficult because models give different results. Cloud behavior is not completely known, and observations are also limited.
+Mennyire bizonyított? angolul: Science states with high confidence that the effect of clouds is complex, but the net effect of all cloud feedbacks is warming. However, detailed mechanisms are not yet completely known.
+Forrás: Wikipédia: Cloud feedback (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Cloud_feedback
+Forrás: Cloud Feedbacks in the Climate System: A Critical Review (2005) – https://doi.org/10.1175/jcli-3243.1
+Forrás: Low-Cloud Feedbacks from Cloud-Controlling Factors: A Review (2017) – https://doi.org/10.1007/s10712-017-9433-3
+Forrás: Mechanisms and Model Diversity of Trade-Wind Shallow Cumulus Cloud Feedbacks: A Review (2017) – https://doi.org/10.1007/s10712-017-9418-2
+Lektorálva: igen
+--- technikai ---
+Keresés: cloud feedback climate change estimate|low cloud feedback observational constraint|cloud feedback climate sensitivity
+Paraméter: visszacsatolas_w_m2_c
+Wikipédia: felhő éghajlat visszacsatolás
+Wikipédia angolul: cloud feedback
+Áttekintő cikkek keresése: cloud feedback review
+
+=== ocean_ho ===
+Korszak: I. (Felismerés)
+Kérdés: A melegedés hőjének mekkora részét nyeli el az óceán?
+Röviden: A többlethő a tengerbe, a jégbe, a talajba és a levegőbe kerül. A tengerben évszázadokig megmarad.
+Ha kikutatod:
+Mire jó?: Az óceán nagyon sok energiát tud elnyelni, ezért segít megérteni, hogy a klímaváltozás mennyi hőt halmoz fel a Földön.
+Mi a gond vele?: Nem minden hőt tud elnyelni a felszíni réteg, egy része mélyebbre jut, ami nehezen mérhető és eltérő módon tárolódik.
+Mennyire bizonyított?: A tudomány rendkívül biztos abban, hogy az óceánok nyelik el a globális melegedés okozta többlethő több mint 90 százalékát, de a pontos számokat még finomítják.
+Kérdés angolul: What share of the extra heat does the ocean absorb?
+Röviden angolul: The extra heat goes into the sea, ice, land and air. In the sea it stays for centuries.
+Ha kikutatod angolul:
+Mire jó? angolul: The ocean can absorb a great deal of energy, so it helps us understand how much heat climate change accumulates on Earth.
+Mi a gond vele? angolul: Not all heat can be absorbed by the surface layer; some reaches deeper, which is hard to measure and is stored differently.
+Mennyire bizonyított? angolul: Science is very certain that oceans absorb more than 90 percent of the extra heat caused by global warming, though exact figures are still being refined.
+Forrás: Wikipédia: Ocean heat content (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Ocean_heat_content
+Forrás: A review of global ocean temperature observations: Implications for ocean heat content estimates and climate change (2013) – https://doi.org/10.1002/rog.20022
+Forrás: Changes in Ocean Heat, Carbon Content, and Ventilation: A Review of the First Decade of GO-SHIP Global Repeat Hydrography (2015) – https://doi.org/10.1146/annurev-marine-052915-100829
+Forrás: Measuring Global Ocean Heat Content to Estimate the Earth Energy Imbalance (2019) – https://doi.org/10.3389/fmars.2019.00432
+Lektorálva: igen
+--- technikai ---
+Keresés: ocean heat content increase observations|ocean warming heat uptake|Earth energy imbalance ocean heat
+Paraméter: reszarany_pct
+Wikipédia: óceán hőtartalom
+Wikipédia angolul: ocean heat content
+Áttekintő cikkek keresése: ocean heat content review
+
+=== amoc ===
+Korszak: I. (Felismerés)
+Kérdés: Lassul-e a Golf-áramlat rendszere?
+Röviden: Az Atlanti-óceán nagy áramlása meleget visz Európába. Ha gyengül, megváltozik az időjárásunk.
+Ha kikutatod:
+Mire jó?: A Golf-áramlat rendszer segíti a hőszállítást Nyugat-Európa éghajlatában, így például Norvégia tengerpartja enyhébb, mint az azonos szélességű észak-kanadai területek.
+Mi a gond vele?: A kutatók szerint a globális felmelegedés miatt gyengülhet a rendszer, ami az éghajlatra és az időjárásra is nagy hatással lehet.
+Mennyire bizonyított?: A tudomány több tanulmányban is észlelt változásokat a rendszerben, de a pontos mérték és a hatások még nem teljesen bizonyítottak.
+Kérdés angolul: Is the Gulf Stream system slowing down?
+Röviden angolul: The Atlantic's great current carries heat to Europe. If it weakens, our weather changes.
+Ha kikutatod angolul:
+Mire jó? angolul: The Gulf Stream system helps heat transport in Western Europe's climate, so for example Norway's coast is milder than northern Canadian areas at the same latitude.
+Mi a gond vele? angolul: Researchers indicate that the system may weaken due to global warming, which can also have a major impact on climate and weather.
+Mennyire bizonyított? angolul: Science has detected changes in the system in several studies, though the exact extent and impacts are not yet fully proven.
+Forrás: Wikipédia: Golf-áramlat (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Golf-%C3%A1ramlat
+Forrás: Atlantic Meridional Overturning Circulation: Reviews of Observational and Modeling Advances—An Introduction (2021) – https://doi.org/10.1029/2020jc016745
+Forrás: Observations, inferences, and mechanisms of the Atlantic Meridional Overturning Circulation: A review (2016) – https://doi.org/10.1002/2015rg000493
+Forrás: Stability of the Atlantic Meridional Overturning Circulation: A Review and Synthesis (2019) – https://doi.org/10.1029/2019jc015083
+Lektorálva: igen
+--- technikai ---
+Keresés: Atlantic meridional overturning circulation slowdown|AMOC weakening projections|AMOC tipping point early warning
+Paraméter: csokkenes_pct
+Wikipédia: Golf-áramlat
+Wikipédia angolul: Atlantic meridional overturning circulation
+Áttekintő cikkek keresése: Atlantic meridional overturning circulation review
+
+# ----- II. korszak: Mérséklés -----
+
+=== led ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyi áramot spórol a LED-lámpa?
+Röviden: A LED (világító dióda) ugyanannyi fényt kevesebb árammal ad, mint a régi izzó.
+Ha kikutatod:
+Mire jó?: A LED-lámpa kevesebb energiát fogyaszt, így segít a klímaváltozás ellen, és hosszabb ideig működik, így ritkábban kell cserélni.
+Mi a gond vele?: A megadott források nem adnak pontos megtakarítási értéket erre a kérdésre.
+Mennyire bizonyított?: A tudományos források szerint a LED-lámpák energiahatékonyak, de pontosan mennyit spórolnak, az a forrásokban nem részletezett.
+Kérdés angolul: How much electricity does an LED lamp save?
+Röviden angolul: An LED (light-emitting diode) gives the same light with less electricity than an old bulb.
+Ha kikutatod angolul:
+Mire jó? angolul: An LED lamp consumes less energy, so it helps against climate change, and it lasts longer, so it needs to be replaced less often.
+Mi a gond vele? angolul: The provided sources do not give an exact savings value for this question.
+Mennyire bizonyított? angolul: According to scientific sources, LED lamps are energy-efficient, though exact savings are not detailed in the sources.
+Forrás: Wikipédia: Közlekedési lámpa (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/K%C3%B6zleked%C3%A9si_l%C3%A1mpa
+Forrás: Advances in the LED Materials and Architectures for Energy-Saving Solid-State Lighting Toward “Lighting Revolution” (2012) – https://doi.org/10.1109/jphot.2012.2191276
+Forrás: Metallic nanostructures for efficient LED lighting (2016) – https://doi.org/10.1038/lsa.2016.80
+Forrás: Review of high efficiency integrated LED lighting (2017) – https://doi.org/10.1109/peds.2017.8289181
+Lektorálva: igen
+--- technikai ---
+Keresés: LED lighting energy savings|solid-state lighting energy efficiency|LED retrofit electricity savings
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: LED-lámpa
+Wikipédia angolul: LED lamp
+Áttekintő cikkek keresése: LED lighting energy efficiency review
+
+=== kondenzcsik ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyit melegítenek a repülők kondenzcsíkjai?
+Röviden: A repülők mögötti fehér csíkok vékony felhőként csapdába ejtik a hőt. Elkerülhetők, ha a gép más magasságon repül.
+Ha kikutatod:
+Mire jó?: A kondenzcsíkok megértése segít a klímahatásuk becslésében, mivel gátolhatják a Föld infravörös kisugárzását, bár ez a hatás változó lehet.
+Mi a gond vele?: A kondenzcsíkok hatása nem teljesen ismert, és a melegedés mértéke függ a légkör hőmérsékletétől, a szélviszonyoktól és a repülőgépek forgalmától.
+Mennyire bizonyított?: A tudományos ismeretek szerint a kondenzcsíkok hatása bizonyított, de a pontos mértéke és a jövőbeli hatások még nem teljesen tisztázottak.
+Kérdés angolul: How much do aircraft contrails warm the Earth?
+Röviden angolul: The white trails behind aircraft trap heat like thin clouds. Flying at another altitude can avoid them.
+Ha kikutatod angolul:
+Mire jó? angolul: Understanding contrails helps estimate their climate impact, as they can trap Earth's infrared radiation, though this effect can vary.
+Mi a gond vele? angolul: The effect of contrails is not completely known, and the amount of warming depends on atmospheric temperature, wind conditions, and aircraft traffic.
+Mennyire bizonyított? angolul: According to scientific knowledge, the effect of contrails is proven, though their exact extent and future effects are not yet completely clear.
+Forrás: Wikipédia: Kondenzcsík (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Kondenzcs%C3%ADk
+Forrás: Global Modeling of the Contrail and Contrail Cirrus Climate Impact (2009) – https://doi.org/10.1175/2009bams2656.1
+Forrás: Understanding the role of contrails and contrail cirrus in climate change: a global perspective (2024) – https://doi.org/10.5194/acp-24-9219-2024
+Forrás: Global aviation contrail climate effects from 2019 to 2021 (2024) – https://doi.org/10.5194/acp-24-6071-2024
+Lektorálva: igen
+--- technikai ---
+Keresés: contrail cirrus radiative forcing|aviation non-CO2 effects contrails mitigation|contrail avoidance flight altitude
+Paraméter: sugarzasi_kenyszer_w_m2
+Wikipédia: kondenzcsík
+Wikipédia angolul: contrail
+Áttekintő cikkek keresése: aviation contrails climate review
+
+# ----- III. korszak: Átalakulás -----
+
+=== atomenergia ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyi CO2-vel jár az atomerőművi áram?
+Röviden: Az atomerőmű nem éget semmit, de az építésnek és az üzemanyagnak is van kibocsátása.
+Ha kikutatod:
+Mire jó?: A kis CO2-kibocsátás miatt az atomerőművek fontos alternatívát jelenthetnek a klímaváltozás elleni küzdelemben, mivel kevesebb CO2-kibocsátással járnak, mint a fosszilis tüzelésű erőművek.
+Mi a gond vele?: A CO2-kibocsátás mellett az atomerőműveknek lehetnek más kockázatai is, például a balesetek vagy a radioaktív hulladék kezelése, amelyekről a megadott források nem szólnak részletesen.
+Mennyire bizonyított?: A tudományos források szerint az atomerőművi áram CO2-kibocsátása bizonyítottan alacsony, de a pontos értéke függ a technológiától és a körülményektől.
+Kérdés angolul: How much CO2 comes with nuclear electricity?
+Röviden angolul: A nuclear plant burns nothing, but building it and its fuel cause some emissions.
+Ha kikutatod angolul:
+Mire jó? angolul: Because of low CO2 emissions, nuclear power plants can be an important alternative in fighting climate change, as they involve lower CO2 emissions than fossil-fueled power plants.
+Mi a gond vele? angolul: Alongside CO2 emissions, nuclear power plants can have other risks, such as accidents or radioactive waste management, which the provided sources do not address in detail.
+Mennyire bizonyított? angolul: According to scientific sources, CO2 emissions from nuclear electricity are proven to be low, though the exact value depends on the technology and conditions.
+Forrás: Wikipédia: Atomenergia (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Atomenergia
+Forrás: Comparative assessment of the environmental impact of nuclear power plant technology using life cycle assessment approach: A review (2023) – https://doi.org/10.1088/1755-1315/1267/1/012041
+Forrás: Parametric Life Cycle Assessment of Nuclear Power for Simplified Models (2023) – https://doi.org/10.1021/acs.est.3c03190
+Forrás: Critical Review of Life Cycle Assessment of Hydrogen Production Pathways (2024) – https://doi.org/10.3390/environments11060108
+Lektorálva: igen
+--- technikai ---
+Keresés: nuclear power life cycle greenhouse gas emissions gCO2/kWh|life cycle assessment nuclear electricity carbon intensity|nuclear power lifecycle emissions harmonization
+Paraméter: eletciklus_gco2_kwh
+Wikipédia: atomenergia
+Wikipédia angolul: nuclear power
+Áttekintő cikkek keresése: nuclear power life cycle assessment review
+
+=== hotarolas ===
+Korszak: III. (Átalakulás)
+Kérdés: Eltehető-e a napenergia hőként, sóban vagy kőben?
+Röviden: A felforrósított só vagy kő órákig, akár napokig megtartja a hőt.
+Ha kikutatod:
+Mire jó?: Ez a technológia segít a hőenergia hatékonyabb felhasználásában, például az összegyűjtött hőt később használhatjuk fel, így csökkenthetjük a fosszilis energiák fogyasztását.
+Mi a gond vele?: A hőtárolás hatékony alkalmazása korlátozott, mivel a tárolt hő idővel veszíthet a hatékonyságából, és nagyobb tárolók esetén magas költségek is felléphetnek.
+Mennyire bizonyított?: A hőtárolás technológiája jól tanulmányozott, és már különböző országokban alkalmazzák, de a legjobb hatékonyság érdekében további fejlesztésekre van szükség.
+Kérdés angolul: Can solar energy be stored as heat, in salt or stone?
+Röviden angolul: Heated salt or stone holds heat for hours or even days.
+Ha kikutatod angolul:
+Mire jó? angolul: This technology helps use thermal energy more efficiently—for example, collected heat can be used later, reducing the consumption of fossil fuels.
+Mi a gond vele? angolul: Effective application of thermal energy storage is limited because stored heat can lose effectiveness over time, and high costs can also arise for larger storage systems.
+Mennyire bizonyított? angolul: Thermal energy storage technology is well studied and already applied in various countries, though further development is needed for optimal efficiency.
+Forrás: Wikipédia: Thermal energy storage (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Thermal_energy_storage
+Forrás: Seasonal Ground Solar Thermal Energy Storage – Review of Systems and Applications (2011) – https://doi.org/10.18086/swc.2011.29.24
+Forrás: Phase Change Materials for Applications in Building Thermal Energy Storage (Review) (2024) – https://doi.org/10.1134/s0040601524700174
+Forrás: A Comprehensive Review of Thermal Energy Storage (2018) – https://doi.org/10.3390/su10010191
+Lektorálva: igen
+--- technikai ---
+Keresés: thermal energy storage molten salt efficiency|sand rock thermal energy storage|Carnot battery round-trip efficiency
+Paraméter: hatasfok_pct
+Wikipédia: hőtárolás
+Wikipédia angolul: thermal energy storage
+Áttekintő cikkek keresése: thermal energy storage review
+
+# ----- IV. korszak: Helyreállítás -----
+
+=== fuzio ===
+Korszak: IV. (Helyreállítás)
+Kérdés: Mennyi energiát nyernek ma a magfúziós kísérletek?
+Röviden: A Nap energiáját utánozza: könnyű atommagok egyesülnek, és sok energia szabadul fel.
+Ha kikutatod:
+Mire jó?: A fúzió jövőbeli energiaforrás lehet, de jelenleg csak kísérleti szinten működik.
+Mi a gond vele?: A fúziós reakciók tartós és gazdaságos fenntartásához szükséges feltételek még kihívást jelentenek, ezért még nem termelnek tömeges energiát.
+Mennyire bizonyított?: A tudomány bizonyítja, hogy a fúzió energiafelszabadítást okozhat, de a gyakorlati alkalmazás még nem bizonyított.
+Kérdés angolul: How much energy do fusion experiments produce today?
+Röviden angolul: It copies the Sun: light atomic nuclei fuse and release a lot of energy.
+Ha kikutatod angolul:
+Mire jó? angolul: Fusion could be a future energy source, but currently it only operates at an experimental level.
+Mi a gond vele? angolul: Maintaining the conditions needed to sustain fusion reactions economically is still challenging, so they do not yet produce energy at scale.
+Mennyire bizonyított? angolul: Science proves that fusion can release energy, though practical application is not yet proven.
+Forrás: Wikipédia: Magfúzió (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Magf%C3%BAzi%C3%B3
+Forrás: The commercialisation of fusion for the energy market: a review of socio-economic studies (2022) – https://doi.org/10.1088/2516-1083/ac84bf
+Forrás: Production of Hydrogen by Fusion Energy: A Review and Perspective (2003) – https://doi.org/10.13182/fst03-a366
+Forrás: Public acceptability of fusion energy: A scoping review of social science research (2026) – https://doi.org/10.1016/j.fusengdes.2026.115692
+Lektorálva: igen
+--- technikai ---
+Keresés: inertial confinement fusion target gain ignition|tokamak fusion energy gain record|fusion power plant timeline review
+Paraméter: energia_nyereseg
+Wikipédia: magfúzió
+Wikipédia angolul: fusion power
+Áttekintő cikkek keresése: fusion energy review
+
+=== napernyo ===
+Korszak: IV. (Helyreállítás)
+Kérdés: Mennyire hűtene a kén a magaslégkörben?
+Röviden: A magaslégkörbe juttatott kén visszaverné a napfényt. Nagy a kockázata: ha leáll, gyors melegedés jön.
+Ha kikutatod: Csak megérted: a játékban nem vezethető be.
+Mire jó?: A kén magaslégkörbe juttatása lehetővé tenné a globális hűtést, ami segíthet a felmelegedés mérséklésében.
+Mi a gond vele?: A kén magaslégkörbe juttatása nem biztos, hogy hatékony, és számos ismeretlen hatása lehet, például a csapadék- és hőmérséklet-eloszlás megváltozása.
+Mennyire bizonyított?: A tudományos bizonyítékok nem teljesen egyértelműek, mivel a kén magaslégkörbe juttatása még nem lett teljesen megértve és tesztelve.
+Kérdés angolul: How much would sulphur in the upper atmosphere cool the Earth?
+Röviden angolul: Sulphur in the upper atmosphere would reflect sunlight. The risk is high: if it stops, rapid warming follows.
+Ha kikutatod angolul: Understanding only: it cannot be deployed in the game.
+Mire jó? angolul: Introducing sulphur into the upper atmosphere could enable global cooling, which can help moderate warming.
+Mi a gond vele? angolul: Introducing sulphur into the upper atmosphere is not certain to be effective and can have many unknown effects, such as changes in precipitation and temperature distribution.
+Mennyire bizonyított? angolul: Scientific evidence is not completely clear, as introducing sulphur into the upper atmosphere has not yet been fully understood and tested.
+Forrás: Wikipédia: Stratospheric aerosol injection (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Stratospheric_aerosol_injection
+Forrás: The potential environmental and climate impacts of stratospheric aerosol injection: a review (2024) – https://doi.org/10.1039/d3ea00134b
+Forrás: Review of possible very high-altitude platforms for stratospheric aerosol injection (2022) – https://doi.org/10.1088/2515-7620/ac4f5d
+Forrás: Uncertainties and confidence in stratospheric aerosol injection modelling: a systematic literature review (2024) – https://doi.org/10.1093/oxfclm/kgae007
+Lektorálva: igen
+--- technikai ---
+Keresés: stratospheric aerosol injection radiative forcing per Tg SO2|stratospheric sulfate geoengineering efficacy|solar geoengineering termination shock
+Paraméter: sai_kenyszer_w_m2_per_tg
+Wikipédia: napsugárzás-módosítás
+Wikipédia angolul: stratospheric aerosol injection
+Áttekintő cikkek keresése: stratospheric aerosol injection review
+
+=== felho_fenyesites ===
+Korszak: IV. (Helyreállítás)
+Kérdés: Hűthetik-e a Földet a fényesebbé tett tengeri felhők?
+Röviden: Tengervíz-permetet fújnának a felhőkbe, így azok több napfényt vernének vissza. Kockázatos ötlet.
+Ha kikutatod: Csak megérted: a játékban nem vezethető be.
+Mire jó?: Ez a technológia segíthet csökkenteni a globális melegedést, különösen a tengeri térségekben, és mérsékelheti a hőterhelést.
+Mi a gond vele?: A technológia hatása nem teljesen biztos, és nem tudja önmagában megszüntetni a melegedést. A technikai akadályok, például a tengeri felhők befolyásolása, valamint a hosszú távú hatások ismeretlensége is kockázatot jelent.
+Mennyire bizonyított?: A tudományos bizonyítékok nem teljesen biztosak, de a technológia egyes formái már kis léptékben tesztelésre kerültek, és a kísérletek alapján egyes módszerek hatékonyak lehetnek.
+Kérdés angolul: Could brighter sea clouds cool the Earth?
+Röviden angolul: Sea-water spray would be blown into clouds so they reflect more sunlight. A risky idea.
+Ha kikutatod angolul: Understanding only: it cannot be deployed in the game.
+Mire jó? angolul: This technology can help reduce global warming, especially in marine regions, and can moderate heat stress.
+Mi a gond vele? angolul: The effect of the technology is not completely certain, and it cannot eliminate warming on its own. Technical hurdles, such as influencing marine clouds, as well as unknown long-term effects also pose risks.
+Mennyire bizonyított? angolul: Scientific evidence is not completely certain, though some forms of the technology have already been tested on a small scale, and based on experiments some methods can be effective.
+Forrás: Wikipédia: Marine cloud brightening (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Marine_cloud_brightening
+Forrás: A Review of Some Experimental Spray Methods for Marine Cloud Brightening (2013) – https://doi.org/10.4236/ijg.2013.41009
+Forrás: A review of plume dispersion and measurement techniques applicable to marine cloud brightening (2025) – https://doi.org/10.3389/fmars.2025.1450175
+Forrás: Marine cloud brightening (2012) – https://doi.org/10.1098/rsta.2012.0086
+Lektorálva: igen
+--- technikai ---
+Keresés: marine cloud brightening cooling potential|marine cloud brightening aerosol cloud interactions
+Paraméter: sugarzasi_kenyszer_w_m2
+Wikipédia: felhőfényesítés
+Wikipédia angolul: marine cloud brightening
+Áttekintő cikkek keresése: marine cloud brightening review
+
+=== cirrus ===
+Korszak: IV. (Helyreállítás)
+Kérdés: Hűtene-e a magas jégfelhők ritkítása?
+Röviden: A vékony, magas jégfelhők csapdába ejtik a hőt. Ritkításuk hűthetne, de nagyon bizonytalan.
+Ha kikutatod: Csak megérted: a játékban nem vezethető be.
+Mire jó?: Ez a technika csökkentheti a Föld hőmérsékletét, mert csökkenti a jégfelhők által visszatartott hőt, így segíthet a klímaváltozás ellen.
+Mi a gond vele?: A hatás nem biztos, mert a szimulációk eredményei eltérőek, és a túlzott ritkítás akár melegíthet is. Továbbá változhat a csapadék, és ha abbahagyják a beavatkozást, gyorsan visszatérhet a melegedés.
+Mennyire bizonyított?: A tudomány alacsony bizonyossággal értékeli a hűtő hatását, mert a szimulációk eredményei nem egyértelműek.
+Kérdés angolul: Would thinning high ice clouds cool the Earth?
+Röviden angolul: Thin, high ice clouds trap heat. Thinning them might cool, but it is very uncertain.
+Ha kikutatod angolul: Understanding only: it cannot be deployed in the game.
+Mire jó? angolul: This technique can lower Earth's temperature because it reduces the heat retained by ice clouds, thus helping against climate change.
+Mi a gond vele? angolul: The effect is not certain because simulation results differ, and excessive thinning could even warm the Earth. In addition, precipitation can change, and if the intervention is stopped, warming can return quickly.
+Mennyire bizonyított? angolul: Science assesses its cooling effect with low confidence because simulation results are not clear.
+Forrás: Wikipédia: Cirrus cloud thinning (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Cirrus_cloud_thinning
+Forrás: The hydrological cycle response to cirrus cloud thinning (2015) – https://doi.org/10.1002/2015gl066795
+Forrás: Cirrus Cloud Thinning (2025) – https://doi.org/10.1002/9781394204847.ch18
+Forrás: Cirrus Clouds (2017) – https://doi.org/10.1175/amsmonographs-d-16-0010.1
+Lektorálva: igen
+--- technikai ---
+Keresés: cirrus cloud thinning climate engineering|cirrus seeding radiative effect
+Paraméter: sugarzasi_kenyszer_w_m2
+Wikipédia: pehelyfelhő
+Wikipédia angolul: cirrus cloud thinning
+Áttekintő cikkek keresése: cirrus cloud thinning review

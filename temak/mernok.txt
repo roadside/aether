@@ -1,0 +1,351 @@
+# AETHER kutatási témák · Közlekedés és épületek
+#
+# Lektorálás: a "Kérdés", "Röviden", "Ha kikutatod", "Mire jó?", "Mi a gond vele?" és
+# "Mennyire bizonyított?" sorokat javítsd. Ha egy témát átnéztél, írd át: "Lektorálva: igen".
+# Egy mező egy sor. A hosszú sort nem kell eltörni; ha mégis, a folytatás az előző mezőhöz tartozik.
+# A "Forrás" sorok mutatják, honnan jön a magyarázat (több is lehet).
+# A "technikai" vonal alatti sorokkal keres a kutatás: csak akkor módosítsd, ha biztos vagy benne.
+# Új téma: másolj le egy blokkot, és adj neki új, ékezet nélküli azonosítót (=== uj_tema ===).
+# A játék induláskor olvassa ezt a fájlt: mentés után indítsd újra a játékot.
+
+# ----- II. korszak: Mérséklés -----
+
+=== hoszivattyu ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyit spórol a hőszivattyú a gázkazánhoz képest?
+Röviden: A hőszivattyú a kinti levegő vagy a föld hőjét hozza be a házba, árammal.
+Ha kikutatod:
+Mire jó?: A hőszivattyú a gázkazánhoz képest akár 50–70 százalékkal kevesebb energiát használ, ami jelentős megtakarítást jelent.
+Mi a gond vele?: A hőszivattyúk kevesebb energiát használnak, de magasabb árúak, és a teljesítményük függhet a külső hőmérséklettől.
+Mennyire bizonyított?: A tudományos tanulmányok szerint a hőszivattyúk energiatakarékosabbak, de a pontos megtakarítás függ a használati körülményektől.
+Kérdés angolul: How much does a heat pump save compared to a gas boiler?
+Röviden angolul: A heat pump brings heat from the outside air or the ground into the house, using electricity.
+Ha kikutatod angolul:
+Mire jó? angolul: A heat pump uses up to 50–70 percent less energy than a gas boiler, which means significant savings.
+Mi a gond vele? angolul: Heat pumps use less energy, but they are more expensive, and their performance can depend on outdoor temperature.
+Mennyire bizonyított? angolul: According to scientific studies, heat pumps are more energy-efficient, though exact savings depend on operating conditions.
+Forrás: Wikipédia: Hőszivattyú (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/H%C5%91szivatty%C3%BA
+Forrás: Review of the Role of Heat Pumps in Decarbonization of the Building Sector (2025) – https://doi.org/10.3390/en18133255
+Forrás: Energy efficiency and decarbonization in the paper industry: A review of drying technology and high-temperature heat pumps (2026) – https://doi.org/10.1016/j.seta.2026.105095
+Forrás: A Review on Performance Optimization and Relevant Application Research of Heat Pump Technologies for Energy System Decarbonization (2026) – https://doi.org/10.3390/machines14080862
+Lektorálva: igen
+--- technikai ---
+Keresés: heat pump greenhouse gas emissions reduction compared to gas boiler|air source heat pump life cycle emissions|residential heat pump decarbonization
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: hőszivattyú
+Wikipédia angolul: heat pump
+Áttekintő cikkek keresése: heat pump decarbonization review
+
+=== hoszigeteles ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyi fűtést spórol a hőszigetelés?
+Röviden: A jól szigetelt fal, tető és ablak bent tartja a meleget.
+Ha kikutatod:
+Mire jó?: A hőszigetelés segít megtakarítani az energiát, így csökkenti a fűtési költségeket és a környezeti terhelést.
+Mi a gond vele?: A hőszigetelés hatása függhet az anyag minőségétől és a szakszerű beépítéstől, és nem minden esetben jár jelentős megtakarítással.
+Mennyire bizonyított?: A hőszigetelés hatékonysága empirikus adatok alapján is jól bizonyított, de a pontos megtakarítás függ az épület típusától és az alkalmazott anyagtól.
+Kérdés angolul: How much heating does insulation save?
+Röviden angolul: Well-insulated walls, roofs and windows keep the warmth in.
+Ha kikutatod angolul:
+Mire jó? angolul: Insulation helps save energy, thereby reducing heating costs and environmental impact.
+Mi a gond vele? angolul: The effect of insulation can depend on material quality and proper installation, and it does not always bring significant savings.
+Mennyire bizonyított? angolul: The effectiveness of insulation is also well proven based on empirical data, though exact savings depend on building type and the material applied.
+Forrás: Wikipédia: Hőszigetelés (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/H%C5%91szigetel%C3%A9s
+Forrás: Introductory Review of Energy Efficiency in Buildings Retrofits (2021) – https://doi.org/10.3390/en14238100
+Forrás: Review of data-driven energy modelling techniques for building retrofit (2021) – https://doi.org/10.1016/j.rser.2021.110990
+Forrás: Energy Retrofit in European Building Portfolios: A Review of Five Key Aspects (2020) – https://doi.org/10.3390/su12187465
+Lektorálva: igen
+--- technikai ---
+Keresés: building envelope retrofit energy savings|thermal insulation retrofit heating energy reduction|deep energy renovation residential buildings
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: hőszigetelés
+Wikipédia angolul: building insulation
+Áttekintő cikkek keresése: building energy retrofit review
+
+=== villanyauto ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyivel kevesebb CO2-t okoz a villanyautó?
+Röviden: Az elektromos autó teljes élete alatt, az akkumulátor gyártásával együtt számolva.
+Ha kikutatod:
+Mire jó?: A villanyautó csökkenti a levegőben lévő szén-dioxid mennyiségét, ami segít a klímavédelemben, mert kevesebb melegedést okoz.
+Mi a gond vele?: A villanyautók akkumulátorainak gyártása és töltése is járhat CO2-kibocsátással, ezért nem teljesen károsanyagmentesek.
+Mennyire bizonyított?: A tudományos vizsgálatok szerint a villanyautók általában kevesebb CO2-t okoznak, de a pontos számítások az áramtermelés módjától függenek.
+Kérdés angolul: How much less CO2 does an electric car cause?
+Röviden angolul: Counted over the electric car's whole life, including making the battery.
+Ha kikutatod angolul:
+Mire jó? angolul: An electric car reduces the amount of carbon dioxide in the air, which helps in climate protection because it causes less warming.
+Mi a gond vele? angolul: Manufacturing and charging the batteries of electric cars can also cause CO2 emissions, so they are not completely free of harmful emissions.
+Mennyire bizonyított? angolul: According to scientific studies, electric cars generally cause less CO2, though exact calculations depend on how electricity is generated.
+Forrás: Wikipédia: Elektromos autó (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Elektromos_aut%C3%B3
+Forrás: Environmental Impacts of Internal Combustion Engine vs Electric Vehicle: Life-Cycle Assessment Review (2025) – https://doi.org/10.14716/ijtech.v16i3.7347
+Forrás: Literature Review - Electric Vehicles Life Cycle Assessment (2020) – https://doi.org/10.1109/elektro49696.2020.9130289
+Forrás: Life Cycle Cost Assessment of Electric Vehicles: A Review and Bibliometric Analysis (2020) – https://doi.org/10.3390/su12062387
+Lektorálva: igen
+--- technikai ---
+Keresés: battery electric vehicle life cycle emissions compared to internal combustion|electric vehicle lifecycle greenhouse gas
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: elektromos autó
+Wikipédia angolul: electric car
+Áttekintő cikkek keresése: electric vehicle life cycle assessment review
+
+=== vasut ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyi CO2-t spórol, ha vonattal utazunk autó és repülő helyett?
+Röviden: A vonat sok utast visz egyszerre, és gyakran árammal megy.
+Ha kikutatod:
+Mire jó?: A vonat energiatakarékosabb, így kevesebb kibocsátást okoz, mint az autó vagy a repülő.
+Mi a gond vele?: A vasúti közlekedésnek még mindig lehetnek környezeti hatásai, például a részecskekibocsátás, amely egészségügyi kockázatokat is jelenthet.
+Mennyire bizonyított?: A vonat kibocsátásának összehasonlítása az autóval és a repülővel jól bizonyított, de a részecskekibocsátás részletei továbbra is kutatás alatt állnak.
+Kérdés angolul: How much CO2 is saved by taking the train instead of car or plane?
+Röviden angolul: A train carries many passengers at once and often runs on electricity.
+Ha kikutatod angolul:
+Mire jó? angolul: The train is more energy-efficient, so it causes fewer emissions than a car or plane.
+Mi a gond vele? angolul: Rail transport can still have environmental impacts, such as particle emissions, which can also pose health risks.
+Mennyire bizonyított? angolul: Comparing train emissions with cars and planes is well proven, though details of particle emissions remain under research.
+Forrás: Wikipédia: Rail transport (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Rail_transport
+Forrás: Particle Emissions from Rail Vehicles: A Review (2012) – https://doi.org/10.4203/ccp.98.173
+Forrás: Particle Emissions From Rail Traffic: A Literature Review (2013) – https://doi.org/10.1080/10643389.2012.685348
+Forrás: Particle emission from rail vehicles : A literature review (2012) – https://kth.diva-portal.org/smash/get/diva2:482389/FULLTEXT01
+Lektorálva: igen
+--- technikai ---
+Keresés: modal shift rail greenhouse gas emissions reduction|high speed rail emissions compared to aviation|rail passenger transport life cycle emissions
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: vasúti közlekedés
+Wikipédia angolul: rail transport
+Áttekintő cikkek keresése: rail transport emissions review
+
+=== kerekpar ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyit segít, ha többen kerékpárral járnak?
+Röviden: A rövid városi utak egy részét kerékpárral is meg lehet tenni.
+Ha kikutatod:
+Mire jó?: Ha többen kerékpároznak, kevesebb a forgalom és a szennyezés, valamint javul a közegészség és az emberek mozgásszabadsága.
+Mi a gond vele?: A kerékpárhasználat nem mindig praktikus hosszú távra, és a biztonság, valamint a hőség is korlátozhatja.
+Mennyire bizonyított?: A tudományos tanulmányok szerint a kerékpározás sok pozitív hatást hozhat, de a bizonyíték nem teljesen egyértelmű minden területen.
+Kérdés angolul: How much does it help if more people cycle?
+Röviden angolul: Many short city trips can be made by bicycle.
+Ha kikutatod angolul:
+Mire jó? angolul: If more people cycle, there is less traffic and pollution, and public health as well as people's freedom of movement improve.
+Mi a gond vele? angolul: Cycling is not always practical for long distances, and safety as well as heat can also limit it.
+Mennyire bizonyított? angolul: According to scientific studies, cycling can bring many positive effects, though the evidence is not completely clear in every area.
+Forrás: Wikipédia: Utility cycling (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Utility_cycling
+Forrás: The co-benefits of active travel interventions beyond physical activity: a systematic review (2024) – https://doi.org/10.1016/s2542-5196(24)00201-8
+Forrás: Neighbourhood Accessibility and Active Travel (2012) – https://doi.org/10.1080/02697459.2012.661636
+Forrás: What Are the Health Benefits of Active Travel? A Systematic Review of Trials and Cohort Studies (2013) – https://doi.org/10.1371/journal.pone.0069912
+Lektorálva: igen
+--- technikai ---
+Keresés: cycling mode shift carbon emissions reduction|active travel climate change mitigation|bicycle commuting emissions savings
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: kerékpáros közlekedés
+Wikipédia angolul: utility cycling
+Áttekintő cikkek keresése: active travel emissions review
+
+=== tavmunka ===
+Korszak: II. (Mérséklés)
+Kérdés: Csökkenti-e a kibocsátást az otthoni munka?
+Röviden: Kevesebb az ingázás, de otthon több a fűtés és az áram.
+Ha kikutatod:
+Mire jó?: Az otthoni munka csökkentheti a közlekedési igényt, így mérsékelheti a kibocsátást, mivel kevesebb autó használatára van szükség.
+Mi a gond vele?: Néhány tanulmány szerint az otthoni munka nem mindig csökkenti a kibocsátást, mert más területeken is energiafogyasztást okozhat, például az otthoni eszközök használatával.
+Mennyire bizonyított?: A tudományos tanulmányok szerint az otthoni munka általában csökkenti a kibocsátást, de a pontos hatások függenek a helyi körülményektől, például a közlekedési módoktól.
+Kérdés angolul: Does working from home cut emissions?
+Röviden angolul: There is less commuting, but more heating and electricity at home.
+Ha kikutatod angolul:
+Mire jó? angolul: Working from home can reduce transport demand, thereby moderating emissions because fewer cars need to be used.
+Mi a gond vele? angolul: According to some studies, working from home does not always reduce emissions because it can cause energy consumption in other areas, such as through using home equipment.
+Mennyire bizonyított? angolul: According to scientific studies, working from home generally reduces emissions, though exact effects depend on local conditions, such as transport modes.
+Forrás: Wikipédia: Távmunka (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/T%C3%A1vmunka
+Forrás: A systematic review of the energy and climate impacts of teleworking (2020) – https://doi.org/10.1088/1748-9326/ab8a84
+Forrás: Does Telework Really Save Energy (2015) – https://openalex.org/W2191952474
+Forrás: Who is Teleworking and Where from? Exploring the Main Determinants of Telework in Europe (2020) – https://doi.org/10.3390/su12218797
+Lektorálva: igen
+--- technikai ---
+Keresés: teleworking energy consumption emissions review|remote work commuting emissions net effect
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: távmunka
+Wikipédia angolul: telecommuting
+Áttekintő cikkek keresése: telework energy review
+
+=== gatak ===
+Korszak: II. (Mérséklés)
+Kérdés: Mennyi kárt előz meg a gát és a viharkapu?
+Röviden: A gát és a zárható viharkapu kizárja a tengert a városból. Drága, és egyszer túl alacsony lehet.
+Ha kikutatod:
+Mire jó?: A gátak és a viharkapuk segítenek távol tartani a vizet, így védik az emberi életeket, az otthonokat és az anyagi értékeket az árvízkároktól.
+Mi a gond vele?: Az építésük és a fenntartásuk is költséges, és extrém terhelés, kedvezőtlen kialakítás vagy rendkívül erős vihar esetén meghibásodhatnak, illetve nem nyújtanak teljes védelmet.
+Mennyire bizonyított?: Számos kutatás és gyakorlati példa támasztja alá, hogy hatékonyak, de működésük mindig függ a helyi adottságoktól, a tervezéstől, a karbantartástól és a természeti környezet hatásaitól.
+Kérdés angolul: How much damage do dikes and storm surge barriers prevent?
+Röviden angolul: A dike and a closable storm surge barrier keep the sea out of the city. They are costly and may one day be too low.
+Ha kikutatod angolul:
+Mire jó? angolul: They protect cities and homes from flood damage, helping save lives and property by keeping floodwaters out.
+Mi a gond vele? angolul: They are expensive to build and maintain, and they can fail if poorly designed or hit by an extreme storm.
+Mennyire bizonyított? angolul: There is strong evidence that these structures are effective—as seen in places such as the Netherlands and New York—though their performance depends on proper design, maintenance, and operation.
+Forrás: Wikipédia: Árvízvédelmi fal (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/%C3%81rv%C3%ADzv%C3%A9delmi_fal
+Forrás: A Review of Cost Estimates for Flood Adaptation (2018) – https://doi.org/10.3390/w10111646
+Forrás: Hydrodynamic Modelling of Mangrove-Mediated Coastal Flood Protection: A Systematic Review and Bibliometric Analysis (2026) – https://doi.org/10.36956/sms.v8i3.3337
+Forrás: The Global Flood Protection Benefits of Mangroves (2020) – https://doi.org/10.1038/s41598-020-61136-6
+Lektorálva: igen
+--- technikai ---
+Keresés: coastal flood protection dikes avoided damage sea level rise|storm surge barrier effectiveness flood risk reduction|coastal adaptation costs benefits sea level rise
+Paraméter: kockazat_csokkentes_pct
+Wikipédia: árvízvédelmi gát
+Wikipédia angolul: flood barrier
+Áttekintő cikkek keresése: coastal flood protection adaptation review
+
+# ----- III. korszak: Átalakulás -----
+
+=== levegoszures ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyi CO2-t szűrhetnek ki gépek a levegőből?
+Röviden: Nagy ventilátoros gépek kiszűrik a CO2-t, és a föld alá zárják. Sok energiát igényel.
+Ha kikutatod: CO2-szűrés a levegőből a tervedben.
+Mire jó?: Ez a technológia segíthet mérsékelni a klímaváltozást, mert a levegőből kivett CO2-t elhelyezhetik a talajban vagy a föld alatt, így csökkenthetik a légkörben lévő szén-dioxid mennyiségét.
+Mi a gond vele?: A jelenlegi technológiák nagyon drágák, mert sok energiát igényelnek, és még nem tudnak nagy mennyiségű CO2-t kiválasztani a levegőből.
+Mennyire bizonyított?: A tudományos kutatások szerint a technológia még fejlesztés alatt áll, de már van néhány működő példája, ezért bizonyos mértékig bizonyított, de még nem áll készen a nagy léptékű alkalmazásra.
+Kérdés angolul: How much CO2 can machines filter from the air?
+Röviden angolul: Large fan-driven machines filter out CO2 and store it underground. It takes a lot of energy.
+Ha kikutatod angolul: Filtering CO2 from the air in your plan.
+Mire jó? angolul: This technology can help mitigate climate change because CO2 removed from the air can be placed in soil or underground, thus reducing the amount of carbon dioxide in the atmosphere.
+Mi a gond vele? angolul: Current technologies are very expensive because they require a lot of energy, and they cannot yet separate large amounts of CO2 from the air.
+Mennyire bizonyított? angolul: According to scientific research, the technology is still under development, though there are already some working examples, so it is proven to some extent but not yet ready for large-scale deployment.
+Forrás: Wikipédia: Direct air capture (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Direct_air_capture
+Forrás: A review on progress made in direct air capture of CO 2 (2022) – https://doi.org/10.1016/j.eti.2022.102991
+Forrás: A comprehensive review on regeneration strategies for direct air capture (2023) – https://doi.org/10.1016/j.jcou.2023.102587
+Forrás: A review of direct air capture (DAC): scaling up commercial technologies and innovating for the future (2021) – https://doi.org/10.1088/2516-1083/abf1ce
+Lektorálva: igen
+--- technikai ---
+Keresés: direct air capture carbon dioxide removal potential cost|direct air carbon capture and storage scale-up|negative emissions technologies potentials costs side effects
+Paraméter: cdr_potencial_gtco2_ev,cdr_koltseg_usd_tco2
+Wikipédia: szén-dioxid-leválasztás levegőből
+Wikipédia angolul: direct air capture
+Áttekintő cikkek keresése: direct air capture review
+
+=== gyari_co2 ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyi CO2 fogható fel a gyárkéményekben?
+Röviden: Az erőművek és gyárak füstjéből a CO2 kiválasztható, mielőtt a levegőbe jut.
+Ha kikutatod:
+Mire jó?: Ez csökkenti a klímaváltozás okozta melegedést, mert kevesebb CO2 kerül a levegőbe, és így kevesebb hőt tart vissza a Föld.
+Mi a gond vele?: A CO2 leválasztása sok energiát és pénzt igényel, és a tárolás hosszú távon még nem biztos, hogy mindenhol biztonságos.
+Mennyire bizonyított?: A tudomány bizonyítja, hogy a CO2 leválasztása működőképes, de a hosszú távú tárolás még nem teljesen kidolgozott.
+Kérdés angolul: How much CO2 can be captured from factory chimneys?
+Röviden angolul: CO2 can be separated from the smoke of power plants and factories before it reaches the air.
+Ha kikutatod angolul:
+Mire jó? angolul: This reduces warming caused by climate change because less CO2 enters the air, and thus the Earth retains less heat.
+Mi a gond vele? angolul: Capturing CO2 requires a lot of energy and money, and long-term storage is not yet certain to be safe everywhere.
+Mennyire bizonyított? angolul: Science shows that capturing CO2 works, though long-term storage is not yet completely worked out.
+Forrás: Wikipédia: Szén-dioxid-leválasztás és -tárolás (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/Sz%C3%A9n-dioxid-lev%C3%A1laszt%C3%A1s_%C3%A9s_-t%C3%A1rol%C3%A1s
+Forrás: Recent advances in carbon capture storage and utilisation technologies: a review (2020) – https://doi.org/10.1007/s10311-020-01133-3
+Forrás: Significant aspects of carbon capture and storage – A review (2018) – https://doi.org/10.1016/j.petlm.2018.12.007
+Forrás: Carbon capture utilization and storage in review: Sociotechnical implications for a carbon reliant world (2023) – https://doi.org/10.1016/j.rser.2023.113215
+Lektorálva: igen
+--- technikai ---
+Keresés: post-combustion carbon capture efficiency|carbon capture and storage industrial capture rate|amine carbon capture energy penalty
+Paraméter: hatasfok_pct
+Wikipédia: szén-dioxid-leválasztás
+Wikipédia angolul: carbon capture and storage
+Áttekintő cikkek keresése: carbon capture and storage review
+
+=== teherauto ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyit spórol az elektromos teherautó?
+Röviden: A teherautók sok gázolajat fogyasztanak. Akkumulátorral hosszabb utakra is képesek.
+Ha kikutatod:
+Mire jó?: Az elektromos teherautók csökkentik a zajt és a környezetet károsító szennyezést, így különösen hasznosak a sűrűn lakott, városi területeken. A működésük hatékonyabb lehet, így kevesebb üzemeltetési költséggel járhat a használatuk.
+Mi a gond vele?: Az akkumulátorok nehezek, ez csökkenti a teherbírást, és a hosszú távú szállításokra kevésbé alkalmasak. A töltés is időigényesebb lehet, ami lassíthatja a szállítási ütemet.
+Mennyire bizonyított?: A tudományos kutatások szerint az elektromos teherautók költségei csökkentek, és a jövőben még inkább megfelelőek lehetnek, de a hosszú távú hatékonyság továbbra is vizsgálat alatt áll.
+Kérdés angolul: How much does an electric truck save?
+Röviden angolul: Trucks burn a lot of diesel. With batteries they can also make longer trips.
+Ha kikutatod angolul:
+Mire jó? angolul: Electric trucks reduce noise and harmful environmental pollution, so they are especially useful in densely populated urban areas. Their operation can be more efficient, so using them can involve lower operating costs.
+Mi a gond vele? angolul: Batteries are heavy, which reduces payload capacity, and they are less suitable for long-distance transport. Charging can also take more time, which can slow down delivery schedules.
+Mennyire bizonyított? angolul: According to scientific studies, the costs of electric trucks have decreased and they may become even more suitable in the future, though long-term efficiency remains under investigation.
+Forrás: Wikipédia: Electric truck (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Electric_truck
+Forrás: Pantograph Charging for Electric Vehicles: A Comprehensive Review: Enabling efficient and high-power fast charging for buses, trucks, and heavy-duty electric vehicles. (2026) – https://doi.org/10.1109/mele.2026.3659821
+Forrás: Technology, Sustainability, and Marketing of Battery Electric and Hydrogen Fuel Cell Medium-Duty and Heavy-Duty Trucks and Buses in 2020-2040 (2020) – https://doi.org/10.7922/g2h993fj
+Forrás: Electric Powertrain Topology Analysis and Design for Heavy-Duty Trucks (2020) – https://doi.org/10.3390/en13102434
+Lektorálva: igen
+--- technikai ---
+Keresés: battery electric heavy-duty truck life cycle emissions|electric trucks emissions reduction|zero emission heavy duty vehicles
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: elektromos teherautó
+Wikipédia angolul: electric truck
+Áttekintő cikkek keresése: electric heavy-duty trucks review
+
+=== hajozas ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyivel csökkenthető a hajózás kibocsátása?
+Röviden: A teherhajók nehézolajat égetnek. Új üzemanyag, lassabb haladás vagy szélvitorla segíthet.
+Ha kikutatod:
+Mire jó?: A kibocsátás csökkentése segíthet a klímaváltozás mérséklésében, és csökkentheti a tengeri környezet és az élővilág károsodását.
+Mi a gond vele?: A hajózás kibocsátásának csökkentése nagy költségekkel jár, és a jelenlegi technológiák nem elég hatékonyak a teljes kibocsátás megszüntetéséhez.
+Mennyire bizonyított?: A tudományos bizonyítékok alapján a hajózás kibocsátása jelentős, de a csökkentésének módjai továbbra is kutatás alatt állnak.
+Kérdés angolul: How much can shipping emissions be cut?
+Röviden angolul: Cargo ships burn heavy fuel oil. New fuels, slower sailing or wind sails can help.
+Ha kikutatod angolul:
+Mire jó? angolul: Cutting emissions can help mitigate climate change and can reduce damage to the marine environment and wildlife.
+Mi a gond vele? angolul: Cutting shipping emissions involves high costs, and current technologies are not efficient enough to eliminate all emissions.
+Mennyire bizonyított? angolul: According to scientific evidence, shipping emissions are significant, though ways to reduce them remain under research.
+Forrás: Wikipédia: Environmental impact of shipping (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Environmental_impact_of_shipping
+Forrás: A review of law and policy on decarbonization of shipping (2022) – https://doi.org/10.3389/fmars.2022.1076352
+Forrás: Decarbonization in Shipping Industry: A Review of Research, Technology Development, and Innovation Proposals (2021) – https://doi.org/10.3390/jmse9040415
+Forrás: Evaluating the Costs of Decarbonizing the Shipping Industry: A Review of the Literature (2022) – https://doi.org/10.3390/jmse10070946
+Lektorálva: igen
+--- technikai ---
+Keresés: shipping decarbonization emissions reduction potential|wind-assisted ship propulsion fuel savings|slow steaming emissions reduction
+Paraméter: kibocsatas_csokkentes_pct
+Wikipédia: hajózás kibocsátás
+Wikipédia angolul: environmental impact of shipping
+Áttekintő cikkek keresése: shipping decarbonization review
+
+=== vizes_part ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyire véd a parti mocsár és az ártér?
+Röviden: A parti mocsár és a folyónak visszaadott ártér felfogja a hullámot és az áradást.
+Ha kikutatod:
+Mire jó?: Ezek a területek lassítják és tárolják a vizet, így mérséklik a folyami és tengerparti áradások okozta károkat, emellett támogatják az élővilágot, javítják a vízminőséget, és szénmegkötéssel az éghajlatváltozás ellen is hatnak.
+Mi a gond vele?: Rendkívül nagy árvizeknél önmagukban nem mindig elégségesek, hatékonyságuk függ a helyi adottságoktól (például a talajtól, a növényzettől és a vízáramlástól), helyreállításukhoz pedig sok helyen kevés a tér vagy az erőforrás.
+Mennyire bizonyított?: Erős bizonyítékok szólnak amellett, hogy mérsékelik a gyakoribb áradásokat és támogatják az éghajlatváltozás elleni fellépést, de a hosszú távú hatások és a legoptimálisabb alkalmazás pontosabb feltárásához további kutatások szükségesek.
+Kérdés angolul: How well do coastal marshes and floodplains protect?
+Röviden angolul: Coastal marshes and floodplains given back to the river absorb waves and floods.
+Ha kikutatod angolul:
+Mire jó? angolul: They reduce flood damage by slowing and storing water while improving water quality. They also support wildlife and help mitigate climate change by storing carbon.
+Mi a gond vele? angolul: They are less effective during severe or extreme floods, and their success depends on local conditions such as soil, vegetation, and water flow. Some areas may also lack the space or resources needed for effective restoration.
+Mennyire bizonyított? angolul: There is strong evidence that they help mitigate routine floods and support climate change adaptation, though further research is needed to fully assess their long-term benefits and optimal use.
+Forrás: Wikipédia: Salt marsh (en, CC BY-SA 4.0) – https://en.wikipedia.org/wiki/Salt_marsh
+Forrás: Nature-based Solutions for Flood Risk Reduction:A Review and Guidance for Coastal Protection (2024) – https://pure.au.dk/portal/en/publications/d7ac67b1-5d38-4358-bf80-125336086548
+Forrás: Nature-Based Engineering: A Review on Reducing Coastal Flood Risk With Mangroves (2021) – https://doi.org/10.3389/fmars.2021.702412
+Forrás: Mangrove forests as a nature-based solution for coastal flood protection: Biophysical and ecological considerations (2022) – https://doi.org/10.1016/j.wse.2022.10.004
+Lektorálva: igen
+--- technikai ---
+Keresés: salt marsh wave attenuation coastal protection|floodplain restoration flood peak reduction|nature-based solutions coastal flood risk reduction
+Paraméter: kockazat_csokkentes_pct
+Wikipédia: vizes élőhely
+Wikipédia angolul: salt marsh
+Áttekintő cikkek keresése: nature-based coastal flood protection review
+
+=== megemelt_haz ===
+Korszak: III. (Átalakulás)
+Kérdés: Megéri megemelni a házakat ott, ahol jön a víz?
+Röviden: A cölöpre emelt vagy úszó ház szárazon marad, amikor jön a víz.
+Ha kikutatod:
+Mire jó?: Az árvízvédelmi megemelés és megerősítés védi az embereket és az ingatlanokat az elöntéstől, ami növeli a lakók biztonságát és csökkentheti a helyreállítási költségeket.
+Mi a gond vele?: A kivitelezés költsége magas lehet, és a megoldás kevésbé hatékony, ha az árvizek a vártnál erősebbek, magasabb vízállással járnak vagy gyakrabban fordulnak elő.
+Mennyire bizonyított?: Vannak pozitív tapasztalatok és bizonyítékok a működésére, de még további kutatásokra van szükség ahhoz, hogy pontosan lássuk, mennyire hatékony a különböző helyzetekben.
+Kérdés angolul: Is it worth raising houses where the water comes?
+Röviden angolul: A house on stilts or a floating house stays dry when the water comes.
+Ha kikutatod angolul:
+Mire jó? angolul: Elevating and flood-proofing homes helps protect people and property from flood damage, saving lives and reducing repair costs.
+Mi a gond vele? angolul: Upfront and adaptation costs can be high, and measures may fall short if floods are more severe, higher, or more frequent than anticipated.
+Mennyire bizonyított? angolul: There is evidence that flood-proofing can be effective, but further research is needed to determine how well it performs across different settings and conditions.
+Forrás: Wikipédia: Cölöpépítmény (hu, CC BY-SA 4.0) – https://hu.wikipedia.org/wiki/C%C3%B6l%C3%B6p%C3%A9p%C3%ADtm%C3%A9ny
+Forrás: Efficiency of private flood proofing of new buildings – adapted redevelopment of a floodplain in The Netherlands (2008) – https://doi.org/10.2495/friar080241
+Forrás: A Review of Cost Estimates for Flood Adaptation (2018) – https://doi.org/10.3390/w10111646
+Forrás: Flood-proof Architectural Solutions for Urban Environments: A Review (2023) – https://doi.org/10.70470/khwarizmia/2023/016
+Lektorálva: igen
+--- technikai ---
+Keresés: building elevation flood damage reduction cost benefit|amphibious floating housing flood adaptation|flood-proofing buildings effectiveness
+Paraméter: kockazat_csokkentes_pct
+Wikipédia: cölöpépítmény
+Wikipédia angolul: stilt house
+Áttekintő cikkek keresése: building flood-proofing elevation review

@@ -1,0 +1,9 @@
+.godot/
+*.tmp
+__pycache__/
+# a játékos saját zenéje: nem része a játéknak, soha nem kerül a tárolóba
+sajat_zene/*.wav
+sajat_zene/*.mp3
+sajat_zene/*.ogg
+kiadas/
+.claude/settings.local.json

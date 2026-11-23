@@ -1,0 +1,253 @@
+{
+ "forras": "Global Carbon Budget 2026 (v11), Our World in Data; 2025-ös kibocsátás, fosszilis és cement, földhasználat nélkül",
+ "link": "https://ourworldindata.org/co2-emissions",
+ "olaj_orszagok": "Oroszország, Szaúd-Arábia, Irán, Irak, Egyesült Arab Emírségek, Kuvait, Katar, Omán, Bahrein, Kazahsztán, Azerbajdzsán, Venezuela, Brunei",
+ "csoportok": [
+  {
+   "id": "europa",
+   "nev": "Európa",
+   "nev_en": "Europe",
+   "lat": 50,
+   "lon": 10,
+   "szin": "#5aa0ff",
+   "co2_resz": 0.07,
+   "ch4_resz": 0.049,
+   "felelmek": [
+    "munka",
+    "aram",
+    "part"
+   ],
+   "tenyek": [
+    {
+     "szoveg": "Egy emberre évi 5,4 tonna CO2 jut",
+     "szoveg_en": "5.4 tonnes of CO2 per person a year",
+     "forras": "Global Carbon Budget 2026",
+     "link": "https://ourworldindata.org/co2-emissions",
+     "forras_en": "Global Carbon Budget 2026"
+    },
+    {
+     "szoveg": "Az 1750 óta kibocsátott CO2 20,4%-a innen jött",
+     "szoveg_en": "20.4% of all CO2 emitted since 1750 came from here",
+     "forras": "Global Carbon Budget 2026",
+     "link": "https://ourworldindata.org/co2-emissions",
+     "forras_en": "Global Carbon Budget 2026"
+    },
+    {
+     "szoveg": "Az áram 47,7%-a megújuló forrásból jön",
+     "szoveg_en": "47.7% of electricity comes from renewables",
+     "forras": "Ember 2026",
+     "link": "https://ourworldindata.org/electricity-mix",
+     "forras_en": "Ember 2026"
+    },
+    {
+     "szoveg": "A valóságban 2050-re vállalt nulla kibocsátást, törvényben",
+     "szoveg_en": "In reality it has promised zero emissions by 2050, by law",
+     "forras": "EU 2021/1119",
+     "link": "https://eur-lex.europa.eu/eli/reg/2021/1119/oj",
+     "forras_en": "EU 2021/1119"
+    }
+   ]
+  },
+  {
+   "id": "usa",
+   "nev": "Egyesült Államok",
+   "nev_en": "United States",
+   "lat": 39,
+   "lon": -98,
+   "szin": "#e06a6a",
+   "co2_resz": 0.129,
+   "ch4_resz": 0.086,
+   "felelmek": [
+    "munka",
+    "ketseg",
+    "part"
+   ],
+   "tenyek": [
+    {
+     "szoveg": "Egy emberre évi 14,5 tonna CO2 jut",
+     "szoveg_en": "14.5 tonnes of CO2 per person a year",
+     "forras": "Global Carbon Budget 2026",
+     "link": "https://ourworldindata.org/co2-emissions",
+     "forras_en": "Global Carbon Budget 2026"
+    },
+    {
+     "szoveg": "Az 1750 óta kibocsátott CO2 23,3%-a innen jött",
+     "szoveg_en": "23.3% of all CO2 emitted since 1750 came from here",
+     "forras": "Global Carbon Budget 2026",
+     "link": "https://ourworldindata.org/co2-emissions",
+     "forras_en": "Global Carbon Budget 2026"
+    },
+    {
+     "szoveg": "Az áram 16,3%-a szénből jön",
+     "szoveg_en": "16.3% of electricity comes from coal",
+     "forras": "Ember 2026",
+     "link": "https://ourworldindata.org/electricity-mix",
+     "forras_en": "Ember 2026"
+    },
+    {
+     "szoveg": "A valóságban 2025-ben visszavonta az országos nulla-célját",
+     "szoveg_en": "In reality it withdrew its national net zero target in 2025",
+     "forras": "Net Zero Tracker",
+     "link": "https://zerotracker.net/",
+     "forras_en": "Net Zero Tracker"
+    }
+   ]
+  },
+  {
+   "id": "kina",
+   "nev": "Kína",
+   "nev_en": "China",
+   "lat": 35,
+   "lon": 104,
+   "szin": "#f0b24a",
+   "co2_resz": 0.318,
+   "ch4_resz": 0.167,
+   "felelmek": [
+    "aram",
+    "munka",
+    "egeszseg"
+   ],
+   "tenyek": [
+    {
+     "szoveg": "Egy emberre évi 8,8 tonna CO2 jut",
+     "szoveg_en": "8.8 tonnes of CO2 per person a year",
+     "forras": "Global Carbon Budget 2026",
+     "link": "https://ourworldindata.org/co2-emissions",
+     "forras_en": "Global Carbon Budget 2026"
+    },
+    {
+     "szoveg": "Az áram 54,3%-a szénből, 37,0%-a megújulóból jön",
+     "szoveg_en": "54.3% of electricity comes from coal, 37.0% from renewables",
+     "forras": "Ember 2026",
+     "link": "https://ourworldindata.org/electricity-mix",
+     "forras_en": "Ember 2026"
+    },
+    {
+     "szoveg": "A valóságban 2060 előttre ígért nulla kibocsátást",
+     "szoveg_en": "In reality it has promised zero emissions before 2060",
+     "forras": "Kína hosszú távú stratégiája, 2021",
+     "link": "https://unfccc.int/sites/default/files/resource/China%E2%80%99s%20Mid-Century%20Long-Term%20Low%20Greenhouse%20Gas%20Emission%20Development%20Strategy.pdf",
+     "forras_en": "China's long-term strategy, 2021"
+    }
+   ]
+  },
+  {
+   "id": "india",
+   "nev": "India",
+   "nev_en": "India",
+   "lat": 22,
+   "lon": 79,
+   "szin": "#ff9a4a",
+   "co2_resz": 0.082,
+   "ch4_resz": 0.09,
+   "felelmek": [
+    "aram",
+    "elelem",
+    "egeszseg"
+   ],
+   "tenyek": [
+    {
+     "szoveg": "Egy emberre évi 2,2 tonna CO2 jut",
+     "szoveg_en": "2.2 tonnes of CO2 per person a year",
+     "forras": "Global Carbon Budget 2026",
+     "link": "https://ourworldindata.org/co2-emissions",
+     "forras_en": "Global Carbon Budget 2026"
+    },
+    {
+     "szoveg": "Az áram 70,8%-a szénből jön",
+     "szoveg_en": "70.8% of electricity comes from coal",
+     "forras": "Ember 2026",
+     "link": "https://ourworldindata.org/electricity-mix",
+     "forras_en": "Ember 2026"
+    },
+    {
+     "szoveg": "A valóságban 2070-re ígért nulla kibocsátást",
+     "szoveg_en": "In reality it has promised zero emissions by 2070",
+     "forras": "India hosszú távú stratégiája, 2022",
+     "link": "https://unfccc.int/sites/default/files/resource/India_LTLEDS.pdf",
+     "forras_en": "India's long-term strategy, 2022"
+    }
+   ]
+  },
+  {
+   "id": "afrika",
+   "nev": "Afrika",
+   "nev_en": "Africa",
+   "lat": 2,
+   "lon": 20,
+   "szin": "#7fd67a",
+   "co2_resz": 0.04,
+   "ch4_resz": 0.148,
+   "felelmek": [
+    "elelem",
+    "part",
+    "erdo"
+   ],
+   "tenyek": [
+    {
+     "szoveg": "Egy emberre évi 1,0 tonna CO2 jut",
+     "szoveg_en": "1.0 tonne of CO2 per person a year",
+     "forras": "Global Carbon Budget 2026",
+     "link": "https://ourworldindata.org/co2-emissions",
+     "forras_en": "Global Carbon Budget 2026"
+    },
+    {
+     "szoveg": "Az 1750 óta kibocsátott CO2 3,0%-a innen jött",
+     "szoveg_en": "3.0% of all CO2 emitted since 1750 came from here",
+     "forras": "Global Carbon Budget 2026",
+     "link": "https://ourworldindata.org/co2-emissions",
+     "forras_en": "Global Carbon Budget 2026"
+    },
+    {
+     "szoveg": "A Szaharától délre az emberek 55,1%-ának van árama",
+     "szoveg_en": "South of the Sahara, 55.1% of people have electricity",
+     "forras": "Világbank 2024",
+     "link": "https://data.worldbank.org/indicator/EG.ELC.ACCS.ZS",
+     "forras_en": "World Bank 2024"
+    }
+   ]
+  },
+  {
+   "id": "olaj",
+   "nev": "Olajországok",
+   "nev_en": "Oil exporters",
+   "lat": 25,
+   "lon": 48,
+   "szin": "#c8b49a",
+   "co2_resz": 0.117,
+   "ch4_resz": 0.125,
+   "felelmek": [
+    "olaj",
+    "munka",
+    "ketseg"
+   ],
+   "tenyek": [
+    {
+     "szoveg": "Szaúd-Arábiában egy emberre évi 18,5 tonna CO2 jut",
+     "szoveg_en": "In Saudi Arabia, 18.5 tonnes of CO2 per person a year",
+     "forras": "Global Carbon Budget 2026",
+     "link": "https://ourworldindata.org/co2-emissions",
+     "forras_en": "Global Carbon Budget 2026"
+    },
+    {
+     "szoveg": "Irak gazdaságának 42,8%-a az olajból jön",
+     "szoveg_en": "42.8% of Iraq's economy comes from oil",
+     "forras": "Világbank 2021",
+     "link": "https://data.worldbank.org/indicator/NY.GDP.PETR.RT.ZS",
+     "forras_en": "World Bank 2021"
+    },
+    {
+     "szoveg": "A valóságban Oroszország és Szaúd-Arábia 2060-ra ígért nulla kibocsátást",
+     "szoveg_en": "In reality Russia and Saudi Arabia have promised zero emissions by 2060",
+     "forras": "Climate Watch",
+     "link": "https://www.climatewatchdata.org/net-zero-tracker",
+     "forras_en": "Climate Watch"
+    }
+   ]
+  }
+ ],
+ "tobbi_co2_resz": 0.243,
+ "tobbi_ch4_resz": 0.333,
+ "forras_metan": "Jones és mtsai 2025, National contributions to climate change 2025.1 (Our World in Data), 2024-es emberi eredetű metán",
+ "link_metan": "https://ourworldindata.org/grapher/methane-emissions"
+}
