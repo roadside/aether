@@ -1229,6 +1229,12 @@ func _mark_next() -> void:
 
 
 # --- ablakok ------------------------------------------------------------------
+## Az ablak alján mindig látszó gomb (hosszú, görgethető tartalomnál sem kell keresni).
+func _sticky(body: VBoxContainer, node: Control) -> void:
+	node.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	body.get_parent().get_parent().get_parent().add_child(node)
+
+
 func _open(title: String, accent: Color = UI.GOLD) -> VBoxContainer:
 	var keep := _flash_ids       # a felvillanás az ablak valódi bezárásakor jön, nem ablakváltáskor
 	var fresh := _overlay == null or _pop_next
@@ -1299,7 +1305,11 @@ func _fit() -> void:
 		return
 	var p: Control = _overlay
 	var body: Control = _body
-	var h := clampf(body.get_combined_minimum_size().y + 118.0, 240.0, 720.0)
+	var extra := 0.0               # az ablak alján mindig látszó gombok helye
+	var outer := body.get_parent().get_parent().get_parent()
+	for i in range(2, outer.get_child_count()):
+		extra += (outer.get_child(i) as Control).get_combined_minimum_size().y + 10.0
+	var h := clampf(body.get_combined_minimum_size().y + 118.0 + extra, 240.0, 720.0)
 	p.custom_minimum_size.y = h
 	p.size.y = h
 	p.position.y = maxf(40.0, (800.0 - h) * 0.5)
@@ -1797,7 +1807,7 @@ func _open_card(id: String, fresh: bool = false) -> void:
 		body.add_child(UI.text_link(str(s["cim"]), str(s["link"]), 15))
 	if World.CDR.has(id):
 		body.add_child(UI.label(L.t("Ezzel a kártyával CO2-kivonást indíthatsz."), 16, UI.GREEN, true))
-	body.add_child(_go(L.t("Rendben"), _close))
+	_sticky(body, _go(L.t("Rendben"), _close))
 
 
 func _open_hand() -> void:
@@ -2055,7 +2065,7 @@ func _refuted(g: Dictionary, card_id: String) -> void:
 	c.add_child(UI.label(Cards.text(card_id, "Mennyire bizonyított?", L.is_en()), 17, UI.TEXT))
 	body.add_child(UI.card_root(c))
 	body.add_child(UI.label(L.t("%s most jobban bízik benned: eggyel kevesebb kártyával is meggyőzheted.") % L.field(g, "nev"), 17, UI.GREEN, true))
-	body.add_child(_go(L.t("Rendben"), _close))
+	_sticky(body, _go(L.t("Rendben"), _close))
 
 
 ## Rövid jelenet a megállapodás előtt: a bizonyítékaid egymás után érkeznek meg, és a csoport sávja megtelik.
@@ -2108,7 +2118,7 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 		add_child(burst)
 	if ask["fajta"] == "felkeszules":
 		body.add_child(UI.label(L.t("%s felkészült a bajra. Megbízik benned, és többé nem inog meg.") % L.field(g, "nev"), 22, UI.TEXT, true))
-		body.add_child(_go(L.t("Rendben"), _close))
+		_sticky(body, _go(L.t("Rendben"), _close))
 		return
 	var txt: String = (L.rag(L.t("%s vállalta: nulla kibocsátás %d-re.") % [L.field(g, "nev"), int(ask["cel"])])) if ask["fajta"] == "cel" \
 		else (L.t("%s vállalta: 30%%-kal kevesebb metán tíz év alatt.") % L.field(g, "nev"))
@@ -2137,7 +2147,7 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 		body.add_child(UI.label(L.t("Még egy megállapodás ebben a körben, és kapsz egy lépést."), 16, UI.GOLD))
 	body.add_child(UI.label(L.t("2100-ban: +%s és +%s °C között") % [L.num(minf(float(fc["also"][-1][1]), float(fc["felso"][-1][1])), 1), L.num(maxf(float(fc["also"][-1][1]), float(fc["felso"][-1][1])), 1)], 17, UI.SOFT))
 	body.add_child(UI.label(L.t("A hőmérsékleti sáv azért ilyen széles, mert nem tudjuk pontosan, mennyire érzékeny a Föld."), 15, UI.MUTE))
-	body.add_child(_go(L.t("Rendben"), _close))
+	_sticky(body, _go(L.t("Rendben"), _close))
 
 
 # --- CO2-kivonás --------------------------------------------------------------
@@ -2399,7 +2409,7 @@ func _do_dilemma(choice: int) -> void:
 	else:
 		body.add_child(UI.label(L.t("Nem ez volt. A helyes válasz:"), 18, UI.TEXT))
 		body.add_child(UI.label(Cards.text(right, "Kérdés", L.is_en()), 20, UI.GOLD, true))
-	body.add_child(_go(L.t("Rendben"), _close))
+	_sticky(body, _go(L.t("Rendben"), _close))
 
 
 func _open_summit() -> void:
@@ -2441,7 +2451,7 @@ func _do_summit(id: String) -> void:
 		var g := world.group(gid)
 		body.add_child(UI.label(L.rag(L.t("%s előbbre hozta a célját: nulla kibocsátás %d-re.") % [L.field(g, "nev"), int(g["cel"])]), 20, UI.TEXT, true))
 	body.add_child(UI.label(L.t("Várható melegedés 2100-ban: +%s → +%s °C") % [L.num(before, 2), L.num(float(world.forecast()["kozep"][-1][1]), 2)], 20, UI.GREEN, true))
-	body.add_child(_go(L.t("Rendben"), _close))
+	_sticky(body, _go(L.t("Rendben"), _close))
 
 
 func _open_end() -> void:
