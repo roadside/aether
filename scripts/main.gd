@@ -40,6 +40,7 @@ var _stats: Dictionary = {}
 var _dots: Label
 var _group_cards: Dictionary = {}
 var _curve: Control
+var _mission_btn: Button
 var _btns: Dictionary = {}
 var _menu: PanelContainer
 var _menu_catch: Control
@@ -413,9 +414,18 @@ func _build_bottom() -> void:
 		b.set_meta("tag", tag)
 		h.add_child(col)
 		_btns[row[0]] = b
-	var gap := Control.new()
+	var gap := UI.vbox(0)
+	gap.alignment = BoxContainer.ALIGNMENT_END
 	gap.custom_minimum_size = Vector2(190, 0)
 	h.add_child(gap)
+	var mb := UI.button(L.t("Küldetések"), false)
+	mb.custom_minimum_size = Vector2(176, 44)
+	mb.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	mb.focus_mode = Control.FOCUS_NONE
+	mb.add_theme_font_size_override("font_size", 16)
+	mb.pressed.connect(_open_missions)
+	gap.add_child(mb)
+	_mission_btn = mb
 	_curve = Chart.new()
 	_curve.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(_curve)
@@ -637,6 +647,8 @@ func _mark_next() -> void:
 	_btns["kivonas"].disabled = world.steps <= 0 or world.over()
 	_btns["ido"].text = L.t("Végeredmény") if world.over() else L.t("Következő 5 év") + "  ▶"
 	_btns["kartyak"].text = "%s (%d)" % [L.t("Kártyáim"), world.hand.size()]
+	_mission_btn.visible = not world.missions.is_empty()
+	_mission_btn.text = "%s %d/%d" % [L.t("Küldetések"), world.missions_done(), world.missions.size()]
 	for gid in _group_cards:
 		var gb: Button = _group_cards[gid]["gomb"]
 		var col := Color(str(world.group(gid)["szin"]))
@@ -827,6 +839,7 @@ const BADGES := [
 	["napi", "Napi Föld", "Játssz végig egy játékot „A mai Föld” gombbal."],
 	["gyujto", "Gyűjtő", "Kutass ki ötven különböző kártyát."],
 	["tudos", "Mindenhez értesz", "Legyen kártyád mind a nyolc témakörből a gyűjteményben."],
+	["kuldetes", "Küldetésteljesítő", "Teljesítsd mind a három küldetést egy játékban."],
 ]
 var _end_info: Dictionary = {}
 
@@ -881,6 +894,7 @@ func _finish_game(r: Dictionary) -> Dictionary:
 		"gyors": world.groups.all(func(g: Dictionary) -> bool:
 			return world.naplo.any(func(e: Dictionary) -> bool: return e["fajta"] == "cel" and e.get("csoport", "") == g["id"] and int(e["ev"]) < 2040)),
 		"napi": world.seed_v == _daily_code(),
+		"kuldetes": world.missions.size() >= 3 and world.missions_done() == world.missions.size(),
 		"gyujto": c.size() >= 50, "tudos": Cards.THEMES.keys().all(func(th: String) -> bool: return themes.has(th)),
 	}
 	var have := _badges()
@@ -1546,6 +1560,9 @@ func _open_end() -> void:
 		if bd[0] in fin["uj"]:
 			body.add_child(UI.label("★ " + L.t("Új jelvény: %s") % L.t(bd[1]), 17, UI.GOLD, true))
 	body.add_child(UI.label(L.t("A legmelegebb év: +%s °C. Küszöbét átlépő rendszer: %d a %d-ből.") % [L.num(float(r["csucs"]), 2), int(r["billenes"]), world.tips.size()], 17, UI.TEXT))
+	var late := world.what_if(5)
+	if late > tt + 0.005:
+		body.add_child(UI.label(L.t("Ha minden öt évvel később történik, a Földed +%s °C-ra melegszik. Minden év számít!") % L.num(late, 2), 17, UI.GOLD))
 	var s := float(r["sens"])
 	var kind := L.t("átlagos") if absf(s) < 0.25 else (L.t("az átlagnál érzékenyebb") if s > 0 else L.t("az átlagnál kevésbé érzékeny"))
 	body.add_child(UI.label(L.t("Ez a Föld %s volt. Ezt előre senki sem tudhatta, ahogy a valódi Földnél sem tudjuk pontosan.") % kind, 16, UI.SOFT))
@@ -1572,9 +1589,45 @@ func _open_end() -> void:
 			body.add_child(hb)
 		if world.cdr_total >= 0.5:
 			body.add_child(UI.label("%s: %s" % [L.t("CO2-kivonás"), L.t("%s milliárd tonna") % L.num_short(world.cdr_total, 0)], 15, UI.GREEN, true))
+	if not world.missions.is_empty():
+		body.add_child(UI.label("%s: %d/%d" % [L.t("Küldetések"), world.missions_done(), world.missions.size()], 19, UI.GOLD, true, false))
+		_add_missions(body)
 	if not world.naplo.is_empty():
 		body.add_child(UI.label(L.t("A te történeted"), 19, UI.GOLD, true, false))
 		_add_story(body)
+
+
+const MISSION_TEXT := {
+	"korai": "Győzd meg ezt a csoportot 2040 végéig: %s",
+	"metan3": "2050 végéig legalább három csoport vállaljon metáncsökkentést.",
+	"kivonas2": "Indíts el két CO2-kivonást.",
+	"tema": "Kutass ki öt kártyát ebből a témakörből: %s",
+	"felkeszul3": "Segíts három csoportnak felkészülni a bajra.",
+	"nulla2065": "Legalább egy csoport érje el a nulla kibocsátást 2065-ig.",
+	"csucs3": "Egy klímacsúcson legalább három csoport hozza előbbre a célját.",
+	"kartya20": "Gyűjts húsz kártyát ebben a játékban.",
+}
+
+
+func _mission_text(m: Dictionary) -> String:
+	var t: String = L.t(MISSION_TEXT.get(str(m["id"]), ""))
+	if "%s" in t:
+		var arg := str(m.get("arg", ""))
+		t = t % (_theme_name(arg) if m["id"] == "tema" else L.field(world.group(arg), "nev"))
+	return t
+
+
+## A három küldetés sora pipával; a záró képernyőn és a Küldetések ablakban is ez látszik.
+func _add_missions(body: VBoxContainer) -> void:
+	for m in world.missions:
+		var done := world.mission_done(m)
+		body.add_child(UI.label(("✔ " if done else "○ ") + _mission_text(m), 17, UI.GREEN if done else UI.TEXT))
+
+
+func _open_missions() -> void:
+	var body := _open(L.t("Küldetések"), UI.GOLD)
+	body.add_child(UI.label(L.t("Három cél erre a játékra. Nem kötelezők, de jelvény jár értük."), 16, UI.SOFT))
+	_add_missions(body)
 
 
 ## A játék fontos pillanatai évről évre, két oszlopban.
@@ -1692,6 +1745,8 @@ func _selftest() -> void:
 	await _shot("11b_gyujtemeny.png")
 	_pick_game()
 	await _shot("11c_uj_jatek.png")
+	_open_missions()
+	await _shot("11g_kuldetesek.png")
 	_open_story()
 	await _shot("11e_tortenet.png")
 	_close()

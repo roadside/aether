@@ -44,6 +44,8 @@ var news: Array = []             # az utolsó öt év hírei: [{"fajta", ...}]
 var cdr_total := 0.0             # az eddig kivont CO2 összesen (milliárd tonna)
 var net_zero_year := 0           # az első év, amikor a világ több CO2-t von ki, mint amennyit kibocsát (0 = még nem)
 var summit_due := false          # most klímacsúcs van: egy kártyát megmutathatsz az egész világnak
+var missions: Array = []         # a játék három küldetése: [{"id", "arg"}] (játékszabály; a Föld-kódból sorsoljuk)
+var hajto: Array = []            # évenként a tényleges hajtóerők: [co2, kivonás, metán] (a „mi lett volna, ha” számításhoz)
 var naplo: Array = []            # a játék fontos pillanatai a záró képernyőhöz: [{"ev", "fajta", ...}]
 var data: Dictionary = {}
 
@@ -69,6 +71,8 @@ func new_game(seed_value: int = -1, steps_n: int = STEPS) -> void:
 	cdr = []
 	news = []
 	naplo = []
+	hajto = []
+	_pick_missions()
 	summit_due = false
 	net_zero_year = 0
 	cdr_total = 0.0
@@ -450,7 +454,9 @@ func advance() -> void:
 	var p := params()
 	for i in ROUND_YEARS:
 		var y := int(st["ev"]) + 1
-		M.step(st, drivers(y), p)
+		var dy := drivers(y)
+		hajto.append([float(dy["co2"]), float(dy["cdr"]), float(dy["ch4"])])
+		M.step(st, dy, p)
 		M.step(_base, {}, p)
 		history.append([y, float(st["T"])])
 		base_history.append([y, float(_base["T"])])
@@ -516,11 +522,80 @@ func result() -> Dictionary:
 		"tenger": M.sea_2100(float(history[-1][1])), "tenger_alap": M.sea_2100(float(base_history[-1][1])), "sens": sens}
 
 
+# --- küldetések (játékszabály) --------------------------------------------------
+
+const MISSION_KINDS := ["korai", "metan3", "kivonas2", "tema", "felkeszul3", "nulla2065", "csucs3", "kartya20"]
+
+
+## Három különböző küldetés a Föld-kódból (külön véletlenforrásból, hogy a játék menete ne változzon tőle).
+func _pick_missions() -> void:
+	var mr := RandomNumberGenerator.new()
+	mr.seed = seed_v * 7919 + 13
+	var pool := MISSION_KINDS.duplicate()
+	var ids: Array = (data.get("csoportok", []) as Array).map(func(g: Dictionary) -> String: return str(g["id"]))
+	missions = []
+	while missions.size() < 3 and not pool.is_empty():
+		var k: String = pool.pop_at(mr.randi_range(0, pool.size() - 1))
+		var arg := ""
+		if k == "korai" and not ids.is_empty():
+			arg = ids[mr.randi_range(0, ids.size() - 1)]
+		elif k == "tema":
+			var ths: Array = Cards.THEMES.keys()
+			arg = ths[mr.randi_range(0, ths.size() - 1)]
+		missions.append({"id": k, "arg": arg})
+
+
+func mission_done(m: Dictionary) -> bool:
+	var arg := str(m.get("arg", ""))
+	match str(m["id"]):
+		"korai":
+			return naplo.any(func(e: Dictionary) -> bool: return e["fajta"] == "cel" and e.get("csoport", "") == arg and int(e["ev"]) <= 2040)
+		"metan3":
+			return naplo.filter(func(e: Dictionary) -> bool: return e["fajta"] == "metan" and int(e["ev"]) <= 2050).size() >= 3
+		"kivonas2":
+			return cdr.size() >= 2
+		"tema":
+			return hand.filter(func(id: String) -> bool: return Cards.theme_of(id) == arg).size() >= 5
+		"felkeszul3":
+			return groups.filter(func(g: Dictionary) -> bool: return g.get("felkeszult", false)).size() >= 3
+		"nulla2065":
+			return groups.any(func(g: Dictionary) -> bool: return int(g.get("nulla", 0)) > 0 and int(g["nulla"]) <= 2065)
+		"csucs3":
+			return naplo.any(func(e: Dictionary) -> bool: return e["fajta"] == "csucs" and int(e.get("db", 0)) >= 3)
+		"kartya20":
+			return hand.size() >= 20
+	return false
+
+
+func missions_done() -> int:
+	return missions.filter(mission_done).size()
+
+
+## Mi lett volna, ha minden vállalás és kivonás `delay` évvel később (vagy korábban) történik?
+## Ugyanaz a modell, ugyanaz az érzékenység; csak a ténylegesen megtörtént kibocsátási út tolódik el.
+## Vissza: a 2100-as hőmérséklet, vagy -1, ha nincs meg a teljes út (régi mentés).
+func what_if(delay: int) -> float:
+	var n := M.END_YEAR - M.START_YEAR
+	if hajto.size() < n:
+		return -1.0
+	var s := M.new_state()
+	var p := params()
+	M.step(s, {}, p)
+	for i in n:
+		var j := i - delay
+		var d := {}
+		if j >= 0:
+			var h: Array = hajto[mini(j, n - 1)]
+			d = {"co2": float(h[0]), "cdr": float(h[1]), "ch4": float(h[2])}
+		M.step(s, d, p)
+	return float(s["T"])
+
+
 # --- mentés -------------------------------------------------------------------
 
 func to_dict() -> Dictionary:
 	return {"v": SAVE_VERSION, "mag": seed_v, "jatek": game_id, "sens": sens, "st": st, "alap": _base, "kor": round_i, "lepes": steps, "max_lepes": max_steps, "csoportok": groups, "kez": hand,
-		"kivonas": cdr, "billenes": tips, "mult": history, "alap_mult": base_history, "hirek": news, "naplo": naplo, "csucs": summit_due, "vilag_nulla": net_zero_year, "kivont": cdr_total, "rng": str(rng.state)}
+		"kivonas": cdr, "billenes": tips, "mult": history, "alap_mult": base_history, "hirek": news, "naplo": naplo, "hajto": hajto, "kuldetes": missions, "csucs": summit_due, "vilag_nulla": net_zero_year, "kivont": cdr_total, "rng": str(rng.state)}
 
 
 func from_dict(d: Dictionary) -> bool:
@@ -534,6 +609,8 @@ func from_dict(d: Dictionary) -> bool:
 	net_zero_year = int(d.get("vilag_nulla", 0))
 	cdr_total = float(d.get("kivont", 0.0))
 	naplo = d.get("naplo", [])
+	hajto = d.get("hajto", [])
+	missions = d.get("kuldetes", [])
 	for e in naplo:
 		e["ev"] = int(e["ev"])
 		if e.has("cel"):

@@ -39,5 +39,6 @@ func _init() -> void:
 		var cel: Array = []
 		for g in w.groups:
 			cel.append(int(g["cel"]))
+		print("MIVAN mag=%d ugyanaz=%.3f kesobb5=%.2f korabban5=%.2f" % [seed_v, w.what_if(0) - float(r["T"]), w.what_if(5), w.what_if(-5)])
 		print("PROFI mag=%d erz=%.2f T2100=%.2f alap=%.2f csucs=%.2f kuszob=%d celok=%s kivonas=%d" % [seed_v, r["sens"], r["T"], r["alap"], r["csucs"], r["billenes"], str(cel), w.cdr.size()])
 	quit()
