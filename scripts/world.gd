@@ -375,6 +375,7 @@ func _momentum() -> void:
 	streak_bonus = streak % 2 == 0
 	if streak_bonus:
 		steps += 1
+		naplo.append({"ev": year(), "fajta": "lendulet"})
 
 
 func methane_cards(g: Dictionary) -> Array:
@@ -574,6 +575,8 @@ func advance() -> void:
 				var gh: Dictionary = need[rng.randi_range(0, need.size() - 1)]
 				gh["konnyebb"] = true
 				news.append({"fajta": "segit", "csoport": n["csoport"], "kinek": gh["id"]})
+	for g in groups:
+		g["baj"] = ""
 	# az előre látott baj most csap le (játékszabály): utána könnyebb meggyőzni a csoportot;
 	# ha nem készült fel, a mentés elvisz egy lépést ebből a körből
 	if not threat.is_empty():
@@ -583,6 +586,7 @@ func advance() -> void:
 			var ready: bool = g2.get("felkeszult", false)
 			if not ready:
 				steps = maxi(1, steps - 1)
+				g2["baj"] = threat["mi"]          # ebben a körben a kártyájuk tájképe is a bajt mutatja
 			news.append({"fajta": "katasztrofa", "csoport": g2["id"], "mi": threat["mi"], "lepes": not ready})
 			naplo.append({"ev": year(), "fajta": "baj", "csoport": g2["id"], "mi": threat["mi"], "vedve": ready})
 		threat = {}
@@ -706,7 +710,7 @@ func resolve_dilemma(choice: int) -> bool:
 
 # --- küldetések (játékszabály) --------------------------------------------------
 
-const MISSION_KINDS := ["korai", "metan3", "kivonas2", "tema", "felkeszul3", "nulla2065", "csucs3", "kartya20"]
+const MISSION_KINDS := ["korai", "metan3", "kivonas2", "tema", "felkeszul3", "nulla2065", "csucs3", "kartya20", "lendulet2"]
 
 
 ## Három különböző küldetés a Föld-kódból (külön véletlenforrásból, hogy a játék menete ne változzon tőle).
@@ -746,6 +750,8 @@ func mission_done(m: Dictionary) -> bool:
 			return naplo.any(func(e: Dictionary) -> bool: return e["fajta"] == "csucs" and int(e.get("db", 0)) >= 3)
 		"kartya20":
 			return hand.size() >= 20
+		"lendulet2":
+			return naplo.filter(func(e: Dictionary) -> bool: return e["fajta"] == "lendulet").size() >= 2
 	return false
 
 

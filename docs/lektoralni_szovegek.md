@@ -428,3 +428,4 @@ A hozzájuk tartozó szövegek:
 - Honnan tudjuk?: A mérések meggyőztek. Számít, amit teszünk.
 - Olaj és gáz: Ha az olaj után is lesz miből élnünk, belevágunk.
 - Erdő és föld: Ha az erdő megvédése megélhetést is ad, veletek tartunk.
+- Küldetés: Szerezz kétszer lendületet: két megállapodás egy körben.

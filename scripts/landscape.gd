@@ -31,8 +31,9 @@ static var _images: Dictionary = {}
 
 ## clean: a csoport már vállalt célt, ezért szélkerekek és napelemek állnak a tájban (játékbeli jelzés).
 ## frame: 0 vagy 1 – a szélkerék lapátjai és az eső két állása, ettől él a kép.
-static func texture(id: String, clean: bool = false, frame: int = 0) -> Texture2D:
-	var key := id + ("_z" if clean else "") + ("_2" if frame == 1 else "")
+## zero: a csoport már elérte a nulla kibocsátást: több szélkerék, és madarak szállnak az égen (játékbeli jelzés).
+static func texture(id: String, clean: bool = false, frame: int = 0, zero: bool = false) -> Texture2D:
+	var key := id + ("_z" if clean else "") + ("_2" if frame == 1 else "") + ("_n" if zero else "")
 	if _cache.has(key):
 		return _cache[key]
 	if not SPEC.has(id):
@@ -112,6 +113,21 @@ static func texture(id: String, clean: bool = false, frame: int = 0) -> Texture2
 				_turbine(img, int(t[1]), int(t[2]), frame)
 			else:
 				_solar(img, int(t[1]), int(t[2]))
+	if zero:
+		for t in CLEAN.get(id, []):
+			if str(t[0]) == "sz":
+				_turbine(img, int(t[1]) + 6, int(t[2]) + 1, 1 - frame)
+			else:
+				_solar(img, int(t[1]) + 2, int(t[2]) + 2)
+		for b in [[16, 9], [23, 6], [30, 10], [70, 5]]:      # madarak: a szárnyuk a két állás között csap
+			var bx := int(b[0]) + frame
+			var by := int(b[1])
+			var wing := -1 if frame == 0 else 0
+			_px(img, bx - 2, by + wing, Color("#20262e"))
+			_px(img, bx - 1, by, Color("#20262e"))
+			_px(img, bx, by + 1 + wing, Color("#20262e"))
+			_px(img, bx + 1, by, Color("#20262e"))
+			_px(img, bx + 2, by + wing, Color("#20262e"))
 	_images[key] = img
 	var tex := ImageTexture.create_from_image(img)
 	_cache[key] = tex

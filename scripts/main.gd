@@ -706,6 +706,13 @@ func _pulse(gid: String, on: bool, color: Color = Color.WHITE) -> void:
 	tw.tween_property(p, "modulate:a", 1.0, 0.7)
 
 
+## A csoport tájképe most: baj idején a bajt mutatja, cél után szélkerekeket, nulla kibocsátás után madarakat is.
+func _land_tex(g: Dictionary) -> Texture2D:
+	if str(g.get("baj", "")) != "":
+		return Landscape.disaster(str(g["id"]), str(g["baj"]))
+	return Landscape.texture(str(g["id"]), int(g["cel"]) > 0, _land_frame, int(g.get("nulla", 0)) > 0)
+
+
 ## A kártyák tájképei élnek: a szélkerekek forognak, az eső esik.
 func _tick_landscapes() -> void:
 	_land_frame = 1 - _land_frame
@@ -721,7 +728,7 @@ func _tick_landscapes() -> void:
 	for gid in _group_cards:
 		var g: Dictionary = world.group(gid)
 		if not g.is_empty():
-			(_group_cards[gid]["taj"] as TextureRect).texture = Landscape.texture(gid, int(g["cel"]) > 0, _land_frame)
+			(_group_cards[gid]["taj"] as TextureRect).texture = _land_tex(g)
 
 
 func _build_groups() -> void:
@@ -781,7 +788,7 @@ func _fill_group(g: Dictionary) -> void:
 	var v: VBoxContainer = _group_cards[g["id"]]["doboz"]
 	UI.clear(v)
 	var col := Color(str(g["szin"]))
-	(_group_cards[g["id"]]["taj"] as TextureRect).texture = Landscape.texture(str(g["id"]), int(g["cel"]) > 0, _land_frame)
+	(_group_cards[g["id"]]["taj"] as TextureRect).texture = _land_tex(g)
 	var name_l := UI.label(L.field(g, "nev"), 20, col, true, false)
 	v.add_child(name_l)
 	v.add_child(_lbl(L.t("A világ CO2-kibocsátásának %s%%-a") % L.num_short(float(g["co2_resz"]) * 100.0, 0), 13, UI.MUTE))
@@ -1826,6 +1833,7 @@ func _open_group(g: Dictionary) -> void:
 	_tutor_update("csoport" if world.can_convince(g) else "")
 	var top_row := UI.hbox(14)
 	var big_land := Landscape.rect(str(g["id"]), 168, int(g["cel"]) > 0)
+	big_land.texture = _land_tex(g)
 	big_land.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	top_row.add_child(big_land)
 	var top_l := UI.label(L.t("A világ CO2-kibocsátásának %s%%-a") % L.num_short(float(g["co2_resz"]) * 100.0, 0), 16, UI.SOFT)
@@ -2547,6 +2555,7 @@ const MISSION_TEXT := {
 	"nulla2065": "Legalább egy csoport érje el a nulla kibocsátást 2065-ig.",
 	"csucs3": "Egy klímacsúcson legalább három csoport hozza előbbre a célját.",
 	"kartya20": "Gyűjts húsz kártyát ebben a játékban.",
+	"lendulet2": "Szerezz kétszer lendületet: két megállapodás egy körben.",
 }
 
 
