@@ -51,6 +51,8 @@ var naplo: Array = []            # a játék fontos pillanatai a záró képerny
 var threat: Dictionary = {}       # előre látható baj: {"csoport", "mi"} – a kör végén csap le (játékszabály)
 var streak := 0                  # megállapodások ebben a körben (lendület: minden második visszaad egy lépést)
 var streak_bonus := false        # a legutóbbi megállapodás lendületből lépést adott
+var myth: Dictionary = {}         # terjedő tévhit: {"csoport", "kartya"} – a kártya a cáfolata (játékszabály)
+var myths_seen: Array = []        # ebben a játékban már előkerült tévhitek (kártyaazonosítók)
 var challenge := 0               # kihívás-lépcső: 0–5, szintenként egy új nehezítés (játékszabály)
 var data: Dictionary = {}
 
@@ -61,6 +63,10 @@ static func read_json(path: String) -> Variant:
 	return JSON.parse_string(FileAccess.get_file_as_string(path))
 
 
+## Gyakori tévhitek, és melyik „Honnan tudjuk?” kártya felel rájuk (a mondatok a felületen: main.gd MYTH).
+const MYTH_CARDS := ["napaktivitas", "kozmikus", "tcre", "felhok"]
+const MYTH_CHANCE := 0.4
+const MYTH_FROM_ROUND := 2
 const CHALLENGE_MAX := 5
 const CHALLENGE_SECONDS := 75.0                # 1. szint: rövidebb körök (a felület használja)
 const CHALLENGE_SENS := 0.4                    # 2. szint: érzékenyebb Föld (a tudományos sávon belül)
@@ -71,6 +77,8 @@ func new_game(seed_value: int = -1, steps_n: int = STEPS, challenge_n: int = 0) 
 	challenge = clampi(challenge_n, 0, CHALLENGE_MAX)
 	max_steps = clampi(steps_n, 3, 5) - (1 if challenge >= 5 else 0)      # 5. szint: eggyel kevesebb lépés
 	threat = {}
+	myth = {}
+	myths_seen = []
 	streak = 0
 	streak_bonus = false
 	data = read_json("res://adatok/csoportok.json")
@@ -242,6 +250,9 @@ func max_era() -> int:
 func research_offers(theme: String) -> Array:
 	var pool := Cards.open_in(theme, max_era(), hand)
 	var out: Array = []
+	if theme == "ketseg" and not myth.is_empty() and not (str(myth["kartya"]) in hand):     # a terjedő tévhit cáfolata mindig kikutatható
+		out.append(str(myth["kartya"]))
+		pool.erase(str(myth["kartya"]))
 	while out.size() < 3 and not pool.is_empty():
 		out.append(pool.pop_at(rng.randi_range(0, pool.size() - 1)))
 	return out
@@ -270,7 +281,7 @@ func targets_for(g: Dictionary) -> Array:
 
 ## Hány kártya kell a célhoz: fokozatonként egy (40 → 30 → 20 → 15 év); katasztrófa után eggyel kevesebb (legalább 1).
 func cards_needed(g: Dictionary, target: int) -> int:
-	var n := maxi(1, stage_of(target) - int(g["fok"])) + (1 if g.get("makacs", false) else 0)
+	var n := maxi(1, stage_of(target) - int(g["fok"])) + (1 if g.get("makacs", false) else 0) + (1 if myth_on(g) else 0)
 	return maxi(1, n - 1) if g["konnyebb"] else n
 
 
@@ -537,6 +548,21 @@ func advance() -> void:
 			var g: Dictionary = cand[rng.randi_range(0, cand.size() - 1)]
 			g["inog"] = true
 			news.append({"fajta": "inog", "csoport": g["id"]})
+	# terjedő tévhit (játékszabály): amíg nem cáfolod meg, a csoport minden kör végén elbizonytalanodik
+	if not myth.is_empty():
+		var gm := group(str(myth["csoport"]))
+		if not gm.is_empty() and int(gm["cel"]) > 0 and fraction(gm, year()) > 0.0 and not gm.get("felkeszult", false) and not gm.get("inog", false) and not (gm["id"] in just_wavered):
+			gm["inog"] = true
+			news.append({"fajta": "inog", "csoport": gm["id"]})
+	elif round_i >= MYTH_FROM_ROUND and round_i < ROUNDS - 1 and rng.randf() < MYTH_CHANCE:
+		var left: Array = MYTH_CARDS.filter(func(id: String) -> bool: return not (id in myths_seen))
+		if not left.is_empty():
+			var mid: String = left[rng.randi_range(0, left.size() - 1)]
+			var mg: Dictionary = groups[rng.randi_range(0, groups.size() - 1)]
+			if fraction(mg, year()) > 0.0:
+				myth = {"csoport": mg["id"], "kartya": mid}
+				myths_seen.append(mid)
+				news.append({"fajta": "tevhit", "csoport": mg["id"], "kartya": mid})
 	# aki elérte a nullát, segít egy másiknak (játékszabály): azt a csoportot most könnyebb meggyőzni
 	for n in news.duplicate():
 		if n["fajta"] == "nulla":
@@ -617,6 +643,23 @@ func _roll_dilemma() -> void:
 ## choice: a választott lehetőség sorszáma. Támogatás: 0 = eggyel több lépés, 1 = a megnevezett csoport felkészül.
 ## Meghívás: a választott csoportot most eggyel kevesebb kártyával is meg lehet győzni.
 ## Tudáspróba: a jó válasz eggyel több lépést ad. Vissza: igaz, ha a választás „sikerült” (a próbánál: jó válasz).
+## Terjed-e most tévhit ennél a csoportnál? Amíg terjed, eggyel több kártya kell a meggyőzésükhöz.
+func myth_on(g: Dictionary) -> bool:
+	return not myth.is_empty() and str(myth.get("csoport", "")) == str(g["id"])
+
+
+## A tévhit cáfolata: a hozzá tartozó kártyával, egy lépésért. Utána a csoportot könnyebb meggyőzni.
+func refute(g: Dictionary) -> bool:
+	if steps <= 0 or over() or not myth_on(g) or not (str(myth["kartya"]) in hand):
+		return false
+	steps -= 1
+	naplo.append({"ev": year(), "fajta": "cafolat", "csoport": g["id"], "kartya": myth["kartya"]})
+	myth = {}
+	g["konnyebb"] = true
+	g["inog"] = false
+	return true
+
+
 ## Pillanat a Földön (játékszabály): a csoport most figyel, eggyel kevesebb kártya is elég neki ebben a körben.
 func moment_attention(id: String) -> bool:
 	var g := group(id)
@@ -732,7 +775,7 @@ func what_if(delay: int) -> float:
 func to_dict() -> Dictionary:
 	return {"v": SAVE_VERSION, "mag": seed_v, "jatek": game_id, "sens": sens, "st": st, "alap": _base, "kor": round_i, "lepes": steps, "max_lepes": max_steps, "csoportok": groups, "kez": hand,
 		"kivonas": cdr, "billenes": tips, "mult": history, "alap_mult": base_history, "hirek": news, "naplo": naplo, "hajto": hajto, "kuldetes": missions, "csucs": summit_due, "dontes": dilemma, "vilag_nulla": net_zero_year, "kivont": cdr_total, "rng": str(rng.state),
-		"veszely": threat, "sorozat": streak, "kihivas": challenge}
+		"veszely": threat, "sorozat": streak, "kihivas": challenge, "tevhit": myth, "tevhitek": myths_seen}
 
 
 func from_dict(d: Dictionary) -> bool:
@@ -750,6 +793,8 @@ func from_dict(d: Dictionary) -> bool:
 	hajto = d.get("hajto", [])
 	missions = d.get("kuldetes", [])
 	threat = d.get("veszely", {})
+	myth = d.get("tevhit", {})
+	myths_seen = d.get("tevhitek", [])
 	streak = int(d.get("sorozat", 0))
 	streak_bonus = false
 	challenge = int(d.get("kihivas", 0))

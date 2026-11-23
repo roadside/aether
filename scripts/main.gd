@@ -29,6 +29,9 @@ const WORRY := {
 }
 const DISASTER := {"hoseg": "Hőhullám", "aszaly": "Aszály", "arviz": "Áradás", "tuz": "Erdőtűz"}
 const THREAT := {"hoseg": "Hőhullám fenyeget", "aszaly": "Aszály fenyeget", "arviz": "Áradás fenyeget", "tuz": "Erdőtűz fenyeget"}
+const MYTH := {"napaktivitas": "A Nap okozza a melegedést, nem az ember.", "kozmikus": "A világűrből jövő sugárzás okozza a melegedést.",
+	"tcre": "A levegőben túl kevés a CO2 ahhoz, hogy számítson.", "felhok": "A felhők majd megállítják a melegedést."}
+const MYTH_COLOR := Color("#b9a2ff")
 const LEVELS := ["", "Gyorsabban telik az idő.", "Érzékenyebb a Föld.", "Egy csoport makacsabb.", "A csoportok könnyebben elbizonytalanodnak.", "Eggyel kevesebb lépésed van."]
 const CDR_NAME := {"erdo": "Erdősítés", "bioszen": "Bioszén", "kozet": "Kőzetmállasztás", "levegoszures": "CO2-szűrés a levegőből", "novenyi_energia": "Növényi energia CO2-tárolással"}
 
@@ -195,6 +198,14 @@ var _tick_left := 0
 
 func _round_s() -> float:
 	return World.CHALLENGE_SECONDS if world != null and world.challenge >= 1 else ROUND_SECONDS
+
+
+func _quote(text: String) -> String:
+	return ("“%s”" if L.is_en() else "„%s”") % text
+
+
+func _myth_text() -> String:
+	return _quote(L.t(MYTH.get(str(world.myth.get("kartya", "")), "")))
 
 
 ## Az előre látható baj fajtája, ha ezt a csoportot fenyegeti, és még nem készült fel rá.
@@ -691,6 +702,8 @@ func _tick_landscapes() -> void:
 		for g in world.groups:
 			if _threat_on(g) != "":
 				globe.flash(float(g["lat"]), float(g["lon"]), UI.EMBER)
+			elif world.myth_on(g):
+				globe.flash(float(g["lat"]), float(g["lon"]), MYTH_COLOR)
 			elif g.get("inog", false):
 				globe.flash(float(g["lat"]), float(g["lon"]), UI.GOLD)
 	for gid in _group_cards:
@@ -797,9 +810,12 @@ func _fill_group(g: Dictionary) -> void:
 		v.add_child(_lbl("⚠ " + L.t("Bizonytalan"), 15, UI.GOLD, true))
 	if danger != "":
 		v.add_child(_lbl("⚠ " + L.t(THREAT[danger]), 15, UI.EMBER, true))
-	_pulse(str(g["id"]), (danger != "" or shaky) and not world.over(), UI.EMBER if danger != "" else UI.GOLD)
+	var mythy := world.myth_on(g)
+	if mythy:
+		v.add_child(_lbl("⚠ " + L.t("Tévhit terjed"), 15, MYTH_COLOR, true))
+	_pulse(str(g["id"]), (danger != "" or shaky or mythy) and not world.over(), UI.EMBER if danger != "" else (MYTH_COLOR if mythy else UI.GOLD))
 	var fears := HFlowContainer.new()
-	fears.visible = not (shaky and danger != "" and not extras.is_empty())
+	fears.visible = not ((int(shaky) + int(danger != "") + int(mythy) >= 2 and not extras.is_empty()) or int(shaky) + int(danger != "") + int(mythy) >= 3)
 	fears.add_theme_constant_override("h_separation", 3)
 	fears.add_theme_constant_override("v_separation", 4)
 	fears.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -819,6 +835,8 @@ func _fill_group(g: Dictionary) -> void:
 	v.add_child(sp)
 	if danger != "" and world.steps > 0 and not world.prepare_cards(g).is_empty():
 		v.add_child(_lbl(L.t("Készítsd fel őket") + " →", 15, UI.EMBER, true))
+	elif mythy and world.steps > 0:
+		v.add_child(_lbl((L.t("Cáfold meg") if str(world.myth["kartya"]) in world.hand else L.t("Kutasd ki a cáfolatot")) + " →", 15, MYTH_COLOR, true))
 	elif shaky and n > 0 and world.steps > 0:
 		v.add_child(_lbl(L.t("Erősítsd meg őket") + " →", 15, UI.GOLD, true))
 	elif world.can_convince(g):
@@ -1086,9 +1104,10 @@ func _refresh() -> void:
 	for g in world.groups:
 		var shaky: bool = g.get("inog", false)
 		var danger := _threat_on(g)
+		var mythy := world.myth_on(g)
 		marks.append({"id": g["id"], "name": L.field(g, "nev") if danger == "" else "%s\n%s" % [L.field(g, "nev"), L.t(THREAT[danger])],
-			"label": ("⚠ " if shaky or danger != "" else "") + L.field(g, "nev"), "lat": g["lat"], "lon": g["lon"],
-			"color": UI.EMBER if danger != "" else (UI.GOLD if shaky else Color(str(g["szin"])))})
+			"label": ("⚠ " if shaky or danger != "" or mythy else "") + L.field(g, "nev"), "lat": g["lat"], "lon": g["lon"],
+			"color": UI.EMBER if danger != "" else (MYTH_COLOR if mythy else (UI.GOLD if shaky else Color(str(g["szin"]))))})
 	for tp in world.tips:
 		var rng_txt := L.t("küszöb: %s–%s °C") % [L.num(float(tp["also"]), 1), L.num(float(tp["felso"]), 1)]
 		if int(tp["ev"]) > 0:
@@ -1127,6 +1146,9 @@ func _mark_next() -> void:
 			if _threat_on(g) != "" and not world.prepare_cards(g).is_empty():
 				hot = g["id"]
 				break
+		for g in world.groups:       # aztán a megcáfolható tévhit
+			if hot == "" and world.myth_on(g) and str(world.myth["kartya"]) in world.hand:
+				hot = g["id"]
 		for g in world.groups:       # aztán az, aki elbizonytalanodott, és van neki szóló kártyád
 			if hot != "":
 				break
@@ -1183,7 +1205,6 @@ func _open(title: String, accent: Color = UI.GOLD) -> VBoxContainer:
 	_close()
 	_flash_ids = keep
 	_show_menu(false)
-	_tutor_update()
 	_dim = ColorRect.new()
 	_dim.color = Color(0.0, 0.0, 0.02, 0.72)
 	_dim.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -1199,6 +1220,7 @@ func _open(title: String, accent: Color = UI.GOLD) -> VBoxContainer:
 	p.z_index = 11
 	add_child(p)
 	_overlay = p
+	_tutor_update()
 	if fresh and not _test:        # az új ablak finoman előugrik
 		p.pivot_offset = Vector2(460, 360)
 		p.scale = Vector2(0.94, 0.94)
@@ -1637,7 +1659,9 @@ func _open_research(theme: String = "") -> void:
 		for g in world.groups:
 			if g.get("inog", false) and th in g["felelmek"]:
 				shaky_who.append(L.field(g, "nev"))
-		if not shaky_who.is_empty() and n > 0:
+		if th == "ketseg" and not world.myth.is_empty() and not (str(world.myth["kartya"]) in world.hand):
+			v.add_child(_lbl("⚠ " + L.t("Itt a terjedő tévhit cáfolata"), 13, UI.GOLD))
+		elif not shaky_who.is_empty() and n > 0:
 			v.add_child(_lbl("⚠ %s: %s" % [", ".join(shaky_who), L.t("Bizonytalan")], 13, UI.GOLD))
 		else:
 			v.add_child(_lbl(L.t("%d kérdés vár") % n if n > 0 else L.t("Itt most nincs új kérdés"), 13, UI.MUTE))
@@ -1673,6 +1697,8 @@ func _research_theme(th: String) -> void:
 		body.add_child(head)
 	for id in offers:
 		var c := UI.card(_theme_color(th))
+		if id == str(world.myth.get("kartya", "")):
+			c.add_child(UI.label("⚠ " + L.t("Ez cáfolja a terjedő tévhitet."), 15, UI.GOLD, true))
 		c.add_child(UI.label(Cards.text(id, "Kérdés", L.is_en()), 20, UI.TEXT, true))
 		c.add_child(UI.label(Cards.text(id, "Röviden", L.is_en()), 16, UI.SOFT))
 		c.add_child(_go(L.t("Ezt kutatom ki") + " →", _do_research.bind(id, th)))
@@ -1800,6 +1826,25 @@ func _open_group(g: Dictionary) -> void:
 		dr.add_child(dl)
 		body.add_child(dr)
 		asks.append({"fajta": "felkeszules", "kell": 1})
+	if world.myth_on(g):
+		var mc := UI.card(MYTH_COLOR)
+		mc.add_child(UI.label("⚠ %s: %s" % [L.t("Tévhit terjed"), _myth_text()], 18, MYTH_COLOR, true))
+		mc.add_child(UI.label(L.t("Amíg terjed, eggyel több kártya kell nekik, és a kör végén elbizonytalanodnak."), 15, UI.SOFT))
+		var mid := str(world.myth["kartya"])
+		if mid in world.hand:
+			mc.add_child(_go("%s %s" % [L.t("Megcáfolom ezzel:"), Cards.text(mid, "Kérdés", L.is_en())], func() -> void:
+				if world.refute(g):
+					_refresh()
+					_sound("egyezseg")
+					_pop_next = true
+					_refuted(g, mid)))
+		else:
+			var rl := UI.text_link(L.t("Kutasd ki a cáfolatát: %s") % _theme_name("ketseg") + " →", "", 16)
+			for cn in rl.pressed.get_connections():
+				rl.pressed.disconnect(cn["callable"])
+			rl.pressed.connect(_open_research.bind("ketseg"))
+			mc.add_child(rl)
+		body.add_child(UI.card_root(mc))
 	if g.get("makacs", false) and not targets.is_empty():
 		body.add_child(UI.label(L.t("Makacs csoport: eggyel több kártya kell nekik."), 15, UI.GOLD))
 	if g.get("inog", false):
@@ -1959,6 +2004,18 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 			_sound("egyezseg")
 			_pop_next = true
 			_agreed(g, ask, before))
+
+
+func _refuted(g: Dictionary, card_id: String) -> void:
+	_flash_ids = [g["id"]]
+	var body := _open(L.t("Megcáfoltad!"), MYTH_COLOR)
+	body.add_child(UI.label(_quote(L.t(MYTH.get(card_id, ""))), 20, UI.MUTE, true))
+	var c := UI.card(UI.GREEN)
+	c.add_child(UI.label(Cards.text(card_id, "Kérdés", L.is_en()), 19, UI.TEXT, true))
+	c.add_child(UI.label(Cards.text(card_id, "Mennyire bizonyított?", L.is_en()), 17, UI.TEXT))
+	body.add_child(UI.card_root(c))
+	body.add_child(UI.label(L.t("%s most jobban bízik benned: eggyel kevesebb kártyával is meggyőzheted.") % L.field(g, "nev"), 17, UI.GREEN, true))
+	body.add_child(_go(L.t("Rendben"), _close))
 
 
 ## Rövid jelenet a megállapodás előtt: a bizonyítékaid egymás után érkeznek meg, és a csoport sávja megtelik.
@@ -2207,6 +2264,12 @@ func _open_news(y0: int, t0: float) -> void:
 					lost = true
 				c4.add_child(UI.label(L.t("A baj után jobban figyelnek rád: most eggyel kevesebb kártyával is meggyőzheted őket."), 16, UI.SOFT))
 				body.add_child(UI.card_root(c4o))
+			"tevhit":
+				var cm := UI.card(MYTH_COLOR)
+				cm.add_child(UI.label("⚠ %s: %s" % [L.t("Tévhit terjed"), L.field(world.group(n["csoport"]), "nev")], 18, MYTH_COLOR, true))
+				cm.add_child(UI.label(_quote(L.t(MYTH.get(str(n["kartya"]), ""))), 18, UI.TEXT, true))
+				cm.add_child(UI.label(L.t("Kutasd ki az igazságot a „Honnan tudjuk?” témakörben, és cáfold meg! Amíg terjed, eggyel több kártya kell nekik."), 16, UI.SOFT))
+				body.add_child(UI.card_root(cm))
 			"segit":
 				var c8 := UI.card(UI.GREEN)
 				c8.add_child(UI.label(L.t("%s tiszta technikát ad át. %s most könnyebben meggyőzhető.") % [L.field(world.group(n["csoport"]), "nev"), L.field(world.group(n["kinek"]), "nev")], 18, UI.GREEN, true))
@@ -2619,6 +2682,21 @@ func _selftest() -> void:
 	await _shot("1h_baj_lecsap.png")
 	yl.queue_free()
 	world.threat = {}
+	world.myth = {"csoport": "kina", "kartya": "felhok"}
+	_refresh()
+	_open_group(world.group("kina"))
+	await _shot("1i_tevhit.png")
+	world.hand.append("felhok")
+	_open_group(world.group("kina"))
+	await _shot("1j_tevhit_kartyaval.png")
+	world.refute(world.group("kina"))
+	_refuted(world.group("kina"), "felhok")
+	await _shot("1k_megcafolva.png")
+	_close()
+	world.hand.erase("felhok")
+	world.group("kina")["konnyebb"] = false
+	world.steps = world.max_steps
+	world.naplo.clear()
 	_level_force = 3
 	_pick_game(-1, 2)
 	await _shot("1g_kihivas.png")
@@ -2646,6 +2724,7 @@ func _selftest() -> void:
 	for i in 4:
 		world.news.append({"fajta": "katasztrofa", "csoport": world.groups[i]["id"], "mi": ["hoseg", "aszaly", "arviz", "tuz"][i], "lepes": i == 0})
 	world.news.append({"fajta": "segit", "csoport": world.groups[4]["id"], "kinek": world.groups[5]["id"]})
+	world.news.append({"fajta": "tevhit", "csoport": world.groups[1]["id"], "kartya": "napaktivitas"})
 	var real_threat: Dictionary = world.threat
 	world.threat = {"csoport": world.groups[2]["id"], "mi": "tuz"}
 	_open_news(2026, 1.41)

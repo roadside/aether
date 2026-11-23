@@ -1,6 +1,6 @@
 extends SceneTree
 ## Egyensúly-mérés: négy játékostípus, sok Föld. Fej nélkül, ablak és fájlírás nélkül:
-##   godot --headless --path . -s tools/egyensuly_teszt.gd -- [N] [lépés körönként: 3, 4 vagy 5]
+##   godot --headless --path . -s tools/egyensuly_teszt.gd -- [N] [lépés körönként: 3, 4 vagy 5] [kihívás: 0–5]
 ## kezdő:   mindig a legkésőbbi (legkönnyebb) célt kéri, metánt és kivonást nem indít;
 ## átlagos: véletlen sorrendben, véletlen elérhető célt kér, metánt is vállal;
 ## profi:   mindig a legkorábbi elérhető célt kéri, metánt és kivonást is indít;
@@ -24,11 +24,12 @@ func _choose_target(w, g, kind: String, rng: RandomNumberGenerator):
 
 
 var _steps := 4
+var _challenge := 0
 
 
 func _play(kind: String, seed_v: int) -> Dictionary:
 	var w = World.new()
-	w.new_game(seed_v, _steps)
+	w.new_game(seed_v, _steps, _challenge)
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_v * 31 + 7
 	var st := {"csak_kutatas_kor": 0, "elso_egyezseg": 0, "egyezseg": 0, "metan": 0, "kivonas": 0,
@@ -51,6 +52,15 @@ func _play(kind: String, seed_v: int) -> Dictionary:
 				order.sort_custom(func(a, b): return float(a["co2_resz"]) > float(b["co2_resz"]))
 			elif kind != "profi":
 				order.shuffle()
+			# tévhit: a profi és az okos kikutatja a cáfolatot, és megcáfolja
+			if kind in ["profi", "okos"] and not w.myth.is_empty():
+				if str(w.myth["kartya"]) in w.hand:
+					acted = w.refute(w.group(str(w.myth["csoport"])))
+				else:
+					acted = w.research(str(w.myth["kartya"]))
+				if acted:
+					only_research = false
+					continue
 			# megerősítés: a kezdő nem figyel rá, az átlagos az esetek felében, a profi és az okos mindig
 			if w.has_method("reassure") and kind != "kezdo":
 				for g in order:
@@ -134,7 +144,8 @@ func _init() -> void:
 	var a := OS.get_cmdline_user_args()
 	var n: int = int(a[0]) if a.size() > 0 else 100
 	_steps = int(a[1]) if a.size() > 1 else 4      # lépés körönként (3 nehéz, 4 közepes, 5 könnyű)
-	print("lépés körönként: ", _steps)
+	_challenge = int(a[2]) if a.size() > 2 else 0   # kihívás-lépcső (0–5)
+	print("lépés körönként: ", _steps, "  kihívás: ", _challenge)
 	for kind in ["kezdo", "atlagos", "profi", "okos"]:
 		var runs: Array = []
 		for i in n:
