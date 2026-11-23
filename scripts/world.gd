@@ -1,7 +1,7 @@
 extends RefCounted
 ## A játék állapota és szabályai (felület nélkül, így magában is tesztelhető).
 ##
-## Egy kör 5 év, 2026-tól 2100-ig 15 kör. Körönként három lépésed van: kutatás, tárgyalás, CO2-kivonás.
+## Egy kör 5 év, 2026-tól 2100-ig 15 kör. Körönként négy lépésed van: kutatás, tárgyalás, CO2-kivonás.
 ## VALÓDI: a klímamodell és a számai (model.gd), a csoportok kibocsátása és a billenőpontok sávjai
 ## (adatok/*.json, forrással), a kártyák (temak/*.txt), a kivonás határai (archivum/*.json).
 ## JÁTÉKSZABÁLY: a tárgyalás menete, a csoportok aggodalmai, a megingás, a lépések száma.
@@ -11,14 +11,12 @@ const Cards := preload("res://scripts/cards.gd")
 
 const ROUNDS := 15
 const ROUND_YEARS := 5
-const STEPS := 3
-const TARGETS := [2070, 2060, 2050, 2040]     # vállalható „nulla kibocsátás” évek, egyre merészebb
-const MIN_YEARS := 10                          # ennyi év legalább kell az átálláshoz (játékszabály)
+const STEPS := 4
+const SPEEDS := [40, 30, 20, 15]               # ennyi év alatt állhat át nullára egy csoport, egyre merészebben (játékszabály)
 const METHANE_CUT := 0.30                      # a Globális Metánvállalás mértéke: −30% (10 év alatt)
 const METHANE_YEARS := 10
 const CDR_YEARS := 20                          # a kivonás ennyi év alatt fut fel (a modell korábbi szabálya)
-const TRANSITION_YEARS := 30                  # ennyi év alatt áll át egy csoport nullára (játékszabály)
-const SAVE_VERSION := 5                       # ha a szabályok vagy az adatok változnak, a régi mentés helyett új játék indul
+const SAVE_VERSION := 7                       # ha a szabályok vagy az adatok változnak, a régi mentés helyett új játék indul
 const WAVER_CHANCE := 0.30                     # körönként ekkora eséllyel inog meg egy csoport (játékszabály)
 ## CO2-kivonási programok: kártya -> [a fenntartható sáv alja, teteje] GtCO2/év 2050-re
 ## (Fuss és mtsai 2018, Environ. Res. Lett. 13 063002; az archívum ellenőrzött idézetei szerint).
@@ -79,6 +77,7 @@ func new_game(seed_value: int = -1) -> void:
 		d["y0"] = 0
 		d["f0"] = 1.0
 		d["metan"] = 0          # a metánvállalás éve (0 = nincs)
+		d["felkeszult"] = false # felkészült a bajra: nem inog meg
 		d["hasznalt"] = []      # az ennél a csoportnál már kijátszott kártyák
 		d["konnyebb"] = false   # katasztrófa után egy kártyával kevesebb kell (játékszabály)
 		groups.append(d)
@@ -131,13 +130,8 @@ func group(id: String) -> Dictionary:
 static func fraction(g: Dictionary, y: int) -> float:
 	if int(g["cel"]) == 0:
 		return float(g["f0"])
-	var start := decline_start(g)
-	return float(g["f0"]) * clampf(float(int(g["cel"]) - y) / float(int(g["cel"]) - start), 0.0, 1.0)
-
-
-## Mikor kezd csökkenteni a csoport: az átállás 30 évig tart, ezért a kései célt vállaló később kezd (játékszabály).
-static func decline_start(g: Dictionary) -> int:
-	return maxi(int(g["y0"]), int(g["cel"]) - TRANSITION_YEARS)
+	var y0 := int(g["y0"])
+	return float(g["f0"]) * clampf(float(int(g["cel"]) - y) / float(int(g["cel"]) - y0), 0.0, 1.0)
 
 
 func _avg_fraction(y: int) -> float:
@@ -221,19 +215,28 @@ func research(id: String) -> bool:
 	return true
 
 
-## A csoport következő vállalható céljai: csak ami korábbi a mostaninál, és legalább MIN_YEARS évre van.
+## A csoport következő vállalható céljai (évek): mostantól 40, 30, 20 vagy 15 év alatt nullára.
+## Csak az kérhető, ami a mostani vállalásánál merészebb fokozat, és korábbi évet ad.
 func targets_for(g: Dictionary) -> Array:
 	var out: Array = []
-	for t in TARGETS:
-		if (int(g["cel"]) == 0 or t < int(g["cel"])) and t >= year() + MIN_YEARS:
+	if fraction(g, year() - 1) <= 0.0:
+		return out
+	for i in SPEEDS.size():
+		var t: int = year() - 1 + int(SPEEDS[i])
+		if i + 1 > int(g["fok"]) and (int(g["cel"]) == 0 or t < int(g["cel"])):
 			out.append(t)
 	return out
 
 
-## Hány kártya kell a célhoz: 2070-hez 1, 2060-hoz 2, 2050-hez 3, 2040-hez 4; katasztrófa után eggyel kevesebb (legalább 1).
+## Hány kártya kell a célhoz: fokozatonként egy (40 → 30 → 20 → 15 év); katasztrófa után eggyel kevesebb (legalább 1).
 func cards_needed(g: Dictionary, target: int) -> int:
-	var n := 1 if target >= 2070 else (2 if target >= 2060 else (3 if target >= 2050 else 4))
+	var n := maxi(1, stage_of(target) - int(g["fok"]))
 	return maxi(1, n - 1) if g["konnyebb"] else n
+
+
+## A cél éve melyik fokozatnak felel meg most (1 = 40 év, … 4 = 15 év).
+func stage_of(target: int) -> int:
+	return SPEEDS.find(target - (year() - 1)) + 1
 
 
 ## A kézben lévő kártyák, amelyek ennek a csoportnak egy aggodalmára felelnek, és még nem hallották.
@@ -281,9 +284,9 @@ func negotiate(g: Dictionary, target: int, played: Array) -> bool:
 			return false
 	var y := year()
 	g["f0"] = fraction(g, y - 1) if int(g["cel"]) > 0 else float(g["f0"])
+	g["fok"] = stage_of(target)
 	g["y0"] = y - 1
 	g["cel"] = target
-	g["fok"] = int(g["fok"]) + 1
 	g["konnyebb"] = false
 	for id in played:
 		g["hasznalt"].append(id)
@@ -297,6 +300,27 @@ func methane_cards(g: Dictionary) -> Array:
 		if id in Cards.METHANE and not (id in g["hasznalt"]):
 			out.append(id)
 	return out
+
+
+## Felkészülés a bajra (játékszabály): egy Tenger és part, Egészség vagy Élelem kártyával segítesz egy csoportnak.
+## Aki felkészült, megbízik benned: többé nem inog meg.
+const PREPARE_THEMES := ["part", "egeszseg", "elelem"]
+
+func prepare_cards(g: Dictionary) -> Array:
+	var out: Array = []
+	for id in hand:
+		if Cards.theme_of(id) in PREPARE_THEMES and not (id in g["hasznalt"]):
+			out.append(id)
+	return out
+
+
+func prepare(g: Dictionary, card_id: String) -> bool:
+	if steps <= 0 or g.get("felkeszult", false) or not (card_id in prepare_cards(g)):
+		return false
+	g["felkeszult"] = true
+	g["hasznalt"].append(card_id)
+	steps -= 1
+	return true
 
 
 ## Hány metánkártya kell: 1, de 2 azoknál, akik a valóságban nem csatlakoztak a Globális Metánvállaláshoz (játékszabály, valódi tényre építve).
@@ -359,7 +383,7 @@ func advance() -> void:
 	# megingás (játékszabály): egy vállalást tett csoport visszalépne; ha van a kezedben neki szóló, még nem hallott kártya, marad
 	# az esély a játék során nő (30% → 60%): a késői körökben is kell friss bizonyíték
 	if rng.randf() < WAVER_CHANCE * (1.0 + float(round_i) / float(ROUNDS)):
-		var cand: Array = groups.filter(func(g: Dictionary) -> bool: return int(g["cel"]) > 0 and fraction(g, year()) > 0.0)
+		var cand: Array = groups.filter(func(g: Dictionary) -> bool: return int(g["cel"]) > 0 and fraction(g, year()) > 0.0 and not g.get("felkeszult", false))
 		if not cand.is_empty():
 			var g: Dictionary = cand[rng.randi_range(0, cand.size() - 1)]
 			var u := usable(g)
@@ -368,6 +392,7 @@ func advance() -> void:
 				g["f0"] = fraction(g, y - 1)
 				g["y0"] = y - 1
 				g["cel"] = int(g["cel"]) + 10       # tíz évvel későbbre tolja a célját
+				g["fok"] = maxi(1, int(g["fok"]) - 1)   # és egy fokozattal visszalép
 				news.append({"fajta": "visszalepett", "csoport": g["id"], "cel": g["cel"]})
 			else:
 				g["hasznalt"].append(u[0])

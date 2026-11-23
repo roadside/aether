@@ -310,12 +310,15 @@ func _fill_group(g: Dictionary) -> void:
 	v.add_child(bar_row)
 	if int(g["cel"]) > 0:
 		v.add_child(_lbl(L.t("Nulla kibocsátás %d-re") % int(g["cel"]), 16, UI.GREEN, true))
-		if World.decline_start(g) >= world.year():
-			v.add_child(_lbl(L.t("Csökkenteni %d-ben kezd") % (World.decline_start(g) + 1), 13, UI.GOLD))
 	else:
 		v.add_child(_lbl(L.t("Még nem vállalt semmit"), 16, UI.SOFT, true))
+	var extras: Array = []
 	if int(g["metan"]) > 0:
-		v.add_child(_lbl(L.t("Metán: −30% tíz év alatt"), 14, UI.GREEN))
+		extras.append(L.t("Metán: −30%"))
+	if g.get("felkeszult", false):
+		extras.append(L.t("Felkészült"))
+	if not extras.is_empty():
+		v.add_child(_lbl("✔ " + " · ✔ ".join(extras), 14, UI.GREEN))
 	var n := world.usable(g).size()
 	var fears := HFlowContainer.new()
 	fears.add_theme_constant_override("h_separation", 5)
@@ -682,12 +685,13 @@ func _collect(id: String) -> void:
 const BADGES := [
 	["elso", "Első Föld", "Játssz végig egy játékot."],
 	["ketfok", "Két fok alatt", "Maradj 2100-ban +2 °C alatt."],
-	["masfel", "Közel a másfélhez", "Maradj 2100-ban +1,6 °C alatt."],
+	["masfel", "Kiváló Föld", "Maradj 2100-ban +1,7 °C alatt."],
 	["mindenki", "Mindenki vállalta", "A játék végére mind a hat csoport vállaljon nulla kibocsátást."],
 	["metan", "Metánvadász", "Mind a hat csoport vállaljon metáncsökkentést."],
-	["meresz", "Merész cél", "Érd el, hogy egy csoport 2040-re vállaljon nulla kibocsátást."],
+	["meresz", "Merész cél", "Érd el, hogy egy csoport tizenöt év alatt vállalja a nulla kibocsátást."],
 	["kuszob", "Egy küszöb sem", "Játssz végig egy játékot úgy, hogy egy billenőpont küszöbét sem lépitek át."],
 	["kivonas", "Tisztító", "Indíts el legalább három CO2-kivonást egy játékban."],
+	["felkeszult", "Senki sem marad magára", "Segíts mind a hat csoportnak felkészülni a bajra."],
 	["nehez", "Nehéz Föld", "Maradj +2 °C alatt egy az átlagnál érzékenyebb Földön."],
 	["gyujto", "Gyűjtő", "Kutass ki ötven különböző kártyát."],
 	["tudos", "Mindenhez értesz", "Legyen kártyád mind a nyolc témakörből a gyűjteményben."],
@@ -719,10 +723,11 @@ func _finish_game(r: Dictionary) -> Dictionary:
 	for id in c:
 		themes[Cards.theme_of(id)] = true
 	var ok := {
-		"elso": true, "ketfok": t < 2.0, "masfel": t < 1.6,
+		"elso": true, "ketfok": t < 2.0, "masfel": t < 1.7,
 		"mindenki": world.groups.all(func(g: Dictionary) -> bool: return int(g["cel"]) > 0),
 		"metan": world.groups.all(func(g: Dictionary) -> bool: return int(g["metan"]) > 0),
-		"meresz": world.groups.any(func(g: Dictionary) -> bool: return int(g["cel"]) == 2040),
+		"meresz": world.groups.any(func(g: Dictionary) -> bool: return int(g["fok"]) >= 4),
+		"felkeszult": world.groups.all(func(g: Dictionary) -> bool: return g.get("felkeszult", false)),
 		"kuszob": int(r["billenes"]) == 0, "kivonas": world.cdr.size() >= 3,
 		"nehez": t < 2.0 and float(r["sens"]) >= 0.25,
 		"gyujto": c.size() >= 50, "tudos": Cards.THEMES.keys().all(func(th: String) -> bool: return themes.has(th)),
@@ -781,27 +786,37 @@ func _music_on() -> bool:
 	return bool(L.get_setting("zene", true))
 
 
+## Játék közben: a játékos saját zenéje (ha van), utána kétszer a halk, kódból készült alapzene, és így tovább.
+var _playlist: Array = []
+var _track := 0
+
 func _start_music() -> void:
 	if _test or not _music_on() or (_music != null and _music.playing):
 		return
 	if _music == null:
-		var stream: AudioStream = null
 		for path in Intro.OWN_MUSIC:        # a játékos saját zenefájlja, ha van (nem része a játéknak)
 			var full := ProjectSettings.globalize_path(path)
 			if FileAccess.file_exists(full):
-				stream = AudioStreamWAV.load_from_file(full)
-				if stream != null:
+				var own: AudioStream = AudioStreamWAV.load_from_file(full)
+				if own != null:
+					_playlist.append(own)
 					break
-		if stream == null:
-			stream = load("res://assets/hang/intro_handpan.wav")
-		if stream == null:
+		var amb: AudioStream = load("res://assets/hang/alapzene.wav")
+		if amb != null:
+			_playlist.append(amb)
+			_playlist.append(amb)
+		if _playlist.is_empty():
 			return
+		_track = 1 if _playlist.size() > 2 else 0      # a nyitány után előbb az alapzene jön, a saját zene később tér vissza
 		_music = AudioStreamPlayer.new()
-		_music.stream = stream
 		_music.finished.connect(func() -> void:
 			if _music_on():
+				_track = (_track + 1) % _playlist.size()
+				_music.stream = _playlist[_track]
+				_music.volume_db = -17.0
 				_music.play())
 		add_child(_music)
+	_music.stream = _playlist[_track]
 	_music.volume_db = -40.0
 	_music.play()
 	create_tween().tween_property(_music, "volume_db", -17.0, 4.0)
@@ -881,7 +896,7 @@ func _do_research(id: String, th: String) -> void:
 		_offers.erase(th)
 		_collect(id)
 		_refresh()
-		_sound("jel_jo")
+		_sound("kartya")
 		_open_card(id, true)
 
 
@@ -950,6 +965,8 @@ func _open_group(g: Dictionary) -> void:
 		asks.append({"fajta": "cel", "cel": t, "kell": world.cards_needed(g, t)})
 	if int(g["metan"]) == 0:
 		asks.append({"fajta": "metan", "kell": world.methane_needed(g)})
+	if not g.get("felkeszult", false):
+		asks.append({"fajta": "felkeszules", "kell": 1})
 	if asks.is_empty():
 		body.add_child(UI.label(L.t("Tőlük már nincs mit kérned."), 17, UI.SOFT))
 		return
@@ -963,9 +980,11 @@ func _open_group(g: Dictionary) -> void:
 	body.add_child(area)
 	var bg := ButtonGroup.new()
 	for a in asks:
-		var txt: String = (L.t("Nulla kibocsátás %d-re") % int(a["cel"])) if a["fajta"] == "cel" else L.t("Metán: −30% tíz év alatt")
-		var dt := world.preview(g, int(a.get("cel", 0)), a["fajta"] == "metan")
-		var b := UI.button("%s · %s · %s °C" % [txt, L.t("%d kártya") % int(a["kell"]), L.num(dt, 2).replace("-", "−")])
+		var txt: String = (L.t("Nulla kibocsátás %d-re") % int(a["cel"])) if a["fajta"] == "cel" else (L.t("Metán: −30% tíz év alatt") if a["fajta"] == "metan" else L.t("Felkészülés a bajra"))
+		var b := UI.button("%s · %s" % [txt, L.t("%d kártya") % int(a["kell"])])
+		if a["fajta"] != "felkeszules":
+			var dt := world.preview(g, int(a.get("cel", 0)), a["fajta"] == "metan")
+			b.text += " · %s °C" % L.num(dt, 2).replace("-", "−")
 		b.toggle_mode = true
 		b.button_group = bg
 		b.focus_mode = Control.FOCUS_NONE
@@ -1009,7 +1028,16 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 	area.add_child(top)
 	_fit.call_deferred()
 	var any := false
-	if ask["fajta"] == "metan":
+	if ask["fajta"] == "felkeszules":
+		var cp := UI.card(Color("#4aa0e0"))
+		cp.add_child(UI.label(L.t("Segíts nekik felkészülni a hőségre, az áradásra és az aszályra! Aki felkészült, megbízik benned, és többé nem inog meg."), 16, UI.SOFT))
+		for id in world.prepare_cards(g):
+			add_card.call(cp, id)
+			any = true
+		if not any:
+			cp.add_child(UI.label(L.t("Ehhez Tenger és part, Egészség vagy Élelem kártya kell."), 15, UI.MUTE))
+		area.add_child(UI.card_root(cp))
+	elif ask["fajta"] == "metan":
 		var c := UI.card(UI.GREEN)
 		c.add_child(UI.label(L.t("A metán rövid ideig marad a levegőben, de erősen melegít. Mutasd meg, hol lehet gyorsan csökkenteni!"), 16, UI.SOFT))
 		if not bool(g.get("metan_valodi", true)):
@@ -1044,18 +1072,24 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 	ok.pressed.connect(func() -> void:
 		var done := false
 		var before := float(world.forecast()["kozep"][-1][1])
-		if ask["fajta"] == "metan":
+		if ask["fajta"] == "felkeszules":
+			done = world.prepare(g, picked[0])
+		elif ask["fajta"] == "metan":
 			done = world.pledge_methane(g, picked)
 		else:
 			done = world.negotiate(g, int(ask["cel"]), picked)
 		if done:
 			_refresh()
-			_sound("jel_jo")
+			_sound("egyezseg")
 			_agreed(g, ask, before))
 
 
 func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 	var body := _open(L.t("Egyezség kötve!"), UI.GREEN)
+	if ask["fajta"] == "felkeszules":
+		body.add_child(UI.label(L.t("%s felkészült a bajra. Megbízik benned, és többé nem inog meg.") % L.field(g, "nev"), 22, UI.TEXT, true))
+		body.add_child(_go(L.t("Rendben"), _close))
+		return
 	var txt: String = (L.t("%s vállalta: nulla kibocsátás %d-re.") % [L.field(g, "nev"), int(ask["cel"])]) if ask["fajta"] == "cel" \
 		else (L.t("%s vállalta: 30%%-kal kevesebb metán tíz év alatt.") % L.field(g, "nev"))
 	body.add_child(UI.label(txt, 22, UI.TEXT, true))
@@ -1121,8 +1155,8 @@ func _advance() -> void:
 		await tw.finished
 	_busy = false
 	_refresh()
-	var bad: bool = world.news.any(func(n: Dictionary) -> bool: return n["fajta"] in ["billenes", "visszalepett"])
-	_sound("zaro" if world.over() else ("jel_rossz" if bad else "jel_evtized"))
+	var kinds: Array = world.news.map(func(n: Dictionary) -> String: return str(n["fajta"]))
+	_sound("zaro" if world.over() else ("billenes" if "billenes" in kinds else ("megingas" if "visszalepett" in kinds else "korvaltas")))
 	_open_news(y0, t0)
 
 
@@ -1193,7 +1227,7 @@ func _open_end() -> void:
 		v.add_child(c)
 		row.add_child(v)
 	var tt := float(r["T"])
-	var verdict := "A Földed a +1,5 °C közelében maradt. Ennél jobbat a mai tudásunk szerint alig lehet elérni." if tt < 1.6 \
+	var verdict := "A Földed +1,7 °C alatt maradt. 2026-ból indulva ennél sokkal jobbat már alig lehet elérni." if tt < 1.7 \
 		else ("A Földed +2 °C alatt maradt. A Párizsi Megállapodás ennél többet kér: jóval +2 °C alatt megállni, lehetőleg +1,5 °C-nál." if tt < 2.0 \
 		else "A Földed +2 °C fölé melegedett. A következő játékban lépj hamarabb!")
 	body.add_child(UI.label(L.t(verdict), 19, UI.GREEN if tt < 2.0 else UI.EMBER, true))
@@ -1216,9 +1250,9 @@ func _open_help() -> void:
 	var body := _open(L.t("Hogyan játssz?"), UI.CYAN)
 	for row in [
 			["1.", "Te vagy a világ klímatudósa. 2026-ból indulsz; egy kör öt év, így 2100-ig tizenöt köröd van."],
-			["2.", "Körönként három lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal."],
+			["2.", "Körönként négy lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal."],
 			["3.", "Kattints egy országcsoportra, és győzd meg a kártyáiddal. Minden csoport mástól tart, ezért más kártyára van szüksége."],
-			["4.", "Ha elfogytak a lépéseid, jön a következő öt év. A Föld és a görbe megmutatja, mit értél el."],
+			["4.", "Lépj korán: minden év késés számít. Akit egyszer meggyőztél, attól később merészebb célt is kérhetsz."],
 			["5.", "A cél: 2100-ban jóval +2 °C alatt maradni, minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is."],
 			["6.", "A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett billenőpontok. Ne várj sokáig!"]]:
 		var h := UI.hbox(12)
@@ -1259,9 +1293,10 @@ func _selftest() -> void:
 	_open_group(world.group("kina"))
 	await _shot("8_targyalas.png")
 	var kina := world.group("kina")
-	world.negotiate(kina, 2070, world.usable(kina).slice(0, 1))
+	var kt: int = world.targets_for(kina)[0]
+	world.negotiate(kina, kt, world.usable(kina).slice(0, 1))
 	_refresh()
-	_agreed(kina, {"fajta": "cel", "cel": 2070}, 2.8)
+	_agreed(kina, {"fajta": "cel", "cel": kt}, 2.8)
 	await _shot("9_megegyezes.png")
 	_open_hand()
 	await _shot("10_kartyaim.png")

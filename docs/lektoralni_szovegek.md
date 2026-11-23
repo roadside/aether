@@ -166,9 +166,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - küszöb: %s–%s °C
 - Végeredmény
 
-## 6. Új szövegek (2026-11-23 este, még nem lektorált)
-
-Az 1–5. rész lektorált. Csak ezek újak:
+## 6. Új szövegek (2026-11-23 este) – ezeket már jóváhagytad
 
 - eddig
 - a te utad
@@ -190,14 +188,11 @@ Az 1–5. rész lektorált. Csak ezek újak:
 - Játssz végig egy játékot.
 - Két fok alatt
 - Maradj 2100-ban +2 °C alatt.
-- Közel a másfélhez
-- Maradj 2100-ban +1,6 °C alatt.
 - Mindenki vállalta
 - A játék végére mind a hat csoport vállaljon nulla kibocsátást.
 - Metánvadász
 - Mind a hat csoport vállaljon metáncsökkentést.
 - Merész cél
-- Érd el, hogy egy csoport 2040-re vállaljon nulla kibocsátást.
 - Egy küszöb sem
 - Játssz végig egy játékot úgy, hogy egy billenőpont küszöbét sem lépitek át.
 - Tisztító
@@ -209,4 +204,22 @@ Az 1–5. rész lektorált. Csak ezek újak:
 - Mindenhez értesz
 - Legyen kártyád mind a nyolc témakörből a gyűjteményben.
 - A valóságban nem csatlakoztak a Globális Metánvállaláshoz, ezért nehezebb meggyőzni őket.
-- Csökkenteni %d-ben kezd
+
+## 7. Legújabb szövegek (2026-11-23, 19 óra után) – még nem lektorált
+
+Csak ezek újak vagy változtak. A „Hogyan játssz?” két mondata a szabályváltozás miatt módosult (három helyett négy lépés; a célok már nem rögzített évek).
+
+- Lépj korán: minden év késés számít. Akit egyszer meggyőztél, attól később merészebb célt is kérhetsz.
+- Körönként négy lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal.
+- A Földed +1,7 °C alatt maradt. 2026-ból indulva ennél sokkal jobbat már alig lehet elérni.
+- Kiváló Föld
+- Maradj 2100-ban +1,7 °C alatt.
+- Érd el, hogy egy csoport tizenöt év alatt vállalja a nulla kibocsátást.
+- Metán: −30%
+- Felkészült
+- Felkészülés a bajra
+- Segíts nekik felkészülni a hőségre, az áradásra és az aszályra! Aki felkészült, megbízik benned, és többé nem inog meg.
+- Ehhez Tenger és part, Egészség vagy Élelem kártya kell.
+- %s felkészült a bajra. Megbízik benned, és többé nem inog meg.
+- Senki sem marad magára
+- Segíts mind a hat csoportnak felkészülni a bajra.

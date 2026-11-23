@@ -4,9 +4,10 @@ Klímajáték 12 éves kortól. Te vagy a világ klímatudósa: kutatsz, a bizon
 
 ## Egy játék
 
-- 2026-tól 2100-ig tizenöt kör, egy kör öt év, körönként három lépés.
+- 2026-tól 2100-ig tizenöt kör, egy kör öt év, körönként négy lépés.
 - **Kutatás:** témakört választasz, három valódi kérdésből egyet kutatsz ki. Ebből bizonyíték-kártya lesz, valódi tudományos forrásokkal.
 - **Tárgyalás:** minden országcsoport mástól tart. Olyan kártyával győzheted meg, amely az ő aggodalmára felel.
+- **Felkészülés:** egy csoportnak segíthetsz felkészülni a hőségre, az áradásra és az aszályra. Aki felkészült, többé nem inog meg.
 - **Idő:** a Föld és a görbe megmutatja, mit értél el. Minden játékban más a Föld: az érzékenysége és a billenőpontjai rejtve vannak.
 - **Vége:** két Föld egymás mellett. A tiéd, és az, amelyik akkor lett volna, ha semmi sem változik.
 
@@ -22,7 +23,9 @@ Valódi adat:
 - A kártyák kérdései, magyarázatai és forrásai (`temak/`).
 
 Játékszabály (nem a valóság leírása):
-- A tárgyalás menete, az aggodalmak mondatai, hogy hány kártya kell egy vállaláshoz.
+- A tárgyalás menete, az aggodalmak mondatai, hogy hány kártya kell egy vállaláshoz. A kérhető célok a mostani évtől számítanak (40, 30, 20 vagy 15 év alatt nulla kibocsátás); a gyorsabb cél több kártyába kerül.
+- A felkészülés hatása (a felkészült csoport nem inog meg), a jelvények és az értékelés határai (+1,7 és +2 °C).
+- A játék hangjai és alapzenéje kódból készülnek (`tools/jatek_hangok.py`), nem felvételek.
 - A megingás és a jövő hírei (hőhullám, aszály, áradás, erdőtűz).
 - A billenőpontok rejtett küszöbe: a tudományos sávból sorsoljuk, a mai melegedés fölötti részéből. A küszöb átlépése egyelőre nem hat vissza a hőmérsékletre.
 - A csoportok részesedése a teljes mai kibocsátásra vonatkozik (a földhasználatét is arányosan osztjuk szét).
