@@ -582,6 +582,7 @@ func advance() -> void:
 			if not ready:
 				steps = maxi(1, steps - 1)
 			news.append({"fajta": "katasztrofa", "csoport": g2["id"], "mi": threat["mi"], "lepes": not ready})
+			naplo.append({"ev": year(), "fajta": "baj", "csoport": g2["id"], "mi": threat["mi"], "vedve": ready})
 		threat = {}
 	# a következő baj már most látszik (a melegedéssel gyakoribb), fel lehet rá készülni
 	if round_i < ROUNDS - 1 and rng.randf() < clampf(0.15 + 0.25 * (float(st["T"]) - M.T_START), 0.15, 0.6):

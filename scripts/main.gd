@@ -27,6 +27,17 @@ const WORRY := {
 	"olaj": "Az olaj és a gáz a bevételünk. Mit tehetünk úgy, hogy ne menjünk tönkre?",
 	"erdo": "Az erdő és a föld ad megélhetést. Ki fizeti meg, ha érintetlenül hagyjuk?",
 }
+## Amit a csoport a megállapodáskor mond: arra az aggodalmára felel, amelyikre a kártyád válaszolt (játékszabály).
+const REPLY := {
+	"aram": "Ha a tiszta áram elég és megfizethető, belevágunk.",
+	"munka": "Ha van mivel kiváltani, átállítjuk a gyárainkat és az autóinkat.",
+	"elelem": "Ha a termés biztonságban van, veletek tartunk.",
+	"part": "Ez nekünk nem távoli ígéret. Számíthattok ránk.",
+	"egeszseg": "Ha ettől tisztább lesz a levegő a városainkban, benne vagyunk.",
+	"ketseg": "A mérések meggyőztek. Számít, amit teszünk.",
+	"olaj": "Ha az olaj után is lesz miből élnünk, belevágunk.",
+	"erdo": "Ha az erdő megvédése megélhetést is ad, veletek tartunk.",
+}
 const DISASTER := {"hoseg": "Hőhullám", "aszaly": "Aszály", "arviz": "Áradás", "tuz": "Erdőtűz"}
 const THREAT := {"hoseg": "Hőhullám fenyeget", "aszaly": "Aszály fenyeget", "arviz": "Áradás fenyeget", "tuz": "Erdőtűz fenyeget"}
 const MYTH := {"napaktivitas": "A Nap okozza a melegedést, nem az ember.", "kozmikus": "A világűrből jövő sugárzás okozza a melegedést.",
@@ -840,7 +851,15 @@ func _fill_group(g: Dictionary) -> void:
 	elif shaky and n > 0 and world.steps > 0:
 		v.add_child(_lbl(L.t("Erősítsd meg őket") + " →", 15, UI.GOLD, true))
 	elif world.can_convince(g):
-		v.add_child(_lbl(L.t("Meggyőzheted őket") + " →", 15, UI.CYAN, true))
+		var best := 0.0                # a most elérhető legjobb megállapodás hatása 2100-ra
+		for t in world.targets_for(g):
+			if n >= world.cards_needed(g, t):
+				best = minf(best, world.preview(g, t))
+		var gain := ""
+		if best < -0.004:
+			var bs := "%.2f" % best
+			gain = " · %s °C" % (bs if L.is_en() else bs.replace(".", ",")).replace("-", "−")
+		v.add_child(_lbl(L.t("Meggyőzheted őket") + gain + " →", 15, UI.CYAN, true))
 	elif world.targets_for(g).is_empty() and int(g["metan"]) > 0 and g.get("felkeszult", false):
 		v.add_child(_lbl(L.t("Tőlük már nincs mit kérned."), 14, UI.GREEN))
 	elif g["konnyebb"] and not world.targets_for(g).is_empty():
@@ -1085,7 +1104,7 @@ func _refresh() -> void:
 	(_stats["meleg"] as Label).text = "+%s °C" % L.num(t, 2)
 	var fc := world.forecast()
 	if not world.over():
-		(_stats["meleg_al"] as Label).text = L.t("2100-ban: +%s és +%s °C között") % [L.num(float(fc["also"][-1][1]), 1), L.num(float(fc["felso"][-1][1]), 1)]
+		(_stats["meleg_al"] as Label).text = L.t("2100-ban: +%s és +%s °C között") % [L.num(minf(float(fc["also"][-1][1]), float(fc["felso"][-1][1])), 1), L.num(maxf(float(fc["also"][-1][1]), float(fc["felso"][-1][1])), 1)]
 	else:
 		(_stats["meleg_al"] as Label).text = ""
 	var ratio := world.net_ratio(y)
@@ -1406,6 +1425,9 @@ const BADGES := [
 	["tudos", "Mindenhez értesz", "Legyen kártyád mind a nyolc témakörből a gyűjteményben."],
 	["ovatos", "Óvatos tudós", "Kutass ki három kockázatos ötletet."],
 	["kuldetes", "Küldetésteljesítő", "Teljesítsd mind a három küldetést egy játékban."],
+	["tevhit", "Tévhitvadász", "Cáfolj meg három tévhitet egy játékban."],
+	["vedo", "Időben szóltál", "Készíts fel három csoportot, mielőtt lecsap rájuk a baj."],
+	["lepcso", "A lépcső teteje", "Maradj +2 °C alatt az ötödik kihíváson."],
 ]
 var _end_info: Dictionary = {}
 
@@ -1473,6 +1495,9 @@ func _finish_game(r: Dictionary) -> Dictionary:
 		"napi": world.seed_v == _daily_code(),
 		"ovatos": c.filter(func(id: String) -> bool: return Cards.theme_of(id) in Cards.NO_TALK).size() >= 3,
 		"kuldetes": world.missions.size() >= 3 and world.missions_done() == world.missions.size(),
+		"tevhit": world.naplo.filter(func(e: Dictionary) -> bool: return e["fajta"] == "cafolat").size() >= 3,
+		"vedo": world.naplo.filter(func(e: Dictionary) -> bool: return e["fajta"] == "baj" and e.get("vedve", false)).size() >= 3,
+		"lepcso": t < 2.0 and world.challenge >= World.CHALLENGE_MAX,
 		"gyujto": c.size() >= 50, "tudos": Cards.talk_themes().all(func(th: String) -> bool: return themes.has(th)),
 	}
 	var have := _badges()
@@ -1996,6 +2021,7 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 		elif ask["fajta"] == "metan":
 			done = world.pledge_methane(g, picked)
 		else:
+			ask["tema"] = Cards.theme_of(picked[0]) if not picked.is_empty() else ""
 			done = world.negotiate(g, int(ask["cel"]), picked)
 		if done:
 			_refresh()
@@ -2077,6 +2103,8 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 		pic.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		body.add_child(pic)
 	body.add_child(UI.label(txt, 22, UI.TEXT, true))
+	if REPLY.has(str(ask.get("tema", ""))):
+		body.add_child(UI.label(_quote(L.t(REPLY[ask["tema"]])), 18, Color(str(g["szin"])).lightened(0.25)))
 	var fc := world.forecast()
 	var after := float(fc["kozep"][-1][1])
 	if before > 0.0:
@@ -2093,7 +2121,7 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 		_bonus_float = true
 	elif world.streak % 2 == 1 and world.steps > 0:
 		body.add_child(UI.label(L.t("Még egy megállapodás ebben a körben, és kapsz egy lépést."), 16, UI.GOLD))
-	body.add_child(UI.label(L.t("2100-ban: +%s és +%s °C között") % [L.num(float(fc["also"][-1][1]), 1), L.num(float(fc["felso"][-1][1]), 1)], 17, UI.SOFT))
+	body.add_child(UI.label(L.t("2100-ban: +%s és +%s °C között") % [L.num(minf(float(fc["also"][-1][1]), float(fc["felso"][-1][1])), 1), L.num(maxf(float(fc["also"][-1][1]), float(fc["felso"][-1][1])), 1)], 17, UI.SOFT))
 	body.add_child(UI.label(L.t("A hőmérsékleti sáv azért ilyen széles, mert nem tudjuk pontosan, mennyire érzékeny a Föld."), 15, UI.MUTE))
 	body.add_child(_go(L.t("Rendben"), _close))
 
@@ -2581,6 +2609,12 @@ func _add_story(body: VBoxContainer) -> void:
 			"visszalepett":
 				line = L.rag(L.t("%s megingott: a célját %d-re tolta.") % [L.field(world.group(e["csoport"]), "nev"), int(e["cel"])])
 				lc = UI.GOLD
+			"cafolat":
+				line = "%s %s" % [L.t("Megcáfoltad:"), _quote(L.t(MYTH.get(str(e.get("kartya", "")), "")))]
+				lc = MYTH_COLOR
+			"baj":
+				line = "%s: %s" % [L.t(DISASTER[e["mi"]]), L.field(world.group(e["csoport"]), "nev")] + (" · " + L.t("Felkészült") if e.get("vedve", false) else "")
+				lc = UI.GREEN if e.get("vedve", false) else UI.EMBER
 			"billenes":
 				var tp2: Array = world.tips.filter(func(x: Dictionary) -> bool: return x["id"] == e["id"])
 				if not tp2.is_empty():
@@ -2739,7 +2773,7 @@ func _selftest() -> void:
 	world.negotiate(kina, kt, world.usable(kina).slice(0, 1))
 	_refresh()
 	_test = false
-	_agreed(kina, {"fajta": "cel", "cel": kt}, 2.8)
+	_agreed(kina, {"fajta": "cel", "cel": kt, "tema": "aram"}, 2.8)
 	await get_tree().create_timer(0.7).timeout
 	_test = true
 	await _shot("9_megegyezes.png")
@@ -2900,6 +2934,19 @@ func _walkthrough() -> void:
 						_press_toggles(_body)
 					_close()
 					var u := world.usable(g)
+					if world.myth_on(g):            # tévhit: a cáfolat kikutatása, majd a cáfolat
+						var mid := str(world.myth["kartya"])
+						if mid in world.hand:
+							acted = world.refute(g)
+							if acted:
+								_refuted(g, mid)
+						else:
+							_research_theme("ketseg")
+							_do_research(mid, "ketseg")
+							acted = mid in world.hand
+						_close()
+						if acted:
+							break
 					if g.get("inog", false) and not u.is_empty():
 						acted = world.reassure(g, u[0])
 						if acted:

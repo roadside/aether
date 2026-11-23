@@ -345,3 +345,86 @@ Csak ezek újak: a telő idő és a Földön felvillanó pillanatok szövegei.
 - Telő idő: be
 - Telő idő: ki
 - Az évek maguktól telnek. Amíg olvasol, az idő áll. Ha a Földön felvillan valami, kattints rá gyorsan!
+
+## 11. Új szövegek (2026-11-23 éjjel) – még nem lektorált
+
+Csak ezek újak. Ami nincs itt, az nem változott.
+
+### Előre látható baj
+- Hőhullám fenyeget
+- Aszály fenyeget
+- Áradás fenyeget
+- Erdőtűz fenyeget
+- Készítsd fel őket
+- Készítsd fel őket a kör végéig, különben a mentés elvisz egy lépésedet.
+- Nem voltak felkészülve. A mentés miatt most eggyel kevesebb lépésed van.
+
+### Lendület és segítő csoport
+- Lendület! Két megállapodás egy körben: +1 lépés.
+- Még egy megállapodás ebben a körben, és kapsz egy lépést.
+- %s tiszta technikát ad át. %s most könnyebben meggyőzhető.
+
+### Kihívás-lépcső
+- Kihívás:
+- Gyorsabban telik az idő.
+- Érzékenyebb a Föld.
+- Egy csoport makacsabb.
+- A csoportok könnyebben elbizonytalanodnak.
+- Eggyel kevesebb lépésed van.
+- Új kihívás nyílt meg: %d. szint
+- Makacs csoport: eggyel több kártya kell nekik.
+
+### Vezetett első kör (a képernyő alján, egyszerre egy sor)
+- Kezdd kutatással! Kattints a Kutatás gombra.
+- Válassz egy témakört!
+- Válassz egy kérdést!
+- Ez a bizonyítékod. Olvasd el, aztán csukd be az ablakot!
+- Van kártyád! Kattints a világító csoportra.
+- Jelölj be egy kártyát, aztán kattints: Ezzel érvelek.
+- Kutass tovább, amíg van lépésed!
+- Elfogytak a lépéseid. Kattints: Következő 5 év.
+- Mostantól telik az idő. Figyeld a sávot az évszám alatt!
+- Új: metáncsökkentést és felkészülést is kérhetsz.
+- Új gomb: CO2-kivonás. Kártya kell hozzá.
+- Új játék vezetéssel (gomb a súgóban)
+
+### Billenőpontok veszélysávja
+- veszélysávban
+- Veszélysávba értünk: %s
+- A küszöb valahol +%s és +%s °C között van. Senki sem tudja, pontosan hol.
+
+### Terjedő tévhitek
+A négy tévhit mondata (idézőjelben jelennek meg):
+- A Nap okozza a melegedést, nem az ember.
+- A világűrből jövő sugárzás okozza a melegedést.
+- A levegőben túl kevés a CO2 ahhoz, hogy számítson.
+- A felhők majd megállítják a melegedést.
+
+A hozzájuk tartozó szövegek:
+- Tévhit terjed
+- Cáfold meg
+- Kutasd ki a cáfolatot
+- Amíg terjed, eggyel több kártya kell nekik, és a kör végén elbizonytalanodnak.
+- Megcáfolom ezzel:
+- Kutasd ki a cáfolatát: %s
+- Megcáfoltad!
+- %s most jobban bízik benned: eggyel kevesebb kártyával is meggyőzheted.
+- Kutasd ki az igazságot a „Honnan tudjuk?” témakörben, és cáfold meg! Amíg terjed, eggyel több kártya kell nekik.
+- Ez cáfolja a terjedő tévhitet.
+- Itt a terjedő tévhit cáfolata
+
+### Új jelvények és a történet új sorai
+- Megcáfoltad: (a történetben, utána a tévhit mondata)
+- Tévhitvadász – Cáfolj meg három tévhitet egy játékban.
+- Időben szóltál – Készíts fel három csoportot, mielőtt lecsap rájuk a baj.
+- A lépcső teteje – Maradj +2 °C alatt az ötödik kihíváson.
+
+### Amit a csoport a megállapodáskor mond (idézőjelben; arra az aggodalmára felel, amelyikre a kártyád válaszolt)
+- Áram: Ha a tiszta áram elég és megfizethető, belevágunk.
+- Ipar és közlekedés: Ha van mivel kiváltani, átállítjuk a gyárainkat és az autóinkat.
+- Élelem: Ha a termés biztonságban van, veletek tartunk.
+- Tenger és part: Ez nekünk nem távoli ígéret. Számíthattok ránk.
+- Egészség: Ha ettől tisztább lesz a levegő a városainkban, benne vagyunk.
+- Honnan tudjuk?: A mérések meggyőztek. Számít, amit teszünk.
+- Olaj és gáz: Ha az olaj után is lesz miből élnünk, belevágunk.
+- Erdő és föld: Ha az erdő megvédése megélhetést is ad, veletek tartunk.

@@ -26,8 +26,16 @@ Valódi adat:
 Játékszabály (nem a valóság leírása):
 - A telő idő: egy kör (öt év) 90 másodpercig tart, utána a játék magától lép tovább. Amíg ablak van nyitva (olvasás, tárgyalás), az idő áll. A menüben kikapcsolható.
 - A Földön felvillanó pillanatok („Most figyelnek rád!”, „Új felfedezés!”): 12 másodpercig élnek. Az első annál a csoportnál egy kártyával könnyebbé teszi a meggyőzést abban a körben, a második egy lépést ad. Kitalált játékelemek, nem valós események; a helyük is véletlen.
+- Az előre látható baj: a kör elején látszik, melyik csoportot fenyegeti hőhullám, aszály, áradás vagy erdőtűz (a melegedéssel gyakrabban). Ha a kör végéig nem készíted fel őket, a mentés elvisz egy lépést a következő körből. A valóságban ilyen pontosan senki sem lát előre öt évet: ez játékszabály.
+- A lendület: egy körön belül minden második megállapodás visszaad egy lépést.
+- A segítő csoport: aki elérte a nulla kibocsátást, egy másik csoportot könnyebben meggyőzhetővé tesz.
+- A kihívás-lépcső (0–5. szint): ha +2 °C alatt végzel a legmagasabb elért szinten, megnyílik a következő. Szintenként egy nehezítés jön hozzá: gyorsabb körök (75 másodperc), érzékenyebb Föld (a tudományos sávon belül), egy makacs csoport, gyakoribb elbizonytalanodás, eggyel kevesebb lépés.
+- A terjedő tévhitek: négy gyakori tévhit egy-egy mondata (a Nap, a kozmikus sugárzás, a „túl kevés CO2”, a felhők). A cáfolat szövege a hozzá tartozó „Honnan tudjuk?” kártya lektorált „Mennyire bizonyított?” szövege. Az, hogy a tévhit melyik csoportnál terjed, és hogy amíg terjed, eggyel több kártya kell nekik, játékszabály.
+- A billenőpontok veszélysávja: a sáv határai valódi adatok (Armstrong McKay és mtsai 2022); az arany gyűrű és a „Veszélysávba értünk” hír csak jelzi, hogy a melegedés belépett a sávba.
+- A vezetett első kör: az első játék első körében egy sor mindig megmondja a következő mozdulatot, az idő még nem telik, és a lehetőségek körről körre nyílnak meg (küldetések a 2., metán és felkészülés a 3., CO2-kivonás a 4. körtől). A súgóból újra kérhető.
+- A témakörök képei (`scripts/theme_art.gd`), a Földön mozgó jelek, a műhold, a pergő évszám és a szikrák saját, kódból rajzolt képek és animációk, nem valós felvételek.
 - Az országcsoportok kártyáin látható kis tájképek (`scripts/landscape.gd`) saját, kódból festett hangulatképek, nem valós helyek. A szélkerekek és napelemek akkor jelennek meg rajtuk, amikor a csoport célt vállal: ez jelzés, nem adat.
-- A tárgyalás menete, az aggodalmak mondatai, hogy hány kártya kell egy vállaláshoz. A kérhető célok a mostani évtől számítanak (40, 30, 20 vagy 15 év alatt nulla kibocsátás); a gyorsabb cél több kártyába kerül.
+- A tárgyalás menete, az aggodalmak és a megállapodáskor elhangzó válaszok mondatai, hogy hány kártya kell egy vállaláshoz. A kérhető célok a mostani évtől számítanak (40, 30, 20 vagy 15 év alatt nulla kibocsátás); a gyorsabb cél több kártyába kerül.
 - A klímacsúcs (2041 és 2066): egy kártyát az egész világnak megmutathatsz; akinek az aggodalmára felel, és már vállalt célt, öt évvel előbbre hozza.
 - A három fokozat (körönként öt, négy vagy három lépés) és „A mai Föld” (aznap mindenki ugyanazt a Földet kapja).
 - A rangok (a több játékon át kikutatott kártyák száma szerint) és a záró képernyő összesítése: ki mennyi CO2-t nem bocsátott ki a „ha semmi sem változik” úthoz képest (a modell szerint).
