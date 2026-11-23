@@ -189,7 +189,7 @@ const EN := {
 	"A 2025-ös kibocsátáshoz képest; a kivont CO2-t levonjuk belőle.": "Compared with emissions in 2025; removed CO2 is subtracted.",
 	"Ha minden öt évvel később történik, a Földed +%s °C-ra melegszik. Minden év számít!": "If everything had happened five years later, your Earth would warm to +%s °C. Every year counts!",
 	"Küldetések": "Missions",
-	"Három cél erre a játékra. Nem kötelezők, de jelvény jár értük.": "Three goals for this game. They are optional, but they earn a badge.",
+	"Három cél erre a játékra. Nem kötelezőek, de jelvény jár értük.": "Three goals for this game. They are optional, but they earn a badge.",
 	"Győzd meg ezt a csoportot 2040 végéig: %s": "Convince this group by the end of 2040: %s",
 	"2050 végéig legalább három csoport vállaljon metáncsökkentést.": "Get at least three groups to pledge a methane cut by the end of 2050.",
 	"Indíts el két CO2-kivonást.": "Start two CO2 removal projects.",

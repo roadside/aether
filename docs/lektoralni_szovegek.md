@@ -298,13 +298,13 @@ Mindegyiket a megadott forrásból ellenőriztük. A kártyán csak akkor jeleni
 - **termes:** Alkalmazkodás nélkül minden egyes fok melegedés átlagosan 6%-kal csökkenti a búza, 7,4%-kal a kukorica, 3,2%-kal a rizs és 3,1%-kal a szója termését. (Zhao és mtsai 2017) – https://doi.org/10.1073/pnas.1701762114
 - **amazonas:** Az Amazonas esőerdejének pusztulása a kutatók becslése szerint kb. 3,5 fok melegedésnél válik valószínűvé, de már 2 foknál is lehetséges. (Armstrong McKay és mtsai 2022) – https://doi.org/10.1126/science.abn7950
 
-## 9. Új szövegek (2026-11-23, 20 óra után) – még nem lektorált
+## 9. Új szövegek (2026-11-23, 20 óra után)
 
-Csak ezek újak. Küldetések, döntési helyzetek, tudáspróba, a Kockázatos ötletek témakör, a záró képernyő új sorai.
+Csak ezek újak. Küldetések, döntési helyzetek, tudáspróba, a Kockázatos ötletek témakör, a záróképernyő új sorai.
 
 - Ha minden öt évvel később történik, a Földed +%s °C-ra melegszik. Minden év számít!
 - Küldetések
-- Három cél erre a játékra. Nem kötelezők, de jelvény jár értük.
+- Három cél erre a játékra. Nem kötelezőek, de jelvény jár értük.
 - Győzd meg ezt a csoportot 2040 végéig: %s
 - 2050 végéig legalább három csoport vállaljon metáncsökkentést.
 - Indíts el két CO2-kivonást.

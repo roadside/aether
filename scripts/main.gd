@@ -1829,7 +1829,7 @@ func _add_missions(body: VBoxContainer) -> void:
 
 func _open_missions() -> void:
 	var body := _open(L.t("Küldetések"), UI.GOLD)
-	body.add_child(UI.label(L.t("Három cél erre a játékra. Nem kötelezők, de jelvény jár értük."), 16, UI.SOFT))
+	body.add_child(UI.label(L.t("Három cél erre a játékra. Nem kötelezőek, de jelvény jár értük."), 16, UI.SOFT))
 	_add_missions(body)
 
 
