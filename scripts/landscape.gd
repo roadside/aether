@@ -26,6 +26,7 @@ const CLEAN := {
 }
 
 static var _cache: Dictionary = {}
+static var _images: Dictionary = {}
 
 
 ## clean: a csoport már vállalt célt, ezért szélkerekek és napelemek állnak a tájban (játékbeli jelzés).
@@ -110,6 +111,7 @@ static func texture(id: String, clean: bool = false) -> Texture2D:
 				_turbine(img, int(t[1]), int(t[2]))
 			else:
 				_solar(img, int(t[1]), int(t[2]))
+	_images[key] = img
 	var tex := ImageTexture.create_from_image(img)
 	_cache[key] = tex
 	return tex
@@ -213,6 +215,74 @@ static func _tuft(img: Image, x: int, y: int, c: Color) -> void:
 	_px(img, x - 1, y - 1, c)
 	_px(img, x + 1, y - 1, c)
 	_px(img, x, y - 2, c)
+
+
+## Ugyanaz a táj baj idején (a jövő híreihez): hőség, aszály, áradás vagy erdőtűz. Hangulatkép, nem adat.
+static func disaster(id: String, kind: String) -> Texture2D:
+	var key := id + "_" + kind
+	if _cache.has(key):
+		return _cache[key]
+	if texture(id) == null:
+		return null
+	var img: Image = (_images[id] as Image).duplicate()
+	match kind:
+		"hoseg":
+			for y in H:
+				for x in W:
+					var c := img.get_pixel(x, y)
+					img.set_pixel(x, y, c.lerp(Color("#ffb060"), 0.42 - 0.2 * float(y) / float(H)))
+			_disc(img, 60, 9, 9, Color(1.0, 0.95, 0.75, 0.3))
+			_disc(img, 60, 9, 6, Color("#fff6d8"))
+		"aszaly":
+			for y in H:
+				for x in W:
+					var c := img.get_pixel(x, y)
+					var grey := c.r * 0.4 + c.g * 0.4 + c.b * 0.2
+					var dry := Color(grey * 1.15, grey * 0.92, grey * 0.6)
+					img.set_pixel(x, y, c.lerp(dry, 0.75 if y > 20 else 0.3))
+			for i in 9:                               # repedések a kiszáradt földön
+				var x0 := 5 + (i * 23) % (W - 10)
+				var y0 := 31 + (i * 5) % 7
+				for k in 4:
+					_px(img, x0 + k, y0 + (k % 2), Color("#5a4226"))
+					_px(img, x0 + 1 - k / 2, y0 + 1 + k / 2, Color("#5a4226"))
+		"arviz":
+			for y in H:
+				for x in W:
+					var c := img.get_pixel(x, y)
+					if y >= 29:
+						var w := Color("#5f7f8f").lerp(Color("#8fa9b4"), 0.5 if (x + y * 3) % 7 == 0 else 0.0)
+						img.set_pixel(x, y, w.lerp(c, 0.18))
+					else:
+						img.set_pixel(x, y, c.lerp(Color("#6f7f8c"), 0.5))
+			for i in 30:
+				var x1 := (i * 19) % W
+				var y1 := (i * 7) % 24
+				for k in 3:
+					_px(img, x1 - k, y1 + k * 2, Color(0.88, 0.92, 0.96, 0.55))
+		"tuz":
+			for y in H:
+				for x in W:
+					var c := img.get_pixel(x, y)
+					img.set_pixel(x, y, c.lerp(Color("#3a2420") if y > 22 else Color("#c9552a").lerp(Color("#4a3a3a"), 1.0 - float(y) / 22.0), 0.62))
+			for i in 26:                              # füstfelhő: sok, egymásba olvadó folt
+				_disc(img, (i * 29) % W, 5 + (i * 7) % 13, 4 + (i * 3) % 4, Color(0.2, 0.17, 0.17, 0.2))
+			for i in 22:                              # lángok a látóhatáron
+				var fx := 3 + (i * 37) % (W - 6)
+				var fh := 2 + (i * 3) % 4
+				for k in fh:
+					_px(img, fx, 27 - k, Color("#ffd36a") if k < fh - 2 else Color("#ff7a2a"))
+				_px(img, fx + 1, 27, Color("#ff7a2a"))
+				_px(img, fx - 1, 27, Color("#e0481a"))
+	var tex := ImageTexture.create_from_image(img)
+	_cache[key] = tex
+	return tex
+
+
+static func disaster_rect(id: String, kind: String, width: int) -> TextureRect:
+	var t := rect(id, width)
+	t.texture = disaster(id, kind)
+	return t
 
 
 ## A tájkép a felületre: éles képpontokkal, a kért szélességben (a magasság arányos).

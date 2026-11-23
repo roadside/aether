@@ -308,6 +308,23 @@ func _build_groups() -> void:
 		var gid := str(g["id"])
 		b.pressed.connect(func() -> void: _open_group(world.group(gid)))
 		b.mouse_entered.connect(func() -> void: globe.look_at_event({"lat": g["lat"], "lon": g["lon"]}))
+		var wash := TextureRect.new()             # halvány színmosás a csoport színével, felülről lefelé
+		var grad := Gradient.new()
+		grad.set_color(0, Color(col, 0.17))
+		grad.set_color(1, Color(col, 0.0))
+		var gt := GradientTexture2D.new()
+		gt.gradient = grad
+		gt.width = 4
+		gt.height = 64
+		gt.fill_from = Vector2(0, 0)
+		gt.fill_to = Vector2(0, 1)
+		wash.texture = gt
+		wash.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		wash.stretch_mode = TextureRect.STRETCH_SCALE
+		wash.position = Vector2(4, 4)
+		wash.size = Vector2(292, 120)
+		wash.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		b.add_child(wash)
 		var land := Landscape.rect(gid, 70)
 		land.position = Vector2(300 - 9 - 70, 8)
 		b.add_child(land)
@@ -1523,7 +1540,15 @@ func _open_news(y0: int, t0: float) -> void:
 				c3.add_child(UI.label(L.t("A bizonyítékod miatt kitartottak: %s") % Cards.text(n["kartya"], "Kérdés", L.is_en()), 16, UI.SOFT))
 				body.add_child(UI.card_root(c3))
 			"katasztrofa":
-				var c4 := UI.card(UI.EMBER)
+				var c4o := UI.card(UI.EMBER)
+				var row4 := UI.hbox(14)
+				c4o.add_child(row4)
+				var pic4 := Landscape.disaster_rect(str(n["csoport"]), str(n["mi"]), 147)
+				pic4.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+				row4.add_child(pic4)
+				var c4 := UI.vbox(6)
+				c4.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+				row4.add_child(c4)
 				var dh := UI.hbox(10)
 				dh.add_child(Icons.rect(str(n["mi"]), UI.EMBER, 36))
 				dh.add_child(UI.label("%s: %s" % [L.t(DISASTER[n["mi"]]), L.field(world.group(n["csoport"]), "nev")], 18, UI.EMBER, true))
@@ -1531,7 +1556,7 @@ func _open_news(y0: int, t0: float) -> void:
 				if world.group(n["csoport"]).get("felkeszult", false):
 					c4.add_child(UI.label(L.t("Felkészültek rá, ezért kisebb volt a baj."), 16, UI.GREEN))
 				c4.add_child(UI.label(L.t("A baj után jobban figyelnek rád: most eggyel kevesebb kártyával is meggyőzheted őket."), 16, UI.SOFT))
-				body.add_child(UI.card_root(c4))
+				body.add_child(UI.card_root(c4o))
 	if world.news.is_empty():
 		body.add_child(UI.label(L.t("Csendes öt év volt."), 17, UI.SOFT))
 		var known: Array = world.hand.filter(func(id: String) -> bool: return not Cards.key_number(id).is_empty())
@@ -1720,6 +1745,9 @@ func _open_end() -> void:
 		var top_v := float(saved[0]["megsporolt"])
 		for g in saved:
 			var hb := UI.hbox(10)
+			var gp := Landscape.rect(str(g["id"]), 63, int(g.get("nulla", 0)) > 0)
+			gp.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+			hb.add_child(gp)
 			var nm := UI.label(L.field(g, "nev"), 15, Color(str(g["szin"])), true, false)
 			nm.custom_minimum_size = Vector2(170, 0)
 			hb.add_child(nm)
