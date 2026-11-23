@@ -567,6 +567,21 @@ func _roll_dilemma() -> void:
 ## choice: a választott lehetőség sorszáma. Támogatás: 0 = eggyel több lépés, 1 = a megnevezett csoport felkészül.
 ## Meghívás: a választott csoportot most eggyel kevesebb kártyával is meg lehet győzni.
 ## Tudáspróba: a jó válasz eggyel több lépést ad. Vissza: igaz, ha a választás „sikerült” (a próbánál: jó válasz).
+## Pillanat a Földön (játékszabály): a csoport most figyel, eggyel kevesebb kártya is elég neki ebben a körben.
+func moment_attention(id: String) -> bool:
+	var g := group(id)
+	if g.is_empty() or g["konnyebb"] or over():
+		return false
+	g["konnyebb"] = true
+	return true
+
+
+## Pillanat a Földön (játékszabály): új felfedezés, ebben a körben eggyel több lépés.
+func moment_discovery() -> void:
+	if not over():
+		steps += 1
+
+
 func resolve_dilemma(choice: int) -> bool:
 	if dilemma.is_empty():
 		return false

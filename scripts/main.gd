@@ -92,6 +92,187 @@ class Twinkle extends Control:
 			draw_rect(Rect2(s[0], Vector2(sz, sz)), Color(0.85, 0.92, 1.0, a))
 
 
+## Felvillanó pillanat a Földön: lüktető gyűrű, fogyó idővel. Rá kell kattintani, mielőtt eltűnik.
+class Moment extends Control:
+	signal picked
+	var color := Color.WHITE
+	var total := 12.0
+	var left := 12.0
+	var _t := 0.0
+
+	func _init() -> void:
+		size = Vector2(140, 140)
+		pivot_offset = size * 0.5
+		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+
+	func _process(delta: float) -> void:
+		_t += delta
+		queue_redraw()
+
+	func _gui_input(event: InputEvent) -> void:
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			accept_event()
+			picked.emit()
+
+	func _draw() -> void:
+		var c := size * 0.5
+		for i in 3:                                   # kifelé futó gyűrűk
+			var k := fmod(_t * 0.9 + float(i) / 3.0, 1.0)
+			draw_arc(c, 20.0 + 48.0 * k, 0.0, TAU, 48, Color(color, 0.8 * (1.0 - k)), 4.0)
+		draw_circle(c, 21.0, Color(0.04, 0.06, 0.12, 0.88))
+		draw_arc(c, 21.0, -PI / 2.0, -PI / 2.0 + TAU * clampf(left / total, 0.0, 1.0), 40, color, 4.0)   # a hátralévő idő
+		var pulse := 1.0 + 0.25 * sin(_t * 7.0)
+		draw_rect(Rect2(c + Vector2(-3, -11) * pulse, Vector2(6, 14) * pulse), color)                  # felkiáltójel
+		draw_rect(Rect2(c + Vector2(-3, 6) * pulse, Vector2(6, 6) * pulse), color)
+
+
+const ROUND_SECONDS := 90.0          # ennyi ideig tart egy kör (öt év), ha az idő telik (játékszabály)
+const MOMENT_SECONDS := 12.0
+var _clock := 0.0
+var _clock_bar: ColorRect
+var _clock_force := false            # az önteszt képeihez
+var _clock_live := false             # próba: az óra ellenőrző futásban is jár, és magától lép a következő körre
+var _moment: Dictionary = {}         # {"fajta": "figyelem" | "felfedezes", "csoport", "lat", "lon"}
+var _moment_node: Moment
+var _moment_lbl: Label
+var _moment_times: Array = []        # a körön belül ekkor villan fel egy-egy pillanat (másodperc)
+
+
+func _time_on() -> bool:
+	return bool(L.get_setting("elo_ido", true))
+
+
+func _clock_runs() -> bool:
+	if _clock_force:
+		return true
+	if _clock_live:
+		return not _busy and _overlay == null and not world.over()
+	return _time_on() and not _test and not _busy and _overlay == null and _intro == null and not world.over() \
+		and not _menu.visible and not globe.dragging
+
+
+## Mikor villanjon fel pillanat ebben a körben. Az első körben hamar jön egy, hogy rögtön történjen valami.
+func _plan_moments() -> void:
+	_clear_moment()
+	_moment_times = [randf_range(4.0, 6.0), randf_range(50.0, 65.0)] if world.round_i == 0 else [randf_range(20.0, 60.0)]
+
+
+var _moment_home: Array = []
+
+
+func _clear_moment() -> void:
+	_moment = {}
+	if not _moment_home.is_empty():              # a Föld visszafordul oda, ahol a pillanat előtt állt
+		var tw := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT).set_parallel(true)
+		tw.tween_property(globe, "spin", float(_moment_home[0]), 0.9)
+		tw.tween_property(globe, "tilt", float(_moment_home[1]), 0.9)
+		_moment_home = []
+	if _moment_node != null:
+		_moment_node.queue_free()
+		_moment_node = null
+	if _moment_lbl != null:
+		_moment_lbl.queue_free()
+		_moment_lbl = null
+
+
+func _spawn_moment(kind: String = "") -> void:
+	var open_g: Array = world.groups.filter(func(g: Dictionary) -> bool: return not g["konnyebb"] and not world.targets_for(g).is_empty())
+	if kind == "":
+		kind = "figyelem" if (not open_g.is_empty() and world.round_i > 0 and randf() < 0.5) else "felfedezes"
+	if kind == "figyelem" and open_g.is_empty():
+		kind = "felfedezes"
+	if kind == "figyelem":
+		var g: Dictionary = open_g[randi() % open_g.size()]
+		_moment = {"fajta": kind, "csoport": g["id"], "lat": g["lat"], "lon": g["lon"]}
+	else:
+		var tp: Dictionary = world.tips[randi() % world.tips.size()]
+		_moment = {"fajta": kind, "lat": tp["lat"], "lon": tp["lon"]}
+	_moment_home = [globe.spin, globe.tilt]
+	globe.look_at_event(_moment)
+	_moment_node = Moment.new()
+	_moment_node.color = UI.GOLD if kind == "figyelem" else UI.CYAN
+	_moment_node.total = MOMENT_SECONDS
+	_moment_node.left = MOMENT_SECONDS
+	_moment_node.picked.connect(_pick_moment)
+	_moment_lbl = UI.label(L.t("Most figyelnek rád!") if kind == "figyelem" else L.t("Új felfedezés!"), 22, _moment_node.color, true, false)
+	_moment_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_moment_lbl.add_theme_color_override("font_outline_color", Color(0.02, 0.03, 0.08))
+	_moment_lbl.add_theme_constant_override("outline_size", 6)
+	add_child(_moment_node)
+	add_child(_moment_lbl)
+	var after: Node = _group_cards[world.groups[0]["id"]]["gomb"]
+	move_child(_moment_node, after.get_index())      # a kártyák és az ablakok alatt, a Föld fölött
+	move_child(_moment_lbl, _moment_node.get_index() + 1)
+	_place_moment()
+	_sound("jo_hir")
+
+
+func _place_moment() -> void:
+	if _moment_node == null:
+		return
+	var p: Vector3 = globe.project(float(_moment["lat"]), float(_moment["lon"]))
+	var at: Vector2 = globe.position + Vector2(p.x, p.y)
+	_moment_node.visible = p.z > 0.5
+	_moment_lbl.visible = p.z > 0.5
+	_moment_node.position = at - _moment_node.size * 0.5
+	_moment_lbl.position = at + Vector2(-_moment_lbl.size.x * 0.5, 64)
+
+
+func _pick_moment() -> void:
+	if _moment.is_empty() or _busy or _overlay != null:
+		return
+	var m := _moment
+	_clear_moment()
+	globe.flash(float(m["lat"]), float(m["lon"]), UI.GOLD if m["fajta"] == "figyelem" else UI.CYAN)
+	if m["fajta"] == "figyelem":
+		if world.moment_attention(str(m["csoport"])):
+			_refresh()
+			_open_group(world.group(str(m["csoport"])))
+	else:
+		world.moment_discovery()
+		_sound("jo_hir")
+		_refresh()
+		_float_text(L.t("+1 lépés"), Vector2(960, 120), UI.CYAN)     # a lépések számlálója alatt
+
+
+## Rövid, felszálló felirat (például „+1 lépés”).
+func _float_text(text: String, at: Vector2, color: Color) -> void:
+	var l := UI.label(text, 26, color, true, false)
+	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	l.add_theme_color_override("font_outline_color", Color(0.02, 0.03, 0.08))
+	l.add_theme_constant_override("outline_size", 8)
+	l.position = at - Vector2(50, 20)
+	add_child(l)
+	var tw := create_tween().set_parallel(true)
+	tw.tween_property(l, "position:y", l.position.y - 70.0, 1.4)
+	tw.tween_property(l, "modulate:a", 0.0, 1.4).set_delay(0.5)
+	tw.chain().tween_callback(l.queue_free)
+
+
+func _process(delta: float) -> void:
+	if world == null or _clock_bar == null or _menu == null:
+		return
+	(_clock_bar.get_parent() as Control).visible = (_time_on() and not world.over() and not _test) or _clock_force
+	if not _clock_runs():
+		return
+	_clock += delta
+	var k := clampf(_clock / ROUND_SECONDS, 0.0, 1.0)
+	_clock_bar.size.x = 150.0 * (1.0 - k)
+	_clock_bar.color = UI.EMBER if k > 0.85 else UI.CYAN
+	(_stats["ev"] as Label).text = str(world.year() + mini(World.ROUND_YEARS - 1, int(k * World.ROUND_YEARS)))
+	if _moment.is_empty():
+		if not _moment_times.is_empty() and _clock >= float(_moment_times[0]):
+			_moment_times.pop_front()
+			_spawn_moment()
+	else:
+		_moment_node.left -= delta
+		_place_moment()
+		if _moment_node.left <= 0.0:
+			_clear_moment()
+	if _clock >= ROUND_SECONDS and not _clock_force:
+		_advance()
+
+
 func _ready() -> void:
 	L.init()
 	UI.load_fonts()
@@ -153,6 +334,7 @@ func _ready() -> void:
 		get_tree().quit()
 		return
 	_refresh()
+	_plan_moments()
 	get_tree().create_timer(12.0).timeout.connect(_start_music)
 	if not bool(L.get_setting("uj_sugo_latta", false)):
 		_open_help()
@@ -297,6 +479,17 @@ func _build_top() -> void:
 	_stat(h, "kibocs", L.t("A világ CO2-kibocsátása"), UI.GREEN, false, L.t("A 2025-ös kibocsátáshoz képest; a kivont CO2-t levonjuk belőle."))
 	_stat(h, "lepes", L.t("Lépéseid"), UI.CYAN)
 	_dots = _stats["lepes"]
+	var bar_bg := ColorRect.new()                 # a körből hátralévő idő sávja az évszám alatt
+	bar_bg.color = Color(1, 1, 1, 0.10)
+	bar_bg.position = Vector2(174, 68)
+	bar_bg.size = Vector2(150, 4)
+	bar_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(bar_bg)
+	_clock_bar = ColorRect.new()
+	_clock_bar.color = UI.CYAN
+	_clock_bar.size = Vector2(150, 4)
+	_clock_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bar_bg.add_child(_clock_bar)
 	var sp := Control.new()
 	sp.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(sp)
@@ -531,6 +724,13 @@ func _build_menu() -> void:
 		L.set_setting("hangok", not _sounds_on())
 		snd.text = L.t("Hangok: be") if _sounds_on() else L.t("Hangok: ki"))
 	v.add_child(snd)
+	var tim := UI.button(L.t("Telő idő: be") if _time_on() else L.t("Telő idő: ki"))
+	tim.pressed.connect(func() -> void:
+		L.set_setting("elo_ido", not _time_on())
+		tim.text = L.t("Telő idő: be") if _time_on() else L.t("Telő idő: ki")
+		_clear_moment()
+		_refresh())
+	v.add_child(tim)
 	_reset_btn = UI.button(L.t("Új játék"))
 	_reset_btn.pressed.connect(_reset_game)
 	v.add_child(_reset_btn)
@@ -622,6 +822,8 @@ func _new_game(code: int = -1, steps_n: int = World.STEPS) -> void:
 	_close()
 	world.new_game(code, steps_n)
 	_offers = {}
+	_clock = 0.0
+	_plan_moments()
 	globe.home()
 	_refresh()
 
@@ -641,7 +843,8 @@ func _refresh() -> void:
 		(_stats["ev"] as Label).text = "2100"
 		(_stats["ev_al"] as Label).text = L.t("vége")
 	else:
-		(_stats["ev"] as Label).text = "%d–%d" % [y, y + World.ROUND_YEARS - 1]
+		(_stats["ev"] as Label).text = ("%d–%d" % [y, y + World.ROUND_YEARS - 1]) if not (_time_on() and not _test) \
+			else str(y + mini(World.ROUND_YEARS - 1, int(_clock / ROUND_SECONDS * World.ROUND_YEARS)))
 		(_stats["ev_al"] as Label).text = L.t("%d. kör a 15-ből") % (world.round_i + 1)
 	var t := float(world.st["T"])
 	(_stats["meleg"] as Label).text = "+%s °C" % L.num(t, 2)
@@ -1516,6 +1719,8 @@ func _advance() -> void:
 	var heat0: float = globe.heat
 	world.advance()
 	_offers = {}
+	_clock = 0.0
+	_plan_moments()
 	var fc := world.forecast()
 	var tw := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tw.tween_property(globe, "spin", globe.spin + 1.0, 0.2 if _test else 2.6)
@@ -1906,7 +2111,8 @@ func _open_help() -> void:
 			["3.", "Kattints egy országcsoportra, és győzd meg a kártyáiddal. Minden csoport mástól tart, ezért más kártyára van szüksége."],
 			["4.", "Lépj korán: minden év késés számít. Akit egyszer meggyőztél, attól később merészebb célt is kérhetsz."],
 			["5.", "A cél: 2100-ban jóval +2 °C alatt maradni, minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is."],
-			["6.", "A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett billenőpontok. Ne várj sokáig!"]]:
+			["6.", "A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett billenőpontok. Ne várj sokáig!"],
+			["7.", "Az évek maguktól telnek. Amíg olvasol, az idő áll. Ha a Földön felvillan valami, kattints rá gyorsan!"]]:
 		var h := UI.hbox(12)
 		h.add_child(UI.label(row[0], 22, UI.GOLD, true, false))
 		h.add_child(UI.label(L.t(row[1]), 18, UI.TEXT))
@@ -1926,6 +2132,32 @@ func _shot(name: String) -> void:
 
 func _selftest() -> void:
 	await _shot("1_fooldal.png")
+	if "--idoproba" in OS.get_cmdline_user_args():      # az óra a kör végén magától lép tovább?
+		_clock_live = true
+		_clock = ROUND_SECONDS - 3.0
+		await get_tree().create_timer(6.0).timeout
+		print("IDOPROBA kor=%d ablak=%s ora=%.1f" % [world.round_i, str(_overlay != null), _clock])
+		await _shot("0_idoproba.png")
+		get_tree().quit()
+		return
+	# élő idő: felvillanó pillanat a Földön, majd a rákattintás
+	_clock_force = true
+	_clock = 30.0
+	_spawn_moment("felfedezes")
+	await get_tree().create_timer(1.2).timeout
+	await _shot("1b_pillanat.png")
+	_pick_moment()
+	await get_tree().create_timer(0.4).timeout
+	await _shot("1c_pillanat_utan.png")
+	world.steps -= 1
+	_spawn_moment("figyelem")
+	await get_tree().create_timer(1.2).timeout
+	await _shot("1d_figyelnek.png")
+	_clear_moment()
+	_clock_force = false
+	_clock = 0.0
+	_refresh()
+	await get_tree().create_timer(1.6).timeout
 	_open_help()
 	await _shot("2_sugo.png")
 	_open_research()

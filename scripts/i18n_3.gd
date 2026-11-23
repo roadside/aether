@@ -219,4 +219,10 @@ const EN := {
 	"Eltaláltad! Ebben a körben eggyel több lépésed van.": "Correct! You have one extra move this round.",
 	"Nem ez volt. A helyes válasz:": "Not that one. The right answer:",
 	"A mai Föld: %d napja játszod egymás után.": "Today's Earth: you have played %d days in a row.",
+	"Most figyelnek rád!": "They are listening now!",
+	"Új felfedezés!": "New discovery!",
+	"+1 lépés": "+1 move",
+	"Telő idő: be": "Passing time: on",
+	"Telő idő: ki": "Passing time: off",
+	"Az évek maguktól telnek. Amíg olvasol, az idő áll. Ha a Földön felvillan valami, kattints rá gyorsan!": "The years pass by themselves. While you read, time stands still. If something lights up on the Earth, click it quickly!",
 }

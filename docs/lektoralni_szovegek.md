@@ -335,3 +335,14 @@ Csak ezek újak. Küldetések, döntési helyzetek, tudáspróba, a Kockázatos 
 - Nem ez volt. A helyes válasz:
 - A mai Föld: %d napja játszod egymás után.
 - Biztos? Kattints még egyszer!
+
+## 10. Új szövegek (2026-11-23, 21 óra 30 után) – még nem lektorált
+
+Csak ezek újak: a telő idő és a Földön felvillanó pillanatok szövegei.
+
+- Most figyelnek rád!
+- Új felfedezés!
+- +1 lépés
+- Telő idő: be
+- Telő idő: ki
+- Az évek maguktól telnek. Amíg olvasol, az idő áll. Ha a Földön felvillan valami, kattints rá gyorsan!
