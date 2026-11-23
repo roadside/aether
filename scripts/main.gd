@@ -911,7 +911,7 @@ func _open_news(y0: int, t0: float) -> void:
 			"kitartott":
 				var c3 := UI.card(UI.GREEN)
 				c3.add_child(UI.label(L.t("%s megingott, de kitartott.") % L.field(world.group(n["csoport"]), "nev"), 18, UI.GREEN, true))
-				c3.add_child(UI.label(L.t("A bizonyítékod győzte meg őket: %s") % Cards.text(n["kartya"], "Kérdés", L.is_en()), 16, UI.SOFT))
+				c3.add_child(UI.label(L.t("A bizonyítékod miatt kitartottak: %s") % Cards.text(n["kartya"], "Kérdés", L.is_en()), 16, UI.SOFT))
 				body.add_child(UI.card_root(c3))
 			"katasztrofa":
 				var c4 := UI.card(UI.EMBER)

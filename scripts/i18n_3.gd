@@ -15,7 +15,7 @@ const EN := {
 	"A Föld melegedése: +%s → +%s °C": "Global warming: +%s → +%s °C",
 	"A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett billenőpontok. Ne várj sokáig!": "Nobody knows exactly how sensitive the Earth is, and there are hidden tipping points. Don't wait too long!",
 	"A baj után jobban figyelnek rád: most eggyel kevesebb kártyával is meggyőzheted őket.": "After the disaster they listen more closely: you need one card fewer with them now.",
-	"A bizonyítékod győzte meg őket: %s": "Your evidence kept them on board: %s",
+	"A bizonyítékod miatt kitartottak: %s": "Your evidence kept them on board: %s",
 	"A hőmérsékletet egyszerű klímamodell számolta. Irányt és nagyságrendet mutat, nem előrejelzés.": "The temperature comes from a simple climate model. It shows direction and scale; it is not a forecast.",
 	"A játékban eddig: nulla kibocsátás %d-re.": "In the game so far: zero emissions by %d.",
 	"A jövő hírei a játék részei, nem valódi események.": "News from the future is part of the game, not real events.",

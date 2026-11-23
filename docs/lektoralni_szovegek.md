@@ -86,7 +86,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - 2100: a te Földed
 - A Föld melegedése: +%s → +%s °C
 - A baj után jobban figyelnek rád: most eggyel kevesebb kártyával is meggyőzheted őket.
-- A bizonyítékod győzte meg őket: %s
+- A bizonyítékod miatt kitartottak: %s
 - A hőmérsékletet egyszerű klímamodell számolta. Irányt és nagyságrendet mutat, nem előrejelzés.
 - A játékban eddig: nulla kibocsátás %d-re.
 - A jövő hírei a játék részei, nem valódi események.
@@ -163,5 +163,5 @@ A %d és %s jelek helyére szám vagy név kerül.
 - A Földed +2 °C alatt maradt. A Párizsi Megállapodás ennél többet kér: jóval +2 °C alatt megállni, lehetőleg +1,5 °C-nál.
 - A Földed +2 °C fölé melegedett. A következő játékban lépj hamarabb!
 - Várható melegedés 2100-ban: +%s → +%s °C
-- küszöb: %s–%s °C (a billenőpontok jelölőjén a gömbön)
+- küszöb: %s–%s °C
 - Végeredmény
