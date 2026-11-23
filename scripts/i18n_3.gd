@@ -207,4 +207,6 @@ const EN := {
 	"Kép mentése": "Save picture",
 	"Elmentve: %s": "Saved: %s",
 	"Nem sikerült elmenteni a képet.": "Could not save the picture.",
+	"A kártyáidból tudod:": "From your cards:",
+	"Teljesített küldetések: %d": "Missions completed: %d",
 }

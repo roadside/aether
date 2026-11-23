@@ -9,6 +9,7 @@ const Y1 := 2100.0
 
 var _now: Array = []       # [[év, arány]]
 var _ask: Array = []
+var legend_now := "a mostani útjuk"     # a zöld vonal felirata (a záró képernyőn: a világ útja)
 
 
 func _init() -> void:
@@ -44,7 +45,7 @@ func _draw() -> void:
 	draw_string(f, Vector2(40, size.y), "2026", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, UI.MUTE)
 	draw_string(f, Vector2(size.x - 34.0, size.y), "2100", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, UI.MUTE)
 	var lx := 40.0
-	for row in [[L.t("a mostani útjuk"), UI.GREEN, true], [L.t("ha ezt vállalják"), UI.CYAN, not _ask.is_empty()]]:
+	for row in [[L.t(legend_now), UI.GREEN, true], [L.t("ha ezt vállalják"), UI.CYAN, not _ask.is_empty()]]:
 		if not row[2]:
 			continue
 		draw_rect(Rect2(lx, 3, 14, 3), row[1])

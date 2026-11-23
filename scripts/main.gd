@@ -41,6 +41,8 @@ var _dots: Label
 var _group_cards: Dictionary = {}
 var _curve: Control
 var _mission_btn: Button
+var _mission_seen := 0
+var _mission_game := -1
 var _btns: Dictionary = {}
 var _menu: PanelContainer
 var _menu_catch: Control
@@ -648,7 +650,15 @@ func _mark_next() -> void:
 	_btns["ido"].text = L.t("Végeredmény") if world.over() else L.t("Következő 5 év") + "  ▶"
 	_btns["kartyak"].text = "%s (%d)" % [L.t("Kártyáim"), world.hand.size()]
 	_mission_btn.visible = not world.missions.is_empty()
-	_mission_btn.text = "%s %d/%d" % [L.t("Küldetések"), world.missions_done(), world.missions.size()]
+	var md := world.missions_done()
+	_mission_btn.text = "%s %d/%d" % [L.t("Küldetések"), md, world.missions.size()]
+	if _mission_game != world.game_id:
+		_mission_game = world.game_id
+	elif md > _mission_seen:
+		_sound("jo_hir")
+		_mission_btn.modulate = Color(1.6, 1.4, 0.6)
+		create_tween().tween_property(_mission_btn, "modulate", Color.WHITE, 2.5)
+	_mission_seen = md
 	for gid in _group_cards:
 		var gb: Button = _group_cards[gid]["gomb"]
 		var col := Color(str(world.group(gid)["szin"]))
@@ -860,6 +870,7 @@ func _finish_game(r: Dictionary) -> Dictionary:
 	var t := float(r["T"])
 	L.set_setting("utolso_jatek", world.game_id)
 	L.set_setting("jatekok", int(L.get_setting("jatekok", 0)) + 1)
+	L.set_setting("kuldetesek", int(L.get_setting("kuldetesek", 0)) + world.missions_done())
 	if world.seed_v == _daily_code():
 		var db: Variant = L.get_setting("napi_legjobb", {})
 		if typeof(db) != TYPE_DICTIONARY:
@@ -923,6 +934,9 @@ func _open_collection() -> void:
 	var games := int(L.get_setting("jatekok", 0))
 	if games > 0:
 		body.add_child(UI.label(L.t("Befejezett játékok: %d · A legjobb Földed: +%s °C") % [games, L.num(float(L.get_setting("legjobb", 0.0)), 2)], 17, UI.GREEN))
+	var mdone := int(L.get_setting("kuldetesek", 0))
+	if mdone > 0:
+		body.add_child(UI.label(L.t("Teljesített küldetések: %d") % mdone, 17, UI.GREEN))
 	var past: Variant = L.get_setting("foldek", [])
 	if typeof(past) == TYPE_ARRAY and not past.is_empty():
 		body.add_child(UI.label(L.t("Korábbi Földjeid"), 19, UI.GOLD, true, false))
@@ -1473,6 +1487,15 @@ func _open_news(y0: int, t0: float) -> void:
 				body.add_child(UI.card_root(c4))
 	if world.news.is_empty():
 		body.add_child(UI.label(L.t("Csendes öt év volt."), 17, UI.SOFT))
+		var known: Array = world.hand.filter(func(id: String) -> bool: return not Cards.key_number(id).is_empty())
+		if not known.is_empty():
+			var kid: String = known[(world.round_i * 7 + world.seed_v) % known.size()]
+			var k := Cards.key_number(kid)
+			var kc := UI.card(_theme_color(Cards.theme_of(kid)))
+			kc.add_child(UI.label(L.t("A kártyáidból tudod:"), 14, UI.SOFT))
+			kc.add_child(UI.label(str(k["en"] if L.is_en() and str(k.get("en", "")) != "" else k["hu"]), 17, UI.GOLD, true))
+			kc.add_child(UI.label(str(k["forras_en"] if L.is_en() and str(k.get("forras_en", "")) != "" else k["forras"]), 13, UI.CYAN))
+			body.add_child(UI.card_root(kc))
 	body.add_child(UI.label(L.t("A jövő hírei a játék részei, nem valódi események."), 13, UI.MUTE))
 	if world.over():
 		body.add_child(_go(L.t("Lássuk, mi lett a Földdel") + " →", _open_end))
@@ -1582,6 +1605,17 @@ func _open_end() -> void:
 	end_row.add_child(_go(L.t("Kép mentése"), func() -> void: saved_lbl.text = await _save_picture(), false))
 	end_row.add_child(saved_lbl)
 	body.add_child(end_row)
+	if world.hajto.size() >= M.END_YEAR - M.START_YEAR:
+		var wp = PathChart.new()
+		wp.custom_minimum_size = Vector2(560, 96)
+		wp.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		wp.legend_now = "A világ CO2-kibocsátása"
+		var rows: Array = [[2026, 1.0]]
+		for i in world.hajto.size():
+			var hr: Array = world.hajto[i]
+			rows.append([M.START_YEAR + 1 + i, (float(hr[0]) - float(hr[1])) / M.E_CO2_NOW])
+		wp.set_paths(rows, [])
+		body.add_child(wp)
 	# ki mennyi CO2-t nem bocsátott ki (a modell szerint, a „ha semmi sem változik” úthoz képest)
 	var saved: Array = world.groups.filter(func(g: Dictionary) -> bool: return float(g.get("megsporolt", 0.0)) >= 0.5)
 	saved.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return float(a["megsporolt"]) > float(b["megsporolt"]))
