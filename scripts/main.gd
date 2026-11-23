@@ -1711,7 +1711,7 @@ func _open_research(theme: String = "") -> void:
 	var grid := GridContainer.new()
 	grid.columns = 2
 	grid.add_theme_constant_override("h_separation", 14)
-	grid.add_theme_constant_override("v_separation", 14)
+	grid.add_theme_constant_override("v_separation", 9)
 	body.add_child(grid)
 	for th in Cards.THEMES:
 		var n := Cards.open_in(th, world.max_era(), world.hand).size()
@@ -1722,7 +1722,7 @@ func _open_research(theme: String = "") -> void:
 			if th in g["felelmek"]:
 				who.append(L.field(g, "nev"))
 		var b := Button.new()
-		b.custom_minimum_size = Vector2(420, 112)
+		b.custom_minimum_size = Vector2(420, 104)
 		b.focus_mode = Control.FOCUS_NONE
 		b.disabled = n == 0
 		var col := _theme_color(th)
@@ -1748,7 +1748,7 @@ func _open_research(theme: String = "") -> void:
 			v.add_child(_lbl("⚠ " + L.t("Itt a terjedő tévhit cáfolata"), 13, UI.GOLD))
 		elif not shaky_who.is_empty() and n > 0:
 			v.add_child(_lbl("⚠ %s: %s" % [", ".join(shaky_who), L.t("Bizonytalan")], 13, UI.GOLD))
-		else:
+		elif not (th in Cards.NO_TALK):       # a kockázatos ötletek leírása három sor: oda már nem fér állapotsor
 			v.add_child(_lbl(L.t("%d kérdés vár") % n if n > 0 else L.t("Itt most nincs új kérdés"), 13, UI.MUTE))
 		b.add_child(v)
 		v.offset_right = -150
