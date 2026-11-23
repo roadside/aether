@@ -14,6 +14,7 @@ const PathChart := preload("res://scripts/path_chart.gd")
 const Icons := preload("res://scripts/icons.gd")
 const Landscape := preload("res://scripts/landscape.gd")
 const ThemeArt := preload("res://scripts/theme_art.gd")
+const StoryLine := preload("res://scripts/story_line.gd")
 const SAVE := "user://jatek.json"
 
 ## Az aggodalmak mondatai (játékszabály: a csoportok hangja, nem idézet).
@@ -221,7 +222,7 @@ func _myth_text() -> String:
 
 ## Az előre látható baj fajtája, ha ezt a csoportot fenyegeti, és még nem készült fel rá.
 func _threat_on(g: Dictionary) -> String:
-	if world.threat.is_empty() or str(world.threat.get("csoport", "")) != str(g["id"]) or g.get("felkeszult", false):
+	if world.over() or world.threat.is_empty() or str(world.threat.get("csoport", "")) != str(g["id"]) or g.get("felkeszult", false):
 		return ""
 	return str(world.threat.get("mi", ""))
 var _clock_bar: ColorRect
@@ -455,8 +456,8 @@ func _ready() -> void:
 	get_tree().node_added.connect(_on_node_added)
 	var args := OS.get_cmdline_user_args()
 	_test = "--onteszt" in args or "--bejaras" in args
-	_dry = _test and not ("--eles" in args)
-	if _test or "--intro-kepek" in args:
+	_dry = (_test and not ("--eles" in args)) or "--elojatek" in args
+	if _test or "--intro-kepek" in args or "--elojatek" in args:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)   # az ellenőrző futások ablakban mennek
 	var bg := TextureRect.new()
 	bg.texture = load("res://assets/nebula_bg.png")
@@ -496,6 +497,9 @@ func _ready() -> void:
 	_refresh()
 	if "--bejaras" in args:
 		_walkthrough()
+		return
+	if "--elojatek" in args:
+		_live_play()
 		return
 	if _test:
 		_selftest()
@@ -823,18 +827,18 @@ func _fill_group(g: Dictionary) -> void:
 	if not extras.is_empty():
 		v.add_child(_lbl("✔ " + " · ✔ ".join(extras), 14, UI.GREEN))
 	var n := world.usable(g).size()
-	var shaky: bool = g.get("inog", false)
+	var shaky: bool = g.get("inog", false) and not world.over()
 	var danger := _threat_on(g)
 	if shaky:
 		v.add_child(_lbl("⚠ " + L.t("Bizonytalan"), 15, UI.GOLD, true))
 	if danger != "":
 		v.add_child(_lbl("⚠ " + L.t(THREAT[danger]), 15, UI.EMBER, true))
-	var mythy := world.myth_on(g)
+	var mythy := world.myth_on(g) and not world.over()
 	if mythy:
 		v.add_child(_lbl("⚠ " + L.t("Tévhit terjed"), 15, MYTH_COLOR, true))
 	_pulse(str(g["id"]), (danger != "" or shaky or mythy) and not world.over(), UI.EMBER if danger != "" else (MYTH_COLOR if mythy else UI.GOLD))
 	var fears := HFlowContainer.new()
-	fears.visible = not ((int(shaky) + int(danger != "") + int(mythy) >= 2 and not extras.is_empty()) or int(shaky) + int(danger != "") + int(mythy) >= 3)
+	fears.visible = int(shaky) + int(danger != "") + int(mythy) < 2
 	fears.add_theme_constant_override("h_separation", 3)
 	fears.add_theme_constant_override("v_separation", 4)
 	fears.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -872,7 +876,7 @@ func _fill_group(g: Dictionary) -> void:
 		v.add_child(_lbl(L.t("Tőlük már nincs mit kérned."), 14, UI.GREEN))
 	elif g["konnyebb"] and not world.targets_for(g).is_empty():
 		v.add_child(_lbl(L.t("Most könnyebb meggyőzni"), 14, UI.GOLD))
-	else:
+	elif n > 0 or not world.hand.is_empty():     # üres kézzel nincs mit mondani
 		v.add_child(_lbl(L.t("%d kártyád szól nekik") % n if n > 0 else L.t("Nincs hozzájuk illő kártyád"), 14, UI.SOFT if n > 0 else UI.MUTE))
 
 
@@ -1130,9 +1134,9 @@ func _refresh() -> void:
 	globe.sea_rise = clampf((t - M.T_START) / 2.0, 0.0, 1.0)
 	var marks: Array = []
 	for g in world.groups:
-		var shaky: bool = g.get("inog", false)
+		var shaky: bool = g.get("inog", false) and not world.over()
 		var danger := _threat_on(g)
-		var mythy := world.myth_on(g)
+		var mythy := world.myth_on(g) and not world.over()
 		marks.append({"id": g["id"], "name": L.field(g, "nev") if danger == "" else "%s\n%s" % [L.field(g, "nev"), L.t(THREAT[danger])],
 			"label": ("⚠ " if shaky or danger != "" or mythy else "") + L.field(g, "nev"), "lat": g["lat"], "lon": g["lon"],
 			"color": UI.EMBER if danger != "" else (MYTH_COLOR if mythy else (UI.GOLD if shaky else Color(str(g["szin"]))))})
@@ -2593,16 +2597,16 @@ func _save_picture() -> String:
 	return L.t("Elmentve: %s") % path if img.save_png(path) == OK else L.t("Nem sikerült elmenteni a képet.")
 
 
-## A játék fontos pillanatai évről évre, két oszlopban.
+## A játék fontos pillanatai egy képen: megnyitáskor újrajátssza az éveket, utána az egér alatti jel szövege látszik.
 func _add_story(body: VBoxContainer) -> void:
-	var grid := UI.hbox(24)
-	var cols: Array = [UI.vbox(3), UI.vbox(3)]
-	grid.add_child(cols[0])
-	grid.add_child(cols[1])
 	var lines: Array = []
 	for e in world.naplo:
 		var line := ""
 		var lc := UI.SOFT
+		var lane := 0
+		var mark := UI.CYAN
+		if e.has("csoport"):
+			mark = Color(str(world.group(e["csoport"])["szin"]))
 		match str(e["fajta"]):
 			"cel":
 				line = L.rag(L.t("%s vállalta: nulla kibocsátás %d-re.") % [L.field(world.group(e["csoport"]), "nev"), int(e["cel"])])
@@ -2612,35 +2616,49 @@ func _add_story(body: VBoxContainer) -> void:
 				line = L.t("%s felkészült a bajra.") % L.field(world.group(e["csoport"]), "nev")
 			"kivonas":
 				line = "%s: %s" % [L.t("CO2-kivonás"), L.t(CDR_NAME[e["id"]])]
+				mark = UI.GREEN
 			"nulla":
 				line = (L.t("%s elérte a nulla kibocsátást (%d).") % [L.field(world.group(e["csoport"]), "nev"), int(e["ev"])]).replace(" (%d)" % int(e["ev"]), "")
 				lc = UI.GREEN
+				lane = 1
 			"vilag_nulla":
 				line = (L.t("A világ már több CO2-t von ki, mint amennyit kibocsát (%d).") % int(e["ev"])).replace(" (%d)" % int(e["ev"]), "")
 				lc = UI.GREEN
+				lane = 1
+				mark = UI.GOLD
 			"csucs":
 				line = L.t("Klímacsúcs: %d csoport hozta előbbre a célját.") % int(e.get("db", 0))
+				mark = UI.GOLD
 			"visszalepett":
 				line = L.rag(L.t("%s megingott: a célját %d-re tolta.") % [L.field(world.group(e["csoport"]), "nev"), int(e["cel"])])
 				lc = UI.GOLD
+				lane = 2
+				mark = UI.GOLD
 			"cafolat":
 				line = "%s %s" % [L.t("Megcáfoltad:"), _quote(L.t(MYTH.get(str(e.get("kartya", "")), "")))]
 				lc = MYTH_COLOR
+				mark = MYTH_COLOR
 			"baj":
 				line = "%s: %s" % [L.t(DISASTER[e["mi"]]), L.field(world.group(e["csoport"]), "nev")] + (" · " + L.t("Felkészült") if e.get("vedve", false) else "")
 				lc = UI.GREEN if e.get("vedve", false) else UI.EMBER
+				lane = 2
+				mark = lc
 			"billenes":
 				var tp2: Array = world.tips.filter(func(x: Dictionary) -> bool: return x["id"] == e["id"])
 				if not tp2.is_empty():
 					line = L.t("küszöb átlépve:") + " " + L.field(tp2[0], "nev")
 					lc = UI.EMBER
+					lane = 2
+					mark = Color("#ff6a4a")
 		if line != "":
-			var ll := UI.label("%d · %s" % [int(e["ev"]), line], 14, lc)
-			ll.custom_minimum_size = Vector2(400, 0)
-			lines.append(ll)
-	for i in lines.size():
-		cols[0 if i < (lines.size() + 1) / 2 else 1].add_child(lines[i])
-	body.add_child(grid)
+			lines.append({"ev": int(e["ev"]), "szoveg": line, "szin": lc, "jel": mark, "sav": lane})
+	var sl := StoryLine.new()
+	sl.hint = L.t("Vidd az egeret egy jel fölé.")
+	sl.setup(lines, world.history, world.base_history, _test and not _story_live)
+	body.add_child(sl)
+
+
+var _story_live := false
 
 
 func _open_story() -> void:
@@ -2682,6 +2700,110 @@ func _shot(name: String) -> void:
 	await get_tree().create_timer(0.5).timeout
 	await RenderingServer.frame_post_draw
 	get_viewport().get_texture().get_image().save_png(dir.path_join(name))
+
+
+## Élő próbajáték (godot -- --elojatek): valós időben, a valódi gombokon át játssza le az első két kört új játékosként,
+## hogy az animációk, az óra és az első kör vezetése is próbára kerüljön. Beállítást és mentést nem ír.
+func _find_button(n: Node, text: String) -> Button:
+	for c in n.get_children():
+		if c is Button and (c as Button).text.begins_with(text) and not (c as Button).disabled:
+			return c
+		var r := _find_button(c, text)
+		if r != null:
+			return r
+	return null
+
+
+func _find_check(n: Node) -> CheckBox:
+	for c in n.get_children():
+		if c is CheckBox:
+			return c
+		var r := _find_check(c)
+		if r != null:
+			return r
+	return null
+
+
+func _live_play() -> void:
+	_tutor_force = true
+	world.new_game(2026)
+	world.gentle = true
+	_refresh()
+	var wait := func(t: float) -> void: await get_tree().create_timer(t).timeout
+	await wait.call(1.0)
+	await _shot("e1_kezdes.png")
+	print("ELO 1 vezetes=", _tutor.text, " ora=%.1f" % _clock)
+	(_btns["kutatas"] as Button).pressed.emit()
+	await wait.call(0.5)
+	_research_theme("aram")
+	await wait.call(0.4)
+	(_find_button(_overlay, L.t("Ezt kutatom ki")) as Button).pressed.emit()
+	await wait.call(0.6)
+	await _shot("e2_kartya.png")
+	print("ELO 2 vezetes=", _tutor.text, " kez=", world.hand.size())
+	_close_x.pressed.emit()
+	await wait.call(0.6)
+	await _shot("e3_vilagit.png")
+	print("ELO 3 vezetes=", _tutor.text)
+	var hot: Dictionary = {}
+	for g in world.groups:
+		if world.can_convince(g):
+			hot = g
+			break
+	(_group_cards[hot["id"]]["gomb"] as Button).pressed.emit()
+	await wait.call(0.6)
+	print("ELO 4 vezetes=", _tutor.text)
+	_find_check(_overlay).button_pressed = true
+	await wait.call(0.3)
+	await _shot("e4_targyalas.png")
+	(_find_button(_overlay, L.t("Ezzel érvelek")) as Button).pressed.emit()
+	await wait.call(0.5)
+	await _shot("e5_meggyozes.png")
+	await wait.call(1.6)
+	await _shot("e6_megallapodas.png")
+	print("ELO 5 cel=", int(hot["cel"]), " lepes=", world.steps, " sorozat=", world.streak)
+	(_find_button(_overlay, L.t("Rendben")) as Button).pressed.emit()
+	await wait.call(0.8)
+	await _shot("e7_utana.png")
+	while world.steps > 0:
+		(_btns["kutatas"] as Button).pressed.emit()
+		await wait.call(0.3)
+		_research_theme("munka")
+		await wait.call(0.3)
+		var rb := _find_button(_overlay, L.t("Ezt kutatom ki"))
+		if rb == null:
+			break
+		rb.pressed.emit()
+		await wait.call(0.4)
+		_close()
+		await wait.call(0.3)
+	print("ELO 6 vezetes=", _tutor.text, " ora=%.1f (az első körben állnia kell)" % _clock)
+	await _shot("e8_elfogyott.png")
+	var sp := InputEventKey.new()
+	sp.keycode = KEY_SPACE
+	sp.pressed = true
+	Input.parse_input_event(sp)
+	await wait.call(1.2)
+	await _shot("e9_evek.png")
+	await wait.call(4.5)
+	await _shot("e10_hirek.png")
+	print("ELO 7 kor=", world.round_i, " ablak=", _overlay != null)
+	var nb := _find_button(_overlay, L.t("Tovább"))
+	if nb != null:
+		nb.pressed.emit()
+	await wait.call(0.5)
+	_close()
+	await wait.call(3.0)
+	await _shot("e11_masodik_kor.png")
+	print("ELO 8 vezetes=", _tutor.text, " ora=%.1f (most járnia kell)" % _clock)
+	_clock = _round_s() - 5.0
+	await wait.call(3.0)
+	await _shot("e12_ketyeg.png")
+	await wait.call(9.0)
+	print("ELO 9 kor=", world.round_i, " (az óra magától lépett: 2 kell legyen)")
+	await _shot("e13_magatol.png")
+	print("ELOJATEK kész")
+	get_tree().quit()
 
 
 func _selftest() -> void:
@@ -2831,6 +2953,11 @@ func _selftest() -> void:
 	await _shot("11g_kuldetesek.png")
 	_open_story()
 	await _shot("11e_tortenet.png")
+	_story_live = true                 # a visszajátszás közben is készül kép
+	_open_story()
+	await get_tree().create_timer(2.2).timeout
+	await _shot("11e2_tortenet_lejatszas.png")
+	_story_live = false
 	_close()
 	_show_menu(true)
 	await _shot("11f_menu.png")

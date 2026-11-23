@@ -16,6 +16,8 @@ const SPEC := {
 }
 
 ## sz: szélkerék, n: napelem – [fajta, x, y]
+## Nulla kibocsátásnál a második sor szélkerék ennyivel arrébb áll (hogy ne takarják egymást).
+const ZERO_DX := {"europa": -17, "usa": 30, "kina": 14, "india": 14, "afrika": -14, "olaj": 12}
 const CLEAN := {
 	"europa": [["sz", 44, 27], ["sz", 54, 28], ["n", 30, 33]],
 	"usa": [["sz", 8, 31], ["sz", 18, 32], ["n", 30, 35], ["n", 37, 36]],
@@ -116,9 +118,9 @@ static func texture(id: String, clean: bool = false, frame: int = 0, zero: bool 
 	if zero:
 		for t in CLEAN.get(id, []):
 			if str(t[0]) == "sz":
-				_turbine(img, int(t[1]) + 6, int(t[2]) + 1, 1 - frame)
+				_turbine(img, int(t[1]) + int(ZERO_DX.get(id, 12)), int(t[2]) + 2, 1 - frame)
 			else:
-				_solar(img, int(t[1]) + 2, int(t[2]) + 2)
+				_solar(img, int(t[1]) + 7, int(t[2]) + 1)
 		for b in [[16, 9], [23, 6], [30, 10], [70, 5]]:      # madarak: a szárnyuk a két állás között csap
 			var bx := int(b[0]) + frame
 			var by := int(b[1])

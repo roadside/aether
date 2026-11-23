@@ -429,3 +429,6 @@ A hozzájuk tartozó szövegek:
 - Olaj és gáz: Ha az olaj után is lesz miből élnünk, belevágunk.
 - Erdő és föld: Ha az erdő megvédése megélhetést is ad, veletek tartunk.
 - Küldetés: Szerezz kétszer lendületet: két megállapodás egy körben.
+
+### A történet képe (a szöveges lista helyett; a sorok az egér alatti jelnél jelennek meg, a szövegük nem változott)
+- Vidd az egeret egy jel fölé.

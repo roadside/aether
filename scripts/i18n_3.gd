@@ -289,4 +289,5 @@ const EN := {
 	"Ha az olaj után is lesz miből élnünk, belevágunk.": "If we can still make a living after oil, we are in.",
 	"Ha az erdő megvédése megélhetést is ad, veletek tartunk.": "If protecting the forest also gives a living, we are with you.",
 	"Szerezz kétszer lendületet: két megállapodás egy körben.": "Gain momentum twice: two agreements in one round.",
+	"Vidd az egeret egy jel fölé.": "Move the mouse over a mark.",
 }
