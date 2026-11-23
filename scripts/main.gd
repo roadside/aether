@@ -12,6 +12,7 @@ const M := preload("res://scripts/model.gd")
 const Chart := preload("res://scripts/curve.gd")
 const PathChart := preload("res://scripts/path_chart.gd")
 const Icons := preload("res://scripts/icons.gd")
+const Landscape := preload("res://scripts/landscape.gd")
 const SAVE := "user://jatek.json"
 
 ## Az aggodalmak mondatai (játékszabály: a csoportok hangja, nem idézet).
@@ -238,7 +239,7 @@ func _flat(bg: Color, border: Color, width: int = 2, margin: int = 12) -> StyleB
 	sb.bg_color = bg
 	sb.border_color = border
 	sb.set_border_width_all(width)
-	sb.set_corner_radius_all(6)
+	sb.set_corner_radius_all(9)
 	sb.set_content_margin_all(margin)
 	return sb
 
@@ -307,6 +308,9 @@ func _build_groups() -> void:
 		var gid := str(g["id"])
 		b.pressed.connect(func() -> void: _open_group(world.group(gid)))
 		b.mouse_entered.connect(func() -> void: globe.look_at_event({"lat": g["lat"], "lon": g["lon"]}))
+		var land := Landscape.rect(gid, 70)
+		land.position = Vector2(300 - 9 - 70, 8)
+		b.add_child(land)
 		var v := UI.vbox(4)
 		v.set_anchors_preset(Control.PRESET_FULL_RECT)
 		v.offset_left = 14
@@ -653,8 +657,8 @@ func _mark_next() -> void:
 		var on: bool = k == next
 		(b.get_meta("tag") as Label).modulate.a = 1.0 if on else 0.0
 		if on:
-			b.add_theme_stylebox_override("normal", _flat(Color("#1f6f66"), UI.CYAN, 3))
-			b.add_theme_stylebox_override("hover", _flat(Color("#2a8a7f"), UI.CYAN, 3))
+			b.add_theme_stylebox_override("normal", _flat(Color("#2b6b5e"), UI.CYAN, 3))
+			b.add_theme_stylebox_override("hover", _flat(Color("#38816f"), UI.CYAN, 3))
 			b.add_theme_color_override("font_color", Color.WHITE)
 		else:
 			b.remove_theme_stylebox_override("normal")
@@ -1225,7 +1229,15 @@ func _open_group(g: Dictionary) -> void:
 		return
 	var col := Color(str(g["szin"]))
 	var body := _open(L.field(g, "nev"), col)
-	body.add_child(UI.label(L.t("A világ CO2-kibocsátásának %s%%-a") % L.num_short(float(g["co2_resz"]) * 100.0, 0), 16, UI.SOFT))
+	var top_row := UI.hbox(14)
+	var big_land := Landscape.rect(str(g["id"]), 168)
+	big_land.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	top_row.add_child(big_land)
+	var top_l := UI.label(L.t("A világ CO2-kibocsátásának %s%%-a") % L.num_short(float(g["co2_resz"]) * 100.0, 0), 16, UI.SOFT)
+	top_l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	top_l.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	top_row.add_child(top_l)
+	body.add_child(top_row)
 	for f in g.get("tenyek", []):
 		body.add_child(UI.text_link("%s (%s)" % [L.field(f, "szoveg"), L.field(f, "forras")], str(f.get("link", "")), 15))
 	if int(g["cel"]) > 0:

@@ -2,10 +2,10 @@ extends RefCounted
 ## Közös felület-segédek: színek, betűk, címkék, gombok.
 ## Használat: const UI := preload("res://scripts/ui.gd")  ->  UI.label("szöveg")
 
-const GOLD := Color("#f4c85a")
-const CYAN := Color("#63f3e2")
-const EMBER := Color("#f07a4a")
-const GREEN := Color("#8fe388")
+const GOLD := Color("#f1c873")
+const CYAN := Color("#8fe0d6")
+const EMBER := Color("#ec8559")
+const GREEN := Color("#a5d98c")
 const TEXT := Color("#f2f4f8")
 const SOFT := Color("#c9d1de")
 const MUTE := Color("#a7b2c4")
@@ -61,15 +61,16 @@ static func button(text: String, primary: bool = false) -> Button:
 	b.text = text
 	if primary:
 		var sb := StyleBoxFlat.new()
-		sb.bg_color = Color("#1f6f66")
+		sb.bg_color = Color("#2b6b5e")
 		sb.border_color = CYAN
 		sb.set_border_width_all(2)
+		sb.set_corner_radius_all(8)
 		sb.set_content_margin_all(12)
 		sb.content_margin_left = 20
 		sb.content_margin_right = 20
 		b.add_theme_stylebox_override("normal", sb)
 		var sh: StyleBoxFlat = sb.duplicate()
-		sh.bg_color = Color("#2a8a7f")
+		sh.bg_color = Color("#38816f")
 		b.add_theme_stylebox_override("hover", sh)
 		b.add_theme_color_override("font_color", Color.WHITE)
 	return b
@@ -82,6 +83,7 @@ static func card(accent: Color = CYAN) -> VBoxContainer:
 	sb.bg_color = CARD_BG
 	sb.border_color = accent
 	sb.border_width_left = 5
+	sb.set_corner_radius_all(8)
 	sb.set_content_margin_all(12)
 	sb.content_margin_left = 16
 	p.add_theme_stylebox_override("panel", sb)
