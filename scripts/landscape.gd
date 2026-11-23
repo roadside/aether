@@ -15,12 +15,24 @@ const SPEC := {
 	"olaj": ["#8cc4e0", "#f3e2b4", [66, 8, 4, "#fffbe0"], "#d9b877", "#e6c98a"],
 }
 
+## sz: szélkerék, n: napelem – [fajta, x, y]
+const CLEAN := {
+	"europa": [["sz", 44, 27], ["sz", 54, 28], ["n", 30, 33]],
+	"usa": [["sz", 8, 31], ["sz", 18, 32], ["n", 30, 35], ["n", 37, 36]],
+	"kina": [["sz", 30, 31], ["sz", 58, 31], ["n", 40, 35]],
+	"india": [["sz", 40, 30], ["n", 28, 35], ["n", 35, 36], ["n", 50, 35]],
+	"afrika": [["sz", 44, 31], ["n", 34, 36], ["n", 52, 36], ["n", 59, 37]],
+	"olaj": [["sz", 50, 28], ["n", 20, 33], ["n", 27, 34], ["n", 34, 33]],
+}
+
 static var _cache: Dictionary = {}
 
 
-static func texture(id: String) -> Texture2D:
-	if _cache.has(id):
-		return _cache[id]
+## clean: a csoport már vállalt célt, ezért szélkerekek és napelemek állnak a tájban (játékbeli jelzés).
+static func texture(id: String, clean: bool = false) -> Texture2D:
+	var key := id + ("_z" if clean else "")
+	if _cache.has(key):
+		return _cache[key]
 	if not SPEC.has(id):
 		return null
 	var sp: Array = SPEC[id]
@@ -45,8 +57,6 @@ static func texture(id: String) -> Texture2D:
 			_hills(img, near, 29.0, 2.5, 0.08, 2.1, 1.2, 0.23)
 			for t in [[8, 27], [14, 29], [21, 28], [70, 30], [76, 29]]:
 				_pine(img, int(t[0]), int(t[1]), Color("#24543a"))
-			_turbine(img, 44, 27)
-			_turbine(img, 54, 28)
 		"usa":
 			_butte(img, 40, 30, 16, 13, far)
 			_butte(img, 62, 30, 9, 9, far.darkened(0.12))
@@ -94,8 +104,14 @@ static func texture(id: String) -> Texture2D:
 				for y in range(26, H):
 					if img.get_pixel(x, y).is_equal_approx(near) and sin(float(x) * 0.06 + 0.2 + float(y) * 0.12) > 0.55:
 						img.set_pixel(x, y, near.darkened(0.14))
+	if clean:
+		for t in CLEAN.get(id, []):
+			if str(t[0]) == "sz":
+				_turbine(img, int(t[1]), int(t[2]))
+			else:
+				_solar(img, int(t[1]), int(t[2]))
 	var tex := ImageTexture.create_from_image(img)
-	_cache[id] = tex
+	_cache[key] = tex
 	return tex
 
 
@@ -137,6 +153,13 @@ static func _turbine(img: Image, x: int, y: int) -> void:
 		_px(img, x, y - 9 + k, Color(c, 0.0))
 	_px(img, x + 1, y - 8, c)
 	_px(img, x + 2, y - 7, c)
+
+
+static func _solar(img: Image, x: int, y: int) -> void:
+	for k in 5:
+		_px(img, x + k, y - 1, Color("#2c4f8a") if k % 2 == 0 else Color("#3f6fb8"))
+		_px(img, x + k, y, Color("#22406e"))
+	_px(img, x + 2, y + 1, Color("#c9d1de"))
 
 
 static func _butte(img: Image, cx: int, base: int, half: int, h: int, c: Color) -> void:
@@ -193,9 +216,9 @@ static func _tuft(img: Image, x: int, y: int, c: Color) -> void:
 
 
 ## A tájkép a felületre: éles képpontokkal, a kért szélességben (a magasság arányos).
-static func rect(id: String, width: int) -> TextureRect:
+static func rect(id: String, width: int, clean: bool = false) -> TextureRect:
 	var t := TextureRect.new()
-	t.texture = texture(id)
+	t.texture = texture(id, clean)
 	t.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	t.stretch_mode = TextureRect.STRETCH_SCALE

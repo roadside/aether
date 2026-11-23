@@ -320,13 +320,14 @@ func _build_groups() -> void:
 		v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		b.add_child(v)
 		add_child(b)
-		_group_cards[gid] = {"gomb": b, "doboz": v}
+		_group_cards[gid] = {"gomb": b, "doboz": v, "taj": land}
 
 
 func _fill_group(g: Dictionary) -> void:
 	var v: VBoxContainer = _group_cards[g["id"]]["doboz"]
 	UI.clear(v)
 	var col := Color(str(g["szin"]))
+	(_group_cards[g["id"]]["taj"] as TextureRect).texture = Landscape.texture(str(g["id"]), int(g["cel"]) > 0)
 	var name_l := UI.label(L.field(g, "nev"), 20, col, true, false)
 	v.add_child(name_l)
 	v.add_child(_lbl(L.t("A világ CO2-kibocsátásának %s%%-a") % L.num_short(float(g["co2_resz"]) * 100.0, 0), 13, UI.MUTE))
@@ -1230,7 +1231,7 @@ func _open_group(g: Dictionary) -> void:
 	var col := Color(str(g["szin"]))
 	var body := _open(L.field(g, "nev"), col)
 	var top_row := UI.hbox(14)
-	var big_land := Landscape.rect(str(g["id"]), 168)
+	var big_land := Landscape.rect(str(g["id"]), 168, int(g["cel"]) > 0)
 	big_land.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	top_row.add_child(big_land)
 	var top_l := UI.label(L.t("A világ CO2-kibocsátásának %s%%-a") % L.num_short(float(g["co2_resz"]) * 100.0, 0), 16, UI.SOFT)
@@ -1408,6 +1409,10 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 		return
 	var txt: String = (L.rag(L.t("%s vállalta: nulla kibocsátás %d-re.") % [L.field(g, "nev"), int(ask["cel"])])) if ask["fajta"] == "cel" \
 		else (L.t("%s vállalta: 30%%-kal kevesebb metán tíz év alatt.") % L.field(g, "nev"))
+	if ask["fajta"] == "cel":       # a tájban megjelennek a szélkerekek és a napelemek
+		var pic := Landscape.rect(str(g["id"]), 252, true)
+		pic.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		body.add_child(pic)
 	body.add_child(UI.label(txt, 22, UI.TEXT, true))
 	var fc := world.forecast()
 	var after := float(fc["kozep"][-1][1])

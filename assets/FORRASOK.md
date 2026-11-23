@@ -5,7 +5,7 @@
   A képeket a three-globe projekt példái közül töltöttük le:
   https://github.com/vasturiano/three-globe/tree/master/example/img
   A festett pixeles stílus (saját paletta, lépcsős domborzat-árnyalás, mélységi tengerszínek) saját feldolgozás.
-- `earth_clouds.png`, `nebula_bg.png`: saját, programmal generált kép (nem valós felhőkép).
+- `earth_clouds.png`, `nebula_bg.png`: saját, programmal generált kép (nem valós felhőkép, nem valós csillagtérkép). Az éjszakai eget a `tools/hatter.py` készíti.
 
 # Hangok forrása
 

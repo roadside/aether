@@ -24,6 +24,7 @@ Valódi adat:
 - A kártyák kulcsszámai (`adatok/kulcsszamok.json`): egy-egy mondat a megadott tanulmányból, kézzel ellenőrizve. Csak a lektorált mondat jelenik meg a játékban.
 
 Játékszabály (nem a valóság leírása):
+- Az országcsoportok kártyáin látható kis tájképek (`scripts/landscape.gd`) saját, kódból festett hangulatképek, nem valós helyek. A szélkerekek és napelemek akkor jelennek meg rajtuk, amikor a csoport célt vállal: ez jelzés, nem adat.
 - A tárgyalás menete, az aggodalmak mondatai, hogy hány kártya kell egy vállaláshoz. A kérhető célok a mostani évtől számítanak (40, 30, 20 vagy 15 év alatt nulla kibocsátás); a gyorsabb cél több kártyába kerül.
 - A klímacsúcs (2041 és 2066): egy kártyát az egész világnak megmutathatsz; akinek az aggodalmára felel, és már vállalt célt, öt évvel előbbre hozza.
 - A három fokozat (körönként öt, négy vagy három lépés) és „A mai Föld” (aznap mindenki ugyanazt a Földet kapja).
