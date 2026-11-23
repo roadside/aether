@@ -29,7 +29,7 @@ func _init() -> void:
 						acted = w.start_cdr(id)
 						break
 				if not acted:
-					var ths: Array = Cards.THEMES.keys()
+					var ths: Array = Cards.talk_themes()
 					var of := w.research_offers(ths[w.rng.randi_range(0, ths.size() - 1)])
 					if of.is_empty():
 						break

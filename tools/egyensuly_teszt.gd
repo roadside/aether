@@ -100,7 +100,7 @@ func _play(kind: String, seed_v: int) -> Dictionary:
 							break
 			if acted:
 				continue
-			var ths: Array = Cards.THEMES.keys()
+			var ths: Array = Cards.talk_themes()
 			if kind == "okos":
 				ths = []
 				for g in order.slice(0, 3):

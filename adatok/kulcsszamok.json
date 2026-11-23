@@ -1,5 +1,5 @@
 {
- "megjegyzes": "Kulcsszámok a kártyákra: egy-egy mondat, a kártya forrásából, kézzel ellenőrizve (2026-11-23). A játék csak azt mutatja meg, amelyiknél a lektoralva értéke true (Zoltán lektorálta).",
+ "megjegyzes": "Kulcsszámok a kártyákra: egy-egy mondat, a kártya forrásából, kézzel ellenőrizve (2026-11-23; a második, 14 mondatos csomag a szerzői összefoglalókból szó szerinti idézettel ellenőrizve). A játék csak azt mutatja meg, amelyiknél a lektoralva értéke true (Zoltán lektorálta).",
  "szamok": {
   "napelem": {
    "hu": "A napelemes áram teljes életciklusa alatt (gyártás, szállítás, bontás) kb. 45 g CO2 jut egy kilowattórára, a szénerőművi áramnál kb. 1000 g.",
@@ -96,6 +96,118 @@
    "forras_en": "Armstrong McKay et al. 2022",
    "link": "https://doi.org/10.1126/science.abn7950",
    "lektoralva": true
+  },
+  "gronland": {
+   "hu": "Grönland 1992 és 2020 között évente átlagosan 169 milliárd tonna jeget veszített.",
+   "en": "Between 1992 and 2020, Greenland lost on average 169 billion tonnes of ice a year.",
+   "forras": "Otosaka és mtsai 2023",
+   "forras_en": "Otosaka et al. 2023",
+   "link": "https://doi.org/10.5194/essd-15-1597-2023",
+   "lektoralva": false
+  },
+  "antarktisz": {
+   "hu": "A két nagy jégtakaró olvadása 1992 és 2020 között 21 mm-rel emelte a tengert, és az olvadás évi 105-ről 372 milliárd tonnára gyorsult.",
+   "en": "Between 1992 and 2020 the two great ice sheets raised the sea by 21 mm, and their melting sped up from 105 to 372 billion tonnes a year.",
+   "forras": "Otosaka és mtsai 2023",
+   "forras_en": "Otosaka et al. 2023",
+   "link": "https://doi.org/10.5194/essd-15-1597-2023",
+   "lektoralva": false
+  },
+  "korall": {
+   "hu": "A korallzátonyokon a súlyos kifehéredések között ma átlagosan már csak 6 év telik el, ennyi idő alatt nem tudnak helyreállni.",
+   "en": "On coral reefs, severe bleaching events now come only about 6 years apart on average, too little time to recover.",
+   "forras": "Hughes és mtsai 2018",
+   "forras_en": "Hughes et al. 2018",
+   "link": "https://doi.org/10.1126/science.aan8048",
+   "lektoralva": false
+  },
+  "hutokozeg": {
+   "hu": "Ha a hűtőkben és légkondicionálókban a régi hűtőgázokat kevésbé melegítőkre cseréljük, a század végére akár 0,5 fok melegedés elkerülhető.",
+   "en": "Replacing old refrigerant gases in fridges and air conditioners with less warming ones could avoid up to 0.5 °C of warming by 2100.",
+   "forras": "Xu és mtsai 2013",
+   "forras_en": "Xu et al. 2013",
+   "link": "https://doi.org/10.5194/acp-13-6083-2013",
+   "lektoralva": false
+  },
+  "lap": {
+   "hu": "A kiszárított lápok évente kb. 1,9 milliárd tonna CO2-vel egyenértékű üvegházgázt engednek a levegőbe.",
+   "en": "Drained peatlands release about 1.9 billion tonnes of CO2-equivalent greenhouse gases a year.",
+   "forras": "Leifeld és Menichetti 2018",
+   "forras_en": "Leifeld and Menichetti 2018",
+   "link": "https://doi.org/10.1038/s41467-018-03406-6",
+   "lektoralva": false
+  },
+  "metan_muhold": {
+   "hu": "Műholdképek szerint néhány száz nagy szivárgás adja az olaj- és gázipar metánkibocsátásának 8–12%-át, és ezek olcsón megszüntethetők.",
+   "en": "Satellite images show that a few hundred huge leaks cause 8–12% of oil and gas methane emissions, and they can be fixed cheaply.",
+   "forras": "Lauvaux és mtsai 2022",
+   "forras_en": "Lauvaux et al. 2022",
+   "link": "https://doi.org/10.1126/science.abj4351",
+   "lektoralva": false
+  },
+  "voros_alga": {
+   "hu": "Egy kísérletben, ha a marhák takarmányába kevés vörös tengeri algát kevertek, 147 nap alatt 45–68%-kal kevesebb metánt termeltek.",
+   "en": "In one experiment, adding a little red seaweed to cattle feed cut their methane by 45–68% over 147 days.",
+   "forras": "Roque és mtsai 2021",
+   "forras_en": "Roque et al. 2021",
+   "link": "https://doi.org/10.1371/journal.pone.0247820",
+   "lektoralva": false
+  },
+  "gatak": {
+   "hu": "Védekezés nélkül 2100-ban évente a világ népességének 0,2–4,6%-át öntené el a tenger; a gátak ára jóval kisebb, mint a kár, amit megelőznek.",
+   "en": "Without protection, 0.2–4.6% of the world's population would be flooded each year by 2100; dikes cost far less than the damage they prevent.",
+   "forras": "Hinkel és mtsai 2014",
+   "forras_en": "Hinkel et al. 2014",
+   "link": "https://doi.org/10.1073/pnas.1222469111",
+   "lektoralva": false
+  },
+  "mangrove": {
+   "hu": "Ha eltűnnének a mangroveerdők, évente 15 millióval több embert öntene el a víz; védelmük évente több mint 65 milliárd dollár kárt előz meg.",
+   "en": "If mangrove forests disappeared, 15 million more people would be flooded every year; they prevent more than 65 billion dollars of damage a year.",
+   "forras": "Menéndez és mtsai 2020",
+   "forras_en": "Menéndez et al. 2020",
+   "link": "https://doi.org/10.1038/s41598-020-61136-6",
+   "lektoralva": false
+  },
+  "ozon": {
+   "hu": "Az ózonréteg védelméről szóló Montreali Jegyzőkönyv nélkül a század végére akár 0,5–1 fokkal melegebb is lehetne a Föld.",
+   "en": "Without the Montreal Protocol, which protects the ozone layer, the Earth could have been up to 0.5–1 °C warmer by the end of the century.",
+   "forras": "Young és mtsai 2021",
+   "forras_en": "Young et al. 2021",
+   "link": "https://doi.org/10.1038/s41586-021-03737-3",
+   "lektoralva": false
+  },
+  "co2_tarolas": {
+   "hu": "Jól szabályozott tárolóban a föld alá zárt CO2 több mint 98%-a 10 000 év múlva is lent marad.",
+   "en": "In well-regulated storage, more than 98% of the CO2 locked underground is still there after 10,000 years.",
+   "forras": "Alcalde és mtsai 2018",
+   "forras_en": "Alcalde et al. 2018",
+   "link": "https://doi.org/10.1038/s41467-018-04423-1",
+   "lektoralva": false
+  },
+  "munkakepesseg": {
+   "hu": "2020-ban a hőség miatt 295 milliárd munkaóra veszett el a világon, csaknem a felét a szegényebb országok földművesei veszítették el.",
+   "en": "In 2020, heat cost the world 295 billion potential work hours; almost half were lost by farm workers in poorer countries.",
+   "forras": "Lancet Countdown 2021",
+   "forras_en": "Lancet Countdown 2021",
+   "link": "https://doi.org/10.1016/S0140-6736(21)01787-6",
+   "lektoralva": false
+  },
+  "aszaly": {
+   "hu": "2020-ban egy-egy hónapban a szárazföld akár 19%-át sújtotta szélsőséges aszály; 1950 és 1999 között ez sosem volt több 13%-nál.",
+   "en": "In 2020, up to 19% of the world's land was in extreme drought in a single month; between 1950 and 1999 it never exceeded 13%.",
+   "forras": "Lancet Countdown 2021",
+   "forras_en": "Lancet Countdown 2021",
+   "link": "https://doi.org/10.1016/S0140-6736(21)01787-6",
+   "lektoralva": false
+  },
+  "napaktivitas": {
+   "hu": "Az elmúlt évtizedekben a Nap minden olyan változása, amely hathat a klímára, ellenkező irányba mutatott, mint ami a melegedést megmagyarázná.",
+   "en": "In recent decades, every change in the Sun that could affect the climate went in the opposite direction to what would explain the warming.",
+   "forras": "Lockwood és Fröhlich 2007",
+   "forras_en": "Lockwood and Fröhlich 2007",
+   "link": "https://doi.org/10.1098/rspa.2007.1880",
+   "lektoralva": false
   }
  }
 }

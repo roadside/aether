@@ -9,7 +9,11 @@ const THEMES := {
 	"aram": ["Áram", "#f4c85a"], "munka": ["Ipar és közlekedés", "#e0935a"], "elelem": ["Élelem", "#8fe388"],
 	"part": ["Tenger és part", "#4aa0e0"], "egeszseg": ["Egészség", "#ff8fa8"], "ketseg": ["Honnan tudjuk?", "#b9a2ff"],
 	"olaj": ["Olaj és gáz", "#c8b49a"], "erdo": ["Erdő és föld", "#5fbf7a"],
+	"kockazat": ["Kockázatos ötletek", "#9fb0cf"],
 }
+## A „Kockázatos ötletek” kártyái tárgyalásra nem jók (egy csoport sem ettől tart): tudást adnak arról,
+## miért nem megoldás a Föld mesterséges hűtése. Játékszabály.
+const NO_TALK := ["kockazat"]
 const TAGS := {
 	"aram": ["napelem", "szelenergia", "tengeri_szel", "atomenergia", "vizi_tarolo", "litium_akku", "hotarolas", "geotermia", "led",
 		"napkollektor", "perovszkit", "natrium_akku", "szilard_akku", "fuzio", "urbeli_napelem", "biogaz"],
@@ -24,9 +28,15 @@ const TAGS := {
 	"olaj": ["metan_gaz", "metan_szen", "co2_tarolas", "levegoszures", "metan_muhold", "mof",
 		"metan_bontas", "novenyi_energia"],
 	"erdo": ["erdo", "erdo_magatol", "muhold_erdo", "amazonas", "lap", "bioszen", "kozet", "moszaterdo"],
+	"kockazat": ["napernyo", "felho_fenyesites", "cirrus", "urbeli_arnyekolo", "vas_tenger", "ocean_lugositas"],
 }
 ## A metánról szóló kártyák: a metánvállaláshoz ezek egyike kell.
 const METHANE := ["metan_gaz", "metan_szen", "metan_rizs", "kerodzok_metan", "voros_alga", "tragya", "hulladek_metan", "metan_muhold", "biogaz"]
+
+## A tárgyalásra is használható témakörök.
+static func talk_themes() -> Array:
+	return THEMES.keys().filter(func(th: String) -> bool: return not (th in NO_TALK))
+
 
 static var _all: Dictionary = {}       # azonosító -> téma
 static var _tag_of: Dictionary = {}

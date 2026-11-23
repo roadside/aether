@@ -540,7 +540,7 @@ func _pick_missions() -> void:
 		if k == "korai" and not ids.is_empty():
 			arg = ids[mr.randi_range(0, ids.size() - 1)]
 		elif k == "tema":
-			var ths: Array = Cards.THEMES.keys()
+			var ths: Array = Cards.talk_themes()
 			arg = ths[mr.randi_range(0, ths.size() - 1)]
 		missions.append({"id": k, "arg": arg})
 

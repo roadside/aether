@@ -839,6 +839,7 @@ const BADGES := [
 	["napi", "Napi Föld", "Játssz végig egy játékot „A mai Föld” gombbal."],
 	["gyujto", "Gyűjtő", "Kutass ki ötven különböző kártyát."],
 	["tudos", "Mindenhez értesz", "Legyen kártyád mind a nyolc témakörből a gyűjteményben."],
+	["ovatos", "Óvatos tudós", "Kutass ki három kockázatos ötletet."],
 	["kuldetes", "Küldetésteljesítő", "Teljesítsd mind a három küldetést egy játékban."],
 ]
 var _end_info: Dictionary = {}
@@ -894,8 +895,9 @@ func _finish_game(r: Dictionary) -> Dictionary:
 		"gyors": world.groups.all(func(g: Dictionary) -> bool:
 			return world.naplo.any(func(e: Dictionary) -> bool: return e["fajta"] == "cel" and e.get("csoport", "") == g["id"] and int(e["ev"]) < 2040)),
 		"napi": world.seed_v == _daily_code(),
+		"ovatos": c.filter(func(id: String) -> bool: return Cards.theme_of(id) in Cards.NO_TALK).size() >= 3,
 		"kuldetes": world.missions.size() >= 3 and world.missions_done() == world.missions.size(),
-		"gyujto": c.size() >= 50, "tudos": Cards.THEMES.keys().all(func(th: String) -> bool: return themes.has(th)),
+		"gyujto": c.size() >= 50, "tudos": Cards.talk_themes().all(func(th: String) -> bool: return themes.has(th)),
 	}
 	var have := _badges()
 	for row in BADGES:
@@ -1046,6 +1048,8 @@ func _open_research(theme: String = "") -> void:
 	body.add_child(grid)
 	for th in Cards.THEMES:
 		var n := Cards.open_in(th, world.max_era(), world.hand).size()
+		if th in Cards.NO_TALK and world.max_era() < 4:
+			n = 0                      # a kockázatos ötletek csak a játék második felében kerülnek elő
 		var who: Array = []
 		for g in world.groups:
 			if th in g["felelmek"]:
@@ -1065,7 +1069,10 @@ func _open_research(theme: String = "") -> void:
 		v.offset_right = -14
 		v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		v.add_child(_lbl(_theme_name(th), 20, col, true))
-		v.add_child(_lbl(L.t("Akit ez aggaszt: %s") % ", ".join(who) if not who.is_empty() else "", 14, UI.SOFT))
+		if th in Cards.NO_TALK:
+			v.add_child(_lbl(L.t("Tárgyalásra nem jó. Megtudod belőle, miért kockázatos mesterségesen hűteni a Földet."), 14, UI.SOFT))
+		else:
+			v.add_child(_lbl(L.t("Akit ez aggaszt: %s") % ", ".join(who) if not who.is_empty() else "", 14, UI.SOFT))
 		var shaky_who: Array = []
 		for g in world.groups:
 			if g.get("inog", false) and th in g["felelmek"]:
@@ -1774,7 +1781,7 @@ func _selftest() -> void:
 					acted = world.start_cdr(id)
 					break
 			if not acted:
-				var ths: Array = Cards.THEMES.keys()
+				var ths: Array = Cards.talk_themes()
 				var of := world.research_offers(ths[world.rng.randi_range(0, ths.size() - 1)])
 				if of.is_empty():
 					break
@@ -1904,7 +1911,7 @@ func _walkthrough() -> void:
 					_close()
 				if not acted:
 					_open_research()
-					var ths: Array = Cards.THEMES.keys()
+					var ths: Array = Cards.talk_themes()
 					var th: String = ths[world.rng.randi_range(0, ths.size() - 1)]
 					_research_theme(th)
 					if _offers.has(th) and not _offers[th].is_empty():

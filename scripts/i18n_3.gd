@@ -200,4 +200,8 @@ const EN := {
 	"Gyűjts húsz kártyát ebben a játékban.": "Collect twenty cards in this game.",
 	"Küldetésteljesítő": "Mission complete",
 	"Teljesítsd mind a három küldetést egy játékban.": "Complete all three missions in one game.",
+	"Kockázatos ötletek": "Risky ideas",
+	"Tárgyalásra nem jó. Megtudod belőle, miért kockázatos mesterségesen hűteni a Földet.": "No use in talks. It shows you why cooling the Earth artificially is risky.",
+	"Óvatos tudós": "Careful scientist",
+	"Kutass ki három kockázatos ötletet.": "Research three risky ideas.",
 }
