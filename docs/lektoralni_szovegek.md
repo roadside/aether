@@ -260,6 +260,16 @@ Már nem jelenik meg: „Nem volt a kezedben olyan új bizonyíték, amivel megg
 - Nulla kibocsátás %d óta
 - a mostani útjuk
 - ha ezt vállalják
+- Ennyi CO2-t nem bocsátottak ki 2100-ig
+- %s milliárd tonna
+- Rangod: %s
+- Új rang: %s
+- A következő rang: %s (%d kártyától)
+- Gyakornok
+- Kutató
+- Vezető kutató
+- Professzor
+- A Föld őre
 
 ## 8. Kulcsszámok a kártyákra (12 mondat) – még nem lektorált
 

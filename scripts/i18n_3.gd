@@ -172,4 +172,10 @@ const EN := {
 	"Nulla kibocsátás %d óta": "Zero emissions since %d",
 	"a mostani útjuk": "their path now",
 	"ha ezt vállalják": "if they agree to this",
+	"Ennyi CO2-t nem bocsátottak ki 2100-ig": "CO2 they did not emit by 2100",
+	"%s milliárd tonna": "%s billion tonnes",
+	"Rangod: %s": "Your rank: %s",
+	"Új rang: %s": "New rank: %s",
+	"A következő rang: %s (%d kártyától)": "Next rank: %s (from %d cards)",
+	"Gyakornok": "Trainee", "Kutató": "Researcher", "Vezető kutató": "Lead researcher", "Professzor": "Professor", "A Föld őre": "Guardian of the Earth",
 }

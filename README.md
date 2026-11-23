@@ -27,6 +27,7 @@ Játékszabály (nem a valóság leírása):
 - A tárgyalás menete, az aggodalmak mondatai, hogy hány kártya kell egy vállaláshoz. A kérhető célok a mostani évtől számítanak (40, 30, 20 vagy 15 év alatt nulla kibocsátás); a gyorsabb cél több kártyába kerül.
 - A klímacsúcs (2041 és 2066): egy kártyát az egész világnak megmutathatsz; akinek az aggodalmára felel, és már vállalt célt, öt évvel előbbre hozza.
 - A három fokozat (körönként öt, négy vagy három lépés) és „A mai Föld” (aznap mindenki ugyanazt a Földet kapja).
+- A rangok (a több játékon át kikutatott kártyák száma szerint) és a záró képernyő összesítése: ki mennyi CO2-t nem bocsátott ki a „ha semmi sem változik” úthoz képest (a modell szerint).
 - A felkészülés hatása (a felkészült csoport nem inog meg), a jelvények és az értékelés határai (+1,7 és +2 °C).
 - A játék hangjai és alapzenéje kódból készülnek (`tools/jatek_hangok.py`), nem felvételek.
 - A megingás: egy vállalást tett csoport elbizonytalanodhat; ha öt éven belül nem erősíted meg egy neki szóló kártyával, tíz évvel későbbre tolja a célját. A jövő hírei (hőhullám, aszály, áradás, erdőtűz) szintén a játék részei.
@@ -38,4 +39,4 @@ Játékszabály (nem a valóság leírása):
 
 Godot 4.7-tel nyisd meg a `project.godot` fájlt. A nyitány zenéje a `sajat_zene/intro.wav`, ha ott van (nem része a tárolónak); különben a beépített handpan szól.
 
-Ellenőrzés: `godot --path . -- --onteszt --hu` végigjátszik egy játékot, és képeket ment; `godot --headless -s tools/jatek_teszt.gd` a szabályokat, `tools/modell_teszt.gd` a klímamodellt ellenőrzi.
+Ellenőrzés: `godot --path . -- --onteszt --hu` végigjátszik egy játékot, és képeket ment; `godot --path . -- --bejaras` hat teljes játékot játszik végig minden ablakot megnyitva (hibakeresés); `godot --headless -s tools/egyensuly_teszt.gd -- 100 4` száz Földön méri a nehézséget; `godot --headless -s tools/jatek_teszt.gd` a szabályokat, `tools/modell_teszt.gd` a klímamodellt ellenőrzi.

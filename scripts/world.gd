@@ -18,7 +18,7 @@ const SUMMIT_YEARS := 5                        # ennyi évvel hozza előbbre a c
 const METHANE_CUT := 0.30                      # a Globális Metánvállalás mértéke: −30% (10 év alatt)
 const METHANE_YEARS := 10
 const CDR_YEARS := 20                          # a kivonás ennyi év alatt fut fel (a modell korábbi szabálya)
-const SAVE_VERSION := 10                       # ha a szabályok vagy az adatok változnak, a régi mentés helyett új játék indul
+const SAVE_VERSION := 11                       # ha a szabályok vagy az adatok változnak, a régi mentés helyett új játék indul
 const WAVER_CHANCE := 0.30                     # körönként ekkora eséllyel inog meg egy csoport (játékszabály)
 ## CO2-kivonási programok: kártya -> [a fenntartható sáv alja, teteje] GtCO2/év 2050-re
 ## (Fuss és mtsai 2018, Environ. Res. Lett. 13 063002; az archívum ellenőrzött idézetei szerint).
@@ -40,6 +40,7 @@ var tips: Array = []             # billenőpontok: {"id", ..., "kuszob", "ev" (�
 var history: Array = []          # [[év, T]] a megtörtént évek
 var base_history: Array = []     # ugyanez „ha semmi sem változik” mellett, ugyanazon a Földön
 var news: Array = []             # az utolsó öt év hírei: [{"fajta", ...}]
+var cdr_total := 0.0             # az eddig kivont CO2 összesen (milliárd tonna)
 var net_zero_year := 0           # az első év, amikor a világ több CO2-t von ki, mint amennyit kibocsát (0 = még nem)
 var summit_due := false          # most klímacsúcs van: egy kártyát megmutathatsz az egész világnak
 var naplo: Array = []            # a játék fontos pillanatai a záró képernyőhöz: [{"ev", "fajta", ...}]
@@ -68,6 +69,7 @@ func new_game(seed_value: int = -1, steps_n: int = STEPS) -> void:
 	naplo = []
 	summit_due = false
 	net_zero_year = 0
+	cdr_total = 0.0
 	history = [[int(st["ev"]), float(st["T"])]]
 	base_history = history.duplicate(true)
 	_base = st.duplicate()
@@ -88,6 +90,7 @@ func new_game(seed_value: int = -1, steps_n: int = STEPS) -> void:
 		d["f0"] = 1.0
 		d["metan"] = 0          # a metánvállalás éve (0 = nincs)
 		d["felkeszult"] = false # felkészült a bajra: nem inog meg
+		d["megsporolt"] = 0.0   # ennyi CO2-t nem bocsátott ki eddig a „ha semmi sem változik” úthoz képest (milliárd tonna)
 		d["nulla"] = 0          # az év, amikor elérte a nulla kibocsátást (0 = még nem)
 		d["inog"] = false       # elbizonytalanodott: ha a kör végéig nem erősíted meg, megingik
 		d["hasznalt"] = []      # az ennél a csoportnál már kijátszott kártyák
@@ -449,6 +452,9 @@ func advance() -> void:
 		M.step(_base, {}, p)
 		history.append([y, float(st["T"])])
 		base_history.append([y, float(_base["T"])])
+		cdr_total += float(drivers(y)["cdr"])
+		for g in groups:
+			g["megsporolt"] = float(g.get("megsporolt", 0.0)) + (1.0 - fraction(g, y)) * float(g["co2_resz"]) * M.E_CO2_NOW
 		for g in groups:              # jó hír: egy csoport elérte a nullát
 			if int(g["cel"]) > 0 and int(g.get("nulla", 0)) == 0 and fraction(g, y) <= 0.0:
 				g["nulla"] = y
@@ -509,7 +515,7 @@ func result() -> Dictionary:
 
 func to_dict() -> Dictionary:
 	return {"v": SAVE_VERSION, "mag": seed_v, "sens": sens, "st": st, "alap": _base, "kor": round_i, "lepes": steps, "max_lepes": max_steps, "csoportok": groups, "kez": hand,
-		"kivonas": cdr, "billenes": tips, "mult": history, "alap_mult": base_history, "hirek": news, "naplo": naplo, "csucs": summit_due, "vilag_nulla": net_zero_year, "rng": str(rng.state)}
+		"kivonas": cdr, "billenes": tips, "mult": history, "alap_mult": base_history, "hirek": news, "naplo": naplo, "csucs": summit_due, "vilag_nulla": net_zero_year, "kivont": cdr_total, "rng": str(rng.state)}
 
 
 func from_dict(d: Dictionary) -> bool:
@@ -521,6 +527,7 @@ func from_dict(d: Dictionary) -> bool:
 	news = d.get("hirek", [])
 	summit_due = bool(d.get("csucs", false))
 	net_zero_year = int(d.get("vilag_nulla", 0))
+	cdr_total = float(d.get("kivont", 0.0))
 	naplo = d.get("naplo", [])
 	for e in naplo:
 		e["ev"] = int(e["ev"])

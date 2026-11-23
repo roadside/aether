@@ -730,8 +730,23 @@ func _collect(id: String) -> void:
 		return
 	var c := _collection()
 	if not (id in c):
+		var before := _rank(c.size())
 		c.append(id)
 		L.set_setting("gyujtemeny", c)
+		if _rank(c.size()) != before:
+			_new_rank = _rank(c.size())
+
+
+## Rang a több játékon át kikutatott kártyák száma szerint (játékszabály): [ennyi kártyától, név].
+const RANKS := [[0, "Gyakornok"], [10, "Kutató"], [30, "Vezető kutató"], [60, "Professzor"], [90, "A Föld őre"]]
+var _new_rank := ""
+
+func _rank(n: int) -> String:
+	var out := ""
+	for r in RANKS:
+		if n >= int(r[0]):
+			out = r[1]
+	return out
 
 
 ## Jelvények: [azonosító, név, mit kell hozzá]. Több játékon át gyűlnek.
@@ -808,7 +823,12 @@ func _open_collection() -> void:
 	var all_n := 0
 	for th in Cards.THEMES:
 		all_n += Cards.TAGS[th].size()
-	body.add_child(UI.label(L.t("Kikutatott kártyák: %d / %d") % [c.size(), all_n], 22, UI.TEXT, true))
+	body.add_child(UI.label(L.t("Rangod: %s") % L.t(_rank(c.size())), 22, UI.GOLD, true))
+	body.add_child(UI.label(L.t("Kikutatott kártyák: %d / %d") % [c.size(), all_n], 19, UI.TEXT, true))
+	for r in RANKS:
+		if int(r[0]) > c.size():
+			body.add_child(UI.label(L.t("A következő rang: %s (%d kártyától)") % [L.t(r[1]), int(r[0])], 15, UI.SOFT))
+			break
 	var games := int(L.get_setting("jatekok", 0))
 	if games > 0:
 		body.add_child(UI.label(L.t("Befejezett játékok: %d · A legjobb Földed: +%s °C") % [games, L.num(float(L.get_setting("legjobb", 0.0)), 2)], 17, UI.GREEN))
@@ -984,6 +1004,9 @@ func _open_card(id: String, fresh: bool = false) -> void:
 	var th := Cards.theme_of(id)
 	var body := _open(L.t("Új bizonyíték-kártya") if fresh else L.t("Bizonyíték-kártya"), _theme_color(th) if th != "" else UI.GOLD)
 	var en := L.is_en()
+	if fresh and _new_rank != "":
+		body.add_child(UI.label("★ " + L.t("Új rang: %s") % L.t(_new_rank), 20, UI.GOLD, true))
+		_new_rank = ""
 	body.add_child(UI.label(Cards.text(id, "Kérdés", en), 24, UI.TEXT, true))
 	var chips := UI.hbox(8)
 	if th != "":
@@ -1421,6 +1444,26 @@ func _open_end() -> void:
 	body.add_child(UI.label(L.t("Ez a Föld %s volt. Ezt előre senki sem tudhatta, ahogy a valódi Földnél sem tudjuk pontosan.") % kind, 16, UI.SOFT))
 	body.add_child(UI.label(L.t("A hőmérsékletet egyszerű klímamodell számolta. Irányt és nagyságrendet mutat, nem előrejelzés."), 14, UI.MUTE))
 	body.add_child(UI.label(L.t("Föld-kód: %d. Ha egy barátod ezt írja be a menüben, ugyanezt a Földet kapja.") % world.seed_v, 14, UI.SOFT))
+	# ki mennyi CO2-t nem bocsátott ki (a modell szerint, a „ha semmi sem változik” úthoz képest)
+	var saved: Array = world.groups.filter(func(g: Dictionary) -> bool: return float(g.get("megsporolt", 0.0)) >= 0.5)
+	saved.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return float(a["megsporolt"]) > float(b["megsporolt"]))
+	if not saved.is_empty():
+		body.add_child(UI.label(L.t("Ennyi CO2-t nem bocsátottak ki 2100-ig"), 19, UI.GOLD, true, false))
+		var top_v := float(saved[0]["megsporolt"])
+		for g in saved:
+			var hb := UI.hbox(10)
+			var nm := UI.label(L.field(g, "nev"), 15, Color(str(g["szin"])), true, false)
+			nm.custom_minimum_size = Vector2(170, 0)
+			hb.add_child(nm)
+			var barc := ColorRect.new()
+			barc.color = Color(str(g["szin"]))
+			barc.custom_minimum_size = Vector2(maxf(4.0, 380.0 * float(g["megsporolt"]) / top_v), 12)
+			barc.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+			hb.add_child(barc)
+			hb.add_child(UI.label(L.t("%s milliárd tonna") % L.num_short(float(g["megsporolt"]), 0), 15, UI.SOFT, false, false))
+			body.add_child(hb)
+		if world.cdr_total >= 0.5:
+			body.add_child(UI.label("%s: %s" % [L.t("CO2-kivonás"), L.t("%s milliárd tonna") % L.num_short(world.cdr_total, 0)], 15, UI.GREEN, true))
 	if not world.naplo.is_empty():
 		body.add_child(UI.label(L.t("A te történeted"), 19, UI.GOLD, true, false))
 		var grid := UI.hbox(24)
@@ -1441,10 +1484,10 @@ func _open_end() -> void:
 				"kivonas":
 					line = "%s: %s" % [L.t("CO2-kivonás"), L.t(CDR_NAME[e["id"]])]
 				"nulla":
-					line = L.t("%s elérte a nulla kibocsátást (%d).") % [L.field(world.group(e["csoport"]), "nev"), int(e["ev"])]
+					line = (L.t("%s elérte a nulla kibocsátást (%d).") % [L.field(world.group(e["csoport"]), "nev"), int(e["ev"])]).replace(" (%d)" % int(e["ev"]), "")
 					lc = UI.GREEN
 				"vilag_nulla":
-					line = L.t("A világ már több CO2-t von ki, mint amennyit kibocsát (%d).") % int(e["ev"])
+					line = (L.t("A világ már több CO2-t von ki, mint amennyit kibocsát (%d).") % int(e["ev"])).replace(" (%d)" % int(e["ev"]), "")
 					lc = UI.GREEN
 				"csucs":
 					line = L.t("Klímacsúcs: %d csoport hozta előbbre a célját.") % int(e.get("db", 0))
