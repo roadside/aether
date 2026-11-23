@@ -90,7 +90,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - A hőmérsékletet egyszerű klímamodell számolta. Irányt és nagyságrendet mutat, nem előrejelzés.
 - A játékban eddig: nulla kibocsátás %d-re.
 - A metán rövid ideig marad a levegőben, de erősen melegít. Mutasd meg, hol lehet gyorsan csökkenteni!
-- A sáv azért széles, mert nem tudjuk pontosan, mennyire érzékeny a Föld.
+- A hőmérsékleti sáv azért ilyen széles, mert nem tudjuk pontosan, mennyire érzékeny a Föld.
 - A tenger kb. %s cm-rel magasabb
 - A valóságban %d-re ígért nulla kibocsátást.
 - A világ CO2-kibocsátásának %s%-a
@@ -120,7 +120,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Kőzetmállasztás
 - Lássuk, mi lett a Földdel
 - Lépéseid
-- Egyezség kötve!
+- Megállapodtatok!
 - Melyik kérdést kutatod ki? Egy lépésbe kerül.
 - Metán: −30% tíz év alatt
 - Miről kutatsz?
@@ -244,7 +244,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Maradj +2 °C alatt nehéz fokozaton.
 - nulla alatt
 - Klímacsúcs
-- Mutass meg egy kártyát az egész világnak! Aki már vállalt célt, és a kártya az ő aggodalmára felel, öt évvel előbbre hozza. Ez nem kerül lépésbe.
+- Mutass meg egy kártyát az egész világnak! Aki már vállalt célt, és a kártya az ő aggodalmára felel, öt évvel előbbre hozza a vállalását. Nem kerül semmibe.
 - Most nincs olyan kártyád, amire figyelnének.
 - Most nem mutatok semmit
 - %s előbbre hozta a célját: nulla kibocsátás %d-re.

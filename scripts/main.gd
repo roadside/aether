@@ -1438,7 +1438,7 @@ func _open_card(id: String, fresh: bool = false) -> void:
 		var txt := Cards.text(id, pair[0], en)
 		if txt == "":
 			continue
-		body.add_child(UI.label(L.t(pair[0]), 16, pair[1], true, false))
+		body.add_child(UI.label(L.t("Miért jó?" if pair[0] == "Mire jó?" else pair[0]), 16, pair[1], true, false))   # a mező neve a témafájlban marad
 		body.add_child(UI.label(txt, 17, UI.TEXT))
 	body.add_child(UI.label(L.t("Források"), 16, UI.GOLD, true, false))
 	for s in Cards.card(id).get("forrasok", []):
@@ -1666,7 +1666,7 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 		b2.add_child(UI.label(L.t("A bizonyítékod miatt kitartottak: %s") % Cards.text(ask["kartya"], "Kérdés", L.is_en()), 17, UI.SOFT))
 		b2.add_child(_go(L.t("Rendben"), _close))
 		return
-	var body := _open(L.t("Egyezség kötve!"), UI.GREEN)
+	var body := _open(L.t("Megállapodtatok!"), UI.GREEN)
 	if ask["fajta"] == "felkeszules":
 		body.add_child(UI.label(L.t("%s felkészült a bajra. Megbízik benned, és többé nem inog meg.") % L.field(g, "nev"), 22, UI.TEXT, true))
 		body.add_child(_go(L.t("Rendben"), _close))
@@ -1683,7 +1683,7 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 	if before > 0.0:
 		body.add_child(UI.label(L.t("Várható melegedés 2100-ban: +%s → +%s °C") % [L.num(before, 2), L.num(after, 2)], 22, UI.GREEN, true))
 	body.add_child(UI.label(L.t("2100-ban: +%s és +%s °C között") % [L.num(float(fc["also"][-1][1]), 1), L.num(float(fc["felso"][-1][1]), 1)], 17, UI.SOFT))
-	body.add_child(UI.label(L.t("A sáv azért széles, mert nem tudjuk pontosan, mennyire érzékeny a Föld."), 15, UI.MUTE))
+	body.add_child(UI.label(L.t("A hőmérsékleti sáv azért ilyen széles, mert nem tudjuk pontosan, mennyire érzékeny a Föld."), 15, UI.MUTE))
 	body.add_child(_go(L.t("Rendben"), _close))
 
 
@@ -1875,7 +1875,7 @@ func _do_dilemma(choice: int) -> void:
 
 func _open_summit() -> void:
 	var body := _open("%s %d" % [L.t("Klímacsúcs"), world.year()], UI.GOLD)
-	body.add_child(UI.label(L.t("Mutass meg egy kártyát az egész világnak! Aki már vállalt célt, és a kártya az ő aggodalmára felel, öt évvel előbbre hozza. Ez nem kerül lépésbe."), 17, UI.SOFT))
+	body.add_child(UI.label(L.t("Mutass meg egy kártyát az egész világnak! Aki már vállalt célt, és a kártya az ő aggodalmára felel, öt évvel előbbre hozza a vállalását. Nem kerül semmibe."), 17, UI.SOFT))
 	var rows: Array = []
 	for id in world.hand:
 		var ls := world.summit_listeners(id)

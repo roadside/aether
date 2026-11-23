@@ -64,12 +64,12 @@ Wikipédia angolul: occupational heat stress
 
 === legszennyezes ===
 Korszak: I. (Felismerés)
-Kérdés: Hány életet ment, ha kevesebb szenet és olajat égetünk?
+Kérdés: Hány életet ment meg, ha kevesebb szenet és olajat égetünk el?
 Röviden: A kémények és kipufogók füstje betegséget okoz. A tisztább levegő a klímának is jó.
 Ha kikutatod:
 Mire jó?: Ha kevesebb szenet és olajat égetünk, kevesebb káros szennyező anyag kerül a levegőbe, ezért kevesebb embert ölhet meg a légszennyezés, és jobb lehet az egészségünk, valamint a természet is.
-Mi a gond vele?: A szén és az olaj csökkentése nem mindig egyszerű, mert sok gazdasági tevékenység függ ezektől, és a más energiaforrásokra való átállás költségekkel is járhat.
-Mennyire bizonyított?: A tudomány bizonyítja, hogy a légszennyezés több millió ember halálához járulhat hozzá évente, és hogy a szén és az olaj használatának csökkentése csökkenti ezt a számot.
+Mi a gond vele?: A szén és az olaj csökkentése nem mindig egyszerű, mert sok gazdasági tevékenység függ ezektől, és a más energiaforrásokra való átállás jelentős költségekkel járhat.
+Mennyire bizonyított?: Bizonyított, hogy a légszennyezés évente több millió halálesethez járul hozzá – a szén és az olaj visszaszorításával ez a szám is csökken.
 Kérdés angolul: How many lives are saved by burning less coal and oil?
 Röviden angolul: Smoke from chimneys and exhausts causes disease. Cleaner air also helps the climate.
 Ha kikutatod angolul:
