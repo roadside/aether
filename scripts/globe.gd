@@ -414,7 +414,7 @@ func _draw() -> void:
 		if s.get("small", false):
 			# billenőpont: kis gyűrű (halvány, amíg a küszöb alatt vagyunk; lüktet, ha átléptük)
 			var dim: bool = s.get("dim", false)
-			var a := 0.7 if dim else 0.75 + 0.25 * sin(time * 4.0)
+			var a := (0.55 + 0.35 * sin(time * 2.0) if s.get("warn", false) else 0.7) if dim else 0.75 + 0.25 * sin(time * 4.0)
 			var r := 6.0 if dim else 8.0
 			draw_arc(pos, r, 0.0, TAU, 20, Color(0, 0, 0, 0.55), 4.0)
 			draw_arc(pos, r, 0.0, TAU, 20, Color(col, a), 2.0)

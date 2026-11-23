@@ -254,4 +254,8 @@ const EN := {
 	"Kutass tovább, amíg van lépésed!": "Keep researching while you have moves!",
 	"Új: metáncsökkentést és felkészülést is kérhetsz.": "New: you can also ask for a methane cut and for preparation.",
 	"Új gomb: CO2-kivonás. Kártya kell hozzá.": "New button: CO2 removal. It needs a card.",
+	"veszélysávban": "in the danger range",
+	"Veszélysávba értünk: %s": "We have entered the danger range: %s",
+	"A küszöb valahol +%s és +%s °C között van. Senki sem tudja, pontosan hol.": "The threshold is somewhere between +%s and +%s °C. Nobody knows exactly where.",
+	"Új játék vezetéssel": "New guided game",
 }

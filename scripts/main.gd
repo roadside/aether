@@ -13,6 +13,7 @@ const Chart := preload("res://scripts/curve.gd")
 const PathChart := preload("res://scripts/path_chart.gd")
 const Icons := preload("res://scripts/icons.gd")
 const Landscape := preload("res://scripts/landscape.gd")
+const ThemeArt := preload("res://scripts/theme_art.gd")
 const SAVE := "user://jatek.json"
 
 ## Az aggodalmak mondatai (játékszabály: a csoportok hangja, nem idézet).
@@ -95,6 +96,37 @@ class Twinkle extends Control:
 
 
 ## Felvillanó pillanat a Földön: lüktető gyűrű, fogyó idővel. Rá kell kattintani, mielőtt eltűnik.
+## Kis műhold kering a Föld körül (kódból rajzolt); a gömb mögött eltűnik.
+class Satellite extends Control:
+	var center := Vector2(800, 444)
+	var radius := 344.0
+	var phase := 1.2
+
+	func _ready() -> void:
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	func _process(delta: float) -> void:
+		phase = fmod(phase + delta * 0.11, TAU)
+		queue_redraw()
+
+	func _draw() -> void:
+		var x := cos(phase) * radius * 1.16
+		var y := sin(phase) * radius * 0.30
+		var p := center + Vector2(x, y).rotated(-0.38)
+		if sin(phase) < 0.0 and p.distance_to(center) < radius * 0.99:      # a gömb mögött jár
+			return
+		var u := 3.0
+		p = p.snapped(Vector2(u, u))
+		var far := 0.75 if sin(phase) < 0.0 else 1.0
+		draw_rect(Rect2(p + Vector2(-1, -1) * u, Vector2(3, 3) * u), Color(0.82, 0.86, 0.92, far))
+		draw_rect(Rect2(p, Vector2(u, u)), Color(1.0, 0.85, 0.4, far))
+		for sx in [-1.0, 1.0]:
+			draw_rect(Rect2(p + Vector2(sx * 3.0 - (1.0 if sx < 0.0 else -1.0), 0) * u, Vector2(2, 1) * u), Color(0.25, 0.5, 0.95, far))
+			draw_rect(Rect2(p + Vector2(sx * 2.0, 0) * u, Vector2(u, u)), Color(0.5, 0.55, 0.62, far))
+		if int(phase * 9.0) % 7 == 0:      # jelzőfény
+			draw_rect(Rect2(p + Vector2(0, -2) * u, Vector2(u, u)), Color(1.0, 0.3, 0.3, far))
+
+
 ## Szálló színes szikrák a megállapodás ablakában (kódból rajzolt).
 class Burst extends Control:
 	var colors: Array = [Color.WHITE]
@@ -362,6 +394,8 @@ func _float_text(text: String, at: Vector2, color: Color) -> void:
 
 
 func _process(delta: float) -> void:
+	if _sat != null:
+		_sat.visible = _intro == null
 	if world == null or _clock_bar == null or _menu == null:
 		return
 	(_clock_bar.get_parent() as Control).visible = (_time_on() and not world.over() and not _test) or _clock_force
@@ -422,11 +456,15 @@ func _ready() -> void:
 	globe = Globe.new()
 	globe.position = Vector2(400, 44)
 	globe.size = Vector2(800, 800)
+	_sat = Satellite.new()
+	_sat.set_anchors_preset(Control.PRESET_FULL_RECT)
 	globe.fixed_sun = true
 	globe.station_clicked.connect(func(s: Dictionary) -> void:
 		if s.has("id") and _overlay == null:
 			_open_group(world.group(s["id"])))
 	add_child(globe)
+	_sat.visible = false
+	add_child(_sat)
 
 	_build_top()
 	_build_groups()
@@ -1055,6 +1093,8 @@ func _refresh() -> void:
 		var rng_txt := L.t("küszöb: %s–%s °C") % [L.num(float(tp["also"]), 1), L.num(float(tp["felso"]), 1)]
 		if int(tp["ev"]) > 0:
 			marks.append({"name": "%s\n%s %d · %s" % [L.field(tp, "nev"), L.t("küszöb átlépve:"), int(tp["ev"]), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": UI.EMBER, "small": true})
+		elif t >= float(tp["also"]):       # a melegedés már a küszöb sávjában jár: bármikor átléphetjük
+			marks.append({"name": "%s\n%s · %s" % [L.field(tp, "nev"), L.t("veszélysávban"), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": UI.GOLD, "small": true, "dim": true, "warn": true})
 		else:
 			marks.append({"name": "%s\n%s" % [L.field(tp, "nev"), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": Color(0.75, 0.82, 0.92), "small": true, "dim": true})
 	globe.stations = marks
@@ -1137,7 +1177,8 @@ func _mark_next() -> void:
 # --- ablakok ------------------------------------------------------------------
 func _open(title: String, accent: Color = UI.GOLD) -> VBoxContainer:
 	var keep := _flash_ids       # a felvillanás az ablak valódi bezárásakor jön, nem ablakváltáskor
-	var fresh := _overlay == null
+	var fresh := _overlay == null or _pop_next
+	_pop_next = false
 	_flash_ids = []
 	_close()
 	_flash_ids = keep
@@ -1212,6 +1253,8 @@ func _fit() -> void:
 		_close_x.position = p.position + Vector2(920 - 22, -22)
 
 
+var _sat: Satellite
+var _pop_next := false         # a következő ablak akkor is előugrik, ha ablakból nyílik (új kártya, megállapodás)
 var _bonus_float := false
 var _flash_ids: Array = []        # akiknél az ablak bezárása után felvillanás jár (egyezség, megerősítés, csúcs)
 
@@ -1248,6 +1291,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_close()
 		elif event.keycode == KEY_ESCAPE:
 			_show_menu(not _menu.visible)
+		elif event.keycode == KEY_SPACE and _overlay == null and not _menu.visible and world.steps <= 0:
+			_advance()             # szóköz: ha elfogytak a lépések, jöhet a következő öt év
 		elif event.keycode == KEY_F11:
 			var fs := DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED if fs else DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -1570,7 +1615,7 @@ func _open_research(theme: String = "") -> void:
 			if th in g["felelmek"]:
 				who.append(L.field(g, "nev"))
 		var b := Button.new()
-		b.custom_minimum_size = Vector2(420, 104)
+		b.custom_minimum_size = Vector2(420, 112)
 		b.focus_mode = Control.FOCUS_NONE
 		b.disabled = n == 0
 		var col := _theme_color(th)
@@ -1597,9 +1642,14 @@ func _open_research(theme: String = "") -> void:
 		else:
 			v.add_child(_lbl(L.t("%d kérdés vár") % n if n > 0 else L.t("Itt most nincs új kérdés"), 13, UI.MUTE))
 		b.add_child(v)
-		var ic := Icons.rect(th, Color(col, 0.9 if n > 0 else 0.3), 30)
-		ic.size = Vector2(30, 30)
-		ic.position = Vector2(420 - 30 - 12, 8)
+		v.offset_right = -150
+		var art := ThemeArt.rect(th, 126)             # festett kép a témakörhöz
+		art.position = Vector2(420 - 126 - 10, 10)
+		art.modulate.a = 1.0 if n > 0 else 0.35
+		b.add_child(art)
+		var ic := Icons.rect(th, Color(col, 0.9 if n > 0 else 0.3), 24)
+		ic.size = Vector2(24, 24)
+		ic.position = Vector2(420 - 126 - 10, 74)
 		b.add_child(ic)
 		b.pressed.connect(_research_theme.bind(th))
 		grid.add_child(b)
@@ -1614,7 +1664,13 @@ func _research_theme(th: String) -> void:
 	if offers.is_empty():
 		body.add_child(UI.label(L.t("Itt most nincs új kérdés"), 17, UI.SOFT))
 	else:
-		body.add_child(UI.label(L.t("Melyik kérdést kutatod ki? Egy lépésbe kerül."), 17, UI.SOFT))
+		var head := UI.hbox(14)
+		head.add_child(ThemeArt.rect(th, 168))
+		var hl := UI.label(L.t("Melyik kérdést kutatod ki? Egy lépésbe kerül."), 17, UI.SOFT)
+		hl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		hl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		head.add_child(hl)
+		body.add_child(head)
 	for id in offers:
 		var c := UI.card(_theme_color(th))
 		c.add_child(UI.label(Cards.text(id, "Kérdés", L.is_en()), 20, UI.TEXT, true))
@@ -1630,6 +1686,7 @@ func _do_research(id: String, th: String) -> void:
 		_collect(id)
 		_refresh()
 		_sound("kartya")
+		_pop_next = true
 		_open_card(id, true)
 
 
@@ -1641,7 +1698,16 @@ func _open_card(id: String, fresh: bool = false) -> void:
 	if fresh and _new_rank != "":
 		body.add_child(UI.label("★ " + L.t("Új rang: %s") % L.t(_new_rank), 20, UI.GOLD, true))
 		_new_rank = ""
-	body.add_child(UI.label(Cards.text(id, "Kérdés", en), 24, UI.TEXT, true))
+	var qrow := UI.hbox(16)
+	if th != "":
+		var qa := ThemeArt.rect(th, 210)
+		qa.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		qrow.add_child(qa)
+	var ql := UI.label(Cards.text(id, "Kérdés", en), 24, UI.TEXT, true)
+	ql.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	ql.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	qrow.add_child(ql)
+	body.add_child(qrow)
 	var chips := UI.hbox(8)
 	if th != "":
 		chips.add_child(Icons.rect(th, _theme_color(th), 36))
@@ -1888,8 +1954,44 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 			done = world.negotiate(g, int(ask["cel"]), picked)
 		if done:
 			_refresh()
+			if not _test and ask["fajta"] in ["cel", "metan"]:
+				await _persuade(g, picked)
 			_sound("egyezseg")
+			_pop_next = true
 			_agreed(g, ask, before))
+
+
+## Rövid jelenet a megállapodás előtt: a bizonyítékaid egymás után érkeznek meg, és a csoport sávja megtelik.
+func _persuade(g: Dictionary, picked: Array) -> void:
+	_busy = true
+	var col := Color(str(g["szin"]))
+	var body := _open(L.field(g, "nev"), col)
+	var pic := Landscape.rect(str(g["id"]), 252)
+	pic.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	body.add_child(pic)
+	var bar := ProgressBar.new()
+	bar.show_percentage = false
+	bar.max_value = 1.0
+	bar.value = 0.0
+	bar.custom_minimum_size = Vector2(0, 18)
+	bar.add_theme_stylebox_override("background", _flat(Color(1, 1, 1, 0.08), Color.TRANSPARENT, 0, 0))
+	bar.add_theme_stylebox_override("fill", _flat(col, Color.TRANSPARENT, 0, 0))
+	body.add_child(bar)
+	var n := maxi(picked.size(), 1)
+	for i in picked.size():
+		var row := UI.label("✔  " + Cards.text(picked[i], "Kérdés", L.is_en()), 19, UI.TEXT, true)
+		row.modulate.a = 0.0
+		body.add_child(row)
+		var tw := row.create_tween().set_parallel(true)
+		tw.tween_property(row, "modulate:a", 1.0, 0.2)
+		tw.tween_property(bar, "value", float(i + 1) / float(n), 0.45).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		_sound("kartya")
+		await get_tree().create_timer(0.55).timeout
+		if _overlay == null:          # a játékos közben bezárta
+			break
+	if _overlay != null:
+		await get_tree().create_timer(0.25).timeout
+	_busy = false
 
 
 func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
@@ -2042,9 +2144,17 @@ func _advance() -> void:
 
 func _open_news(y0: int, t0: float) -> void:
 	var body := _open("%d–%d" % [y0, y0 + World.ROUND_YEARS - 1])
+	var quiet := true
 	var t1 := float(world.st["T"])
 	body.add_child(UI.label(L.t("A Föld melegedése: +%s → +%s °C") % [L.num(t0, 2), L.num(t1, 2)], 22, UI.EMBER if t1 > t0 + 0.005 else UI.GREEN, true))
 	var lost := false
+	for tp in world.tips:          # új veszélysáv: a küszöb rejtve van, de a sávja ismert
+		if int(tp["ev"]) == 0 and float(tp["also"]) > t0 and float(tp["also"]) <= t1:
+			var cw := UI.card(UI.GOLD)
+			cw.add_child(UI.label("⚠ " + L.t("Veszélysávba értünk: %s") % L.field(tp, "nev"), 18, UI.GOLD, true))
+			cw.add_child(UI.label(L.t("A küszöb valahol +%s és +%s °C között van. Senki sem tudja, pontosan hol.") % [L.num(float(tp["also"]), 1), L.num(float(tp["felso"]), 1)], 16, UI.SOFT))
+			body.add_child(UI.card_root(cw))
+			quiet = false
 	for n in world.news:
 		match str(n["fajta"]):
 			"billenes":
@@ -2117,7 +2227,7 @@ func _open_news(y0: int, t0: float) -> void:
 		var sh := ov.create_tween()
 		for dx in [14.0, -12.0, 9.0, -6.0, 3.0, 0.0]:
 			sh.tween_property(ov, "position:x", x0 + dx, 0.06)
-	if world.news.is_empty() and world.threat.is_empty():
+	if world.news.is_empty() and world.threat.is_empty() and quiet:
 		body.add_child(UI.label(L.t("Csendes öt év volt."), 17, UI.SOFT))
 		var known: Array = world.hand.filter(func(id: String) -> bool: return not Cards.key_number(id).is_empty())
 		if not known.is_empty():
@@ -2445,7 +2555,13 @@ func _open_help() -> void:
 		h.add_child(UI.label(L.t(row[1]), 18, UI.TEXT))
 		body.add_child(h)
 	body.add_child(UI.label(L.t("Valódi: a klímamodell számai, a csoportok kibocsátása, a kártyák forrásai. Játékszabály: a tárgyalás, az aggodalmak mondatai, a jövő hírei."), 15, UI.MUTE))
-	body.add_child(_go(L.t("Kezdjük!"), _close))
+	var hb := UI.hbox(12)
+	hb.add_child(_go(L.t("Kezdjük!"), _close))
+	hb.add_child(_go(L.t("Új játék vezetéssel"), func() -> void:       # az első kör lépésről lépésre, újra
+		if not _dry:
+			L.set_setting("tanulo_kesz", false)
+		_pick_game(), false))
+	body.add_child(hb)
 
 
 # --- önteszt: végigjátszik pár kört, és minden ablakról képet ment --------------
@@ -2458,6 +2574,8 @@ func _shot(name: String) -> void:
 
 
 func _selftest() -> void:
+	_tutor_force = true
+	_refresh()
 	await _shot("1_fooldal.png")
 	if "--idoproba" in OS.get_cmdline_user_args():      # az óra a kör végén magától lép tovább?
 		_clock_live = true
