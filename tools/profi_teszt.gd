@@ -20,8 +20,8 @@ func _init() -> void:
 							break
 					if acted:
 						break
-					if int(g["metan"]) == 0 and not w.methane_cards(g).is_empty():
-						acted = w.pledge_methane(g, w.methane_cards(g)[0])
+					if int(g["metan"]) == 0 and w.methane_cards(g).size() >= w.methane_needed(g):
+						acted = w.pledge_methane(g, w.methane_cards(g).slice(0, w.methane_needed(g)))
 						if acted:
 							break
 				if not acted:

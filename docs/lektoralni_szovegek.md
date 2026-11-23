@@ -165,3 +165,48 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Várható melegedés 2100-ban: +%s → +%s °C
 - küszöb: %s–%s °C
 - Végeredmény
+
+## 6. Új szövegek (2026-11-23 este, még nem lektorált)
+
+Az 1–5. rész lektorált. Csak ezek újak:
+
+- eddig
+- a te utad
+- ha semmi sem változik
+- A szám azt mutatja, mennyivel lenne hűvösebb 2100-ban.
+- Gyűjtemény
+- Kikutatott kártyák: %d / %d
+- Befejezett játékok: %d · A legjobb Földed: +%s °C
+- Zene: be
+- Zene: ki
+- Új rekord! Ez az eddigi legjobb Földed.
+- Tenger 2100-ban
+- kb. +%s cm
+- Jelvények: %d / %d
+- Új jelvény: %s
+- Föld-kód
+- Föld-kód: %d. Ha egy barátod ezt írja be a menüben, ugyanezt a Földet kapja.
+- Első Föld
+- Játssz végig egy játékot.
+- Két fok alatt
+- Maradj 2100-ban +2 °C alatt.
+- Közel a másfélhez
+- Maradj 2100-ban +1,6 °C alatt.
+- Mindenki vállalta
+- A játék végére mind a hat csoport vállaljon nulla kibocsátást.
+- Metánvadász
+- Mind a hat csoport vállaljon metáncsökkentést.
+- Merész cél
+- Érd el, hogy egy csoport 2040-re vállaljon nulla kibocsátást.
+- Egy küszöb sem
+- Játssz végig egy játékot úgy, hogy egy billenőpont küszöbét sem lépitek át.
+- Tisztító
+- Indíts el legalább három CO2-kivonást egy játékban.
+- Nehéz Föld
+- Maradj +2 °C alatt egy az átlagnál érzékenyebb Földön.
+- Gyűjtő
+- Kutass ki ötven különböző kártyát.
+- Mindenhez értesz
+- Legyen kártyád mind a nyolc témakörből a gyűjteményben.
+- A valóságban nem csatlakoztak a Globális Metánvállaláshoz, ezért nehezebb meggyőzni őket.
+- Csökkenteni %d-ben kezd

@@ -31,6 +31,7 @@ var globe
 var _bg_nodes: Array = []
 var _intro: Control
 var _overlay: Control
+var _body: Control
 var _dim: ColorRect
 var _close_x: Button
 var _stats: Dictionary = {}
@@ -242,6 +243,7 @@ func _build_top() -> void:
 	h.add_child(logo)
 	_stat(h, "ev", L.t("Év"), UI.TEXT, true)
 	_stat(h, "meleg", L.t("Melegedés"), UI.EMBER, true)
+	_stat(h, "tenger", L.t("Tenger 2100-ban"), Color("#6ab8ff"))
 	_stat(h, "lepes", L.t("Lépéseid"), UI.CYAN)
 	_dots = _stats["lepes"]
 	var sp := Control.new()
@@ -308,6 +310,8 @@ func _fill_group(g: Dictionary) -> void:
 	v.add_child(bar_row)
 	if int(g["cel"]) > 0:
 		v.add_child(_lbl(L.t("Nulla kibocsátás %d-re") % int(g["cel"]), 16, UI.GREEN, true))
+		if World.decline_start(g) >= world.year():
+			v.add_child(_lbl(L.t("Csökkenteni %d-ben kezd") % (World.decline_start(g) + 1), 13, UI.GOLD))
 	else:
 		v.add_child(_lbl(L.t("Még nem vállalt semmit"), 16, UI.SOFT, true))
 	if int(g["metan"]) > 0:
@@ -406,13 +410,33 @@ func _build_menu() -> void:
 	_reset_btn = UI.button(L.t("Új játék"))
 	_reset_btn.pressed.connect(_reset_game)
 	v.add_child(_reset_btn)
+	var code_row := UI.hbox(6)
+	var code := LineEdit.new()
+	code.placeholder_text = L.t("Föld-kód")
+	code.max_length = 6
+	code.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	code.add_theme_font_size_override("font_size", 17)
+	code_row.add_child(code)
+	var code_go := UI.button("→")
+	code_go.focus_mode = Control.FOCUS_NONE
+	var play_code := func() -> void:
+		if code.text.strip_edges().is_valid_int() and int(code.text) >= 0:
+			var n := int(code.text)
+			code.text = ""
+			_show_menu(false)
+			_new_game(n)
+	code_go.pressed.connect(play_code)
+	code.text_submitted.connect(func(_t: String) -> void: play_code.call())
+	code_row.add_child(code_go)
+	v.add_child(code_row)
 	var quit := UI.button(L.t("Kilépés a játékból"))
 	quit.pressed.connect(func() -> void:
 		_save()
 		get_tree().quit())
 	v.add_child(quit)
 	for b in v.get_children():
-		(b as Button).focus_mode = Control.FOCUS_NONE
+		if b is Button:
+			(b as Button).focus_mode = Control.FOCUS_NONE
 
 
 func _show_menu(on: bool) -> void:
@@ -432,9 +456,9 @@ func _reset_game() -> void:
 	_new_game()
 
 
-func _new_game() -> void:
+func _new_game(code: int = -1) -> void:
 	_close()
-	world.new_game()
+	world.new_game(code)
 	_offers = {}
 	globe.home()
 	_refresh()
@@ -464,6 +488,7 @@ func _refresh() -> void:
 		(_stats["meleg_al"] as Label).text = L.t("2100-ban: +%s és +%s °C között") % [L.num(float(fc["also"][-1][1]), 1), L.num(float(fc["felso"][-1][1]), 1)]
 	else:
 		(_stats["meleg_al"] as Label).text = ""
+	(_stats["tenger"] as Label).text = L.t("kb. +%s cm") % L.num_short(M.sea_2100(float(fc["kozep"][-1][1]) if not world.over() else t) * 100.0, 0)
 	_dots.text = "●".repeat(world.steps) + "○".repeat(World.STEPS - world.steps)
 	for g in world.groups:
 		_fill_group(g)
@@ -574,7 +599,24 @@ func _open(title: String, accent: Color = UI.GOLD) -> VBoxContainer:
 	_close_x.z_index = 12
 	_close_x.pressed.connect(_close)
 	add_child(_close_x)
+	_body = body
+	_fit.call_deferred()
 	return body
+
+
+## Az ablak magassága a tartalomhoz igazodik (legfeljebb 720), és függőlegesen középre kerül.
+func _fit() -> void:
+	await get_tree().process_frame
+	if _overlay == null or not is_instance_valid(_overlay) or _body == null or not is_instance_valid(_body):
+		return
+	var p: Control = _overlay
+	var body: Control = _body
+	var h := clampf(body.get_combined_minimum_size().y + 118.0, 240.0, 720.0)
+	p.custom_minimum_size.y = h
+	p.size.y = h
+	p.position.y = maxf(40.0, (800.0 - h) * 0.5)
+	if _close_x != null:
+		_close_x.position = p.position + Vector2(920 - 22, -22)
 
 
 func _close() -> void:
@@ -636,17 +678,62 @@ func _collect(id: String) -> void:
 		L.set_setting("gyujtemeny", c)
 
 
-## A játék végén egyszer: játékszám és legjobb eredmény. Igaz, ha ez új rekord.
-func _record(t: float) -> bool:
-	if _test or world.seed_v == int(L.get_setting("utolso_jatek", 0)):
-		return false
+## Jelvények: [azonosító, név, mit kell hozzá]. Több játékon át gyűlnek.
+const BADGES := [
+	["elso", "Első Föld", "Játssz végig egy játékot."],
+	["ketfok", "Két fok alatt", "Maradj 2100-ban +2 °C alatt."],
+	["masfel", "Közel a másfélhez", "Maradj 2100-ban +1,6 °C alatt."],
+	["mindenki", "Mindenki vállalta", "A játék végére mind a hat csoport vállaljon nulla kibocsátást."],
+	["metan", "Metánvadász", "Mind a hat csoport vállaljon metáncsökkentést."],
+	["meresz", "Merész cél", "Érd el, hogy egy csoport 2040-re vállaljon nulla kibocsátást."],
+	["kuszob", "Egy küszöb sem", "Játssz végig egy játékot úgy, hogy egy billenőpont küszöbét sem lépitek át."],
+	["kivonas", "Tisztító", "Indíts el legalább három CO2-kivonást egy játékban."],
+	["nehez", "Nehéz Föld", "Maradj +2 °C alatt egy az átlagnál érzékenyebb Földön."],
+	["gyujto", "Gyűjtő", "Kutass ki ötven különböző kártyát."],
+	["tudos", "Mindenhez értesz", "Legyen kártyád mind a nyolc témakörből a gyűjteményben."],
+]
+var _end_info: Dictionary = {}
+
+
+func _badges() -> Array:
+	var b: Variant = L.get_setting("jelvenyek", [])
+	return b if typeof(b) == TYPE_ARRAY else []
+
+
+## A játék végén egyszer: játékszám, legjobb eredmény, új jelvények.
+func _finish_game(r: Dictionary) -> Dictionary:
+	if _end_info.get("mag", -1) == world.seed_v:
+		return _end_info
+	_end_info = {"mag": world.seed_v, "rekord": false, "uj": []}
+	if _test or world.seed_v == int(L.get_setting("utolso_jatek", -1)):
+		return _end_info
+	var t := float(r["T"])
 	L.set_setting("utolso_jatek", world.seed_v)
 	L.set_setting("jatekok", int(L.get_setting("jatekok", 0)) + 1)
 	var best := float(L.get_setting("legjobb", 0.0))
 	if best <= 0.0 or t < best - 0.004:
 		L.set_setting("legjobb", t)
-		return best > 0.0
-	return false
+		_end_info["rekord"] = best > 0.0
+	var c := _collection()
+	var themes := {}
+	for id in c:
+		themes[Cards.theme_of(id)] = true
+	var ok := {
+		"elso": true, "ketfok": t < 2.0, "masfel": t < 1.6,
+		"mindenki": world.groups.all(func(g: Dictionary) -> bool: return int(g["cel"]) > 0),
+		"metan": world.groups.all(func(g: Dictionary) -> bool: return int(g["metan"]) > 0),
+		"meresz": world.groups.any(func(g: Dictionary) -> bool: return int(g["cel"]) == 2040),
+		"kuszob": int(r["billenes"]) == 0, "kivonas": world.cdr.size() >= 3,
+		"nehez": t < 2.0 and float(r["sens"]) >= 0.25,
+		"gyujto": c.size() >= 50, "tudos": Cards.THEMES.keys().all(func(th: String) -> bool: return themes.has(th)),
+	}
+	var have := _badges()
+	for row in BADGES:
+		if ok.get(row[0], false) and not (row[0] in have):
+			have.append(row[0])
+			_end_info["uj"].append(row[0])
+	L.set_setting("jelvenyek", have)
+	return _end_info
 
 
 func _open_collection() -> void:
@@ -659,6 +746,20 @@ func _open_collection() -> void:
 	var games := int(L.get_setting("jatekok", 0))
 	if games > 0:
 		body.add_child(UI.label(L.t("Befejezett játékok: %d · A legjobb Földed: +%s °C") % [games, L.num(float(L.get_setting("legjobb", 0.0)), 2)], 17, UI.GREEN))
+	var have := _badges()
+	body.add_child(UI.label(L.t("Jelvények: %d / %d") % [have.size(), BADGES.size()], 19, UI.GOLD, true, false))
+	var bg := GridContainer.new()
+	bg.columns = 2
+	bg.add_theme_constant_override("h_separation", 12)
+	bg.add_theme_constant_override("v_separation", 8)
+	body.add_child(bg)
+	for row in BADGES:
+		var got: bool = row[0] in have
+		var cell := UI.vbox(0)
+		cell.custom_minimum_size = Vector2(428, 0)
+		cell.add_child(UI.label(("★ " if got else "☆ ") + L.t(row[1]), 17, UI.GOLD if got else UI.MUTE, true, false))
+		cell.add_child(UI.label(L.t(row[2]), 14, UI.SOFT if got else UI.MUTE))
+		bg.add_child(cell)
 	for th in Cards.THEMES:
 		var mine: Array = Cards.TAGS[th].filter(func(id: String) -> bool: return id in c)
 		var head := UI.hbox(10)
@@ -848,7 +949,7 @@ func _open_group(g: Dictionary) -> void:
 	for t in targets:
 		asks.append({"fajta": "cel", "cel": t, "kell": world.cards_needed(g, t)})
 	if int(g["metan"]) == 0:
-		asks.append({"fajta": "metan", "kell": 1})
+		asks.append({"fajta": "metan", "kell": world.methane_needed(g)})
 	if asks.is_empty():
 		body.add_child(UI.label(L.t("Tőlük már nincs mit kérned."), 17, UI.SOFT))
 		return
@@ -906,10 +1007,13 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 	status.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	top.add_child(status)
 	area.add_child(top)
+	_fit.call_deferred()
 	var any := false
 	if ask["fajta"] == "metan":
 		var c := UI.card(UI.GREEN)
 		c.add_child(UI.label(L.t("A metán rövid ideig marad a levegőben, de erősen melegít. Mutasd meg, hol lehet gyorsan csökkenteni!"), 16, UI.SOFT))
+		if not bool(g.get("metan_valodi", true)):
+			c.add_child(UI.text_link(L.t("A valóságban nem csatlakoztak a Globális Metánvállaláshoz, ezért nehezebb meggyőzni őket."), "https://www.globalmethanepledge.org/", 15))
 		for id in world.methane_cards(g):
 			add_card.call(c, id)
 			any = true
@@ -941,7 +1045,7 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 		var done := false
 		var before := float(world.forecast()["kozep"][-1][1])
 		if ask["fajta"] == "metan":
-			done = world.pledge_methane(g, picked[0])
+			done = world.pledge_methane(g, picked)
 		else:
 			done = world.negotiate(g, int(ask["cel"]), picked)
 		if done:
@@ -1067,7 +1171,7 @@ func _open_end() -> void:
 		var v := UI.vbox(4)
 		v.custom_minimum_size = Vector2(410, 0)
 		var gl = Globe.new()
-		gl.custom_minimum_size = Vector2(330, 330)
+		gl.custom_minimum_size = Vector2(270, 270)
 		gl.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		gl.heat = clampf((float(side[1]) - M.T_START) / 2.0, 0.0, 1.5)
 		var ratio := world.net_ratio(2100) if side[4] > 0.5 else 1.0
@@ -1093,13 +1197,18 @@ func _open_end() -> void:
 		else ("A Földed +2 °C alatt maradt. A Párizsi Megállapodás ennél többet kér: jóval +2 °C alatt megállni, lehetőleg +1,5 °C-nál." if tt < 2.0 \
 		else "A Földed +2 °C fölé melegedett. A következő játékban lépj hamarabb!")
 	body.add_child(UI.label(L.t(verdict), 19, UI.GREEN if tt < 2.0 else UI.EMBER, true))
-	if _record(tt):
+	var fin := _finish_game(r)
+	if fin["rekord"]:
 		body.add_child(UI.label(L.t("Új rekord! Ez az eddigi legjobb Földed."), 19, UI.GOLD, true))
+	for bd in BADGES:
+		if bd[0] in fin["uj"]:
+			body.add_child(UI.label("★ " + L.t("Új jelvény: %s") % L.t(bd[1]), 17, UI.GOLD, true))
 	body.add_child(UI.label(L.t("A legmelegebb év: +%s °C. Küszöbét átlépő rendszer: %d a %d-ből.") % [L.num(float(r["csucs"]), 2), int(r["billenes"]), world.tips.size()], 17, UI.TEXT))
 	var s := float(r["sens"])
 	var kind := L.t("átlagos") if absf(s) < 0.25 else (L.t("az átlagnál érzékenyebb") if s > 0 else L.t("az átlagnál kevésbé érzékeny"))
 	body.add_child(UI.label(L.t("Ez a Föld %s volt. Ezt előre senki sem tudhatta, ahogy a valódi Földnél sem tudjuk pontosan.") % kind, 16, UI.SOFT))
 	body.add_child(UI.label(L.t("A hőmérsékletet egyszerű klímamodell számolta. Irányt és nagyságrendet mutat, nem előrejelzés."), 14, UI.MUTE))
+	body.add_child(UI.label(L.t("Föld-kód: %d. Ha egy barátod ezt írja be a menüben, ugyanezt a Földet kapja.") % world.seed_v, 14, UI.SOFT))
 	body.add_child(_go(L.t("Új játék, új Föld") + " →", _new_game))
 
 

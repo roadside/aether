@@ -17,7 +17,8 @@ const MIN_YEARS := 10                          # ennyi év legalább kell az át
 const METHANE_CUT := 0.30                      # a Globális Metánvállalás mértéke: −30% (10 év alatt)
 const METHANE_YEARS := 10
 const CDR_YEARS := 20                          # a kivonás ennyi év alatt fut fel (a modell korábbi szabálya)
-const SAVE_VERSION := 3                       # ha a szabályok vagy az adatok változnak, a régi mentés helyett új játék indul
+const TRANSITION_YEARS := 30                  # ennyi év alatt áll át egy csoport nullára (játékszabály)
+const SAVE_VERSION := 5                       # ha a szabályok vagy az adatok változnak, a régi mentés helyett új játék indul
 const WAVER_CHANCE := 0.30                     # körönként ekkora eséllyel inog meg egy csoport (játékszabály)
 ## CO2-kivonási programok: kártya -> [a fenntartható sáv alja, teteje] GtCO2/év 2050-re
 ## (Fuss és mtsai 2018, Environ. Res. Lett. 13 063002; az archívum ellenőrzött idézetei szerint).
@@ -130,8 +131,13 @@ func group(id: String) -> Dictionary:
 static func fraction(g: Dictionary, y: int) -> float:
 	if int(g["cel"]) == 0:
 		return float(g["f0"])
-	var y0 := int(g["y0"])
-	return float(g["f0"]) * clampf(float(int(g["cel"]) - y) / float(int(g["cel"]) - y0), 0.0, 1.0)
+	var start := decline_start(g)
+	return float(g["f0"]) * clampf(float(int(g["cel"]) - y) / float(int(g["cel"]) - start), 0.0, 1.0)
+
+
+## Mikor kezd csökkenteni a csoport: az átállás 30 évig tart, ezért a kései célt vállaló később kezd (játékszabály).
+static func decline_start(g: Dictionary) -> int:
+	return maxi(int(g["y0"]), int(g["cel"]) - TRANSITION_YEARS)
 
 
 func _avg_fraction(y: int) -> float:
@@ -224,9 +230,9 @@ func targets_for(g: Dictionary) -> Array:
 	return out
 
 
-## Hány kártya kell a célhoz: 2070-hez és 2060-hoz 1, 2050-hez 2, 2040-hez 3; katasztrófa után eggyel kevesebb (legalább 1).
+## Hány kártya kell a célhoz: 2070-hez 1, 2060-hoz 2, 2050-hez 3, 2040-hez 4; katasztrófa után eggyel kevesebb (legalább 1).
 func cards_needed(g: Dictionary, target: int) -> int:
-	var n := 1 if target >= 2060 else (2 if target >= 2050 else 3)
+	var n := 1 if target >= 2070 else (2 if target >= 2060 else (3 if target >= 2050 else 4))
 	return maxi(1, n - 1) if g["konnyebb"] else n
 
 
@@ -256,7 +262,7 @@ func can_convince(g: Dictionary) -> bool:
 	for t in targets_for(g):
 		if n >= cards_needed(g, t):
 			return true
-	return int(g["metan"]) == 0 and not methane_cards(g).is_empty()
+	return int(g["metan"]) == 0 and methane_cards(g).size() >= methane_needed(g)
 
 
 func usable(g: Dictionary) -> Array:
@@ -293,11 +299,21 @@ func methane_cards(g: Dictionary) -> Array:
 	return out
 
 
-func pledge_methane(g: Dictionary, card_id: String) -> bool:
-	if steps <= 0 or int(g["metan"]) > 0 or not (card_id in methane_cards(g)):
+## Hány metánkártya kell: 1, de 2 azoknál, akik a valóságban nem csatlakoztak a Globális Metánvállaláshoz (játékszabály, valódi tényre építve).
+func methane_needed(g: Dictionary) -> int:
+	return 1 if bool(g.get("metan_valodi", true)) else 2
+
+
+func pledge_methane(g: Dictionary, played: Variant) -> bool:
+	var ids: Array = played if typeof(played) == TYPE_ARRAY else [played]
+	if steps <= 0 or int(g["metan"]) > 0 or ids.size() < methane_needed(g):
 		return false
+	for id in ids:
+		if not (id in methane_cards(g)):
+			return false
 	g["metan"] = year() - 1
-	g["hasznalt"].append(card_id)
+	for id in ids:
+		g["hasznalt"].append(id)
 	steps -= 1
 	return true
 
@@ -341,7 +357,8 @@ func advance() -> void:
 	if over():
 		return
 	# megingás (játékszabály): egy vállalást tett csoport visszalépne; ha van a kezedben neki szóló, még nem hallott kártya, marad
-	if rng.randf() < WAVER_CHANCE:
+	# az esély a játék során nő (30% → 60%): a késői körökben is kell friss bizonyíték
+	if rng.randf() < WAVER_CHANCE * (1.0 + float(round_i) / float(ROUNDS)):
 		var cand: Array = groups.filter(func(g: Dictionary) -> bool: return int(g["cel"]) > 0 and fraction(g, year()) > 0.0)
 		if not cand.is_empty():
 			var g: Dictionary = cand[rng.randi_range(0, cand.size() - 1)]

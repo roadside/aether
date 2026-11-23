@@ -47,7 +47,8 @@
      "link": "https://eur-lex.europa.eu/eli/reg/2021/1119/oj",
      "forras_en": "EU 2021/1119"
     }
-   ]
+   ],
+   "metan_valodi": true
   },
   {
    "id": "usa",
@@ -93,7 +94,8 @@
      "link": "https://zerotracker.net/",
      "forras_en": "Net Zero Tracker"
     }
-   ]
+   ],
+   "metan_valodi": true
   },
   {
    "id": "kina",
@@ -132,7 +134,8 @@
      "link": "https://unfccc.int/sites/default/files/resource/China%E2%80%99s%20Mid-Century%20Long-Term%20Low%20Greenhouse%20Gas%20Emission%20Development%20Strategy.pdf",
      "forras_en": "China's long-term strategy, 2021"
     }
-   ]
+   ],
+   "metan_valodi": false
   },
   {
    "id": "india",
@@ -171,7 +174,8 @@
      "link": "https://unfccc.int/sites/default/files/resource/India_LTLEDS.pdf",
      "forras_en": "India's long-term strategy, 2022"
     }
-   ]
+   ],
+   "metan_valodi": false
   },
   {
    "id": "afrika",
@@ -210,7 +214,8 @@
      "link": "https://data.worldbank.org/indicator/EG.ELC.ACCS.ZS",
      "forras_en": "World Bank 2024"
     }
-   ]
+   ],
+   "metan_valodi": true
   },
   {
    "id": "olaj",
@@ -249,11 +254,14 @@
      "link": "https://www.climatewatchdata.org/net-zero-tracker",
      "forras_en": "Climate Watch"
     }
-   ]
+   ],
+   "metan_valodi": false
   }
  ],
  "tobbi_co2_resz": 0.243,
  "tobbi_ch4_resz": 0.333,
  "forras_metan": "Jones és mtsai 2025, National contributions to climate change 2025.1 (Our World in Data), 2024-es emberi eredetű metán",
- "link_metan": "https://ourworldindata.org/grapher/methane-emissions"
+ "link_metan": "https://ourworldindata.org/grapher/methane-emissions",
+ "forras_metanvallalas": "Global Methane Pledge résztvevői, 2026-11-23: EU és USA csatlakozott; Kína, India, Oroszország nem. Afrikánál nincs egységes adat (Nigéria csatlakozott), ezért ott a könnyebb szabály él.",
+ "link_metanvallalas": "https://www.globalmethanepledge.org/"
 }
