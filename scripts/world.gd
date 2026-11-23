@@ -476,10 +476,12 @@ func advance() -> void:
 	summit_due = round_i in SUMMIT_ROUNDS
 	# megingás (játékszabály): aki az előző kör végén elbizonytalanodott, és nem erősítetted meg, visszalép:
 	# tíz évvel későbbre tolja a célját (legfeljebb 2100-ig), és egy fokozattal visszaesik
+	var just_wavered: Array = []
 	for g in groups:
 		if g.get("inog", false):
 			g["inog"] = false
 			if int(g["cel"]) > 0 and fraction(g, year()) > 0.0 and not g.get("felkeszult", false):
+				just_wavered.append(g["id"])
 				var y := year()
 				g["f0"] = fraction(g, y - 1)
 				g["y0"] = y - 1
@@ -489,7 +491,8 @@ func advance() -> void:
 				naplo.append({"ev": y, "fajta": "visszalepett", "csoport": g["id"], "cel": g["cel"]})
 	# új elbizonytalanodás: az esély a játék során nő (30% → 60%); a felkészült csoport nem inog meg
 	if round_i < ROUNDS - 1 and rng.randf() < WAVER_CHANCE * (1.0 + float(round_i) / float(ROUNDS)):
-		var cand: Array = groups.filter(func(g: Dictionary) -> bool: return int(g["cel"]) > 0 and fraction(g, year()) > 0.0 and not g.get("felkeszult", false))
+		var cand: Array = groups.filter(func(g: Dictionary) -> bool:      # aki most ingott meg, az nem bizonytalanodik el rögtön újra
+			return int(g["cel"]) > 0 and fraction(g, year()) > 0.0 and not g.get("felkeszult", false) and not (g["id"] in just_wavered))
 		if not cand.is_empty():
 			var g: Dictionary = cand[rng.randi_range(0, cand.size() - 1)]
 			g["inog"] = true
