@@ -45,6 +45,11 @@ func _draw() -> void:
 		var a := _pt(Y0, t)
 		draw_line(a, _pt(Y1, t), Color(1, 1, 1, 0.14), 1.0)
 		draw_string(f, Vector2(0, a.y + 5), "+" + L.num_short(t, 1), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, UI.MUTE)
+	var lx := 44.0
+	for row in [[L.t("eddig"), Color.WHITE], [L.t("a te utad"), UI.GREEN], [L.t("ha semmi sem változik"), UI.EMBER]]:
+		draw_rect(Rect2(lx, -13, 14, 3), row[1])
+		draw_string(f, Vector2(lx + 19, -7), row[0], HORIZONTAL_ALIGNMENT_LEFT, -1, 12, UI.SOFT)
+		lx += 32.0 + f.get_string_size(row[0], HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
 	if _hist.is_empty():
 		return
 	# „ha semmi sem változik”: a már eltelt rész és a folytatása

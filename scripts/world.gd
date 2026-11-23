@@ -17,7 +17,7 @@ const MIN_YEARS := 10                          # ennyi év legalább kell az át
 const METHANE_CUT := 0.30                      # a Globális Metánvállalás mértéke: −30% (10 év alatt)
 const METHANE_YEARS := 10
 const CDR_YEARS := 20                          # a kivonás ennyi év alatt fut fel (a modell korábbi szabálya)
-const SAVE_VERSION := 2                       # ha a szabályok vagy az adatok változnak, a régi mentés helyett új játék indul
+const SAVE_VERSION := 3                       # ha a szabályok vagy az adatok változnak, a régi mentés helyett új játék indul
 const WAVER_CHANCE := 0.30                     # körönként ekkora eséllyel inog meg egy csoport (játékszabály)
 ## CO2-kivonási programok: kártya -> [a fenntartható sáv alja, teteje] GtCO2/év 2050-re
 ## (Fuss és mtsai 2018, Environ. Res. Lett. 13 063002; az archívum ellenőrzött idézetei szerint).
@@ -67,6 +67,12 @@ func new_game(seed_value: int = -1) -> void:
 	rest_ch4 = float(data.get("tobbi_ch4_resz", 0.0))
 	for g in data["csoportok"]:
 		var d: Dictionary = g.duplicate(true)
+		# játékszabály: a fő aggodalom állandó, a többiből játékonként kettőt sorsolunk
+		var pool: Array = d["felelmek"].duplicate()
+		var fears: Array = [pool.pop_front()]
+		while fears.size() < 3 and not pool.is_empty():
+			fears.append(pool.pop_at(rng.randi_range(0, pool.size() - 1)))
+		d["felelmek"] = fears
 		d["fok"] = 0            # hányadik vállalásnál tart (0 = nincs)
 		d["cel"] = 0            # a vállalt „nulla” év
 		d["y0"] = 0
@@ -225,6 +231,23 @@ func cards_needed(g: Dictionary, target: int) -> int:
 
 
 ## A kézben lévő kártyák, amelyek ennek a csoportnak egy aggodalmára felelnek, és még nem hallották.
+## Mennyit változna a 2100-ra várt melegedés (középérték), ha a csoport elfogadná a kérést? (negatív = hűvösebb)
+func preview(g: Dictionary, target: int, methane: bool = false) -> float:
+	var before := float(forecast()["kozep"][-1][1])
+	var keep := {"f0": g["f0"], "y0": g["y0"], "cel": g["cel"], "metan": g["metan"]}
+	var y := year()
+	if methane:
+		g["metan"] = y - 1
+	else:
+		g["f0"] = fraction(g, y - 1) if int(g["cel"]) > 0 else float(g["f0"])
+		g["y0"] = y - 1
+		g["cel"] = target
+	var after := float(forecast()["kozep"][-1][1])
+	for k in keep:
+		g[k] = keep[k]
+	return after - before
+
+
 ## Van-e most olyan kérés, amihez megvan a kártyád?
 func can_convince(g: Dictionary) -> bool:
 	if steps <= 0 or over():
