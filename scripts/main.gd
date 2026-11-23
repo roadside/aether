@@ -78,7 +78,7 @@ func _ready() -> void:
 	theme = _make_theme()
 	get_tree().node_added.connect(_on_node_added)
 	var args := OS.get_cmdline_user_args()
-	_test = "--onteszt" in args
+	_test = "--onteszt" in args or "--bejaras" in args
 	if _test or "--intro-kepek" in args:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)   # az ellenőrző futások ablakban mennek
 	var bg := TextureRect.new()
@@ -112,6 +112,9 @@ func _ready() -> void:
 	_build_bottom()
 	_build_menu()
 	_refresh()
+	if "--bejaras" in args:
+		_walkthrough()
+		return
 	if _test:
 		_selftest()
 		return
@@ -929,7 +932,7 @@ func _open_research(theme: String = "") -> void:
 			if th in g["felelmek"]:
 				who.append(L.field(g, "nev"))
 		var b := Button.new()
-		b.custom_minimum_size = Vector2(420, 96)
+		b.custom_minimum_size = Vector2(420, 104)
 		b.focus_mode = Control.FOCUS_NONE
 		b.disabled = n == 0
 		var col := _theme_color(th)
@@ -1023,7 +1026,15 @@ func _open_hand() -> void:
 			for c in b.pressed.get_connections():
 				b.pressed.disconnect(c["callable"])
 			b.pressed.connect(_open_card.bind(id, false))
-			body.add_child(b)
+			var row := UI.hbox(8)
+			row.add_child(b)
+			for g in world.groups:      # kinek szólhat még ez a kártya (aki már hallotta, annak nem)
+				if th in g["felelmek"] and not (id in g["hasznalt"]):
+					var ch := _chip(L.field(g, "nev"), Color(str(g["szin"])))
+					ch.add_theme_font_size_override("font_size", 12)
+					ch.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+					row.add_child(ch)
+			body.add_child(row)
 
 
 # --- tárgyalás ----------------------------------------------------------------
@@ -1597,4 +1608,96 @@ func _selftest() -> void:
 		(nd as ScrollContainer).scroll_vertical = 100000
 		await _shot("14b_tortenet.png")
 	print("ONTESZT kész: T2100=%.2f alap=%.2f" % [world.result()["T"], world.result()["alap"]])
+	get_tree().quit()
+
+
+## Bejárás (hibakereső futás, kép nélkül): több Földön, mindhárom fokozaton végigjátssza a játékot a felület
+## saját függvényein át, minden körben megnyitva minden ablakot és minden kérést.   godot -- --bejaras
+func _press_toggles(n: Node) -> void:
+	for c in n.get_children():
+		if c is Button and (c as Button).toggle_mode and not (c is CheckBox):
+			(c as Button).button_pressed = true
+		_press_toggles(c)
+
+
+func _walkthrough() -> void:
+	var games := 0
+	for seed_v in [11, 222, 3333, 44444, 5, 60606]:
+		_new_game(seed_v, 3 + games % 3)
+		while not world.over():
+			if world.summit_due:
+				_open_summit()
+				var best := ""
+				for id in world.hand:
+					if best == "" or world.summit_listeners(id).size() > world.summit_listeners(best).size():
+						best = id
+				if best != "" and not world.summit_listeners(best).is_empty() and world.round_i % 2 == 1:
+					_do_summit(best)
+				else:
+					world.skip_summit()
+				_close()
+			var guard := 0
+			while world.steps > 0 and guard < 12:
+				guard += 1
+				var acted := false
+				for g in world.groups:
+					_open_group(g)
+					if _body != null:
+						_press_toggles(_body)
+					_close()
+					var u := world.usable(g)
+					if g.get("inog", false) and not u.is_empty():
+						acted = world.reassure(g, u[0])
+						if acted:
+							_agreed(g, {"fajta": "megerosites", "kartya": u[0]})
+					var ts := world.targets_for(g)
+					if not acted and not ts.is_empty():
+						var t: int = ts[world.rng.randi_range(0, ts.size() - 1)]
+						if u.size() >= world.cards_needed(g, t):
+							var before := float(world.forecast()["kozep"][-1][1])
+							acted = world.negotiate(g, t, u.slice(0, world.cards_needed(g, t)))
+							if acted:
+								_agreed(g, {"fajta": "cel", "cel": t}, before)
+					if not acted and int(g["metan"]) == 0 and world.methane_cards(g).size() >= world.methane_needed(g):
+						acted = world.pledge_methane(g, world.methane_cards(g).slice(0, world.methane_needed(g)))
+						if acted:
+							_agreed(g, {"fajta": "metan"}, 2.0)
+					if not acted and not g.get("felkeszult", false) and not world.prepare_cards(g).is_empty() and world.rng.randf() < 0.3:
+						acted = world.prepare(g, world.prepare_cards(g)[0])
+						if acted:
+							_agreed(g, {"fajta": "felkeszules"})
+					_close()
+					if acted:
+						break
+				if not acted:
+					_open_cdr()
+					for id in world.cdr_available():
+						acted = world.start_cdr(id)
+						break
+					_close()
+				if not acted:
+					_open_research()
+					var ths: Array = Cards.THEMES.keys()
+					var th: String = ths[world.rng.randi_range(0, ths.size() - 1)]
+					_research_theme(th)
+					if _offers.has(th) and not _offers[th].is_empty():
+						_do_research(_offers[th][0], th)
+					else:
+						world.steps -= 1
+					_close()
+				_refresh()
+			_open_hand()
+			for id in world.hand.slice(0, 3):
+				_open_card(id)
+			_open_collection()
+			_open_help()
+			_close()
+			await _advance()
+			_close()
+		_open_end()
+		await get_tree().process_frame
+		_close()
+		games += 1
+		print("BEJARAS mag=%d lepes=%d T2100=%.2f naplo=%d" % [seed_v, world.max_steps, world.result()["T"], world.naplo.size()])
+	print("BEJARAS kész: %d játék" % games)
 	get_tree().quit()
