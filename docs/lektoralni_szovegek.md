@@ -297,3 +297,41 @@ Mindegyiket a megadott forrásból ellenőriztük. A kártyán csak akkor jeleni
 - **legszennyezes:** A szén, olaj és gáz égetéséből származó légszennyezés évente kb. 5,1 millió ember korai halálát okozza; ezek elkerülhetők lennének. (Lelieveld és mtsai 2023) – https://doi.org/10.1136/bmj-2023-077784
 - **termes:** Alkalmazkodás nélkül minden egyes fok melegedés átlagosan 6%-kal csökkenti a búza, 7,4%-kal a kukorica, 3,2%-kal a rizs és 3,1%-kal a szója termését. (Zhao és mtsai 2017) – https://doi.org/10.1073/pnas.1701762114
 - **amazonas:** Az Amazonas esőerdejének pusztulása a kutatók becslése szerint kb. 3,5 fok melegedésnél válik valószínűvé, de már 2 foknál is lehetséges. (Armstrong McKay és mtsai 2022) – https://doi.org/10.1126/science.abn7950
+
+## 9. Új szövegek (2026-11-23, 20 óra után) – még nem lektorált
+
+Csak ezek újak. Küldetések, döntési helyzetek, tudáspróba, a Kockázatos ötletek témakör, a záró képernyő új sorai.
+
+- Ha minden öt évvel később történik, a Földed +%s °C-ra melegszik. Minden év számít!
+- Küldetések
+- Három cél erre a játékra. Nem kötelezők, de jelvény jár értük.
+- Győzd meg ezt a csoportot 2040 végéig: %s
+- 2050 végéig legalább három csoport vállaljon metáncsökkentést.
+- Indíts el két CO2-kivonást.
+- Kutass ki öt kártyát ebből a témakörből: %s
+- Segíts három csoportnak felkészülni a bajra.
+- Legalább egy csoport érje el a nulla kibocsátást 2065-ig.
+- Egy klímacsúcson legalább három csoport hozza előbbre a célját.
+- Gyűjts húsz kártyát ebben a játékban.
+- Küldetésteljesítő
+- Teljesítsd mind a három küldetést egy játékban.
+- Kockázatos ötletek
+- Tárgyalásra nem jó. Megtudod belőle, miért kockázatos mesterségesen hűteni a Földet.
+- Óvatos tudós
+- Kutass ki három kockázatos ötletet.
+- Kép mentése
+- Elmentve: %s
+- Nem sikerült elmenteni a képet.
+- A kártyáidból tudod:
+- Teljesített küldetések: %d
+- Döntés
+- Egy alapítvány támogatja a munkádat. Mire kéred?
+- Több kutató: ebben a körben eggyel több lépésed van.
+- Felkészítő program: %s azonnal felkészül a bajra.
+- Két meghívást kaptál, de csak egy útra van időd. Akit meglátogatsz, azt most eggyel kevesebb kártyával is meggyőzheted.
+- Tudáspróba
+- Melyik kártyádon áll ez? Ha eltalálod, ebben a körben eggyel több lépésed van.
+- Eltaláltad! Ebben a körben eggyel több lépésed van.
+- Nem ez volt. A helyes válasz:
+- A mai Föld: %d napja játszod egymás után.
+- Biztos? Kattints még egyszer!
