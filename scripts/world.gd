@@ -48,6 +48,10 @@ var summit_due := false          # most klímacsúcs van: egy kártyát megmutat
 var missions: Array = []         # a játék három küldetése: [{"id", "arg"}] (játékszabály; a Föld-kódból sorsoljuk)
 var hajto: Array = []            # évenként a tényleges hajtóerők: [co2, kivonás, metán] (a „mi lett volna, ha” számításhoz)
 var naplo: Array = []            # a játék fontos pillanatai a záró képernyőhöz: [{"ev", "fajta", ...}]
+var threat: Dictionary = {}       # előre látható baj: {"csoport", "mi"} – a kör végén csap le (játékszabály)
+var streak := 0                  # megállapodások ebben a körben (lendület: minden második visszaad egy lépést)
+var streak_bonus := false        # a legutóbbi megállapodás lendületből lépést adott
+var challenge := 0               # kihívás-lépcső: 0–5, szintenként egy új nehezítés (játékszabály)
 var data: Dictionary = {}
 
 
@@ -57,13 +61,25 @@ static func read_json(path: String) -> Variant:
 	return JSON.parse_string(FileAccess.get_file_as_string(path))
 
 
-func new_game(seed_value: int = -1, steps_n: int = STEPS) -> void:
-	max_steps = clampi(steps_n, 3, 5)
+const CHALLENGE_MAX := 5
+const CHALLENGE_SECONDS := 75.0                # 1. szint: rövidebb körök (a felület használja)
+const CHALLENGE_SENS := 0.4                    # 2. szint: érzékenyebb Föld (a tudományos sávon belül)
+const CHALLENGE_WAVER := 1.5                   # 4. szint: gyakoribb megingás
+
+
+func new_game(seed_value: int = -1, steps_n: int = STEPS, challenge_n: int = 0) -> void:
+	challenge = clampi(challenge_n, 0, CHALLENGE_MAX)
+	max_steps = clampi(steps_n, 3, 5) - (1 if challenge >= 5 else 0)      # 5. szint: eggyel kevesebb lépés
+	threat = {}
+	streak = 0
+	streak_bonus = false
 	data = read_json("res://adatok/csoportok.json")
 	seed_v = seed_value if seed_value >= 0 else int(Time.get_unix_time_from_system()) % 1000000
 	game_id = int(Time.get_unix_time_from_system() * 1000.0) % 2000000000
 	rng.seed = seed_v
 	sens = clampf(rng.randfn(0.0, 0.5), -1.0, 1.0)     # többnyire a sáv közepe táján, néha a szélén
+	if challenge >= 2:
+		sens = clampf(sens + CHALLENGE_SENS, -1.0, 1.0)
 	st = M.new_state()
 	M.step(st, {}, params())                            # 2025: a játék 2026 elején indul
 	round_i = 0
@@ -103,6 +119,7 @@ func new_game(seed_value: int = -1, steps_n: int = STEPS) -> void:
 		d["inog"] = false       # elbizonytalanodott: ha a kör végéig nem erősíted meg, megingik
 		d["hasznalt"] = []      # az ennél a csoportnál már kijátszott kártyák
 		d["konnyebb"] = false   # katasztrófa után egy kártyával kevesebb kell (játékszabály)
+		d["makacs"] = challenge >= 3 and groups.size() == seed_v % 6     # 3. szint: egy csoportnak eggyel több kártya kell
 		groups.append(d)
 	tips = []
 	var tj: Variant = read_json("res://adatok/billenopontok.json")
@@ -253,7 +270,7 @@ func targets_for(g: Dictionary) -> Array:
 
 ## Hány kártya kell a célhoz: fokozatonként egy (40 → 30 → 20 → 15 év); katasztrófa után eggyel kevesebb (legalább 1).
 func cards_needed(g: Dictionary, target: int) -> int:
-	var n := maxi(1, stage_of(target) - int(g["fok"]))
+	var n := maxi(1, stage_of(target) - int(g["fok"])) + (1 if g.get("makacs", false) else 0)
 	return maxi(1, n - 1) if g["konnyebb"] else n
 
 
@@ -334,8 +351,17 @@ func negotiate(g: Dictionary, target: int, played: Array) -> bool:
 	for id in played:
 		g["hasznalt"].append(id)
 	steps -= 1
+	_momentum()
 	naplo.append({"ev": y, "fajta": "cel", "csoport": g["id"], "cel": target})
 	return true
+
+
+## Lendület (játékszabály): egy körön belül minden második megállapodás visszaad egy lépést.
+func _momentum() -> void:
+	streak += 1
+	streak_bonus = streak % 2 == 0
+	if streak_bonus:
+		steps += 1
 
 
 func methane_cards(g: Dictionary) -> Array:
@@ -425,6 +451,7 @@ func pledge_methane(g: Dictionary, played: Variant) -> bool:
 	for id in ids:
 		g["hasznalt"].append(id)
 	steps -= 1
+	_momentum()
 	naplo.append({"ev": year(), "fajta": "metan", "csoport": g["id"]})
 	return true
 
@@ -481,6 +508,8 @@ func advance() -> void:
 				naplo.append({"ev": y, "fajta": "billenes", "id": t["id"]})
 	round_i += 1
 	steps = max_steps
+	streak = 0
+	streak_bonus = false
 	if over():
 		return
 	summit_due = round_i in SUMMIT_ROUNDS
@@ -501,18 +530,39 @@ func advance() -> void:
 				news.append({"fajta": "visszalepett", "csoport": g["id"], "cel": g["cel"]})
 				naplo.append({"ev": y, "fajta": "visszalepett", "csoport": g["id"], "cel": g["cel"]})
 	# új elbizonytalanodás: az esély a játék során nő (30% → 60%); a felkészült csoport nem inog meg
-	if round_i < ROUNDS - 1 and rng.randf() < WAVER_CHANCE * (1.0 + float(round_i) / float(ROUNDS)):
+	if round_i < ROUNDS - 1 and rng.randf() < WAVER_CHANCE * (CHALLENGE_WAVER if challenge >= 4 else 1.0) * (1.0 + float(round_i) / float(ROUNDS)):
 		var cand: Array = groups.filter(func(g: Dictionary) -> bool:      # aki most ingott meg, az nem bizonytalanodik el rögtön újra
 			return int(g["cel"]) > 0 and fraction(g, year()) > 0.0 and not g.get("felkeszult", false) and not (g["id"] in just_wavered))
 		if not cand.is_empty():
 			var g: Dictionary = cand[rng.randi_range(0, cand.size() - 1)]
 			g["inog"] = true
 			news.append({"fajta": "inog", "csoport": g["id"]})
-	# katasztrófa (játékszabály, a melegedéssel gyakoribb): az érintett csoportot utána könnyebb meggyőzni
-	if rng.randf() < clampf(0.15 + 0.25 * (float(st["T"]) - M.T_START), 0.15, 0.6):
-		var g2: Dictionary = groups[rng.randi_range(0, groups.size() - 1)]
-		g2["konnyebb"] = true
-		news.append({"fajta": "katasztrofa", "csoport": g2["id"], "mi": ["hoseg", "aszaly", "arviz", "tuz"][rng.randi_range(0, 3)]})
+	# aki elérte a nullát, segít egy másiknak (játékszabály): azt a csoportot most könnyebb meggyőzni
+	for n in news.duplicate():
+		if n["fajta"] == "nulla":
+			var need: Array = groups.filter(func(g: Dictionary) -> bool:
+				return g["id"] != n["csoport"] and not g["konnyebb"] and not targets_for(g).is_empty())
+			if not need.is_empty():
+				var gh: Dictionary = need[rng.randi_range(0, need.size() - 1)]
+				gh["konnyebb"] = true
+				news.append({"fajta": "segit", "csoport": n["csoport"], "kinek": gh["id"]})
+	# az előre látott baj most csap le (játékszabály): utána könnyebb meggyőzni a csoportot;
+	# ha nem készült fel, a mentés elvisz egy lépést ebből a körből
+	if not threat.is_empty():
+		var g2 := group(str(threat["csoport"]))
+		if not g2.is_empty():
+			g2["konnyebb"] = true
+			var ready: bool = g2.get("felkeszult", false)
+			if not ready:
+				steps = maxi(1, steps - 1)
+			news.append({"fajta": "katasztrofa", "csoport": g2["id"], "mi": threat["mi"], "lepes": not ready})
+		threat = {}
+	# a következő baj már most látszik (a melegedéssel gyakoribb), fel lehet rá készülni
+	if round_i < ROUNDS - 1 and rng.randf() < clampf(0.15 + 0.25 * (float(st["T"]) - M.T_START), 0.15, 0.6):
+		var open: Array = groups.filter(func(g: Dictionary) -> bool: return not g.get("felkeszult", false))
+		var kind: String = ["hoseg", "aszaly", "arviz", "tuz"][rng.randi_range(0, 3)]
+		if not open.is_empty():       # aki már felkészült, azt nem fenyegeti újabb baj
+			threat = {"csoport": open[rng.randi_range(0, open.size() - 1)]["id"], "mi": kind}
 
 
 ## A játék vége: a te Földed és a „ha semmi sem változik” Föld.
@@ -681,7 +731,8 @@ func what_if(delay: int) -> float:
 
 func to_dict() -> Dictionary:
 	return {"v": SAVE_VERSION, "mag": seed_v, "jatek": game_id, "sens": sens, "st": st, "alap": _base, "kor": round_i, "lepes": steps, "max_lepes": max_steps, "csoportok": groups, "kez": hand,
-		"kivonas": cdr, "billenes": tips, "mult": history, "alap_mult": base_history, "hirek": news, "naplo": naplo, "hajto": hajto, "kuldetes": missions, "csucs": summit_due, "dontes": dilemma, "vilag_nulla": net_zero_year, "kivont": cdr_total, "rng": str(rng.state)}
+		"kivonas": cdr, "billenes": tips, "mult": history, "alap_mult": base_history, "hirek": news, "naplo": naplo, "hajto": hajto, "kuldetes": missions, "csucs": summit_due, "dontes": dilemma, "vilag_nulla": net_zero_year, "kivont": cdr_total, "rng": str(rng.state),
+		"veszely": threat, "sorozat": streak, "kihivas": challenge}
 
 
 func from_dict(d: Dictionary) -> bool:
@@ -698,6 +749,10 @@ func from_dict(d: Dictionary) -> bool:
 	naplo = d.get("naplo", [])
 	hajto = d.get("hajto", [])
 	missions = d.get("kuldetes", [])
+	threat = d.get("veszely", {})
+	streak = int(d.get("sorozat", 0))
+	streak_bonus = false
+	challenge = int(d.get("kihivas", 0))
 	for e in naplo:
 		e["ev"] = int(e["ev"])
 		if e.has("cel"):

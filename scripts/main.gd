@@ -27,6 +27,8 @@ const WORRY := {
 	"erdo": "Az erdő és a föld ad megélhetést. Ki fizeti meg, ha érintetlenül hagyjuk?",
 }
 const DISASTER := {"hoseg": "Hőhullám", "aszaly": "Aszály", "arviz": "Áradás", "tuz": "Erdőtűz"}
+const THREAT := {"hoseg": "Hőhullám fenyeget", "aszaly": "Aszály fenyeget", "arviz": "Áradás fenyeget", "tuz": "Erdőtűz fenyeget"}
+const LEVELS := ["", "Gyorsabban telik az idő.", "Érzékenyebb a Föld.", "Egy csoport makacsabb.", "A csoportok könnyebben elbizonytalanodnak.", "Eggyel kevesebb lépésed van."]
 const CDR_NAME := {"erdo": "Erdősítés", "bioszen": "Bioszén", "kozet": "Kőzetmállasztás", "levegoszures": "CO2-szűrés a levegőből", "novenyi_energia": "Növényi energia CO2-tárolással"}
 
 var world: World
@@ -129,6 +131,17 @@ class Moment extends Control:
 const ROUND_SECONDS := 90.0          # ennyi ideig tart egy kör (öt év), ha az idő telik (játékszabály)
 const MOMENT_SECONDS := 12.0
 var _clock := 0.0
+
+
+func _round_s() -> float:
+	return World.CHALLENGE_SECONDS if world != null and world.challenge >= 1 else ROUND_SECONDS
+
+
+## Az előre látható baj fajtája, ha ezt a csoportot fenyegeti, és még nem készült fel rá.
+func _threat_on(g: Dictionary) -> String:
+	if world.threat.is_empty() or str(world.threat.get("csoport", "")) != str(g["id"]) or g.get("felkeszult", false):
+		return ""
+	return str(world.threat.get("mi", ""))
 var _clock_bar: ColorRect
 var _clock_force := false            # az önteszt képeihez
 var _clock_live := false             # próba: az óra ellenőrző futásban is jár, és magától lép a következő körre
@@ -256,7 +269,7 @@ func _process(delta: float) -> void:
 	if not _clock_runs():
 		return
 	_clock += delta
-	var k := clampf(_clock / ROUND_SECONDS, 0.0, 1.0)
+	var k := clampf(_clock / _round_s(), 0.0, 1.0)
 	_clock_bar.size.x = 150.0 * (1.0 - k)
 	_clock_bar.color = UI.EMBER if k > 0.85 else UI.CYAN
 	(_stats["ev"] as Label).text = str(world.year() + mini(World.ROUND_YEARS - 1, int(k * World.ROUND_YEARS)))
@@ -269,7 +282,7 @@ func _process(delta: float) -> void:
 		_place_moment()
 		if _moment_node.left <= 0.0:
 			_clear_moment()
-	if _clock >= ROUND_SECONDS and not _clock_force:
+	if _clock >= _round_s() and not _clock_force:
 		_advance()
 
 
@@ -501,11 +514,42 @@ func _build_top() -> void:
 
 
 var _land_frame := 0
+var _pulse_n := 0
+
+
+## Lüktető keret a csoport kártyáján (baj fenyeget: parázsszín; bizonytalan: arany).
+func _pulse(gid: String, on: bool, color: Color = Color.WHITE) -> void:
+	var entry: Dictionary = _group_cards[gid]
+	var old: Variant = entry.get("lukt")
+	if old != null and is_instance_valid(old):
+		if on and (old as Panel).get_meta("szin") == color:
+			return
+		(old as Panel).queue_free()
+	entry["lukt"] = null
+	if not on:
+		return
+	var p := Panel.new()
+	p.set_anchors_preset(Control.PRESET_FULL_RECT)
+	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	p.add_theme_stylebox_override("panel", _flat(Color(color, 0.07), color, 3))
+	p.set_meta("szin", color)
+	(entry["gomb"] as Button).add_child(p)
+	entry["lukt"] = p
+	var tw := p.create_tween().set_loops().set_trans(Tween.TRANS_SINE)
+	tw.tween_property(p, "modulate:a", 0.15, 0.7)
+	tw.tween_property(p, "modulate:a", 1.0, 0.7)
 
 
 ## A kártyák tájképei élnek: a szélkerekek forognak, az eső esik.
 func _tick_landscapes() -> void:
 	_land_frame = 1 - _land_frame
+	_pulse_n += 1
+	if _pulse_n % 5 == 0 and _overlay == null and not _busy and not world.over():     # a Földön is látszik, kire kell figyelni
+		for g in world.groups:
+			if _threat_on(g) != "":
+				globe.flash(float(g["lat"]), float(g["lon"]), UI.EMBER)
+			elif g.get("inog", false):
+				globe.flash(float(g["lat"]), float(g["lon"]), UI.GOLD)
 	for gid in _group_cards:
 		var g: Dictionary = world.group(gid)
 		if not g.is_empty():
@@ -605,9 +649,14 @@ func _fill_group(g: Dictionary) -> void:
 		v.add_child(_lbl("✔ " + " · ✔ ".join(extras), 14, UI.GREEN))
 	var n := world.usable(g).size()
 	var shaky: bool = g.get("inog", false)
+	var danger := _threat_on(g)
 	if shaky:
 		v.add_child(_lbl("⚠ " + L.t("Bizonytalan"), 15, UI.GOLD, true))
+	if danger != "":
+		v.add_child(_lbl("⚠ " + L.t(THREAT[danger]), 15, UI.EMBER, true))
+	_pulse(str(g["id"]), (danger != "" or shaky) and not world.over(), UI.EMBER if danger != "" else UI.GOLD)
 	var fears := HFlowContainer.new()
+	fears.visible = not (shaky and danger != "" and not extras.is_empty())
 	fears.add_theme_constant_override("h_separation", 3)
 	fears.add_theme_constant_override("v_separation", 4)
 	fears.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -625,7 +674,9 @@ func _fill_group(g: Dictionary) -> void:
 	sp.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	sp.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	v.add_child(sp)
-	if shaky and n > 0 and world.steps > 0:
+	if danger != "" and world.steps > 0 and not world.prepare_cards(g).is_empty():
+		v.add_child(_lbl(L.t("Készítsd fel őket") + " →", 15, UI.EMBER, true))
+	elif shaky and n > 0 and world.steps > 0:
 		v.add_child(_lbl(L.t("Erősítsd meg őket") + " →", 15, UI.GOLD, true))
 	elif world.can_convince(g):
 		v.add_child(_lbl(L.t("Meggyőzheted őket") + " →", 15, UI.CYAN, true))
@@ -811,16 +862,39 @@ func _reset_game() -> void:
 
 
 ## Új játék előtt: fokozat választása (játékszabály: körönként hány lépésed van).
-func _pick_game(code: int = -1) -> void:
+var _level_force := -1         # az önteszt képeihez
+
+## Kihívás-lépcső (játékszabály): ha +2 °C alatt végzel a legmagasabb elért szinten, megnyílik a következő.
+func _level_max() -> int:
+	return clampi(int(L.get_setting("lepcso", 0)) if _level_force < 0 else _level_force, 0, World.CHALLENGE_MAX)
+
+
+func _pick_game(code: int = -1, level: int = -1) -> void:
+	var top := _level_max()
+	var lv := top if level < 0 else clampi(level, 0, top)
 	var body := _open(L.t("Új játék"), UI.CYAN)
+	if top > 0:
+		var lrow := UI.hbox(8)
+		var ll := UI.label(L.t("Kihívás:"), 18, UI.GOLD, true, false)
+		ll.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		lrow.add_child(ll)
+		for i in top + 1:
+			var lb := UI.button(str(i), i == lv)
+			lb.focus_mode = Control.FOCUS_NONE
+			lb.custom_minimum_size = Vector2(52, 0)
+			lb.pressed.connect(func() -> void: _pick_game(code, i))
+			lrow.add_child(lb)
+		body.add_child(lrow)
+		for i in range(1, lv + 1):
+			body.add_child(UI.label("%d. %s" % [i, L.t(LEVELS[i])], 16, UI.SOFT))
 	for row in [["Könnyű", 5], ["Közepes", 4], ["Nehéz", 3]]:
 		var n: int = row[1]
-		body.add_child(_go("%s · %s" % [L.t(row[0]), L.t("%d lépés körönként") % n], func() -> void: _new_game(code, n), n == 4))
+		body.add_child(_go("%s · %s" % [L.t(row[0]), L.t("%d lépés körönként") % n], func() -> void: _new_game(code, n, lv), n == 4))
 
 
-func _new_game(code: int = -1, steps_n: int = World.STEPS) -> void:
+func _new_game(code: int = -1, steps_n: int = World.STEPS, level: int = 0) -> void:
 	_close()
-	world.new_game(code, steps_n)
+	world.new_game(code, steps_n, level)
 	_offers = {}
 	_clock = 0.0
 	_plan_moments()
@@ -844,7 +918,7 @@ func _refresh() -> void:
 		(_stats["ev_al"] as Label).text = L.t("vége")
 	else:
 		(_stats["ev"] as Label).text = ("%d–%d" % [y, y + World.ROUND_YEARS - 1]) if not (_time_on() and not _test) \
-			else str(y + mini(World.ROUND_YEARS - 1, int(_clock / ROUND_SECONDS * World.ROUND_YEARS)))
+			else str(y + mini(World.ROUND_YEARS - 1, int(_clock / _round_s() * World.ROUND_YEARS)))
 		(_stats["ev_al"] as Label).text = L.t("%d. kör a 15-ből") % (world.round_i + 1)
 	var t := float(world.st["T"])
 	(_stats["meleg"] as Label).text = "+%s °C" % L.num(t, 2)
@@ -868,8 +942,10 @@ func _refresh() -> void:
 	var marks: Array = []
 	for g in world.groups:
 		var shaky: bool = g.get("inog", false)
-		marks.append({"id": g["id"], "name": L.field(g, "nev"), "label": ("⚠ " if shaky else "") + L.field(g, "nev"), "lat": g["lat"], "lon": g["lon"],
-			"color": UI.GOLD if shaky else Color(str(g["szin"]))})
+		var danger := _threat_on(g)
+		marks.append({"id": g["id"], "name": L.field(g, "nev") if danger == "" else "%s\n%s" % [L.field(g, "nev"), L.t(THREAT[danger])],
+			"label": ("⚠ " if shaky or danger != "" else "") + L.field(g, "nev"), "lat": g["lat"], "lon": g["lon"],
+			"color": UI.EMBER if danger != "" else (UI.GOLD if shaky else Color(str(g["szin"])))})
 	for tp in world.tips:
 		var rng_txt := L.t("küszöb: %s–%s °C") % [L.num(float(tp["also"]), 1), L.num(float(tp["felso"]), 1)]
 		if int(tp["ev"]) > 0:
@@ -896,7 +972,13 @@ func _mark_next() -> void:
 	elif world.steps <= 0:
 		next = "ido"
 	else:
-		for g in world.groups:       # először az, aki elbizonytalanodott, és van neki szóló kártyád
+		for g in world.groups:       # legelőször az, akit baj fenyeget, és fel tudod készíteni
+			if _threat_on(g) != "" and not world.prepare_cards(g).is_empty():
+				hot = g["id"]
+				break
+		for g in world.groups:       # aztán az, aki elbizonytalanodott, és van neki szóló kártyád
+			if hot != "":
+				break
 			if g.get("inog", false) and not world.usable(g).is_empty():
 				hot = g["id"]
 				break
@@ -935,6 +1017,8 @@ func _mark_next() -> void:
 		var gb: Button = _group_cards[gid]["gomb"]
 		var col := Color(str(world.group(gid)["szin"]))
 		gb.add_theme_stylebox_override("normal", _flat(Color(0.04, 0.06, 0.12, 0.88), UI.CYAN if gid == hot else Color(col, 0.55), 3 if gid == hot else 2))
+		if _group_cards[gid].get("lukt") != null and is_instance_valid(_group_cards[gid]["lukt"]):
+			gb.move_child(_group_cards[gid]["lukt"], -1)
 
 
 # --- ablakok ------------------------------------------------------------------
@@ -1004,6 +1088,7 @@ func _fit() -> void:
 		_close_x.position = p.position + Vector2(920 - 22, -22)
 
 
+var _bonus_float := false
 var _flash_ids: Array = []        # akiknél az ablak bezárása után felvillanás jár (egyezség, megerősítés, csúcs)
 
 func _close() -> void:
@@ -1022,6 +1107,11 @@ func _close() -> void:
 		card.modulate = Color(1.9, 1.9, 1.9)
 		create_tween().tween_property(card, "modulate", Color.WHITE, 0.2 if _test else 1.2)
 	_flash_ids = []
+	if _bonus_float:
+		_bonus_float = false
+		_float_text(L.t("+1 lépés"), _dots.global_position + Vector2(60, 40), UI.GOLD)
+		_dots.modulate = Color(2.2, 1.9, 0.8)
+		create_tween().tween_property(_dots, "modulate", Color.WHITE, 1.5)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -1163,6 +1253,9 @@ func _finish_game(r: Dictionary) -> Dictionary:
 	var dd := Time.get_date_dict_from_system()
 	past.push_front({"ev": int(dd["year"]), "ho": int(dd["month"]), "nap": int(dd["day"]), "T": t, "lepes": world.max_steps, "mag": world.seed_v})
 	L.set_setting("foldek", past.slice(0, 12))
+	if t < 2.0 and world.challenge >= _level_max() and world.challenge < World.CHALLENGE_MAX:
+		L.set_setting("lepcso", world.challenge + 1)
+		_end_info["lepcso"] = world.challenge + 1
 	var best := float(L.get_setting("legjobb", 0.0))
 	if best <= 0.0 or t < best - 0.004:
 		L.set_setting("legjobb", t)
@@ -1502,13 +1595,24 @@ func _open_group(g: Dictionary) -> void:
 		return
 	var targets := world.targets_for(g)
 	var asks: Array = []
+	var danger := _threat_on(g)
+	if danger != "":
+		var dr := UI.hbox(10)
+		dr.add_child(Icons.rect(danger, UI.EMBER, 30))
+		var dl := UI.label("%s. %s" % [L.t(THREAT[danger]), L.t("Készítsd fel őket a kör végéig, különben a mentés elvisz egy lépésedet.")], 17, UI.EMBER, true)
+		dl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		dr.add_child(dl)
+		body.add_child(dr)
+		asks.append({"fajta": "felkeszules", "kell": 1})
+	if g.get("makacs", false) and not targets.is_empty():
+		body.add_child(UI.label(L.t("Makacs csoport: eggyel több kártya kell nekik."), 15, UI.GOLD))
 	if g.get("inog", false):
 		asks.append({"fajta": "megerosites", "kell": 1})
 	for t in targets:
 		asks.append({"fajta": "cel", "cel": t, "kell": world.cards_needed(g, t)})
 	if int(g["metan"]) == 0:
 		asks.append({"fajta": "metan", "kell": world.methane_needed(g)})
-	if not g.get("felkeszult", false):
+	if not g.get("felkeszult", false) and danger == "":
 		asks.append({"fajta": "felkeszules", "kell": 1})
 	if asks.is_empty():
 		body.add_child(UI.label(L.t("Tőlük már nincs mit kérned."), 17, UI.SOFT))
@@ -1681,7 +1785,19 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 	var fc := world.forecast()
 	var after := float(fc["kozep"][-1][1])
 	if before > 0.0:
-		body.add_child(UI.label(L.t("Várható melegedés 2100-ban: +%s → +%s °C") % [L.num(before, 2), L.num(after, 2)], 22, UI.GREEN, true))
+		var fmt := L.t("Várható melegedés 2100-ban: +%s → +%s °C")
+		var cl := UI.label(fmt % [L.num(before, 2), L.num(after, 2)], 22, UI.GREEN, true)
+		body.add_child(cl)
+		if not _test:             # a szám a szemed előtt pereg le az új értékre
+			cl.text = fmt % [L.num(before, 2), L.num(before, 2)]
+			var tw := cl.create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+			tw.tween_interval(0.35)
+			tw.tween_method(func(x: float) -> void: cl.text = fmt % [L.num(before, 2), L.num(x, 2)], before, after, 1.1)
+	if world.streak_bonus:
+		body.add_child(UI.label("★ " + L.t("Lendület! Két megállapodás egy körben: +1 lépés."), 19, UI.GOLD, true))
+		_bonus_float = true
+	elif world.streak % 2 == 1 and world.steps > 0:
+		body.add_child(UI.label(L.t("Még egy megállapodás ebben a körben, és kapsz egy lépést."), 16, UI.GOLD))
 	body.add_child(UI.label(L.t("2100-ban: +%s és +%s °C között") % [L.num(float(fc["also"][-1][1]), 1), L.num(float(fc["felso"][-1][1]), 1)], 17, UI.SOFT))
 	body.add_child(UI.label(L.t("A hőmérsékleti sáv azért ilyen széles, mert nem tudjuk pontosan, mennyire érzékeny a Föld."), 15, UI.MUTE))
 	body.add_child(_go(L.t("Rendben"), _close))
@@ -1757,6 +1873,7 @@ func _open_news(y0: int, t0: float) -> void:
 	var body := _open("%d–%d" % [y0, y0 + World.ROUND_YEARS - 1])
 	var t1 := float(world.st["T"])
 	body.add_child(UI.label(L.t("A Föld melegedése: +%s → +%s °C") % [L.num(t0, 2), L.num(t1, 2)], 22, UI.EMBER if t1 > t0 + 0.005 else UI.GREEN, true))
+	var lost := false
 	for n in world.news:
 		match str(n["fajta"]):
 			"billenes":
@@ -1804,9 +1921,32 @@ func _open_news(y0: int, t0: float) -> void:
 				c4.add_child(dh)
 				if world.group(n["csoport"]).get("felkeszult", false):
 					c4.add_child(UI.label(L.t("Felkészültek rá, ezért kisebb volt a baj."), 16, UI.GREEN))
+				elif n.get("lepes", false):
+					c4.add_child(UI.label(L.t("Nem voltak felkészülve. A mentés miatt most eggyel kevesebb lépésed van."), 16, UI.EMBER, true))
+					lost = true
 				c4.add_child(UI.label(L.t("A baj után jobban figyelnek rád: most eggyel kevesebb kártyával is meggyőzheted őket."), 16, UI.SOFT))
 				body.add_child(UI.card_root(c4o))
-	if world.news.is_empty():
+			"segit":
+				var c8 := UI.card(UI.GREEN)
+				c8.add_child(UI.label(L.t("%s tiszta technikát ad át. %s most könnyebben meggyőzhető.") % [L.field(world.group(n["csoport"]), "nev"), L.field(world.group(n["kinek"]), "nev")], 18, UI.GREEN, true))
+				body.add_child(UI.card_root(c8))
+				_flash_ids = [n["csoport"], n["kinek"]]
+	if not world.threat.is_empty() and not world.over():      # a következő baj már látszik: van idő felkészülni
+		var tg := world.group(str(world.threat["csoport"]))
+		var c9 := UI.card(UI.EMBER)
+		var r9 := UI.hbox(10)
+		r9.add_child(Icons.rect(str(world.threat["mi"]), UI.EMBER, 36))
+		r9.add_child(UI.label("⚠ %s: %s" % [L.t(THREAT[world.threat["mi"]]), L.field(tg, "nev")], 18, UI.EMBER, true))
+		c9.add_child(r9)
+		c9.add_child(UI.label(L.t("Készítsd fel őket a kör végéig, különben a mentés elvisz egy lépésedet."), 16, UI.SOFT))
+		body.add_child(UI.card_root(c9))
+	if lost and not _test:        # megrázkódik az ablak, ha a baj felkészületlenül ért
+		var ov := _overlay
+		var x0 := ov.position.x
+		var sh := ov.create_tween()
+		for dx in [14.0, -12.0, 9.0, -6.0, 3.0, 0.0]:
+			sh.tween_property(ov, "position:x", x0 + dx, 0.06)
+	if world.news.is_empty() and world.threat.is_empty():
 		body.add_child(UI.label(L.t("Csendes öt év volt."), 17, UI.SOFT))
 		var known: Array = world.hand.filter(func(id: String) -> bool: return not Cards.key_number(id).is_empty())
 		if not known.is_empty():
@@ -1953,6 +2093,9 @@ func _open_end() -> void:
 	var fin := _finish_game(r)
 	if fin["rekord"]:
 		body.add_child(UI.label(L.t("Új rekord! Ez az eddigi legjobb Földed."), 19, UI.GOLD, true))
+	if int(fin.get("lepcso", 0)) > 0:
+		body.add_child(UI.label("★ " + L.t("Új kihívás nyílt meg: %d. szint") % int(fin["lepcso"]), 19, UI.GOLD, true))
+		body.add_child(UI.label(L.t(LEVELS[int(fin["lepcso"])]), 16, UI.SOFT))
 	for bd in BADGES:
 		if bd[0] in fin["uj"]:
 			body.add_child(UI.label("★ " + L.t("Új jelvény: %s") % L.t(bd[1]), 17, UI.GOLD, true))
@@ -2143,7 +2286,7 @@ func _selftest() -> void:
 	await _shot("1_fooldal.png")
 	if "--idoproba" in OS.get_cmdline_user_args():      # az óra a kör végén magától lép tovább?
 		_clock_live = true
-		_clock = ROUND_SECONDS - 3.0
+		_clock = _round_s() - 3.0
 		await get_tree().create_timer(6.0).timeout
 		print("IDOPROBA kor=%d ablak=%s ora=%.1f" % [world.round_i, str(_overlay != null), _clock])
 		await _shot("0_idoproba.png")
@@ -2165,6 +2308,20 @@ func _selftest() -> void:
 	_clear_moment()
 	_clock_force = false
 	_clock = 0.0
+	# előre látható baj: a kártyán, a Földön és a csoport ablakában
+	world.threat = {"csoport": "europa", "mi": "arviz"}
+	_refresh()
+	await get_tree().create_timer(0.5).timeout
+	await _shot("1e_veszely.png")
+	_open_group(world.group("europa"))
+	await _shot("1f_veszely_ablak.png")
+	_close()
+	world.threat = {}
+	_level_force = 3
+	_pick_game(-1, 2)
+	await _shot("1g_kihivas.png")
+	_close()
+	_level_force = -1
 	_refresh()
 	await get_tree().create_timer(1.6).timeout
 	_open_help()
@@ -2185,10 +2342,14 @@ func _selftest() -> void:
 	var real_news: Array = world.news          # a négy hír-képjel képe (a világ állapotát nem változtatja meg)
 	world.news = []
 	for i in 4:
-		world.news.append({"fajta": "katasztrofa", "csoport": world.groups[i]["id"], "mi": ["hoseg", "aszaly", "arviz", "tuz"][i]})
+		world.news.append({"fajta": "katasztrofa", "csoport": world.groups[i]["id"], "mi": ["hoseg", "aszaly", "arviz", "tuz"][i], "lepes": i == 0})
+	world.news.append({"fajta": "segit", "csoport": world.groups[4]["id"], "kinek": world.groups[5]["id"]})
+	var real_threat: Dictionary = world.threat
+	world.threat = {"csoport": world.groups[2]["id"], "mi": "tuz"}
 	_open_news(2026, 1.41)
 	await _shot("7b_hir_kepjelek.png")
 	world.news = real_news
+	world.threat = real_threat
 	_close()
 	_open_group(world.group("kina"))
 	await _shot("8_targyalas.png")
@@ -2327,7 +2488,7 @@ func _press_toggles(n: Node) -> void:
 func _walkthrough() -> void:
 	var games := 0
 	for seed_v in [11, 222, 3333, 44444, 5, 60606]:
-		_new_game(seed_v, 3 + games % 3)
+		_new_game(seed_v, 3 + games % 3, games % 6)
 		while not world.over():
 			if not world.dilemma.is_empty():
 				_open_dilemma()
