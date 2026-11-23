@@ -25,6 +25,7 @@ const WAVER_CHANCE := 0.30                     # körönként ekkora eséllyel i
 const CDR := {"erdo": [0.5, 3.6], "bioszen": [0.5, 2.0], "kozet": [2.0, 4.0], "levegoszures": [0.5, 5.0], "novenyi_energia": [0.5, 5.0]}
 
 var seed_v := 0
+var game_id := 0                 # ennek a játszmának az egyedi száma (ugyanaz a Föld-kód többször is játszható)
 var sens := 0.0                  # a Föld rejtett érzékenysége (−1…+1), a végén derül ki
 var rng := RandomNumberGenerator.new()
 var st: Dictionary = {}
@@ -57,6 +58,7 @@ func new_game(seed_value: int = -1, steps_n: int = STEPS) -> void:
 	max_steps = clampi(steps_n, 3, 5)
 	data = read_json("res://adatok/csoportok.json")
 	seed_v = seed_value if seed_value >= 0 else int(Time.get_unix_time_from_system()) % 1000000
+	game_id = int(Time.get_unix_time_from_system() * 1000.0) % 2000000000
 	rng.seed = seed_v
 	sens = clampf(rng.randfn(0.0, 0.5), -1.0, 1.0)     # többnyire a sáv közepe táján, néha a szélén
 	st = M.new_state()
@@ -517,7 +519,7 @@ func result() -> Dictionary:
 # --- mentés -------------------------------------------------------------------
 
 func to_dict() -> Dictionary:
-	return {"v": SAVE_VERSION, "mag": seed_v, "sens": sens, "st": st, "alap": _base, "kor": round_i, "lepes": steps, "max_lepes": max_steps, "csoportok": groups, "kez": hand,
+	return {"v": SAVE_VERSION, "mag": seed_v, "jatek": game_id, "sens": sens, "st": st, "alap": _base, "kor": round_i, "lepes": steps, "max_lepes": max_steps, "csoportok": groups, "kez": hand,
 		"kivonas": cdr, "billenes": tips, "mult": history, "alap_mult": base_history, "hirek": news, "naplo": naplo, "csucs": summit_due, "vilag_nulla": net_zero_year, "kivont": cdr_total, "rng": str(rng.state)}
 
 
@@ -525,7 +527,7 @@ func from_dict(d: Dictionary) -> bool:
 	if int(d.get("v", 0)) != SAVE_VERSION or not d.has("st") or not d.has("csoportok"):
 		return false
 	data = read_json("res://adatok/csoportok.json")
-	seed_v = int(d["mag"]); sens = float(d["sens"]); st = d["st"]; _base = d["alap"]; round_i = int(d["kor"]); steps = int(d["lepes"]); max_steps = int(d.get("max_lepes", STEPS))
+	seed_v = int(d["mag"]); game_id = int(d.get("jatek", 0)); sens = float(d["sens"]); st = d["st"]; _base = d["alap"]; round_i = int(d["kor"]); steps = int(d["lepes"]); max_steps = int(d.get("max_lepes", STEPS))
 	groups = d["csoportok"]; hand = d["kez"]; cdr = d["kivonas"]; tips = d["billenes"]; history = d["mult"]; base_history = d["alap_mult"]
 	news = d.get("hirek", [])
 	summit_due = bool(d.get("csucs", false))

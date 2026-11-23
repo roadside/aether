@@ -281,6 +281,9 @@ Már nem jelenik meg: „Nem volt a kezedben olyan új bizonyíték, amivel megg
 - Játssz végig egy játékot „A mai Föld” gombbal.
 - Hangok: be
 - Hangok: ki
+- Az 1850–1900-as évek átlagához képest.
+- Az 1995–2014-es évek átlagához képest (IPCC AR6).
+- A 2025-ös kibocsátáshoz képest; a kivont CO2-t levonjuk belőle.
 
 ## 8. Kulcsszámok a kártyákra (12 mondat) – még nem lektorált
 

@@ -241,8 +241,11 @@ func _flat(bg: Color, border: Color, width: int = 2, margin: int = 12) -> StyleB
 
 
 # --- felület ------------------------------------------------------------------
-func _stat(parent: Control, key: String, caption: String, color: Color, sub: bool = false) -> void:
+func _stat(parent: Control, key: String, caption: String, color: Color, sub: bool = false, tip: String = "") -> void:
 	var v := UI.vbox(-3)
+	if tip != "":           # mihez képest értendő a szám: az egérrel fölé állva látszik
+		v.tooltip_text = tip
+		v.mouse_filter = Control.MOUSE_FILTER_STOP
 	v.add_child(UI.label(caption, 14, UI.MUTE, false, false))
 	var l := UI.label("", 21, color, true, false)
 	v.add_child(l)
@@ -270,9 +273,9 @@ func _build_top() -> void:
 	logo.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	h.add_child(logo)
 	_stat(h, "ev", L.t("Év"), UI.TEXT, true)
-	_stat(h, "meleg", L.t("Melegedés"), UI.EMBER, true)
-	_stat(h, "tenger", L.t("Tenger 2100-ban"), Color("#6ab8ff"))
-	_stat(h, "kibocs", L.t("A világ CO2-kibocsátása"), UI.GREEN)
+	_stat(h, "meleg", L.t("Melegedés"), UI.EMBER, true, L.t("Az 1850–1900-as évek átlagához képest."))
+	_stat(h, "tenger", L.t("Tenger 2100-ban"), Color("#6ab8ff"), false, L.t("Az 1995–2014-es évek átlagához képest (IPCC AR6)."))
+	_stat(h, "kibocs", L.t("A világ CO2-kibocsátása"), UI.GREEN, false, L.t("A 2025-ös kibocsátáshoz képest; a kivont CO2-t levonjuk belőle."))
 	_stat(h, "lepes", L.t("Lépéseid"), UI.CYAN)
 	_dots = _stats["lepes"]
 	var sp := Control.new()
@@ -462,6 +465,9 @@ func _build_menu() -> void:
 	_reset_btn.pressed.connect(_reset_game)
 	v.add_child(_reset_btn)
 	var daily := UI.button(L.t("A mai Föld"))
+	var day_best: Variant = L.get_setting("napi_legjobb", {})
+	if typeof(day_best) == TYPE_DICTIONARY and day_best.has(str(_daily_code())):     # a mai legjobb eredményed
+		daily.text += " · +%s °C" % L.num(float(day_best[str(_daily_code())]), 2)
 	daily.tooltip_text = L.t("Ma mindenki ugyanezt a Földet kapja.")
 	daily.pressed.connect(func() -> void:
 		_show_menu(false)
@@ -815,14 +821,21 @@ func _badges() -> Array:
 
 ## A játék végén egyszer: játékszám, legjobb eredmény, új jelvények.
 func _finish_game(r: Dictionary) -> Dictionary:
-	if _end_info.get("mag", -1) == world.seed_v:
+	if _end_info.get("jatek", -1) == world.game_id:
 		return _end_info
-	_end_info = {"mag": world.seed_v, "rekord": false, "uj": []}
-	if _dry or world.seed_v == int(L.get_setting("utolso_jatek", -1)):
+	_end_info = {"jatek": world.game_id, "rekord": false, "uj": []}
+	if _dry or world.game_id == int(L.get_setting("utolso_jatek", -1)):
 		return _end_info
 	var t := float(r["T"])
-	L.set_setting("utolso_jatek", world.seed_v)
+	L.set_setting("utolso_jatek", world.game_id)
 	L.set_setting("jatekok", int(L.get_setting("jatekok", 0)) + 1)
+	if world.seed_v == _daily_code():
+		var db: Variant = L.get_setting("napi_legjobb", {})
+		if typeof(db) != TYPE_DICTIONARY:
+			db = {}
+		var key := str(world.seed_v)
+		if not db.has(key) or t < float(db[key]):
+			L.set_setting("napi_legjobb", {key: t})       # csak a mai napot őrizzük
 	var past: Variant = L.get_setting("foldek", [])
 	if typeof(past) != TYPE_ARRAY:
 		past = []

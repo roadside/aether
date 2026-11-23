@@ -184,4 +184,7 @@ const EN := {
 	"Gyors kezdés": "Quick start", "Érd el, hogy 2040 előtt mind a hat csoport vállaljon célt.": "Get all six groups to promise a target before 2040.",
 	"Napi Föld": "Daily Earth", "Játssz végig egy játékot „A mai Föld” gombbal.": "Finish a game started with the “Today's Earth” button.",
 	"Hangok: be": "Sounds: on", "Hangok: ki": "Sounds: off",
+	"Az 1850–1900-as évek átlagához képest.": "Compared with the 1850–1900 average.",
+	"Az 1995–2014-es évek átlagához képest (IPCC AR6).": "Compared with the 1995–2014 average (IPCC AR6).",
+	"A 2025-ös kibocsátáshoz képest; a kivont CO2-t levonjuk belőle.": "Compared with emissions in 2025; removed CO2 is subtracted.",
 }
