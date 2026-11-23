@@ -179,4 +179,9 @@ const EN := {
 	"A következő rang: %s (%d kártyától)": "Next rank: %s (from %d cards)",
 	"Gyakornok": "Trainee", "Kutató": "Researcher", "Vezető kutató": "Lead researcher", "Professzor": "Professor", "A Föld őre": "Guardian of the Earth",
 	"Felkészültek rá, ezért kisebb volt a baj.": "They were prepared, so the damage was smaller.",
+	"Hűvös Föld": "Cool Earth", "Maradj 2100-ban +1,6 °C alatt.": "Stay below +1.6 °C in 2100.",
+	"Egy megingás sem": "Not one waver", "Játssz végig egy játékot úgy, hogy egy csoport sem tolja későbbre a célját.": "Finish a game in which no group pushes its target back.",
+	"Gyors kezdés": "Quick start", "Érd el, hogy 2040 előtt mind a hat csoport vállaljon célt.": "Get all six groups to promise a target before 2040.",
+	"Napi Föld": "Daily Earth", "Játssz végig egy játékot „A mai Föld” gombbal.": "Finish a game started with the “Today's Earth” button.",
+	"Hangok: be": "Sounds: on", "Hangok: ki": "Sounds: off",
 }

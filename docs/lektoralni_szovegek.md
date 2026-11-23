@@ -270,6 +270,17 @@ Már nem jelenik meg: „Nem volt a kezedben olyan új bizonyíték, amivel megg
 - Vezető kutató
 - Professzor
 - A Föld őre
+- Felkészültek rá, ezért kisebb volt a baj.
+- Hűvös Föld
+- Maradj 2100-ban +1,6 °C alatt.
+- Egy megingás sem
+- Játssz végig egy játékot úgy, hogy egy csoport sem tolja későbbre a célját.
+- Gyors kezdés
+- Érd el, hogy 2040 előtt mind a hat csoport vállaljon célt.
+- Napi Föld
+- Játssz végig egy játékot „A mai Föld” gombbal.
+- Hangok: be
+- Hangok: ki
 
 ## 8. Kulcsszámok a kártyákra (12 mondat) – még nem lektorált
 

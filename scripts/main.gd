@@ -164,7 +164,7 @@ var _click: AudioStreamPlayer
 func _on_node_added(n: Node) -> void:
 	if n is BaseButton and not (n is CheckBox):
 		(n as BaseButton).pressed.connect(func() -> void:
-			if _dry:
+			if _dry or not _sounds_on():
 				return
 			if _click == null:
 				_click = AudioStreamPlayer.new()
@@ -174,8 +174,12 @@ func _on_node_added(n: Node) -> void:
 			_click.play())
 
 
+func _sounds_on() -> bool:
+	return bool(L.get_setting("hangok", true))
+
+
 func _sound(name: String) -> void:
-	if _dry:
+	if _dry or not _sounds_on():
 		return
 	if _snd == null:
 		_snd = AudioStreamPlayer.new()
@@ -448,15 +452,19 @@ func _build_menu() -> void:
 	var mus := UI.button(L.t("Zene: be") if _music_on() else L.t("Zene: ki"))
 	mus.pressed.connect(_toggle_music.bind(mus))
 	v.add_child(mus)
+	var snd := UI.button(L.t("Hangok: be") if _sounds_on() else L.t("Hangok: ki"))
+	snd.pressed.connect(func() -> void:
+		L.set_setting("hangok", not _sounds_on())
+		snd.text = L.t("Hangok: be") if _sounds_on() else L.t("Hangok: ki"))
+	v.add_child(snd)
 	_reset_btn = UI.button(L.t("Új játék"))
 	_reset_btn.pressed.connect(_reset_game)
 	v.add_child(_reset_btn)
 	var daily := UI.button(L.t("A mai Föld"))
 	daily.tooltip_text = L.t("Ma mindenki ugyanezt a Földet kapja.")
 	daily.pressed.connect(func() -> void:
-		var d := Time.get_date_dict_from_system()
 		_show_menu(false)
-		_pick_game((int(d["year"]) % 100) * 10000 + int(d["month"]) * 100 + int(d["day"])))
+		_pick_game(_daily_code()))
 	v.add_child(daily)
 	var code_row := UI.hbox(6)
 	var code := LineEdit.new()
@@ -485,6 +493,12 @@ func _build_menu() -> void:
 	for b in v.get_children():
 		if b is Button:
 			(b as Button).focus_mode = Control.FOCUS_NONE
+
+
+## A mai nap Föld-kódja (ééhhnn): aznap mindenki ugyanazt a Földet kapja.
+func _daily_code() -> int:
+	var d := Time.get_date_dict_from_system()
+	return (int(d["year"]) % 100) * 10000 + int(d["month"]) * 100 + int(d["day"])
 
 
 func _show_menu(on: bool) -> void:
@@ -620,7 +634,10 @@ func _mark_next() -> void:
 
 # --- ablakok ------------------------------------------------------------------
 func _open(title: String, accent: Color = UI.GOLD) -> VBoxContainer:
+	var keep := _flash_ids       # a felvillanás az ablak valódi bezárásakor jön, nem ablakváltáskor
+	_flash_ids = []
 	_close()
+	_flash_ids = keep
 	_show_menu(false)
 	_dim = ColorRect.new()
 	_dim.color = Color(0.0, 0.0, 0.02, 0.72)
@@ -682,6 +699,8 @@ func _fit() -> void:
 		_close_x.position = p.position + Vector2(920 - 22, -22)
 
 
+var _flash_ids: Array = []        # akiknél az ablak bezárása után felvillanás jár (egyezség, megerősítés, csúcs)
+
 func _close() -> void:
 	for n in [_overlay, _dim, _close_x]:
 		if n != null and is_instance_valid(n):
@@ -689,6 +708,15 @@ func _close() -> void:
 	_overlay = null
 	_dim = null
 	_close_x = null
+	for gid in _flash_ids:
+		var g := world.group(gid)
+		if g.is_empty() or not _group_cards.has(gid):
+			continue
+		globe.flash(float(g["lat"]), float(g["lon"]), Color(str(g["szin"])).lightened(0.3))
+		var card: Control = _group_cards[gid]["gomb"]
+		card.modulate = Color(1.9, 1.9, 1.9)
+		create_tween().tween_property(card, "modulate", Color.WHITE, 0.2 if _test else 1.2)
+	_flash_ids = []
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -769,6 +797,10 @@ const BADGES := [
 	["felkeszult", "Senki sem marad magára", "Segíts mind a hat csoportnak felkészülni a bajra."],
 	["nehez", "Nehéz Föld", "Maradj +2 °C alatt egy az átlagnál érzékenyebb Földön."],
 	["mester", "Mester", "Maradj +2 °C alatt nehéz fokozaton."],
+	["huvos", "Hűvös Föld", "Maradj 2100-ban +1,6 °C alatt."],
+	["szilard", "Egy megingás sem", "Játssz végig egy játékot úgy, hogy egy csoport sem tolja későbbre a célját."],
+	["gyors", "Gyors kezdés", "Érd el, hogy 2040 előtt mind a hat csoport vállaljon célt."],
+	["napi", "Napi Föld", "Játssz végig egy játékot „A mai Föld” gombbal."],
 	["gyujto", "Gyűjtő", "Kutass ki ötven különböző kártyát."],
 	["tudos", "Mindenhez értesz", "Legyen kártyád mind a nyolc témakörből a gyűjteményben."],
 ]
@@ -813,6 +845,11 @@ func _finish_game(r: Dictionary) -> Dictionary:
 		"kuszob": int(r["billenes"]) == 0, "kivonas": world.cdr.size() >= 3,
 		"nehez": t < 2.0 and float(r["sens"]) >= 0.25,
 		"mester": t < 2.0 and world.max_steps <= 3,
+		"huvos": t < 1.6,
+		"szilard": not world.naplo.any(func(e: Dictionary) -> bool: return e["fajta"] == "visszalepett"),
+		"gyors": world.groups.all(func(g: Dictionary) -> bool:
+			return world.naplo.any(func(e: Dictionary) -> bool: return e["fajta"] == "cel" and e.get("csoport", "") == g["id"] and int(e["ev"]) < 2040)),
+		"napi": world.seed_v == _daily_code(),
 		"gyujto": c.size() >= 50, "tudos": Cards.THEMES.keys().all(func(th: String) -> bool: return themes.has(th)),
 	}
 	var have := _badges()
@@ -974,7 +1011,14 @@ func _open_research(theme: String = "") -> void:
 		v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		v.add_child(_lbl(_theme_name(th), 20, col, true))
 		v.add_child(_lbl(L.t("Akit ez aggaszt: %s") % ", ".join(who) if not who.is_empty() else "", 14, UI.SOFT))
-		v.add_child(_lbl(L.t("%d kérdés vár") % n if n > 0 else L.t("Itt most nincs új kérdés"), 13, UI.MUTE))
+		var shaky_who: Array = []
+		for g in world.groups:
+			if g.get("inog", false) and th in g["felelmek"]:
+				shaky_who.append(L.field(g, "nev"))
+		if not shaky_who.is_empty() and n > 0:
+			v.add_child(_lbl("⚠ %s: %s" % [", ".join(shaky_who), L.t("Bizonytalan")], 13, UI.GOLD))
+		else:
+			v.add_child(_lbl(L.t("%d kérdés vár") % n if n > 0 else L.t("Itt most nincs új kérdés"), 13, UI.MUTE))
 		b.add_child(v)
 		b.pressed.connect(_research_theme.bind(th))
 		grid.add_child(b)
@@ -1227,6 +1271,7 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 
 
 func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
+	_flash_ids = [g["id"]]
 	if ask["fajta"] == "megerosites":
 		var b2 := _open(L.field(g, "nev"), UI.GREEN)
 		b2.add_child(UI.label(L.t("%s megingott, de kitartott.") % L.field(g, "nev"), 22, UI.GREEN, true))
@@ -1395,6 +1440,7 @@ func _open_summit() -> void:
 func _do_summit(id: String) -> void:
 	var before := float(world.forecast()["kozep"][-1][1])
 	var who := world.summit(id)
+	_flash_ids = who.duplicate()
 	_refresh()
 	_save()
 	_sound("egyezseg")
@@ -1583,6 +1629,9 @@ func _selftest() -> void:
 	_refresh()
 	_agreed(kina, {"fajta": "cel", "cel": kt}, 2.8)
 	await _shot("9_megegyezes.png")
+	_close()
+	await get_tree().create_timer(0.6).timeout
+	await _shot("9b_felvillanas.png")
 	_open_hand()
 	await _shot("10_kartyaim.png")
 	_open_cdr()
@@ -1593,6 +1642,10 @@ func _selftest() -> void:
 	await _shot("11c_uj_jatek.png")
 	_open_story()
 	await _shot("11e_tortenet.png")
+	_close()
+	_show_menu(true)
+	await _shot("11f_menu.png")
+	_show_menu(false)
 	Cards.show_unproofed = true
 	_open_card("napelem")
 	await _shot("11d_kulcsszam.png")

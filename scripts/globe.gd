@@ -25,6 +25,7 @@ var fixed_sun := false               # a Nap mindig a néző felől süt (játé
 var spin := 0.12
 var cloud_drift := 0.0
 var time := 0.0
+var flashes: Array = []             # felvillanó gyűrűk: [{"lat", "lon", "color", "t0"}] (egyezségnél)
 var stations: Array = []             # [{name, lat, lon, color, me, locked}]
 var links: Array = []                # [[lat1, lon1, lat2, lon2], ...]
 var events: Array = []               # valós események (world_state.py): {cim, kategoria, lat, lon, link, ...}
@@ -351,6 +352,16 @@ func _draw() -> void:
 				var a := TAU * k / 36.0
 				var q := (hc + Vector2(cos(a), sin(a)) * rad).snapped(Vector2(px, px))
 				draw_rect(Rect2(q, Vector2(px, px)), Color(1.0, 0.85, 0.35, 0.95))
+	# felvillanás (egyezség): három, egymás után táguló gyűrű
+	for fl in flashes:
+		var pf := project(float(fl["lat"]), float(fl["lon"]))
+		if pf.z < 0.5:
+			continue
+		for ring in 3:
+			var age: float = time - float(fl["t0"]) - ring * 0.35
+			if age > 0.0 and age < 1.6:
+				var k := age / 1.6
+				draw_arc(Vector2(pf.x, pf.y), 10.0 + 90.0 * k, 0.0, TAU, 48, Color(fl["color"], (1.0 - k) * 0.9), 3.0)
 	# állomások: fényoszlop + gyémánt
 	for s in stations:
 		var p := project(s.lat, s.lon)
@@ -412,3 +423,10 @@ func _station_at(pos: Vector2) -> Dictionary:
 		if p.z > 0.5 and pos.distance_to(Vector2(p.x, p.y)) < 14.0:
 			return s
 	return {}
+
+
+## Felvillanó gyűrűk egy helyen (pl. amikor egy országcsoport vállal valamit).
+func flash(lat: float, lon: float, color: Color) -> void:
+	flashes = flashes.filter(func(f: Dictionary) -> bool: return time - float(f["t0"]) < 3.0)
+	flashes.append({"lat": lat, "lon": lon, "color": color, "t0": time})
+	queue_redraw()
