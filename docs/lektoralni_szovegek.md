@@ -391,7 +391,7 @@ Csak ezek újak. Ami nincs itt, az nem változott.
 ### Billenőpontok veszélysávja
 - veszélysávban
 - Veszélysávba értünk: %s
-- A küszöb valahol +%s és +%s °C között van. Senki sem tudja, pontosan hol.
+- A küszöb rejtve van: senki sem tudja, pontosan mikor lépjük át.
 
 ### Terjedő tévhitek
 A négy tévhit mondata (idézőjelben jelennek meg):

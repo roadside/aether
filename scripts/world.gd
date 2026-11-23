@@ -52,6 +52,7 @@ var threat: Dictionary = {}       # előre látható baj: {"csoport", "mi"} – 
 var streak := 0                  # megállapodások ebben a körben (lendület: minden második visszaad egy lépést)
 var streak_bonus := false        # a legutóbbi megállapodás lendületből lépést adott
 var myth: Dictionary = {}         # terjedő tévhit: {"csoport", "kartya"} – a kártya a cáfolata (játékszabály)
+var gentle := false              # az első játék: a nehezítések később és ritkábban jönnek (a felület állítja be)
 var myths_seen: Array = []        # ebben a játékban már előkerült tévhitek (kártyaazonosítók)
 var challenge := 0               # kihívás-lépcső: 0–5, szintenként egy új nehezítés (játékszabály)
 var data: Dictionary = {}
@@ -79,6 +80,7 @@ func new_game(seed_value: int = -1, steps_n: int = STEPS, challenge_n: int = 0) 
 	threat = {}
 	myth = {}
 	myths_seen = []
+	gentle = false
 	streak = 0
 	streak_bonus = false
 	data = read_json("res://adatok/csoportok.json")
@@ -541,7 +543,7 @@ func advance() -> void:
 				news.append({"fajta": "visszalepett", "csoport": g["id"], "cel": g["cel"]})
 				naplo.append({"ev": y, "fajta": "visszalepett", "csoport": g["id"], "cel": g["cel"]})
 	# új elbizonytalanodás: az esély a játék során nő (30% → 60%); a felkészült csoport nem inog meg
-	if round_i < ROUNDS - 1 and rng.randf() < WAVER_CHANCE * (CHALLENGE_WAVER if challenge >= 4 else 1.0) * (1.0 + float(round_i) / float(ROUNDS)):
+	if round_i < ROUNDS - 1 and rng.randf() < WAVER_CHANCE * (CHALLENGE_WAVER if challenge >= 4 else 1.0) * (1.0 + float(round_i) / float(ROUNDS)) and not (gentle and round_i < 3):
 		var cand: Array = groups.filter(func(g: Dictionary) -> bool:      # aki most ingott meg, az nem bizonytalanodik el rögtön újra
 			return int(g["cel"]) > 0 and fraction(g, year()) > 0.0 and not g.get("felkeszult", false) and not (g["id"] in just_wavered))
 		if not cand.is_empty():
@@ -554,7 +556,7 @@ func advance() -> void:
 		if not gm.is_empty() and int(gm["cel"]) > 0 and fraction(gm, year()) > 0.0 and not gm.get("felkeszult", false) and not gm.get("inog", false) and not (gm["id"] in just_wavered):
 			gm["inog"] = true
 			news.append({"fajta": "inog", "csoport": gm["id"]})
-	elif round_i >= MYTH_FROM_ROUND and round_i < ROUNDS - 1 and rng.randf() < MYTH_CHANCE:
+	elif round_i >= MYTH_FROM_ROUND + (2 if gentle else 0) and round_i < ROUNDS - 1 and rng.randf() < MYTH_CHANCE:
 		var left: Array = MYTH_CARDS.filter(func(id: String) -> bool: return not (id in myths_seen))
 		if not left.is_empty():
 			var mid: String = left[rng.randi_range(0, left.size() - 1)]
@@ -585,7 +587,7 @@ func advance() -> void:
 			naplo.append({"ev": year(), "fajta": "baj", "csoport": g2["id"], "mi": threat["mi"], "vedve": ready})
 		threat = {}
 	# a következő baj már most látszik (a melegedéssel gyakoribb), fel lehet rá készülni
-	if round_i < ROUNDS - 1 and rng.randf() < clampf(0.15 + 0.25 * (float(st["T"]) - M.T_START), 0.15, 0.6):
+	if round_i < ROUNDS - 1 and rng.randf() < clampf(0.15 + 0.25 * (float(st["T"]) - M.T_START), 0.15, 0.6) and not (gentle and round_i < 2):
 		var open: Array = groups.filter(func(g: Dictionary) -> bool: return not g.get("felkeszult", false))
 		var kind: String = ["hoseg", "aszaly", "arviz", "tuz"][rng.randi_range(0, 3)]
 		if not open.is_empty():       # aki már felkészült, azt nem fenyegeti újabb baj
@@ -776,7 +778,7 @@ func what_if(delay: int) -> float:
 func to_dict() -> Dictionary:
 	return {"v": SAVE_VERSION, "mag": seed_v, "jatek": game_id, "sens": sens, "st": st, "alap": _base, "kor": round_i, "lepes": steps, "max_lepes": max_steps, "csoportok": groups, "kez": hand,
 		"kivonas": cdr, "billenes": tips, "mult": history, "alap_mult": base_history, "hirek": news, "naplo": naplo, "hajto": hajto, "kuldetes": missions, "csucs": summit_due, "dontes": dilemma, "vilag_nulla": net_zero_year, "kivont": cdr_total, "rng": str(rng.state),
-		"veszely": threat, "sorozat": streak, "kihivas": challenge, "tevhit": myth, "tevhitek": myths_seen}
+		"veszely": threat, "sorozat": streak, "kihivas": challenge, "tevhit": myth, "tevhitek": myths_seen, "szelid": gentle}
 
 
 func from_dict(d: Dictionary) -> bool:
@@ -796,6 +798,7 @@ func from_dict(d: Dictionary) -> bool:
 	threat = d.get("veszely", {})
 	myth = d.get("tevhit", {})
 	myths_seen = d.get("tevhitek", [])
+	gentle = bool(d.get("szelid", false))
 	streak = int(d.get("sorozat", 0))
 	streak_bonus = false
 	challenge = int(d.get("kihivas", 0))

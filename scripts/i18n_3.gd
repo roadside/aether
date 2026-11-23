@@ -256,7 +256,7 @@ const EN := {
 	"Új gomb: CO2-kivonás. Kártya kell hozzá.": "New button: CO2 removal. It needs a card.",
 	"veszélysávban": "in the danger range",
 	"Veszélysávba értünk: %s": "We have entered the danger range: %s",
-	"A küszöb valahol +%s és +%s °C között van. Senki sem tudja, pontosan hol.": "The threshold is somewhere between +%s and +%s °C. Nobody knows exactly where.",
+	"A küszöb rejtve van: senki sem tudja, pontosan mikor lépjük át.": "The threshold is hidden: nobody knows exactly when we will cross it.",
 	"Új játék vezetéssel": "New guided game",
 	"A Nap okozza a melegedést, nem az ember.": "The Sun is causing the warming, not people.",
 	"A világűrből jövő sugárzás okozza a melegedést.": "Radiation from space is causing the warming.",

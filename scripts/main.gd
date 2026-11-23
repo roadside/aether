@@ -474,6 +474,7 @@ func _ready() -> void:
 	var saved: Variant = null if _test else World.read_json(SAVE)
 	if typeof(saved) != TYPE_DICTIONARY or not world.from_dict(saved):
 		world.new_game(2026 if _test else -1)
+		world.gentle = not _test and not bool(L.get_setting("tanulo_kesz", false))      # az első játék szelídebb
 
 	globe = Globe.new()
 	globe.position = Vector2(400, 44)
@@ -1075,6 +1076,7 @@ func _pick_game(code: int = -1, level: int = -1) -> void:
 func _new_game(code: int = -1, steps_n: int = World.STEPS, level: int = 0) -> void:
 	_close()
 	world.new_game(code, steps_n, level)
+	world.gentle = not _test and not bool(L.get_setting("tanulo_kesz", false))      # az első játék szelídebb
 	_offers = {}
 	_clock = 0.0
 	_plan_moments()
@@ -2233,13 +2235,16 @@ func _open_news(y0: int, t0: float) -> void:
 	var t1 := float(world.st["T"])
 	body.add_child(UI.label(L.t("A Föld melegedése: +%s → +%s °C") % [L.num(t0, 2), L.num(t1, 2)], 22, UI.EMBER if t1 > t0 + 0.005 else UI.GREEN, true))
 	var lost := false
-	for tp in world.tips:          # új veszélysáv: a küszöb rejtve van, de a sávja ismert
+	var bands: Array = []          # új veszélysáv: a küszöb rejtve van, de a sávja ismert
+	for tp in world.tips:
 		if int(tp["ev"]) == 0 and float(tp["also"]) > t0 and float(tp["also"]) <= t1:
-			var cw := UI.card(UI.GOLD)
-			cw.add_child(UI.label("⚠ " + L.t("Veszélysávba értünk: %s") % L.field(tp, "nev"), 18, UI.GOLD, true))
-			cw.add_child(UI.label(L.t("A küszöb valahol +%s és +%s °C között van. Senki sem tudja, pontosan hol.") % [L.num(float(tp["also"]), 1), L.num(float(tp["felso"]), 1)], 16, UI.SOFT))
-			body.add_child(UI.card_root(cw))
-			quiet = false
+			bands.append(L.field(tp, "nev"))
+	if not bands.is_empty():
+		var cw := UI.card(UI.GOLD)
+		cw.add_child(UI.label("⚠ " + L.t("Veszélysávba értünk: %s") % ", ".join(bands), 18, UI.GOLD, true))
+		cw.add_child(UI.label(L.t("A küszöb rejtve van: senki sem tudja, pontosan mikor lépjük át."), 16, UI.SOFT))
+		body.add_child(UI.card_root(cw))
+		quiet = false
 	for n in world.news:
 		match str(n["fajta"]):
 			"billenes":
@@ -2780,6 +2785,31 @@ func _selftest() -> void:
 	_close()
 	await get_tree().create_timer(0.6).timeout
 	await _shot("9b_felvillanas.png")
+	# a valós idejű jelenetek próbája (ezek ellenőrző futásban különben kimaradnak): meggyőzés, lecsapó baj, ketyegő óra
+	_test = false
+	var eu2 := world.group("europa")
+	await _persuade(eu2, world.hand.slice(0, 2))
+	await _shot("9c_meggyozes.png")
+	_close()
+	_busy = false
+	world.threat = {"csoport": "europa", "mi": "tuz"}
+	world.summit_due = false
+	world.dilemma = {}
+	_advance()
+	await get_tree().create_timer(5.2).timeout
+	_test = true
+	await _shot("9d_baj_lecsap.png")
+	_test = false
+	await get_tree().create_timer(2.6).timeout
+	await _shot("9e_baj_hirek.png")
+	_close()
+	_clock_force = true
+	_clock = _round_s() - 4.0
+	await get_tree().create_timer(2.2).timeout
+	_clock_force = false
+	_clock = 0.0
+	_test = true
+	print("JELENETEK kör=%d lépés=%d/%d" % [world.round_i, world.steps, world.max_steps])
 	_open_hand()
 	await _shot("10_kartyaim.png")
 	_open_cdr()
@@ -2881,6 +2911,12 @@ func _selftest() -> void:
 					break
 			_open_collection()
 			_close()
+	_test = false
+	_open_end()
+	await get_tree().create_timer(0.8).timeout
+	await _shot("14a_vege_szamlal.png")
+	await get_tree().create_timer(3.0).timeout
+	_test = true
 	_open_end()
 	await _shot("14_vege.png")
 	print("KEP ", await _save_picture())

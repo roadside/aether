@@ -76,7 +76,7 @@ static func field(d: Dictionary, key: String) -> String:
 
 ## Szám a nyelvnek megfelelő tizedesjellel.
 static func num(x: float, decimals: int = 1) -> String:
-	var s := String.num(x, decimals)
+	var s := ("%." + str(maxi(decimals, 0)) + "f") % x       # mindig ugyanannyi tizedes: +1,50 és +1,58 egymás mellett is rendezett
 	return s if is_en() else s.replace(".", ",")
 
 
