@@ -13,9 +13,9 @@ uniform float radius = 0.86;           // a gömb sugara a téglalaphoz képest 
 uniform float spin = 0.0;              // forgás (fordulat), a GDScript állítja
 uniform float tilt = 0.35;             // dőlés radiánban
 uniform vec3 sun_dir = vec3(-0.62, -0.38, 0.69);
-uniform float levels = 9.0;            // színszintek csatornánként (poszterizálás)
+uniform float levels = 15.0;           // színszintek csatornánként (finomabb, festményszerű átmenetek)
 uniform float cloud_drift = 0.0;       // felhők elmozdulása (fordulat)
-uniform vec3 atmosphere = vec3(0.39, 0.95, 0.89);
+uniform vec3 atmosphere = vec3(0.50, 0.74, 1.0);    // természetes égkék (nem neon)
 uniform float zoom = 1.0;              // nagyítás (1 = egész gömb)
 uniform sampler2D anomaly_map : source_color, filter_linear, repeat_enable;  // mai hőmérséklet-eltérés (Climate Pulse)
 uniform float anomaly_mix = 0.0;       // 0 = normál Föld, 1 = eltérés-térkép
@@ -56,15 +56,18 @@ void fragment() {
 	} else if (r2 > 1.0) {
 		// légkör-perem a gömbön kívül
 		float dist = sqrt(r2);
-		float k = 1.0 - (dist - 1.0) / 0.09;
+		float k = 1.0 - (dist - 1.0) / 0.13;
 		if (k <= 0.0) {
 			COLOR = vec4(0.0);
 		} else {
 			vec2 dir = p / dist;
 			float lit = clamp(-(dir.x * L.x + dir.y * L.y) * 0.9 + 0.45, 0.15, 1.0);
-			float a = pow(k, 2.2) * lit * 0.75;
-			a = floor(a * 6.0 + d) / 6.0;
-			COLOR = vec4(mix(vec3(0.24, 0.55, 1.0), atmosphere, k), a);
+			float a = pow(k, 2.6) * lit * 0.8;
+			a = floor(a * 12.0 + d) / 12.0;
+			// a nappal és az éjszaka határánál a légkör pereme melegebb, alkonyi színű
+			float dusk = 1.0 - smoothstep(0.0, 0.45, abs(dir.x * L.x + dir.y * L.y));
+			vec3 halo = mix(vec3(0.16, 0.36, 0.86), atmosphere, k);
+			COLOR = vec4(mix(halo, vec3(1.0, 0.62, 0.40), dusk * 0.35 * k), a);
 		}
 	} else {
 		vec3 n = vec3(p.x, p.y, sqrt(max(0.0, 1.0 - r2)));
@@ -161,9 +164,18 @@ void fragment() {
 				albedo = mix(albedo, albedo * vec3(0.85, 0.95, 1.1), (1.0 - stripe) * k * 0.4);
 			}
 		}
+		// festményszerű szemcse: a felszín színe finoman, foltokban változik (akvarell hatás)
+		float grain = texture(cloud_map, fract(tex * vec2(23.0, 11.0) + vec2(0.13, 0.71))).r;
+		albedo *= 0.93 + 0.14 * grain;
+		if (data.r < 0.5) {
+			// a mély óceán sötétebb, telt kék; a sekély part menti víz világosabb, türkizebb marad
+			albedo = mix(albedo, vec3(0.09, 0.27, 0.50), 0.26);        // a rikító türkiz helyett természetesebb tengerkék
+			albedo = mix(albedo * vec3(0.74, 0.87, 1.04), albedo * vec3(0.94, 1.0, 1.0), clamp(data.g * 1.5, 0.0, 1.0));
+		}
 		float ndl = dot(n, L);
-		float light = clamp(ndl * 0.95 + 0.12, 0.0, 1.0);
-		vec3 col = albedo * (0.25 + light * 0.95);
+		float light = clamp(ndl * 0.85 + 0.18, 0.0, 1.0);
+		// meleg napfény, hűvös, kékes árnyék: természetes, festett megvilágítás
+		vec3 col = albedo * mix(vec3(0.20, 0.25, 0.36), vec3(1.15, 1.11, 1.03), light);
 
 		// Pára (smog): a sűrűn lakott, iparosodott vidékek (ahol éjjel sok a fény) fölött barnás-szürke
 		// pára a kibocsátással arányosan; ahogy a terved szerint csökken a kibocsátás, kitisztul.
@@ -187,6 +199,8 @@ void fragment() {
 			vec3 h = normalize(L + vec3(0.0, 0.0, 1.0));
 			// visszafogott csillogás: a tavak a Nap alatt ne világítsanak hófehéren
 			col += vec3(1.0, 0.95, 0.84) * pow(max(dot(n, h), 0.0), 140.0) * 0.55 * step(0.0, ndl);
+			// széles, halvány fénylés a vízen a Nap felől
+			col += vec3(0.50, 0.66, 0.88) * pow(max(dot(n, h), 0.0), 9.0) * 0.10 * step(0.0, ndl);
 		}
 
 		// felhők és árnyékuk
@@ -203,15 +217,15 @@ void fragment() {
 		// vastagabb felhő fehérebb, a vékony széle kékesebb és áttetszőbb
 		vec3 cloud_col = mix(vec3(0.70, 0.79, 0.90), vec3(0.94, 0.97, 1.0), cv) * max(0.1, light);
 		// 5 lépcsős, ditherelt felhőszél: lágy, de pixeles marad
-		col = mix(col, cloud_col, min(1.0, floor(cv * 5.0 + d) / 5.0) * 0.9);
+		col = mix(col, cloud_col, min(1.0, floor(cv * 9.0 + d) / 9.0) * 0.9);
 
 		// naplemente-sáv és perem-pára
 		// keskeny, halvány alkonysáv a nappal-éjszaka határán
-		if (ndl > -0.03 && ndl < 0.07) {
-			col = mix(col, vec3(1.0, 0.55, 0.31), 0.10 * (1.0 - abs(ndl - 0.02) / 0.05));
+		if (ndl > -0.08 && ndl < 0.16) {
+			col = mix(col, vec3(1.0, 0.58, 0.34), 0.20 * (1.0 - abs(ndl - 0.04) / 0.12));
 		}
 		float rim = pow(1.0 - n.z, 3.0);
-		col = mix(col, vec3(0.43, 0.75, 1.0), min(0.55, rim * 0.9 * (0.4 + max(0.0, ndl))) * step(-0.1, ndl));
+		col = mix(col, vec3(0.52, 0.76, 1.0), min(0.6, rim * 0.95 * (0.4 + max(0.0, ndl))) * step(-0.1, ndl));
 
 		// éjszakai oldal: városfények
 		float night = smoothstep(0.02, -0.12, ndl);

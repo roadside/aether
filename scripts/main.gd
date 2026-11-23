@@ -61,7 +61,7 @@ class Twinkle extends Control:
 	func _ready() -> void:
 		var rng := RandomNumberGenerator.new()
 		rng.seed = 2026
-		for i in 140:
+		for i in 60:
 			_stars.append([Vector2(rng.randf() * 1600.0, rng.randf() * 900.0).snapped(Vector2(2, 2)),
 				rng.randf_range(0.6, 2.2), rng.randf() * TAU, 2.0 if rng.randf() < 0.15 else 1.0])
 
@@ -71,7 +71,7 @@ class Twinkle extends Control:
 
 	func _draw() -> void:
 		for s in _stars:
-			var a: float = 0.25 + 0.55 * (0.5 + 0.5 * sin(_t * float(s[1]) + float(s[2])))
+			var a: float = 0.12 + 0.50 * (0.5 + 0.5 * sin(_t * float(s[1]) + float(s[2])))
 			var sz: float = float(s[3]) * 2.0
 			draw_rect(Rect2(s[0], Vector2(sz, sz)), Color(0.85, 0.92, 1.0, a))
 
