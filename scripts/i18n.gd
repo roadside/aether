@@ -80,6 +80,29 @@ static func num(x: float, decimals: int = 1) -> String:
 	return s if is_en() else s.replace(".", ",")
 
 
+## Magyar toldalék szám után: „2060-re” → „2060-ra” (a kiejtett szám hangrendje szerint). Angolul változatlan.
+static func rag(text: String) -> String:
+	if is_en():
+		return text
+	var re := RegEx.new()
+	re.compile("(\\d+)-r[ae](?![a-zA-Záéíóöőúüű])")
+	var out := text
+	for m in re.search_all(text):
+		var digits := m.get_string(1)
+		var back := false      # mély hangrendű-e az utolsó kiejtett tag
+		var pos := digits.length() - 1
+		while pos > 0 and digits[pos] == "0":
+			pos -= 1
+		var d := int(digits[pos])
+		match digits.length() - 1 - pos:
+			0: back = d in [3, 6, 8]                 # három, hat, nyolc
+			1: back = d in [2, 3, 6, 8]              # húsz, harminc, hatvan, nyolcvan
+			2: back = true                           # száz
+			_: back = false                          # ezer
+		out = out.replace(m.get_string(0), digits + ("-ra" if back else "-re"))
+	return out
+
+
 ## Szám legfeljebb ennyi tizedessel, a felesleges nullák nélkül (5,0 -> 5; 0,50 -> 0,5).
 static func num_short(x: float, decimals: int = 2) -> String:
 	var s := String.num(snappedf(x, pow(10.0, -decimals)), decimals)

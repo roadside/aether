@@ -178,4 +178,5 @@ const EN := {
 	"Új rang: %s": "New rank: %s",
 	"A következő rang: %s (%d kártyától)": "Next rank: %s (from %d cards)",
 	"Gyakornok": "Trainee", "Kutató": "Researcher", "Vezető kutató": "Lead researcher", "Professzor": "Professor", "A Föld őre": "Guardian of the Earth",
+	"Felkészültek rá, ezért kisebb volt a baj.": "They were prepared, so the damage was smaller.",
 }
