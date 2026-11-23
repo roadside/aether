@@ -456,8 +456,8 @@ func _ready() -> void:
 	get_tree().node_added.connect(_on_node_added)
 	var args := OS.get_cmdline_user_args()
 	_test = "--onteszt" in args or "--bejaras" in args
-	_dry = (_test and not ("--eles" in args)) or "--elojatek" in args
-	if _test or "--intro-kepek" in args or "--elojatek" in args:
+	_dry = (_test and not ("--eles" in args)) or "--elojatek" in args or "--majom" in args
+	if _test or "--intro-kepek" in args or "--elojatek" in args or "--majom" in args:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)   # az ellenőrző futások ablakban mennek
 	var bg := TextureRect.new()
 	bg.texture = load("res://assets/nebula_bg.png")
@@ -500,6 +500,16 @@ func _ready() -> void:
 		return
 	if "--elojatek" in args:
 		_live_play()
+		return
+	if "--majom" in args:
+		var ms := 1
+		var secs := 150.0
+		for a in args:
+			if str(a).begins_with("--mag="):
+				ms = int(str(a).trim_prefix("--mag="))
+			if str(a).begins_with("--mp="):
+				secs = float(str(a).trim_prefix("--mp="))
+		_monkey(ms, secs)
 		return
 	if _test:
 		_selftest()
@@ -2219,7 +2229,10 @@ func _advance() -> void:
 	tw.tween_property(globe, "spin", globe.spin + 1.0, 0.2 if _test else 2.6)
 	# évről évre: az évszám, a hőmérséklet, a görbe és a Föld színe együtt lép
 	var big := _year_label()
+	var game := world.game_id        # ha közben új játék indul (menü), ez a körváltás csendben abbamarad
 	for i in range(n0, world.history.size()):
+		if world.game_id != game or i >= world.history.size():
+			break
 		var row: Array = world.history[i]
 		big.text = str(int(row[0]))
 		big.scale = Vector2(1.12, 1.12)
@@ -2234,6 +2247,10 @@ func _advance() -> void:
 	var fade := big.create_tween()
 	fade.tween_property(big, "modulate:a", 0.0, 0.4)
 	fade.tween_callback(big.queue_free)
+	if world.game_id != game:
+		_busy = false
+		_refresh()
+		return
 	# a baj lecsap: a Föld odafordul, és a jel felnagyítva lobog
 	for n in world.news:
 		if n["fajta"] == "katasztrofa" and not _test:
@@ -2244,8 +2261,12 @@ func _advance() -> void:
 			await get_tree().create_timer(0.7).timeout
 			globe.flash(float(dg["lat"]), float(dg["lon"]), UI.EMBER)
 			await get_tree().create_timer(1.3).timeout
+			if world.game_id != game:
+				break
 	_busy = false
 	_refresh()
+	if world.game_id != game:
+		return
 	var kinds: Array = world.news.map(func(n: Dictionary) -> String: return str(n["fajta"]))
 	_sound("zaro" if world.over() else ("billenes" if "billenes" in kinds else ("katasztrofa" if "katasztrofa" in kinds else ("veszely" if not world.threat.is_empty() else ("megingas" if ("visszalepett" in kinds or "inog" in kinds) else ("jo_hir" if ("nulla" in kinds or "vilag_nulla" in kinds) else "korvaltas"))))))
 	_open_news(y0, t0)
@@ -2732,6 +2753,74 @@ func _find_check(n: Node) -> CheckBox:
 		if r != null:
 			return r
 	return null
+
+
+## Véletlen próba (godot -- --majom --mag=3 --mp=150): valós időben, találomra nyomkodja azokat a gombokat,
+## amelyeket a játékos is elérne (nyitott ablaknál csak az ablak gombjait), néha szóközt és Esc-et is üt.
+## Rejtett hibák kiszűrésére: a futás végén a naplóban nem lehet SCRIPT ERROR.
+func _monkey_buttons(n: Node, out: Array) -> void:
+	for c in n.get_children():
+		if c is CanvasItem and not (c as CanvasItem).visible:
+			continue
+		if c is BaseButton and not (c as BaseButton).disabled and (c as Control).is_visible_in_tree():
+			var txt := str(c.get("text")) if c is Button else ""
+			if txt != L.t("Kilépés a játékból") and not (c as Control).tooltip_text.begins_with("http") and not (_monkey_calm and txt in [L.t("Menü"), "English", "Magyar"]):
+				out.append(c)
+		_monkey_buttons(c, out)
+
+
+var _monkey_calm := false       # páros magnál a próba nem nyúl a menühöz: így végig is ér egy játékon
+
+
+func _monkey(seed_n: int, seconds: float) -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = seed_n
+	_monkey_calm = seed_n % 2 == 0
+	world.new_game(2026 + seed_n)
+	_refresh()
+	var t_end := Time.get_ticks_msec() + int(seconds * 1000.0)
+	var clicks := 0
+	var games := 0
+	var top_round := 0
+	var was_over := false
+	while Time.get_ticks_msec() < t_end:
+		if not is_inside_tree():       # nyelvváltáskor a jelenet újratölt: ott új próba indul
+			return
+		await get_tree().create_timer(rng.randf_range(0.05, 0.3)).timeout
+		if not is_inside_tree():
+			return
+		top_round = maxi(top_round, world.round_i)
+		if world.over() and not was_over:
+			games += 1
+		was_over = world.over()
+		var r := rng.randf()
+		if r < 0.06:
+			for pressed in [true, false]:
+				var ev := InputEventKey.new()
+				ev.keycode = KEY_SPACE if r < 0.04 else KEY_ESCAPE
+				ev.physical_keycode = ev.keycode
+				ev.pressed = pressed
+				Input.parse_input_event(ev)
+			continue
+		var pool: Array = []
+		if _overlay != null and is_instance_valid(_overlay):
+			_monkey_buttons(_overlay, pool)
+			if _close_x != null and is_instance_valid(_close_x) and _close_x.visible:
+				pool.append(_close_x)
+		else:
+			_monkey_buttons(self, pool)
+			if r > 0.8 and not (_btns["ido"] as Button).disabled and (_btns["ido"] as Button).is_visible_in_tree():
+				pool = [_btns["ido"]]
+		if pool.is_empty():
+			continue
+		var b: BaseButton = pool[rng.randi() % pool.size()]
+		if b.toggle_mode:
+			b.button_pressed = not b.button_pressed
+		else:
+			b.pressed.emit()
+		clicks += 1
+	print("MAJOM kész mag=%d kattintás=%d legtovább=%d. kör befejezett=%d" % [seed_n, clicks, top_round, games])
+	get_tree().quit()
 
 
 func _live_play() -> void:
