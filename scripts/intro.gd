@@ -153,12 +153,17 @@ func _ready() -> void:
 
 ## A zene a főjelenethez kerül, hogy átugráskor / a végén lágyan elhalkulhasson,
 ## akkor is, ha az intro már eltűnt.
+## A saját zenefájl lehetséges helyei teljes útvonallal: kiadott játéknál az exe mellett, különben a projektben vagy a felhasználói mappában.
+static func own_music_places() -> Array:
+	var places: Array = [OS.get_executable_path().get_base_dir().path_join("sajat_zene/intro.wav")]
+	for path in OWN_MUSIC:
+		places.append(ProjectSettings.globalize_path(path))
+	return places
+
+
 func _start_music() -> void:
 	var stream: AudioStream = null
-	var places: Array = OWN_MUSIC.duplicate()
-	places.push_front(OS.get_executable_path().get_base_dir().path_join("sajat_zene/intro.wav"))     # kiadott játék: az exe mellett
-	for path in places:        # a játékos saját zenefájlja, ha van (nem része a játéknak)
-		var full: String = path if not (str(path).begins_with("res://") or str(path).begins_with("user://")) else ProjectSettings.globalize_path(path)
+	for full in own_music_places():        # a játékos saját zenefájlja, ha van (nem része a játéknak)
 		if FileAccess.file_exists(full):
 			stream = AudioStreamWAV.load_from_file(full)
 			if stream != null:

@@ -1562,6 +1562,47 @@ func _open_collection() -> void:
 	var mdone := int(L.get_setting("kuldetesek", 0))
 	if mdone > 0:
 		body.add_child(UI.label(L.t("Teljesített küldetések: %d") % mdone, 17, UI.GREEN))
+	for th in Cards.THEMES:
+		var mine: Array = Cards.TAGS[th].filter(func(id: String) -> bool: return id in c)
+		var head := UI.hbox(10)
+		head.add_child(Icons.rect(th, _theme_color(th), 24))
+		head.add_child(UI.label(_theme_name(th), 18, _theme_color(th), true, false))
+		head.add_child(UI.label("%d / %d" % [mine.size(), Cards.TAGS[th].size()], 15, UI.SOFT, false, false))
+		body.add_child(head)
+		# album: minden kártya egy csempe; a megtaláltak színesek és újra elolvashatók, a többi még rejtély
+		var ask := UI.label(" ", 16, UI.TEXT, false, false)
+		var flow := HFlowContainer.new()
+		flow.add_theme_constant_override("h_separation", 6)
+		flow.add_theme_constant_override("v_separation", 6)
+		for id in Cards.TAGS[th]:
+			var got: bool = id in c
+			var tile := Button.new()
+			tile.custom_minimum_size = Vector2(44, 44)
+			tile.focus_mode = Control.FOCUS_NONE
+			tile.disabled = not got
+			var col := _theme_color(th)
+			for st in ["normal", "hover", "pressed", "disabled"]:
+				var sb := StyleBoxFlat.new()
+				sb.bg_color = Color(0.05, 0.07, 0.12) if not got else (col.darkened(0.45) if st == "hover" else col.darkened(0.68))
+				sb.border_color = col if got else UI.EDGE
+				sb.set_border_width_all(3 if st == "hover" else 2)
+				tile.add_theme_stylebox_override(st, sb)
+			if got:
+				var ic := Icons.rect(th, col, 26)
+				ic.position = Vector2(9, 9)
+				ic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+				tile.add_child(ic)
+				tile.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+				tile.mouse_entered.connect(func() -> void: ask.text = Cards.text(id, "Kérdés", L.is_en()))
+				tile.mouse_exited.connect(func() -> void: ask.text = " ")
+				tile.pressed.connect(_open_card.bind(id, false))
+			else:
+				tile.text = "?"
+				tile.add_theme_font_size_override("font_size", 18)
+				tile.add_theme_color_override("font_disabled_color", UI.EDGE)
+			flow.add_child(tile)
+		body.add_child(flow)
+		body.add_child(ask)
 	var past: Variant = L.get_setting("foldek", [])
 	if typeof(past) == TYPE_ARRAY and not past.is_empty():
 		body.add_child(UI.label(L.t("Korábbi Földjeid"), 19, UI.GOLD, true, false))
@@ -1592,19 +1633,6 @@ func _open_collection() -> void:
 		cell.add_child(UI.label(("★ " if got else "☆ ") + L.t(row[1]), 17, UI.GOLD if got else UI.MUTE, true, false))
 		cell.add_child(UI.label(L.t(row[2]), 14, UI.SOFT if got else UI.MUTE))
 		bg.add_child(cell)
-	for th in Cards.THEMES:
-		var mine: Array = Cards.TAGS[th].filter(func(id: String) -> bool: return id in c)
-		var head := UI.hbox(10)
-		head.add_child(Icons.rect(th, _theme_color(th), 24))
-		head.add_child(UI.label(_theme_name(th), 18, _theme_color(th), true, false))
-		head.add_child(UI.label("%d / %d" % [mine.size(), Cards.TAGS[th].size()], 15, UI.SOFT, false, false))
-		body.add_child(head)
-		for id in mine:
-			var b := UI.text_link(Cards.text(id, "Kérdés", L.is_en()), "", 16)
-			for cn in b.pressed.get_connections():
-				b.pressed.disconnect(cn["callable"])
-			b.pressed.connect(_open_card.bind(id, false))
-			body.add_child(b)
 
 
 # --- zene játék közben ----------------------------------------------------------
@@ -1622,8 +1650,7 @@ func _start_music() -> void:
 	if _dry or not _music_on() or (_music != null and _music.playing):
 		return
 	if _music == null:
-		for path in Intro.OWN_MUSIC:        # a játékos saját zenefájlja, ha van (nem része a játéknak)
-			var full := ProjectSettings.globalize_path(path)
+		for full in Intro.own_music_places():        # a játékos saját zenefájlja, ha van (nem része a játéknak)
 			if FileAccess.file_exists(full):
 				var own: AudioStream = AudioStreamWAV.load_from_file(full)
 				if own != null:
@@ -2475,7 +2502,11 @@ func _do_summit(id: String) -> void:
 	_sticky(body, _go(L.t("Rendben"), _close))
 
 
+var _end_opened := 0            # hányszor nyílt meg a záróképernyő (a véletlen próba képet ment róla)
+
+
 func _open_end() -> void:
+	_end_opened += 1
 	var r := world.result()
 	var body := _open(L.t("2100: a te Földed"), UI.CYAN)
 	var row := UI.hbox(24)
@@ -2503,8 +2534,18 @@ func _open_end() -> void:
 		v.add_child(b)
 		if not _test:             # a két szám együtt indul a mai melegedésről; a „ha semmi sem változik” tovább kúszik
 			var end_t := float(side[1])
+			var dur := 0.9 * maxf(end_t - M.T_START, 0.2) / 0.5
 			var cnt := b.create_tween()
-			cnt.tween_method(func(x: float) -> void: b.text = "+%s °C" % L.num(x, 2), M.T_START, end_t, 0.9 * maxf(end_t - M.T_START, 0.2) / 0.5)
+			cnt.tween_method(func(x: float) -> void: b.text = "+%s °C" % L.num(x, 2), M.T_START, end_t, dur)
+			# a két Föld a mai állapotból indul, és a számmal együtt változik 2100-ig; közben lassan forog
+			var look := {"heat": gl.heat, "sea_rise": gl.sea_rise, "smog": gl.smog, "clean": gl.clean, "regrow": gl.regrow}
+			gl.heat = 0.0
+			gl.sea_rise = 0.0
+			gl.set_plan_look({"smog": 1.0, "clean": 0.0, "regrow": 0.0})
+			gl.spin_speed = 0.006
+			var lapse := gl.create_tween().set_parallel(true)
+			for key in look:
+				lapse.tween_property(gl, key, float(look[key]), dur)
 		var c := UI.label(L.t("A tenger kb. %s cm-rel magasabb") % L.num_short(float(side[2]) * 100.0, 0), 15, UI.SOFT, false, false)
 		c.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		v.add_child(c)
@@ -2790,6 +2831,10 @@ func _monkey(seed_n: int, seconds: float) -> void:
 		if not is_inside_tree():
 			return
 		top_round = maxi(top_round, world.round_i)
+		if _end_opened == 1:
+			_end_opened = 2
+			await get_tree().create_timer(0.6).timeout
+			await _shot("m_vege_%d.png" % seed_n)
 		if world.over() and not was_over:
 			games += 1
 		was_over = world.over()
