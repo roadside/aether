@@ -2112,8 +2112,11 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 			done = world.negotiate(g, int(ask["cel"]), picked)
 		if done:
 			_refresh()
+			var game := world.game_id
 			if not _test and ask["fajta"] in ["cel", "metan"]:
 				await _persuade(g, picked)
+			if world.game_id != game:       # a jelenet alatt új játék indult
+				return
 			_sound("egyezseg")
 			_pop_next = true
 			_agreed(g, ask, before))
@@ -2149,6 +2152,8 @@ func _persuade(g: Dictionary, picked: Array) -> void:
 	body.add_child(bar)
 	var n := maxi(picked.size(), 1)
 	for i in picked.size():
+		if not is_instance_valid(body) or not body.is_inside_tree():      # közben bezárták, vagy más ablak nyílt
+			break
 		var row := UI.label("✔  " + Cards.text(picked[i], "Kérdés", L.is_en()), 19, UI.TEXT, true)
 		row.modulate.a = 0.0
 		body.add_child(row)
@@ -2159,7 +2164,7 @@ func _persuade(g: Dictionary, picked: Array) -> void:
 		await get_tree().create_timer(0.55).timeout
 		if _overlay == null:          # a játékos közben bezárta
 			break
-	if _overlay != null:
+	if _overlay != null and is_instance_valid(body):
 		await get_tree().create_timer(0.25).timeout
 	_busy = false
 
@@ -2267,9 +2272,9 @@ func _advance_click() -> void:
 		btn.text = L.t("Még %d lépésed van") % world.steps + "  ▶"
 		btn.add_theme_color_override("font_color", UI.GOLD)
 		btn.add_theme_color_override("font_hover_color", UI.GOLD)
-		get_tree().create_timer(4.0).timeout.connect(func() -> void:
+		create_tween().tween_callback(func() -> void:
 			if Time.get_ticks_msec() >= _adv_ask - 60:
-				_adv_reset())
+				_adv_reset()).set_delay(4.0)
 		return
 	_adv_reset()
 	_advance()
@@ -2611,7 +2616,7 @@ func _open_end() -> void:
 	if (tt < 2.0 or _cheer_force) and not _test:           # +2 °C alatt: három szikraeső a te Földed fölött
 		var game := world.game_id
 		for i in 3:
-			get_tree().create_timer(1.0 + 0.5 * i).timeout.connect(func() -> void:
+			create_tween().tween_callback(func() -> void:
 				if _overlay == null or world.game_id != game or not world.over():
 					return
 				var burst := Burst.new()
@@ -2620,7 +2625,7 @@ func _open_end() -> void:
 				burst.z_index = 12
 				add_child(burst)
 				if i == 0:
-					_sound("lendulet"))
+					_sound("lendulet")).set_delay(1.0 + 0.5 * i)
 	var verdict := "A Földed +1,7 °C alatt maradt. 2026-ból indulva ennél sokkal jobbat már alig lehet elérni." if tt < 1.7 \
 		else ("A Földed +2 °C alatt maradt. A Párizsi Megállapodás ennél többet kér: jóval +2 °C alatt megállni, lehetőleg +1,5 °C-nál." if tt < 2.0 \
 		else "A Földed +2 °C fölé melegedett. A következő játékban lépj hamarabb!")
