@@ -11,6 +11,8 @@ const T1 := 3.6
 var _hist: Array = []
 var _base: Array = []
 var _fc: Dictionary = {}
+var _ghost: Array = []            # előnézet: a várható út, ha a kártyáján mutatott csoport megállapodik
+var _ghost_color := Color.WHITE
 
 
 func _init() -> void:
@@ -22,6 +24,14 @@ func set_data(history: Array, base_history: Array, forecast: Dictionary) -> void
 	_hist = history
 	_base = base_history
 	_fc = forecast
+	queue_redraw()
+
+
+func set_ghost(rows: Array, color: Color = Color.WHITE) -> void:
+	if rows.is_empty() and _ghost.is_empty():
+		return
+	_ghost = rows
+	_ghost_color = color
 	queue_redraw()
 
 
@@ -66,6 +76,11 @@ func _draw() -> void:
 			if absf(q[0].y - q[3].y) + absf(q[1].y - q[2].y) > 0.6:
 				draw_colored_polygon(q, Color(UI.GREEN, 0.22))
 	_line(_fc.get("kozep", []), UI.GREEN, 2.0)
+	if _ghost.size() >= 2:          # szaggatott vonal a csoport színével, a végén a várható érték
+		for i in range(0, _ghost.size() - 1, 2):
+			draw_line(_pt(float(_ghost[i][0]), float(_ghost[i][1])), _pt(float(_ghost[i + 1][0]), float(_ghost[i + 1][1])), _ghost_color, 2.5, true)
+		var ge := _pt(Y1, float(_ghost[-1][1]))
+		draw_circle(ge, 3.5, _ghost_color)
 	_line(_hist, Color.WHITE, 3.0)
 	var now: Array = _hist[-1]
 	draw_circle(_pt(float(now[0]), float(now[1])), 4.5, Color.WHITE)

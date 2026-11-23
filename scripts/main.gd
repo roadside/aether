@@ -765,7 +765,10 @@ func _build_groups() -> void:
 		b.add_theme_stylebox_override("pressed", _flat(Color(0.07, 0.11, 0.2, 0.95), col, 3))
 		var gid := str(g["id"])
 		b.pressed.connect(func() -> void: _open_group(world.group(gid)))
-		b.mouse_entered.connect(func() -> void: globe.look_at_event({"lat": g["lat"], "lon": g["lon"]}))
+		b.mouse_entered.connect(func() -> void:
+			globe.look_at_event({"lat": g["lat"], "lon": g["lon"]})
+			_ghost_show(gid))
+		b.mouse_exited.connect(func() -> void: _curve.set_ghost([]))
 		var wash := TextureRect.new()             # halvány színmosás a csoport színével, felülről lefelé
 		var grad := Gradient.new()
 		grad.set_color(0, Color(col, 0.17))
@@ -796,6 +799,19 @@ func _build_groups() -> void:
 		b.add_child(v)
 		add_child(b)
 		_group_cards[gid] = {"gomb": b, "doboz": v, "taj": land}
+
+
+var _best_target: Dictionary = {}     # csoport -> a most elérhető legjobb cél (a görbe előnézetéhez)
+
+
+## Ha a kártyára mutatsz, a görbén szaggatott vonal mutatja, hová vinne a csoport legjobb elérhető megállapodása.
+func _ghost_show(gid: String) -> void:
+	var g := world.group(gid)
+	if _overlay != null or _busy or world.over() or g.is_empty() or not _best_target.has(gid) or not world.can_convince(g):
+		return
+	if not (int(_best_target[gid]) in world.targets_for(g)):
+		return
+	_curve.set_ghost(world.preview_path(g, int(_best_target[gid])), Color(str(g["szin"])).lightened(0.25))
 
 
 var _bar_shown: Dictionary = {}       # "játék/csoport" -> a kártyán utoljára mutatott kibocsátás-arány
@@ -912,7 +928,10 @@ func _fill_group(g: Dictionary) -> void:
 		var best := 0.0                # a most elérhető legjobb megállapodás hatása 2100-ra
 		for t in world.targets_for(g):
 			if n >= world.cards_needed(g, t):
-				best = minf(best, world.preview(g, t))
+				var pv := world.preview(g, t)
+				if pv < best:
+					best = pv
+					_best_target[str(g["id"])] = int(t)
 		var gain := ""
 		if best < -0.004:
 			var bs := "%.2f" % best
@@ -1152,6 +1171,9 @@ func _save() -> void:
 # --- frissítés ----------------------------------------------------------------
 func _refresh() -> void:
 	var y := world.year()
+	_best_target.clear()
+	if _curve != null:
+		_curve.set_ghost([])
 	if world.over():
 		(_stats["ev"] as Label).text = "2100"
 		(_stats["ev_al"] as Label).text = L.t("vége")
@@ -3176,6 +3198,10 @@ func _selftest() -> void:
 	world.news = real_news
 	world.threat = real_threat
 	_close()
+	_refresh()
+	_ghost_show("kina")                 # a görbe előnézete, amikor az egér a kártya fölött van
+	await _shot("7c_elonezet.png")
+	_curve.set_ghost([])
 	_open_group(world.group("kina"))
 	await _shot("8_targyalas.png")
 	var kina := world.group("kina")

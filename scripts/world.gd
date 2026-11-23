@@ -310,6 +310,19 @@ func preview(g: Dictionary, target: int, methane: bool = false) -> float:
 	return after - before
 
 
+## A hőmérséklet várható útja (középérték), ha a csoport most ezt a célt vállalná: [[év, T], ...]
+func preview_path(g: Dictionary, target: int) -> Array:
+	var keep := {"f0": g["f0"], "y0": g["y0"], "cel": g["cel"]}
+	var y := year()
+	g["f0"] = fraction(g, y - 1) if int(g["cel"]) > 0 else float(g["f0"])
+	g["y0"] = y - 1
+	g["cel"] = target
+	var rows: Array = forecast()["kozep"]
+	for k in keep:
+		g[k] = keep[k]
+	return rows
+
+
 ## A csoport kibocsátásának útja mostantól 2100-ig: [[év, arány]] (1 = a mai szint).
 ## target > 0: úgy, mintha most ezt a célt vállalná.
 func path(g: Dictionary, target: int = 0) -> Array:
