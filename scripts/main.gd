@@ -1507,7 +1507,10 @@ func _open_news(y0: int, t0: float) -> void:
 				body.add_child(UI.card_root(c3))
 			"katasztrofa":
 				var c4 := UI.card(UI.EMBER)
-				c4.add_child(UI.label("%s: %s" % [L.t(DISASTER[n["mi"]]), L.field(world.group(n["csoport"]), "nev")], 18, UI.EMBER, true))
+				var dh := UI.hbox(10)
+				dh.add_child(Icons.rect(str(n["mi"]), UI.EMBER, 36))
+				dh.add_child(UI.label("%s: %s" % [L.t(DISASTER[n["mi"]]), L.field(world.group(n["csoport"]), "nev")], 18, UI.EMBER, true))
+				c4.add_child(dh)
 				if world.group(n["csoport"]).get("felkeszult", false):
 					c4.add_child(UI.label(L.t("Felkészültek rá, ezért kisebb volt a baj."), 16, UI.GREEN))
 				c4.add_child(UI.label(L.t("A baj után jobban figyelnek rád: most eggyel kevesebb kártyával is meggyőzheted őket."), 16, UI.SOFT))
@@ -1861,6 +1864,13 @@ func _selftest() -> void:
 	await _shot("6_lepesek_elfogytak.png")
 	await _advance()
 	await _shot("7_hirek.png")
+	var real_news: Array = world.news          # a négy hír-képjel képe (a világ állapotát nem változtatja meg)
+	world.news = []
+	for i in 4:
+		world.news.append({"fajta": "katasztrofa", "csoport": world.groups[i]["id"], "mi": ["hoseg", "aszaly", "arviz", "tuz"][i]})
+	_open_news(2026, 1.41)
+	await _shot("7b_hir_kepjelek.png")
+	world.news = real_news
 	_close()
 	_open_group(world.group("kina"))
 	await _shot("8_targyalas.png")
