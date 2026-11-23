@@ -304,8 +304,6 @@ func _fill_group(g: Dictionary) -> void:
 		v.add_child(_lbl(L.t("Még nem vállalt semmit"), 16, UI.SOFT, true))
 	if int(g["metan"]) > 0:
 		v.add_child(_lbl(L.t("Metán: −30% tíz év alatt"), 14, UI.GREEN))
-	if g["konnyebb"]:
-		v.add_child(_lbl(L.t("Most könnyebb meggyőzni"), 14, UI.GOLD))
 	var n := world.usable(g).size()
 	var fears := HFlowContainer.new()
 	fears.add_theme_constant_override("h_separation", 5)
@@ -323,6 +321,8 @@ func _fill_group(g: Dictionary) -> void:
 	v.add_child(sp)
 	if world.can_convince(g):
 		v.add_child(_lbl(L.t("Meggyőzheted őket") + " →", 15, UI.CYAN, true))
+	elif g["konnyebb"]:
+		v.add_child(_lbl(L.t("Most könnyebb meggyőzni"), 14, UI.GOLD))
 	else:
 		v.add_child(_lbl(L.t("%d kártyád szól nekik") % n if n > 0 else L.t("Nincs nekik szóló kártyád"), 14, UI.SOFT if n > 0 else UI.MUTE))
 
@@ -815,6 +815,7 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 	update.call()
 	ok.pressed.connect(func() -> void:
 		var done := false
+		var before := float(world.forecast()["kozep"][-1][1])
 		if ask["fajta"] == "metan":
 			done = world.pledge_methane(g, picked[0])
 		else:
@@ -822,16 +823,19 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 		if done:
 			_refresh()
 			_sound("jel_jo")
-			_agreed(g, ask))
+			_agreed(g, ask, before))
 
 
-func _agreed(g: Dictionary, ask: Dictionary) -> void:
+func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 	var body := _open(L.t("Megegyeztetek!"), UI.GREEN)
 	var txt: String = (L.t("%s vállalta: nulla kibocsátás %d-re.") % [L.field(g, "nev"), int(ask["cel"])]) if ask["fajta"] == "cel" \
 		else (L.t("%s vállalta: 30%%-kal kevesebb metán tíz év alatt.") % L.field(g, "nev"))
 	body.add_child(UI.label(txt, 22, UI.TEXT, true))
 	var fc := world.forecast()
-	body.add_child(UI.label(L.t("2100-ban: +%s és +%s °C között") % [L.num(float(fc["also"][-1][1]), 1), L.num(float(fc["felso"][-1][1]), 1)], 19, UI.EMBER))
+	var after := float(fc["kozep"][-1][1])
+	if before > 0.0:
+		body.add_child(UI.label(L.t("Várható melegedés 2100-ban: +%s → +%s °C") % [L.num(before, 2), L.num(after, 2)], 22, UI.GREEN, true))
+	body.add_child(UI.label(L.t("2100-ban: +%s és +%s °C között") % [L.num(float(fc["also"][-1][1]), 1), L.num(float(fc["felso"][-1][1]), 1)], 17, UI.SOFT))
 	body.add_child(UI.label(L.t("A sáv azért széles, mert nem tudjuk pontosan, mennyire érzékeny a Föld."), 15, UI.MUTE))
 	body.add_child(_go(L.t("Rendben"), _close))
 
@@ -947,7 +951,7 @@ func _open_end() -> void:
 		row.add_child(v)
 	var tt := float(r["T"])
 	var verdict := "A Földed a +1,5 °C közelében maradt. Ennél jobbat a mai tudásunk szerint alig lehet elérni." if tt < 1.6 \
-		else ("A Földed +2 °C alatt maradt: ez a Párizsi Megállapodás fő célja." if tt < 2.0 \
+		else ("A Földed +2 °C alatt maradt. A Párizsi Megállapodás ennél többet kér: jóval +2 °C alatt megállni, lehetőleg +1,5 °C-nál." if tt < 2.0 \
 		else "A Földed +2 °C fölé melegedett. A következő játékban lépj hamarabb!")
 	body.add_child(UI.label(L.t(verdict), 19, UI.GREEN if tt < 2.0 else UI.EMBER, true))
 	body.add_child(UI.label(L.t("A legmelegebb év: +%s °C. Küszöbét átlépő rendszer: %d a %d-ből.") % [L.num(float(r["csucs"]), 2), int(r["billenes"]), world.tips.size()], 17, UI.TEXT))
@@ -965,7 +969,7 @@ func _open_help() -> void:
 			["2.", "Körönként három lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal."],
 			["3.", "Kattints egy országcsoportra, és győzd meg a kártyáiddal. Mindenki mástól tart, ezért más kártya kell neki."],
 			["4.", "Ha elfogytak a lépéseid, jön a következő öt év. A Föld és a görbe megmutatja, mit értél el."],
-			["5.", "A cél: 2100-ban +2 °C alatt maradni, és minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is."],
+			["5.", "A cél: 2100-ban jóval +2 °C alatt maradni, minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is."],
 			["6.", "A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett billenőpontok. Ne várj sokáig!"]]:
 		var h := UI.hbox(12)
 		h.add_child(UI.label(row[0], 22, UI.GOLD, true, false))
@@ -1007,7 +1011,7 @@ func _selftest() -> void:
 	var kina := world.group("kina")
 	world.negotiate(kina, 2070, world.usable(kina).slice(0, 1))
 	_refresh()
-	_agreed(kina, {"fajta": "cel", "cel": 2070})
+	_agreed(kina, {"fajta": "cel", "cel": 2070}, 2.8)
 	await _shot("9_megegyezes.png")
 	_open_hand()
 	await _shot("10_kartyaim.png")

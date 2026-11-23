@@ -8,7 +8,7 @@ Minden szöveg új (2026-11-23). A kutatási kártyák szövege a már lektorál
 - Körönként három lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal.
 - Kattints egy országcsoportra, és győzd meg a kártyáiddal. Mindenki mástól tart, ezért más kártya kell neki.
 - Ha elfogytak a lépéseid, jön a következő öt év. A Föld és a görbe megmutatja, mit értél el.
-- A cél: 2100-ban +2 °C alatt maradni, és minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is.
+- A cél: 2100-ban jóval +2 °C alatt maradni, minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is.
 - A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett billenőpontok. Ne várj sokáig!
 
 ## 2. Az országcsoportok aggodalmai (játékszabály, nem idézet)
@@ -160,5 +160,6 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Ipar és közlekedés
 - Meggyőzheted őket
 - A Földed a +1,5 °C közelében maradt. Ennél jobbat a mai tudásunk szerint alig lehet elérni.
-- A Földed +2 °C alatt maradt: ez a Párizsi Megállapodás fő célja.
+- A Földed +2 °C alatt maradt. A Párizsi Megállapodás ennél többet kér: jóval +2 °C alatt megállni, lehetőleg +1,5 °C-nál.
 - A Földed +2 °C fölé melegedett. A következő játékban lépj hamarabb!
+- Várható melegedés 2100-ban: +%s → +%s °C

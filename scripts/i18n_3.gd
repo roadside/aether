@@ -101,7 +101,8 @@ const EN := {
 	"Ipar és közlekedés": "Industry and transport",
 	"Meggyőzheted őket": "You can convince them",
 	"A Földed a +1,5 °C közelében maradt. Ennél jobbat a mai tudásunk szerint alig lehet elérni.": "Your Earth stayed close to +1.5 °C. As far as we know today, it is hard to do better.",
-	"A Földed +2 °C alatt maradt: ez a Párizsi Megállapodás fő célja.": "Your Earth stayed below +2 °C: that is the main goal of the Paris Agreement.",
+	"A Földed +2 °C alatt maradt. A Párizsi Megállapodás ennél többet kér: jóval +2 °C alatt megállni, lehetőleg +1,5 °C-nál.": "Your Earth stayed below +2 °C. The Paris Agreement asks for more: to stop well below +2 °C, ideally at +1.5 °C.",
 	"A Földed +2 °C fölé melegedett. A következő játékban lépj hamarabb!": "Your Earth warmed beyond +2 °C. Act sooner in the next game!",
-	"A cél: 2100-ban +2 °C alatt maradni, és minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is.": "The goal: stay below +2 °C in 2100, and as close to +1.5 °C as possible. This is also the goal of the Paris Agreement.",
+	"A cél: 2100-ban jóval +2 °C alatt maradni, minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is.": "The goal: stay well below +2 °C in 2100, as close to +1.5 °C as possible. This is also the goal of the Paris Agreement.",
+	"Várható melegedés 2100-ban: +%s → +%s °C": "Expected warming in 2100: +%s → +%s °C",
 }
