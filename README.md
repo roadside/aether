@@ -30,10 +30,14 @@ Játékszabály (nem a valóság leírása):
 - A rangok (a több játékon át kikutatott kártyák száma szerint) és a záró képernyő összesítése: ki mennyi CO2-t nem bocsátott ki a „ha semmi sem változik” úthoz képest (a modell szerint).
 - A felkészülés hatása (a felkészült csoport nem inog meg), a jelvények és az értékelés határai (+1,7 és +2 °C).
 - A játék hangjai és alapzenéje kódból készülnek (`tools/jatek_hangok.py`), nem felvételek.
-- A megingás: egy vállalást tett csoport elbizonytalanodhat; ha öt éven belül nem erősíted meg egy neki szóló kártyával, tíz évvel későbbre tolja a célját. A jövő hírei (hőhullám, aszály, áradás, erdőtűz) szintén a játék részei.
+- A megingás: egy vállalást tett csoport elbizonytalanodhat; ha öt éven belül nem erősíted meg egy hozzá illő kártyával, tíz évvel későbbre tolja a célját (legfeljebb 2090-ig). A jövő hírei (hőhullám, aszály, áradás, erdőtűz) szintén a játék részei.
 - A billenőpontok rejtett küszöbe: a tudományos sávból sorsoljuk, a mai melegedés fölötti részéből. A küszöb átlépése egyelőre nem hat vissza a hőmérsékletre.
 - A csoportok részesedése a teljes mai kibocsátásra vonatkozik (a földhasználatét is arányosan osztjuk szét).
 - A világ többi része a hat csoport átlagát követi.
+- A küldetések (játékonként három, a Föld-kódból sorsolva) és a döntési helyzetek a körök elején (támogatás, meghívás): a játék kitalált helyzetei.
+- A tudáspróba: a kérdés mondata a kártya lektorált kulcsszáma; a jó válasz eggyel több lépést ad.
+- A „Kockázatos ötletek” témakör (a Föld mesterséges hűtése): ezek a kártyák tárgyalásra nem használhatók, mert egy csoport aggodalmára sem felelnek. A szövegük ugyanúgy a lektorált témákból jön.
+- „Ha minden öt évvel később történik”: ugyanaz a klímamodell, ugyanazzal az érzékenységgel, a játékban megtörtént kibocsátási utat öt évvel eltolva.
 
 ## Futtatás
 
