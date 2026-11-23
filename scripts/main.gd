@@ -324,7 +324,7 @@ func _fill_group(g: Dictionary) -> void:
 	elif g["konnyebb"]:
 		v.add_child(_lbl(L.t("Most könnyebb meggyőzni"), 14, UI.GOLD))
 	else:
-		v.add_child(_lbl(L.t("%d kártyád szól nekik") % n if n > 0 else L.t("Nincs nekik szóló kártyád"), 14, UI.SOFT if n > 0 else UI.MUTE))
+		v.add_child(_lbl(L.t("%d kártyád szól nekik") % n if n > 0 else L.t("Nincs hozzájuk illő kártyád"), 14, UI.SOFT if n > 0 else UI.MUTE))
 
 
 func _lbl(text: String, size: int, color: Color, bold: bool = false) -> Label:
@@ -832,7 +832,7 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 
 
 func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
-	var body := _open(L.t("Megegyeztetek!"), UI.GREEN)
+	var body := _open(L.t("Egyezség kötve!"), UI.GREEN)
 	var txt: String = (L.t("%s vállalta: nulla kibocsátás %d-re.") % [L.field(g, "nev"), int(ask["cel"])]) if ask["fajta"] == "cel" \
 		else (L.t("%s vállalta: 30%%-kal kevesebb metán tíz év alatt.") % L.field(g, "nev"))
 	body.add_child(UI.label(txt, 22, UI.TEXT, true))
@@ -848,7 +848,7 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 # --- CO2-kivonás --------------------------------------------------------------
 func _open_cdr() -> void:
 	var body := _open(L.t("CO2-kivonás"), UI.GREEN)
-	body.add_child(UI.label(L.t("Ha megvan a kártyája, elindíthatod. Húsz év alatt fut fel, és óvatosan, a fenntartható sáv aljával számolunk."), 17, UI.SOFT))
+	body.add_child(UI.label(L.t("Ha megvan a hozzá tartozó kártya, elindíthatod. Húsz év alatt fut fel, és óvatosan, a fenntartható sáv aljával számolunk."), 17, UI.SOFT))
 	for id in World.CDR:
 		var c := UI.card(UI.GREEN)
 		var rng: Array = World.CDR[id]
@@ -906,17 +906,17 @@ func _open_news(y0: int, t0: float) -> void:
 			"visszalepett":
 				var c2 := UI.card(UI.GOLD)
 				c2.add_child(UI.label(L.t("%s megingott: a célját %d-re tolta.") % [L.field(world.group(n["csoport"]), "nev"), int(n["cel"])], 18, UI.GOLD, true))
-				c2.add_child(UI.label(L.t("Nem volt a kezedben új bizonyíték, ami megtartotta volna őket."), 16, UI.SOFT))
+				c2.add_child(UI.label(L.t("Nem volt a kezedben olyan új bizonyíték, amivel meggyőzhetted volna őket."), 16, UI.SOFT))
 				body.add_child(UI.card_root(c2))
 			"kitartott":
 				var c3 := UI.card(UI.GREEN)
 				c3.add_child(UI.label(L.t("%s megingott, de kitartott.") % L.field(world.group(n["csoport"]), "nev"), 18, UI.GREEN, true))
-				c3.add_child(UI.label(L.t("A bizonyítékod tartotta meg őket: %s") % Cards.text(n["kartya"], "Kérdés", L.is_en()), 16, UI.SOFT))
+				c3.add_child(UI.label(L.t("A bizonyítékod győzte meg őket: %s") % Cards.text(n["kartya"], "Kérdés", L.is_en()), 16, UI.SOFT))
 				body.add_child(UI.card_root(c3))
 			"katasztrofa":
 				var c4 := UI.card(UI.EMBER)
 				c4.add_child(UI.label("%s: %s" % [L.t(DISASTER[n["mi"]]), L.field(world.group(n["csoport"]), "nev")], 18, UI.EMBER, true))
-				c4.add_child(UI.label(L.t("A baj után jobban figyelnek rád: most eggyel kevesebb kártya kell náluk."), 16, UI.SOFT))
+				c4.add_child(UI.label(L.t("A baj után jobban figyelnek rád: most eggyel kevesebb kártyával is meggyőzheted őket."), 16, UI.SOFT))
 				body.add_child(UI.card_root(c4))
 	if world.news.is_empty():
 		body.add_child(UI.label(L.t("Csendes öt év volt."), 17, UI.SOFT))
@@ -973,9 +973,9 @@ func _open_end() -> void:
 func _open_help() -> void:
 	var body := _open(L.t("Hogyan játssz?"), UI.CYAN)
 	for row in [
-			["1.", "Te vagy a világ klímatudósa. 2026-ból indulsz, egy kör öt év, 2100-ig tizenöt köröd van."],
+			["1.", "Te vagy a világ klímatudósa. 2026-ból indulsz; egy kör öt év, így 2100-ig tizenöt köröd van."],
 			["2.", "Körönként három lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal."],
-			["3.", "Kattints egy országcsoportra, és győzd meg a kártyáiddal. Mindenki mástól tart, ezért más kártya kell neki."],
+			["3.", "Kattints egy országcsoportra, és győzd meg a kártyáiddal. Minden csoport mástól tart, ezért más kártyára van szüksége."],
 			["4.", "Ha elfogytak a lépéseid, jön a következő öt év. A Föld és a görbe megmutatja, mit értél el."],
 			["5.", "A cél: 2100-ban jóval +2 °C alatt maradni, minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is."],
 			["6.", "A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett billenőpontok. Ne várj sokáig!"]]:

@@ -4,9 +4,9 @@ Minden szöveg új (2026-11-23). A kutatási kártyák szövege a már lektorál
 
 ## 1. Hogyan játssz?
 
-- Te vagy a világ klímatudósa. 2026-ból indulsz, egy kör öt év, 2100-ig tizenöt köröd van.
+- Te vagy a világ klímatudósa. 2026-ból indulsz; egy kör öt év, így 2100-ig tizenöt köröd van.
 - Körönként három lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal.
-- Kattints egy országcsoportra, és győzd meg a kártyáiddal. Mindenki mástól tart, ezért más kártya kell neki.
+- Kattints egy országcsoportra, és győzd meg a kártyáiddal. Minden csoport mástól tart, ezért más kártyára van szüksége.
 - Ha elfogytak a lépéseid, jön a következő öt év. A Föld és a görbe megmutatja, mit értél el.
 - A cél: 2100-ban jóval +2 °C alatt maradni, minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is.
 - A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett billenőpontok. Ne várj sokáig!
@@ -34,7 +34,7 @@ Minden szöveg új (2026-11-23). A kutatási kártyák szövege a már lektorál
 - Egy emberre évi 14,5 tonna CO2 jut (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
 - Az 1750 óta kibocsátott CO2 23,3%-a innen jött (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
 - Az áram 16,3%-a szénből jön (Ember 2026) – https://ourworldindata.org/electricity-mix
-- A valóságban 2025-ben visszavonta az országos nulla-célját (Net Zero Tracker) – https://zerotracker.net/
+- A valóságban 2025-ben visszavonta a nulla kibocsátási célját (Net Zero Tracker) – https://zerotracker.net/
 
 **Kína**
 - Egy emberre évi 8,8 tonna CO2 jut (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
@@ -85,8 +85,8 @@ A %d és %s jelek helyére szám vagy név kerül.
 - 2100-ban: +%s és +%s °C között
 - 2100: a te Földed
 - A Föld melegedése: +%s → +%s °C
-- A baj után jobban figyelnek rád: most eggyel kevesebb kártya kell náluk.
-- A bizonyítékod tartotta meg őket: %s
+- A baj után jobban figyelnek rád: most eggyel kevesebb kártyával is meggyőzheted őket.
+- A bizonyítékod győzte meg őket: %s
 - A hőmérsékletet egyszerű klímamodell számolta. Irányt és nagyságrendet mutat, nem előrejelzés.
 - A játékban eddig: nulla kibocsátás %d-re.
 - A jövő hírei a játék részei, nem valódi események.
@@ -113,7 +113,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Ezzel a kártyával CO2-kivonást indíthatsz.
 - Ezzel érvelek
 - Források
-- Ha megvan a kártyája, elindíthatod. Húsz év alatt fut fel, és óvatosan, a fenntartható sáv aljával számolunk.
+- Ha megvan a hozzá tartozó kártya, elindíthatod. Húsz év alatt fut fel, és óvatosan, a fenntartható sáv aljával számolunk.
 - Itt most nincs új kérdés
 - Kutatás: %s
 - Kártyáim
@@ -121,7 +121,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Kőzetmállasztás
 - Lássuk, mi lett a Földdel
 - Lépéseid
-- Megegyeztetek!
+- Egyezség kötve!
 - Melyik kérdést kutatod ki? Egy lépésbe kerül.
 - Metán: −30% tíz év alatt
 - Miről kutatsz?
@@ -131,8 +131,8 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Másik témakör
 - Még nem vállalt semmit
 - Még nincs kártyád. Kutass, hogy legyen mivel érvelned!
-- Nem volt a kezedben új bizonyíték, ami megtartotta volna őket.
-- Nincs nekik szóló kártyád
+- Nem volt a kezedben olyan új bizonyíték, amivel meggyőzhetted volna őket.
+- Nincs hozzájuk illő kártyád
 - Nulla kibocsátás %d-re
 - Növényi energia CO2-tárolással
 - Tőlük már nincs mit kérned.
