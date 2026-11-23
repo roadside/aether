@@ -166,4 +166,10 @@ const EN := {
 	"Most nem mutatok semmit": "I will not show anything now",
 	"%s előbbre hozta a célját: nulla kibocsátás %d-re.": "%s brought its target forward: zero emissions by %d.",
 	"Klímacsúcs: %d csoport hozta előbbre a célját.": "Climate summit: %d groups brought their target forward.",
+	"Korábbi Földjeid": "Your earlier Earths",
+	"%s elérte a nulla kibocsátást (%d).": "%s reached zero emissions (%d).",
+	"A világ már több CO2-t von ki, mint amennyit kibocsát (%d).": "The world now removes more CO2 than it emits (%d).",
+	"Nulla kibocsátás %d óta": "Zero emissions since %d",
+	"a mostani útjuk": "their path now",
+	"ha ezt vállalják": "if they agree to this",
 }

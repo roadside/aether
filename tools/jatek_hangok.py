@@ -11,6 +11,9 @@ Hangok (assets/hang/):
   kartya.wav      – új bizonyíték-kártya: rövid, csillanó két hang (kb. 2 mp)
   korvaltas.wav   – telik öt év: halk suhanás és két lágy hang (kb. 3 mp)
   kattintas.wav   – gombnyomás: egyetlen rövid, halk hang (0,5 mp)
+  jo_hir.wav      – jó hír (egy csoport elérte a nullát): felfelé futó, derűs hangzat (kb. 3,5 mp)
+  katasztrofa.wav – rossz hír (hőhullám, aszály, áradás, erdőtűz): mély ütés és feszült hangköz (kb. 5 mp)
+  alapzene2.wav   – a második alapzene: más hangzatsor, ugyanabban a hangsorban (64 mp)
   alapzene.wav    – halk, ismétlődő alapzene játék közbe (64 mp, hézag nélkül ismételhető)
 
 Futtatás (csak a Python standard könyvtára kell):  python tools/jatek_hangok.py [kimeneti mappa]
@@ -149,7 +152,7 @@ def sound(seconds, notes, extra=None):
     return b
 
 
-def ambient():
+def ambient(variant=1):
     """64 mp-es alapzene: lassú, nyugodt arpeggio a D kurd hangsorban, ismétlődve hézag nélkül.
     A lecsengések a fájl elejére „tekerednek”, így a vége és az eleje összeillik."""
     length = 64.0
@@ -159,7 +162,12 @@ def ambient():
               ["D3", "Bb3", "D4", "F4", "G4", "F4", "D4", "Bb3"],
               ["D3", "C4", "E4", "G4", "A4", "G4", "E4", "C4"],
               ["D3", "A3", "D4", "E4", "F4", "E4", "D4", "A3"]]
-    rnd = random.Random(2026)
+    if variant == 2:   # második változat: magasabbról induló, B♭ – D – C – A hangzatsor
+        chords = [["D3", "Bb3", "F4", "D4", "G4", "D4", "F4", "Bb3"],
+                  ["D3", "A3", "E4", "A4", "F4", "E4", "D4", "A3"],
+                  ["D3", "C4", "G4", "E4", "C5", "G4", "E4", "C4"],
+                  ["D3", "A3", "C4", "E4", "A4", "E4", "D4", "A3"]]
+    rnd = random.Random(2026 if variant == 1 else 2026 + variant)
     for s, ch in enumerate(chords):
         for k, note in enumerate(ch):
             t = s * 16.0 + k * 2.0 + rnd.uniform(-0.05, 0.05)
@@ -184,6 +192,11 @@ def main():
     write(sound(3.0, [(0.55, "D3", 0.45), (0.75, "A3", 0.35)], extra=lambda b: whoosh(b, 0.0, 1.4, 1.0)),
           out / "korvaltas.wav", fade_out=0.6)
     write(sound(0.5, [(0.00, "D5", 0.35)]), out / "kattintas.wav", peak=0.35, fade_out=0.3)
+    write(sound(3.5, [(0.00, "D4", 0.5), (0.18, "F4", 0.5), (0.36, "A4", 0.55), (0.60, "D5", 0.6), (0.62, "A4", 0.3)]),
+          out / "jo_hir.wav", fade_out=0.6)
+    write(sound(5.0, [(0.30, "D3", 0.8), (0.34, "A3", 0.5), (1.10, "Bb3", 0.55), (1.14, "E4", 0.4)],
+                extra=lambda b: rumble(b, 0.0, 4.5, 0.7)), out / "katasztrofa.wav", fade_out=0.8)
+    write(ambient(2), out / "alapzene2.wav", peak=0.55)
     write(ambient(), out / "alapzene.wav", peak=0.55)
 
 

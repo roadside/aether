@@ -10,6 +10,7 @@ const World := preload("res://scripts/world.gd")
 const Cards := preload("res://scripts/cards.gd")
 const M := preload("res://scripts/model.gd")
 const Chart := preload("res://scripts/curve.gd")
+const PathChart := preload("res://scripts/path_chart.gd")
 const SAVE := "user://jatek.json"
 
 ## Az aggodalmak mondatai (játékszabály: a csoportok hangja, nem idézet).
@@ -326,7 +327,9 @@ func _fill_group(g: Dictionary) -> void:
 	bar_row.add_child(_lbl("%d%%" % roundi(bar.value * 100.0), 13, UI.SOFT))
 	(bar_row.get_child(1) as Label).autowrap_mode = TextServer.AUTOWRAP_OFF
 	v.add_child(bar_row)
-	if int(g["cel"]) > 0:
+	if int(g.get("nulla", 0)) > 0:
+		v.add_child(_lbl("★ " + L.t("Nulla kibocsátás %d óta") % int(g["nulla"]), 16, UI.GREEN, true))
+	elif int(g["cel"]) > 0:
 		v.add_child(_lbl(L.t("Nulla kibocsátás %d-re") % int(g["cel"]), 16, UI.GREEN, true))
 	else:
 		v.add_child(_lbl(L.t("Még nem vállalt semmit"), 16, UI.SOFT, true))
@@ -545,7 +548,9 @@ func _refresh() -> void:
 	globe.sea_rise = clampf((t - M.T_START) / 2.0, 0.0, 1.0)
 	var marks: Array = []
 	for g in world.groups:
-		marks.append({"id": g["id"], "name": L.field(g, "nev"), "label": L.field(g, "nev"), "lat": g["lat"], "lon": g["lon"], "color": Color(str(g["szin"]))})
+		var shaky: bool = g.get("inog", false)
+		marks.append({"id": g["id"], "name": L.field(g, "nev"), "label": ("⚠ " if shaky else "") + L.field(g, "nev"), "lat": g["lat"], "lon": g["lon"],
+			"color": UI.GOLD if shaky else Color(str(g["szin"]))})
 	for tp in world.tips:
 		var rng_txt := L.t("küszöb: %s–%s °C") % [L.num(float(tp["also"]), 1), L.num(float(tp["felso"]), 1)]
 		if int(tp["ev"]) > 0:
@@ -760,6 +765,12 @@ func _finish_game(r: Dictionary) -> Dictionary:
 	var t := float(r["T"])
 	L.set_setting("utolso_jatek", world.seed_v)
 	L.set_setting("jatekok", int(L.get_setting("jatekok", 0)) + 1)
+	var past: Variant = L.get_setting("foldek", [])
+	if typeof(past) != TYPE_ARRAY:
+		past = []
+	var dd := Time.get_date_dict_from_system()
+	past.push_front({"ev": int(dd["year"]), "ho": int(dd["month"]), "nap": int(dd["day"]), "T": t, "lepes": world.max_steps, "mag": world.seed_v})
+	L.set_setting("foldek", past.slice(0, 12))
 	var best := float(L.get_setting("legjobb", 0.0))
 	if best <= 0.0 or t < best - 0.004:
 		L.set_setting("legjobb", t)
@@ -798,6 +809,13 @@ func _open_collection() -> void:
 	var games := int(L.get_setting("jatekok", 0))
 	if games > 0:
 		body.add_child(UI.label(L.t("Befejezett játékok: %d · A legjobb Földed: +%s °C") % [games, L.num(float(L.get_setting("legjobb", 0.0)), 2)], 17, UI.GREEN))
+	var past: Variant = L.get_setting("foldek", [])
+	if typeof(past) == TYPE_ARRAY and not past.is_empty():
+		body.add_child(UI.label(L.t("Korábbi Földjeid"), 19, UI.GOLD, true, false))
+		for e in past:
+			var date := ("%d-%02d-%02d" if L.is_en() else "%d. %02d. %02d.") % [int(e["ev"]), int(e["ho"]), int(e["nap"])]
+			var level: String = L.t({3: "Nehéz", 4: "Közepes", 5: "Könnyű"}.get(int(e.get("lepes", 4)), "Közepes"))
+			body.add_child(UI.label("%s · +%s °C · %s · %s: %d" % [date, L.num(float(e["T"]), 2), level, L.t("Föld-kód"), int(e["mag"])], 15, UI.SOFT))
 	var have := _badges()
 	body.add_child(UI.label(L.t("Jelvények: %d / %d") % [have.size(), BADGES.size()], 19, UI.GOLD, true, false))
 	var bg := GridContainer.new()
@@ -833,7 +851,7 @@ func _music_on() -> bool:
 	return bool(L.get_setting("zene", true))
 
 
-## Játék közben: a játékos saját zenéje (ha van), utána kétszer a halk, kódból készült alapzene, és így tovább.
+## Játék közben: a játékos saját zenéje (ha van), utána a két halk, kódból készült alapzene, és így tovább.
 var _playlist: Array = []
 var _track := 0
 
@@ -848,10 +866,10 @@ func _start_music() -> void:
 				if own != null:
 					_playlist.append(own)
 					break
-		var amb: AudioStream = load("res://assets/hang/alapzene.wav")
-		if amb != null:
-			_playlist.append(amb)
-			_playlist.append(amb)
+		for name in ["alapzene", "alapzene2"]:      # a két kódból készült alapzene felváltva
+			var amb: AudioStream = load("res://assets/hang/%s.wav" % name)
+			if amb != null:
+				_playlist.append(amb)
 		if _playlist.is_empty():
 			return
 		_track = 1 if _playlist.size() > 2 else 0      # a nyitány után előbb az alapzene jön, a saját zene később tér vissza
@@ -859,14 +877,26 @@ func _start_music() -> void:
 		_music.finished.connect(func() -> void:
 			if _music_on():
 				_track = (_track + 1) % _playlist.size()
-				_music.stream = _playlist[_track]
-				_music.volume_db = -17.0
-				_music.play())
+				_play_track(2.0))
 		add_child(_music)
+	_play_track(4.0)
+
+
+## Egy szám lejátszása: lassan beúszik, és a vége előtt kiúszik, hogy a számok között ne legyen kattanás.
+var _music_tw: Tween
+
+func _play_track(fade_in: float) -> void:
+	if _music_tw != null:
+		_music_tw.kill()
 	_music.stream = _playlist[_track]
 	_music.volume_db = -40.0
 	_music.play()
-	create_tween().tween_property(_music, "volume_db", -17.0, 4.0)
+	var length: float = (_playlist[_track] as AudioStream).get_length()
+	_music_tw = create_tween()
+	_music_tw.tween_property(_music, "volume_db", -17.0, fade_in)
+	if length > fade_in + 6.0:
+		_music_tw.tween_interval(length - fade_in - 3.0)
+		_music_tw.tween_property(_music, "volume_db", -50.0, 2.8)
 
 
 func _toggle_music(btn: Button) -> void:
@@ -1025,8 +1055,17 @@ func _open_group(g: Dictionary) -> void:
 	if asks.is_empty():
 		body.add_child(UI.label(L.t("Tőlük már nincs mit kérned."), 17, UI.SOFT))
 		return
-	body.add_child(UI.label(L.t("Mit kérsz tőlük?"), 19, UI.GOLD, true, false))
-	body.add_child(UI.label(L.t("A szám azt mutatja, mennyivel lenne hűvösebb 2100-ban."), 14, UI.MUTE))
+	var head_row := UI.hbox(16)
+	var head_v := UI.vbox(4)
+	head_v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	head_v.size_flags_vertical = Control.SIZE_SHRINK_END
+	head_v.add_child(UI.label(L.t("Mit kérsz tőlük?"), 19, UI.GOLD, true, false))
+	head_v.add_child(UI.label(L.t("A szám azt mutatja, mennyivel lenne hűvösebb 2100-ban."), 14, UI.MUTE))
+	head_row.add_child(head_v)
+	var pc = PathChart.new()
+	pc.set_paths(world.path(g), [])
+	head_row.add_child(pc)
+	body.add_child(head_row)
 	var ask_row := HFlowContainer.new()
 	ask_row.add_theme_constant_override("h_separation", 10)
 	ask_row.add_theme_constant_override("v_separation", 10)
@@ -1046,6 +1085,7 @@ func _open_group(g: Dictionary) -> void:
 		b.focus_mode = Control.FOCUS_NONE
 		b.toggled.connect(func(on: bool) -> void:
 			if on:
+				pc.set_paths(world.path(g), world.path(g, int(a["cel"])) if a["fajta"] == "cel" else [])
 				_fill_ask(area, g, a))
 		ask_row.add_child(b)
 	(ask_row.get_child(0) as Button).button_pressed = true
@@ -1226,7 +1266,7 @@ func _advance() -> void:
 	_busy = false
 	_refresh()
 	var kinds: Array = world.news.map(func(n: Dictionary) -> String: return str(n["fajta"]))
-	_sound("zaro" if world.over() else ("billenes" if "billenes" in kinds else ("megingas" if ("visszalepett" in kinds or "inog" in kinds) else "korvaltas")))
+	_sound("zaro" if world.over() else ("billenes" if "billenes" in kinds else ("katasztrofa" if "katasztrofa" in kinds else ("megingas" if ("visszalepett" in kinds or "inog" in kinds) else ("jo_hir" if ("nulla" in kinds or "vilag_nulla" in kinds) else "korvaltas")))))
 	_open_news(y0, t0)
 
 
@@ -1247,6 +1287,14 @@ func _open_news(y0: int, t0: float) -> void:
 				c2.add_child(UI.label(L.t("%s megingott: a célját %d-re tolta.") % [L.field(world.group(n["csoport"]), "nev"), int(n["cel"])], 18, UI.GOLD, true))
 				c2.add_child(UI.label(L.t("Nem erősítetted meg őket időben."), 16, UI.SOFT))
 				body.add_child(UI.card_root(c2))
+			"nulla":
+				var c6 := UI.card(UI.GREEN)
+				c6.add_child(UI.label("★ " + L.t("%s elérte a nulla kibocsátást (%d).") % [L.field(world.group(n["csoport"]), "nev"), int(n["ev"])], 18, UI.GREEN, true))
+				body.add_child(UI.card_root(c6))
+			"vilag_nulla":
+				var c7 := UI.card(UI.GREEN)
+				c7.add_child(UI.label("★ " + L.t("A világ már több CO2-t von ki, mint amennyit kibocsát (%d).") % int(n["ev"]), 18, UI.GREEN, true))
+				body.add_child(UI.card_root(c7))
 			"inog":
 				var c5 := UI.card(UI.GOLD)
 				c5.add_child(UI.label("⚠ " + L.t("%s elbizonytalanodott.") % L.field(world.group(n["csoport"]), "nev"), 18, UI.GOLD, true))
@@ -1381,6 +1429,12 @@ func _open_end() -> void:
 					line = L.t("%s felkészült a bajra.") % L.field(world.group(e["csoport"]), "nev")
 				"kivonas":
 					line = "%s: %s" % [L.t("CO2-kivonás"), L.t(CDR_NAME[e["id"]])]
+				"nulla":
+					line = L.t("%s elérte a nulla kibocsátást (%d).") % [L.field(world.group(e["csoport"]), "nev"), int(e["ev"])]
+					lc = UI.GREEN
+				"vilag_nulla":
+					line = L.t("A világ már több CO2-t von ki, mint amennyit kibocsát (%d).") % int(e["ev"])
+					lc = UI.GREEN
 				"csucs":
 					line = L.t("Klímacsúcs: %d csoport hozta előbbre a célját.") % int(e.get("db", 0))
 				"visszalepett":
@@ -1514,6 +1568,25 @@ func _selftest() -> void:
 			await _shot("12b_bizonytalan.png")
 			_open_group(sh[0])
 			await _shot("12c_megerosites.png")
+			if not world.usable(sh[0]).is_empty() and world.steps <= 0:
+				world.steps = 1
+			if not world.usable(sh[0]).is_empty():
+				var cid: String = world.usable(sh[0])[0]
+				if world.reassure(sh[0], cid):
+					_refresh()
+					_agreed(sh[0], {"fajta": "megerosites", "kartya": cid})
+					await _shot("12d_kitartott.png")
+			_close()
+			for g2 in world.groups:
+				if not g2.get("felkeszult", false) and not world.prepare_cards(g2).is_empty():
+					world.steps = maxi(world.steps, 1)
+					if world.prepare(g2, world.prepare_cards(g2)[0]):
+						_refresh()
+						_agreed(g2, {"fajta": "felkeszules"})
+						await _shot("12e_felkeszult.png")
+						_close()
+					break
+			_open_collection()
 			_close()
 	_open_end()
 	await _shot("14_vege.png")

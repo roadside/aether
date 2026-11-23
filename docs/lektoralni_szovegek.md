@@ -254,6 +254,12 @@ Már nem jelenik meg: „Nem volt a kezedben olyan új bizonyíték, amivel megg
 - Most nem mutatok semmit
 - %s előbbre hozta a célját: nulla kibocsátás %d-re.
 - Klímacsúcs: %d csoport hozta előbbre a célját.
+- Korábbi Földjeid
+- %s elérte a nulla kibocsátást (%d).
+- A világ már több CO2-t von ki, mint amennyit kibocsát (%d).
+- Nulla kibocsátás %d óta
+- a mostani útjuk
+- ha ezt vállalják
 
 ## 8. Kulcsszámok a kártyákra (12 mondat) – még nem lektorált
 
