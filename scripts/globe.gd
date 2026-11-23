@@ -26,6 +26,7 @@ var spin := 0.12
 var cloud_drift := 0.0
 var time := 0.0
 var flashes: Array = []             # felvillanó gyűrűk: [{"lat", "lon", "color", "t0"}] (egyezségnél)
+var storms: Array = []              # fenyegető vagy lecsapó baj: [{"lat", "lon", "kind", "strong"}] – kódból rajzolt, mozgó jel
 var stations: Array = []             # [{name, lat, lon, color, me, locked}]
 var links: Array = []                # [[lat1, lon1, lat2, lon2], ...]
 var events: Array = []               # valós események (world_state.py): {cim, kategoria, lat, lon, link, ...}
@@ -362,6 +363,47 @@ func _draw() -> void:
 			if age > 0.0 and age < 1.6:
 				var k := age / 1.6
 				draw_arc(Vector2(pf.x, pf.y), 10.0 + 90.0 * k, 0.0, TAU, 48, Color(fl["color"], (1.0 - k) * 0.9), 3.0)
+	# fenyegető baj: kis mozgó jel a csoport fölött (láng, eső, hőség, kiszáradt föld)
+	for st in storms:
+		var ps := project(float(st["lat"]), float(st["lon"]))
+		if ps.z < 0.5:
+			continue
+		var k := 2.4 if st.get("strong", false) else 1.4
+		var u := px * k
+		var base := Vector2(ps.x, ps.y) + Vector2(0, -16.0 * px)
+		draw_circle(base + Vector2(0, -3.0 * u), 9.5 * u, Color(0, 0, 0, 0.42))
+		match str(st.get("kind", "")):
+			"tuz":
+				for i in 9:
+					var h := 2 + int(4.0 * absf(sin(time * 7.0 + i * 1.7))) - int(absf(i - 4) * 0.6)
+					for j in maxi(h, 1):
+						var heat_c := Color(1.0, 0.86, 0.3).lerp(Color(0.95, 0.3, 0.12), float(j) / 5.0)
+						draw_rect(Rect2(base + Vector2(i - 4, -j) * u, Vector2(u, u)), heat_c)
+				for i in 3:
+					var sy := fmod(time * 9.0 + i * 4.1, 9.0)
+					draw_rect(Rect2(base + Vector2(sin(time * 2.0 + i * 2.1) * 4.0, -6.0 - sy) * u, Vector2(u, u)), Color(1.0, 0.7, 0.3, 1.0 - sy / 9.0))
+			"arviz":
+				for i in 7:
+					var ry := fmod(time * 16.0 + i * 3.7, 9.0)
+					draw_rect(Rect2(base + Vector2(i * 2 - 6, -9.0 + ry) * u, Vector2(u, 2.0 * u)), Color(0.55, 0.8, 1.0, 0.95))
+				for i in 13:
+					var wy := roundf(sin(time * 4.0 + i * 0.9))
+					draw_rect(Rect2(base + Vector2(i - 6, 1.0 + wy) * u, Vector2(u, u)), Color(0.3, 0.6, 1.0))
+			"hoseg":
+				var ray := 5.0 + 2.0 * sin(time * 5.0)
+				for i in 8:
+					var a := TAU * i / 8.0 + time * 0.6
+					for j in range(4, int(ray) + 3):
+						draw_rect(Rect2((base + Vector2(0, -4) * u + Vector2(cos(a), sin(a)) * j * u).snapped(Vector2(u, u)), Vector2(u, u)), Color(1.0, 0.6, 0.2, 0.9))
+				draw_circle(base + Vector2(0, -4) * u + Vector2(u, u) * 0.5, 3.2 * u, Color(1.0, 0.85, 0.35))
+			_:
+				draw_circle(base + Vector2(3, -7) * u, 2.4 * u, Color(1.0, 0.8, 0.4))
+				for i in 13:
+					var zy := float((i * 7) % 3) - 1.0
+					draw_rect(Rect2(base + Vector2(i - 6, zy) * u, Vector2(u, u)), Color(0.72, 0.5, 0.28))
+				for i in 4:
+					var dx := fmod(time * 6.0 + i * 5.3, 16.0) - 8.0
+					draw_rect(Rect2(base + Vector2(dx, -2.0 - float(i % 2) * 2.0) * u, Vector2(u, u)), Color(0.85, 0.7, 0.45, 0.8))
 	# állomások: fényoszlop + gyémánt
 	for s in stations:
 		var p := project(s.lat, s.lon)

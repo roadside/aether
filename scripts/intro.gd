@@ -155,8 +155,10 @@ func _ready() -> void:
 ## akkor is, ha az intro már eltűnt.
 func _start_music() -> void:
 	var stream: AudioStream = null
-	for path in OWN_MUSIC:        # a játékos saját zenefájlja, ha van (nem része a játéknak)
-		var full := ProjectSettings.globalize_path(path)
+	var places: Array = OWN_MUSIC.duplicate()
+	places.push_front(OS.get_executable_path().get_base_dir().path_join("sajat_zene/intro.wav"))     # kiadott játék: az exe mellett
+	for path in places:        # a játékos saját zenefájlja, ha van (nem része a játéknak)
+		var full: String = path if not (str(path).begins_with("res://") or str(path).begins_with("user://")) else ProjectSettings.globalize_path(path)
 		if FileAccess.file_exists(full):
 			stream = AudioStreamWAV.load_from_file(full)
 			if stream != null:

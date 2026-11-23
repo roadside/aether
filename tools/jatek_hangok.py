@@ -179,6 +179,15 @@ def ambient(variant=1):
     return b
 
 
+def new_sounds(out):
+    """Az óra ketyegése a kör végén, a közelgő baj jelzése és a lendület hangja."""
+    write(sound(0.45, [(0.00, "D3", 0.5)]), out / "ora.wav", peak=0.3, fade_out=0.25)
+    write(sound(3.0, [(0.00, "Bb3", 0.55), (0.22, "A3", 0.5), (0.44, "Bb3", 0.55), (0.66, "A3", 0.5)],
+                extra=lambda b: rumble(b, 0.0, 2.6, 0.45)), out / "veszely.wav", fade_out=0.7)
+    write(sound(2.6, [(0.00, "D4", 0.5), (0.09, "F4", 0.5), (0.18, "A4", 0.55), (0.27, "D5", 0.65), (0.45, "D5", 0.4)]),
+          out / "lendulet.wav", fade_out=0.6)
+
+
 def main():
     out = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parents[1] / "assets" / "hang"
     out.mkdir(parents=True, exist_ok=True)
@@ -196,6 +205,7 @@ def main():
           out / "jo_hir.wav", fade_out=0.6)
     write(sound(5.0, [(0.30, "D3", 0.8), (0.34, "A3", 0.5), (1.10, "Bb3", 0.55), (1.14, "E4", 0.4)],
                 extra=lambda b: rumble(b, 0.0, 4.5, 0.7)), out / "katasztrofa.wav", fade_out=0.8)
+    new_sounds(out)
     write(ambient(2), out / "alapzene2.wav", peak=0.55)
     write(ambient(), out / "alapzene.wav", peak=0.55)
 

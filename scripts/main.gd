@@ -95,6 +95,33 @@ class Twinkle extends Control:
 
 
 ## Felvillanó pillanat a Földön: lüktető gyűrű, fogyó idővel. Rá kell kattintani, mielőtt eltűnik.
+## Szálló színes szikrák a megállapodás ablakában (kódból rajzolt).
+class Burst extends Control:
+	var colors: Array = [Color.WHITE]
+	var bits: Array = []
+	var age := 0.0
+
+	func _ready() -> void:
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+		for i in 44:
+			var a := randf_range(-PI, 0.0)
+			bits.append({"p": Vector2.ZERO, "v": Vector2(cos(a), sin(a)) * randf_range(140.0, 520.0), "c": colors[i % colors.size()], "s": randf_range(4.0, 8.0)})
+
+	func _process(delta: float) -> void:
+		age += delta
+		for b in bits:
+			b["v"] = (b["v"] as Vector2) * (1.0 - 1.2 * delta) + Vector2(0, 520.0) * delta
+			b["p"] = (b["p"] as Vector2) + (b["v"] as Vector2) * delta
+		queue_redraw()
+		if age > 2.2:
+			queue_free()
+
+	func _draw() -> void:
+		for b in bits:
+			var s: float = floorf(float(b["s"]))
+			draw_rect(Rect2((b["p"] as Vector2).snapped(Vector2(4, 4)), Vector2(s, s)), Color(b["c"], clampf(2.2 - age, 0.0, 1.0)))
+
+
 class Moment extends Control:
 	signal picked
 	var color := Color.WHITE
@@ -131,6 +158,7 @@ class Moment extends Control:
 const ROUND_SECONDS := 90.0          # ennyi ideig tart egy kör (öt év), ha az idő telik (játékszabály)
 const MOMENT_SECONDS := 12.0
 var _clock := 0.0
+var _tick_left := 0
 
 
 func _round_s() -> float:
@@ -155,9 +183,80 @@ func _time_on() -> bool:
 	return bool(L.get_setting("elo_ido", true))
 
 
+# --- az első játék vezetése -----------------------------------------------------
+## Az első játék első körében egy rövid sor mindig megmondja a következő mozdulatot (legfeljebb egy mondat).
+## Ebben a körben az idő még nem telik, és nem villan fel pillanat: előbb a három alaplépést kell megtanulni.
+var _tutor: Label
+var _tutor_ctx := ""
+var _ramp_game := -1            # az első játék: a lehetőségek körről körre nyílnak meg (ennek a játéknak az azonosítója)
+
+## Az első játékban lépcsőzetesen nyílnak meg a lehetőségek: hányadik körtől él a megadott dolog.
+func _ramp(from_round: int) -> bool:
+	return _ramp_game != world.game_id or world.round_i >= from_round or world.over()
+
+var _tutor_force := false
+
+func _tutor_on() -> bool:
+	if world == null or world.over() or world.round_i != 0:
+		return false
+	if _tutor_force or not bool(L.get_setting("tanulo_kesz", false)):
+		_ramp_game = world.game_id
+		return true
+	return false
+
+
+func _tutor_text() -> String:
+	if _intro != null or world == null:
+		return ""
+	if not _tutor_on():
+		if _overlay != null or world.over() or _ramp_game != world.game_id:
+			return ""
+		if world.round_i == 1 and _time_on():
+			return "Mostantól telik az idő. Figyeld a sávot az évszám alatt!"
+		if world.round_i == 2:
+			return "Új: metáncsökkentést és felkészülést is kérhetsz."
+		if world.round_i == 3:
+			return "Új gomb: CO2-kivonás. Kártya kell hozzá."
+		return ""
+	if _overlay != null:
+		return {"temak": "Válassz egy témakört!", "kerdesek": "Válassz egy kérdést!", "kartya": "Ez a bizonyítékod. Olvasd el, aztán csukd be az ablakot!",
+			"csoport": "Jelölj be egy kártyát, aztán kattints: Ezzel érvelek."}.get(_tutor_ctx, "")
+	if world.steps <= 0:
+		return "Elfogytak a lépéseid. Kattints: Következő 5 év."
+	if world.hand.is_empty():
+		return "Kezdd kutatással! Kattints a Kutatás gombra."
+	if world.groups.any(func(g: Dictionary) -> bool: return world.can_convince(g)):
+		return "Van kártyád! Kattints a világító csoportra."
+	return "Kutass tovább, amíg van lépésed!"
+
+
+func _tutor_update(ctx: String = "") -> void:
+	_tutor_ctx = ctx
+	if _tutor == null:
+		_tutor = UI.label("", 19, UI.GOLD, true, false)
+		_tutor.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_tutor.add_theme_stylebox_override("normal", _flat(Color(0.03, 0.05, 0.11, 0.94), UI.GOLD, 2, 10))
+		_tutor.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_tutor.z_index = 20
+		add_child(_tutor)
+	var txt := L.t(_tutor_text()) if _tutor_text() != "" else ""
+	_tutor.visible = txt != ""
+	if txt == "" or txt == _tutor.text:
+		return
+	_tutor.text = "➜  " + txt if not txt.begins_with("➜") else txt
+	_tutor.reset_size()
+	_tutor.position = Vector2(340.0, 764.0)
+	if not _test:
+		_tutor.pivot_offset = _tutor.get_minimum_size() * 0.5
+		_tutor.scale = Vector2(1.12, 1.12)
+		_tutor.create_tween().tween_property(_tutor, "scale", Vector2.ONE, 0.25)
+
+
 func _clock_runs() -> bool:
 	if _clock_force:
 		return true
+	if _tutor_on() and not _clock_live:
+		return false
 	if _clock_live:
 		return not _busy and _overlay == null and not world.over()
 	return _time_on() and not _test and not _busy and _overlay == null and _intro == null and not world.over() \
@@ -272,6 +371,12 @@ func _process(delta: float) -> void:
 	var k := clampf(_clock / _round_s(), 0.0, 1.0)
 	_clock_bar.size.x = 150.0 * (1.0 - k)
 	_clock_bar.color = UI.EMBER if k > 0.85 else UI.CYAN
+	var left := int(ceilf(_round_s() - _clock))
+	if left <= 8 and left != _tick_left and left > 0:        # az utolsó másodpercekben ketyeg az óra
+		_sound("ora")
+		_clock_bar.get_parent().scale = Vector2(1.0, 2.2)
+		_clock_bar.create_tween().tween_property(_clock_bar.get_parent(), "scale", Vector2.ONE, 0.3)
+	_tick_left = left
 	(_stats["ev"] as Label).text = str(world.year() + mini(World.ROUND_YEARS - 1, int(k * World.ROUND_YEARS)))
 	if _moment.is_empty():
 		if not _moment_times.is_empty() and _clock >= float(_moment_times[0]):
@@ -953,6 +1058,11 @@ func _refresh() -> void:
 		else:
 			marks.append({"name": "%s\n%s" % [L.field(tp, "nev"), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": Color(0.75, 0.82, 0.92), "small": true, "dim": true})
 	globe.stations = marks
+	var storms: Array = []
+	for g in world.groups:
+		if _threat_on(g) != "":
+			storms.append({"lat": g["lat"], "lon": g["lon"], "kind": _threat_on(g)})
+	globe.storms = storms
 	var allies: Array = world.groups.filter(func(g: Dictionary) -> bool: return int(g["cel"]) > 0)
 	allies.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return float(a["lon"]) < float(b["lon"]))
 	var lines: Array = []
@@ -960,6 +1070,7 @@ func _refresh() -> void:
 		lines.append([allies[i - 1]["lat"], allies[i - 1]["lon"], allies[i]["lat"], allies[i]["lon"]])
 	globe.links = lines
 	_mark_next()
+	_tutor_update(_tutor_ctx)
 	_save()
 
 
@@ -1001,9 +1112,11 @@ func _mark_next() -> void:
 			b.remove_theme_color_override("font_color")
 	_btns["kutatas"].disabled = world.steps <= 0 or world.over()
 	_btns["kivonas"].disabled = world.steps <= 0 or world.over()
+	(_btns["kivonas"].get_parent() as Control).modulate.a = 1.0 if _ramp(3) else 0.0
+	_btns["kivonas"].mouse_filter = Control.MOUSE_FILTER_STOP if _ramp(3) else Control.MOUSE_FILTER_IGNORE
 	_btns["ido"].text = L.t("Végeredmény") if world.over() else L.t("Következő 5 év") + "  ▶"
 	_btns["kartyak"].text = "%s (%d)" % [L.t("Kártyáim"), world.hand.size()]
-	_mission_btn.visible = not world.missions.is_empty()
+	_mission_btn.visible = not world.missions.is_empty() and _ramp(1)
 	var md := world.missions_done()
 	_mission_btn.text = "%s %d/%d" % [L.t("Küldetések"), md, world.missions.size()]
 	if _mission_game != world.game_id:
@@ -1024,10 +1137,12 @@ func _mark_next() -> void:
 # --- ablakok ------------------------------------------------------------------
 func _open(title: String, accent: Color = UI.GOLD) -> VBoxContainer:
 	var keep := _flash_ids       # a felvillanás az ablak valódi bezárásakor jön, nem ablakváltáskor
+	var fresh := _overlay == null
 	_flash_ids = []
 	_close()
 	_flash_ids = keep
 	_show_menu(false)
+	_tutor_update()
 	_dim = ColorRect.new()
 	_dim.color = Color(0.0, 0.0, 0.02, 0.72)
 	_dim.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -1043,6 +1158,15 @@ func _open(title: String, accent: Color = UI.GOLD) -> VBoxContainer:
 	p.z_index = 11
 	add_child(p)
 	_overlay = p
+	if fresh and not _test:        # az új ablak finoman előugrik
+		p.pivot_offset = Vector2(460, 360)
+		p.scale = Vector2(0.94, 0.94)
+		p.modulate.a = 0.0
+		_dim.modulate.a = 0.0
+		var pop := p.create_tween().set_parallel(true).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		pop.tween_property(p, "scale", Vector2.ONE, 0.22)
+		pop.tween_property(p, "modulate:a", 1.0, 0.14)
+		pop.tween_property(_dim, "modulate:a", 1.0, 0.14)
 	var outer := UI.vbox(10)
 	p.add_child(outer)
 	var head := UI.heading(title, 28)
@@ -1098,6 +1222,7 @@ func _close() -> void:
 	_overlay = null
 	_dim = null
 	_close_x = null
+	_tutor_update()
 	for gid in _flash_ids:
 		var g := world.group(gid)
 		if g.is_empty() or not _group_cards.has(gid):
@@ -1109,6 +1234,7 @@ func _close() -> void:
 	_flash_ids = []
 	if _bonus_float:
 		_bonus_float = false
+		_sound("lendulet")
 		_float_text(L.t("+1 lépés"), _dots.global_position + Vector2(60, 40), UI.GOLD)
 		_dots.modulate = Color(2.2, 1.9, 0.8)
 		create_tween().tween_property(_dots, "modulate", Color.WHITE, 1.5)
@@ -1428,6 +1554,7 @@ func _open_research(theme: String = "") -> void:
 		_research_theme(theme)
 		return
 	var body := _open(L.t("Miről kutatsz?"))
+	_tutor_update("temak")
 	body.add_child(UI.label(L.t("Válassz témakört. Három valódi kérdést kapsz, egyet kutathatsz ki: ebből lesz bizonyíték-kártyád."), 17, UI.SOFT))
 	var grid := GridContainer.new()
 	grid.columns = 2
@@ -1482,6 +1609,7 @@ func _research_theme(th: String) -> void:
 	if not _offers.has(th):
 		_offers[th] = world.research_offers(th)
 	var body := _open(_theme_name(th), _theme_color(th))
+	_tutor_update("kerdesek")
 	var offers: Array = _offers[th].filter(func(id: String) -> bool: return not (id in world.hand))
 	if offers.is_empty():
 		body.add_child(UI.label(L.t("Itt most nincs új kérdés"), 17, UI.SOFT))
@@ -1508,6 +1636,7 @@ func _do_research(id: String, th: String) -> void:
 func _open_card(id: String, fresh: bool = false) -> void:
 	var th := Cards.theme_of(id)
 	var body := _open(L.t("Új bizonyíték-kártya") if fresh else L.t("Bizonyíték-kártya"), _theme_color(th) if th != "" else UI.GOLD)
+	_tutor_update("kartya" if fresh else "")
 	var en := L.is_en()
 	if fresh and _new_rank != "":
 		body.add_child(UI.label("★ " + L.t("Új rang: %s") % L.t(_new_rank), 20, UI.GOLD, true))
@@ -1575,6 +1704,7 @@ func _open_group(g: Dictionary) -> void:
 		return
 	var col := Color(str(g["szin"]))
 	var body := _open(L.field(g, "nev"), col)
+	_tutor_update("csoport" if world.can_convince(g) else "")
 	var top_row := UI.hbox(14)
 	var big_land := Landscape.rect(str(g["id"]), 168, int(g["cel"]) > 0)
 	big_land.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -1610,9 +1740,9 @@ func _open_group(g: Dictionary) -> void:
 		asks.append({"fajta": "megerosites", "kell": 1})
 	for t in targets:
 		asks.append({"fajta": "cel", "cel": t, "kell": world.cards_needed(g, t)})
-	if int(g["metan"]) == 0:
+	if int(g["metan"]) == 0 and _ramp(2):
 		asks.append({"fajta": "metan", "kell": world.methane_needed(g)})
-	if not g.get("felkeszult", false) and danger == "":
+	if not g.get("felkeszult", false) and danger == "" and _ramp(2):
 		asks.append({"fajta": "felkeszules", "kell": 1})
 	if asks.is_empty():
 		body.add_child(UI.label(L.t("Tőlük már nincs mit kérned."), 17, UI.SOFT))
@@ -1771,6 +1901,12 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 		b2.add_child(_go(L.t("Rendben"), _close))
 		return
 	var body := _open(L.t("Megállapodtatok!"), UI.GREEN)
+	if not _test:
+		var burst := Burst.new()
+		burst.colors = [Color(str(g["szin"])), UI.GOLD, UI.GREEN, UI.CYAN]
+		burst.position = Vector2(800, 120)
+		burst.z_index = 12
+		add_child(burst)
 	if ask["fajta"] == "felkeszules":
 		body.add_child(UI.label(L.t("%s felkészült a bajra. Megbízik benned, és többé nem inog meg.") % L.field(g, "nev"), 22, UI.TEXT, true))
 		body.add_child(_go(L.t("Rendben"), _close))
@@ -1828,6 +1964,21 @@ func _open_cdr() -> void:
 
 
 # --- telik az idő -------------------------------------------------------------
+## Nagy, áttetsző évszám a Föld fölött, amíg az évek peregnek.
+func _year_label() -> Label:
+	var big := UI.label("", 132, Color(1, 1, 1, 0.36), true, false)
+	big.add_theme_font_override("font", UI.font_pixel)
+	big.add_theme_color_override("font_outline_color", Color(0.02, 0.03, 0.08, 0.5))
+	big.add_theme_constant_override("outline_size", 12)
+	big.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	big.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	big.position = Vector2(500, 350)
+	big.size = Vector2(600, 150)
+	big.pivot_offset = Vector2(300, 75)
+	add_child(big)
+	return big
+
+
 func _advance() -> void:
 	if _busy or _overlay != null:
 		return
@@ -1845,6 +1996,9 @@ func _advance() -> void:
 	var y0 := world.year()
 	var n0 := world.history.size()
 	var heat0: float = globe.heat
+	if _tutor_on():              # az első kör végén a vezetés véget ér
+		if not _dry:
+			L.set_setting("tanulo_kesz", true)
 	world.advance()
 	_offers = {}
 	_clock = 0.0
@@ -1853,8 +2007,12 @@ func _advance() -> void:
 	var tw := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tw.tween_property(globe, "spin", globe.spin + 1.0, 0.2 if _test else 2.6)
 	# évről évre: az évszám, a hőmérséklet, a görbe és a Föld színe együtt lép
+	var big := _year_label()
 	for i in range(n0, world.history.size()):
 		var row: Array = world.history[i]
+		big.text = str(int(row[0]))
+		big.scale = Vector2(1.12, 1.12)
+		big.create_tween().tween_property(big, "scale", Vector2.ONE, 0.3)
 		(_stats["ev"] as Label).text = str(int(row[0]))
 		(_stats["meleg"] as Label).text = "+%s °C" % L.num(float(row[1]), 2)
 		_curve.set_data(world.history.slice(0, i + 1), world.base_history.slice(0, i + 1), fc)
@@ -1862,10 +2020,23 @@ func _advance() -> void:
 		await get_tree().create_timer(0.03 if _test else 0.5).timeout
 	if tw.is_running():
 		await tw.finished
+	var fade := big.create_tween()
+	fade.tween_property(big, "modulate:a", 0.0, 0.4)
+	fade.tween_callback(big.queue_free)
+	# a baj lecsap: a Föld odafordul, és a jel felnagyítva lobog
+	for n in world.news:
+		if n["fajta"] == "katasztrofa" and not _test:
+			var dg := world.group(n["csoport"])
+			globe.look_at_event({"lat": dg["lat"], "lon": dg["lon"]})
+			globe.storms = [{"lat": dg["lat"], "lon": dg["lon"], "kind": n["mi"], "strong": true}]
+			_sound("katasztrofa")
+			await get_tree().create_timer(0.7).timeout
+			globe.flash(float(dg["lat"]), float(dg["lon"]), UI.EMBER)
+			await get_tree().create_timer(1.3).timeout
 	_busy = false
 	_refresh()
 	var kinds: Array = world.news.map(func(n: Dictionary) -> String: return str(n["fajta"]))
-	_sound("zaro" if world.over() else ("billenes" if "billenes" in kinds else ("katasztrofa" if "katasztrofa" in kinds else ("megingas" if ("visszalepett" in kinds or "inog" in kinds) else ("jo_hir" if ("nulla" in kinds or "vilag_nulla" in kinds) else "korvaltas")))))
+	_sound("zaro" if world.over() else ("billenes" if "billenes" in kinds else ("katasztrofa" if "katasztrofa" in kinds else ("veszely" if not world.threat.is_empty() else ("megingas" if ("visszalepett" in kinds or "inog" in kinds) else ("jo_hir" if ("nulla" in kinds or "vilag_nulla" in kinds) else "korvaltas"))))))
 	_open_news(y0, t0)
 
 
@@ -2081,6 +2252,10 @@ func _open_end() -> void:
 		var b := UI.label("+%s °C" % L.num(float(side[1]), 2), 34, side[3], true, false)
 		b.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		v.add_child(b)
+		if not _test:             # a két szám együtt indul a mai melegedésről; a „ha semmi sem változik” tovább kúszik
+			var end_t := float(side[1])
+			var cnt := b.create_tween()
+			cnt.tween_method(func(x: float) -> void: b.text = "+%s °C" % L.num(x, 2), M.T_START, end_t, 0.9 * maxf(end_t - M.T_START, 0.2) / 0.5)
 		var c := UI.label(L.t("A tenger kb. %s cm-rel magasabb") % L.num_short(float(side[2]) * 100.0, 0), 15, UI.SOFT, false, false)
 		c.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		v.add_child(c)
@@ -2316,6 +2491,15 @@ func _selftest() -> void:
 	_open_group(world.group("europa"))
 	await _shot("1f_veszely_ablak.png")
 	_close()
+	var yl := _year_label()
+	yl.text = "2031"
+	var eu := world.group("europa")
+	globe.storms = [{"lat": eu["lat"], "lon": eu["lon"], "kind": "arviz", "strong": true}, {"lat": 28.0, "lon": 15.0, "kind": "hoseg", "strong": true},
+		{"lat": 5.0, "lon": 20.0, "kind": "tuz", "strong": true}, {"lat": 25.0, "lon": 45.0, "kind": "aszaly", "strong": true},
+		{"lat": 50.0, "lon": 40.0, "kind": "tuz"}, {"lat": -15.0, "lon": 25.0, "kind": "aszaly"}, {"lat": 10.0, "lon": 0.0, "kind": "hoseg"}]
+	await get_tree().create_timer(0.4).timeout
+	await _shot("1h_baj_lecsap.png")
+	yl.queue_free()
 	world.threat = {}
 	_level_force = 3
 	_pick_game(-1, 2)
@@ -2357,7 +2541,10 @@ func _selftest() -> void:
 	var kt: int = world.targets_for(kina)[0]
 	world.negotiate(kina, kt, world.usable(kina).slice(0, 1))
 	_refresh()
+	_test = false
 	_agreed(kina, {"fajta": "cel", "cel": kt}, 2.8)
+	await get_tree().create_timer(0.7).timeout
+	_test = true
 	await _shot("9_megegyezes.png")
 	_close()
 	await get_tree().create_timer(0.6).timeout
