@@ -43,6 +43,7 @@ var base_history: Array = []     # ugyanez „ha semmi sem változik” mellett,
 var news: Array = []             # az utolsó öt év hírei: [{"fajta", ...}]
 var cdr_total := 0.0             # az eddig kivont CO2 összesen (milliárd tonna)
 var net_zero_year := 0           # az első év, amikor a világ több CO2-t von ki, mint amennyit kibocsát (0 = még nem)
+var dilemma: Dictionary = {}      # függőben lévő döntés: {"fajta": "tamogatas"|"meghivas", "a": csoport, "b": csoport}
 var summit_due := false          # most klímacsúcs van: egy kártyát megmutathatsz az egész világnak
 var missions: Array = []         # a játék három küldetése: [{"id", "arg"}] (játékszabály; a Föld-kódból sorsoljuk)
 var hajto: Array = []            # évenként a tényleges hajtóerők: [co2, kivonás, metán] (a „mi lett volna, ha” számításhoz)
@@ -74,6 +75,7 @@ func new_game(seed_value: int = -1, steps_n: int = STEPS) -> void:
 	hajto = []
 	_pick_missions()
 	summit_due = false
+	dilemma = {}
 	net_zero_year = 0
 	cdr_total = 0.0
 	history = [[int(st["ev"]), float(st["T"])]]
@@ -482,6 +484,7 @@ func advance() -> void:
 	if over():
 		return
 	summit_due = round_i in SUMMIT_ROUNDS
+	_roll_dilemma()
 	# megingás (játékszabály): aki az előző kör végén elbizonytalanodott, és nem erősítetted meg, visszalép:
 	# tíz évvel későbbre tolja a célját (legfeljebb 2090-ig, hogy a vállalás valódi maradjon), és egy fokozattal visszaesik
 	var just_wavered: Array = []
@@ -520,6 +523,51 @@ func result() -> Dictionary:
 	return {"T": float(history[-1][1]), "alap": float(base_history[-1][1]), "csucs": peak,
 		"billenes": tips.filter(func(t: Dictionary) -> bool: return int(t["ev"]) > 0).size(),
 		"tenger": M.sea_2100(float(history[-1][1])), "tenger_alap": M.sea_2100(float(base_history[-1][1])), "sens": sens}
+
+
+# --- döntési helyzetek (játékszabály) -------------------------------------------
+
+const DILEMMA_CHANCE := 0.3
+
+
+## Néhány kör elején döntened kell (a Föld-kódból sorsolva, külön véletlenforrásból).
+func _roll_dilemma() -> void:
+	dilemma = {}
+	if round_i < 1 or round_i >= ROUNDS - 1 or summit_due:
+		return
+	var dr := RandomNumberGenerator.new()
+	dr.seed = seed_v * 104729 + round_i * 31 + 7
+	if dr.randf() >= DILEMMA_CHANCE:
+		return
+	var open_g: Array = groups.filter(func(g: Dictionary) -> bool: return not g["konnyebb"] and not targets_for(g).is_empty())
+	var unprep: Array = groups.filter(func(g: Dictionary) -> bool: return not g.get("felkeszult", false))
+	if dr.randf() < 0.5 and open_g.size() >= 2:
+		var a: Dictionary = open_g.pop_at(dr.randi_range(0, open_g.size() - 1))
+		var b: Dictionary = open_g[dr.randi_range(0, open_g.size() - 1)]
+		dilemma = {"fajta": "meghivas", "a": a["id"], "b": b["id"]}
+	elif not unprep.is_empty():
+		dilemma = {"fajta": "tamogatas", "a": unprep[dr.randi_range(0, unprep.size() - 1)]["id"]}
+
+
+## choice: 0 vagy 1. Támogatás: 0 = eggyel több lépés, 1 = a megnevezett csoport felkészül.
+## Meghívás: a választott csoportot most eggyel kevesebb kártyával is meg lehet győzni.
+func resolve_dilemma(choice: int) -> void:
+	if dilemma.is_empty():
+		return
+	if dilemma["fajta"] == "tamogatas":
+		if choice == 0:
+			steps += 1
+		else:
+			var g := group(str(dilemma["a"]))
+			if not g.is_empty():
+				g["felkeszult"] = true
+				g["inog"] = false
+				naplo.append({"ev": year(), "fajta": "felkeszules", "csoport": g["id"]})
+	else:
+		var g2 := group(str(dilemma["a" if choice == 0 else "b"]))
+		if not g2.is_empty():
+			g2["konnyebb"] = true
+	dilemma = {}
 
 
 # --- küldetések (játékszabály) --------------------------------------------------
@@ -595,7 +643,7 @@ func what_if(delay: int) -> float:
 
 func to_dict() -> Dictionary:
 	return {"v": SAVE_VERSION, "mag": seed_v, "jatek": game_id, "sens": sens, "st": st, "alap": _base, "kor": round_i, "lepes": steps, "max_lepes": max_steps, "csoportok": groups, "kez": hand,
-		"kivonas": cdr, "billenes": tips, "mult": history, "alap_mult": base_history, "hirek": news, "naplo": naplo, "hajto": hajto, "kuldetes": missions, "csucs": summit_due, "vilag_nulla": net_zero_year, "kivont": cdr_total, "rng": str(rng.state)}
+		"kivonas": cdr, "billenes": tips, "mult": history, "alap_mult": base_history, "hirek": news, "naplo": naplo, "hajto": hajto, "kuldetes": missions, "csucs": summit_due, "dontes": dilemma, "vilag_nulla": net_zero_year, "kivont": cdr_total, "rng": str(rng.state)}
 
 
 func from_dict(d: Dictionary) -> bool:
@@ -606,6 +654,7 @@ func from_dict(d: Dictionary) -> bool:
 	groups = d["csoportok"]; hand = d["kez"]; cdr = d["kivonas"]; tips = d["billenes"]; history = d["mult"]; base_history = d["alap_mult"]
 	news = d.get("hirek", [])
 	summit_due = bool(d.get("csucs", false))
+	dilemma = d.get("dontes", {})
 	net_zero_year = int(d.get("vilag_nulla", 0))
 	cdr_total = float(d.get("kivont", 0.0))
 	naplo = d.get("naplo", [])

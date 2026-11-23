@@ -103,7 +103,7 @@
    "forras": "Otosaka és mtsai 2023",
    "forras_en": "Otosaka et al. 2023",
    "link": "https://doi.org/10.5194/essd-15-1597-2023",
-   "lektoralva": false
+   "lektoralva": true
   },
   "antarktisz": {
    "hu": "A két nagy jégtakaró olvadása 1992 és 2020 között 21 mm-rel emelte a tengert, és az olvadás évi 105-ről 372 milliárd tonnára gyorsult.",
@@ -111,7 +111,7 @@
    "forras": "Otosaka és mtsai 2023",
    "forras_en": "Otosaka et al. 2023",
    "link": "https://doi.org/10.5194/essd-15-1597-2023",
-   "lektoralva": false
+   "lektoralva": true
   },
   "korall": {
    "hu": "A korallzátonyokon a súlyos kifehéredések között ma átlagosan már csak 6 év telik el, ennyi idő alatt nem tudnak helyreállni.",
@@ -119,7 +119,7 @@
    "forras": "Hughes és mtsai 2018",
    "forras_en": "Hughes et al. 2018",
    "link": "https://doi.org/10.1126/science.aan8048",
-   "lektoralva": false
+   "lektoralva": true
   },
   "hutokozeg": {
    "hu": "Ha a hűtőkben és légkondicionálókban a régi hűtőgázokat kevésbé melegítőkre cseréljük, a század végére akár 0,5 fok melegedés elkerülhető.",
@@ -127,7 +127,7 @@
    "forras": "Xu és mtsai 2013",
    "forras_en": "Xu et al. 2013",
    "link": "https://doi.org/10.5194/acp-13-6083-2013",
-   "lektoralva": false
+   "lektoralva": true
   },
   "lap": {
    "hu": "A kiszárított lápok évente kb. 1,9 milliárd tonna CO2-vel egyenértékű üvegházgázt engednek a levegőbe.",
@@ -135,7 +135,7 @@
    "forras": "Leifeld és Menichetti 2018",
    "forras_en": "Leifeld and Menichetti 2018",
    "link": "https://doi.org/10.1038/s41467-018-03406-6",
-   "lektoralva": false
+   "lektoralva": true
   },
   "metan_muhold": {
    "hu": "Műholdképek szerint néhány száz nagy szivárgás adja az olaj- és gázipar metánkibocsátásának 8–12%-át, és ezek olcsón megszüntethetők.",
@@ -143,7 +143,7 @@
    "forras": "Lauvaux és mtsai 2022",
    "forras_en": "Lauvaux et al. 2022",
    "link": "https://doi.org/10.1126/science.abj4351",
-   "lektoralva": false
+   "lektoralva": true
   },
   "voros_alga": {
    "hu": "Egy kísérletben, ha a marhák takarmányába kevés vörös tengeri algát kevertek, 147 nap alatt 45–68%-kal kevesebb metánt termeltek.",
@@ -151,15 +151,15 @@
    "forras": "Roque és mtsai 2021",
    "forras_en": "Roque et al. 2021",
    "link": "https://doi.org/10.1371/journal.pone.0247820",
-   "lektoralva": false
+   "lektoralva": true
   },
   "gatak": {
-   "hu": "Védekezés nélkül 2100-ban évente a világ népességének 0,2–4,6%-át öntené el a tenger; a gátak ára jóval kisebb, mint a kár, amit megelőznek.",
+   "hu": "Védekezés nélkül 2100-ban évente a világ népességének 0,2–4,6%-át öntené el a tenger; a gátak ára ennél jóval kisebb, mint a kár, amit megelőznek.",
    "en": "Without protection, 0.2–4.6% of the world's population would be flooded each year by 2100; dikes cost far less than the damage they prevent.",
    "forras": "Hinkel és mtsai 2014",
    "forras_en": "Hinkel et al. 2014",
    "link": "https://doi.org/10.1073/pnas.1222469111",
-   "lektoralva": false
+   "lektoralva": true
   },
   "mangrove": {
    "hu": "Ha eltűnnének a mangroveerdők, évente 15 millióval több embert öntene el a víz; védelmük évente több mint 65 milliárd dollár kárt előz meg.",
@@ -167,15 +167,15 @@
    "forras": "Menéndez és mtsai 2020",
    "forras_en": "Menéndez et al. 2020",
    "link": "https://doi.org/10.1038/s41598-020-61136-6",
-   "lektoralva": false
+   "lektoralva": true
   },
   "ozon": {
-   "hu": "Az ózonréteg védelméről szóló Montreali Jegyzőkönyv nélkül a század végére akár 0,5–1 fokkal melegebb is lehetne a Föld.",
+   "hu": "Az ózonréteg védelméről szóló montreali jegyzőkönyv nélkül a század végére akár 0,5–1 fokkal melegebb is lehetne a Föld.",
    "en": "Without the Montreal Protocol, which protects the ozone layer, the Earth could have been up to 0.5–1 °C warmer by the end of the century.",
    "forras": "Young és mtsai 2021",
    "forras_en": "Young et al. 2021",
    "link": "https://doi.org/10.1038/s41586-021-03737-3",
-   "lektoralva": false
+   "lektoralva": true
   },
   "co2_tarolas": {
    "hu": "Jól szabályozott tárolóban a föld alá zárt CO2 több mint 98%-a 10 000 év múlva is lent marad.",
@@ -183,15 +183,15 @@
    "forras": "Alcalde és mtsai 2018",
    "forras_en": "Alcalde et al. 2018",
    "link": "https://doi.org/10.1038/s41467-018-04423-1",
-   "lektoralva": false
+   "lektoralva": true
   },
   "munkakepesseg": {
-   "hu": "2020-ban a hőség miatt 295 milliárd munkaóra veszett el a világon, csaknem a felét a szegényebb országok földművesei veszítették el.",
+   "hu": "2020-ban a hőség miatt 295 milliárd munkaóra veszett el a világon, csaknem a felét a szegényebb országok földművesei szenvedték el.",
    "en": "In 2020, heat cost the world 295 billion potential work hours; almost half were lost by farm workers in poorer countries.",
    "forras": "Lancet Countdown 2021",
    "forras_en": "Lancet Countdown 2021",
    "link": "https://doi.org/10.1016/S0140-6736(21)01787-6",
-   "lektoralva": false
+   "lektoralva": true
   },
   "aszaly": {
    "hu": "2020-ban egy-egy hónapban a szárazföld akár 19%-át sújtotta szélsőséges aszály; 1950 és 1999 között ez sosem volt több 13%-nál.",
@@ -199,7 +199,7 @@
    "forras": "Lancet Countdown 2021",
    "forras_en": "Lancet Countdown 2021",
    "link": "https://doi.org/10.1016/S0140-6736(21)01787-6",
-   "lektoralva": false
+   "lektoralva": true
   },
   "napaktivitas": {
    "hu": "Az elmúlt évtizedekben a Nap minden olyan változása, amely hathat a klímára, ellenkező irányba mutatott, mint ami a melegedést megmagyarázná.",
@@ -207,15 +207,15 @@
    "forras": "Lockwood és Fröhlich 2007",
    "forras_en": "Lockwood and Fröhlich 2007",
    "link": "https://doi.org/10.1098/rspa.2007.1880",
-   "lektoralva": false
+   "lektoralva": true
   },
   "tcre": {
-   "hu": "A melegedés a kibocsátott szén teljes mennyiségétől függ: minden ezer milliárd tonna szén (kb. 3700 milliárd tonna CO2) 1–2,1 fokkal melegíti a Földet.",
+   "hu": "A melegedés a kibocsátott szén teljes mennyiségétől függ: minden ezermilliárd tonna szén (kb. 3700 milliárd tonna CO2) 1–2,1 fokkal melegíti a Földet.",
    "en": "Warming depends on the total amount of carbon emitted: every trillion tonnes of carbon (about 3,700 billion tonnes of CO2) warms the Earth by 1–2.1 °C.",
    "forras": "Matthews és mtsai 2009",
    "forras_en": "Matthews et al. 2009",
    "link": "https://doi.org/10.1038/nature08047",
-   "lektoralva": false
+   "lektoralva": true
   },
   "klimaerzekenyseg": {
    "hu": "Ha a levegő CO2-tartalma kétszeresére nő, a Föld végül valószínűleg 2,6–3,9 fokkal lesz melegebb; 2 fok alatti érték szinte kizárt.",
@@ -223,7 +223,7 @@
    "forras": "Sherwood és mtsai 2020",
    "forras_en": "Sherwood et al. 2020",
    "link": "https://doi.org/10.1029/2019RG000678",
-   "lektoralva": false
+   "lektoralva": true
   },
   "ocean_ho": {
    "hu": "A melegedés többlethőjének 89%-át az óceán nyelte el 1971 és 2018 között; a levegőbe csak 1% jutott.",
@@ -231,7 +231,7 @@
    "forras": "von Schuckmann és mtsai 2020",
    "forras_en": "von Schuckmann et al. 2020",
    "link": "https://doi.org/10.5194/essd-12-2013-2020",
-   "lektoralva": false
+   "lektoralva": true
   },
   "amoc": {
    "hu": "Az Atlanti-óceán nagy áramlása (amelyhez a Golf-áramlat is tartozik) a 20. század közepe óta kb. 15%-kal gyengült.",
@@ -239,7 +239,7 @@
    "forras": "Caesar és mtsai 2018",
    "forras_en": "Caesar et al. 2018",
    "link": "https://doi.org/10.1038/s41586-018-0006-5",
-   "lektoralva": false
+   "lektoralva": true
   },
   "permafroszt": {
    "hu": "Az északi fagyott talajok vidékén kb. 1300 milliárd tonna szén van a földben, ebből kb. 800 milliárd tonna egész évben fagyott.",
@@ -247,7 +247,7 @@
    "forras": "Hugelius és mtsai 2014",
    "forras_en": "Hugelius et al. 2014",
    "link": "https://doi.org/10.5194/bg-11-6573-2014",
-   "lektoralva": false
+   "lektoralva": true
   },
   "muhold_erdo": {
    "hu": "Műholdképek szerint 2000 és 2012 között 2,3 millió négyzetkilométer erdő tűnt el a Földön, több mint Magyarország területének 24-szerese.",
@@ -255,7 +255,7 @@
    "forras": "Hansen és mtsai 2013",
    "forras_en": "Hansen et al. 2013",
    "link": "https://doi.org/10.1126/science.1244693",
-   "lektoralva": false
+   "lektoralva": true
   }
  }
 }

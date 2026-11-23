@@ -530,8 +530,8 @@ func _show_menu(on: bool) -> void:
 
 
 func _reset_game() -> void:
-	if _reset_btn.text != L.t("Biztos? Kattints újra"):
-		_reset_btn.text = L.t("Biztos? Kattints újra")
+	if _reset_btn.text != L.t("Biztos? Kattints még egyszer!"):
+		_reset_btn.text = L.t("Biztos? Kattints még egyszer!")
 		get_tree().create_timer(3.0).timeout.connect(func() -> void:
 			if is_instance_valid(_reset_btn):
 				_reset_btn.text = L.t("Új játék"))
@@ -1416,6 +1416,9 @@ func _advance() -> void:
 	if world.summit_due:          # előbb a klímacsúcsról kell dönteni
 		_open_summit()
 		return
+	if not world.dilemma.is_empty():     # függőben lévő döntés
+		_open_dilemma()
+		return
 	_busy = true
 	var t0 := float(world.st["T"])
 	var y0 := world.year()
@@ -1502,10 +1505,38 @@ func _open_news(y0: int, t0: float) -> void:
 	elif world.summit_due:
 		body.add_child(_go(L.t("Tovább") + " →", _open_summit))
 	else:
-		body.add_child(_go(L.t("Tovább"), _close))
+		body.add_child(_go(L.t("Tovább") + (" →" if not world.dilemma.is_empty() else ""), _open_dilemma if not world.dilemma.is_empty() else _close))
 
 
 # --- klímacsúcs ---------------------------------------------------------------
+## Döntési helyzet a kör elején (játékszabály): két lehetőség, mindkettőnél látszik, mit ad.
+func _open_dilemma() -> void:
+	var d := world.dilemma
+	if d.is_empty():
+		_close()
+		return
+	var body := _open(L.t("Döntés"), UI.GOLD)
+	var opts: Array = []
+	if d["fajta"] == "tamogatas":
+		body.add_child(UI.label(L.t("Egy alapítvány támogatja a munkádat. Mire kéred?"), 18, UI.TEXT))
+		opts = [L.t("Több kutató: ebben a körben eggyel több lépésed van."),
+			L.t("Felkészítő program: %s azonnal felkészül a bajra.") % L.field(world.group(str(d["a"])), "nev")]
+	else:
+		body.add_child(UI.label(L.t("Két meghívást kaptál, de csak egy útra van időd. Akit meglátogatsz, azt most eggyel kevesebb kártyával is meggyőzheted."), 18, UI.TEXT))
+		opts = [L.field(world.group(str(d["a"])), "nev"), L.field(world.group(str(d["b"])), "nev")]
+	for i in opts.size():
+		body.add_child(_go(str(opts[i]) + " →", _do_dilemma.bind(i), false))
+	body.add_child(UI.label(L.t("A jövő hírei a játék részei, nem valódi események."), 13, UI.MUTE))
+
+
+func _do_dilemma(choice: int) -> void:
+	world.resolve_dilemma(choice)
+	_sound("kartya")
+	_save()
+	_refresh()
+	_close()
+
+
 func _open_summit() -> void:
 	var body := _open("%s %d" % [L.t("Klímacsúcs"), world.year()], UI.GOLD)
 	body.add_child(UI.label(L.t("Mutass meg egy kártyát az egész világnak! Aki már vállalt célt, és a kártya az ő aggodalmára felel, öt évvel előbbre hozza. Ez nem kerül lépésbe."), 17, UI.SOFT))
@@ -1846,6 +1877,10 @@ func _selftest() -> void:
 		if world.round_i == 8 or world.over():
 			await _shot("13_hirek_%d.png" % world.round_i)
 		_close()
+		if not world.dilemma.is_empty():
+			_open_dilemma()
+			await _shot("13d_dontes_%s.png" % str(world.dilemma["fajta"]))
+			_do_dilemma(world.round_i % 2)
 		if world.summit_due:
 			_open_summit()
 			await _shot("13b_csucs_%d.png" % world.round_i)
@@ -1913,6 +1948,10 @@ func _walkthrough() -> void:
 	for seed_v in [11, 222, 3333, 44444, 5, 60606]:
 		_new_game(seed_v, 3 + games % 3)
 		while not world.over():
+			if not world.dilemma.is_empty():
+				_open_dilemma()
+				await get_tree().process_frame
+				_do_dilemma(world.round_i % 2)
 			if world.summit_due:
 				_open_summit()
 				var best := ""

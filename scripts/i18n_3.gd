@@ -209,4 +209,9 @@ const EN := {
 	"Nem sikerült elmenteni a képet.": "Could not save the picture.",
 	"A kártyáidból tudod:": "From your cards:",
 	"Teljesített küldetések: %d": "Missions completed: %d",
+	"Döntés": "Decision",
+	"Egy alapítvány támogatja a munkádat. Mire kéred?": "A foundation is backing your work. What do you ask for?",
+	"Több kutató: ebben a körben eggyel több lépésed van.": "More researchers: you get one extra move this round.",
+	"Felkészítő program: %s azonnal felkészül a bajra.": "Readiness programme: %s is prepared for trouble right away.",
+	"Két meghívást kaptál, de csak egy útra van időd. Akit meglátogatsz, azt most eggyel kevesebb kártyával is meggyőzheted.": "You have two invitations but time for only one trip. Whoever you visit can now be convinced with one card fewer.",
 }

@@ -338,7 +338,7 @@ const EN := {
 	"A klímamodell becslése erre az évre: %d. (2024-ben mért érték: +1,36 °C, Forster és mtsai 2025.)": "The climate model's estimate for this year: %d. (Measured in 2024: +1.36 °C, Forster et al. 2025.)",
 	"Az évek telnek. Ha egy ablak nyitva van, az idő áll.": "Years pass. While a window is open, time stops.",
 	"Bizalom": "Trust",
-	"Biztos? Kattints újra": "Sure? Click again",
+	"Biztos? Kattints még egyszer!": "Sure? Click again",
 	"Egy évvel előre.": "One year forward.",
 	"Gyors": "Fast",
 	"Gyorsabban telik az idő.": "Time passes faster.",
