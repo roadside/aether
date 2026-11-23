@@ -1246,7 +1246,10 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 		var usable := world.usable(g)
 		for th in g["felelmek"]:
 			var c := UI.card(_theme_color(th))
-			c.add_child(UI.label(("“%s”" if L.is_en() else "„%s”") % L.t(WORRY[th]), 17, UI.TEXT))
+			var wrow := UI.hbox(10)
+			wrow.add_child(Icons.rect(th, _theme_color(th), 24))
+			wrow.add_child(UI.label(("“%s”" if L.is_en() else "„%s”") % L.t(WORRY[th]), 17, UI.TEXT))
+			c.add_child(wrow)
 			var mine: Array = usable.filter(func(id: String) -> bool: return Cards.theme_of(id) == th)
 			for id in mine:
 				add_card.call(c, id)
@@ -1471,14 +1474,14 @@ func _open_end() -> void:
 		var v := UI.vbox(4)
 		v.custom_minimum_size = Vector2(410, 0)
 		var gl = Globe.new()
-		gl.custom_minimum_size = Vector2(270, 270)
+		gl.custom_minimum_size = Vector2(320, 320)
 		gl.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		gl.heat = clampf((float(side[1]) - M.T_START) / 2.0, 0.0, 1.5)
 		var ratio := world.net_ratio(2100) if side[4] > 0.5 else 1.0
 		gl.set_plan_look({"smog": clampf(ratio, 0.0, 1.0), "clean": clampf(1.0 - ratio, 0.0, 1.0), "regrow": clampf(-ratio / 0.25, 0.0, 1.0)})
 		gl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		gl.fixed_sun = true
-		gl.pixels = 240.0
+		gl.pixels = 280.0
 		gl.sea_rise = clampf((float(side[1]) - M.T_START) / 2.0, 0.0, 1.0)
 		gl.spin = 0.05
 		v.add_child(gl)

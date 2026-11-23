@@ -15,6 +15,14 @@
 - `hang/intro.wav`: a bevezető másik, handpan hangzású saját zenéje (a `tools/intro_zene.py` állítja elő).
   Jelenleg a játék az `intro_handpan.wav`-ot játssza; a kettő közül Zoltán választ.
 
+- `hang/egyezseg.wav`, `megingas.wav`, `billenes.wav`, `kartya.wav`, `korvaltas.wav`, `kattintas.wav`, `jo_hir.wav`,
+  `katasztrofa.wav`, `alapzene.wav`, `alapzene2.wav`: a játék közbeni hangok és a két halk alapzene. Saját, programmal
+  szintetizált hangok (nem felvétel, nem minta): a `tools/jatek_hangok.py` állítja elő őket, ugyanabban a hangsorban.
+
+# Képjelek
+
+- A nyolc témakör kis képjele (`scripts/icons.gd`): saját, kódból rajzolt 12×12 képpontos rajz.
+
 # Domborzat (alacsony partok)
 
 - `earth_low.png`: a mai tengerszint fölött legfeljebb 10 méteren fekvő partvidékek maszkja a földgömbhöz
