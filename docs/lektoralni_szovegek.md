@@ -8,17 +8,18 @@ Minden szöveg új (2026-11-23). A kutatási kártyák szövege a már lektorál
 - Körönként három lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal.
 - Kattints egy országcsoportra, és győzd meg a kártyáiddal. Mindenki mástól tart, ezért más kártya kell neki.
 - Ha elfogytak a lépéseid, jön a következő öt év. A Föld és a görbe megmutatja, mit értél el.
+- A cél: 2100-ban +2 °C alatt maradni, és minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is.
 - A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett billenőpontok. Ne várj sokáig!
 
 ## 2. Az országcsoportok aggodalmai (játékszabály, nem idézet)
 
 - „Ha bezárjuk a szénerőműveket, miből lesz elég és megfizethető áram?”
-- „Bányák és gyárak zárnának be. Mi lesz az ott dolgozókkal?”
+- „A gyáraink, az autóink és a fűtésünk szénnel, olajjal, gázzal mennek. Mivel váltjuk ki?”
 - „Előbb az embereknek kell enniük. Nem kockáztathatjuk a termést.”
 - „A tenger már most emelkedik nálunk. Mit ér nekünk egy távoli ígéret?”
 - „A városainkban már most betegít a hőség és a füst. Segít ez rajtuk?”
 - „Biztos, hogy az ember okozza? És számít, amit mi teszünk?”
-- „A bevételünk az olajból és a gázból jön. Miből élünk, ha ezt elengedjük?”
+- „Az olaj és a gáz a bevételünk. Mit tehetünk úgy, hogy ne menjünk tönkre?”
 - „Az erdő és a föld ad megélhetést. Ki fizeti meg, ha érintetlenül hagyjuk?”
 
 ## 3. Tények az országcsoportokról (forrással)
@@ -71,7 +72,7 @@ Minden szöveg új (2026-11-23). A kutatási kártyák szövege a már lektorál
 
 ## 5. Gombok, feliratok, mondatok
 
-A %d, %s jelek helyére szám vagy név kerül.
+A %d és %s jelek helyére szám vagy név kerül.
 
 - %d kártya
 - %d kártyád szól nekik
@@ -146,7 +147,6 @@ A %d, %s jelek helyére szám vagy név kerül.
 - Új bizonyíték-kártya
 - Új játék, új Föld
 - Áram
-- Munka és ipar
 - Élelem
 - Tenger és part
 - Egészség
@@ -157,3 +157,8 @@ A %d, %s jelek helyére szám vagy név kerül.
 - Ha a melegedés tartósan e fölött marad, a változás lassan, de megállíthatatlanul végbemegy. A küszöböt a tudomány csak sávként ismeri (%s és %s °C között); a játék ebből sorsolt egyet.
 - A legmelegebb év: +%s °C. Küszöbét átlépő rendszer: %d a %d-ből.
 - küszöb átlépve:
+- Ipar és közlekedés
+- Meggyőzheted őket
+- A Földed a +1,5 °C közelében maradt. Ennél jobbat a mai tudásunk szerint alig lehet elérni.
+- A Földed +2 °C alatt maradt: ez a Párizsi Megállapodás fő célja.
+- A Földed +2 °C fölé melegedett. A következő játékban lépj hamarabb!

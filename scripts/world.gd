@@ -217,13 +217,24 @@ func targets_for(g: Dictionary) -> Array:
 	return out
 
 
-## Hány kártya kell a célhoz: az első két lépcsőhöz 1, a merészebbekhez 2; katasztrófa után eggyel kevesebb (legalább 1).
+## Hány kártya kell a célhoz: 2070-hez és 2060-hoz 1, 2050-hez 2, 2040-hez 3; katasztrófa után eggyel kevesebb (legalább 1).
 func cards_needed(g: Dictionary, target: int) -> int:
-	var n := 1 if target >= 2060 else 2
+	var n := 1 if target >= 2060 else (2 if target >= 2050 else 3)
 	return maxi(1, n - 1) if g["konnyebb"] else n
 
 
 ## A kézben lévő kártyák, amelyek ennek a csoportnak egy aggodalmára felelnek, és még nem hallották.
+## Van-e most olyan kérés, amihez megvan a kártyád?
+func can_convince(g: Dictionary) -> bool:
+	if steps <= 0 or over():
+		return false
+	var n := usable(g).size()
+	for t in targets_for(g):
+		if n >= cards_needed(g, t):
+			return true
+	return int(g["metan"]) == 0 and not methane_cards(g).is_empty()
+
+
 func usable(g: Dictionary) -> Array:
 	var out: Array = []
 	for id in hand:

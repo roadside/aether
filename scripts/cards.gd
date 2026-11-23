@@ -6,7 +6,7 @@ extends RefCounted
 const FILES := ["anyag", "biologia", "egeszseg", "energia", "fizika", "fold", "kemia", "mernok", "mezogazdasag", "ur"]
 ## Témakörök: azonosító -> [név, szín]
 const THEMES := {
-	"aram": ["Áram", "#f4c85a"], "munka": ["Munka és ipar", "#e0935a"], "elelem": ["Élelem", "#8fe388"],
+	"aram": ["Áram", "#f4c85a"], "munka": ["Ipar és közlekedés", "#e0935a"], "elelem": ["Élelem", "#8fe388"],
 	"part": ["Tenger és part", "#4aa0e0"], "egeszseg": ["Egészség", "#ff8fa8"], "ketseg": ["Honnan tudjuk?", "#b9a2ff"],
 	"olaj": ["Olaj és gáz", "#c8b49a"], "erdo": ["Erdő és föld", "#5fbf7a"],
 }

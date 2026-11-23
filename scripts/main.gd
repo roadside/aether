@@ -15,12 +15,12 @@ const SAVE := "user://jatek.json"
 ## Az aggodalmak mondatai (játékszabály: a csoportok hangja, nem idézet).
 const WORRY := {
 	"aram": "Ha bezárjuk a szénerőműveket, miből lesz elég és megfizethető áram?",
-	"munka": "Bányák és gyárak zárnának be. Mi lesz az ott dolgozókkal?",
+	"munka": "A gyáraink, az autóink és a fűtésünk szénnel, olajjal, gázzal mennek. Mivel váltjuk ki?",
 	"elelem": "Előbb az embereknek kell enniük. Nem kockáztathatjuk a termést.",
 	"part": "A tenger már most emelkedik nálunk. Mit ér nekünk egy távoli ígéret?",
 	"egeszseg": "A városainkban már most betegít a hőség és a füst. Segít ez rajtuk?",
 	"ketseg": "Biztos, hogy az ember okozza? És számít, amit mi teszünk?",
-	"olaj": "A bevételünk az olajból és a gázból jön. Miből élünk, ha ezt elengedjük?",
+	"olaj": "Az olaj és a gáz a bevételünk. Mit tehetünk úgy, hogy ne menjünk tönkre?",
 	"erdo": "Az erdő és a föld ad megélhetést. Ki fizeti meg, ha érintetlenül hagyjuk?",
 }
 const DISASTER := {"hoseg": "Hőhullám", "aszaly": "Aszály", "arviz": "Áradás", "tuz": "Erdőtűz"}
@@ -44,6 +44,7 @@ var _reset_btn: Button
 var _offers: Dictionary = {}          # témakör -> a körben felkínált kérdések (hogy ne lehessen újrahúzni)
 var _busy := false
 var _test := false
+var _snd: AudioStreamPlayer
 
 
 class Twinkle extends Control:
@@ -146,6 +147,17 @@ func anomaly_ready() -> bool:
 
 func warming_text() -> String:
 	return "+%s °C" % L.num(float(world.st["T"]), 2)
+
+
+func _sound(name: String) -> void:
+	if _test:
+		return
+	if _snd == null:
+		_snd = AudioStreamPlayer.new()
+		_snd.volume_db = -8.0
+		add_child(_snd)
+	_snd.stream = load("res://assets/hang/%s.wav" % name)
+	_snd.play()
 
 
 # --- téma ---------------------------------------------------------------------
@@ -309,7 +321,10 @@ func _fill_group(g: Dictionary) -> void:
 	sp.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	sp.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	v.add_child(sp)
-	v.add_child(_lbl(L.t("%d kártyád szól nekik") % n if n > 0 else L.t("Nincs nekik szóló kártyád"), 14, UI.CYAN if n > 0 else UI.MUTE))
+	if world.can_convince(g):
+		v.add_child(_lbl(L.t("Meggyőzheted őket") + " →", 15, UI.CYAN, true))
+	else:
+		v.add_child(_lbl(L.t("%d kártyád szól nekik") % n if n > 0 else L.t("Nincs nekik szóló kártyád"), 14, UI.SOFT if n > 0 else UI.MUTE))
 
 
 func _lbl(text: String, size: int, color: Color, bold: bool = false) -> Label:
@@ -463,11 +478,8 @@ func _mark_next() -> void:
 		next = "ido"
 	else:
 		for g in world.groups:
-			for tg in world.targets_for(g):
-				if world.usable(g).size() >= world.cards_needed(g, tg):
-					hot = g["id"]
-					break
-			if hot != "":
+			if world.can_convince(g):
+				hot = g["id"]
 				break
 		if hot != "":
 			next = ""
@@ -646,6 +658,7 @@ func _do_research(id: String, th: String) -> void:
 	if world.research(id):
 		_offers.erase(th)
 		_refresh()
+		_sound("jel_jo")
 		_open_card(id, true)
 
 
@@ -808,6 +821,7 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 			done = world.negotiate(g, int(ask["cel"]), picked)
 		if done:
 			_refresh()
+			_sound("jel_jo")
 			_agreed(g, ask))
 
 
@@ -860,6 +874,8 @@ func _advance() -> void:
 	_offers = {}
 	_busy = false
 	_refresh()
+	var bad: bool = world.news.any(func(n: Dictionary) -> bool: return n["fajta"] in ["billenes", "visszalepett"])
+	_sound("zaro" if world.over() else ("jel_rossz" if bad else "jel_evtized"))
 	_open_news(y0, t0)
 
 
@@ -929,6 +945,11 @@ func _open_end() -> void:
 		c.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		v.add_child(c)
 		row.add_child(v)
+	var tt := float(r["T"])
+	var verdict := "A Földed a +1,5 °C közelében maradt. Ennél jobbat a mai tudásunk szerint alig lehet elérni." if tt < 1.6 \
+		else ("A Földed +2 °C alatt maradt: ez a Párizsi Megállapodás fő célja." if tt < 2.0 \
+		else "A Földed +2 °C fölé melegedett. A következő játékban lépj hamarabb!")
+	body.add_child(UI.label(L.t(verdict), 19, UI.GREEN if tt < 2.0 else UI.EMBER, true))
 	body.add_child(UI.label(L.t("A legmelegebb év: +%s °C. Küszöbét átlépő rendszer: %d a %d-ből.") % [L.num(float(r["csucs"]), 2), int(r["billenes"]), world.tips.size()], 17, UI.TEXT))
 	var s := float(r["sens"])
 	var kind := L.t("átlagos") if absf(s) < 0.25 else (L.t("az átlagnál érzékenyebb") if s > 0 else L.t("az átlagnál kevésbé érzékeny"))
@@ -944,7 +965,8 @@ func _open_help() -> void:
 			["2.", "Körönként három lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal."],
 			["3.", "Kattints egy országcsoportra, és győzd meg a kártyáiddal. Mindenki mástól tart, ezért más kártya kell neki."],
 			["4.", "Ha elfogytak a lépéseid, jön a következő öt év. A Föld és a görbe megmutatja, mit értél el."],
-			["5.", "A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett billenőpontok. Ne várj sokáig!"]]:
+			["5.", "A cél: 2100-ban +2 °C alatt maradni, és minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is."],
+			["6.", "A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett billenőpontok. Ne várj sokáig!"]]:
 		var h := UI.hbox(12)
 		h.add_child(UI.label(row[0], 22, UI.GOLD, true, false))
 		h.add_child(UI.label(L.t(row[1]), 18, UI.TEXT))

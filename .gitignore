@@ -7,3 +7,4 @@ sajat_zene/*.mp3
 sajat_zene/*.ogg
 kiadas/
 .claude/settings.local.json
+sajat_zene/*.import
