@@ -17,6 +17,7 @@ const MIN_YEARS := 10                          # ennyi év legalább kell az át
 const METHANE_CUT := 0.30                      # a Globális Metánvállalás mértéke: −30% (10 év alatt)
 const METHANE_YEARS := 10
 const CDR_YEARS := 20                          # a kivonás ennyi év alatt fut fel (a modell korábbi szabálya)
+const SAVE_VERSION := 2                       # ha a szabályok vagy az adatok változnak, a régi mentés helyett új játék indul
 const WAVER_CHANCE := 0.30                     # körönként ekkora eséllyel inog meg egy csoport (játékszabály)
 ## CO2-kivonási programok: kártya -> [a fenntartható sáv alja, teteje] GtCO2/év 2050-re
 ## (Fuss és mtsai 2018, Environ. Res. Lett. 13 063002; az archívum ellenőrzött idézetei szerint).
@@ -351,12 +352,12 @@ func result() -> Dictionary:
 # --- mentés -------------------------------------------------------------------
 
 func to_dict() -> Dictionary:
-	return {"mag": seed_v, "sens": sens, "st": st, "alap": _base, "kor": round_i, "lepes": steps, "csoportok": groups, "kez": hand,
+	return {"v": SAVE_VERSION, "mag": seed_v, "sens": sens, "st": st, "alap": _base, "kor": round_i, "lepes": steps, "csoportok": groups, "kez": hand,
 		"kivonas": cdr, "billenes": tips, "mult": history, "alap_mult": base_history, "hirek": news, "rng": str(rng.state)}
 
 
 func from_dict(d: Dictionary) -> bool:
-	if not d.has("st") or not d.has("csoportok"):
+	if int(d.get("v", 0)) != SAVE_VERSION or not d.has("st") or not d.has("csoportok"):
 		return false
 	data = read_json("res://adatok/csoportok.json")
 	seed_v = int(d["mag"]); sens = float(d["sens"]); st = d["st"]; _base = d["alap"]; round_i = int(d["kor"]); steps = int(d["lepes"])

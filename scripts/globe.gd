@@ -358,6 +358,16 @@ func _draw() -> void:
 			continue
 		var col: Color = s.color
 		var pos := Vector2(p.x, p.y)
+		if s.get("small", false):
+			# billenőpont: kis gyűrű (halvány, amíg a küszöb alatt vagyunk; lüktet, ha átléptük)
+			var dim: bool = s.get("dim", false)
+			var a := 0.7 if dim else 0.75 + 0.25 * sin(time * 4.0)
+			var r := 6.0 if dim else 8.0
+			draw_arc(pos, r, 0.0, TAU, 20, Color(0, 0, 0, 0.55), 4.0)
+			draw_arc(pos, r, 0.0, TAU, 20, Color(col, a), 2.0)
+			if not dim:
+				draw_circle(pos, 3.0, Color(col, a))
+			continue
 		var beam := 22 if s.get("me", false) else 12
 		for j in beam:
 			draw_rect(Rect2(pos + Vector2(0, -j * px), Vector2(px, px)), Color(col, 0.55 * (1.0 - float(j) / beam)))

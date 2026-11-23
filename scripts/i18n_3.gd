@@ -105,4 +105,5 @@ const EN := {
 	"A Földed +2 °C fölé melegedett. A következő játékban lépj hamarabb!": "Your Earth warmed beyond +2 °C. Act sooner in the next game!",
 	"A cél: 2100-ban jóval +2 °C alatt maradni, minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is.": "The goal: stay well below +2 °C in 2100, as close to +1.5 °C as possible. This is also the goal of the Paris Agreement.",
 	"Várható melegedés 2100-ban: +%s → +%s °C": "Expected warming in 2100: +%s → +%s °C",
+	"küszöb: %s–%s °C": "threshold: %s–%s °C",
 }

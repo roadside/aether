@@ -163,3 +163,4 @@ A %d és %s jelek helyére szám vagy név kerül.
 - A Földed +2 °C alatt maradt. A Párizsi Megállapodás ennél többet kér: jóval +2 °C alatt megállni, lehetőleg +1,5 °C-nál.
 - A Földed +2 °C fölé melegedett. A következő játékban lépj hamarabb!
 - Várható melegedés 2100-ban: +%s → +%s °C
+- küszöb: %s–%s °C (a billenőpontok jelölőjén a gömbön)

@@ -461,8 +461,11 @@ func _refresh() -> void:
 	for g in world.groups:
 		marks.append({"id": g["id"], "name": L.field(g, "nev"), "label": L.field(g, "nev"), "lat": g["lat"], "lon": g["lon"], "color": Color(str(g["szin"]))})
 	for tp in world.tips:
+		var rng_txt := L.t("küszöb: %s–%s °C") % [L.num(float(tp["also"]), 1), L.num(float(tp["felso"]), 1)]
 		if int(tp["ev"]) > 0:
-			marks.append({"name": "%s · %s %d" % [L.field(tp, "nev"), L.t("küszöb átlépve:"), int(tp["ev"])], "lat": tp["lat"], "lon": tp["lon"], "color": UI.EMBER})
+			marks.append({"name": "%s\n%s %d · %s" % [L.field(tp, "nev"), L.t("küszöb átlépve:"), int(tp["ev"]), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": UI.EMBER, "small": true})
+		else:
+			marks.append({"name": "%s\n%s" % [L.field(tp, "nev"), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": Color(0.75, 0.82, 0.92), "small": true, "dim": true})
 	globe.stations = marks
 	_mark_next()
 	_save()
