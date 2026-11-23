@@ -1562,6 +1562,46 @@ func _open_collection() -> void:
 	var mdone := int(L.get_setting("kuldetesek", 0))
 	if mdone > 0:
 		body.add_child(UI.label(L.t("Teljesített küldetések: %d") % mdone, 17, UI.GREEN))
+	# jelvények: érmek egy sorban; alattuk az egér alatti (vagy a következő megszerezhető) jelvény neve és feltétele
+	var have := _badges()
+	body.add_child(UI.label(L.t("Jelvények: %d / %d") % [have.size(), BADGES.size()], 19, UI.GOLD, true, false))
+	var medals := HFlowContainer.new()
+	medals.add_theme_constant_override("h_separation", 4)
+	medals.add_theme_constant_override("v_separation", 5)
+	var medal_lbl := UI.label(" ", 16, UI.SOFT, false, false)
+	var next_goal := " "
+	for row in BADGES:
+		if not (row[0] in have):
+			next_goal = "☆ %s – %s" % [L.t(row[1]), L.t(row[2])]
+			break
+	medal_lbl.text = next_goal
+	for row in BADGES:
+		var got_b: bool = row[0] in have
+		var m := Button.new()
+		m.custom_minimum_size = Vector2(33, 36)
+		m.focus_mode = Control.FOCUS_NONE
+		m.text = "★" if got_b else "☆"
+		m.add_theme_font_size_override("font_size", 20)
+		for cn in ["font_color", "font_hover_color", "font_pressed_color"]:
+			m.add_theme_color_override(cn, UI.GOLD if got_b else UI.MUTE)
+		for st in ["normal", "hover", "pressed"]:
+			var sb := StyleBoxFlat.new()
+			sb.bg_color = (Color(0.2, 0.16, 0.06) if got_b else Color(0.05, 0.07, 0.12)).lightened(0.08 if st == "hover" else 0.0)
+			sb.border_color = UI.GOLD if got_b else UI.EDGE
+			sb.set_border_width_all(2)
+			sb.set_corner_radius_all(18)
+			m.add_theme_stylebox_override(st, sb)
+		var line := "%s %s – %s" % ["★" if got_b else "☆", L.t(row[1]), L.t(row[2])]
+		var line_col := UI.GOLD if got_b else UI.SOFT
+		m.mouse_entered.connect(func() -> void:
+			medal_lbl.text = line
+			medal_lbl.add_theme_color_override("font_color", line_col))
+		m.mouse_exited.connect(func() -> void:
+			medal_lbl.text = next_goal
+			medal_lbl.add_theme_color_override("font_color", UI.SOFT))
+		medals.add_child(m)
+	body.add_child(medals)
+	body.add_child(medal_lbl)
 	for th in Cards.THEMES:
 		var mine: Array = Cards.TAGS[th].filter(func(id: String) -> bool: return id in c)
 		var head := UI.hbox(10)
@@ -1619,20 +1659,6 @@ func _open_collection() -> void:
 			var date := ("%d-%02d-%02d" if L.is_en() else "%d. %02d. %02d.") % [int(e["ev"]), int(e["ho"]), int(e["nap"])]
 			var level: String = L.t({3: "Nehéz", 4: "Közepes", 5: "Könnyű"}.get(int(e.get("lepes", 4)), "Közepes"))
 			(colv[0 if i < half else 1] as Control).add_child(UI.label("%s  %s · +%s °C · %s · %s: %d" % [_stars(float(e["T"])), date, L.num(float(e["T"]), 2), level, L.t("Föld-kód"), int(e["mag"])], 15, UI.SOFT))
-	var have := _badges()
-	body.add_child(UI.label(L.t("Jelvények: %d / %d") % [have.size(), BADGES.size()], 19, UI.GOLD, true, false))
-	var bg := GridContainer.new()
-	bg.columns = 2
-	bg.add_theme_constant_override("h_separation", 12)
-	bg.add_theme_constant_override("v_separation", 8)
-	body.add_child(bg)
-	for row in BADGES:
-		var got: bool = row[0] in have
-		var cell := UI.vbox(0)
-		cell.custom_minimum_size = Vector2(428, 0)
-		cell.add_child(UI.label(("★ " if got else "☆ ") + L.t(row[1]), 17, UI.GOLD if got else UI.MUTE, true, false))
-		cell.add_child(UI.label(L.t(row[2]), 14, UI.SOFT if got else UI.MUTE))
-		bg.add_child(cell)
 
 
 # --- zene játék közben ----------------------------------------------------------
