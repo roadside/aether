@@ -1575,7 +1575,13 @@ func _open_end() -> void:
 	body.add_child(UI.label(L.t("Ez a Föld %s volt. Ezt előre senki sem tudhatta, ahogy a valódi Földnél sem tudjuk pontosan.") % kind, 16, UI.SOFT))
 	body.add_child(UI.label(L.t("A hőmérsékletet egyszerű klímamodell számolta. Irányt és nagyságrendet mutat, nem előrejelzés."), 14, UI.MUTE))
 	body.add_child(UI.label(L.t("Föld-kód: %d. Ha egy barátod ezt írja be a menüben, ugyanezt a Földet kapja.") % world.seed_v, 14, UI.SOFT))
-	body.add_child(_go(L.t("Új játék, új Föld") + " →", func() -> void: _pick_game()))
+	var end_row := UI.hbox(12)
+	end_row.add_child(_go(L.t("Új játék, új Föld") + " →", func() -> void: _pick_game()))
+	var saved_lbl := UI.label("", 14, UI.SOFT)
+	saved_lbl.custom_minimum_size = Vector2(430, 0)
+	end_row.add_child(_go(L.t("Kép mentése"), func() -> void: saved_lbl.text = await _save_picture(), false))
+	end_row.add_child(saved_lbl)
+	body.add_child(end_row)
 	# ki mennyi CO2-t nem bocsátott ki (a modell szerint, a „ha semmi sem változik” úthoz képest)
 	var saved: Array = world.groups.filter(func(g: Dictionary) -> bool: return float(g.get("megsporolt", 0.0)) >= 0.5)
 	saved.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return float(a["megsporolt"]) > float(b["megsporolt"]))
@@ -1635,6 +1641,19 @@ func _open_missions() -> void:
 	var body := _open(L.t("Küldetések"), UI.GOLD)
 	body.add_child(UI.label(L.t("Három cél erre a játékra. Nem kötelezők, de jelvény jár értük."), 16, UI.SOFT))
 	_add_missions(body)
+
+
+## A képernyő képe a Képek mappába (ha nincs ilyen, a játék saját mappájába). Vissza: a kiírandó mondat.
+func _save_picture() -> String:
+	await RenderingServer.frame_post_draw
+	var img := get_viewport().get_texture().get_image()
+	var dir := OS.get_system_dir(OS.SYSTEM_DIR_PICTURES)
+	if dir == "" or not DirAccess.dir_exists_absolute(dir) or _dry:
+		dir = OS.get_user_data_dir()
+	var path := dir.path_join("AETHER_2100_%d.png" % world.seed_v)
+	if _dry:
+		return L.t("Elmentve: %s") % path
+	return L.t("Elmentve: %s") % path if img.save_png(path) == OK else L.t("Nem sikerült elmenteni a képet.")
 
 
 ## A játék fontos pillanatai évről évre, két oszlopban.
@@ -1835,6 +1854,7 @@ func _selftest() -> void:
 			_close()
 	_open_end()
 	await _shot("14_vege.png")
+	print("KEP ", await _save_picture())
 	var nd: Node = _body
 	while nd != null and not (nd is ScrollContainer):
 		nd = nd.get_parent()
@@ -1938,6 +1958,10 @@ func _walkthrough() -> void:
 			_close()
 			await _advance()
 			_close()
+		_open_end()
+		print("KEP ", await _save_picture())
+		_open_missions()
+		await get_tree().process_frame
 		_open_end()
 		await get_tree().process_frame
 		_close()
