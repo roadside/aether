@@ -1,4 +1,4 @@
-# Új AETHER – lektorálandó magyar szövegek
+# Új AETHER – lektorált magyar szövegek
 
 Minden szöveg új (2026-11-23). A kutatási kártyák szövege a már lektorált témákból jön, azokhoz nem nyúltam.
 
@@ -166,7 +166,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - küszöb: %s–%s °C
 - Végeredmény
 
-## 6. Új szövegek (2026-11-23 este) – ezeket már jóváhagytad
+## 6. Új szövegek (2026-11-23 este)
 
 - eddig
 - a te utad
@@ -198,18 +198,14 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Tisztító
 - Indíts el legalább három CO2-kivonást egy játékban.
 - Nehéz Föld
-- Maradj +2 °C alatt egy az átlagnál érzékenyebb Földön.
+- Maradj +2 °C alatt egy átlagnál érzékenyebb Földön.
 - Gyűjtő
 - Kutass ki ötven különböző kártyát.
 - Mindenhez értesz
 - Legyen kártyád mind a nyolc témakörből a gyűjteményben.
 - A valóságban nem csatlakoztak a Globális Metánvállaláshoz, ezért nehezebb meggyőzni őket.
 
-## 7. Legújabb szövegek (2026-11-23, 19 óra után) – még nem lektorált
-
-Csak ezek újak vagy változtak. A „Hogyan játssz?” két mondata a szabályváltozás miatt módosult (a lépések száma a fokozattól függ: három, négy vagy öt; a célok már nem rögzített évek). A megingás új szabálya: a csoport előbb elbizonytalanodik, és egy körön át megerősítheted.
-
-Már nem jelenik meg: „Nem volt a kezedben olyan új bizonyíték, amivel meggyőzhetted volna őket.” A „%s megingott, de kitartott.” és „A bizonyítékod miatt kitartottak: …” mondat változatlan, mostantól a megerősítés után látszik.
+## 7. Legújabb szövegek (2026-11-23, 19 óra után)
 
 - Lépj korán: minden év késés számít. Akit egyszer meggyőztél, attól később merészebb célt is kérhetsz.
 - Körönként %s lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal.
@@ -234,7 +230,7 @@ Már nem jelenik meg: „Nem volt a kezedben olyan új bizonyíték, amivel megg
 - Elbizonytalanodtak. Ha a kör végéig nem erősíted meg őket, megingnak, és későbbre tolják a céljukat.
 - Nem erősítetted meg őket időben.
 - %s elbizonytalanodott.
-- Erősítsd meg őket egy nekik szóló kártyával, különben öt év múlva megingnak!
+- Erősítsd meg őket egy hozzájuk illő kártyával, különben öt év múlva megingnak!
 - A te történeted
 - %s felkészült a bajra.
 - A mai Föld
@@ -285,7 +281,7 @@ Már nem jelenik meg: „Nem volt a kezedben olyan új bizonyíték, amivel megg
 - Az 1995–2014-es évek átlagához képest (IPCC AR6).
 - A 2025-ös kibocsátáshoz képest; a kivont CO2-t levonjuk belőle.
 
-## 8. Kulcsszámok a kártyákra (12 mondat) – még nem lektorált
+## 8. Kulcsszámok a kártyákra (12 mondat)
 
 Mindegyiket a megadott forrásból ellenőriztük. A kártyán csak akkor jelenik meg, ha jóváhagytad.
 
@@ -300,4 +296,4 @@ Mindegyiket a megadott forrásból ellenőriztük. A kártyán csak akkor jeleni
 - **hoseg_halal:** 1991 és 2018 között a nyári hőség okozta halálesetek 37%-a az ember okozta melegedés miatt történt (43 ország adatai). (Vicedo-Cabrera és mtsai 2021) – https://doi.org/10.1038/s41558-021-01058-x
 - **legszennyezes:** A szén, olaj és gáz égetéséből származó légszennyezés évente kb. 5,1 millió ember korai halálát okozza; ezek elkerülhetők lennének. (Lelieveld és mtsai 2023) – https://doi.org/10.1136/bmj-2023-077784
 - **termes:** Alkalmazkodás nélkül minden egyes fok melegedés átlagosan 6%-kal csökkenti a búza, 7,4%-kal a kukorica, 3,2%-kal a rizs és 3,1%-kal a szója termését. (Zhao és mtsai 2017) – https://doi.org/10.1073/pnas.1701762114
-- **amazonas:** Az Amazonas-esőerdő pusztulása a kutatók becslése szerint kb. 3,5 fok melegedésnél válik valószínűvé, de már 2 foknál is lehetséges. (Armstrong McKay és mtsai 2022) – https://doi.org/10.1126/science.abn7950
+- **amazonas:** Az Amazonas esőerdejének pusztulása a kutatók becslése szerint kb. 3,5 fok melegedésnél válik valószínűvé, de már 2 foknál is lehetséges. (Armstrong McKay és mtsai 2022) – https://doi.org/10.1126/science.abn7950

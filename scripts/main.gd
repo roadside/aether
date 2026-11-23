@@ -819,7 +819,7 @@ const BADGES := [
 	["kuszob", "Egy küszöb sem", "Játssz végig egy játékot úgy, hogy egy billenőpont küszöbét sem lépitek át."],
 	["kivonas", "Tisztító", "Indíts el legalább három CO2-kivonást egy játékban."],
 	["felkeszult", "Senki sem marad magára", "Segíts mind a hat csoportnak felkészülni a bajra."],
-	["nehez", "Nehéz Föld", "Maradj +2 °C alatt egy az átlagnál érzékenyebb Földön."],
+	["nehez", "Nehéz Föld", "Maradj +2 °C alatt egy átlagnál érzékenyebb Földön."],
 	["mester", "Mester", "Maradj +2 °C alatt nehéz fokozaton."],
 	["huvos", "Hűvös Föld", "Maradj 2100-ban +1,6 °C alatt."],
 	["szilard", "Egy megingás sem", "Játssz végig egy játékot úgy, hogy egy csoport sem tolja későbbre a célját."],
@@ -1436,7 +1436,7 @@ func _open_news(y0: int, t0: float) -> void:
 			"inog":
 				var c5 := UI.card(UI.GOLD)
 				c5.add_child(UI.label("⚠ " + L.t("%s elbizonytalanodott.") % L.field(world.group(n["csoport"]), "nev"), 18, UI.GOLD, true))
-				c5.add_child(UI.label(L.t("Erősítsd meg őket egy nekik szóló kártyával, különben öt év múlva megingnak!"), 16, UI.SOFT))
+				c5.add_child(UI.label(L.t("Erősítsd meg őket egy hozzájuk illő kártyával, különben öt év múlva megingnak!"), 16, UI.SOFT))
 				body.add_child(UI.card_root(c5))
 			"kitartott":
 				var c3 := UI.card(UI.GREEN)

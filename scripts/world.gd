@@ -477,7 +477,7 @@ func advance() -> void:
 		return
 	summit_due = round_i in SUMMIT_ROUNDS
 	# megingás (játékszabály): aki az előző kör végén elbizonytalanodott, és nem erősítetted meg, visszalép:
-	# tíz évvel későbbre tolja a célját (legfeljebb 2100-ig), és egy fokozattal visszaesik
+	# tíz évvel későbbre tolja a célját (legfeljebb 2090-ig, hogy a vállalás valódi maradjon), és egy fokozattal visszaesik
 	var just_wavered: Array = []
 	for g in groups:
 		if g.get("inog", false):
@@ -487,7 +487,7 @@ func advance() -> void:
 				var y := year()
 				g["f0"] = fraction(g, y - 1)
 				g["y0"] = y - 1
-				g["cel"] = mini(int(g["cel"]) + 10, 2100)
+				g["cel"] = mini(int(g["cel"]) + 10, maxi(int(g["cel"]), 2090))
 				g["fok"] = maxi(1, int(g["fok"]) - 1)
 				news.append({"fajta": "visszalepett", "csoport": g["id"], "cel": g["cel"]})
 				naplo.append({"ev": y, "fajta": "visszalepett", "csoport": g["id"], "cel": g["cel"]})
