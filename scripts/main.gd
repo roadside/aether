@@ -358,14 +358,22 @@ func _fill_group(g: Dictionary) -> void:
 	if shaky:
 		v.add_child(_lbl("⚠ " + L.t("Bizonytalan"), 15, UI.GOLD, true))
 	var fears := HFlowContainer.new()
-	fears.add_theme_constant_override("h_separation", 5)
+	fears.add_theme_constant_override("h_separation", 3)
 	fears.add_theme_constant_override("v_separation", 4)
 	fears.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	for th in g["felelmek"]:
 		var ch := _chip(_theme_name(th), _theme_color(th))
-		ch.add_theme_font_size_override("font_size", 12)
+		ch.add_theme_font_size_override("font_size", 11)
 		ch.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		fears.add_child(ch)
+	# ha a három címke nem fér el egy sorban, kisebb betűvel írjuk, hogy a kártya alja ne csússzon ki
+	for fs in [12, 11, 10, 9]:
+		var w := 0.0
+		for ch in fears.get_children():
+			(ch as Label).add_theme_font_size_override("font_size", fs)
+			w += (ch as Label).get_minimum_size().x + 3.0
+		if w <= 276.0:
+			break
 	v.add_child(fears)
 	var sp := Control.new()
 	sp.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -1487,7 +1495,7 @@ func _open_end() -> void:
 		var v := UI.vbox(4)
 		v.custom_minimum_size = Vector2(410, 0)
 		var gl = Globe.new()
-		gl.custom_minimum_size = Vector2(320, 320)
+		gl.custom_minimum_size = Vector2(264, 264)
 		gl.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		gl.heat = clampf((float(side[1]) - M.T_START) / 2.0, 0.0, 1.5)
 		var ratio := world.net_ratio(2100) if side[4] > 0.5 else 1.0
