@@ -92,7 +92,7 @@ func _seen() -> bool:
 	var p := get_parent()
 	while p != null:
 		if p is ScrollContainer:
-			return global_position.y + 190.0 < (p as Control).global_position.y + (p as Control).size.y
+			return global_position.y + 100.0 < (p as Control).global_position.y + (p as Control).size.y
 		p = p.get_parent()
 	return true
 

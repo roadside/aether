@@ -2701,6 +2701,8 @@ func _open_end() -> void:
 	for bd in BADGES:
 		if bd[0] in fin["uj"]:
 			body.add_child(UI.label("★ " + L.t("Új jelvény: %s") % L.t(bd[1]), 17, UI.GOLD, true))
+	if not world.naplo.is_empty():       # a játék története egy képen, rögtön az eredmény alatt
+		_add_story(body)
 	body.add_child(UI.label(L.t("A legmelegebb év: +%s °C. Küszöbét átlépő rendszer: %d a %d-ből.") % [L.num(float(r["csucs"]), 2), int(r["billenes"]), world.tips.size()], 17, UI.TEXT))
 	var late := world.what_if(5)
 	if late > tt + 0.005:
@@ -2716,7 +2718,7 @@ func _open_end() -> void:
 	saved_lbl.custom_minimum_size = Vector2(430, 0)
 	end_row.add_child(_go(L.t("Kép mentése"), func() -> void: saved_lbl.text = await _save_picture(), false))
 	end_row.add_child(saved_lbl)
-	body.add_child(end_row)
+	_sticky(body, end_row)
 	if world.hajto.size() >= M.END_YEAR - M.START_YEAR:
 		var wp = PathChart.new()
 		wp.custom_minimum_size = Vector2(560, 96)
@@ -2754,9 +2756,6 @@ func _open_end() -> void:
 	if not world.missions.is_empty():
 		body.add_child(UI.label("%s: %d/%d" % [L.t("Küldetések"), world.missions_done(), world.missions.size()], 19, UI.GOLD, true, false))
 		_add_missions(body)
-	if not world.naplo.is_empty():
-		body.add_child(UI.label(L.t("A te történeted"), 19, UI.GOLD, true, false))
-		_add_story(body)
 
 
 const MISSION_TEXT := {
