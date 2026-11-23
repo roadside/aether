@@ -500,7 +500,7 @@ func _mark_next() -> void:
 			b.remove_theme_color_override("font_color")
 	_btns["kutatas"].disabled = world.steps <= 0 or world.over()
 	_btns["kivonas"].disabled = world.steps <= 0 or world.over()
-	_btns["ido"].disabled = world.over()
+	_btns["ido"].text = L.t("Végeredmény") if world.over() else L.t("Következő 5 év") + "  ▶"
 	_btns["kartyak"].text = "%s (%d)" % [L.t("Kártyáim"), world.hand.size()]
 	for gid in _group_cards:
 		var gb: Button = _group_cards[gid]["gomb"]
@@ -570,6 +570,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_ESCAPE and _overlay != null:
 			_close()
+		elif event.keycode == KEY_ESCAPE:
+			_show_menu(not _menu.visible)
 		elif event.keycode == KEY_F11:
 			var fs := DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED if fs else DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -869,7 +871,10 @@ func _open_cdr() -> void:
 
 # --- telik az idő -------------------------------------------------------------
 func _advance() -> void:
-	if _busy or _overlay != null or world.over():
+	if _busy or _overlay != null:
+		return
+	if world.over():
+		_open_end()
 		return
 	_busy = true
 	var t0 := float(world.st["T"])
