@@ -432,3 +432,6 @@ A hozzájuk tartozó szövegek:
 
 ### A történet képe (a szöveges lista helyett; a sorok az egér alatti jelnél jelennek meg, a szövegük nem változott)
 - Vidd az egeret egy jel fölé.
+
+### Véletlen kattintás elleni védelem (a „Következő 5 év” gomb felirata néhány másodpercig, ha még van lépésed; a második kattintás lép tovább)
+- Még %d lépésed van

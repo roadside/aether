@@ -290,4 +290,5 @@ const EN := {
 	"Ha az erdő megvédése megélhetést is ad, veletek tartunk.": "If protecting the forest also gives a living, we are with you.",
 	"Szerezz kétszer lendületet: két megállapodás egy körben.": "Gain momentum twice: two agreements in one round.",
 	"Vidd az egeret egy jel fölé.": "Move the mouse over a mark.",
+	"Még %d lépésed van": "Moves left: %d",
 }

@@ -902,7 +902,7 @@ func _build_bottom() -> void:
 	h.size = Vector2(1548, 86)
 	add_child(h)
 	for row in [["kutatas", L.t("Kutatás"), 150, _open_research], ["kartyak", L.t("Kártyáim"), 150, _open_hand],
-			["kivonas", L.t("CO2-kivonás"), 160, _open_cdr], ["ido", L.t("Következő 5 év") + "  ▶", 210, _advance]]:
+			["kivonas", L.t("CO2-kivonás"), 160, _open_cdr], ["ido", L.t("Következő 5 év") + "  ▶", 210, _advance_click]]:
 		var b := UI.button(row[1])
 		b.custom_minimum_size = Vector2(row[2], 54)
 		b.focus_mode = Control.FOCUS_NONE
@@ -1218,7 +1218,7 @@ func _mark_next() -> void:
 	_btns["kivonas"].disabled = world.steps <= 0 or world.over()
 	(_btns["kivonas"].get_parent() as Control).modulate.a = 1.0 if _ramp(3) else 0.0
 	_btns["kivonas"].mouse_filter = Control.MOUSE_FILTER_STOP if _ramp(3) else Control.MOUSE_FILTER_IGNORE
-	_btns["ido"].text = L.t("Végeredmény") if world.over() else L.t("Következő 5 év") + "  ▶"
+	_adv_reset()
 	_btns["kartyak"].text = "%s (%d)" % [L.t("Kártyáim"), world.hand.size()]
 	_mission_btn.visible = not world.missions.is_empty() and _ramp(1)
 	var md := world.missions_done()
@@ -2253,6 +2253,36 @@ func _year_label() -> Label:
 	return big
 
 
+## A gomb első megnyomása nem lép tovább, ha még van lépésed: előbb szól, és csak a második kattintás vált kört
+## (véletlen kattintás ne vigyen el egy egész kört). Az óra és a szóköz ezt nem használja.
+var _adv_ask := 0
+
+func _advance_click() -> void:
+	if _busy or _overlay != null:
+		return
+	var now := Time.get_ticks_msec()
+	if not _test and not world.over() and not world.summit_due and world.dilemma.is_empty() and world.steps > 0 and now > _adv_ask:
+		_adv_ask = now + 4000
+		var btn: Button = _btns["ido"]
+		btn.text = L.t("Még %d lépésed van") % world.steps + "  ▶"
+		btn.add_theme_color_override("font_color", UI.GOLD)
+		btn.add_theme_color_override("font_hover_color", UI.GOLD)
+		get_tree().create_timer(4.0).timeout.connect(func() -> void:
+			if Time.get_ticks_msec() >= _adv_ask - 60:
+				_adv_reset())
+		return
+	_adv_reset()
+	_advance()
+
+
+func _adv_reset() -> void:
+	_adv_ask = 0
+	var btn: Button = _btns["ido"]
+	btn.remove_theme_color_override("font_color")
+	btn.remove_theme_color_override("font_hover_color")
+	btn.text = L.t("Végeredmény") if world.over() else L.t("Következő 5 év") + "  ▶"
+
+
 func _advance() -> void:
 	if _busy or _overlay != null:
 		return
@@ -2528,6 +2558,7 @@ func _do_summit(id: String) -> void:
 	_sticky(body, _go(L.t("Rendben"), _close))
 
 
+var _cheer_force := false        # az élő próba így a szikraesőt is lefuttatja
 var _end_opened := 0            # hányszor nyílt meg a záróképernyő (a véletlen próba képet ment róla)
 
 
@@ -2577,6 +2608,19 @@ func _open_end() -> void:
 		v.add_child(c)
 		row.add_child(v)
 	var tt := float(r["T"])
+	if (tt < 2.0 or _cheer_force) and not _test:           # +2 °C alatt: három szikraeső a te Földed fölött
+		var game := world.game_id
+		for i in 3:
+			get_tree().create_timer(1.0 + 0.5 * i).timeout.connect(func() -> void:
+				if _overlay == null or world.game_id != game or not world.over():
+					return
+				var burst := Burst.new()
+				burst.colors = [UI.GREEN, UI.GOLD, UI.CYAN, Color.WHITE]
+				burst.position = Vector2(560 + 60 * i, 250 - 30 * (i % 2))
+				burst.z_index = 12
+				add_child(burst)
+				if i == 0:
+					_sound("lendulet"))
 	var verdict := "A Földed +1,7 °C alatt maradt. 2026-ból indulva ennél sokkal jobbat már alig lehet elérni." if tt < 1.7 \
 		else ("A Földed +2 °C alatt maradt. A Párizsi Megállapodás ennél többet kér: jóval +2 °C alatt megállni, lehetőleg +1,5 °C-nál." if tt < 2.0 \
 		else "A Földed +2 °C fölé melegedett. A következő játékban lépj hamarabb!")
@@ -2972,6 +3016,17 @@ func _live_play() -> void:
 	await wait.call(9.0)
 	print("ELO 9 kor=", world.round_i, " (az óra magától lépett: 2 kell legyen)")
 	await _shot("e13_magatol.png")
+	_close()
+	while not world.over():            # a végére ugrik: a záróképernyő élő (nem gyorsított) változata is lefut
+		world.advance()
+	_busy = false
+	_refresh()
+	_cheer_force = true
+	(_btns["ido"] as Button).pressed.emit()
+	await wait.call(2.4)
+	await _shot("e14_vege.png")
+	print("ELO 10 vege ablak=", _overlay != null, " T=%.2f" % float(world.st["T"]))
+	await wait.call(3.0)
 	print("ELOJATEK kész")
 	get_tree().quit()
 
