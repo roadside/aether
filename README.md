@@ -4,7 +4,7 @@ Klímajáték 12 éves kortól. Te vagy a világ klímatudósa: kutatsz, a bizon
 
 ## Egy játék
 
-- 2026-tól 2100-ig tizenöt kör, egy kör öt év, körönként négy lépés.
+- 2026-tól 2100-ig tizenöt kör, egy kör öt év, körönként négy lépés (könnyű fokozaton öt, nehéz fokozaton három).
 - **Kutatás:** témakört választasz, három valódi kérdésből egyet kutatsz ki. Ebből bizonyíték-kártya lesz, valódi tudományos forrásokkal.
 - **Tárgyalás:** minden országcsoport mástól tart. Olyan kártyával győzheted meg, amely az ő aggodalmára felel.
 - **Felkészülés:** egy csoportnak segíthetsz felkészülni a hőségre, az áradásra és az aszályra. Aki felkészült, többé nem inog meg.
@@ -21,9 +21,12 @@ Valódi adat:
 - A CO2-kivonás lehetséges mértéke: Fuss és mtsai 2018 (a sáv alsó értékével számolunk).
 - A tengerszint 2100-ban: IPCC AR6 WG1 9.9 táblázat.
 - A kártyák kérdései, magyarázatai és forrásai (`temak/`).
+- A kártyák kulcsszámai (`adatok/kulcsszamok.json`): egy-egy mondat a megadott tanulmányból, kézzel ellenőrizve. Csak a lektorált mondat jelenik meg a játékban.
 
 Játékszabály (nem a valóság leírása):
 - A tárgyalás menete, az aggodalmak mondatai, hogy hány kártya kell egy vállaláshoz. A kérhető célok a mostani évtől számítanak (40, 30, 20 vagy 15 év alatt nulla kibocsátás); a gyorsabb cél több kártyába kerül.
+- A klímacsúcs (2041 és 2066): egy kártyát az egész világnak megmutathatsz; akinek az aggodalmára felel, és már vállalt célt, öt évvel előbbre hozza.
+- A három fokozat (körönként öt, négy vagy három lépés) és „A mai Föld” (aznap mindenki ugyanazt a Földet kapja).
 - A felkészülés hatása (a felkészült csoport nem inog meg), a jelvények és az értékelés határai (+1,7 és +2 °C).
 - A játék hangjai és alapzenéje kódból készülnek (`tools/jatek_hangok.py`), nem felvételek.
 - A megingás: egy vállalást tett csoport elbizonytalanodhat; ha öt éven belül nem erősíted meg egy neki szóló kártyával, tíz évvel későbbre tolja a célját. A jövő hírei (hőhullám, aszály, áradás, erdőtűz) szintén a játék részei.

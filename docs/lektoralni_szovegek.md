@@ -207,12 +207,15 @@ A %d és %s jelek helyére szám vagy név kerül.
 
 ## 7. Legújabb szövegek (2026-11-23, 19 óra után) – még nem lektorált
 
-Csak ezek újak vagy változtak. A „Hogyan játssz?” két mondata a szabályváltozás miatt módosult (három helyett négy lépés; a célok már nem rögzített évek). A megingás új szabálya: a csoport előbb elbizonytalanodik, és egy körön át megerősítheted.
+Csak ezek újak vagy változtak. A „Hogyan játssz?” két mondata a szabályváltozás miatt módosult (a lépések száma a fokozattól függ: három, négy vagy öt; a célok már nem rögzített évek). A megingás új szabálya: a csoport előbb elbizonytalanodik, és egy körön át megerősítheted.
 
 Már nem jelenik meg: „Nem volt a kezedben olyan új bizonyíték, amivel meggyőzhetted volna őket.” A „%s megingott, de kitartott.” és „A bizonyítékod miatt kitartottak: …” mondat változatlan, mostantól a megerősítés után látszik.
 
 - Lépj korán: minden év késés számít. Akit egyszer meggyőztél, attól később merészebb célt is kérhetsz.
-- Körönként négy lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal.
+- Körönként %s lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal.
+- három
+- négy
+- öt
 - A Földed +1,7 °C alatt maradt. 2026-ból indulva ennél sokkal jobbat már alig lehet elérni.
 - Kiváló Föld
 - Maradj 2100-ban +1,7 °C alatt.
@@ -236,6 +239,21 @@ Már nem jelenik meg: „Nem volt a kezedben olyan új bizonyíték, amivel megg
 - %s felkészült a bajra.
 - A mai Föld
 - Ma mindenki ugyanezt a Földet kapja.
+- A világ CO2-kibocsátása
+- a mai %d%-a
+- Könnyű
+- Közepes
+- Nehéz
+- %d lépés körönként
+- Mester
+- Maradj +2 °C alatt nehéz fokozaton.
+- nulla alatt
+- Klímacsúcs
+- Mutass meg egy kártyát az egész világnak! Aki már vállalt célt, és a kártya az ő aggodalmára felel, öt évvel előbbre hozza. Ez nem kerül lépésbe.
+- Most nincs olyan kártyád, amire figyelnének.
+- Most nem mutatok semmit
+- %s előbbre hozta a célját: nulla kibocsátás %d-re.
+- Klímacsúcs: %d csoport hozta előbbre a célját.
 
 ## 8. Kulcsszámok a kártyákra (12 mondat) – még nem lektorált
 

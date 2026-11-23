@@ -160,4 +160,10 @@ const EN := {
 	"%d lépés körönként": "%d moves per round",
 	"Mester": "Master", "Maradj +2 °C alatt nehéz fokozaton.": "Stay below +2 °C on Hard.",
 	"nulla alatt": "below zero",
+	"Klímacsúcs": "Climate summit",
+	"Mutass meg egy kártyát az egész világnak! Aki már vállalt célt, és a kártya az ő aggodalmára felel, öt évvel előbbre hozza. Ez nem kerül lépésbe.": "Show one card to the whole world! Every group that already has a target and whose worry the card answers brings its target five years forward. This does not cost a move.",
+	"Most nincs olyan kártyád, amire figyelnének.": "Right now you have no card they would listen to.",
+	"Most nem mutatok semmit": "I will not show anything now",
+	"%s előbbre hozta a célját: nulla kibocsátás %d-re.": "%s brought its target forward: zero emissions by %d.",
+	"Klímacsúcs: %d csoport hozta előbbre a célját.": "Climate summit: %d groups brought their target forward.",
 }

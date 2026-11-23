@@ -1200,6 +1200,9 @@ func _advance() -> void:
 	if world.over():
 		_open_end()
 		return
+	if world.summit_due:          # előbb a klímacsúcsról kell dönteni
+		_open_summit()
+		return
 	_busy = true
 	var t0 := float(world.st["T"])
 	var y0 := world.year()
@@ -1264,8 +1267,52 @@ func _open_news(y0: int, t0: float) -> void:
 	body.add_child(UI.label(L.t("A jövő hírei a játék részei, nem valódi események."), 13, UI.MUTE))
 	if world.over():
 		body.add_child(_go(L.t("Lássuk, mi lett a Földdel") + " →", _open_end))
+	elif world.summit_due:
+		body.add_child(_go(L.t("Tovább") + " →", _open_summit))
 	else:
 		body.add_child(_go(L.t("Tovább"), _close))
+
+
+# --- klímacsúcs ---------------------------------------------------------------
+func _open_summit() -> void:
+	var body := _open("%s %d" % [L.t("Klímacsúcs"), world.year()], UI.GOLD)
+	body.add_child(UI.label(L.t("Mutass meg egy kártyát az egész világnak! Aki már vállalt célt, és a kártya az ő aggodalmára felel, öt évvel előbbre hozza. Ez nem kerül lépésbe."), 17, UI.SOFT))
+	var rows: Array = []
+	for id in world.hand:
+		var ls := world.summit_listeners(id)
+		if not ls.is_empty():
+			rows.append([id, ls])
+	rows.sort_custom(func(a: Array, b: Array) -> bool: return a[1].size() > b[1].size())
+	for r in rows.slice(0, 8):
+		var id: String = r[0]
+		var c := UI.card(_theme_color(Cards.theme_of(id)))
+		var chips := HFlowContainer.new()
+		chips.add_theme_constant_override("h_separation", 6)
+		for g in r[1]:
+			chips.add_child(_chip(L.field(g, "nev"), Color(str(g["szin"]))))
+		c.add_child(chips)
+		c.add_child(_go(Cards.text(id, "Kérdés", L.is_en()) + " →", _do_summit.bind(id), false))
+		body.add_child(UI.card_root(c))
+	if rows.is_empty():
+		body.add_child(UI.label(L.t("Most nincs olyan kártyád, amire figyelnének."), 17, UI.GOLD))
+	body.add_child(_go(L.t("Most nem mutatok semmit"), func() -> void:
+		world.skip_summit()
+		_save()
+		_close(), rows.is_empty()))
+
+
+func _do_summit(id: String) -> void:
+	var before := float(world.forecast()["kozep"][-1][1])
+	var who := world.summit(id)
+	_refresh()
+	_save()
+	_sound("egyezseg")
+	var body := _open(L.t("Klímacsúcs"), UI.GREEN)
+	for gid in who:
+		var g := world.group(gid)
+		body.add_child(UI.label(L.t("%s előbbre hozta a célját: nulla kibocsátás %d-re.") % [L.field(g, "nev"), int(g["cel"])], 20, UI.TEXT, true))
+	body.add_child(UI.label(L.t("Várható melegedés 2100-ban: +%s → +%s °C") % [L.num(before, 2), L.num(float(world.forecast()["kozep"][-1][1]), 2)], 20, UI.GREEN, true))
+	body.add_child(_go(L.t("Rendben"), _close))
 
 
 func _open_end() -> void:
@@ -1334,6 +1381,8 @@ func _open_end() -> void:
 					line = L.t("%s felkészült a bajra.") % L.field(world.group(e["csoport"]), "nev")
 				"kivonas":
 					line = "%s: %s" % [L.t("CO2-kivonás"), L.t(CDR_NAME[e["id"]])]
+				"csucs":
+					line = L.t("Klímacsúcs: %d csoport hozta előbbre a célját.") % int(e.get("db", 0))
 				"visszalepett":
 					line = L.t("%s megingott: a célját %d-re tolta.") % [L.field(world.group(e["csoport"]), "nev"), int(e["cel"])]
 					lc = UI.GOLD
@@ -1445,6 +1494,19 @@ func _selftest() -> void:
 		if world.round_i == 8 or world.over():
 			await _shot("13_hirek_%d.png" % world.round_i)
 		_close()
+		if world.summit_due:
+			_open_summit()
+			await _shot("13b_csucs_%d.png" % world.round_i)
+			var best := ""
+			for id in world.hand:
+				if best == "" or world.summit_listeners(id).size() > world.summit_listeners(best).size():
+					best = id
+			if best != "" and not world.summit_listeners(best).is_empty():
+				_do_summit(best)
+				await _shot("13c_csucs_utan_%d.png" % world.round_i)
+			else:
+				world.skip_summit()
+			_close()
 		var sh: Array = world.groups.filter(func(x: Dictionary) -> bool: return x.get("inog", false))
 		if not sh.is_empty() and not shaky_shot and not world.over():
 			shaky_shot = true

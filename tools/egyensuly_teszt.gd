@@ -32,8 +32,17 @@ func _play(kind: String, seed_v: int) -> Dictionary:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_v * 31 + 7
 	var st := {"csak_kutatas_kor": 0, "elso_egyezseg": 0, "egyezseg": 0, "metan": 0, "kivonas": 0,
-		"visszalepes": 0, "kitartott": 0, "felkeszult": 0}
+		"visszalepes": 0, "kitartott": 0, "felkeszult": 0, "csucs": 0}
 	while not w.over():
+		if w.get("summit_due") == true:      # klímacsúcs: a kezdő kihagyja, a többiek a legtöbb csoportot megszólító kártyát mutatják
+			var best := ""
+			for id in w.hand:
+				if best == "" or w.summit_listeners(id).size() > w.summit_listeners(best).size():
+					best = id
+			if kind != "kezdo" and best != "" and not w.summit_listeners(best).is_empty():
+				st["csucs"] += w.summit(best).size()
+			else:
+				w.skip_summit()
 		var only_research := true
 		while w.steps > 0:
 			var acted := false
@@ -136,7 +145,7 @@ func _init() -> void:
 		var bx := runs.filter(func(r): return r["T"] >= 2.0).size()
 		print("== %s (%d Föld) ==  T2100 10%%/közép/90%%: %.2f / %.2f / %.2f   <1,6: %d  1,6–2,0: %d  >=2,0: %d" % [kind, n, _q(ts, 0.1), _q(ts, 0.5), _q(ts, 0.9), b15, b20, bx])
 		var line := "  "
-		for key in ["egyezseg", "elso_egyezseg", "metan", "kivonas", "felkeszult", "csak_kutatas_kor", "visszalepes", "kitartott", "billenes"]:
+		for key in ["egyezseg", "elso_egyezseg", "metan", "kivonas", "felkeszult", "csak_kutatas_kor", "visszalepes", "kitartott", "billenes", "csucs"]:
 			var vals: Array = runs.map(func(r): return float(r[key]))
 			line += " %s %.0f/%.0f/%.0f" % [key, _q(vals, 0.1), _q(vals, 0.5), _q(vals, 0.9)]
 		print(line)
