@@ -11,6 +11,7 @@ const Cards := preload("res://scripts/cards.gd")
 const M := preload("res://scripts/model.gd")
 const Chart := preload("res://scripts/curve.gd")
 const PathChart := preload("res://scripts/path_chart.gd")
+const Icons := preload("res://scripts/icons.gd")
 const SAVE := "user://jatek.json"
 
 ## Az aggodalmak mondatai (játékszabály: a csoportok hangja, nem idézet).
@@ -900,6 +901,7 @@ func _open_collection() -> void:
 	for th in Cards.THEMES:
 		var mine: Array = Cards.TAGS[th].filter(func(id: String) -> bool: return id in c)
 		var head := UI.hbox(10)
+		head.add_child(Icons.rect(th, _theme_color(th), 24))
 		head.add_child(UI.label(_theme_name(th), 18, _theme_color(th), true, false))
 		head.add_child(UI.label("%d / %d" % [mine.size(), Cards.TAGS[th].size()], 15, UI.SOFT, false, false))
 		body.add_child(head)
@@ -1020,6 +1022,10 @@ func _open_research(theme: String = "") -> void:
 		else:
 			v.add_child(_lbl(L.t("%d kérdés vár") % n if n > 0 else L.t("Itt most nincs új kérdés"), 13, UI.MUTE))
 		b.add_child(v)
+		var ic := Icons.rect(th, Color(col, 0.9 if n > 0 else 0.3), 30)
+		ic.size = Vector2(30, 30)
+		ic.position = Vector2(420 - 30 - 12, 8)
+		b.add_child(ic)
 		b.pressed.connect(_research_theme.bind(th))
 		grid.add_child(b)
 
@@ -1061,6 +1067,7 @@ func _open_card(id: String, fresh: bool = false) -> void:
 	body.add_child(UI.label(Cards.text(id, "Kérdés", en), 24, UI.TEXT, true))
 	var chips := UI.hbox(8)
 	if th != "":
+		chips.add_child(Icons.rect(th, _theme_color(th), 36))
 		chips.add_child(_chip(_theme_name(th), _theme_color(th)))
 	for g in world.groups:
 		if th in g["felelmek"]:
@@ -1094,7 +1101,10 @@ func _open_hand() -> void:
 		var mine: Array = world.hand.filter(func(id: String) -> bool: return Cards.theme_of(id) == th)
 		if mine.is_empty():
 			continue
-		body.add_child(UI.label(_theme_name(th), 18, _theme_color(th), true, false))
+		var th_row := UI.hbox(8)
+		th_row.add_child(Icons.rect(th, _theme_color(th), 24))
+		th_row.add_child(UI.label(_theme_name(th), 18, _theme_color(th), true, false))
+		body.add_child(th_row)
 		for id in mine:
 			var b := UI.text_link(Cards.text(id, "Kérdés", L.is_en()), "", 17)
 			for c in b.pressed.get_connections():
