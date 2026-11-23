@@ -207,7 +207,9 @@ A %d és %s jelek helyére szám vagy név kerül.
 
 ## 7. Legújabb szövegek (2026-11-23, 19 óra után) – még nem lektorált
 
-Csak ezek újak vagy változtak. A „Hogyan játssz?” két mondata a szabályváltozás miatt módosult (három helyett négy lépés; a célok már nem rögzített évek).
+Csak ezek újak vagy változtak. A „Hogyan játssz?” két mondata a szabályváltozás miatt módosult (három helyett négy lépés; a célok már nem rögzített évek). A megingás új szabálya: a csoport előbb elbizonytalanodik, és egy körön át megerősítheted.
+
+Már nem jelenik meg: „Nem volt a kezedben olyan új bizonyíték, amivel meggyőzhetted volna őket.” A „%s megingott, de kitartott.” és „A bizonyítékod miatt kitartottak: …” mondat változatlan, mostantól a megerősítés után látszik.
 
 - Lépj korán: minden év késés számít. Akit egyszer meggyőztél, attól később merészebb célt is kérhetsz.
 - Körönként négy lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal.
@@ -223,3 +225,14 @@ Csak ezek újak vagy változtak. A „Hogyan játssz?” két mondata a szabály
 - %s felkészült a bajra. Megbízik benned, és többé nem inog meg.
 - Senki sem marad magára
 - Segíts mind a hat csoportnak felkészülni a bajra.
+- Bizonytalan
+- Erősítsd meg őket
+- Megerősítés
+- Elbizonytalanodtak. Ha a kör végéig nem erősíted meg őket, megingnak, és későbbre tolják a céljukat.
+- Nem erősítetted meg őket időben.
+- %s elbizonytalanodott.
+- Erősítsd meg őket egy nekik szóló kártyával, különben öt év múlva megingnak!
+- A te történeted
+- %s felkészült a bajra.
+- A mai Föld
+- Ma mindenki ugyanezt a Földet kapja.

@@ -39,6 +39,17 @@ func _play(kind: String, seed_v: int) -> Dictionary:
 				order.sort_custom(func(a, b): return float(a["co2_resz"]) > float(b["co2_resz"]))
 			elif kind != "profi":
 				order.shuffle()
+			# megerősítés: a kezdő nem figyel rá, az átlagos az esetek felében, a profi és az okos mindig
+			if w.has_method("reassure") and kind != "kezdo":
+				for g in order:
+					if g.get("inog", false) and not w.usable(g).is_empty() and (kind != "atlagos" or rng.randf() < 0.5):
+						acted = w.reassure(g, w.usable(g)[0])
+						if acted:
+							st["kitartott"] += 1
+							break
+			if acted:
+				only_research = false
+				continue
 			for g in order:
 				var t = _choose_target(w, g, kind, rng)
 				if t != null:

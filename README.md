@@ -26,7 +26,7 @@ Játékszabály (nem a valóság leírása):
 - A tárgyalás menete, az aggodalmak mondatai, hogy hány kártya kell egy vállaláshoz. A kérhető célok a mostani évtől számítanak (40, 30, 20 vagy 15 év alatt nulla kibocsátás); a gyorsabb cél több kártyába kerül.
 - A felkészülés hatása (a felkészült csoport nem inog meg), a jelvények és az értékelés határai (+1,7 és +2 °C).
 - A játék hangjai és alapzenéje kódból készülnek (`tools/jatek_hangok.py`), nem felvételek.
-- A megingás és a jövő hírei (hőhullám, aszály, áradás, erdőtűz).
+- A megingás: egy vállalást tett csoport elbizonytalanodhat; ha öt éven belül nem erősíted meg egy neki szóló kártyával, tíz évvel későbbre tolja a célját. A jövő hírei (hőhullám, aszály, áradás, erdőtűz) szintén a játék részei.
 - A billenőpontok rejtett küszöbe: a tudományos sávból sorsoljuk, a mai melegedés fölötti részéből. A küszöb átlépése egyelőre nem hat vissza a hőmérsékletre.
 - A csoportok részesedése a teljes mai kibocsátásra vonatkozik (a földhasználatét is arányosan osztjuk szét).
 - A világ többi része a hat csoport átlagát követi.

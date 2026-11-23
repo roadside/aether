@@ -16,7 +16,7 @@ const SPEEDS := [40, 30, 20, 15]               # ennyi év alatt állhat át nul
 const METHANE_CUT := 0.30                      # a Globális Metánvállalás mértéke: −30% (10 év alatt)
 const METHANE_YEARS := 10
 const CDR_YEARS := 20                          # a kivonás ennyi év alatt fut fel (a modell korábbi szabálya)
-const SAVE_VERSION := 7                       # ha a szabályok vagy az adatok változnak, a régi mentés helyett új játék indul
+const SAVE_VERSION := 8                       # ha a szabályok vagy az adatok változnak, a régi mentés helyett új játék indul
 const WAVER_CHANCE := 0.30                     # körönként ekkora eséllyel inog meg egy csoport (játékszabály)
 ## CO2-kivonási programok: kártya -> [a fenntartható sáv alja, teteje] GtCO2/év 2050-re
 ## (Fuss és mtsai 2018, Environ. Res. Lett. 13 063002; az archívum ellenőrzött idézetei szerint).
@@ -37,6 +37,7 @@ var tips: Array = []             # billenőpontok: {"id", ..., "kuszob", "ev" (�
 var history: Array = []          # [[év, T]] a megtörtént évek
 var base_history: Array = []     # ugyanez „ha semmi sem változik” mellett, ugyanazon a Földön
 var news: Array = []             # az utolsó öt év hírei: [{"fajta", ...}]
+var naplo: Array = []            # a játék fontos pillanatai a záró képernyőhöz: [{"ev", "fajta", ...}]
 var data: Dictionary = {}
 
 
@@ -58,6 +59,7 @@ func new_game(seed_value: int = -1) -> void:
 	hand = []
 	cdr = []
 	news = []
+	naplo = []
 	history = [[int(st["ev"]), float(st["T"])]]
 	base_history = history.duplicate(true)
 	_base = st.duplicate()
@@ -78,6 +80,7 @@ func new_game(seed_value: int = -1) -> void:
 		d["f0"] = 1.0
 		d["metan"] = 0          # a metánvállalás éve (0 = nincs)
 		d["felkeszult"] = false # felkészült a bajra: nem inog meg
+		d["inog"] = false       # elbizonytalanodott: ha a kör végéig nem erősíted meg, megingik
 		d["hasznalt"] = []      # az ennél a csoportnál már kijátszott kártyák
 		d["konnyebb"] = false   # katasztrófa után egy kártyával kevesebb kell (játékszabály)
 		groups.append(d)
@@ -262,6 +265,8 @@ func can_convince(g: Dictionary) -> bool:
 	if steps <= 0 or over():
 		return false
 	var n := usable(g).size()
+	if g.get("inog", false) and n > 0:
+		return true
 	for t in targets_for(g):
 		if n >= cards_needed(g, t):
 			return true
@@ -288,9 +293,11 @@ func negotiate(g: Dictionary, target: int, played: Array) -> bool:
 	g["y0"] = y - 1
 	g["cel"] = target
 	g["konnyebb"] = false
+	g["inog"] = false          # az új egyezség meg is erősíti őket
 	for id in played:
 		g["hasznalt"].append(id)
 	steps -= 1
+	naplo.append({"ev": y, "fajta": "cel", "csoport": g["id"], "cel": target})
 	return true
 
 
@@ -318,6 +325,18 @@ func prepare(g: Dictionary, card_id: String) -> bool:
 	if steps <= 0 or g.get("felkeszult", false) or not (card_id in prepare_cards(g)):
 		return false
 	g["felkeszult"] = true
+	g["inog"] = false
+	g["hasznalt"].append(card_id)
+	steps -= 1
+	naplo.append({"ev": year(), "fajta": "felkeszules", "csoport": g["id"]})
+	return true
+
+
+## Megerősítés (játékszabály): az elbizonytalanodott csoportot egy neki szóló, még nem hallott kártyával megtarthatod.
+func reassure(g: Dictionary, card_id: String) -> bool:
+	if steps <= 0 or not g.get("inog", false) or not (card_id in usable(g)):
+		return false
+	g["inog"] = false
 	g["hasznalt"].append(card_id)
 	steps -= 1
 	return true
@@ -339,6 +358,7 @@ func pledge_methane(g: Dictionary, played: Variant) -> bool:
 	for id in ids:
 		g["hasznalt"].append(id)
 	steps -= 1
+	naplo.append({"ev": year(), "fajta": "metan", "csoport": g["id"]})
 	return true
 
 
@@ -356,6 +376,7 @@ func start_cdr(id: String) -> bool:
 		return false
 	cdr.append({"id": id, "gt": float(CDR[id][0]), "ev": year() - 1})
 	steps -= 1
+	naplo.append({"ev": year(), "fajta": "kivonas", "id": id})
 	return true
 
 
@@ -376,27 +397,31 @@ func advance() -> void:
 			if int(t["ev"]) == 0 and float(st["T"]) >= float(t["kuszob"]):
 				t["ev"] = y
 				news.append({"fajta": "billenes", "id": t["id"], "ev": y})
+				naplo.append({"ev": y, "fajta": "billenes", "id": t["id"]})
 	round_i += 1
 	steps = STEPS
 	if over():
 		return
-	# megingás (játékszabály): egy vállalást tett csoport visszalépne; ha van a kezedben neki szóló, még nem hallott kártya, marad
-	# az esély a játék során nő (30% → 60%): a késői körökben is kell friss bizonyíték
-	if rng.randf() < WAVER_CHANCE * (1.0 + float(round_i) / float(ROUNDS)):
-		var cand: Array = groups.filter(func(g: Dictionary) -> bool: return int(g["cel"]) > 0 and fraction(g, year()) > 0.0 and not g.get("felkeszult", false))
-		if not cand.is_empty():
-			var g: Dictionary = cand[rng.randi_range(0, cand.size() - 1)]
-			var u := usable(g)
-			if u.is_empty():
+	# megingás (játékszabály): aki az előző kör végén elbizonytalanodott, és nem erősítetted meg, visszalép:
+	# tíz évvel későbbre tolja a célját (legfeljebb 2100-ig), és egy fokozattal visszaesik
+	for g in groups:
+		if g.get("inog", false):
+			g["inog"] = false
+			if int(g["cel"]) > 0 and fraction(g, year()) > 0.0 and not g.get("felkeszult", false):
 				var y := year()
 				g["f0"] = fraction(g, y - 1)
 				g["y0"] = y - 1
-				g["cel"] = int(g["cel"]) + 10       # tíz évvel későbbre tolja a célját
-				g["fok"] = maxi(1, int(g["fok"]) - 1)   # és egy fokozattal visszalép
+				g["cel"] = mini(int(g["cel"]) + 10, 2100)
+				g["fok"] = maxi(1, int(g["fok"]) - 1)
 				news.append({"fajta": "visszalepett", "csoport": g["id"], "cel": g["cel"]})
-			else:
-				g["hasznalt"].append(u[0])
-				news.append({"fajta": "kitartott", "csoport": g["id"], "kartya": u[0]})
+				naplo.append({"ev": y, "fajta": "visszalepett", "csoport": g["id"], "cel": g["cel"]})
+	# új elbizonytalanodás: az esély a játék során nő (30% → 60%); a felkészült csoport nem inog meg
+	if round_i < ROUNDS - 1 and rng.randf() < WAVER_CHANCE * (1.0 + float(round_i) / float(ROUNDS)):
+		var cand: Array = groups.filter(func(g: Dictionary) -> bool: return int(g["cel"]) > 0 and fraction(g, year()) > 0.0 and not g.get("felkeszult", false))
+		if not cand.is_empty():
+			var g: Dictionary = cand[rng.randi_range(0, cand.size() - 1)]
+			g["inog"] = true
+			news.append({"fajta": "inog", "csoport": g["id"]})
 	# katasztrófa (játékszabály, a melegedéssel gyakoribb): az érintett csoportot utána könnyebb meggyőzni
 	if rng.randf() < clampf(0.15 + 0.25 * (float(st["T"]) - M.T_START), 0.15, 0.6):
 		var g2: Dictionary = groups[rng.randi_range(0, groups.size() - 1)]
@@ -418,7 +443,7 @@ func result() -> Dictionary:
 
 func to_dict() -> Dictionary:
 	return {"v": SAVE_VERSION, "mag": seed_v, "sens": sens, "st": st, "alap": _base, "kor": round_i, "lepes": steps, "csoportok": groups, "kez": hand,
-		"kivonas": cdr, "billenes": tips, "mult": history, "alap_mult": base_history, "hirek": news, "rng": str(rng.state)}
+		"kivonas": cdr, "billenes": tips, "mult": history, "alap_mult": base_history, "hirek": news, "naplo": naplo, "rng": str(rng.state)}
 
 
 func from_dict(d: Dictionary) -> bool:
@@ -428,6 +453,11 @@ func from_dict(d: Dictionary) -> bool:
 	seed_v = int(d["mag"]); sens = float(d["sens"]); st = d["st"]; _base = d["alap"]; round_i = int(d["kor"]); steps = int(d["lepes"])
 	groups = d["csoportok"]; hand = d["kez"]; cdr = d["kivonas"]; tips = d["billenes"]; history = d["mult"]; base_history = d["alap_mult"]
 	news = d.get("hirek", [])
+	naplo = d.get("naplo", [])
+	for e in naplo:
+		e["ev"] = int(e["ev"])
+		if e.has("cel"):
+			e["cel"] = int(e["cel"])
 	rest_share = float(data.get("tobbi_co2_resz", 0.0)); rest_ch4 = float(data.get("tobbi_ch4_resz", 0.0))
 	rng.seed = seed_v
 	rng.state = int(str(d.get("rng", "0")))
