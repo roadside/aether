@@ -75,6 +75,7 @@ func _ready() -> void:
 	UI.load_fonts()
 	Cards.load_all()
 	theme = _make_theme()
+	get_tree().node_added.connect(_on_node_added)
 	var args := OS.get_cmdline_user_args()
 	_test = "--onteszt" in args
 	if _test or "--intro-kepek" in args:
@@ -149,6 +150,22 @@ func anomaly_ready() -> bool:
 
 func warming_text() -> String:
 	return "+%s °C" % L.num(float(world.st["T"]), 2)
+
+
+var _click: AudioStreamPlayer
+
+## Halk kattanás minden gombnyomásra (külön lejátszó, hogy ne vágja el a többi hangot).
+func _on_node_added(n: Node) -> void:
+	if n is BaseButton and not (n is CheckBox):
+		(n as BaseButton).pressed.connect(func() -> void:
+			if _test:
+				return
+			if _click == null:
+				_click = AudioStreamPlayer.new()
+				_click.volume_db = -14.0
+				_click.stream = load("res://assets/hang/kattintas.wav")
+				add_child(_click)
+			_click.play())
 
 
 func _sound(name: String) -> void:
@@ -235,7 +252,7 @@ func _build_top() -> void:
 	bare.content_margin_top = 8
 	p.add_theme_stylebox_override("panel", bare)
 	add_child(p)
-	var h := UI.hbox(44)
+	var h := UI.hbox(36)
 	p.add_child(h)
 	var logo := UI.label("AETHER", 32, UI.CYAN, false, false)
 	logo.add_theme_font_override("font", UI.font_pixel)
@@ -244,6 +261,7 @@ func _build_top() -> void:
 	_stat(h, "ev", L.t("Év"), UI.TEXT, true)
 	_stat(h, "meleg", L.t("Melegedés"), UI.EMBER, true)
 	_stat(h, "tenger", L.t("Tenger 2100-ban"), Color("#6ab8ff"))
+	_stat(h, "kibocs", L.t("A világ CO2-kibocsátása"), UI.GREEN)
 	_stat(h, "lepes", L.t("Lépéseid"), UI.CYAN)
 	_dots = _stats["lepes"]
 	var sp := Control.new()
@@ -425,7 +443,7 @@ func _build_menu() -> void:
 	daily.pressed.connect(func() -> void:
 		var d := Time.get_date_dict_from_system()
 		_show_menu(false)
-		_new_game((int(d["year"]) % 100) * 10000 + int(d["month"]) * 100 + int(d["day"])))
+		_pick_game((int(d["year"]) % 100) * 10000 + int(d["month"]) * 100 + int(d["day"])))
 	v.add_child(daily)
 	var code_row := UI.hbox(6)
 	var code := LineEdit.new()
@@ -441,7 +459,7 @@ func _build_menu() -> void:
 			var n := int(code.text)
 			code.text = ""
 			_show_menu(false)
-			_new_game(n)
+			_pick_game(n)
 	code_go.pressed.connect(play_code)
 	code.text_submitted.connect(func(_t: String) -> void: play_code.call())
 	code_row.add_child(code_go)
@@ -470,12 +488,20 @@ func _reset_game() -> void:
 		return
 	_reset_btn.text = L.t("Új játék")
 	_show_menu(false)
-	_new_game()
+	_pick_game()
 
 
-func _new_game(code: int = -1) -> void:
+## Új játék előtt: fokozat választása (játékszabály: körönként hány lépésed van).
+func _pick_game(code: int = -1) -> void:
+	var body := _open(L.t("Új játék"), UI.CYAN)
+	for row in [["Könnyű", 5], ["Közepes", 4], ["Nehéz", 3]]:
+		var n: int = row[1]
+		body.add_child(_go("%s · %s" % [L.t(row[0]), L.t("%d lépés körönként") % n], func() -> void: _new_game(code, n), n == 4))
+
+
+func _new_game(code: int = -1, steps_n: int = World.STEPS) -> void:
 	_close()
-	world.new_game(code)
+	world.new_game(code, steps_n)
 	_offers = {}
 	globe.home()
 	_refresh()
@@ -505,14 +531,16 @@ func _refresh() -> void:
 		(_stats["meleg_al"] as Label).text = L.t("2100-ban: +%s és +%s °C között") % [L.num(float(fc["also"][-1][1]), 1), L.num(float(fc["felso"][-1][1]), 1)]
 	else:
 		(_stats["meleg_al"] as Label).text = ""
+	var ratio := world.net_ratio(y)
+	(_stats["kibocs"] as Label).text = (L.t("a mai %d%%-a") % roundi(ratio * 100.0)) if ratio > 0.005 else L.t("nulla alatt")
+	(_stats["kibocs"] as Label).add_theme_color_override("font_color", UI.GREEN if ratio < 0.995 else UI.SOFT)
 	(_stats["tenger"] as Label).text = L.t("kb. +%s cm") % L.num_short(M.sea_2100(float(fc["kozep"][-1][1]) if not world.over() else t) * 100.0, 0)
-	_dots.text = "●".repeat(world.steps) + "○".repeat(World.STEPS - world.steps)
+	_dots.text = "●".repeat(world.steps) + "○".repeat(maxi(world.max_steps - world.steps, 0))
 	for g in world.groups:
 		_fill_group(g)
 	_curve.set_data(world.history, world.base_history, fc)
 	# a Föld képe: melegedés, pára és városfény a kibocsátás szerint, zöldülés a kivonással
 	globe.heat = clampf((t - M.T_START) / 2.0, 0.0, 1.5)
-	var ratio := world.net_ratio(y)
 	globe.set_plan_look({"smog": clampf(ratio, 0.0, 1.0), "clean": clampf(1.0 - ratio, 0.0, 1.0), "regrow": clampf(-ratio / 0.25, 0.0, 1.0)})
 	globe.sea_rise = clampf((t - M.T_START) / 2.0, 0.0, 1.0)
 	var marks: Array = []
@@ -710,6 +738,7 @@ const BADGES := [
 	["kivonas", "Tisztító", "Indíts el legalább három CO2-kivonást egy játékban."],
 	["felkeszult", "Senki sem marad magára", "Segíts mind a hat csoportnak felkészülni a bajra."],
 	["nehez", "Nehéz Föld", "Maradj +2 °C alatt egy az átlagnál érzékenyebb Földön."],
+	["mester", "Mester", "Maradj +2 °C alatt nehéz fokozaton."],
 	["gyujto", "Gyűjtő", "Kutass ki ötven különböző kártyát."],
 	["tudos", "Mindenhez értesz", "Legyen kártyád mind a nyolc témakörből a gyűjteményben."],
 ]
@@ -747,6 +776,7 @@ func _finish_game(r: Dictionary) -> Dictionary:
 		"felkeszult": world.groups.all(func(g: Dictionary) -> bool: return g.get("felkeszult", false)),
 		"kuszob": int(r["billenes"]) == 0, "kivonas": world.cdr.size() >= 3,
 		"nehez": t < 2.0 and float(r["sens"]) >= 0.25,
+		"mester": t < 2.0 and world.max_steps <= 3,
 		"gyujto": c.size() >= 50, "tudos": Cards.THEMES.keys().all(func(th: String) -> bool: return themes.has(th)),
 	}
 	var have := _badges()
@@ -929,6 +959,12 @@ func _open_card(id: String, fresh: bool = false) -> void:
 		if th in g["felelmek"]:
 			chips.add_child(_chip(L.field(g, "nev"), Color(str(g["szin"]))))
 	body.add_child(chips)
+	var kn := Cards.key_number(id)
+	if not kn.is_empty():
+		var kc := UI.card(UI.GOLD)
+		kc.add_child(UI.label(str(kn["en"]) if en and str(kn.get("en", "")) != "" else str(kn["hu"]), 19, UI.GOLD, true))
+		kc.add_child(UI.text_link(str(kn.get("forras_en", kn.get("forras", ""))) if en else str(kn.get("forras", "")), str(kn.get("link", "")), 14))
+		body.add_child(UI.card_root(kc))
 	for pair in [["Mire jó?", UI.GREEN], ["Mi a gond vele?", UI.EMBER], ["Mennyire bizonyított?", UI.CYAN]]:
 		var txt := Cards.text(id, pair[0], en)
 		if txt == "":
@@ -1313,14 +1349,14 @@ func _open_end() -> void:
 		for i in lines.size():
 			cols[0 if i < (lines.size() + 1) / 2 else 1].add_child(lines[i])
 		body.add_child(grid)
-	body.add_child(_go(L.t("Új játék, új Föld") + " →", _new_game))
+	body.add_child(_go(L.t("Új játék, új Föld") + " →", func() -> void: _pick_game()))
 
 
 func _open_help() -> void:
 	var body := _open(L.t("Hogyan játssz?"), UI.CYAN)
 	for row in [
 			["1.", "Te vagy a világ klímatudósa. 2026-ból indulsz; egy kör öt év, így 2100-ig tizenöt köröd van."],
-			["2.", "Körönként négy lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal."],
+			["2.", L.t("Körönként %s lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal.") % L.t({3: "három", 4: "négy", 5: "öt"}[world.max_steps])],
 			["3.", "Kattints egy országcsoportra, és győzd meg a kártyáiddal. Minden csoport mástól tart, ezért más kártyára van szüksége."],
 			["4.", "Lépj korán: minden év késés számít. Akit egyszer meggyőztél, attól később merészebb célt is kérhetsz."],
 			["5.", "A cél: 2100-ban jóval +2 °C alatt maradni, minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is."],
@@ -1374,6 +1410,12 @@ func _selftest() -> void:
 	await _shot("11_kivonas.png")
 	_open_collection()
 	await _shot("11b_gyujtemeny.png")
+	_pick_game()
+	await _shot("11c_uj_jatek.png")
+	Cards.show_unproofed = true
+	_open_card("napelem")
+	await _shot("11d_kulcsszam.png")
+	Cards.show_unproofed = false
 	_close()
 	# a többi kör gyorsan: minden körben kutatás és ahol lehet, megegyezés
 	var shaky_shot := false

@@ -28,6 +28,7 @@ var rng := RandomNumberGenerator.new()
 var st: Dictionary = {}
 var round_i := 0                 # 0…15 (15 = vége)
 var steps := STEPS
+var max_steps := STEPS           # lépés körönként: 5 könnyű, 4 közepes, 3 nehéz fokozaton (játékszabály)
 var groups: Array = []
 var rest_share := 0.0            # a világ többi részének CO2-részesedése: a hat csoport átlagát követi (játékszabály)
 var rest_ch4 := 0.0
@@ -47,7 +48,8 @@ static func read_json(path: String) -> Variant:
 	return JSON.parse_string(FileAccess.get_file_as_string(path))
 
 
-func new_game(seed_value: int = -1) -> void:
+func new_game(seed_value: int = -1, steps_n: int = STEPS) -> void:
+	max_steps = clampi(steps_n, 3, 5)
 	data = read_json("res://adatok/csoportok.json")
 	seed_v = seed_value if seed_value >= 0 else int(Time.get_unix_time_from_system()) % 1000000
 	rng.seed = seed_v
@@ -55,7 +57,7 @@ func new_game(seed_value: int = -1) -> void:
 	st = M.new_state()
 	M.step(st, {}, params())                            # 2025: a játék 2026 elején indul
 	round_i = 0
-	steps = STEPS
+	steps = max_steps
 	hand = []
 	cdr = []
 	news = []
@@ -399,7 +401,7 @@ func advance() -> void:
 				news.append({"fajta": "billenes", "id": t["id"], "ev": y})
 				naplo.append({"ev": y, "fajta": "billenes", "id": t["id"]})
 	round_i += 1
-	steps = STEPS
+	steps = max_steps
 	if over():
 		return
 	# megingás (játékszabály): aki az előző kör végén elbizonytalanodott, és nem erősítetted meg, visszalép:
@@ -442,7 +444,7 @@ func result() -> Dictionary:
 # --- mentés -------------------------------------------------------------------
 
 func to_dict() -> Dictionary:
-	return {"v": SAVE_VERSION, "mag": seed_v, "sens": sens, "st": st, "alap": _base, "kor": round_i, "lepes": steps, "csoportok": groups, "kez": hand,
+	return {"v": SAVE_VERSION, "mag": seed_v, "sens": sens, "st": st, "alap": _base, "kor": round_i, "lepes": steps, "max_lepes": max_steps, "csoportok": groups, "kez": hand,
 		"kivonas": cdr, "billenes": tips, "mult": history, "alap_mult": base_history, "hirek": news, "naplo": naplo, "rng": str(rng.state)}
 
 
@@ -450,7 +452,7 @@ func from_dict(d: Dictionary) -> bool:
 	if int(d.get("v", 0)) != SAVE_VERSION or not d.has("st") or not d.has("csoportok"):
 		return false
 	data = read_json("res://adatok/csoportok.json")
-	seed_v = int(d["mag"]); sens = float(d["sens"]); st = d["st"]; _base = d["alap"]; round_i = int(d["kor"]); steps = int(d["lepes"])
+	seed_v = int(d["mag"]); sens = float(d["sens"]); st = d["st"]; _base = d["alap"]; round_i = int(d["kor"]); steps = int(d["lepes"]); max_steps = int(d.get("max_lepes", STEPS))
 	groups = d["csoportok"]; hand = d["kez"]; cdr = d["kivonas"]; tips = d["billenes"]; history = d["mult"]; base_history = d["alap_mult"]
 	news = d.get("hirek", [])
 	naplo = d.get("naplo", [])

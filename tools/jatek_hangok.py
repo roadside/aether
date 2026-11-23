@@ -10,6 +10,7 @@ Hangok (assets/hang/):
   billenes.wav    – billenőpont átlépve: mély morajlás és feszült hangköz (kb. 7 mp)
   kartya.wav      – új bizonyíték-kártya: rövid, csillanó két hang (kb. 2 mp)
   korvaltas.wav   – telik öt év: halk suhanás és két lágy hang (kb. 3 mp)
+  kattintas.wav   – gombnyomás: egyetlen rövid, halk hang (0,5 mp)
   alapzene.wav    – halk, ismétlődő alapzene játék közbe (64 mp, hézag nélkül ismételhető)
 
 Futtatás (csak a Python standard könyvtára kell):  python tools/jatek_hangok.py [kimeneti mappa]
@@ -182,6 +183,7 @@ def main():
     write(sound(2.0, [(0.00, "A4", 0.45), (0.12, "D5", 0.55)]), out / "kartya.wav", fade_out=0.5)
     write(sound(3.0, [(0.55, "D3", 0.45), (0.75, "A3", 0.35)], extra=lambda b: whoosh(b, 0.0, 1.4, 1.0)),
           out / "korvaltas.wav", fade_out=0.6)
+    write(sound(0.5, [(0.00, "D5", 0.35)]), out / "kattintas.wav", peak=0.35, fade_out=0.3)
     write(ambient(), out / "alapzene.wav", peak=0.55)
 
 

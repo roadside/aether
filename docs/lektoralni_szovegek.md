@@ -236,3 +236,20 @@ Már nem jelenik meg: „Nem volt a kezedben olyan új bizonyíték, amivel megg
 - %s felkészült a bajra.
 - A mai Föld
 - Ma mindenki ugyanezt a Földet kapja.
+
+## 8. Kulcsszámok a kártyákra (12 mondat) – még nem lektorált
+
+Mindegyiket a megadott forrásból ellenőriztük. A kártyán csak akkor jelenik meg, ha jóváhagytad.
+
+- **napelem:** A napelemes áram teljes életciklusa alatt (gyártás, szállítás, bontás) kb. 45 g CO2 jut egy kilowattórára, a szénerőművi áramnál kb. 1000 g. (Hsu és mtsai 2012; szén: Whitaker és mtsai 2012) – https://doi.org/10.1111/j.1530-9290.2011.00439.x
+- **szelenergia:** A szélerőművek áramának teljes életciklusa kb. 11 g CO2 kilowattóránként. (Dolan és Heath 2012) – https://doi.org/10.1111/j.1530-9290.2012.00464.x
+- **atomenergia:** Az atomerőművi áram teljes életciklusa (bányászat, építés, üzem, bontás) kb. 12 g CO2 kilowattóránként. (Warner és Heath 2012) – https://doi.org/10.1111/j.1530-9290.2012.00472.x
+- **villanyauto:** A világ 59 térségéből 53-ban már a mai áramtermelés mellett is kevesebb kibocsátással jár a villanyautó, mint a benzines vagy dízel autó; ez a közlekedési és fűtési igény 95%-a. (Knobloch és mtsai 2020) – https://doi.org/10.1038/s41893-020-0488-7
+- **hoszivattyu:** A hőszivattyú a világ 59 térségéből 53-ban már ma kevesebb kibocsátással fűt, mint a gáz- vagy olajkazán. (Knobloch és mtsai 2020) – https://doi.org/10.1038/s41893-020-0488-7
+- **zold_acel:** Az acélgyártás évente kb. 2,6 milliárd tonna CO2-t bocsát ki közvetlenül, az energiaszektor kibocsátásának 7%-át. (IEA 2020) – https://www.iea.org/reports/iron-and-steel-technology-roadmap
+- **cement:** A cementgyártás vegyi folyamata (a mészkő bontása) 2016-ban 1,45 milliárd tonna CO2-t engedett ki, a fosszilis kibocsátás kb. 4%-át. Ez akkor is keletkezik, ha a hőt tiszta energia adja. (Andrew 2018) – https://doi.org/10.5194/essd-10-195-2018
+- **metan_gaz:** Az olaj-, gáz- és szénágazat metánkibocsátásának kb. 70%-a ma már létező technikával elkerülhető, sokszor olcsón. (IEA 2025) – https://www.iea.org/reports/global-methane-tracker-2025/key-findings
+- **hoseg_halal:** 1991 és 2018 között a nyári hőség okozta halálesetek 37%-a az ember okozta melegedés miatt történt (43 ország adatai). (Vicedo-Cabrera és mtsai 2021) – https://doi.org/10.1038/s41558-021-01058-x
+- **legszennyezes:** A szén, olaj és gáz égetéséből származó légszennyezés évente kb. 5,1 millió ember korai halálát okozza; ezek elkerülhetők lennének. (Lelieveld és mtsai 2023) – https://doi.org/10.1136/bmj-2023-077784
+- **termes:** Alkalmazkodás nélkül minden egyes fok melegedés átlagosan 6%-kal csökkenti a búza, 7,4%-kal a kukorica, 3,2%-kal a rizs és 3,1%-kal a szója termését. (Zhao és mtsai 2017) – https://doi.org/10.1073/pnas.1701762114
+- **amazonas:** Az Amazonas-esőerdő pusztulása a kutatók becslése szerint kb. 3,5 fok melegedésnél válik valószínűvé, de már 2 foknál is lehetséges. (Armstrong McKay és mtsai 2022) – https://doi.org/10.1126/science.abn7950

@@ -1,6 +1,6 @@
 extends SceneTree
 ## Egyensúly-mérés: négy játékostípus, sok Föld. Fej nélkül, ablak és fájlírás nélkül:
-##   godot --headless --path . -s tools/egyensuly_teszt.gd -- [N]
+##   godot --headless --path . -s tools/egyensuly_teszt.gd -- [N] [lépés körönként: 3, 4 vagy 5]
 ## kezdő:   mindig a legkésőbbi (legkönnyebb) célt kéri, metánt és kivonást nem indít;
 ## átlagos: véletlen sorrendben, véletlen elérhető célt kér, metánt is vállal;
 ## profi:   mindig a legkorábbi elérhető célt kéri, metánt és kivonást is indít;
@@ -23,9 +23,12 @@ func _choose_target(w, g, kind: String, rng: RandomNumberGenerator):
 			return ok[ok.size() - 1]             # a legkorábbi elérhető cél
 
 
+var _steps := 4
+
+
 func _play(kind: String, seed_v: int) -> Dictionary:
 	var w = World.new()
-	w.new_game(seed_v)
+	w.new_game(seed_v, _steps)
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_v * 31 + 7
 	var st := {"csak_kutatas_kor": 0, "elso_egyezseg": 0, "egyezseg": 0, "metan": 0, "kivonas": 0,
@@ -121,6 +124,8 @@ func _q(vals: Array, f: float) -> float:
 func _init() -> void:
 	var a := OS.get_cmdline_user_args()
 	var n: int = int(a[0]) if a.size() > 0 else 100
+	_steps = int(a[1]) if a.size() > 1 else 4      # lépés körönként (3 nehéz, 4 közepes, 5 könnyű)
+	print("lépés körönként: ", _steps)
 	for kind in ["kezdo", "atlagos", "profi", "okos"]:
 		var runs: Array = []
 		for i in n:

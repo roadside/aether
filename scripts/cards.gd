@@ -116,3 +116,20 @@ static func open_in(theme: String, max_era: int, have: Array) -> Array:
 	while out.size() < 3 and not later.is_empty():
 		out.append(later.pop_front())
 	return out
+
+
+## Kulcsszám a kártyához (adatok/kulcsszamok.json): csak a kézzel ellenőrzött ÉS lektorált mondat jelenik meg.
+static var _keys: Dictionary = {}
+static var _keys_loaded := false
+static var show_unproofed := false     # csak az öntesztben: a még nem lektorált mondat is látszik
+
+static func key_number(id: String) -> Dictionary:
+	if not _keys_loaded:
+		_keys_loaded = true
+		var j: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://adatok/kulcsszamok.json"))
+		if typeof(j) == TYPE_DICTIONARY and typeof(j.get("szamok")) == TYPE_DICTIONARY:
+			_keys = j["szamok"]
+	var k: Variant = _keys.get(id)
+	if typeof(k) == TYPE_DICTIONARY and (bool(k.get("lektoralva", false)) or show_unproofed) and str(k.get("hu", "")) != "":
+		return k
+	return {}
