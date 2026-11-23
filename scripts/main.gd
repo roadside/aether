@@ -910,10 +910,19 @@ func _open_collection() -> void:
 	var past: Variant = L.get_setting("foldek", [])
 	if typeof(past) == TYPE_ARRAY and not past.is_empty():
 		body.add_child(UI.label(L.t("Korábbi Földjeid"), 19, UI.GOLD, true, false))
-		for e in past:
+		# két oszlop, az elsőben a legfrissebbek – így a jelvények is kiférnek alá
+		var cols := UI.hbox(24)
+		var half := ceili(past.size() / 2.0)
+		var colv: Array = [UI.vbox(4), UI.vbox(4)]
+		for cv in colv:
+			(cv as Control).custom_minimum_size = Vector2(416, 0)
+			cols.add_child(cv)
+		body.add_child(cols)
+		for i in past.size():
+			var e: Dictionary = past[i]
 			var date := ("%d-%02d-%02d" if L.is_en() else "%d. %02d. %02d.") % [int(e["ev"]), int(e["ho"]), int(e["nap"])]
 			var level: String = L.t({3: "Nehéz", 4: "Közepes", 5: "Könnyű"}.get(int(e.get("lepes", 4)), "Közepes"))
-			body.add_child(UI.label("%s · +%s °C · %s · %s: %d" % [date, L.num(float(e["T"]), 2), level, L.t("Föld-kód"), int(e["mag"])], 15, UI.SOFT))
+			(colv[0 if i < half else 1] as Control).add_child(UI.label("%s · +%s °C · %s · %s: %d" % [date, L.num(float(e["T"]), 2), level, L.t("Föld-kód"), int(e["mag"])], 15, UI.SOFT))
 	var have := _badges()
 	body.add_child(UI.label(L.t("Jelvények: %d / %d") % [have.size(), BADGES.size()], 19, UI.GOLD, true, false))
 	var bg := GridContainer.new()
