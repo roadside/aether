@@ -541,7 +541,22 @@ func _roll_dilemma() -> void:
 		return
 	var open_g: Array = groups.filter(func(g: Dictionary) -> bool: return not g["konnyebb"] and not targets_for(g).is_empty())
 	var unprep: Array = groups.filter(func(g: Dictionary) -> bool: return not g.get("felkeszult", false))
-	if dr.randf() < 0.5 and open_g.size() >= 2:
+	var known: Array = hand.filter(func(id: String) -> bool: return not Cards.key_number(id).is_empty())
+	var kind := dr.randf()
+	if kind < 0.34 and not known.is_empty() and hand.size() >= 3:
+		# tudáspróba: melyik kártyádon áll ez a mondat? (a mondat a kártya lektorált kulcsszáma)
+		var right: String = known[dr.randi_range(0, known.size() - 1)]
+		var others: Array = hand.filter(func(id: String) -> bool: return id != right)
+		var opts: Array = [right]
+		while opts.size() < 3:
+			opts.append(others.pop_at(dr.randi_range(0, others.size() - 1)))
+		for i in range(opts.size() - 1, 0, -1):
+			var j := dr.randi_range(0, i)
+			var tmp: String = opts[i]
+			opts[i] = opts[j]
+			opts[j] = tmp
+		dilemma = {"fajta": "kviz", "id": right, "valasz": opts}
+	elif kind < 0.67 and open_g.size() >= 2:
 		var a: Dictionary = open_g.pop_at(dr.randi_range(0, open_g.size() - 1))
 		var b: Dictionary = open_g[dr.randi_range(0, open_g.size() - 1)]
 		dilemma = {"fajta": "meghivas", "a": a["id"], "b": b["id"]}
@@ -549,11 +564,18 @@ func _roll_dilemma() -> void:
 		dilemma = {"fajta": "tamogatas", "a": unprep[dr.randi_range(0, unprep.size() - 1)]["id"]}
 
 
-## choice: 0 vagy 1. Támogatás: 0 = eggyel több lépés, 1 = a megnevezett csoport felkészül.
+## choice: a választott lehetőség sorszáma. Támogatás: 0 = eggyel több lépés, 1 = a megnevezett csoport felkészül.
 ## Meghívás: a választott csoportot most eggyel kevesebb kártyával is meg lehet győzni.
-func resolve_dilemma(choice: int) -> void:
+## Tudáspróba: a jó válasz eggyel több lépést ad. Vissza: igaz, ha a választás „sikerült” (a próbánál: jó válasz).
+func resolve_dilemma(choice: int) -> bool:
 	if dilemma.is_empty():
-		return
+		return false
+	if dilemma["fajta"] == "kviz":
+		var ok: bool = choice >= 0 and choice < (dilemma["valasz"] as Array).size() and dilemma["valasz"][choice] == dilemma["id"]
+		if ok:
+			steps += 1
+		dilemma = {}
+		return ok
 	if dilemma["fajta"] == "tamogatas":
 		if choice == 0:
 			steps += 1
@@ -568,6 +590,7 @@ func resolve_dilemma(choice: int) -> void:
 		if not g2.is_empty():
 			g2["konnyebb"] = true
 	dilemma = {}
+	return true
 
 
 # --- küldetések (játékszabály) --------------------------------------------------

@@ -214,4 +214,8 @@ const EN := {
 	"Több kutató: ebben a körben eggyel több lépésed van.": "More researchers: you get one extra move this round.",
 	"Felkészítő program: %s azonnal felkészül a bajra.": "Readiness programme: %s is prepared for trouble right away.",
 	"Két meghívást kaptál, de csak egy útra van időd. Akit meglátogatsz, azt most eggyel kevesebb kártyával is meggyőzheted.": "You have two invitations but time for only one trip. Whoever you visit can now be convinced with one card fewer.",
+	"Tudáspróba": "Quiz",
+	"Melyik kártyádon áll ez? Ha eltalálod, ebben a körben eggyel több lépésed van.": "Which of your cards says this? Get it right and you have one extra move this round.",
+	"Eltaláltad! Ebben a körben eggyel több lépésed van.": "Correct! You have one extra move this round.",
+	"Nem ez volt. A helyes válasz:": "Not that one. The right answer:",
 }

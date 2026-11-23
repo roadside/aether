@@ -1515,9 +1515,17 @@ func _open_dilemma() -> void:
 	if d.is_empty():
 		_close()
 		return
-	var body := _open(L.t("Döntés"), UI.GOLD)
+	var body := _open(L.t("Tudáspróba") if d["fajta"] == "kviz" else L.t("Döntés"), UI.GOLD)
 	var opts: Array = []
-	if d["fajta"] == "tamogatas":
+	if d["fajta"] == "kviz":
+		var k := Cards.key_number(str(d["id"]))
+		body.add_child(UI.label(L.t("Melyik kártyádon áll ez? Ha eltalálod, ebben a körben eggyel több lépésed van."), 17, UI.SOFT))
+		var kc := UI.card(UI.GOLD)
+		kc.add_child(UI.label(str(k.get("en", "") if L.is_en() and str(k.get("en", "")) != "" else k.get("hu", "")), 19, UI.GOLD, true))
+		body.add_child(UI.card_root(kc))
+		for id in d["valasz"]:
+			opts.append(Cards.text(str(id), "Kérdés", L.is_en()))
+	elif d["fajta"] == "tamogatas":
 		body.add_child(UI.label(L.t("Egy alapítvány támogatja a munkádat. Mire kéred?"), 18, UI.TEXT))
 		opts = [L.t("Több kutató: ebben a körben eggyel több lépésed van."),
 			L.t("Felkészítő program: %s azonnal felkészül a bajra.") % L.field(world.group(str(d["a"])), "nev")]
@@ -1526,15 +1534,28 @@ func _open_dilemma() -> void:
 		opts = [L.field(world.group(str(d["a"])), "nev"), L.field(world.group(str(d["b"])), "nev")]
 	for i in opts.size():
 		body.add_child(_go(str(opts[i]) + " →", _do_dilemma.bind(i), false))
-	body.add_child(UI.label(L.t("A jövő hírei a játék részei, nem valódi események."), 13, UI.MUTE))
+	if d["fajta"] != "kviz":
+		body.add_child(UI.label(L.t("A jövő hírei a játék részei, nem valódi események."), 13, UI.MUTE))
 
 
 func _do_dilemma(choice: int) -> void:
-	world.resolve_dilemma(choice)
-	_sound("kartya")
+	var quiz: bool = world.dilemma.get("fajta", "") == "kviz"
+	var right := str(world.dilemma.get("id", ""))
+	var ok := world.resolve_dilemma(choice)
 	_save()
 	_refresh()
-	_close()
+	if not quiz:
+		_sound("kartya")
+		_close()
+		return
+	_sound("jo_hir" if ok else "megingas")
+	var body := _open(L.t("Tudáspróba"), UI.GREEN if ok else UI.EMBER)
+	if ok:
+		body.add_child(UI.label(L.t("Eltaláltad! Ebben a körben eggyel több lépésed van."), 20, UI.GREEN, true))
+	else:
+		body.add_child(UI.label(L.t("Nem ez volt. A helyes válasz:"), 18, UI.TEXT))
+		body.add_child(UI.label(Cards.text(right, "Kérdés", L.is_en()), 20, UI.GOLD, true))
+	body.add_child(_go(L.t("Rendben"), _close))
 
 
 func _open_summit() -> void:
@@ -1849,6 +1870,12 @@ func _selftest() -> void:
 	await _shot("11d_kulcsszam.png")
 	Cards.show_unproofed = false
 	_close()
+	if world.hand.size() >= 2:        # a tudáspróba képe (a világ állapotát nem változtatja meg)
+		world.dilemma = {"fajta": "kviz", "id": "napelem", "valasz": [world.hand[0], "napelem", world.hand[1]]}
+		_open_dilemma()
+		await _shot("11h_tudasproba.png")
+		world.dilemma = {}
+		_close()
 	# a többi kör gyorsan: minden körben kutatás és ahol lehet, megegyezés
 	var shaky_shot := false
 	while not world.over():
@@ -1881,6 +1908,8 @@ func _selftest() -> void:
 			_open_dilemma()
 			await _shot("13d_dontes_%s.png" % str(world.dilemma["fajta"]))
 			_do_dilemma(world.round_i % 2)
+			await _shot("13e_dontes_utan.png")
+			_close()
 		if world.summit_due:
 			_open_summit()
 			await _shot("13b_csucs_%d.png" % world.round_i)
@@ -1952,6 +1981,7 @@ func _walkthrough() -> void:
 				_open_dilemma()
 				await get_tree().process_frame
 				_do_dilemma(world.round_i % 2)
+				_close()
 			if world.summit_due:
 				_open_summit()
 				var best := ""
