@@ -798,6 +798,19 @@ func _build_groups() -> void:
 		_group_cards[gid] = {"gomb": b, "doboz": v, "taj": land}
 
 
+var _bar_shown: Dictionary = {}       # "játék/csoport" -> a kártyán utoljára mutatott kibocsátás-arány
+var _bar_hold := false                # körváltás: a hírek ablaka mindjárt eltakarja a kártyákat
+var _bar_pending := false             # van még le nem játszott sávcsökkenés
+
+
+func _bars_play() -> void:
+	if not _bar_pending or _overlay != null or _busy:
+		return
+	_bar_pending = false
+	for g in world.groups:
+		_fill_group(g)
+
+
 func _fill_group(g: Dictionary) -> void:
 	var v: VBoxContainer = _group_cards[g["id"]]["doboz"]
 	UI.clear(v)
@@ -823,6 +836,29 @@ func _fill_group(g: Dictionary) -> void:
 	bar_row.add_child(_lbl("%d%%" % roundi(bar.value * 100.0), 13, UI.SOFT))
 	(bar_row.get_child(1) as Label).autowrap_mode = TextServer.AUTOWRAP_OFF
 	v.add_child(bar_row)
+	# körváltáskor a sáv és a szám láthatóan csökken az előző értékről (ugyanabban a játékban)
+	var return_bar := false
+	var key := "%d/%s" % [world.game_id, str(g["id"])]
+	var shown: float = float(_bar_shown.get(key, bar.value))
+	if not _test and absf(shown - bar.value) > 0.004 and (_overlay != null or _bar_hold):
+		bar.value = shown              # ablak takarja: a régi érték marad, a csökkenés az ablak bezárása után látszik
+		(bar_row.get_child(1) as Label).text = "%d%%" % roundi(shown * 100.0)
+		_bar_pending = true
+		return_bar = true
+	elif not _test and absf(shown - bar.value) > 0.004:
+		var target: float = bar.value
+		var pct: Label = bar_row.get_child(1)
+		bar.value = shown
+		pct.text = "%d%%" % roundi(shown * 100.0)
+		pct.add_theme_color_override("font_color", UI.GREEN if target < shown else UI.EMBER)
+		var btw := bar.create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		btw.tween_interval(0.3)
+		btw.tween_method(func(x: float) -> void:
+			bar.value = x
+			pct.text = "%d%%" % roundi(x * 100.0), shown, target, 1.3)
+		btw.tween_callback(func() -> void: pct.add_theme_color_override("font_color", UI.SOFT))
+	if not return_bar:
+		_bar_shown[key] = World.fraction(g, world.year() - 1)
 	if int(g.get("nulla", 0)) > 0:
 		v.add_child(_lbl("★ " + L.t("Nulla kibocsátás %d óta") % int(g["nulla"]), 16, UI.GREEN, true))
 	elif int(g["cel"]) > 0:
@@ -1355,6 +1391,8 @@ func _close() -> void:
 		_float_text(L.t("+1 lépés"), _dots.global_position + Vector2(60, 40), UI.GOLD)
 		_dots.modulate = Color(2.2, 1.9, 0.8)
 		create_tween().tween_property(_dots, "modulate", Color.WHITE, 1.5)
+	if _bar_pending:
+		_bars_play.call_deferred()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -2352,7 +2390,9 @@ func _advance() -> void:
 			if world.game_id != game:
 				break
 	_busy = false
+	_bar_hold = true
 	_refresh()
+	_bar_hold = false
 	if world.game_id != game:
 		return
 	var kinds: Array = world.news.map(func(n: Dictionary) -> String: return str(n["fajta"]))
@@ -3012,7 +3052,11 @@ func _live_play() -> void:
 		nb.pressed.emit()
 	await wait.call(0.5)
 	_close()
-	await wait.call(3.0)
+	await wait.call(0.5)                # a kibocsátás-sávok most csökkennek: a kép a mozgás közepén készül
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png(OS.get_user_data_dir().path_join("aether_onteszt/e10b_savok.png"))
+	print("ELO 7b sav_varakozik=", _bar_pending)
+	await wait.call(2.4)
 	await _shot("e11_masodik_kor.png")
 	print("ELO 8 vezetes=", _tutor.text, " ora=%.1f (most járnia kell)" % _clock)
 	_clock = _round_s() - 5.0
