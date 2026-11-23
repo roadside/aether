@@ -366,15 +366,11 @@ func _fill_group(g: Dictionary) -> void:
 		ch.add_theme_font_size_override("font_size", 11)
 		ch.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		fears.add_child(ch)
-	# ha a három címke nem fér el egy sorban, kisebb betűvel írjuk, hogy a kártya alja ne csússzon ki
-	for fs in [12, 11, 10, 9]:
-		var w := 0.0
-		for ch in fears.get_children():
-			(ch as Label).add_theme_font_size_override("font_size", fs)
-			w += (ch as Label).get_minimum_size().x + 3.0
-		if w <= 276.0:
-			break
 	v.add_child(fears)
+	if fears.is_inside_tree():
+		_fit_chips(fears)
+	else:
+		fears.ready.connect(_fit_chips.bind(fears))
 	var sp := Control.new()
 	sp.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	sp.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -745,6 +741,19 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif event.keycode == KEY_F11:
 			var fs := DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED if fs else DisplayServer.WINDOW_MODE_FULLSCREEN)
+
+
+func _fit_chips(fears: Control) -> void:
+	# ha a címkék nem férnek el egy sorban, kisebb betűvel írjuk, hogy a kártya alja ne csússzon ki
+	for fs in [12, 11, 10, 9]:
+		var w := 0.0
+		for ch in fears.get_children():
+			var l := ch as Label
+			l.add_theme_font_size_override("font_size", fs)
+			w += l.get_theme_font("font").get_string_size(l.text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+			w += l.get_theme_stylebox("normal").get_minimum_size().x + 4.0
+		if w <= 270.0:
+			break
 
 
 func _chip(text: String, color: Color) -> Label:
