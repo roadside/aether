@@ -89,7 +89,6 @@ A %d és %s jelek helyére szám vagy név kerül.
 - A bizonyítékod miatt kitartottak: %s
 - A hőmérsékletet egyszerű klímamodell számolta. Irányt és nagyságrendet mutat, nem előrejelzés.
 - A játékban eddig: nulla kibocsátás %d-re.
-- A jövő hírei a játék részei, nem valódi események.
 - A metán rövid ideig marad a levegőben, de erősen melegít. Mutasd meg, hol lehet gyorsan csökkenteni!
 - A sáv azért széles, mert nem tudjuk pontosan, mennyire érzékeny a Föld.
 - A tenger kb. %s cm-rel magasabb
@@ -153,7 +152,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Honnan tudjuk?
 - Olaj és gáz
 - Erdő és föld
-- Átlépte a küszöbét: %s (%d)
+- Átlépte a küszöbértéket: %s (%d)
 - Ha a melegedés tartósan e fölött marad, a változás lassan, de megállíthatatlanul végbemegy. A küszöböt a tudomány csak sávként ismeri (%s és %s °C között); a játék ebből sorsolt egyet.
 - A legmelegebb év: +%s °C. Küszöbét átlépő rendszer: %d a %d-ből.
 - küszöb átlépve:
@@ -227,10 +226,10 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Bizonytalan
 - Erősítsd meg őket
 - Megerősítés
-- Elbizonytalanodtak. Ha a kör végéig nem erősíted meg őket, megingnak, és későbbre tolják a céljukat.
+- Elbizonytalanodtak. Ha a kör végéig nem erősíted meg őket, meginognak, és későbbre tolják a céljukat.
 - Nem erősítetted meg őket időben.
 - %s elbizonytalanodott.
-- Erősítsd meg őket egy hozzájuk illő kártyával, különben öt év múlva megingnak!
+- Erősítsd meg őket egy hozzájuk illő kártyával, különben öt év múlva meginognak!
 - A te történeted
 - %s felkészült a bajra.
 - A mai Föld

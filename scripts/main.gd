@@ -1531,13 +1531,25 @@ func _open_group(g: Dictionary) -> void:
 	var area := UI.vbox(10)
 	body.add_child(area)
 	var bg := ButtonGroup.new()
+	# a várható hűlés: két tizedes; ha így két cél egyformának látszana, három tizedes
+	var cooling: Dictionary = {}
+	var dec := 2
+	var seen: Array = []
+	for a in asks:
+		if a["fajta"] in ["cel", "metan"]:
+			var v := world.preview(g, int(a.get("cel", 0)), a["fajta"] == "metan")
+			cooling[a] = v
+			var short := "%.2f" % v
+			if short in seen:
+				dec = 3
+			seen.append(short)
 	for a in asks:
 		var txt: String = (L.rag(L.t("Nulla kibocsátás %d-re") % int(a["cel"]))) if a["fajta"] == "cel" else (L.t("Metán: −30% tíz év alatt") if a["fajta"] == "metan" \
 			else (L.t("Megerősítés") if a["fajta"] == "megerosites" else L.t("Felkészülés a bajra")))
 		var b := UI.button("%s · %s" % [txt, L.t("%d kártya") % int(a["kell"])])
 		if a["fajta"] in ["cel", "metan"]:
-			var dt := world.preview(g, int(a.get("cel", 0)), a["fajta"] == "metan")
-			b.text += " · %s °C" % L.num(dt, 2).replace("-", "−")
+			var dts := ("%.3f" if dec == 3 else "%.2f") % float(cooling[a])
+			b.text += " · %s °C" % (dts if L.is_en() else dts.replace(".", ",")).replace("-", "−")
 		b.toggle_mode = true
 		b.button_group = bg
 		b.focus_mode = Control.FOCUS_NONE
@@ -1604,7 +1616,7 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 		area.add_child(UI.card_root(c))
 	else:
 		if ask["fajta"] == "megerosites":
-			area.add_child(UI.label(L.t("Elbizonytalanodtak. Ha a kör végéig nem erősíted meg őket, megingnak, és későbbre tolják a céljukat."), 16, UI.GOLD))
+			area.add_child(UI.label(L.t("Elbizonytalanodtak. Ha a kör végéig nem erősíted meg őket, meginognak, és későbbre tolják a céljukat."), 16, UI.GOLD))
 		area.add_child(UI.label(L.t("Amitől tartanak:"), 17, UI.GOLD, true, false))
 		var usable := world.usable(g)
 		for th in g["felelmek"]:
@@ -1750,7 +1762,7 @@ func _open_news(y0: int, t0: float) -> void:
 			"billenes":
 				var tp: Dictionary = world.tips.filter(func(x: Dictionary) -> bool: return x["id"] == n["id"])[0]
 				var c := UI.card(UI.EMBER)
-				c.add_child(UI.label(L.t("Átlépte a küszöbét: %s (%d)") % [L.field(tp, "nev"), int(n["ev"])], 19, UI.EMBER, true))
+				c.add_child(UI.label(L.t("Átlépte a küszöbértéket: %s (%d)") % [L.field(tp, "nev"), int(n["ev"])], 19, UI.EMBER, true))
 				c.add_child(UI.label(L.t("Ha a melegedés tartósan e fölött marad, a változás lassan, de megállíthatatlanul végbemegy. A küszöböt a tudomány csak sávként ismeri (%s és %s °C között); a játék ebből sorsolt egyet.") % [L.num(float(tp["also"]), 1), L.num(float(tp["felso"]), 1)], 16, UI.TEXT))
 				body.add_child(UI.card_root(c))
 			"visszalepett":
@@ -1769,7 +1781,7 @@ func _open_news(y0: int, t0: float) -> void:
 			"inog":
 				var c5 := UI.card(UI.GOLD)
 				c5.add_child(UI.label("⚠ " + L.t("%s elbizonytalanodott.") % L.field(world.group(n["csoport"]), "nev"), 18, UI.GOLD, true))
-				c5.add_child(UI.label(L.t("Erősítsd meg őket egy hozzájuk illő kártyával, különben öt év múlva megingnak!"), 16, UI.SOFT))
+				c5.add_child(UI.label(L.t("Erősítsd meg őket egy hozzájuk illő kártyával, különben öt év múlva meginognak!"), 16, UI.SOFT))
 				body.add_child(UI.card_root(c5))
 			"kitartott":
 				var c3 := UI.card(UI.GREEN)
@@ -1805,7 +1817,6 @@ func _open_news(y0: int, t0: float) -> void:
 			kc.add_child(UI.label(str(k["en"] if L.is_en() and str(k.get("en", "")) != "" else k["hu"]), 17, UI.GOLD, true))
 			kc.add_child(UI.label(str(k["forras_en"] if L.is_en() and str(k.get("forras_en", "")) != "" else k["forras"]), 13, UI.CYAN))
 			body.add_child(UI.card_root(kc))
-	body.add_child(UI.label(L.t("A jövő hírei a játék részei, nem valódi események."), 13, UI.MUTE))
 	if world.over():
 		body.add_child(_go(L.t("Lássuk, mi lett a Földdel") + " →", _open_end))
 	elif world.summit_due:
@@ -1840,8 +1851,6 @@ func _open_dilemma() -> void:
 		opts = [L.field(world.group(str(d["a"])), "nev"), L.field(world.group(str(d["b"])), "nev")]
 	for i in opts.size():
 		body.add_child(_go(str(opts[i]) + " →", _do_dilemma.bind(i), false))
-	if d["fajta"] != "kviz":
-		body.add_child(UI.label(L.t("A jövő hírei a játék részei, nem valódi események."), 13, UI.MUTE))
 
 
 func _do_dilemma(choice: int) -> void:
