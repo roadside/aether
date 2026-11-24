@@ -613,3 +613,15 @@ A CO2-kivonás ablakában és a naplóban:
 - %d-ben: %s ppm.
 - Adat: %s
 - NOAA Global Monitoring Laboratory (2026); EPA (2022) – Our World in Data feldolgozásában
+
+## 17. rész – még nem lektorált (2026-11-24, 21:45)
+
+### Jégfurat: megállók (amíg a fúró hűl, megjelenik, mi volt akkor a Földön; a %s helyére szám kerül)
+
+- %s ezer éve
+- Véget ért az utolsó hideg szakasz, és a Föld gyorsan melegedni kezdett. Ekkor kezdődött a mi korunk, a holocén.
+- A jégkorszak csúcsán hatalmas jégtakarók borították Észak-Amerikát és Észak-Európát. Kb. 26 500 és 19 000 éve voltak a legnagyobbak.
+- Az előző meleg időszakban a tenger szintje 6–9 méterrel magasabb volt a mainál, mert a sarki jég egy része elolvadt.
+- Marokkóban élt az egyik legkorábbi ismert Homo sapiens, vagyis a mi fajunk. Az arcuk már hasonlított a miénkre.
+- Spanyolországban olyan emberek éltek, akiknek az arca már a neandervölgyiekére kezdett hasonlítani.
+- A Föld mágneses tere megfordult: ami addig északot mutatott, délre fordult. Ez volt az utolsó ilyen fordulat.

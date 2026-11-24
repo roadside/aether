@@ -1,0 +1,53 @@
+{
+ "megjegyzes": "A Jégfurat minijáték megállói: mi volt akkor a Földön. Minden mondat a megadott cikk összefoglalóján alapul (DOI és összefoglaló a PC-n ellenőrizve, 2026-11-24).",
+ "korok": [
+  {
+   "ezer_eve": 11.7,
+   "hu": "Véget ért az utolsó hideg szakasz, és a Föld gyorsan melegedni kezdett. Ekkor kezdődött a mi korunk, a holocén.",
+   "en": "The last cold spell ended and the Earth began to warm quickly. Our own epoch, the Holocene, began.",
+   "forras": "Formal definition and dating of the GSSP for the base of the Holocene using the Greenland NGRIP ice core (2009)",
+   "link": "https://doi.org/10.1002/jqs.1227",
+   "rajz": "erdo"
+  },
+  {
+   "ezer_eve": 23,
+   "hu": "A jégkorszak csúcsán hatalmas jégtakarók borították Észak-Amerikát és Észak-Európát. Kb. 26 500 és 19 000 éve voltak a legnagyobbak.",
+   "en": "At the peak of the ice age, huge ice sheets covered North America and northern Europe. They were largest between about 26,500 and 19,000 years ago.",
+   "forras": "The Last Glacial Maximum (2009)",
+   "link": "https://doi.org/10.1126/science.1172873",
+   "rajz": "jeg"
+  },
+  {
+   "ezer_eve": 125,
+   "hu": "Az előző meleg időszakban a tenger szintje 6–9 méterrel magasabb volt a mainál, mert a sarki jég egy része elolvadt.",
+   "en": "In the previous warm period, sea level was 6–9 metres higher than today because part of the polar ice melted.",
+   "forras": "Sea-level rise due to polar ice-sheet mass loss during past warm periods (2015)",
+   "link": "https://doi.org/10.1126/science.aaa4019",
+   "rajz": "tenger"
+  },
+  {
+   "ezer_eve": 315,
+   "hu": "Marokkóban élt az egyik legkorábbi ismert Homo sapiens, vagyis a mi fajunk. Az arcuk már hasonlított a miénkre.",
+   "en": "One of the earliest known Homo sapiens, our own species, lived in Morocco. Their faces already looked like ours.",
+   "forras": "New fossils from Jebel Irhoud, Morocco and the pan-African origin of Homo sapiens (2017)",
+   "link": "https://doi.org/10.1038/nature22336",
+   "rajz": "ember"
+  },
+  {
+   "ezer_eve": 430,
+   "hu": "Spanyolországban olyan emberek éltek, akiknek az arca már a neandervölgyiekére kezdett hasonlítani.",
+   "en": "In Spain lived people whose faces were starting to look like those of the Neanderthals.",
+   "forras": "Neandertal roots: Cranial and chronological evidence from Sima de los Huesos (2014)",
+   "link": "https://doi.org/10.1126/science.1253958",
+   "rajz": "ember"
+  },
+  {
+   "ezer_eve": 773,
+   "hu": "A Föld mágneses tere megfordult: ami addig északot mutatott, délre fordult. Ez volt az utolsó ilyen fordulat.",
+   "en": "Earth's magnetic field flipped: what had pointed north turned south. This was the last such reversal.",
+   "forras": "Synchronizing volcanic, sedimentary, and ice core records of Earth's last magnetic polarity reversal (2019)",
+   "link": "https://doi.org/10.1126/sciadv.aaw4621",
+   "rajz": "iranytu"
+  }
+ ]
+}

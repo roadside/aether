@@ -523,8 +523,8 @@ func _ready() -> void:
 		var mdir := OS.get_user_data_dir().path_join("aether_onteszt")
 		DirAccess.make_dir_recursive_absolute(mdir)
 		var k := 0
-		while mi.done_t < 4.0 and k < 40:
-			await get_tree().create_timer(6.0).timeout
+		while mi.done_t < 4.0 and k < 60:
+			await get_tree().create_timer(5.6).timeout
 			k += 1
 			if mi.done_t < 0.0:
 				get_viewport().get_texture().get_image().save_png(mdir.path_join("mini_jeg_%d.png" % k))

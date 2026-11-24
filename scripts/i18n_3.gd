@@ -375,4 +375,5 @@ const EN := {
 	"800 ezer évig a levegő CO2-tartalma %s és %s ppm között maradt.": "For 800,000 years the CO2 in the air stayed between %s and %s ppm.",
 	"%d-ben: %s ppm.": "In %d: %s ppm.",
 	"Adat: %s": "Data: %s",
+	"%s ezer éve": "%s thousand years ago",
 }

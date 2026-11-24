@@ -38,6 +38,14 @@ var _hold := false
 var _info: Label
 var _read: Label
 var _end: VBoxContainer
+var eras: Array = []          # megállók: mi volt akkor a Földön (adatok/jegfurat_korok.json, forrással)
+var _auto_rest := false
+var _era := -1                # a most mutatott megálló
+var _era_a := 0.0
+var _era_box: VBoxContainer
+var _era_text: Label
+var _era_src: Label
+var _era_age: Label
 var _bubbles: Array = []
 var _stars: Array = []
 
@@ -66,6 +74,20 @@ func _ready() -> void:
 	var hint := UI.label(L.t("Esc: átugrás"), 14, UI.MUTE, false, false)
 	hint.position = Vector2(1460, 870)
 	add_child(hint)
+	_era_box = UI.vbox(4)
+	_era_box.position = Vector2(176, 18)
+	_era_box.size = Vector2(620, 150)
+	_era_box.modulate.a = 0.0
+	_era_age = UI.label("", 20, UI.GOLD, true, false)
+	_era_text = UI.label("", 18, UI.TEXT)
+	_era_src = UI.label("", 12, UI.MUTE)
+	for l in [_era_age, _era_text, _era_src]:
+		l.custom_minimum_size.x = 600
+		_era_box.add_child(l)
+	add_child(_era_box)
+	var je: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://adatok/jegfurat_korok.json"))
+	if typeof(je) == TYPE_DICTIONARY:
+		eras = je.get("korok", [])
 	_end = UI.vbox(4)
 	_end.position = Vector2(900, 84)
 	_end.size = Vector2(640, 110)
@@ -128,12 +150,17 @@ func _gui_input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	_t += delta
+	if auto:      # a próbafutás is megáll hűlni, hogy a megállók látsszanak
+		if heat >= 0.8:
+			_auto_rest = true
+		elif heat <= 0.05:
+			_auto_rest = false
 	if done_t >= 0.0:
 		done_t += delta
 	elif stuck > 0.0:
 		stuck -= delta
 		heat = maxf(0.0, heat - delta / (STUCK * 1.2))
-	elif _hold or auto and heat < 0.8:
+	elif _hold or auto and not _auto_rest:
 		depth = minf(1.0, depth + delta / DRILL_SECONDS)
 		heat += delta / HEAT_UP
 		if heat >= 1.0:
@@ -142,6 +169,21 @@ func _process(delta: float) -> void:
 			_finish()
 	else:
 		heat = maxf(0.0, heat - delta / COOL)
+	# megálláskor (hűl vagy beragadt a fúró) megjelenik, mi volt akkor a Földön: a legutóbb átfúrt megálló
+	var resting := done_t < 0.0 and depth > 0.0 and (stuck > 0.0 or not (_hold or auto and not _auto_rest))
+	if resting:
+		var pick := -1
+		for i in eras.size():
+			if float(eras[i]["ezer_eve"]) * 1000.0 <= depth * oldest:
+				pick = i
+		if pick != _era and pick >= 0:
+			_era = pick
+			var e: Dictionary = eras[pick]
+			_era_age.text = L.t("%s ezer éve") % L.num(float(e["ezer_eve"]), 1 if fmod(float(e["ezer_eve"]), 1.0) > 0.0 else 0)
+			_era_text.text = str(e["en"] if L.is_en() else e["hu"])
+			_era_src.text = str(e["forras"])
+	_era_a = move_toward(_era_a, 1.0 if resting and _era >= 0 else 0.0, delta * 2.5)
+	_era_box.modulate.a = _era_a
 	if done_t < 0.0:
 		var age := depth * oldest
 		_read.text = L.t("%s ezer éve: %s ppm") % [L.num(age / 1000.0, 0), L.num(_ppm_at(age), 0)] if depth > 0.0 else ""
@@ -160,6 +202,56 @@ func _finish() -> void:
 	b.pressed.connect(func() -> void: finished.emit(true))
 	b.position = Vector2(1390, 30)
 	add_child(b)
+
+
+## Egyszerű rajz a megállóhoz (jelkép, nem valódi személy vagy fénykép).
+func _draw_era(kind: String, c: Vector2, a: float) -> void:
+	var gold := Color(0.95, 0.78, 0.45, a)
+	var ice := Color(0.85, 0.94, 1.0, a)
+	draw_circle(c, 56.0, Color(0.09, 0.13, 0.22, a))
+	draw_arc(c, 56.0, 0.0, TAU, 48, gold, 2.0, true)
+	match kind:
+		"erdo":
+			for i in 3:
+				var x := c.x - 30.0 + i * 30.0
+				var h := 44.0 if i == 1 else 32.0
+				draw_rect(Rect2(x - 3, c.y + 18, 6, 18), Color(0.55, 0.38, 0.22, a))
+				draw_colored_polygon(PackedVector2Array([Vector2(x - 17, c.y + 20), Vector2(x + 17, c.y + 20), Vector2(x, c.y + 20 - h)]), Color(0.45, 0.8, 0.5, a))
+				draw_colored_polygon(PackedVector2Array([Vector2(x - 12, c.y + 2), Vector2(x + 12, c.y + 2), Vector2(x, c.y + 8 - h)]), Color(0.55, 0.88, 0.58, a))
+		"jeg":
+			draw_circle(c + Vector2(0, 8), 40.0, Color(0.25, 0.5, 0.8, a))
+			draw_arc(c + Vector2(0, 8), 34.0, PI * 1.12, PI * 1.88, 24, ice, 13.0, true)
+			draw_arc(c + Vector2(0, 8), 39.0, PI * 1.2, PI * 1.8, 24, Color(1, 1, 1, a), 3.0, true)
+			draw_circle(c + Vector2(-8, 20), 9.0, Color(0.45, 0.75, 0.5, a))
+			draw_circle(c + Vector2(14, 26), 7.0, Color(0.45, 0.75, 0.5, a))
+		"tenger":
+			draw_colored_polygon(PackedVector2Array([c + Vector2(-46, 34), c + Vector2(-10, -8), c + Vector2(10, 34)]), Color(0.78, 0.66, 0.45, a))
+			for k in 2:
+				var y := c.y + (14.0 if k == 0 else -6.0)
+				var w := PackedVector2Array()
+				for i in 25:
+					w.append(Vector2(c.x - 48.0 + i * 4.0, y + 3.0 * sin(i * 0.9 + _t * 2.0 + k)))
+				draw_polyline(w, Color(0.3, 0.63, 0.88, a) if k == 0 else Color(0.56, 0.88, 0.84, a * (0.5 + 0.5 * sin(_t * 1.5))), 3.0, true)
+			draw_line(c + Vector2(34, 14), c + Vector2(34, -6), gold, 2.0)
+			draw_colored_polygon(PackedVector2Array([c + Vector2(29, -4), c + Vector2(39, -4), c + Vector2(34, -13)]), gold)
+		"ember":
+			draw_circle(c + Vector2(0, -24), 11.0, gold)
+			draw_line(c + Vector2(0, -13), c + Vector2(0, 14), gold, 5.0)
+			draw_line(c + Vector2(0, -4), c + Vector2(-18, 8), gold, 4.0)
+			draw_line(c + Vector2(0, -4), c + Vector2(20, -12), gold, 4.0)
+			draw_line(c + Vector2(0, 14), c + Vector2(-12, 38), gold, 4.0)
+			draw_line(c + Vector2(0, 14), c + Vector2(12, 38), gold, 4.0)
+			draw_line(c + Vector2(20, -34), c + Vector2(20, 38), Color(0.75, 0.6, 0.4, a), 3.0)
+		"iranytu":
+			draw_arc(c, 40.0, 0.0, TAU, 40, ice, 3.0, true)
+			var ang := PI * (0.5 + 0.5 * sin(_t * 0.9))      # a tű lassan átfordul
+			var d := Vector2(sin(ang), -cos(ang))
+			draw_colored_polygon(PackedVector2Array([c + d * 32.0, c + d.orthogonal() * 7.0, c - d.orthogonal() * 7.0]), Color(0.93, 0.52, 0.35, a))
+			draw_colored_polygon(PackedVector2Array([c - d * 32.0, c + d.orthogonal() * 7.0, c - d.orthogonal() * 7.0]), ice)
+			draw_circle(c, 4.0, Color(0.09, 0.13, 0.22, a))
+		_:
+			for i in 7:
+				draw_arc(c + Vector2(sin(i * 2.4) * 26.0, cos(i * 1.7) * 26.0), 5.0 + (i % 3) * 3.0, 0.0, TAU, 20, ice, 2.0, true)
 
 
 func _ppm_at(age: float) -> float:
@@ -199,6 +291,12 @@ func _draw() -> void:
 	for i in 7:
 		draw_circle(Vector2(650, TOP + 6), 90.0 - i * 11.0, Color(1.0, 0.8, 0.55, 0.05 + i * 0.012))
 	draw_circle(Vector2(650, TOP + 6), 17.0, Color("#ffe6b8"))
+	if _era_a > 0.0 and _era >= 0:      # a megálló kártyája és rajza
+		draw_rect(Rect2(30, 10, 790, 140), Color(0.043, 0.063, 0.114, 0.9 * _era_a))
+		draw_rect(Rect2(30, 10, 790, 140), Color(0.95, 0.78, 0.45, 0.5 * _era_a), false, 1.5)
+		_draw_era(str(eras[_era]["rajz"]), Vector2(100, 80), _era_a)
+		var ey := lerpf(TOP, BOTTOM, float(eras[_era]["ezer_eve"]) * 1000.0 / oldest)      # hol van ez a kor a jégben
+		draw_line(Vector2(0, ey), Vector2(840, ey), Color(0.95, 0.78, 0.45, 0.55 * _era_a), 1.5)
 	# távoli jéghátak
 	var ridge := PackedVector2Array([Vector2(0, TOP)])
 	for i in 22:
