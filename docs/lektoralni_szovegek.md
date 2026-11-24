@@ -815,6 +815,14 @@ A CO2-kivonás ablakában és a naplóban:
 - Gyors kibocsátáscsökkentéssel: %d ház. Egyre több fosszilis energiával: %d ház.
 - Próbáld ki a másik úton is!
 
+### Minijáték: Metánvadász – a megszüntetett szivárgás játék közben is látszik; új eredménysorok (a régi „A kutak %s%%-át javítottad ki…” helyett, mert a hat csapat miatt az első szám mindig 10% volt)
+
+- Csapat: %d    Idő: %d mp    Megszüntetve: %s%%
+- Nagy szivárgás megszüntetve: +%s%%
+- Kicsi szivárgás: +%s%%
+- %d javítócsapattal a szivárgás %s%%-át szüntetted meg.
+- Ha a %d legnagyobbat választod, %s%% lett volna. A kutak csak %s%%-a ez!
+
 ### Gyűjtemény
 
 - Minijátékok

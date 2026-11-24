@@ -512,4 +512,9 @@ const EN := {
 	"Gyors kibocsátáscsökkentéssel: %d ház. Egyre több fosszilis energiával: %d ház.": "With fast emission cuts: %d houses. With more and more fossil fuels: %d houses.",
 	"Próbáld ki a másik úton is!": "Try the other path too!",
 	"tenger": "sea",
+	"Csapat: %d    Idő: %d mp    Megszüntetve: %s%%": "Crews: %d    Time: %d s    Stopped: %s%%",
+	"Nagy szivárgás megszüntetve: +%s%%": "Big leak stopped: +%s%%",
+	"Kicsi szivárgás: +%s%%": "Small leak: +%s%%",
+	"%d javítócsapattal a szivárgás %s%%-át szüntetted meg.": "With %d repair crews you stopped %s%% of the leaking.",
+	"Ha a %d legnagyobbat választod, %s%% lett volna. A kutak csak %s%%-a ez!": "Had you picked the %d biggest, it would have been %s%%. That is only %s%% of the wells!",
 }

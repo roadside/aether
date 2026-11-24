@@ -56,7 +56,7 @@ func _ready() -> void:
 	_info.size = Vector2(980, 60)
 	add_child(_info)
 	_read = UI.label("", 20, UI.CYAN, true, false)
-	_read.position = Vector2(1100, 40)
+	_read.position = Vector2(1010, 40)
 	add_child(_read)
 	var hint := UI.label(L.t("Esc: átugrás"), 14, UI.MUTE, false, false)
 	hint.position = Vector2(1460, 870)
@@ -116,7 +116,7 @@ func _scan_x() -> float:
 
 
 func _update_read() -> void:
-	_read.text = L.t("Csapat: %d    Idő: %d mp") % [crews, int(ceil(maxf(TIME - _play_t, 0.0)))]
+	_read.text = L.t("Csapat: %d    Idő: %d mp    Megszüntetve: %s%%") % [crews, int(ceil(maxf(TIME - _play_t, 0.0))), L.num(100.0 * fixed_e / maxf(total, 0.001), 0)]
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -154,7 +154,8 @@ func _fix(i: int) -> void:
 	fixed_n += 1
 	if not bool(s["seen"]):
 		wasted += 1
-	_msg = L.t("Kicsi szivárgás") if float(s["rel"]) < 0.2 else L.t("Nagy szivárgás megszüntetve!")
+	var gain := L.num(100.0 * float(s["e"]) / maxf(total, 0.001), 0)
+	_msg = (L.t("Kicsi szivárgás: +%s%%") if float(s["rel"]) < 0.2 else L.t("Nagy szivárgás megszüntetve: +%s%%")) % gain
 	_msg_t = _t
 	_msg_pos = s["pos"]
 	_update_read()
@@ -203,7 +204,16 @@ func _finish() -> void:
 	var m: Dictionary = facts.get("muhold", {})
 	var u: Dictionary = facts.get("usa_2015", {})
 	_end.visible = true
-	_end.add_child(UI.label(L.t("A kutak %s%%-át javítottad ki, amivel a szivárgás %s%%-át szüntetted meg.") % [L.num(100.0 * fixed_n / SITES, 0), L.num(100.0 * fixed_e / maxf(total, 0.001), 0)], 22, UI.CYAN, true))
+	var es: Array = []
+	for s in sites:
+		es.append(float(s["e"]))
+	es.sort()
+	es.reverse()
+	var best := 0.0
+	for k in mini(CREWS, es.size()):
+		best += float(es[k])
+	_end.add_child(UI.label(L.t("%d javítócsapattal a szivárgás %s%%-át szüntetted meg.") % [CREWS - crews, L.num(100.0 * fixed_e / maxf(total, 0.001), 0)], 22, UI.CYAN, true))
+	_end.add_child(UI.label(L.t("Ha a %d legnagyobbat választod, %s%% lett volna. A kutak csak %s%%-a ez!") % [CREWS, L.num(100.0 * best / maxf(total, 0.001), 0), L.num(100.0 * CREWS / SITES, 0)], 19, UI.TEXT))
 	_end.add_child(UI.label(L.t("A kevés nagyobb szivárgás adja a légkörbe kerülő metán nagy részét. Ezeket érdemes először megtalálni."), 19, UI.TEXT))
 	_end.add_child(UI.label(L.t("A valóságban: műholdas mérések szerint (%s) néhány száz óriási szivárgás adta az olaj- és gázipari metán %s–%s%%-át, évi kb. %s millió tonnát. A javításuk nagyrészt olcsó lenne.") % [str(m.get("evek", "")), L.num(float(m.get("oriasi_szivargasok_aranya_min", 0)), 0), L.num(float(m.get("oriasi_szivargasok_aranya_max", 0)), 0), L.num(float(m.get("oriasi_szivargasok_millio_tonna_ev", 0)), 0)], 19, UI.TEXT, true))
 	_end.add_child(UI.label(L.t("Az USA-ban 2015-ben az olaj- és gázágazat kb. %s%%-kal több metánt engedett ki, mint a hivatalos becslés.") % L.num(float(u.get("tobblet_szazalek", 0)), 0), 19, UI.TEXT))
@@ -257,7 +267,7 @@ func _draw() -> void:
 		draw_rect(Rect2(sp - Vector2(34, 3), Vector2(22, 6)), Color(UI.CYAN, 0.8))
 		draw_rect(Rect2(sp + Vector2(12, -3), Vector2(22, 6)), Color(UI.CYAN, 0.8))
 		if _t - _msg_t < 1.2 and _msg != "":
-			draw_string(font, _msg_pos + Vector2(-120, -40), _msg, HORIZONTAL_ALIGNMENT_CENTER, 240, 17, UI.GOLD)
+			draw_string(font, _msg_pos + Vector2(-170, -40), _msg, HORIZONTAL_ALIGNMENT_CENTER, 340, 17, UI.GOLD)
 		draw_string(font, Vector2(60, 850), L.t("A felhők mérete jelkép. A kis szivárgásokat a műhold nem látja."), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, UI.MUTE)
 	else:
 		draw_rect(Rect2(110, 270, 1380, 440), Color(0.043, 0.063, 0.114, 0.9 * clampf(done_t / 0.8, 0.0, 1.0)))

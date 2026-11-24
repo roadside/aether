@@ -187,7 +187,6 @@ func _finish() -> void:
 	_info.visible = false
 	_end.visible = true
 	_end.add_child(UI.label(L.t("Tanulság: a jelenlegi felmelegedést a CO₂ okozza, nem a Nap."), 22, UI.GOLD, true))
-	_end.add_child(UI.label(L.t("Találat: %d / 3") % hits, 18, UI.CYAN, true))
 	_end.add_child(UI.label(L.t("Forrás: %s") % source, 13, UI.MUTE))
 	_next_btn.visible = true
 
