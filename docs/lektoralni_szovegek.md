@@ -435,3 +435,6 @@ A hozzájuk tartozó szövegek:
 
 ### Véletlen kattintás elleni védelem (a „Következő 5 év” gomb felirata néhány másodpercig, ha még van lépésed; a második kattintás lép tovább)
 - Még %d lépésed van
+
+### Súgó, 2. pont (az 5. kihívás nehéz fokozatán körönként két lépés van; eddig csak három, négy, öt szerepelt)
+- két (a mondatban: „Körönként két lépésed van.”)

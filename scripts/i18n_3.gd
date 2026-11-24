@@ -291,4 +291,5 @@ const EN := {
 	"Szerezz kétszer lendületet: két megállapodás egy körben.": "Gain momentum twice: two agreements in one round.",
 	"Vidd az egeret egy jel fölé.": "Move the mouse over a mark.",
 	"Még %d lépésed van": "Moves left: %d",
+	"két": "two",
 }

@@ -1559,7 +1559,7 @@ func _finish_game(r: Dictionary) -> Dictionary:
 	if typeof(past) != TYPE_ARRAY:
 		past = []
 	var dd := Time.get_date_dict_from_system()
-	past.push_front({"ev": int(dd["year"]), "ho": int(dd["month"]), "nap": int(dd["day"]), "T": t, "lepes": world.max_steps, "mag": world.seed_v})
+	past.push_front({"ev": int(dd["year"]), "ho": int(dd["month"]), "nap": int(dd["day"]), "T": t, "lepes": world.max_steps + (1 if world.challenge >= World.CHALLENGE_MAX else 0), "mag": world.seed_v})
 	L.set_setting("foldek", past.slice(0, 12))
 	if t < 2.0 and world.challenge >= _level_max() and world.challenge < World.CHALLENGE_MAX:
 		L.set_setting("lepcso", world.challenge + 1)
@@ -2881,7 +2881,7 @@ func _open_help() -> void:
 	var body := _open(L.t("Hogyan játssz?"), UI.CYAN)
 	for row in [
 			["1.", "Te vagy a világ klímatudósa. 2026-ból indulsz; egy kör öt év, így 2100-ig tizenöt köröd van."],
-			["2.", L.t("Körönként %s lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal.") % L.t({3: "három", 4: "négy", 5: "öt"}[world.max_steps])],
+			["2.", L.t("Körönként %s lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal.") % L.t(str({2: "két", 3: "három", 4: "négy", 5: "öt"}.get(world.max_steps, str(world.max_steps))))],
 			["3.", "Kattints egy országcsoportra, és győzd meg a kártyáiddal. Minden csoport mástól tart, ezért más kártyára van szüksége."],
 			["4.", "Lépj korán: minden év késés számít. Akit egyszer meggyőztél, attól később merészebb célt is kérhetsz."],
 			["5.", "A cél: 2100-ban jóval +2 °C alatt maradni, minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is."],
