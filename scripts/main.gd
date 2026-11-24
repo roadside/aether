@@ -1685,6 +1685,9 @@ func _open_collection() -> void:
 	for th in Cards.THEMES:
 		all_n += Cards.TAGS[th].size()
 	body.add_child(UI.label(L.t("Rangod: %s") % L.t(_rank(c.size())), 22, UI.GOLD, true))
+	if not _dry:      # a minijátékok innen bármikor újrajátszhatók (amíg a kártyájuk nincs a játékban, csak innen érhetők el)
+		for mid in MINI:
+			body.add_child(_go("▶ " + L.t("Minijáték: %s") % L.t(str(MINI[mid][0])), _open_mini.bind(mid), false))
 	body.add_child(UI.label(L.t("Kikutatott kártyák: %d / %d") % [c.size(), all_n], 19, UI.TEXT, true))
 	for r in RANKS:
 		if int(r[0]) > c.size():
