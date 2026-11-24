@@ -351,4 +351,11 @@ const EN := {
 	"Eredmény másolása": "Copy result",
 	"Kimásolva. Beillesztheted bárhová.": "Copied. You can paste it anywhere.",
 	"Föld-kód: %d": "Earth code: %d",
+	"A %s dönt a lépésekről, és a saját szavaival indokol. Ehhez saját kulcs kell a szolgáltatótól, és a használatért ő pénzt kérhet.": "%s decides the moves and explains them in its own words. You need your own key from the provider, and the provider may charge for use.",
+	"A játék csak a játék állását és az országok adatait küldi el neki, rólad semmit. A kulcs csak ezen a gépen marad.": "The game sends it only the state of the game and the countries' data, nothing about you. The key stays on this computer only.",
+	"Ide másold a kulcsot": "Paste the key here",
+	"Kulcs mentése": "Save key",
+	"Kulcs törlése": "Delete key",
+	"Kapcsolódom…": "Connecting…",
+	"Nem sikerült kapcsolódni. Nézd meg a kulcsot és az internetet!": "Could not connect. Check the key and the internet!",
 }

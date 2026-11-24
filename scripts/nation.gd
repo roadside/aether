@@ -117,11 +117,21 @@ static func _pick(opts: Array, content: String) -> Dictionary:
 	return out
 
 
+## Az évszám viszonya a valós, nyilvános vállaláshoz: kódból számolt tény, hogy a modellnek ne kelljen évszámokat összevetnie.
+static func _vs(g: Dictionary, year: int) -> String:
+	var real := int(dossier(str(g["id"])).get("nyilvanos_cel_ev", 0))
+	if real <= 0:
+		return ""
+	if year == real:
+		return " This is the same year as your real pledge."
+	return " This is %d years %s than your real pledge of %d, so it is a %s promise than the real one." % [absi(year - real), "later" if year > real else "earlier", real, "weaker" if year > real else "stronger"]
+
+
 ## A kérésre adható válaszok: a kért év, minden későbbi vállalható év, vagy semmi.
 static func options(w, g: Dictionary, target: int) -> Array:
-	var out: Array = [{"dontes": "accept", "cel": target, "en": "Promise zero emissions by %d, as asked." % target}]
+	var out: Array = [{"dontes": "accept", "cel": target, "en": "Promise zero emissions by %d, as asked.%s" % [target, _vs(g, target)]}]
 	for t in later_targets(w, g, target):
-		out.append({"dontes": "later", "cel": int(t), "en": "Promise zero emissions by %d instead (later than asked)." % int(t)})
+		out.append({"dontes": "later", "cel": int(t), "en": "Promise zero emissions by %d instead (later than asked).%s" % [int(t), _vs(g, int(t))]})
 	out.append({"dontes": "refuse", "cel": target, "en": "Make no new promise now."})
 	return out
 
@@ -131,7 +141,7 @@ static func round_options(w, g: Dictionary) -> Array:
 	var out: Array = [{"dontes": "keep", "en": "Change nothing."}]
 	var ts: Array = w.targets_for(g)
 	for t in ts:
-		out.append({"dontes": "earlier", "cel": int(t), "en": ("On your own, bring your promise forward to zero emissions by %d." if int(g.get("cel", 0)) > 0 else "On your own, promise zero emissions by %d.") % int(t)})
+		out.append({"dontes": "earlier", "cel": int(t), "en": ("On your own, bring your promise forward to zero emissions by %d." if int(g.get("cel", 0)) > 0 else "On your own, promise zero emissions by %d.") % int(t) + _vs(g, int(t))})
 	if int(g.get("cel", 0)) > 0 and int(g["cel"]) < 2090:
 		out.append({"dontes": "delay", "en": "Postpone your promise by five years, to %d." % mini(int(g["cel"]) + 5, 2090)})
 	return out

@@ -72,6 +72,7 @@
     }
    ],
    "nyilvanos_cel_en": "zero net emissions by 2050, written into law (Regulation (EU) 2021/1119)",
+      "nyilvanos_cel_ev": 2050,
    "kozvelemeny": [
     {
      "orszag": "Németország",
@@ -165,6 +166,7 @@
     }
    ],
    "nyilvanos_cel_en": "carbon neutrality before 2060 (long-term strategy, 2021)",
+      "nyilvanos_cel_ev": 2060,
    "kozvelemeny": [
     {
      "orszag": "Kína",
@@ -203,6 +205,7 @@
     }
    ],
    "nyilvanos_cel_en": "net zero by 2070 (long-term strategy, 2022)",
+      "nyilvanos_cel_ev": 2070,
    "kozvelemeny": [
     {
      "orszag": "India",
@@ -297,6 +300,7 @@
     }
    ],
    "nyilvanos_cel_en": "Russia and Saudi Arabia: net zero by 2060 (Climate Watch)",
+      "nyilvanos_cel_ev": 2060,
    "kozvelemeny": [
     {
      "orszag": "Oroszország",

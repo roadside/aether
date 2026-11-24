@@ -560,3 +560,17 @@ Gazdasági és politikai mutatók az adatlapokon (GDP/fő USD 2025 · olaj- és 
 - Russia: 17547 · 15.6 · 64.3 · 0.17
 - Saudi Arabia: 34537 · 25.4 · 97.8 · 0.02
 - Iran: 3924 · 27.1 · 94.3 · 0.16
+
+## 13. Új szövegek (2026-11-24, 20:00 után) – még nem lektorált
+
+### Saját AI: Claude, ChatGPT, Gemini (az „AI játszik” ablak; a %s helyére a szolgáltató neve kerül)
+
+- A %s dönt a lépésekről, és a saját szavaival indokol. Ehhez saját kulcs kell a szolgáltatótól, és a használatért ő pénzt kérhet.
+- A játék csak a játék állását és az országok adatait küldi el neki, rólad semmit. A kulcs csak ezen a gépen marad.
+- Ide másold a kulcsot
+- Kulcs mentése
+- Kulcs törlése
+- Kapcsolódom…
+- Nem sikerült kapcsolódni. Nézd meg a kulcsot és az internetet!
+
+A négy választógomb felirata név, nem fordítjuk: Ollama, Claude, ChatGPT, Gemini.

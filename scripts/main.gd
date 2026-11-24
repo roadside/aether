@@ -462,6 +462,12 @@ func _ready() -> void:
 	_test = "--onteszt" in args or "--bejaras" in args
 	_dry = (_test and not ("--eles" in args)) or "--elojatek" in args or "--majom" in args or "--gepjatek" in args
 	L.dry = _dry
+	for a in args:
+		if _dry and a.begins_with("--aicim="):      # próba: felhős szolgáltató ál-kiszolgálóval
+			_ai_test_host = a.trim_prefix("--aicim=")
+			_ai_test_key = "proba-kulcs"
+		if _dry and a.begins_with("--ai="):
+			L.set_setting("ai_szolgaltato", a.trim_prefix("--ai="))
 	if _dry and "--orszagok" in args:      # próba: AI-országok bekapcsolva (csak a memóriában), ha fut a saját AI
 		L.set_setting("orszag_ai", true)
 		_own_probe()
@@ -2430,15 +2436,115 @@ var _own_fail := 0                 # hányszor nem adott szabályos lépést (a 
 var _own_ok := 0
 
 
+## Felhős szolgáltatók: Claude, ChatGPT, Gemini, a játékos saját kulcsával. A kulcs külön fájlban, csak a játékos gépén
+## (user://) van; a játék soha nem írja ki, és a beállítások közé sem kerül. A modellek listáját a szolgáltató adja.
+const AI_PROVIDERS := ["ollama", "claude", "chatgpt", "gemini"]
+const AI_NAMES := {"ollama": "Ollama", "claude": "Claude", "chatgpt": "ChatGPT", "gemini": "Gemini"}
+const AI_HOSTS := {"claude": "https://api.anthropic.com", "chatgpt": "https://api.openai.com", "gemini": "https://generativelanguage.googleapis.com"}
+const AI_FIRST := {"claude": "claude-opus-5-5"}
+const AI_KEYS := "user://ai_kulcsok.cfg"
+const AI_SKIP := ["embed", "whisper", "tts", "dall", "image", "audio", "moderation", "realtime", "transcribe", "sora", "babbage", "davinci"]
+var _own_models: Array = []
+var _ai_test_host := ""            # próba: ál-kiszolgáló címe (--aicim=)
+var _ai_test_key := ""             # próba vagy szárazfutás: a kulcs csak a memóriában
+
+
+func _ai() -> String:
+	var p := str(L.get_setting("ai_szolgaltato", "ollama"))
+	return p if p in AI_PROVIDERS else "ollama"
+
+
+func _ai_key(p: String) -> String:
+	if _dry:
+		return _ai_test_key
+	var cfg := ConfigFile.new()
+	if cfg.load(AI_KEYS) != OK:
+		return ""
+	return str(cfg.get_value("kulcs", p, ""))
+
+
+func _ai_set_key(p: String, key: String) -> void:
+	if _dry:
+		_ai_test_key = key
+		return
+	var cfg := ConfigFile.new()
+	cfg.load(AI_KEYS)
+	cfg.set_value("kulcs", p, key if key != "" else null)
+	cfg.save(AI_KEYS)
+
+
+func _ai_host(p: String) -> String:
+	return _ai_test_host if _ai_test_host != "" else str(AI_HOSTS[p])
+
+
+func _ai_headers(p: String) -> Array:
+	var key := _ai_key(p)
+	match p:
+		"claude": return ["x-api-key: " + key, "anthropic-version: 2026-10-21"]
+		"chatgpt": return ["Authorization: Bearer " + key]
+	return ["x-goog-api-key: " + key]
+
+
+func _cloud_models(p: String) -> Array:
+	var out: Array = []
+	var url := "/v1/models?limit=100" if p == "claude" else ("/v1/models" if p == "chatgpt" else "/v1beta/models?pageSize=200")
+	var r: Variant = await _http_json(_ai_host(p) + url, null, 10.0, _ai_headers(p))
+	if typeof(r) != TYPE_DICTIONARY:
+		return out
+	if p == "gemini":
+		for m in r.get("models", []):
+			if "generateContent" in (m as Dictionary).get("supportedGenerationMethods", []):
+				out.append(str(m.get("name", "")).trim_prefix("models/"))
+		return out
+	for m in r.get("data", []):
+		var id := str((m as Dictionary).get("id", ""))
+		if id != "" and not AI_SKIP.any(func(w: String) -> bool: return w in id):
+			out.append(id)
+	if p == "chatgpt":
+		out.sort()
+	return out
+
+
+## Egy kérdés a felhős szolgáltatónak; vissza a válasz szövege, vagy "".
+func _cloud_chat(p: String, sys: String, user: String, timeout_s: float) -> String:
+	var r: Variant = null
+	var text := ""
+	match p:
+		"claude":
+			r = await _http_json(_ai_host(p) + "/v1/messages", {"model": _own_model, "max_tokens": 2000, "system": sys,
+				"messages": [{"role": "user", "content": user}]}, timeout_s, _ai_headers(p))
+			if typeof(r) == TYPE_DICTIONARY and typeof(r.get("content")) == TYPE_ARRAY:
+				for b in r["content"]:
+					if typeof(b) == TYPE_DICTIONARY and b.get("type", "") == "text":
+						text += str(b.get("text", ""))
+		"chatgpt":
+			r = await _http_json(_ai_host(p) + "/v1/chat/completions", {"model": _own_model,
+				"messages": [{"role": "system", "content": sys}, {"role": "user", "content": user}]}, timeout_s, _ai_headers(p))
+			if typeof(r) == TYPE_DICTIONARY and typeof(r.get("choices")) == TYPE_ARRAY and not (r["choices"] as Array).is_empty():
+				var msg: Variant = (r["choices"][0] as Dictionary).get("message")
+				if typeof(msg) == TYPE_DICTIONARY and typeof(msg.get("content")) == TYPE_STRING:
+					text = str(msg["content"])
+		"gemini":
+			r = await _http_json(_ai_host(p) + "/v1beta/models/%s:generateContent" % _own_model.uri_encode(), {"systemInstruction": {"parts": [{"text": sys}]},
+				"contents": [{"role": "user", "parts": [{"text": user}]}], "generationConfig": {"responseMimeType": "application/json"}}, timeout_s, _ai_headers(p))
+			if typeof(r) == TYPE_DICTIONARY and typeof(r.get("candidates")) == TYPE_ARRAY and not (r["candidates"] as Array).is_empty():
+				var c: Variant = (r["candidates"][0] as Dictionary).get("content")
+				if typeof(c) == TYPE_DICTIONARY:
+					for part in c.get("parts", []):
+						if typeof(part) == TYPE_DICTIONARY and not part.get("thought", false):
+							text += str(part.get("text", ""))
+	return text
+
+
 func _own_url() -> String:
 	return str(L.get_setting("ai_cim", "http://127.0.0.1:11434")).trim_suffix("/")
 
 
-func _http_json(url: String, payload: Variant = null, timeout_s: float = 90.0) -> Variant:
+func _http_json(url: String, payload: Variant = null, timeout_s: float = 90.0, extra: Array = []) -> Variant:
 	var req := HTTPRequest.new()
 	req.timeout = timeout_s
 	add_child(req)
-	var err := req.request(url, ["Content-Type: application/json"], HTTPClient.METHOD_GET if payload == null else HTTPClient.METHOD_POST,
+	var err := req.request(url, PackedStringArray(["Content-Type: application/json"] + extra), HTTPClient.METHOD_GET if payload == null else HTTPClient.METHOD_POST,
 		"" if payload == null else JSON.stringify(payload))
 	if err != OK:
 		req.queue_free()
@@ -2457,6 +2563,8 @@ var _own_think_off := true
 
 
 func _own_chat(messages: Array, timeout_s: float = 90.0) -> String:
+	if _ai() != "ollama":
+		return _own_clean(await _cloud_chat(_ai(), str(messages[0]["content"]), str(messages[1]["content"]), timeout_s))
 	var payload := {"model": _own_model, "stream": false, "format": "json", "options": {"temperature": 0.2}, "messages": messages}
 	var reply: Variant = null
 	if _own_think_off:
@@ -2469,7 +2577,10 @@ func _own_chat(messages: Array, timeout_s: float = 90.0) -> String:
 		reply = await _http_json(_own_url() + "/api/chat", payload, timeout_s)
 	if typeof(reply) != TYPE_DICTIONARY or typeof(reply.get("message")) != TYPE_DICTIONARY:
 		return ""
-	var text := str(reply["message"].get("content", ""))
+	return _own_clean(str(reply["message"].get("content", "")))
+
+
+func _own_clean(text: String) -> String:
 	var cut := text.rfind("</think>")
 	if cut >= 0:
 		text = text.substr(cut + 8)
@@ -2479,6 +2590,18 @@ func _own_chat(messages: Array, timeout_s: float = 90.0) -> String:
 
 
 func _own_probe() -> String:
+	if _ai() != "ollama":
+		var p := _ai()
+		_own_model = ""
+		_own_models = await _cloud_models(p) if _ai_key(p) != "" else []
+		var want2 := str(L.get_setting("ai_modell_" + p, ""))
+		if _own_models.has(want2):
+			_own_model = want2
+		elif _own_models.has(str(AI_FIRST.get(p, ""))):
+			_own_model = str(AI_FIRST[p])
+		elif not _own_models.is_empty():
+			_own_model = str(_own_models[0])
+		return _own_model
 	var tags: Variant = await _http_json(_own_url() + "/api/tags", null, 4.0)
 	_own_model = ""
 	if typeof(tags) == TYPE_DICTIONARY and typeof(tags.get("models")) == TYPE_ARRAY:
@@ -2492,8 +2615,45 @@ func _own_probe() -> String:
 
 func _add_own_ai(body: VBoxContainer) -> void:
 	var c := UI.card(UI.GOLD)
-	c.add_child(UI.label(L.t("A gépeden futó nyelvi modell (Ollama) dönt a lépésekről, és a saját szavaival indokol. Ha nem ad szabályos lépést, az Okos gép lép helyette."), 16, UI.SOFT))
-	var status := UI.label(L.t("Keresem a gépeden futó AI-t…"), 15, UI.MUTE)
+	var p := _ai()
+	var row := UI.hbox(6)
+	for q in AI_PROVIDERS:
+		var b := UI.button(str(AI_NAMES[q]), q == p)
+		b.pressed.connect(func() -> void:
+			L.set_setting("ai_szolgaltato", q)
+			_own_model = ""
+			_open_auto())
+		row.add_child(b)
+	c.add_child(row)
+	if p == "ollama":
+		c.add_child(UI.label(L.t("A gépeden futó nyelvi modell (Ollama) dönt a lépésekről, és a saját szavaival indokol. Ha nem ad szabályos lépést, az Okos gép lép helyette."), 16, UI.SOFT))
+	else:
+		c.add_child(UI.label(L.t("A %s dönt a lépésekről, és a saját szavaival indokol. Ehhez saját kulcs kell a szolgáltatótól, és a használatért ő pénzt kérhet.") % str(AI_NAMES[p]), 16, UI.SOFT))
+		c.add_child(UI.label(L.t("A játék csak a játék állását és az országok adatait küldi el neki, rólad semmit. A kulcs csak ezen a gépen marad."), 15, UI.MUTE))
+		if _ai_key(p) == "":
+			var key_row := UI.hbox(6)
+			var key := LineEdit.new()
+			key.secret = true
+			key.placeholder_text = L.t("Ide másold a kulcsot")
+			key.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			key.add_theme_font_size_override("font_size", 17)
+			key_row.add_child(key)
+			var save := UI.button(L.t("Kulcs mentése"))
+			save.pressed.connect(func() -> void:
+				if key.text.strip_edges() != "":
+					_ai_set_key(p, key.text.strip_edges())
+					_open_auto())
+			key_row.add_child(save)
+			c.add_child(key_row)
+			body.add_child(UI.card_root(c))
+			return
+		var del := UI.button(L.t("Kulcs törlése"))
+		del.pressed.connect(func() -> void:
+			_ai_set_key(p, "")
+			_own_model = ""
+			_open_auto())
+		c.add_child(del)
+	var status := UI.label(L.t("Keresem a gépeden futó AI-t…") if p == "ollama" else L.t("Kapcsolódom…"), 15, UI.MUTE)
 	c.add_child(status)
 	var go := _go(L.t(AUTO_NAMES["sajat"]) + " →", _auto_start.bind("sajat"), false)
 	go.disabled = true
@@ -2503,10 +2663,21 @@ func _add_own_ai(body: VBoxContainer) -> void:
 	if not is_instance_valid(status):
 		return
 	if model == "":
-		status.text = L.t("Most nem fut AI ezen a gépen. Indítsd el az Ollamát, aztán nyisd meg újra ezt az ablakot!")
+		status.text = L.t("Most nem fut AI ezen a gépen. Indítsd el az Ollamát, aztán nyisd meg újra ezt az ablakot!") if p == "ollama" else L.t("Nem sikerült kapcsolódni. Nézd meg a kulcsot és az internetet!")
 	else:
 		status.text = L.t("Megvan: %s") % model
 		go.disabled = false
+		if p != "ollama" and _own_models.size() > 1:
+			var pick := OptionButton.new()
+			pick.add_theme_font_size_override("font_size", 16)
+			for m in _own_models:
+				pick.add_item(str(m))
+			pick.select(_own_models.find(model))
+			pick.item_selected.connect(func(i: int) -> void:
+				_own_model = str(_own_models[i])
+				L.set_setting("ai_modell_" + p, _own_model)
+				status.text = L.t("Megvan: %s") % _own_model)
+			c.add_child(pick)
 		c.add_child(UI.label(L.t("A csoportok vezetőit is játszhatja a saját AI. Csak a 2026-ig ismert, valós adataikat kapja meg, és nemet is mondhat. Így akkor is ő felel, ha te játszol."), 16, UI.SOFT))
 		var nat := UI.button("")
 		var show_nat := func() -> void:
