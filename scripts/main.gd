@@ -2602,7 +2602,6 @@ func _nation_decide(g: Dictionary, target: int, cards: Array) -> Dictionary:
 	if out.is_empty():                 # a modell nem adott szabályos választ: az alapjáték szabálya dönt (elfogadják)
 		_nat["hiba"] += 1
 		return {"dontes": "accept", "cel": target, "szoveg": L.t("A saját AI most nem válaszolt, ezért az alapszabály döntött.")}
-	out["szoveg"] = L.t(str(out["szoveg"])) if str(out["szoveg"]) != "" else ""
 	_nat[out["dontes"]] += 1
 	if _dry:
 		print("ORSZAG %s %s %d" % [str(g["id"]), str(out["dontes"]), int(out["cel"])])
@@ -2629,7 +2628,7 @@ func _nation_round() -> Array:
 		print("ORSZAG_KOR %s %s %d" % [str(g["id"]), str(out["dontes"]), t])
 	if t == 0:
 		return []
-	return [{"fajta": "onkent" if out["dontes"] == "earlier" else "halaszt", "csoport": g["id"], "cel": t, "szoveg": L.t(str(out["szoveg"])) if str(out["szoveg"]) != "" else ""}]
+	return [{"fajta": "onkent" if out["dontes"] == "earlier" else "halaszt", "csoport": g["id"], "cel": t, "szoveg": out["szoveg"]}]
 
 
 func _mood_line(g: Dictionary) -> String:

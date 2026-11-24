@@ -42,7 +42,7 @@ def main():
                 dec = a["lehetosegek"][k] if 0 <= k < len(a["lehetosegek"]) else "SZABÁLYTALAN választás: %r" % ans.get("choice")
                 if not (0 <= k < len(a["lehetosegek"])):
                     bad += 1
-                text = "indok %s | valós helyzet a modell szerint: %s" % (ans.get("reason"), ans.get("real_record"))
+                text = "%s | valós helyzet a modell szerint: %s" % (ans.get("statement"), ans.get("real_record"))
                 extra = ""
             except Exception as e:  # szabálytalan válasz: a játék ilyenkor az alapszabály szerint dönt
                 bad += 1

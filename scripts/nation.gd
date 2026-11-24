@@ -87,30 +87,20 @@ static func _system(w, g: Dictionary, reply: String) -> String:
 		+ "Reply with JSON only: " + reply
 
 
-## Az indokok rögzített listája: a képernyőre csak ezek a (lektorált) magyar mondatok kerülnek, a modell saját szövege nem.
-const REASONS := [
-	["A népünk ezt kéri tőlünk.", "Our people ask for it."],
-	["A bizonyítékod a mi aggodalmunkra felel.", "The evidence shown answers our concern."],
-	["Ez illik a terveinkhez.", "It fits plans we already have."],
-	["A gazdaságunk még a szénre, az olajra és a gázra épül.", "Our economy still depends on coal, oil and gas."],
-	["Az embereinknek előbb áram, élelem és munka kell.", "Our people first need electricity, food and jobs."],
-	["Előbb azok lépjenek, akik többet bocsátottak ki.", "Those who emitted more should act first."],
-	["Most nem kötjük magunkat nemzetközi vállaláshoz.", "We do not bind ourselves to international pledges now."],
-	["Több időre van szükségünk.", "We need more time."],
-	["Nálunk most semmi sem változott.", "Nothing has changed for us."],
-]
 const LETTERS := "ABCDEF"
-const REPLY := "{\"real_record\": \"<one English sentence: what your real leadership had actually decided on this question by 2026>\", " \
-	+ "\"choice\": \"<the letter of one option>\", \"reason\": <the number of one reason>}. Your choice must fit your real record."
+
+
+## A válasz alakja. A vezetés a saját szavaival felel (a játék nyelvén); ezt a mondatot a játék nem javítja és nem lektorálja.
+static func _reply(en: bool) -> String:
+	return "{\"real_record\": \"<one English sentence: what your real leadership had decided on this question BEFORE 2026; not today's decision>\", " \
+		+ "\"choice\": \"<the letter of one option>\", \"statement\": \"<what you say to the mediator, in your own words, in %s, one or two sentences>\"}. " % ("English" if en else "Hungarian") \
+		+ "Your choice must fit your real record."
 
 
 static func _menu(l: Array, opts: Array) -> void:
 	l.append("YOUR OPTIONS")
 	for i in opts.size():
 		l.append("%s. %s" % [LETTERS[i], str(opts[i]["en"])])
-	l.append("REASONS (pick the one closest to your real situation)")
-	for i in REASONS.size():
-		l.append("%d. %s" % [i + 1, str(REASONS[i][1])])
 	l.append("A promise made here is public, and you will be held to it.")
 
 
@@ -123,8 +113,7 @@ static func _pick(opts: Array, content: String) -> Dictionary:
 		return {}
 	var out: Dictionary = (opts[k] as Dictionary).duplicate()
 	out.erase("en")
-	var r := int(float(str(ans.get("reason", "0")))) if str(ans.get("reason", "")).is_valid_float() else 0
-	out["szoveg"] = str(REASONS[r - 1][0]) if r >= 1 and r <= REASONS.size() else ""
+	out["szoveg"] = str(ans.get("statement", "")).strip_edges().replace("\n", " ").left(220)
 	return out
 
 
@@ -164,7 +153,8 @@ static func _brief(w, g: Dictionary) -> Array:
 	for f in d.get("tovabbi_tenyek", []):
 		l.append("- %s (%s)" % [str(f["szoveg_en"]), str(f["link"])])
 	l.append("Your real public climate pledge as of 2026: %s." % str(d.get("nyilvanos_cel_en", "none")))
-	l.append("In these talks you have promised so far: %s." % _talks(g))
+	l.append("In these talks every party starts with no promise on the table. You have promised here so far: %s." % _talks(g))
+	l.append("A promise here that is not earlier than your real public pledge is consistent with your real record.")
 	l.append("YOUR PEOPLE")
 	for r in d.get("kozvelemeny", []):
 		l.append("- %s: %d%% supported stronger climate action by their country (UNDP Peoples' Climate Vote 2024)." % [str(r["orszag_en"]), int(r["ertek"])])
@@ -191,7 +181,7 @@ static func _brief(w, g: Dictionary) -> Array:
 	return l
 
 
-static func prompt(w, g: Dictionary, target: int, cards: Array, _en: bool = true) -> Array:
+static func prompt(w, g: Dictionary, target: int, cards: Array, en: bool = true) -> Array:
 	var l := _brief(w, g)
 	l.append("THE REQUEST")
 	l.append("The mediator asks you to promise zero emissions by %d. Evidence they showed you:" % target)
@@ -201,7 +191,7 @@ static func prompt(w, g: Dictionary, target: int, cards: Array, _en: bool = true
 			if Cards.text(str(c), k, true) != "":
 				l.append("  %s" % Cards.text(str(c), k, true))
 	_menu(l, options(w, g, target))
-	return [{"role": "system", "content": _system(w, g, REPLY)}, {"role": "user", "content": "\n".join(l)}]
+	return [{"role": "system", "content": _system(w, g, _reply(en))}, {"role": "user", "content": "\n".join(l)}]
 
 
 ## JSON olvasása hibaüzenet nélkül (a nyelvi modell válasza gyakran nem szabályos JSON; ez nem a játék hibája).
@@ -210,17 +200,17 @@ static func json(content: String) -> Variant:
 	return j.data if j.parse(content) == OK else null
 
 
-## A modell válaszából döntés: {"dontes": "accept"|"later"|"refuse", "cel": év, "szoveg": az indok magyar kulcsa}; üres, ha nem szabályos.
+## A modell válaszából döntés: {"dontes": "accept"|"later"|"refuse", "cel": év, "szoveg": a vezetés saját mondata}; üres, ha nem szabályos.
 static func parse(w, g: Dictionary, target: int, content: String) -> Dictionary:
 	return _pick(options(w, g, target), content)
 
 
-static func prompt_round(w, g: Dictionary, _en: bool = true) -> Array:
+static func prompt_round(w, g: Dictionary, en: bool = true) -> Array:
 	var l := _brief(w, g)
 	l.append("YOUR OWN MOVE")
 	l.append("Five years are about to pass. Nobody is asking you anything now.")
 	_menu(l, round_options(w, g))
-	return [{"role": "system", "content": _system(w, g, REPLY)}, {"role": "user", "content": "\n".join(l)}]
+	return [{"role": "system", "content": _system(w, g, _reply(en))}, {"role": "user", "content": "\n".join(l)}]
 
 
 static func parse_round(w, g: Dictionary, content: String) -> Dictionary:

@@ -30,7 +30,7 @@ func _init() -> void:
 		and Nation.parse(w, g, t0, "{\"choice\":\"B\",\"reason\":4}").get("dontes", "") == "refuse" \
 		and Nation.parse(w, g, t0, "{\"choice\":\"C\"}").is_empty() and Nation.parse(w, g, t0, "nem json").is_empty() \
 		and o.size() == 5 and str(o[1]["dontes"]) == "later" and int(o[1]["cel"]) > int(o[0]["cel"]) \
-		and Nation.parse(w, g, int(w.targets_for(g)[-1]), "{\"choice\":\"b\",\"reason\":8}").get("szoveg", "") == "Több időre van szükségünk." \
+		and Nation.parse(w, g, int(w.targets_for(g)[-1]), "{\"choice\":\"b\",\"statement\":\"Kell még idő.\"}").get("szoveg", "") == "Kell még idő." \
 		and Nation.parse_round(w, g, "{\"choice\":\"A\",\"reason\":9}").get("dontes", "") == "keep" and Nation.parse_round(w, g, "{\"choice\":\"C\"}").is_empty()
 	# 4. nem: elvisz egy lépést, a cél nem változik; önkéntes vállalás: a legkönnyebb fokozat; halasztás: +5 év
 	var s0: int = w.steps
