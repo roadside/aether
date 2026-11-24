@@ -536,6 +536,11 @@ A közhangulat változásának iránya ezekből a cikkekből jön (a mérték j�
 - Wlezien, C. (1995): The Public as Thermostat: Dynamics of Preferences for Spending. American Journal of Political Science 39(4), 981–1000. https://doi.org/10.2307/2111666 – A közvélemény termosztátként működik: ha a politika többet tesz, csökken az igény a még többre; ha nem tesz, nő. (A DOI-t a saját gépen futó segéd ellenőrizte.)
   A játékban: Szabály: minden vállalt fokozat kissé csökkenti azok arányát, akik még erősebb klímavédelmet kérnek.
 
+Háttér a nyelvi modellnek arról, hogyan hat a közvélemény a vezetőkre (nem utasítás; angolul kapja meg):
+- Page, B. I., Shapiro, R. Y. (1983): Effects of Public Opinion on Policy. American Political Science Review 77(1), 175–190. https://doi.org/10.2307/1956018 – A politika főleg a tartós és a nyilvánosságban kiemelt véleményváltozást követi.
+- Bättig, M. B., Bernauer, T. (2009): National Institutions and Global Public Goods: Are Democracies More Cooperative in Climate Change Policy? International Organization 63(2), 281–308. https://doi.org/10.1017/S0020818309090092 – A demokráciák több klímavállalást tesznek, mint a nem demokratikus országok, de a kibocsátásuk alakulásában ez kevésbé látszik.
+- Mildenberger, M., Tingley, D. (2019): Beliefs about Climate Beliefs: The Importance of Second-Order Opinions for Climate Politics. British Journal of Political Science 49(4), 1279–1307. https://doi.org/10.1017/S0007123417000321 – A politikai szereplők és a lakosság is alábecsülik, mennyien támogatják a klímavédelmet.
+
 További ellenőrzött tények az adatlapokon (csak a nyelvi modell kapja meg angolul; a magyar mondat a te ellenőrzésedhez van itt):
 - europa: 2026 februárjában az Európai Parlament megszavazta a kötelező 2040-es célt: 90%-kal kevesebb nettó kibocsátás, mint 1990-ben (413 igen, 226 nem). (Európai Parlament, 2026-02-10) – https://www.europarl.europa.eu/news/en/press-room/20260205IPR33620/eu-climate-law-a-2040-emissions-reduction-target-of-90-for-the-eu
 - europa: Az uniós polgárok 85%-a súlyos gondnak tartja az éghajlatváltozást, 81%-a támogatja a 2050-es klímasemlegességet. (Európai Bizottság – Eurobarométer 2025) – https://climate.ec.europa.eu/citizens/citizen-support-climate-action_en

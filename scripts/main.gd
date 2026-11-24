@@ -2570,7 +2570,7 @@ func _own_decide() -> Dictionary:
 	if _own_model != "" and not acts.is_empty():
 		var content: String = await _own_chat(_own_prompt(acts))
 		if content != "":
-			var ans: Variant = JSON.parse_string(content)
+			var ans: Variant = Nation.json(content)
 			if typeof(ans) == TYPE_DICTIONARY and str(ans.get("move", "")).is_valid_float():
 				var n := int(float(str(ans["move"])))
 				if n >= 1 and n <= acts.size():

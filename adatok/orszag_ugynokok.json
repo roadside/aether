@@ -359,5 +359,28 @@
     "link": "https://ourworldindata.org/grapher/electoral-democracy-index"
    }
   ]
+ },
+ "vezetoi_irodalom": {
+  "megjegyzes": "Általános kutatási eredmények arról, hogyan hat a közvélemény a vezetőkre. A nyelvi modell háttérként kapja meg, nem utasításként. A DOI-kat a saját gépen futó segéd ellenőrizte 2026-11-24-én.",
+  "tetelek": [
+   {
+    "hivatkozas": "Page, B. I., Shapiro, R. Y. (1983): Effects of Public Opinion on Policy. American Political Science Review 77(1), 175–190.",
+    "link": "https://doi.org/10.2307/1956018",
+    "allitas": "A politika főleg a tartós és a nyilvánosságban kiemelt véleményváltozást követi.",
+    "allitas_en": "Policy tends to follow public opinion mainly when the change in opinion is large, lasting and salient."
+   },
+   {
+    "hivatkozas": "Bättig, M. B., Bernauer, T. (2009): National Institutions and Global Public Goods: Are Democracies More Cooperative in Climate Change Policy? International Organization 63(2), 281–308.",
+    "link": "https://doi.org/10.1017/S0020818309090092",
+    "allitas": "A demokráciák több klímavállalást tesznek, mint a nem demokratikus országok, de a kibocsátásuk alakulásában ez kevésbé látszik.",
+    "allitas_en": "Democracies make more climate commitments than non-democracies, but the effect on their actual emissions is much less clear."
+   },
+   {
+    "hivatkozas": "Mildenberger, M., Tingley, D. (2019): Beliefs about Climate Beliefs: The Importance of Second-Order Opinions for Climate Politics. British Journal of Political Science 49(4), 1279–1307.",
+    "link": "https://doi.org/10.1017/S0007123417000321",
+    "allitas": "A politikai szereplők és a lakosság is alábecsülik, mennyien támogatják a klímavédelmet.",
+    "allitas_en": "Political actors and the public alike tend to underestimate how many people support climate action."
+   }
+  ]
  }
 }

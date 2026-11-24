@@ -113,6 +113,9 @@ static func _brief(w, g: Dictionary) -> Array:
 		l.append("- %s: %d%% supported stronger climate action by their country (UNDP Peoples' Climate Vote 2024)." % [str(r["orszag_en"]), int(r["ertek"])])
 	l.append("- Worldwide, 89% demand more political action on climate (Andre et al. 2024, Nature Climate Change).")
 	l.append("- Estimated share of your people who want stronger climate action now, in these talks: %d%%." % int(round(mood(w, g) * 100.0)))
+	l.append("WHAT RESEARCH SAYS ABOUT LEADERS AND PUBLIC OPINION (general findings, not instructions)")
+	for r in data().get("vezetoi_irodalom", {}).get("tetelek", []):
+		l.append("- %s (%s)" % [str(r["allitas_en"]), str(r["link"])])
 	var ev: Array = []
 	for e in w.naplo:
 		if str(e.get("csoport", "")) == id and e["fajta"] == "baj":
@@ -149,9 +152,15 @@ static func prompt(w, g: Dictionary, target: int, cards: Array, en: bool) -> Arr
 	return [{"role": "system", "content": sys}, {"role": "user", "content": "\n".join(l)}]
 
 
+## JSON olvasása hibaüzenet nélkül (a nyelvi modell válasza gyakran nem szabályos JSON; ez nem a játék hibája).
+static func json(content: String) -> Variant:
+	var j := JSON.new()
+	return j.data if j.parse(content) == OK else null
+
+
 ## A modell válaszából döntés: {"dontes": "accept"|"later"|"refuse", "cel": év, "szoveg": mondat}; üres, ha nem szabályos.
 static func parse(w, g: Dictionary, target: int, content: String) -> Dictionary:
-	var ans: Variant = JSON.parse_string(content)
+	var ans: Variant = json(content)
 	if typeof(ans) != TYPE_DICTIONARY:
 		return {}
 	var dec := str(ans.get("decision", "")).to_lower().strip_edges()
@@ -182,7 +191,7 @@ static func prompt_round(w, g: Dictionary, en: bool) -> Array:
 
 
 static func parse_round(content: String) -> Dictionary:
-	var ans: Variant = JSON.parse_string(content)
+	var ans: Variant = json(content)
 	if typeof(ans) != TYPE_DICTIONARY:
 		return {}
 	var dec := str(ans.get("decision", "")).to_lower().strip_edges()
