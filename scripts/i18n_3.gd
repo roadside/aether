@@ -360,4 +360,6 @@ const EN := {
 	"Nem sikerült kapcsolódni. Ellenőrizd a kulcsot és az internetkapcsolatot!": "Could not connect. Check the key and the internet!",
 	"%s nem változtatott a célján.": "%s did not change its target.",
 	"%s kitartott a célja mellett: %d.": "%s stood by its target: %d.",
+	"A szolgáltató nem fogadta el ezt a kulcsot.": "The provider did not accept this key.",
+	"A szolgáltató most nem enged több kérést. Próbáld meg később!": "The provider is not allowing more requests right now. Try again later!",
 }

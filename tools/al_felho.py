@@ -24,7 +24,7 @@ class H(BaseHTTPRequestHandler):
         if h.get("x-api-key") == "proba-kulcs" and h.get("anthropic-version") == "2026-10-21": return "claude"
         if h.get("Authorization") == "Bearer proba-kulcs": return "chatgpt"
         if h.get("x-goog-api-key") == "proba-kulcs": return "gemini"
-        C["401"] += 1; return ""
+        C["401"] += 1; return ""          # rossz kulcs: 401 (a játék ezt külön kiírja)
     def do_GET(self):
         w = self.who()
         if not w: return self._send({}, 401)

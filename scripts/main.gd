@@ -466,6 +466,8 @@ func _ready() -> void:
 		if _dry and a.begins_with("--aicim="):      # próba: felhős szolgáltató ál-kiszolgálóval
 			_ai_test_host = a.trim_prefix("--aicim=")
 			_ai_test_key = "proba-kulcs"
+		if _dry and a.begins_with("--aikulcs="):    # próba: szándékosan rossz kulcs (az --aicim után add meg)
+			_ai_test_key = a.trim_prefix("--aikulcs=")
 		if _dry and a.begins_with("--ai="):
 			L.set_setting("ai_szolgaltato", a.trim_prefix("--ai="))
 	if _dry and "--orszagok" in args:      # próba: AI-országok bekapcsolva (csak a memóriában), ha fut a saját AI
@@ -2542,6 +2544,9 @@ func _own_url() -> String:
 	return str(L.get_setting("ai_cim", "http://127.0.0.1:11434")).trim_suffix("/")
 
 
+var _http_code := 0                # az utolsó kérés HTTP-válaszkódja (0: nem jött válasz)
+
+
 func _http_json(url: String, payload: Variant = null, timeout_s: float = 90.0, extra: Array = []) -> Variant:
 	var req := HTTPRequest.new()
 	req.timeout = timeout_s
@@ -2553,6 +2558,7 @@ func _http_json(url: String, payload: Variant = null, timeout_s: float = 90.0, e
 		return null
 	var res: Array = await req.request_completed
 	req.queue_free()
+	_http_code = int(res[1]) if int(res[0]) == HTTPRequest.RESULT_SUCCESS else 0
 	if int(res[0]) != HTTPRequest.RESULT_SUCCESS or int(res[1]) != 200:
 		return null
 	return JSON.parse_string((res[3] as PackedByteArray).get_string_from_utf8())
@@ -2665,7 +2671,7 @@ func _add_own_ai(body: VBoxContainer) -> void:
 	if not is_instance_valid(status):
 		return
 	if model == "":
-		status.text = L.t("Most nem fut AI ezen a gépen. Indítsd el az Ollamát, aztán nyisd meg újra ezt az ablakot!") if p == "ollama" else L.t("Nem sikerült kapcsolódni. Ellenőrizd a kulcsot és az internetkapcsolatot!")
+		status.text = L.t("Most nem fut AI ezen a gépen. Indítsd el az Ollamát, aztán nyisd meg újra ezt az ablakot!") if p == "ollama" else (L.t("A szolgáltató nem fogadta el ezt a kulcsot.") if _http_code in [401, 403] else (L.t("A szolgáltató most nem enged több kérést. Próbáld meg később!") if _http_code == 429 else L.t("Nem sikerült kapcsolódni. Ellenőrizd a kulcsot és az internetkapcsolatot!")))
 	else:
 		status.text = L.t("Megvan: %s") % model
 		go.disabled = false

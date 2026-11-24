@@ -584,3 +584,8 @@ A négy választógomb felirata név, nem fordítjuk: Ollama, Claude, ChatGPT, G
 ### Megingás AI-országokkal (hírek és napló; a %s a csoport neve, a %d az évszám; alatta a vezetés saját mondata áll)
 
 - %s kitartott a célja mellett: %d.
+
+### Saját AI felhőből: hibaüzenetek (az „AI játszik” ablakban, ha a kapcsolódás nem sikerül)
+
+- A szolgáltató nem fogadta el ezt a kulcsot.
+- A szolgáltató most nem enged több kérést. Próbáld meg később!
