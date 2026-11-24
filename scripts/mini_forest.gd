@@ -220,7 +220,7 @@ func _make_tile() -> void:
 					if rng.randf() < 0.85:
 						var col := Color("#c9b45a").lerp(Color("#9bc36a"), rng.randf())
 						_shapes.append(["rect", Rect2(x0 + gx * 130.0, y0 + gy * 120.0, 122.0, 112.0), col])
-			_shapes.append(["line", Vector2(x0 - 40.0, y0 + 236.0), Vector2(620.0, y0 + 236.0), Color("#d8c9a8"), 4.0])
+			_shapes.append(["line", Vector2(x0 - 10.0, y0 + 3.0 * 120.0 + 6.0), Vector2(640.0, y0 + 3.0 * 120.0 + 6.0), Color("#8a6e4b"), 9.0])      # földút a táblák alatt, a kép széléig
 		"tuz":
 			var c := Vector2(rng.randf_range(260.0, 380.0), rng.randf_range(260.0, 380.0))
 			for k in 26:
@@ -321,7 +321,6 @@ func _draw_tile() -> void:
 					draw_circle(p, minf(rad, minf(p.x - r.position.x, r.end.x - p.x)), s[3])
 	draw_rect(r, Color(UI.CYAN, 0.6), false, 2.0)
 	var font := get_theme_default_font()
-	draw_string(font, r.position + Vector2(0, r.size.y + 24.0), L.t("Rajzolt jelkép, nem valódi műholdkép."), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, UI.MUTE)
 	if _answer != "":      # visszajelzés a képen
 		var ok_ans := _answer == str(QUIZ[round_i])
 		draw_rect(r, Color(UI.GREEN if ok_ans else UI.EMBER, 0.9), false, 6.0)

@@ -762,7 +762,6 @@ A CO2-kivonás ablakában és a naplóban:
 - Teraszos gödör, mellette víztározó: bánya.
 - Sok kis, szabálytalan irtás, a régebbiek már újra zöldülnek.
 - Sűrű utcák és házak: település nőtt az erdő helyén.
-- Rajzolt jelkép, nem valódi műholdkép.
 - A valóságban 2001 és %d között %s millió hektár faborítás tűnt el a Földön.
 - A legnagyobb ok az állandó mezőgazdaság (%s%%). Ez végleges: az erdő helyén szántó, legelő vagy ültetvény lesz.
 - Fakitermelés és váltogató művelés után gyakran visszanő az erdő.

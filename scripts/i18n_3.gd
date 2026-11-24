@@ -477,7 +477,6 @@ const EN := {
 	"Teraszos gödör, mellette víztározó: bánya.": "A terraced pit with a pond beside it: a mine.",
 	"Sok kis, szabálytalan irtás, a régebbiek már újra zöldülnek.": "Many small, irregular clearings; the older ones are already turning green again.",
 	"Sűrű utcák és házak: település nőtt az erdő helyén.": "Dense streets and houses: a settlement grew where the forest was.",
-	"Rajzolt jelkép, nem valódi műholdkép.": "A drawn symbol, not a real satellite image.",
 	"A valóságban 2001 és %d között %s millió hektár faborítás tűnt el a Földön.": "In reality, between 2001 and %d, %s million hectares of tree cover disappeared on Earth.",
 	"A legnagyobb ok az állandó mezőgazdaság (%s%%). Ez végleges: az erdő helyén szántó, legelő vagy ültetvény lesz.": "The biggest cause is permanent agriculture (%s%%). It is permanent: cropland, pasture or plantations replace the forest.",
 	"Fakitermelés és váltogató művelés után gyakran visszanő az erdő.": "After logging and shifting cultivation, the forest often grows back.",
