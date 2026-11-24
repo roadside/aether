@@ -34,7 +34,8 @@ func _init() -> void:
 		and Nation.parse_summit({"id": "kina", "cel": 2060}, "{\"choice\":\"B\"}").get("dontes", "") == "keep" and int(Nation.parse_summit({"id": "kina", "cel": 2060}, "{\"choice\":\"A\"}").get("cel", 0)) == 2055 \
 		and Nation.parse_waver({"id": "kina", "cel": 2055}, "{\"choice\":\"A\"}").get("dontes", "") == "hold" and int(Nation.parse_waver({"id": "kina", "cel": 2055}, "{\"choice\":\"B\"}").get("cel", 0)) == 2065 \
 		and Nation.parse_methane("{\"choice\":\"B\"}").get("dontes", "") == "refuse" and "have not joined" in Nation.methane_record(w.group("kina")) and "have joined" in Nation.methane_record(w.group("europa")) \
-		and Nation.parse_round(w, g, "{\"choice\":\"A\",\"reason\":9}").get("dontes", "") == "keep" and Nation.parse_round(w, g, "{\"choice\":\"F\"}").is_empty() and int(Nation.parse_round(w, g, "{\"choice\":\"C\"}").get("cel", 0)) == int(w.targets_for(g)[1])
+		and Nation.parse_round(w, g, "{\"choice\":\"A\",\"reason\":9}").get("dontes", "") == "keep" and Nation.parse_round(w, g, "{\"choice\":\"H\"}").is_empty() and int(Nation.parse_round(w, g, "{\"choice\":\"C\"}").get("cel", 0)) == int(Nation.round_options(w, g)[2]["cel"]) \
+		and Nation.round_options(w, w.group("kina")).any(func(o: Dictionary) -> bool: return int(o.get("cel", 0)) == 2060) and w.stage_of(2060) == 1 and w.stage_of(2065) == 1 and w.stage_of(2055) == 2 and w.stage_of(2040) == 4
 	# 4. nem: elvisz egy lépést, a cél nem változik; önkéntes vállalás: a legkönnyebb fokozat; halasztás: +5 év
 	var s0: int = w.steps
 	var no: bool = w.rebuff(g, t0) and w.steps == s0 - 1 and int(g["cel"]) == 0

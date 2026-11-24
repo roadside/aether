@@ -87,7 +87,7 @@ static func _system(w, g: Dictionary, reply: String) -> String:
 		+ "Reply with JSON only: " + reply
 
 
-const LETTERS := "ABCDEF"
+const LETTERS := "ABCDEFGH"
 
 
 ## A válasz alakja. A vezetés a saját szavaival felel (a játék nyelvén); ezt a mondatot a játék nem javítja és nem lektorálja.
@@ -140,6 +140,12 @@ static func options(w, g: Dictionary, target: int) -> Array:
 static func round_options(w, g: Dictionary) -> Array:
 	var out: Array = [{"dontes": "keep", "en": "Change nothing."}]
 	var ts: Array = w.targets_for(g)
+	var real := int(dossier(str(g["id"])).get("nyilvanos_cel_ev", 0))
+	if real > 0 and not ts.has(real) and w.own_year_ok(g, real):      # a valós, nyilvános célév is vállalható, ha a fokozatok határai közé esik
+		ts = ts.duplicate()
+		ts.append(real)
+		ts.sort()
+		ts.reverse()
 	for t in ts:
 		out.append({"dontes": "earlier", "cel": int(t), "en": ("On your own, bring your promise forward to zero emissions by %d." if int(g.get("cel", 0)) > 0 else "On your own, promise zero emissions by %d.") % int(t) + _vs(g, int(t))})
 	if int(g.get("cel", 0)) > 0 and int(g["cel"]) < 2090:

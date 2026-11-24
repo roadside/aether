@@ -38,7 +38,7 @@ def main():
                 if "{" in text and "}" in text:
                     text = text[text.find("{"):text.rfind("}") + 1]
                 ans = json.loads(text)
-                k = "ABCDEF".find(str(ans.get("choice", "?")).strip().upper()[:1])
+                k = "ABCDEFGH".find(str(ans.get("choice", "?")).strip().upper()[:1])
                 dec = a["lehetosegek"][k] if 0 <= k < len(a["lehetosegek"]) else "SZABÁLYTALAN választás: %r" % ans.get("choice")
                 if not (0 <= k < len(a["lehetosegek"])):
                     bad += 1

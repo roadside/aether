@@ -7,7 +7,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 C = {"claude": 0, "chatgpt": 0, "gemini": 0, "401": 0}
 def answer(sysm, user):
     if sysm.startswith("You speak for"):
-        opts = re.findall(r"^([A-F])\. ", user, re.M)
+        opts = re.findall(r"^([A-H])\. ", user, re.M)
         return "Here you go: " + json.dumps({"real_record": "x", "choice": opts[1] if "YOUR OWN MOVE" in user else opts[0], "statement": "Felhős próbamondat."})
     moves = re.findall(r"^(\d+)\. (.*)$", user, re.M)
     good = [m for m in moves if m[1].startswith(("Ask", "Reassure", "Refute", "Climate summit: show the card"))]

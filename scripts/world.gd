@@ -291,7 +291,20 @@ func cards_needed(g: Dictionary, target: int) -> int:
 
 ## A cél éve melyik fokozatnak felel meg most (1 = 40 év, … 4 = 15 év).
 func stage_of(target: int) -> int:
-	return SPEEDS.find(target - (year() - 1)) + 1
+	var k := SPEEDS.find(target - (year() - 1))
+	if k >= 0:
+		return k + 1
+	var n := 0                 # köztes év (AI-ország a valós célévét vállalja): annyi fokozat, ahányat ez az év már elér
+	for sp in SPEEDS:
+		if int(sp) >= target - (year() - 1):
+			n += 1
+	return n
+
+
+## Vállalhatja-e a csoport magától ezt a köztes évet (AI-országok: a valós, nyilvános célév)? A fokozatok határai között kell lennie.
+func own_year_ok(g: Dictionary, target: int) -> bool:
+	var gap := target - (year() - 1)
+	return gap >= int(SPEEDS[-1]) and gap <= int(SPEEDS[0]) and fraction(g, year() - 1) > 0.0 and (int(g["cel"]) == 0 or target < int(g["cel"]))
 
 
 ## A kézben lévő kártyák, amelyek ennek a csoportnak egy aggodalmára felelnek, és még nem hallották.
@@ -405,11 +418,11 @@ func hold(g: Dictionary) -> bool:
 ## AI-országok saját lépése (játékszabály): a vezetés magától vállalja a következő fokozatot. Vissza: az új célév, vagy 0.
 func volunteer(g: Dictionary, target: int = 0) -> int:
 	var ts := targets_for(g)
-	if ts.is_empty() or over():
+	if over() or (ts.is_empty() and not (target > 0 and own_year_ok(g, target))):
 		return 0
-	var t := int(ts[0])
+	var t := int(ts[0]) if not ts.is_empty() else target
 	if target > 0:
-		if not ts.has(target):
+		if not ts.has(target) and not own_year_ok(g, target):
 			return 0
 		t = target
 	var y := year()

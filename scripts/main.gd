@@ -93,7 +93,7 @@ class Twinkle extends Control:
 	func _process(delta: float) -> void:
 		_t += delta
 		if _t > _met_at + 0.9:   # ritkán, 20–45 másodpercenként egy halvány hullócsillag
-			_met_at = _t + randf_range(20.0, 45.0)
+			_met_at = _t + randf_range(20.0, 120.0)
 			_met_from = Vector2(randf_range(200.0, 1400.0), randf_range(20.0, 300.0))
 			_met_dir = Vector2(1.0 if randf() < 0.5 else -1.0, randf_range(0.35, 0.6)).normalized()
 		queue_redraw()
@@ -2800,7 +2800,7 @@ func _nation_summit(card: String, status: Label = null) -> Dictionary:
 	for g in world.summit_listeners(card):
 		if status != null and is_instance_valid(status):
 			status.text = L.t("%s vezetői gondolkodnak…") % L.field(g, "nev")
-		var nd: Dictionary = Nation.parse_summit(g, await _own_chat(Nation.prompt_summit(world, g, card, L.is_en()), 45.0))
+		var nd: Dictionary = Nation.parse_summit(g, await _own_chat(Nation.prompt_summit(world, g, card, L.is_en()), 120.0))
 		if nd.is_empty():
 			_nat["hiba"] += 1
 			continue
@@ -2831,7 +2831,7 @@ func _nation_round() -> Array:
 	for wg in world.groups:          # az elbizonytalanodott vezetés maga dönt: kitart, vagy visszalép (ha nem felel szabályosan, az alapszabály él)
 		if wg.get("inog", false) and int(wg["cel"]) > 0 and not wg.get("felkeszult", false) and World.fraction(wg, world.year()) > 0.0:
 			doubted.append(wg["id"])
-			var wd: Dictionary = Nation.parse_waver(wg, await _own_chat(Nation.prompt_waver(world, wg, L.is_en()), 45.0))
+			var wd: Dictionary = Nation.parse_waver(wg, await _own_chat(Nation.prompt_waver(world, wg, L.is_en()), 120.0))
 			if wd.is_empty():
 				_nat["hiba"] += 1
 				continue
@@ -2846,7 +2846,7 @@ func _nation_round() -> Array:
 	var g: Dictionary = world.groups[world.round_i % world.groups.size()]
 	if World.fraction(g, world.year()) <= 0.0 or g["id"] in doubted:
 		return news
-	var out: Dictionary = Nation.parse_round(world, g, await _own_chat(Nation.prompt_round(world, g, L.is_en()), 45.0))
+	var out: Dictionary = Nation.parse_round(world, g, await _own_chat(Nation.prompt_round(world, g, L.is_en()), 120.0))
 	if out.is_empty():
 		_nat["hiba"] += 1
 		return news
