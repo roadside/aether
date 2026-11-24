@@ -219,3 +219,165 @@ Paraméter: kockazat_csokkentes_pct
 Wikipédia: korai előrejelző rendszer
 Wikipédia angolul: early warning system
 Áttekintő cikkek keresése: early warning systems effectiveness review
+
+# ----- Új témák (2026-11-24, Zoltán lektorálta) -----
+
+=== dengue ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Eljuthat-e a dengue-láz Európába is?
+Röviden: A dengue-lázat szúnyog terjeszti. A melegedéssel a szúnyogok egyre északabbra élhetnek meg.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, hová juthat el a betegség, időben fel lehet készülni: figyelni a szúnyogokat, és felkészíteni a kórházakat.
+Mi a gond vele?: A jövő nem csak a hőmérsékleten múlik. Számít a városok növekedése, az utazás és az is, mennyire védekeznek a szúnyogok ellen.
+Mennyire bizonyított?: Több nagy modellvizsgálat szerint a fertőzés veszélye Európa nagy részén nő, már a közeljövőben is. Egy vizsgálat szerint a legrosszabb esetben a következő évszázadban közel egymilliárd ember kerülhet újonnan veszélybe.
+Kérdés angolul: Could dengue fever reach Europe too?
+Röviden angolul: Dengue is spread by mosquitoes. With warming, the mosquitoes can survive further north.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know where the disease may spread, we can prepare in time: watch the mosquitoes and get hospitals ready.
+Mi a gond vele? angolul: The future does not depend on temperature alone. City growth, travel and mosquito control also matter.
+Mennyire bizonyított? angolul: Several large modelling studies find that the risk of transmission rises across most of Europe, even in the near term. One study finds that in the worst case nearly a billion people could face new exposure within the next century.
+Forrás: Global expansion and redistribution of Aedes-borne virus transmission risk with climate change (2019) – https://doi.org/10.1371/journal.pntd.0007213
+Forrás: The current and future global distribution and population at risk of dengue (2019) – https://doi.org/10.1038/s41564-019-0476-8
+Lektorálva: igen
+--- technikai ---
+Keresés: dengue climate change range expansion Europe|Aedes albopictus temperature transmission
+
+=== malaria_hegyvidek ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Felkúszik-e a malária a hegyekbe?
+Röviden: A hegyekben hűvösebb van, ezért ott eddig kevés volt a malária. A melegebb években feljebb is megjelenik.
+Ha kikutatod:
+Mire jó?: Afrika és Dél-Amerika hegyvidékein sok ember él. Ha tudják, hogy jöhet a malária, időben védekezhetnek.
+Mi a gond vele?: A betegség terjedése a védekezésen is múlik: szúnyoghálón, gyógyszeren, orvosokon. A modellek eredményei között nagy a bizonytalanság.
+Mennyire bizonyított?: Etiópia és Kolumbia hegyvidékén kimutatták, hogy melegebb években magasabbra húzódik a malária. A világ több modellje szerint összességében nő a veszélyeztetett emberek száma, de nagy bizonytalansággal.
+Kérdés angolul: Is malaria climbing into the mountains?
+Röviden angolul: Highlands are cooler, so malaria was rare there. In warmer years it appears higher up.
+Ha kikutatod angolul:
+Mire jó? angolul: Many people live in the highlands of Africa and South America. If they know malaria may come, they can protect themselves in time.
+Mi a gond vele? angolul: Spread also depends on protection: bed nets, medicine, doctors. The models disagree a lot.
+Mennyire bizonyított? angolul: In the highlands of Ethiopia and Colombia, malaria was found to move to higher altitudes in warmer years. Several global models show an overall increase in the population at risk, with large uncertainties.
+Forrás: Altitudinal Changes in Malaria Incidence in Highlands of Ethiopia and Colombia (2014) – https://doi.org/10.1126/science.1244325
+Forrás: Impact of climate change on global malaria distribution (2014) – https://doi.org/10.1073/pnas.1302089111
+Lektorálva: igen
+--- technikai ---
+Keresés: highland malaria temperature altitude|malaria climate change model intercomparison
+
+=== pollen ===
+Korszak: I. (Felismerés)
+Kérdés: Hosszabb lesz-e a pollenszezon?
+Röviden: A melegebb tavasz miatt a növények korábban virágoznak, és tovább szórják a pollent. Az allergiásoknak ez nehezebb.
+Ha kikutatod:
+Mire jó?: Az allergiás emberek, különösen a gyerekek, jobban felkészülhetnek: időben kezdhetik a gyógyszert, figyelhetik a pollenjelentést.
+Mi a gond vele?: A pollen mennyisége nem csak a melegen múlik, hanem azon is, milyen növények nőnek a környéken.
+Mennyire bizonyított?: Észak-Amerika 60 mérőállomásán 1990 és 2018 között a pollenszezon kb. 20 nappal hosszabb lett, a pollen mennyisége 21%-kal nőtt. A szezon hosszabbodásának kb. a feléért az ember okozta melegedés felel. Az északi félteke 17 helyszínéből 11-ben szintén hosszabb lett a szezon.
+Kérdés angolul: Is the pollen season getting longer?
+Röviden angolul: Warmer springs make plants flower earlier and release pollen longer. That is harder for people with allergies.
+Ha kikutatod angolul:
+Mire jó? angolul: People with allergies, especially children, can prepare better: start medicine in time and follow pollen forecasts.
+Mi a gond vele? angolul: Pollen levels also depend on which plants grow nearby, not only on warmth.
+Mennyire bizonyított? angolul: At 60 North American stations between 1990 and 2018, the pollen season became about 20 days longer and pollen concentrations rose by 21%. Human-caused warming explains about half of the longer seasons. In 11 of 17 sites across the northern hemisphere, the season also became longer.
+Forrás: Anthropogenic climate change is worsening North American pollen seasons (2021) – https://doi.org/10.1073/pnas.2013284118
+Forrás: Temperature-related changes in airborne allergenic pollen abundance and seasonality across the northern hemisphere (2019) – https://doi.org/10.1016/S2542-5196(19)30015-4
+Lektorálva: igen
+--- technikai ---
+Keresés: pollen season length climate change attribution|allergenic pollen temperature trend
+
+=== alvas ===
+Korszak: I. (Felismerés)
+Kérdés: Rosszabbul alszunk-e a meleg éjszakákon?
+Röviden: Ha éjjel is meleg van, nehezebb elaludni és kipihenni magunkat. A melegedéssel több lesz a meleg éjszaka.
+Ha kikutatod:
+Mire jó?: A rossz alvás rontja az egészséget, a tanulást és a munkát. Ha tudjuk, kiket érint a legjobban, segíthetünk nekik: árnyékkal, fákkal, hűvösebb lakással.
+Mi a gond vele?: Az emberek alkalmazkodhatnak is, például ventilátorral vagy légkondicionálóval, de ez nem mindenkinek elérhető.
+Mennyire bizonyított?: Egy 765 000 amerikai megkérdezettre kiterjedő vizsgálat szerint a melegebb éjszakákon többen számolnak be kevés alvásról. Leginkább nyáron, az idősek és a kisebb jövedelműek körében.
+Kérdés angolul: Do we sleep worse on hot nights?
+Röviden angolul: When nights stay warm, it is harder to fall asleep and rest. Warming brings more warm nights.
+Ha kikutatod angolul:
+Mire jó? angolul: Poor sleep harms health, learning and work. If we know who is hit hardest, we can help them: with shade, trees and cooler homes.
+Mi a gond vele? angolul: People can adapt, for example with fans or air conditioning, but not everyone can afford it.
+Mennyire bizonyított? angolul: A study of 765,000 American respondents found that warmer nights increase reports of insufficient sleep, most strongly in summer and among older and lower-income people.
+Forrás: Nighttime temperature and human sleep loss in a changing climate (2017) – https://doi.org/10.1126/sciadv.1601555
+Forrás: Rising temperatures erode human sleep globally (2022) – https://doi.org/10.1016/j.oneear.2022.04.008
+Lektorálva: igen
+--- technikai ---
+Keresés: nighttime temperature sleep loss climate change|sleep duration ambient temperature global
+
+=== klimaszorongas ===
+Korszak: I. (Felismerés)
+Kérdés: Mennyire aggódnak a fiatalok a klíma miatt?
+Röviden: Sok fiatal fél attól, mi lesz a jövővel. Ezt klímaszorongásnak hívják.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, hogy ez gyakori, beszélni lehet róla. A közös cselekvés és a jó hírek segítenek, hogy a félelemből tenni akarás legyen.
+Mi a gond vele?: Egy kis aggodalom hasznos, mert cselekvésre késztet. A túl erős félelem viszont megbéníthat. A kettőt meg kell különböztetni.
+Mennyire bizonyított?: Egy tíz országra kiterjedő felmérésben 10 000 16–25 éves válaszolt. 59%-uk nagyon vagy rendkívül aggódik a klíma miatt, 84%-uk legalább közepesen. Több mint 45%-uk szerint ez a mindennapjait is rontja.
+Kérdés angolul: How worried are young people about the climate?
+Röviden angolul: Many young people fear for the future. This is called climate anxiety.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know it is common, we can talk about it. Acting together and good news help turn fear into action.
+Mi a gond vele? angolul: Some worry is useful because it moves people to act. Too much fear can freeze them. The two must be told apart.
+Mennyire bizonyított? angolul: In a survey of 10,000 people aged 16–25 in ten countries, 59% were very or extremely worried about climate change and 84% at least moderately worried. More than 45% said it affects their daily life.
+Forrás: Climate anxiety in children and young people and their beliefs about government responses to climate change: a global survey (2021) – https://doi.org/10.1016/S2542-5196(21)00278-3
+Forrás: Climate anxiety: Psychological responses to climate change (2020) – https://doi.org/10.1016/j.janxdis.2020.102263
+Lektorálva: igen
+--- technikai ---
+Keresés: climate anxiety young people survey|eco-anxiety psychological responses
+
+=== vibrio ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Terjednek-e a tengeri baktériumok a melegebb vízben?
+Röviden: A Vibrio nevű baktériumok a meleg tengervizet szeretik. Fürdéskor vagy nyers tenger gyümölcseiből megfertőzhetik az embert.
+Ha kikutatod:
+Mire jó?: Ha a part menti orvosok és a strandok tudnak róla, időben figyelmeztethetik az embereket, főleg kánikula idején.
+Mi a gond vele?: A fertőzések száma azon is múlik, mennyien fürdenek, és mennyire figyelnek az orvosok erre a betegségre.
+Mennyire bizonyított?: Az Atlanti-óceán északi részén 1958 és 2011 között gyűjtött minták szerint a vízhőmérséklettel együtt nőtt a Vibrio baktériumok mennyisége. Ezzel együtt Észak-Európában és az USA atlanti partján korábban nem látott számban jelentek meg ilyen fertőzések.
+Kérdés angolul: Do sea bacteria spread in warmer water?
+Röviden angolul: Vibrio bacteria like warm seawater. People can get infected while swimming or from raw seafood.
+Ha kikutatod angolul:
+Mire jó? angolul: If coastal doctors and beaches know about it, they can warn people in time, especially during heatwaves.
+Mi a gond vele? angolul: Case numbers also depend on how many people swim and how closely doctors look for this disease.
+Mennyire bizonyított? angolul: Samples collected in the North Atlantic from 1958 to 2011 show that Vibrio abundance rose with sea temperature. At the same time, Vibrio infections appeared in unprecedented numbers in Northern Europe and on the US Atlantic coast.
+Forrás: Climate influence on Vibrio and associated human diseases during the past half-century in the coastal North Atlantic (2016) – https://doi.org/10.1073/pnas.1609157113
+Forrás: Emerging Vibrio risk at high latitudes in response to ocean warming (2013) – https://doi.org/10.1038/nclimate1628
+Lektorálva: igen
+--- technikai ---
+Keresés: Vibrio sea surface temperature infections Baltic North Atlantic
+
+=== terhesseg_hoseg ===
+Korszak: I. (Felismerés)
+Kérdés: Veszélyes-e a hőség a várandós anyáknak?
+Röviden: Nagy melegben nagyobb az esélye, hogy a baba túl korán születik. A melegedéssel ez több családot érinthet.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, a várandós anyák hőségben jobban vigyázhatnak magukra, az orvosok pedig figyelmeztethetik őket.
+Mi a gond vele?: A hatás egy-egy fokra kicsi, de sok születésnél ez sok babát érint. A legszegényebbeket és a legfiatalabb vagy legidősebb anyákat éri leginkább.
+Mennyire bizonyított?: 70 vizsgálat összesítése szerint minden egy fok melegedéssel kb. 5%-kal nő a koraszülés esélye, hőhullám idején kb. 16%-kal. 47 vizsgálatból 40-ben gyakoribb volt a koraszülés melegebb időben.
+Kérdés angolul: Is heat dangerous for pregnant women?
+Röviden angolul: In great heat, babies are more likely to be born too early. With warming, this can affect more families.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know this, pregnant women can take more care during heat, and doctors can warn them.
+Mi a gond vele? angolul: The effect per degree is small, but across many births it affects many babies. The poorest and the youngest or oldest mothers are hit hardest.
+Mennyire bizonyított? angolul: Combining 70 studies, the odds of preterm birth rise by about 5% per 1 °C and by about 16% during heatwaves. In 40 of 47 studies, preterm births were more common at higher temperatures.
+Forrás: Associations between high temperatures in pregnancy and risk of preterm birth, low birth weight, and stillbirths: systematic review and meta-analysis (2020) – https://doi.org/10.1136/bmj.m3811
+Forrás: Association of Air Pollution and Heat Exposure With Preterm Birth, Low Birth Weight, and Stillbirth in the US (2020) – https://doi.org/10.1001/jamanetworkopen.2020.8243
+Lektorálva: igen
+--- technikai ---
+Keresés: heat exposure pregnancy preterm birth meta-analysis
+
+=== lelki_egeszseg ===
+Korszak: I. (Felismerés)
+Kérdés: Hat-e a hőség a lelki egészségre?
+Röviden: Nagy melegben az emberek ingerlékenyebbek és szomorúbbak lehetnek. A tartós melegedés és a viharok a lelki egészséget is megviselik.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, hogy a hőség a lelket is terheli, a kánikula idején jobban figyelhetünk egymásra, és több segítséget adhatunk.
+Mi a gond vele?: A lelki egészség sok mindenen múlik. A hőség csak egy a sok ok közül, és a hatás egy-egy emberre kicsi.
+Mennyire bizonyított?: Közel 2 millió amerikai adatai szerint 30 °C fölötti hónapokban 0,5 százalékponttal gyakoribbak a lelki nehézségek, és öt év alatt 1 fok melegedés 2 százalékponttal növeli az arányukat. Egy másik vizsgálat szerint melegebb hónapokban az USA-ban és Mexikóban több az öngyilkosság.
+Kérdés angolul: Does heat affect mental health?
+Röviden angolul: In great heat people can become more irritable and sad. Lasting warming and storms also strain mental health.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know heat also weighs on the mind, we can look out for each other more during heatwaves and offer more help.
+Mi a gond vele? angolul: Mental health depends on many things. Heat is only one cause, and the effect on each person is small.
+Mennyire bizonyított? angolul: Data from nearly 2 million Americans show that months above 30 °C raise the probability of mental health difficulties by 0.5 percentage points, and 1 °C of five-year warming raises their prevalence by 2 percentage points. Another study finds higher suicide rates in warmer months in the United States and Mexico.
+Forrás: Empirical evidence of mental health risks posed by climate change (2018) – https://doi.org/10.1073/pnas.1801528115
+Forrás: Higher temperatures increase suicide rates in the United States and Mexico (2018) – https://doi.org/10.1038/s41558-018-0222-x
+Lektorálva: igen
+--- technikai ---
+Keresés: temperature mental health climate change empirical|heat suicide rates

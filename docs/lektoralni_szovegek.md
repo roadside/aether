@@ -600,13 +600,13 @@ A CO2-kivonás ablakában és a naplóban:
 - Bővített CO2-kivonás
 - Tíz éve fut: bővítem a CO2-kivonást.
 
-## 16. rész – még nem lektorált (2026-11-24, 21:10)
+## 16. Új szövegek (2026-11-24, 21:10, lektorálva)
 
 ### Minijáték: Jégfurat (a %s helyére szám kerül, a %d helyére évszám)
 
 - Minijáték: %s
 - Jégfurat
-- Tartsd nyomva a szóközt, és fúrj le a jégbe! Ha a fúró felforrósodik, engedd el.
+- Tartsd lenyomva a szóközt, és fúrj le a jégbe! Ha a fúró felforrósodik, engedd el.
 - %s ezer éve: %s ppm
 - ezer éve
 - 800 ezer évig a levegő CO2-tartalma %s és %s ppm között maradt.

@@ -272,3 +272,25 @@ Paraméter: szenmegkotes_t_ha_ev
 Wikipédia: agrárerdészet
 Wikipédia angolul: agroforestry
 Áttekintő cikkek keresése: agroforestry carbon review
+
+# ----- Új témák (2026-11-24, Zoltán lektorálta) -----
+
+=== termeloi_kulonbseg ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Lehet-e ugyanaz az étel sokkal szennyezőbb máshonnan?
+Röviden: Ugyanazt az ételt sokféleképpen lehet megtermelni. Az egyik gazdaság sokkal több üvegházgázt bocsát ki, mint a másik.
+Ha kikutatod:
+Mire jó?: Ha a gazdák mérik és megmutatják a saját hatásukat, a legjobb módszereket lehet terjeszteni, és a vásárló is jobban választhat.
+Mi a gond vele?: A gazdák nem tudnak a végtelenségig javítani. A legkisebb hatású állati termékek is általában többet szennyeznek, mint a növényi helyettesítőik.
+Mennyire bizonyított?: Egy közel 38 700 gazdaság adatait összesítő vizsgálat szerint ugyanannak a terméknek a környezeti hatása termelőnként akár ötvenszeres különbséget is mutathat. Egy másik elemzés szerint az élelmiszer-rendszert csak több lépés együtt tarthatja a környezet határain belül: étrendváltás, jobb technológia és kevesebb pazarlás.
+Kérdés angolul: Can the same food be much more polluting from elsewhere?
+Röviden angolul: The same food can be produced in many ways. One farm emits far more greenhouse gases than another.
+Ha kikutatod angolul:
+Mire jó? angolul: If farmers measure and share their own impact, the best methods can spread, and shoppers can choose better.
+Mi a gond vele? angolul: Farmers cannot improve without limit. Even the lowest-impact animal products usually exceed their plant-based substitutes.
+Mennyire bizonyított? angolul: A study pooling data from about 38,700 farms finds that the environmental impact of the same product can vary up to 50-fold between producers. Another analysis finds that only several steps together can keep the food system within environmental limits: dietary change, better technology and less waste.
+Forrás: Reducing food's environmental impacts through producers and consumers (2018) – https://doi.org/10.1126/science.aaq0216
+Forrás: Options for keeping the food system within environmental limits (2018) – https://doi.org/10.1038/s41586-018-0594-0
+Lektorálva: igen
+--- technikai ---
+Keresés: food environmental impact variation producers life cycle

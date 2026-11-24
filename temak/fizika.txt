@@ -379,3 +379,125 @@ Paraméter: sugarzasi_kenyszer_w_m2
 Wikipédia: pehelyfelhő
 Wikipédia angolul: cirrus cloud thinning
 Áttekintő cikkek keresése: cirrus cloud thinning review
+
+# ----- Új témák (2026-11-24, Zoltán lektorálta) -----
+
+=== konszenzus ===
+Korszak: I. (Felismerés)
+Kérdés: Egyetértenek-e a tudósok abban, hogy az ember okozza a melegedést?
+Röviden: Néha úgy tűnik, a tudósok vitatkoznak. Valójában szinte mindegyik tudományos cikk ugyanarra jut: a mostani melegedést az ember okozza.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, hogy a tudomány egyetért, nem kell a „vita” miatt várni a cselekvéssel.
+Mi a gond vele?: A tudomány nem szavazás: az egyetértés a bizonyítékokból jön, nem abból, hányan mondják. A tudósok a részletekben (például a gyorsaságban) ma is vitatkoznak.
+Mennyire bizonyított?: Egy 2013-as vizsgálat közel 12 000 cikk összefoglalóját nézte át: amelyik állást foglalt, annak 97%-a szerint az ember okozza a melegedést. Egy 2021-es frissítés szerint 2012 óta ez az arány 99% fölött van.
+Kérdés angolul: Do scientists agree that humans cause warming?
+Röviden angolul: Sometimes it seems scientists disagree. In fact, almost every scientific paper reaches the same conclusion: today's warming is caused by humans.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know science agrees, there is no need to wait for action because of a "debate".
+Mi a gond vele? angolul: Science is not a vote: agreement comes from evidence, not from how many people say it. Scientists still debate details, such as how fast things change.
+Mennyire bizonyított? angolul: A 2013 study reviewed nearly 12,000 paper abstracts: of those taking a position, 97% said humans cause warming. A 2021 update finds the share above 99% since 2012.
+Forrás: Quantifying the consensus on anthropogenic global warming in the scientific literature (2013) – https://doi.org/10.1088/1748-9326/8/2/024024
+Forrás: Greater than 99% consensus on human caused climate change in the peer-reviewed scientific literature (2021) – https://doi.org/10.1088/1748-9326/ac2966
+Lektorálva: igen
+--- technikai ---
+Keresés: scientific consensus anthropogenic global warming literature
+
+=== regi_modellek ===
+Korszak: I. (Felismerés)
+Kérdés: Bevált-e, amit a régi klímamodellek jósoltak?
+Röviden: Már az 1970-es években is számolták, mennyire melegszik majd a Föld. Most megnézhetjük, igazuk lett-e.
+Ha kikutatod:
+Mire jó?: Ha a régi jóslatok beváltak, jobban bízhatunk a mai modellekben is, amelyek a jövőt mutatják.
+Mi a gond vele?: Néhány régi modell kicsit többet vagy kevesebbet jósolt. Ennek egyik oka, hogy a jövőbeli kibocsátást nem tudták pontosan előre.
+Mennyire bizonyított?: Egy vizsgálat 1970 és 2007 között közzétett modelleket vetett össze a mért melegedéssel: a legtöbbjük jól jósolta meg, mennyit melegszik a Föld, különösen ha figyelembe vették, mennyi üvegházgáz került valóban a levegőbe.
+Kérdés angolul: Did the old climate models get it right?
+Röviden angolul: Already in the 1970s, scientists calculated how much the Earth would warm. Now we can check whether they were right.
+Ha kikutatod angolul:
+Mire jó? angolul: If the old forecasts came true, we can trust today's models of the future more.
+Mi a gond vele? angolul: Some old models predicted a bit more or less warming. One reason is that future emissions could not be known exactly.
+Mennyire bizonyított? angolul: A study compared models published between 1970 and 2007 with observed warming: most were skilful, especially once the actual amount of greenhouse gases was taken into account.
+Forrás: Evaluating the Performance of Past Climate Model Projections (2020) – https://doi.org/10.1029/2019GL085378
+Forrás: IPCC AR6 WG1 – Climate Change 2021: The Physical Science Basis (2021) – https://www.ipcc.ch/report/ar6/wg1/
+Lektorálva: igen
+--- technikai ---
+Keresés: past climate model projections evaluation observations
+
+=== jegfurat ===
+Korszak: I. (Felismerés)
+Kérdés: Honnan tudjuk, mennyi CO2 volt a levegőben régen?
+Röviden: Az Antarktisz jegében apró légbuborékok vannak, amelyek több százezer éve záródtak be. Ezekből megmérhető a régi levegő.
+Ha kikutatod:
+Mire jó?: Ebből látjuk, hogy a CO2 és a hőmérséklet együtt változott a jégkorszakok során, és hogy a mai szint mennyire szokatlan.
+Mi a gond vele?: A jégfurat a déli sarkvidékről ad képet; a régi hőmérsékletet közvetve, a jég összetételéből becsülik.
+Mennyire bizonyított?: Az EPICA Dome C jégfurat 800 000 évre visszamenőleg mutatja a CO2-t. Nyolc jégkorszak-ciklus alatt a CO2 szorosan együtt mozgott az antarktiszi hőmérséklettel, és az ipari forradalom előtt 172 és 300 milliomodrész között volt.
+Kérdés angolul: How do we know how much CO2 was in the air long ago?
+Röviden angolul: Antarctic ice holds tiny air bubbles trapped hundreds of thousands of years ago. They let us measure ancient air.
+Ha kikutatod angolul:
+Mire jó? angolul: This shows that CO2 and temperature changed together through the ice ages, and how unusual today's level is.
+Mi a gond vele? angolul: Ice cores show the polar south; past temperature is estimated indirectly from the ice's composition.
+Mennyire bizonyított? angolul: The EPICA Dome C ice core shows CO2 back 800,000 years. Over eight glacial cycles CO2 closely tracked Antarctic temperature, and before the industrial era it ranged between 172 and 300 parts per million.
+Forrás: High-resolution carbon dioxide concentration record 650,000–800,000 years before present (2008) – https://doi.org/10.1038/nature06949
+Forrás: IPCC AR6 WG1 – Climate Change 2021: The Physical Science Basis (2021) – https://www.ipcc.ch/report/ar6/wg1/
+Lektorálva: igen
+--- technikai ---
+Keresés: ice core CO2 800000 years EPICA Dome C
+
+=== attribucio ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Meg lehet-e mondani, hogy egy hőhullámot a klímaváltozás okozott?
+Röviden: A tudósok összevetik a mai világot egy elképzelt, melegedés nélküli világgal. Így kiszámolják, mennyivel lett valószínűbb egy szélsőséges időjárás.
+Ha kikutatod:
+Mire jó?: Közvetlenül egy hőhullám vagy árvíz után megmutatja, mennyit tett hozzá a klímaváltozás. Ez segít a felkészülésben és a döntésekben.
+Mi a gond vele?: Az eredmény sok választáson múlik: hogyan határozzák meg az eseményt, milyen méréseket és modelleket használnak. Nem minden eseménynél lehet biztos választ adni.
+Mennyire bizonyított?: Az első ilyen vizsgálat a 2003-as európai hőhullámot elemezte. Azóta egy nemzetközi kutatócsoport kidolgozott módszerrel már kb. két tucat szélsőséges eseményt vizsgált meg, gyorsan, közvetlenül az esemény után.
+Kérdés angolul: Can we say that a heatwave was caused by climate change?
+Röviden angolul: Scientists compare today's world with an imagined world without warming. This shows how much more likely an extreme event has become.
+Ha kikutatod angolul:
+Mire jó? angolul: Right after a heatwave or flood, it shows how much climate change contributed. This helps preparation and decisions.
+Mi a gond vele? angolul: The result depends on many choices: how the event is defined and which observations and models are used. Not every event allows a firm answer.
+Mennyire bizonyított? angolul: The first such study examined the 2003 European heatwave. Since then an international group has developed a method and studied two dozen extreme events quickly, right after they happened.
+Forrás: Human contribution to the European heatwave of 2003 (2004) – https://doi.org/10.1038/nature03089
+Forrás: Pathways and pitfalls in extreme event attribution (2021) – https://doi.org/10.1007/s10584-021-03071-7
+Lektorálva: igen
+--- technikai ---
+Keresés: extreme event attribution heatwave probability
+
+=== sztratoszfera ===
+Korszak: I. (Felismerés)
+Kérdés: Miért hűl a légkör felső része, miközben a felszín melegszik?
+Röviden: Ha a Nap melegítene jobban, a légkör minden rétege melegedne. A CO2 viszont alul melegít, fent hűt. Ez az ember „ujjlenyomata”.
+Ha kikutatod:
+Mire jó?: Ez az egyik legerősebb bizonyíték arra, hogy a melegedést az üvegházgázok okozzák, nem a Nap.
+Mi a gond vele?: A felső légkör hőmérsékletét nehéz mérni, ehhez műholdak és ballonok kellenek.
+Mennyire bizonyított?: Már 1967-ben megjósolták, hogy a CO2 alul melegít, fent hűt. A műholdas mérések ezt igazolták: 1986 és 2022 között a légkör 25–50 km magas rétege 1–2 fokkal hűlt, és ez a minta egyértelműen az ember hatására utal.
+Kérdés angolul: Why does the upper atmosphere cool while the surface warms?
+Röviden angolul: If the Sun were warming us more, all layers of the atmosphere would warm. CO2 warms below and cools above. This is the human "fingerprint".
+Ha kikutatod angolul:
+Mire jó? angolul: It is one of the strongest proofs that warming is caused by greenhouse gases, not the Sun.
+Mi a gond vele? angolul: The upper atmosphere is hard to measure; satellites and balloons are needed.
+Mennyire bizonyított? angolul: Already in 1967 scientists predicted that CO2 warms below and cools above. Satellite data confirmed it: from 1986 to 2022 the layer 25–50 km up cooled by 1–2 °C, and this pattern clearly points to human influence.
+Forrás: Exceptional stratospheric contribution to human fingerprints on atmospheric temperature (2023) – https://doi.org/10.1073/pnas.2300758120
+Forrás: IPCC AR6 WG1 – Climate Change 2021: The Physical Science Basis (2021) – https://www.ipcc.ch/report/ar6/wg1/
+Lektorálva: igen
+--- technikai ---
+Keresés: stratospheric cooling tropospheric warming fingerprint attribution
+
+=== jegkorszak_ota ===
+Korszak: I. (Felismerés)
+Kérdés: Volt-e már ilyen gyors melegedés a jégkorszak óta?
+Röviden: A tudósok kőzetekből, iszapból és a klímamodellekből összerakták az elmúlt 24 000 év hőmérsékletét.
+Ha kikutatod:
+Mire jó?: Ebből látszik, hogy a mostani melegedés nem a természetes ingadozás része: sokkal gyorsabb és nagyobb annál, ami a jégkorszak vége óta történt.
+Mi a gond vele?: A régi hőmérsékletet csak közvetve lehet becsülni, ezért a régmúlt adatai bizonytalanabbak.
+Mennyire bizonyított?: Egy 2021-es rekonstrukció szerint az elmúlt kb. 9000 évben a Föld átlaghőmérséklete lassan, kb. 0,5 fokkal emelkedett. A mostani melegedés üteme és mértéke az elmúlt 24 000 évhez képest is szokatlan.
+Kérdés angolul: Has there been warming this fast since the ice age?
+Röviden angolul: Scientists combined rocks, sediments and climate models to rebuild the temperature of the past 24,000 years.
+Ha kikutatod angolul:
+Mire jó? angolul: It shows that today's warming is not part of natural swings: it is much faster and larger than anything since the end of the ice age.
+Mi a gond vele? angolul: Past temperatures can only be estimated indirectly, so older data are less certain.
+Mennyire bizonyított? angolul: A 2021 reconstruction finds that global temperature warmed slowly, by about 0.5 °C, over roughly the last 9,000 years. The rate and size of modern warming are unusual compared with the past 24,000 years.
+Forrás: Globally resolved surface temperatures since the Last Glacial Maximum (2021) – https://doi.org/10.1038/s41586-021-03984-4
+Forrás: IPCC AR6 WG1 – Climate Change 2021: The Physical Science Basis (2021) – https://www.ipcc.ch/report/ar6/wg1/
+Lektorálva: igen
+--- technikai ---
+Keresés: Holocene temperature reconstruction Last Glacial Maximum data assimilation

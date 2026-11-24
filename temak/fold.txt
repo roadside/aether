@@ -325,3 +325,85 @@ Paraméter: szen_gtc
 Wikipédia: vastrágyázás óceán
 Wikipédia angolul: iron fertilization
 Áttekintő cikkek keresése: ocean iron fertilization review
+
+# ----- Új témák (2026-11-24, Zoltán lektorálta) -----
+
+=== tengeri_hohullam ===
+Korszak: I. (Felismerés)
+Kérdés: Van-e hőhullám a tengerben is?
+Röviden: Igen. Napokig vagy hetekig szokatlanul meleg lehet a tenger. Ilyenkor pusztulnak a korallok, a hínárerdők és a halak.
+Ha kikutatod:
+Mire jó?: Ha előre jelzik a tengeri hőhullámot, a halászok és a part menti emberek felkészülhetnek, a tengeri élőhelyeket pedig jobban lehet védeni.
+Mi a gond vele?: A tengeri hőhullám a víz alatt zajlik, ezért nehezebb észrevenni, mint a szárazföldit. A régi mérések ritkábbak voltak.
+Mennyire bizonyított?: Mérések szerint 1925 és 2016 között a tengeri hőhullámok 34%-kal gyakoribbak és 17%-kal hosszabbak lettek, így évente 54%-kal több a tengeri hőhullámos nap. Ezt főleg a tenger átlagos melegedése okozza.
+Kérdés angolul: Are there heatwaves in the sea too?
+Röviden angolul: Yes. The sea can stay unusually warm for days or weeks. Corals, kelp forests and fish die off then.
+Ha kikutatod angolul:
+Mire jó? angolul: If marine heatwaves are forecast, fishers and coastal people can prepare, and sea habitats can be better protected.
+Mi a gond vele? angolul: Marine heatwaves happen under water, so they are harder to notice than heatwaves on land. Older measurements were sparse.
+Mennyire bizonyított? angolul: Measurements show that from 1925 to 2016 marine heatwaves became 34% more frequent and 17% longer, giving 54% more marine heatwave days each year. This is mainly caused by the overall warming of the ocean.
+Forrás: Longer and more frequent marine heatwaves over the past century (2018) – https://doi.org/10.1038/s41467-018-03732-9
+Forrás: Marine heatwaves under global warming (2018) – https://doi.org/10.1038/s41586-018-0383-9
+Lektorálva: igen
+--- technikai ---
+Keresés: marine heatwaves frequency duration trend
+
+=== viharar ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Milyen gyakran önti el a tenger a partot a jövőben?
+Röviden: A tengerszint emelkedik, és a viharok erre ráépülnek. Ami eddig százévente egyszer történt meg, az a jövőben sokkal gyakoribb lesz.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, hol és mikor jön a nagy víz, gátat, magasabb házat és korai riasztást lehet építeni, vagy biztonságosabb helyre költözni.
+Mi a gond vele?: A pontos szám azon múlik, mennyit bocsátunk ki, és milyen gyorsan olvad a jég. A partvidékek magasságát is nehéz pontosan mérni.
+Mennyire bizonyított?: Egy világméretű előrejelzés szerint 2100-ra a százévente egyszer előforduló magas vízszint mérsékelt kibocsátás mellett 34–76 cm-rel, változatlan kibocsátás mellett 58–172 cm-rel emelkedik. Ma kb. 250 millió ember él olyan területen, amely 1 méternél kevésbé van a dagály szintje fölött.
+Kérdés angolul: How often will the sea flood the coast in the future?
+Röviden angolul: Sea level is rising, and storms build on top of it. What happened once a century will become much more frequent.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know where and when high water comes, we can build dikes, raise houses, set up early warnings or move to safer places.
+Mi a gond vele? angolul: The exact figure depends on our emissions and how fast ice melts. Coastal heights are also hard to measure precisely.
+Mennyire bizonyított? angolul: A global projection finds that by 2100 the 100-year extreme sea level rises by 34–76 cm under moderate emissions and 58–172 cm under business as usual. About 250 million people live less than 1 metre above today's high tide line.
+Forrás: Global probabilistic projections of extreme sea levels show intensification of coastal flood hazard (2018) – https://doi.org/10.1038/s41467-018-04692-w
+Forrás: New elevation data triple estimates of global vulnerability to sea-level rise and coastal flooding (2019) – https://doi.org/10.1038/s41467-019-12808-z
+Lektorálva: igen
+--- technikai ---
+Keresés: extreme sea level projections coastal flooding exposure population
+
+=== atollok ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Lakhatók maradnak-e a korallszigetek?
+Röviden: A Csendes- és az Indiai-óceán apró, lapos korallszigetei alig emelkednek ki a tengerből. A hullámok egyre gyakrabban átcsapnak rajtuk.
+Ha kikutatod:
+Mire jó?: Az itt élő emberek idejében tervezhetnek: hogyan védjék meg az ivóvizüket és a házaikat, vagy hová költözzenek.
+Mi a gond vele?: A jövő azon is múlik, milyen gyorsan emelkedik a tengerszint, és mennyire nőnek a korallzátonyok. A szigetek nem egyformák.
+Mennyire bizonyított?: Egy előrejelzés szerint a mostani kibocsátás mellett a tengerszint-emelkedés és a hullámok együtt a század közepére a legtöbb korallszigetet évente elöntik. Ez az édesvízkészletüket is tönkreteheti, és lakhatatlanná teheti őket.
+Kérdés angolul: Will coral atolls stay habitable?
+Röviden angolul: The tiny, flat coral islands of the Pacific and Indian oceans barely rise above the sea. Waves wash over them more and more often.
+Ha kikutatod angolul:
+Mire jó? angolul: People living there can plan in time: how to protect their drinking water and homes, or where to move.
+Mi a gond vele? angolul: The future depends on how fast the sea rises and how well reefs grow. The islands differ.
+Mennyire bizonyított? angolul: A projection finds that at current emission rates, sea-level rise and waves together will flood most atoll islands every year by the mid-century, ruining freshwater supplies and making them uninhabitable.
+Forrás: Most atolls will be uninhabitable by the mid-21st century because of sea-level rise exacerbating wave-driven flooding (2018) – https://doi.org/10.1126/sciadv.aap9741
+Forrás: IPCC – Special Report on the Ocean and Cryosphere in a Changing Climate (2019) – https://www.ipcc.ch/srocc/
+Lektorálva: igen
+--- technikai ---
+Keresés: atoll islands sea level rise wave overwash freshwater
+
+=== sos_viz ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Elsózhatja-e a tenger a parti kutak vizét?
+Röviden: A part közelében a föld alatt az édesvíz és a tengervíz találkozik. Ha emelkedik a tenger, vagy túl sok vizet szivattyúznak, a sós víz beljebb nyomul.
+Ha kikutatod:
+Mire jó?: Ha figyelik a kutakat, és nem szivattyúznak túl sokat, a parti városok és a földek tovább kaphatnak iható és öntözhető vizet.
+Mi a gond vele?: A föld alatti vizet nehéz megfigyelni, és a sós víz betörését nehéz visszafordítani.
+Mennyire bizonyított?: Tudományos áttekintések szerint a tengervíz betörése a parti földalatti vízkészletekbe világszerte ismert gond, amelyet a túlzott vízkivétel és a tengerszint-emelkedés is erősít. Az IPCC szerint a tengerszint emelkedése a part menti édesvizet is fenyegeti.
+Kérdés angolul: Can the sea make coastal wells salty?
+Röviden angolul: Near the coast, fresh groundwater meets seawater underground. When the sea rises or too much water is pumped, salt water pushes inland.
+Ha kikutatod angolul:
+Mire jó? angolul: If wells are monitored and not over-pumped, coastal towns and fields can keep getting drinkable and irrigation water.
+Mi a gond vele? angolul: Groundwater is hard to observe, and saltwater intrusion is hard to reverse.
+Mennyire bizonyított? angolul: Scientific reviews find that seawater intrusion into coastal aquifers is a known problem worldwide, worsened by over-pumping and sea-level rise. The IPCC finds that sea-level rise also threatens coastal freshwater.
+Forrás: Seawater intrusion processes, investigation and management: Recent advances and future challenges (2013) – https://doi.org/10.1016/j.advwatres.2012.03.004
+Forrás: IPCC – Special Report on the Ocean and Cryosphere in a Changing Climate (2019) – https://www.ipcc.ch/srocc/
+Lektorálva: igen
+--- technikai ---
+Keresés: seawater intrusion coastal aquifers sea level rise

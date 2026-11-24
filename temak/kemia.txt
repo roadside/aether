@@ -403,3 +403,85 @@ Paraméter: metan_csokkentes_pct
 Wikipédia: metán lebomlás légkör
 Wikipédia angolul: atmospheric methane removal
 Áttekintő cikkek keresése: atmospheric methane removal review
+
+# ----- Új témák (2026-11-24, Zoltán lektorálta) -----
+
+=== repules ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Mennyire melegíti a Földet a repülés?
+Röviden: A repülők CO2-t bocsátanak ki, de a magasban hagyott kondenzcsíkok és más gázok is melegítenek.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, mi melegít a repülésben, célzottan lehet csökkenteni: új üzemanyaggal, más útvonalakkal, kevesebb felesleges repülőúttal.
+Mi a gond vele?: A kondenzcsíkok hatását nehéz pontosan kiszámolni, ezért ez a rész bizonytalanabb, mint a CO2-é.
+Mennyire bizonyított?: 1960 és 2018 között a repülés CO2-kibocsátása 6,8-szorosára nőtt. 2018-ban a repülés melegítő hatásának 66%-a nem a CO2-ből, hanem főleg a kondenzcsíkokból és a nitrogén-oxidokból jött.
+Kérdés angolul: How much does flying warm the Earth?
+Röviden angolul: Planes emit CO2, but the contrails they leave high up and other gases also cause warming.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know what warms in aviation, we can cut it in a targeted way: new fuels, different routes, fewer unnecessary trips.
+Mi a gond vele? angolul: The effect of contrails is hard to calculate exactly, so this part is more uncertain than CO2.
+Mennyire bizonyított? angolul: From 1960 to 2018 aviation CO2 emissions grew 6.8-fold. In 2018, 66% of aviation's warming effect came not from CO2 but mainly from contrails and nitrogen oxides.
+Forrás: The contribution of global aviation to anthropogenic climate forcing for 2000 to 2018 (2021) – https://doi.org/10.1016/j.atmosenv.2020.117834
+Forrás: IPCC AR6 WG3 – Climate Change 2022: Mitigation of Climate Change (2022) – https://www.ipcc.ch/report/ar6/wg3/
+Lektorálva: igen
+--- technikai ---
+Keresés: aviation effective radiative forcing contrail cirrus CO2 NOx
+
+=== kritikus_asvanyok ===
+Korszak: III. (Átalakulás)
+Kérdés: Honnan lesz elég fém a napelemekhez és az akkumulátorokhoz?
+Röviden: A tiszta energiához sok réz, lítium, kobalt és ritkaföldfém kell. Ezeket bányászni kell, ami sok helyen károsítja a természetet és az embereket.
+Ha kikutatod:
+Mire jó?: Ha tudjuk a gondokat, jobb szabályokkal, újrahasznosítással és tisztességes bányászattal tisztábbá tehető az átállás.
+Mi a gond vele?: A bányák egy része olyan helyeken van, ahol rossz a felügyelet, és gyakoriak a konfliktusok. Ezt nem lehet egyik napról a másikra megoldani.
+Mennyire bizonyított?: Tudományos áttekintések szerint a kobalt, a réz, a lítium, a kadmium és a ritkaföldfémek kitermelése sok helyen környezeti kárt, egészségügyi gondot és konfliktust okoz. A szerzők négy javaslatot tesznek a tisztább bányászatra.
+Kérdés angolul: Where will we get enough metal for solar panels and batteries?
+Röviden angolul: Clean energy needs a lot of copper, lithium, cobalt and rare earths. They must be mined, which in many places harms nature and people.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know the problems, better rules, recycling and fair mining can make the transition cleaner.
+Mi a gond vele? angolul: Some mines are in places with weak oversight and frequent conflict. This cannot be fixed overnight.
+Mennyire bizonyított? angolul: Scientific reviews find that mining cobalt, copper, lithium, cadmium and rare earths causes environmental damage, health problems and conflict in many places. The authors make four recommendations for cleaner mining.
+Forrás: Sustainable minerals and metals for a low-carbon future (2020) – https://doi.org/10.1126/science.aaz6003
+Forrás: IEA – The Role of Critical Minerals in Clean Energy Transitions (2021) – https://www.iea.org/reports/the-role-of-critical-minerals-in-clean-energy-transitions
+Lektorálva: igen
+--- technikai ---
+Keresés: critical minerals energy transition mining sustainability
+
+=== korforgasos ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyi anyagot hasznosítunk újra a világon?
+Röviden: A körforgásos gazdaság lényege, hogy a használt anyagokból új termék legyen, ne szemét. Így kevesebbet kell bányászni és gyártani.
+Ha kikutatod:
+Mire jó?: Az újrahasznosítás kevesebb energiát és kevesebb új nyersanyagot igényel, ezért csökkenti a kibocsátást is.
+Mi a gond vele?: Az anyagok nagy részét energiaként elégetjük, ezt nem lehet újrahasznosítani. Sok anyag pedig évtizedekre beépül házakba és utakba.
+Mennyire bizonyított?: Egy 2005-ös világméretű számítás szerint évente kb. 62 milliárd tonna anyagot dolgoztunk fel, és ebből csak kb. 4 milliárd tonnát hasznosítottunk újra. Az alacsony arány egyik oka, hogy a feldolgozott anyagok 44%-a energiaként ég el.
+Kérdés angolul: How much material does the world recycle?
+Röviden angolul: In a circular economy, used materials become new products instead of waste. Then less needs to be mined and made.
+Ha kikutatod angolul:
+Mire jó? angolul: Recycling needs less energy and fewer new raw materials, so it also cuts emissions.
+Mi a gond vele? angolul: Most materials are burned for energy and cannot be recycled. Many others are locked into buildings and roads for decades.
+Mennyire bizonyított? angolul: A global estimate for 2005 finds that about 62 billion tonnes of materials were processed each year, and only about 4 billion tonnes were recycled. One reason for the low rate is that 44% of processed materials are burned for energy.
+Forrás: How Circular is the Global Economy?: An Assessment of Material Flows, Waste Production, and Recycling in the European Union and the World in 2005 (2015) – https://doi.org/10.1111/jiec.12244
+Forrás: IPCC AR6 WG3 – Climate Change 2022: Mitigation of Climate Change (2022) – https://www.ipcc.ch/report/ar6/wg3/
+Lektorálva: igen
+--- technikai ---
+Keresés: circular economy global material flows recycling rate
+
+=== kevesebb_igeny ===
+Korszak: III. (Átalakulás)
+Kérdés: Segít-e, ha kevesebb energiát használunk ugyanarra?
+Röviden: Nemcsak tisztább áram kell, hanem okosabb használat is: jobb házak, rövidebb utak, közös közlekedés, tartósabb termékek.
+Ha kikutatod:
+Mire jó?: Ami nem kell, azt nem kell megtermelni. Így kevesebb erőmű, kevesebb bánya és kevesebb kibocsátás kell, és sokszor a pénztárcának is jobb.
+Mi a gond vele?: Az emberek szokásait nehéz megváltoztatni, és ez nem lehet a szegényebbek terhe: nekik sokszor több energiára van szükségük, nem kevesebbre.
+Mennyire bizonyított?: Kutatók szerint a keresletoldali megoldások, vagyis hogy mit és hogyan használunk, nagyban hozzájárulhatnak a kibocsátás csökkentéséhez, és a jólétet sem kell feláldozni hozzá. Az IPCC is külön fejezetben tárgyalja ezeket.
+Kérdés angolul: Does it help to use less energy for the same thing?
+Röviden angolul: We need not only cleaner power but smarter use: better homes, shorter trips, shared transport, longer-lasting products.
+Ha kikutatod angolul:
+Mire jó? angolul: What is not needed does not have to be produced. That means fewer power plants, fewer mines and fewer emissions, and often lower bills.
+Mi a gond vele? angolul: Habits are hard to change, and this must not burden poorer people, who often need more energy, not less.
+Mennyire bizonyított? angolul: Researchers find that demand-side solutions, meaning what and how we use, can contribute a lot to cutting emissions without sacrificing well-being. The IPCC covers them in a separate chapter.
+Forrás: Towards demand-side solutions for mitigating climate change (2018) – https://doi.org/10.1038/s41558-018-0121-1
+Forrás: IPCC AR6 WG3 – Climate Change 2022: Mitigation of Climate Change (2022) – https://www.ipcc.ch/report/ar6/wg3/
+Lektorálva: igen
+--- technikai ---
+Keresés: demand-side mitigation solutions well-being

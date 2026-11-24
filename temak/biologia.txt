@@ -299,3 +299,45 @@ Paraméter: reszarany_pct
 Wikipédia: korallzátony helyreállítása
 Wikipédia angolul: coral reef restoration
 Áttekintő cikkek keresése: coral reef restoration review
+
+# ----- Új témák (2026-11-24, Zoltán lektorálta) -----
+
+=== erdoirtas_okai ===
+Korszak: I. (Felismerés)
+Kérdés: Miért vágják ki az erdőket?
+Röviden: Az erdők helyén legelő, szója- vagy pálmaolaj-ültetvény lesz. Sokszor a távoli országokban vásárolt termékek miatt.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, mi hajtja az erdőirtást, a vásárlók és a cégek is tehetnek ellene: olyan terméket vehetnek, amelyért nem vágtak ki erdőt.
+Mi a gond vele?: Nem minden erdővesztés végleges: egy része erdőgazdálkodás vagy tűz, ahol később újra nő az erdő. Ezeket nehéz szétválasztani.
+Mennyire bizonyított?: Műholdas elemzés szerint 2001 és 2015 között a világ erdővesztésének 27%-a volt végleges irtás áruk termelése miatt. A trópusokon 2010 és 2014 között a mezőgazdaság és az ültetvények terjeszkedése évi kb. 2,6 milliárd tonna CO2-kibocsátással járt; ennek több mint felét a marhahús- és olajnövény-termékek okozták.
+Kérdés angolul: Why are forests cut down?
+Röviden angolul: Forests are replaced by pasture or soy and palm oil plantations, often for products bought in faraway countries.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know what drives deforestation, shoppers and companies can act: buy products that did not cost a forest.
+Mi a gond vele? angolul: Not all forest loss is permanent: some is forestry or fire, where forest grows back. These are hard to separate.
+Mennyire bizonyított? angolul: Satellite analysis shows that from 2001 to 2015, 27% of global forest loss was permanent clearing for commodity production. In the tropics, from 2010 to 2014 the expansion of farms and plantations caused about 2.6 billion tonnes of CO2 per year; cattle and oilseed products accounted for over half.
+Forrás: Classifying drivers of global forest loss (2018) – https://doi.org/10.1126/science.aau3445
+Forrás: Agricultural and forestry trade drives large share of tropical deforestation emissions (2019) – https://doi.org/10.1016/j.gloenvcha.2019.03.002
+Lektorálva: igen
+--- technikai ---
+Keresés: drivers of forest loss commodity deforestation embodied emissions trade
+
+=== erdo_nyelo ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Elnyelik-e az esőerdők a jövőben is a CO2-t?
+Röviden: Az érintetlen esőerdők sok CO2-t kivonnak a levegőből. De a melegedés és az aszály miatt ez a képességük gyengülhet.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, hogy az erdők nem nyelnek el örökké egyre többet, nem lehet csak rájuk bízni a kibocsátás ellensúlyozását.
+Mi a gond vele?: Az erdők mérése lassú, sok terepmunkát igényel. Afrikában és az Amazonasnál másként alakul a helyzet.
+Mennyire bizonyított?: Az 1990-es években és a 2000-es évek elején az érintetlen trópusi erdők az ember okozta CO2-kibocsátás kb. 15%-át nyelték el. Az afrikai erdők nyelőképessége három évtizedig stabil volt, az Amazonasé viszont hosszú ideje csökken.
+Kérdés angolul: Will rainforests keep absorbing CO2 in the future?
+Röviden angolul: Intact rainforests remove a lot of CO2 from the air. But warming and drought can weaken this ability.
+Ha kikutatod angolul:
+Mire jó? angolul: If forests will not absorb ever more forever, we cannot rely only on them to offset emissions.
+Mi a gond vele? angolul: Measuring forests is slow and needs much fieldwork. Africa and the Amazon behave differently.
+Mennyire bizonyított? angolul: In the 1990s and early 2000s, intact tropical forests removed about 15% of human CO2 emissions. The carbon sink of African forests was stable for three decades, while the Amazon's has long been declining.
+Forrás: Asynchronous carbon sink saturation in African and Amazonian tropical forests (2020) – https://doi.org/10.1038/s41586-020-2035-0
+Forrás: IPCC AR6 WG1 – Climate Change 2021: The Physical Science Basis (2021) – https://www.ipcc.ch/report/ar6/wg1/
+Lektorálva: igen
+--- technikai ---
+Keresés: tropical forest carbon sink saturation Amazon Africa

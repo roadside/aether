@@ -295,3 +295,265 @@ Paraméter: kibocsatas_csokkentes_pct
 Wikipédia: biogáz
 Wikipédia angolul: biogas
 Áttekintő cikkek keresése: biogas life cycle review
+
+# ----- Új témák (2026-11-24, Zoltán lektorálta) -----
+
+=== eromu_hoseg ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Termelhetnek-e kevesebb áramot az erőművek a melegben?
+Röviden: A szén-, gáz- és atomerőműveket folyóvízzel hűtik. Ha kevés a víz vagy túl meleg, kevesebb áram készül.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, mely erőművek a legsérülékenyebbek, időben át lehet állni más hűtésre vagy olyan áramra, amely nem függ a folyóktól, például a szél- és napenergiára.
+Mi a gond vele?: A jövőbeli kár azon is múlik, mennyire alkalmazkodnak az erőművek. A számok modellből jönnek, nem mérésből.
+Mennyire bizonyított?: Egy világméretű vizsgálat szerint 2040 és 2069 között a vízerőművek 61–74%-ánál és a hőerőművek 81–86%-ánál csökken a ténylegesen használható teljesítmény. Hatékonyabb erőművekkel, más hűtéssel és más tüzelőanyaggal a kár csökkenthető.
+Kérdés angolul: Can power plants produce less electricity in the heat?
+Röviden angolul: Coal, gas and nuclear plants are cooled with river water. When water is scarce or too warm, less power is produced.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know which plants are most vulnerable, we can switch in time to other cooling or to power that does not depend on rivers, such as wind and solar.
+Mi a gond vele? angolul: Future losses also depend on how plants adapt. The figures come from models, not measurements.
+Mennyire bizonyított? angolul: A global study finds that between 2040 and 2069 usable capacity falls for 61–74% of hydropower plants and 81–86% of thermoelectric plants. Higher plant efficiency, other cooling systems and fuel switches can reduce the damage.
+Forrás: Power-generation system vulnerability and adaptation to changes in climate and water resources (2016) – https://doi.org/10.1038/nclimate2903
+Forrás: Vulnerability of US and European electricity supply to climate change (2012) – https://doi.org/10.1038/nclimate1546
+Lektorálva: igen
+--- technikai ---
+Keresés: thermoelectric hydropower usable capacity climate change water temperature
+
+=== agrovoltaik ===
+Korszak: III. (Átalakulás)
+Kérdés: Lehet-e egyszerre napelem és termés ugyanazon a földön?
+Röviden: A napelemeket magasra lehet tenni, alattuk pedig zöldség nőhet. A panel árnyékot ad, a növény hűti a panelt.
+Ha kikutatod:
+Mire jó?: Nem kell választani az áram és az élelem között. Száraz, napos vidékeken a növények kevesebb vizet párologtatnak el az árnyékban.
+Mi a gond vele?: Nem minden növény szereti az árnyékot, és az ilyen rendszer építése drágább, mint a sima napelemparké.
+Mennyire bizonyított?: Kísérletek szerint száraz vidéken a panelek alatt egyes növények jobban teremnek és kevesebb vizet igényelnek, a panelek pedig a növények párologtatása miatt hűvösebbek maradnak.
+Kérdés angolul: Can solar panels and crops share the same land?
+Röviden angolul: Solar panels can be raised high, with vegetables growing underneath. The panel gives shade; the plants cool the panel.
+Ha kikutatod angolul:
+Mire jó? angolul: We do not have to choose between power and food. In dry, sunny places, plants lose less water in the shade.
+Mi a gond vele? angolul: Not every crop likes shade, and such systems cost more to build than ordinary solar farms.
+Mennyire bizonyított? angolul: Experiments in drylands show that some crops yield more and need less water under the panels, while the panels stay cooler thanks to the plants' transpiration.
+Forrás: Agrivoltaics provide mutual benefits across the food–energy–water nexus in drylands (2019) – https://doi.org/10.1038/s41893-019-0364-5
+Forrás: The potential of agrivoltaic systems (2016) – https://doi.org/10.1016/j.rser.2015.10.024
+Lektorálva: igen
+--- technikai ---
+Keresés: agrivoltaics crop yield water use drylands
+
+=== nap_alulbecsles ===
+Korszak: III. (Átalakulás)
+Kérdés: Miért becsülték alá sokáig a napenergiát?
+Röviden: A jövőt leíró számítások évekig azt mondták, hogy a napelem drága marad. Közben egyre olcsóbb lett, és sokkal gyorsabban terjedt.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, hogy a tiszta technológiák gyakran gyorsabban olcsóbbodnak a vártnál, bátrabban lehet rájuk építeni.
+Mi a gond vele?: A jövőt senki sem látja előre. Az olcsó napelemhez tárolás és jobb hálózat is kell, különben este és télen nincs áram.
+Mennyire bizonyított?: Kutatók kimutatták, hogy a korábbi modellek rendszeresen túlbecsülték a megújuló energia árát, és alábecsülték, milyen gyorsan terjed. Egy elemzés szerint a gyors zöld átállás összességében sok ezer milliárd dollár megtakarítást hozhat a fosszilis rendszerhez képest, még a klímakár nélkül is.
+Kérdés angolul: Why was solar power underestimated for so long?
+Röviden angolul: For years, forecasts said solar would stay expensive. Meanwhile it got cheaper and spread much faster.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know that clean technologies often get cheaper faster than expected, we can rely on them more boldly.
+Mi a gond vele? angolul: Nobody can see the future. Cheap solar also needs storage and a better grid, or there is no power at night and in winter.
+Mennyire bizonyított? angolul: Researchers have shown that earlier models systematically overestimated the cost of renewables and underestimated their growth. One analysis finds that a rapid green transition would likely save many trillions of dollars compared with a fossil-based system, even without counting climate damages.
+Forrás: Empirically grounded technology forecasts and the energy transition (2022) – https://doi.org/10.1016/j.joule.2022.08.009
+Forrás: The underestimated potential of solar energy to mitigate climate change (2017) – https://doi.org/10.1038/nenergy.2017.140
+Lektorálva: igen
+--- technikai ---
+Keresés: solar PV cost forecasts underestimated learning rate energy transition
+
+=== halozat_osszekotes ===
+Korszak: III. (Átalakulás)
+Kérdés: Miért jó, ha az országok áramhálózata össze van kötve?
+Röviden: Ha az egyik országban nem fúj a szél, a másikban talán igen. Összekötött hálózattal az áram oda mehet, ahol éppen kell.
+Ha kikutatod:
+Mire jó?: Kevesebb tároló és tartalék erőmű kell, és olcsóbb lesz a tiszta áram, mert a szél és a nap ingadozása nagy területen kiegyenlítődik.
+Mi a gond vele?: Új távvezetékeket építeni lassú és drága, és sok helyen a lakók sem akarják őket a közelükben.
+Mennyire bizonyított?: Európai modellszámítások szerint egy szinte csak megújulókra épülő rendszerben a hálózat korlátozása kb. harmadával drágítja az áramot. Már a legjobb bővítés kevesebb mint felével (44%) is elérhető a megtakarítás 85%-a.
+Kérdés angolul: Why is it good when countries' power grids are connected?
+Röviden angolul: When there is no wind in one country, there may be wind in another. A connected grid lets power go where it is needed.
+Ha kikutatod angolul:
+Mire jó? angolul: Less storage and fewer backup plants are needed, and clean power gets cheaper, because wind and solar swings even out over a large area.
+Mi a gond vele? angolul: Building new power lines is slow and expensive, and many residents do not want them nearby.
+Mennyire bizonyított? angolul: European model studies find that in a highly renewable system, restricting the grid raises costs by about a third. Already 44% of the optimal expansion captures 85% of the savings.
+Forrás: The benefits of cooperation in a highly renewable European electricity network (2017) – https://doi.org/10.1016/j.energy.2017.06.004
+Forrás: Synergies of sector coupling and transmission reinforcement in a cost-optimised, highly renewable European energy system (2018) – https://doi.org/10.1016/j.energy.2018.06.222
+Lektorálva: igen
+--- technikai ---
+Keresés: European transmission grid expansion renewable cost optimisation
+
+=== faklyazas ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Miért égetik el a gázt az olajkutaknál?
+Röviden: Az olajjal együtt gáz is feljön a földből. Ahol nincs vezeték, sokszor egyszerűen elégetik egy nagy fáklyán.
+Ha kikutatod:
+Mire jó?: Ez a gáz pazarlás: el lehetne adni vagy áramot termelni vele. Ha nem égetik el és nem is engedik ki, kevesebb CO2 és metán kerül a levegőbe.
+Mi a gond vele?: A gáz összegyűjtéséhez vezeték és gép kell, ami pénzbe kerül. Távoli kutaknál ez nehéz.
+Mennyire bizonyított?: Műholdas mérés szerint 2012-ben a világon 7467 helyen égettek gázt, összesen kb. 143 milliárd köbmétert. Ez a kitermelt gáz 3,5%-a. A legtöbb fáklya az USA-ban van, a legtöbb gázt Oroszország égeti el.
+Kérdés angolul: Why is gas burned off at oil wells?
+Röviden angolul: Gas comes up together with oil. Where there is no pipeline, it is often simply burned in a large flare.
+Ha kikutatod angolul:
+Mire jó? angolul: This gas is wasted: it could be sold or used to make power. If it is neither burned nor released, less CO2 and methane enter the air.
+Mi a gond vele? angolul: Capturing the gas needs pipelines and equipment, which cost money. At remote wells this is hard.
+Mennyire bizonyított? angolul: Satellite measurements found 7,467 flare sites worldwide in 2012, burning about 143 billion cubic metres of gas, 3.5% of global production. The United States has the most flares; Russia flares the most gas.
+Forrás: Methods for Global Survey of Natural Gas Flaring from Visible Infrared Imaging Radiometer Suite Data (2015) – https://doi.org/10.3390/en9010014
+Forrás: Világbank – Global Gas Flaring Reduction Partnership – https://www.worldbank.org/en/programs/gasflaringreduction
+Lektorálva: igen
+--- technikai ---
+Keresés: global gas flaring VIIRS satellite volume
+
+=== foldben_marad ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyi olajat, gázt és szenet kell a földben hagyni?
+Röviden: Ha minden ismert olajat, gázt és szenet elégetnénk, nagyon melegre fűtenénk a Földet. Egy részüket ezért a föld alatt kell hagyni.
+Ha kikutatod:
+Mire jó?: Az olajra épülő országoknak és cégeknek időben fel kell készülniük: új bevétel és új munka kell, mielőtt a régi elfogy.
+Mi a gond vele?: A számítás modellből jön, és azon múlik, mennyi CO2-t tudunk majd kivonni a levegőből. A tervezett új kutak sokszor nem illenek a célokhoz.
+Mennyire bizonyított?: Egy modellszámítás szerint ahhoz, hogy fele eséllyel 1,5 °C alatt maradjunk, 2050-ig az olaj és a földgáz közel 60%-át, a szén 90%-át a földben kell hagyni, és az olaj- és gáztermelésnek évente 3%-kal kell csökkennie.
+Kérdés angolul: How much oil, gas and coal must stay in the ground?
+Röviden angolul: If we burned all known oil, gas and coal, we would heat the Earth a lot. Part of it must therefore stay underground.
+Ha kikutatod angolul:
+Mire jó? angolul: Countries and companies that live from oil must prepare in time: new income and new jobs are needed before the old ones run out.
+Mi a gond vele? angolul: The figures come from a model and depend on how much CO2 we can later remove from the air. Many planned new wells do not fit the goals.
+Mennyire bizonyított? angolul: A model study finds that for a 50% chance of staying below 1.5 °C, nearly 60% of oil and fossil gas and 90% of coal must stay unextracted by 2050, and oil and gas production must fall by 3% each year.
+Forrás: Unextractable fossil fuels in a 1.5 °C world (2021) – https://doi.org/10.1038/s41586-021-03821-8
+Forrás: The geographical distribution of fossil fuels unused when limiting global warming to 2 °C (2015) – https://doi.org/10.1038/nature14016
+Lektorálva: igen
+--- technikai ---
+Keresés: unextractable fossil fuel reserves carbon budget 1.5 C
+
+=== akku_olcsobodas ===
+Korszak: III. (Átalakulás)
+Kérdés: Miért lettek olcsóbbak az akkumulátorok?
+Röviden: Minél többet gyártanak valamiből, annál jobban és olcsóbban tudják gyártani. Az akkumulátorokkal is ez történt.
+Ha kikutatod:
+Mire jó?: Az olcsó akkumulátor teszi lehetővé a villanyautót, és hogy a napáramot estére is el lehessen tárolni.
+Mi a gond vele?: Az akkumulátorhoz fémek kellenek, amelyek bányászata gondokat okozhat. A jövőbeli árcsökkenés üteme sem biztos.
+Mennyire bizonyított?: Kutatók kimutatták, hogy a lítiumion-akkumulátorok gyorsan javultak és olcsóbbodtak, és a korábbi mérőszámok a háztartási és hálózati tárolásnál még alá is becsülték ezt az ütemet. Más elemzések szerint a modellek rendszeresen túl drágának becsülték a tiszta technológiákat.
+Kérdés angolul: Why have batteries become cheaper?
+Röviden angolul: The more of something is made, the better and cheaper it can be made. This happened with batteries too.
+Ha kikutatod angolul:
+Mire jó? angolul: Cheap batteries make electric cars possible and let solar power be stored for the evening.
+Mi a gond vele? angolul: Batteries need metals whose mining can cause problems. The pace of future price falls is also uncertain.
+Mennyire bizonyított? angolul: Researchers have shown that lithium-ion batteries improved and got cheaper quickly, and earlier metrics even underestimated this pace for stationary storage. Other analyses find that models have consistently overestimated the cost of clean technologies.
+Forrás: Re-examining rates of lithium-ion battery technology improvement and cost decline (2021) – https://doi.org/10.1039/D0EE02681F
+Forrás: Empirically grounded technology forecasts and the energy transition (2022) – https://doi.org/10.1016/j.joule.2022.08.009
+Lektorálva: igen
+--- technikai ---
+Keresés: lithium-ion battery cost decline learning rate
+
+=== elhagyott_kutak ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Szivárog-e metán a régi, elhagyott olajkutakból?
+Röviden: Ha egy olaj- vagy gázkút kiürül, sokszor nem zárják le rendesen. A föld alól metán szivároghat fel rajta.
+Ha kikutatod:
+Mire jó?: Ha megtalálják és lezárják a szivárgó kutakat, olcsón csökkenthető a metán, és munkahelyet is ad az olajvidékeken.
+Mi a gond vele?: Sok régi kút helyét senki sem ismeri, és a legtöbb keveset ereszt, néhány viszont nagyon sokat. Ezeket meg kell találni.
+Mennyire bizonyított?: Mérések szerint csak az USA-ban legalább 4 millió, Kanadában legalább 370 000 elhagyott kút van. A hivatalos becslések az elhagyott kutak metánját Kanadában 150%-kal, az USA-ban 20%-kal alábecsülik. Pennsylvaniában a mért kutak között volt néhány, amely ezerszer többet eresztett a többinél.
+Kérdés angolul: Do old, abandoned oil wells leak methane?
+Röviden angolul: When an oil or gas well runs dry, it is often not sealed properly. Methane can seep up through it.
+Ha kikutatod angolul:
+Mire jó? angolul: Finding and plugging leaking wells cuts methane cheaply and creates jobs in oil regions.
+Mi a gond vele? angolul: Nobody knows where many old wells are, and most leak little but a few leak a lot. Those must be found.
+Mennyire bizonyított? angolul: There are at least 4 million abandoned wells in the US and at least 370,000 in Canada. Official estimates of their methane are too low by 150% in Canada and 20% in the US. In Pennsylvania a few measured wells emitted a thousand times more than the rest.
+Forrás: Direct measurements of methane emissions from abandoned oil and gas wells in Pennsylvania (2014) – https://doi.org/10.1073/pnas.1408315111
+Forrás: Methane Emissions from Abandoned Oil and Gas Wells in Canada and the United States (2021) – https://doi.org/10.1021/acs.est.0c04265
+Lektorálva: igen
+--- technikai ---
+Keresés: abandoned oil gas wells methane emissions measurements
+
+=== metan_szivargas ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Többet szivárog-e a gázvezetékekből, mint amennyit jelentenek?
+Röviden: A földgáz főleg metán. A kutaktól a vezetékeken át sok helyen szivárog, és ezt nem mindig veszik észre.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, hogy több a szivárgás, célzottan lehet keresni és javítani. Ez gyorsan csökkenti a melegedést, mert a metán erősen melegít.
+Mi a gond vele?: A legnagyobb szivárgások gyakran üzemzavarkor történnek, amelyeket a szokásos számítások nem vesznek figyelembe.
+Mennyire bizonyított?: Mérések szerint az USA olaj- és gázágazatának metánkibocsátása 2015-ben kb. 60%-kal nagyobb volt a hivatalos becslésnél. A Nemzetközi Energiaügynökség szerint az ágazat metánkibocsátásának nagy része ma már létező technológiával elkerülhető lenne.
+Kérdés angolul: Do gas systems leak more than reported?
+Röviden angolul: Natural gas is mostly methane. It leaks in many places from wells through pipelines, and this is not always noticed.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know leaks are larger, we can search for and fix them. This slows warming fast, because methane warms strongly.
+Mi a gond vele? angolul: The biggest leaks often happen during malfunctions, which standard calculations miss.
+Mennyire bizonyított? angolul: Measurements show that US oil and gas methane emissions in 2015 were about 60% higher than the official inventory. The International Energy Agency finds that much of the sector's methane could be avoided with existing technology.
+Forrás: Assessment of methane emissions from the U.S. oil and gas supply chain (2018) – https://doi.org/10.1126/science.aar7204
+Forrás: IEA – Global Methane Tracker 2025 (2025) – https://www.iea.org/reports/global-methane-tracker-2025/key-findings
+Lektorálva: igen
+--- technikai ---
+Keresés: oil gas supply chain methane emissions measurement inventory
+
+=== legkondi ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Mennyi áramot visz el a légkondicionálás a melegben?
+Röviden: Ahogy melegszik a Föld és nő a jólét, egyre több családnak lesz légkondicionálója. Ez sok áramot igényel.
+Ha kikutatod:
+Mire jó?: Ha időben számolnak vele, több tiszta áram, jobb szigetelés és hatékonyabb gépek kellenek, hogy a hűtés ne növelje a kibocsátást.
+Mi a gond vele?: A légkondicionáló életet ment a hőségben, ezért nem lehet egyszerűen lemondani róla. A régi gépek hűtőgáza is melegít.
+Mennyire bizonyított?: Mexikói háztartások adatai szerint a jövedelem és a hőmérséklet emelkedésével gyorsan terjed a légkondicionálás: néhány évtized alatt szinte minden meleg vidéken általánossá válik. Ez jelentősen növeli az áramfogyasztást.
+Kérdés angolul: How much electricity does air conditioning use in the heat?
+Röviden angolul: As the Earth warms and incomes rise, more and more families get air conditioners. They use a lot of power.
+Ha kikutatod angolul:
+Mire jó? angolul: If planned in time, more clean power, better insulation and efficient machines can keep cooling from raising emissions.
+Mi a gond vele? angolul: Air conditioning saves lives in heatwaves, so it cannot simply be given up. Refrigerant gases in old units also warm the climate.
+Mennyire bizonyított? angolul: Data from Mexican households show that air conditioning spreads quickly as income and temperature rise: within a few decades it will be nearly universal in all warm areas. This raises electricity use substantially.
+Forrás: Contribution of air conditioning adoption to future energy use under global warming (2015) – https://doi.org/10.1073/pnas.1423558112
+Forrás: IEA – The Future of Cooling (2018) – https://www.iea.org/reports/the-future-of-cooling
+Lektorálva: igen
+--- technikai ---
+Keresés: air conditioning adoption income temperature electricity demand
+
+=== olajallam_jovo ===
+Korszak: III. (Átalakulás)
+Kérdés: Mit tesznek az olajállamok, ha csökken az olaj iránti igény?
+Röviden: Sok ország bevétele szinte teljesen az olajból jön. Ha a világ kevesebb olajat vesz, nekik új megélhetést kell találniuk.
+Ha kikutatod:
+Mire jó?: Ha megértjük az olajállamok helyzetét, jobb megállapodásokat lehet kötni velük: segíteni az átállásban, hogy ne a lassítás legyen az érdekük.
+Mi a gond vele?: Az olajbevétel a hatalmat is biztosítja sok országban. Ezért a változás nemcsak gazdasági, hanem politikai kérdés is.
+Mennyire bizonyított?: Egy 113 országra kiterjedő vizsgálat szerint az olajexport erősen összefügg a tekintélyelvű kormányzással. Az olaj- és gázcégek viselkedését vizsgáló kutatás szerint 2004 és 2019 között egyik nagy cég sem fordult el a fosszilis üzlettől; a legambiciózusabbak is csak megosztották a kockázatot.
+Kérdés angolul: What do oil states do when demand for oil falls?
+Röviden angolul: Many countries get almost all their income from oil. If the world buys less oil, they must find a new livelihood.
+Ha kikutatod angolul:
+Mire jó? angolul: If we understand oil states, better agreements can be made with them: help with the transition so that slowing it down is not in their interest.
+Mi a gond vele? angolul: Oil income also secures power in many countries, so change is a political question, not only an economic one.
+Mennyire bizonyított? angolul: A study of 113 countries finds that oil exports are strongly linked with authoritarian rule. Research on oil and gas companies finds that between 2004 and 2019 none of the majors shifted away from fossil fuels; the most ambitious only hedged their risks.
+Forrás: Does Oil Hinder Democracy? (2001) – https://doi.org/10.1353/wp.2001.0011
+Forrás: Transition, hedge, or resist? Understanding political and economic behavior toward decarbonization in the oil and gas industry (2022) – https://doi.org/10.1080/09692290.2021.1946708
+Lektorálva: igen
+--- technikai ---
+Keresés: oil curse rentier state decarbonization oil majors
+
+=== napelem_ujra ===
+Korszak: III. (Átalakulás)
+Kérdés: Mi lesz a kiöregedett napelemekkel?
+Röviden: Egy napelem évtizedekig működik, de utána le kell cserélni. A régi panelekben üveg, alumínium, szilícium és ezüst van.
+Ha kikutatod:
+Mire jó?: Ha a régi paneleket újrahasznosítják, kevesebb szemét lesz, és az értékes anyagokból új panel készülhet.
+Mi a gond vele?: Ma még kevés panel öregedett ki, ezért az újrahasznosítás drága, és az anyagok egy részét nehéz visszanyerni.
+Mennyire bizonyított?: Kutatók összegyűjtötték, milyen fejlesztések kellenek ahhoz, hogy a szilícium napelemek újrahasznosítása megérje, és körforgásos legyen az iparág. A Nemzetközi Megújulóenergia-ügynökség külön jelentésben foglalkozik a kiöregedett napelemek kezelésével.
+Kérdés angolul: What happens to old solar panels?
+Röviden angolul: A solar panel works for decades, but then needs replacing. Old panels contain glass, aluminium, silicon and silver.
+Ha kikutatod angolul:
+Mire jó? angolul: If old panels are recycled, there is less waste and valuable materials can go into new panels.
+Mi a gond vele? angolul: So far few panels have reached end of life, so recycling is expensive and some materials are hard to recover.
+Mennyire bizonyított? angolul: Researchers have set out which developments are needed to make silicon solar panel recycling worthwhile and the industry circular. The International Renewable Energy Agency has a dedicated report on managing end-of-life solar panels.
+Forrás: Research and development priorities for silicon photovoltaic module recycling to support a circular economy (2020) – https://doi.org/10.1038/s41560-020-0645-2
+Forrás: IRENA – End-of-life management: Solar photovoltaic panels (2016) – https://www.irena.org/publications/2016/Jun/End-of-life-management-Solar-Photovoltaic-Panels
+Lektorálva: igen
+--- technikai ---
+Keresés: photovoltaic module recycling end of life circular economy
+
+=== hosszu_tarolas ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyi tároló kell, hogy szélből és napból mindig legyen áram?
+Röviden: A szél és a nap nem mindig termel. Ha éjjel, szélcsendben vagy télen is kell áram, el kell tárolni a felesleget.
+Ha kikutatod:
+Mire jó?: Ha a tárolás elég olcsó, a szél és a nap egész évben, éjjel-nappal ellátja az embereket, szén- és gázerőmű nélkül.
+Mi a gond vele?: A napokig vagy hetekig tartó tároláshoz még drága a ma használt akkumulátor. Ezért más módszerek is kellenek, például hő-, víz- vagy vegyi tárolás.
+Mennyire bizonyított?: Egy elemzés szerint, ha a tárolás kapacitásának ára kb. 20 dollár/kWh alá csökken, a szél és a nap tárolóval együtt a napsütéses, szeles vidékeken (például Texasban és Arizonában) olcsón biztosíthatja az állandó áramot. Ha néhány órányi kiesés megengedett, a tárolás olcsóbb lehet, de akkor kiegészítő megoldás kell.
+Kérdés angolul: How much storage is needed for wind and solar to supply power at all times?
+Röviden angolul: Wind and sun do not always produce. If power is needed at night, in calm weather or in winter, surplus must be stored.
+Ha kikutatod angolul:
+Mire jó? angolul: If storage is cheap enough, wind and solar can supply people day and night, all year, without coal or gas plants.
+Mi a gond vele? angolul: Today's batteries are still expensive for storing power for days or weeks. Other methods are needed too, such as heat, water or chemical storage.
+Mennyire bizonyított? angolul: An analysis finds that if storage capacity costs fall below roughly $20/kWh, wind and solar with storage could cost-competitively provide constant power in sunny, windy places such as Texas and Arizona. Allowing a few hours of downtime makes storage cheaper but requires supplemental technologies.
+Forrás: Storage Requirements and Costs of Shaping Renewable Energy Toward Grid Decarbonization (2019) – https://doi.org/10.1016/j.joule.2019.06.012
+Forrás: The design space for long-duration energy storage in decarbonized power systems (2021) – https://doi.org/10.1038/s41560-021-00796-8
+Lektorálva: igen
+--- technikai ---
+Keresés: long-duration energy storage cost targets wind solar baseload

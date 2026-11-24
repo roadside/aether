@@ -369,7 +369,7 @@ const EN := {
 	"Tíz éve fut: bővítem a CO2-kivonást.": "It has run for ten years: I expand the CO2 removal.",
 	"Minijáték: %s": "Minigame: %s",
 	"Jégfurat": "Ice core",
-	"Tartsd nyomva a szóközt, és fúrj le a jégbe! Ha a fúró felforrósodik, engedd el.": "Hold the space bar to drill into the ice. Let go when the drill gets hot.",
+	"Tartsd lenyomva a szóközt, és fúrj le a jégbe! Ha a fúró felforrósodik, engedd el.": "Hold the space bar to drill into the ice. Let go when the drill gets hot.",
 	"%s ezer éve: %s ppm": "%s thousand years ago: %s ppm",
 	"ezer éve": "thousand years ago",
 	"800 ezer évig a levegő CO2-tartalma %s és %s ppm között maradt.": "For 800,000 years the CO2 in the air stayed between %s and %s ppm.",
