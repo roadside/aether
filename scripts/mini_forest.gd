@@ -267,6 +267,12 @@ func _make_tile() -> void:
 			for k in 3:
 				_shapes.append(["silo", yard.position + Vector2(134.0, 22.0 + k * 24.0), 10.0])
 			_shapes.append(["blob", yard.position + Vector2(70.0, 110.0), 15.0, Color("#3f8a9a")])      # itató
+			for k in 8:      # tehenek az első táblán
+				var cp := Vector2(x0 + rng.randf_range(14.0, cw[0] - 24.0), y0 + rng.randf_range(14.0, rh[0] - 24.0))
+				_shapes.append(["blob", cp + Vector2(1.5, 2.0), 3.2, Color(0, 0, 0, 0.3)])
+				_shapes.append(["blob", cp, 3.2, Color("#f2efe6") if k % 3 != 0 else Color("#5a4030")])
+			_shapes.append(["rect", Rect2(gate + Vector2(22.0, -1.0), Vector2(16.0, 9.0)), Color("#2f6fb0")])      # teherautó a bekötőúton
+			_shapes.append(["rect", Rect2(gate + Vector2(38.0, 0.0), Vector2(7.0, 7.0)), Color("#c9d1de")])
 			_shapes.append(["tree", yard.position + Vector2(20.0, 66.0), 13.0, green[1]])
 			_shapes.append(["tree", yard.position + Vector2(118.0, 104.0), 11.0, green[0]])
 			for k in 46:      # az erdő széle belóg a táblák fölé
@@ -342,6 +348,8 @@ func _make_tile() -> void:
 				var a := -0.6 + i * 0.3
 				ramp.append(c + Vector2(cos(a), sin(a) * 0.86) * (205.0 - i * 5.0))
 			_shapes.append(["path", ramp, Color("#d6c096"), 4.0])
+			for k in 4:      # dömperek a szállítóúton
+				_shapes.append(["rect", Rect2(ramp[3 + k * 7] - Vector2(6.0, 4.0), Vector2(12.0, 8.0)), Color("#e8b62c")])
 			var pond := c + Vector2(232.0, 190.0)
 			_shapes.append(["poly", _noisy(pond, 82.0, 14, rng, 0.14), Color("#9c9079")])      # zagytározó gátja
 			_shapes.append(["poly", _noisy(pond, 66.0, 14, rng, 0.12), Color("#4fa7b0")])
@@ -416,6 +424,12 @@ func _make_tile() -> void:
 				_shapes.append(["path", PackedVector2Array([Vector2(x0 + g * bs, y0 - 6.0), Vector2(x0 + g * bs, y0 + 6.0 * bs + 6.0)]), Color("#b4b9c0"), w])
 				_shapes.append(["path", PackedVector2Array([Vector2(x0 - 6.0, y0 + g * bs), Vector2(x0 + 6.0 * bs + 6.0, y0 + g * bs)]), Color("#b4b9c0"), w])
 			_shapes.append(["path", PackedVector2Array([Vector2(x0 + 3.0 * bs, y0 + 6.0 * bs), Vector2(x0 + 3.0 * bs + 20.0, 660.0)]), Color("#b4b9c0"), 9.0])      # országút kifelé
+			var cars := [Color("#e8e8e8"), Color("#c0392b"), Color("#2f6fb0"), Color("#e0b030")]
+			for k in 9:      # autók az utcákon
+				if k % 2 == 0:
+					_shapes.append(["rect", Rect2(Vector2(x0 + 3.0 * bs - 2.5, y0 + rng.randf_range(10.0, 6.0 * bs - 16.0)), Vector2(5.0, 9.0)), cars[k % 4]])
+				else:
+					_shapes.append(["rect", Rect2(Vector2(x0 + rng.randf_range(10.0, 6.0 * bs - 16.0), y0 + 3.0 * bs - 2.5), Vector2(9.0, 5.0)), cars[k % 4]])
 			_shapes.append(["path", PackedVector2Array([Vector2(x0 + 6.0 * bs, y0 + 3.0 * bs), Vector2(660.0, y0 + 3.0 * bs - 30.0)]), Color("#b4b9c0"), 9.0])
 
 
