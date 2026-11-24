@@ -521,6 +521,16 @@ func _ready() -> void:
 		for a in args:
 			if str(a).begins_with("--mini="):
 				mwhich = str(a).substr(7)
+		if "--gyujtemenybol" in args:      # próba: a Gyűjtemény ablakából indítva az ablak eltűnik-e
+			_open_collection()
+			_open_mini(mwhich)
+			await get_tree().create_timer(3.0).timeout
+			var gdir := OS.get_user_data_dir().path_join("aether_onteszt")
+			DirAccess.make_dir_recursive_absolute(gdir)
+			get_viewport().get_texture().get_image().save_png(gdir.path_join("mini_gyujtemenybol.png"))
+			print("MINIJATEK gyűjteményből: ablak látszik=%s" % str(_overlay != null and _overlay.visible))
+			get_tree().quit()
+			return
 		var mi = (load(str(MINI[mwhich][1])) as GDScript).new()
 		mi.auto = true
 		add_child(mi)
@@ -1692,8 +1702,13 @@ func _open_collection() -> void:
 		all_n += Cards.TAGS[th].size()
 	body.add_child(UI.label(L.t("Rangod: %s") % L.t(_rank(c.size())), 22, UI.GOLD, true))
 	if not _dry:      # a minijátékok innen bármikor újrajátszhatók (amíg a kártyájuk nincs a játékban, csak innen érhetők el)
+		var mflow := HFlowContainer.new()
+		mflow.add_theme_constant_override("h_separation", 10)
+		mflow.add_theme_constant_override("v_separation", 8)
 		for mid in MINI:
-			body.add_child(_go("▶ " + L.t("Minijáték: %s") % L.t(str(MINI[mid][0])), _open_mini.bind(mid), false))
+			mflow.add_child(_go("▶ " + L.t(str(MINI[mid][0])), _open_mini.bind(mid), false))
+		body.add_child(UI.label(L.t("Minijátékok"), 19, UI.TEXT, true))
+		body.add_child(mflow)
 	body.add_child(UI.label(L.t("Kikutatott kártyák: %d / %d") % [c.size(), all_n], 19, UI.TEXT, true))
 	for r in RANKS:
 		if int(r[0]) > c.size():
@@ -1973,13 +1988,22 @@ func _do_research(id: String, th: String) -> void:
 
 
 ## Minijátékok: kártya -> [név, a jelenet szkriptje]. A minijáték valódi adatból rajzol; a menete játékszabály.
-const MINI := {"jegfurat": ["Jégfurat", "res://scripts/mini_ice.gd"], "halozat_osszekotes": ["Áramhálózat", "res://scripts/mini_grid.gd"], "repules": ["Kondenzcsík-kerülő", "res://scripts/mini_flight.gd"], "sztratoszfera": ["Nap vagy CO2?", "res://scripts/mini_sun.gd"], "metan_szivargas": ["Metánvadász", "res://scripts/mini_methane.gd"], "tengeri_hohullam": ["Melegrekord a tengeren", "res://scripts/mini_sea.gd"], "viharar": ["Gátőr", "res://scripts/mini_dike.gd"]}
+const MINI := {"jegfurat": ["Jégfurat", "res://scripts/mini_ice.gd"], "halozat_osszekotes": ["Áramhálózat", "res://scripts/mini_grid.gd"], "repules": ["Kondenzcsík-kerülő", "res://scripts/mini_flight.gd"], "sztratoszfera": ["Nap vagy CO2?", "res://scripts/mini_sun.gd"], "metan_szivargas": ["Metánvadász", "res://scripts/mini_methane.gd"], "tengeri_hohullam": ["Melegrekord a tengeren", "res://scripts/mini_sea.gd"], "viharar": ["Gátőr", "res://scripts/mini_dike.gd"], "erdoirtas_okai": ["Erdőnyomozó", "res://scripts/mini_forest.gd"]}
 
 func _open_mini(id: String) -> void:
 	var mi = (load(str(MINI[id][1])) as GDScript).new()
+	mi.z_index = 50      # minden ablak fölé kerül
+	var hidden: Array = []
+	for n in [_overlay, _dim, _close_x]:      # amíg a minijáték tart, a mögötte lévő ablak eltűnik
+		if n != null and is_instance_valid(n) and n.visible:
+			n.visible = false
+			hidden.append(n)
 	add_child(mi)
 	await mi.finished
 	mi.queue_free()
+	for n in hidden:
+		if is_instance_valid(n):
+			n.visible = true
 
 
 func _open_card(id: String, fresh: bool = false) -> void:

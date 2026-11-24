@@ -738,6 +738,32 @@ A CO2-kivonás ablakában és a naplóban:
 - A régen százévente egyszer előforduló magas vízállás 2100-ra a mérőhelyek több mint felén legalább évente előfordul.
 - A gát időt ad, de a tenger 2100 után is emelkedik. A kibocsátás csökkentése lassítja.
 
+### Minijáték: Erdőnyomozó (az „erdoirtas_okai” kártyához; a %d és %s helyére szám kerül)
+
+- Erdőnyomozó
+- Ez egy műholdkép egy erdőről. Mi tüntette el a fákat? Válaszd ki!
+- Kép: %d / %d    Jó válasz: %d
+- Jó válasz: %d / %d
+- Igen!
+- Nem egészen.
+- Egyenes szélű, nagy táblák: itt szántó, legelő vagy ültetvény lett az erdőből.
+- Szabálytalan, fekete folt, utak és táblák nélkül: tűz égette le.
+- Halszálka-minta: egy főútról oldalutak ágaznak el, közben az erdő visszanő.
+- Teraszos gödör, mellette víztározó: bánya.
+- Sok kis, szabálytalan irtás, a régebbiek már újra zöldülnek.
+- Sűrű utcák és házak: település nőtt az erdő helyén.
+- Rajzolt jelkép, nem valódi műholdkép.
+- A valóságban 2001 és %d között %s millió hektár faborítás tűnt el a Földön.
+- A legnagyobb ok az állandó mezőgazdaság (%s%%). Ez végleges: az erdő helyén szántó, legelő vagy ültetvény lesz.
+- Fakitermelés és váltogató művelés után gyakran visszanő az erdő.
+- Az adatsor utolsó évében (%d) a tűz %s millió hektárt pusztított el, többet, mint bármelyik korábbi évben.
+- Faborítás-vesztés okai évente (millió hektár)
+- Az okok nevei: Települések, utak; Bányászat, energiaipar; Más természeti zavar (földcsuszamlás, rovarkár); Váltogató földművelés; Fakitermelés; Állandó mezőgazdaság; Erdőtűz
+
+### Gyűjtemény
+
+- Minijátékok
+
 ### Átnevezés: „Saját AI” helyett „Föld AI” (Zoltán kérése, 21:29). Ezekben a már lektorált szövegekben csak a név változott:
 
 - Föld AI
