@@ -2148,7 +2148,10 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 			area.add_child(UI.label(L.t("Elbizonytalanodtak. Ha a kör végéig nem erősíted meg őket, meginognak, és későbbre tolják a céljukat."), 16, UI.GOLD))
 		area.add_child(UI.label(L.t("Amitől tartanak:"), 17, UI.GOLD, true, false))
 		var usable := world.usable(g)
-		for th in g["felelmek"]:
+		# előre az az aggodalom kerül, amelyikre van kártyád: a bejelölhető sor görgetés nélkül látszik
+		var has_card := func(th: String) -> bool: return usable.any(func(id: String) -> bool: return Cards.theme_of(id) == th)
+		var fears: Array = (g["felelmek"] as Array).filter(has_card) + (g["felelmek"] as Array).filter(func(th: String) -> bool: return not has_card.call(th))
+		for th in fears:
 			var c := UI.card(_theme_color(th))
 			var wrow := UI.hbox(10)
 			wrow.add_child(Icons.rect(th, _theme_color(th), 24))
