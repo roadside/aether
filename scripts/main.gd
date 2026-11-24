@@ -8,6 +8,7 @@ const Globe := preload("res://scripts/globe.gd")
 const Intro := preload("res://scripts/intro.gd")
 const World := preload("res://scripts/world.gd")
 const Cards := preload("res://scripts/cards.gd")
+const Agent := preload("res://scripts/agent.gd")
 const M := preload("res://scripts/model.gd")
 const Chart := preload("res://scripts/curve.gd")
 const PathChart := preload("res://scripts/path_chart.gd")
@@ -252,7 +253,7 @@ func _ramp(from_round: int) -> bool:
 var _tutor_force := false
 
 func _tutor_on() -> bool:
-	if world == null or world.over() or world.round_i != 0:
+	if world == null or world.over() or world.round_i != 0 or _auto != "":
 		return false
 	if _tutor_force or not bool(L.get_setting("tanulo_kesz", false)):
 		_ramp_game = world.game_id
@@ -261,7 +262,7 @@ func _tutor_on() -> bool:
 
 
 func _tutor_text() -> String:
-	if _intro != null or world == null:
+	if _intro != null or world == null or _auto != "":
 		return ""
 	if not _tutor_on():
 		if _overlay != null or world.over() or _ramp_game != world.game_id:
@@ -310,6 +311,8 @@ func _tutor_update(ctx: String = "") -> void:
 func _clock_runs() -> bool:
 	if _clock_force:
 		return true
+	if _auto != "":                # amíg a gép játszik, az óra áll: a gép a saját tempójában lép
+		return false
 	if _tutor_on() and not _clock_live:
 		return false
 	if _clock_live:
@@ -456,9 +459,9 @@ func _ready() -> void:
 	get_tree().node_added.connect(_on_node_added)
 	var args := OS.get_cmdline_user_args()
 	_test = "--onteszt" in args or "--bejaras" in args
-	_dry = (_test and not ("--eles" in args)) or "--elojatek" in args or "--majom" in args
+	_dry = (_test and not ("--eles" in args)) or "--elojatek" in args or "--majom" in args or "--gepjatek" in args
 	L.dry = _dry
-	if _test or "--intro-kepek" in args or "--elojatek" in args or "--majom" in args:
+	if _test or "--intro-kepek" in args or "--elojatek" in args or "--majom" in args or "--gepjatek" in args:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)   # az ellenőrző futások ablakban mennek
 	var bg := TextureRect.new()
 	bg.texture = load("res://assets/nebula_bg.png")
@@ -501,6 +504,13 @@ func _ready() -> void:
 		return
 	if "--elojatek" in args:
 		_live_play()
+		return
+	if "--gepjatek" in args:
+		var gk := "okos"
+		for a in args:
+			if str(a).begins_with("--gep="):
+				gk = str(a).substr(6)
+		_auto_test(gk)
 		return
 	if "--majom" in args:
 		var ms := 1
@@ -1025,6 +1035,16 @@ func _build_menu() -> void:
 		_show_menu(false)
 		_open_collection())
 	v.add_child(coll)
+	var ai := UI.button(L.t("AI játszik"))
+	ai.pressed.connect(func() -> void:
+		_show_menu(false)
+		_open_auto())
+	v.add_child(ai)
+	var tip := UI.button(L.t("Tanács a géptől"))
+	tip.pressed.connect(func() -> void:
+		_show_menu(false)
+		_hint())
+	v.add_child(tip)
 	var mus := UI.button(L.t("Zene: be") if _music_on() else L.t("Zene: ki"))
 	mus.pressed.connect(_toggle_music.bind(mus))
 	v.add_child(mus)
@@ -1152,6 +1172,7 @@ func _pick_game(code: int = -1, level: int = -1) -> void:
 
 
 func _new_game(code: int = -1, steps_n: int = World.STEPS, level: int = 0) -> void:
+	_auto_stop()
 	_close()
 	world.new_game(code, steps_n, level)
 	world.gentle = not _test and not bool(L.get_setting("tanulo_kesz", false))      # az első játék szelídebb
@@ -1423,7 +1444,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _intro != null:
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_ESCAPE and _overlay != null:
+		if event.keycode == KEY_ESCAPE and _auto != "":
+			_auto_stop()
+		elif event.keycode == KEY_ESCAPE and _overlay != null:
 			_close()
 		elif event.keycode == KEY_ESCAPE:
 			_show_menu(not _menu.visible)
@@ -1537,7 +1560,7 @@ func _finish_game(r: Dictionary) -> Dictionary:
 	if _end_info.get("jatek", -1) == world.game_id:
 		return _end_info
 	_end_info = {"jatek": world.game_id, "rekord": false, "uj": []}
-	if _dry or world.game_id == int(L.get_setting("utolso_jatek", -1)):
+	if _dry or world.ai or world.game_id == int(L.get_setting("utolso_jatek", -1)):      # gép által játszott játék nem számít
 		return _end_info
 	var t := float(r["T"])
 	L.set_setting("utolso_jatek", world.game_id)
@@ -2335,6 +2358,242 @@ func _open_cdr() -> void:
 		body.add_child(UI.card_root(c))
 
 
+
+# --- AI játszik ----------------------------------------------------------------
+## A játékot gép is játszhatja: minden lépése előtt kiírja, miért lép úgy, és bármikor visszavehető tőle az irányítás.
+## A beépített gépek rögzített szabályokat követnek (scripts/agent.gd); a „Saját AI” a játékos gépén futó nyelvi modell.
+const AUTO_NAMES := {"kezdo": "Kezdő gép", "atlagos": "Átlagos gép", "okos": "Okos gép", "sajat": "Saját AI"}
+const AUTO_INFO := {"kezdo": "Mindig a legkönnyebb célt kéri.", "atlagos": "Véletlen sorrendben halad, metáncsökkentést is kér.",
+	"okos": "A legnagyobb kibocsátókkal kezd, és a legmerészebb célt kéri."}
+const AUTO_THINK := 1.7            # ennyi ideig látszik az indoklás, mielőtt a gép lép
+const AUTO_READ := 3.2             # ennyi ideig marad nyitva egy ablak (hírek), mielőtt a gép továbblép
+
+var _auto := ""                    # "", "kezdo", "atlagos", "okos", "sajat"
+var _auto_run := 0
+var _agent
+var _auto_bar: PanelContainer
+var _auto_lbl: Label
+var _auto_catch: Control
+var _auto_fast := false            # próbafutás: várakozás nélkül
+var _auto_speed := 1.0
+
+
+func _open_auto() -> void:
+	var body := _open(L.t("AI játszik"), UI.CYAN)
+	if world.over():
+		body.add_child(UI.label(L.t("Ez a játék már véget ért. Indíts újat, és ott kérd a gépet!"), 17, UI.SOFT))
+		return
+	body.add_child(UI.label(L.t("Nézd, ahogy egy gép játszik ezen a Földön, és figyeld, miért lép úgy! Bármikor visszaveheted az irányítást."), 17, UI.SOFT))
+	for kind in Agent.KINDS:
+		var c := UI.card(UI.CYAN)
+		c.add_child(UI.label(L.t(AUTO_INFO[kind]), 16, UI.SOFT))
+		c.add_child(_go(L.t(AUTO_NAMES[kind]) + " →", _auto_start.bind(kind), kind == "okos"))
+		body.add_child(UI.card_root(c))
+	body.add_child(UI.label(L.t("Ezek a gépek rögzített szabályokat követnek, nem tanulnak."), 14, UI.MUTE))
+	_add_own_ai(body)
+	body.add_child(UI.label(L.t("A gép által játszott játék nem számít bele a gyűjteményedbe és a jelvényeidbe."), 14, UI.MUTE))
+
+
+func _add_own_ai(_body: VBoxContainer) -> void:
+	pass
+
+
+func _auto_start(kind: String) -> void:
+	_close()
+	if world.over():
+		return
+	_auto = kind
+	world.ai = true
+	_agent = Agent.new(world, world.seed_v + world.round_i)
+	if _auto_bar == null:
+		_auto_catch = Control.new()             # amíg a gép játszik, a kattintások nem érik el a játékot
+		_auto_catch.set_anchors_preset(Control.PRESET_FULL_RECT)
+		_auto_catch.mouse_filter = Control.MOUSE_FILTER_STOP
+		_auto_catch.z_index = 19
+		add_child(_auto_catch)
+		_auto_bar = PanelContainer.new()
+		_auto_bar.add_theme_stylebox_override("panel", _flat(Color(0.03, 0.05, 0.11, 0.96), UI.CYAN, 2, 10))
+		_auto_bar.position = Vector2(340, 748)
+		_auto_bar.z_index = 21
+		var h := UI.hbox(12)
+		_auto_lbl = UI.label("", 17, UI.TEXT, true, true)
+		_auto_lbl.custom_minimum_size = Vector2(430, 0)
+		_auto_lbl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		h.add_child(_auto_lbl)
+		var fast := UI.button("▶")              # a gép tempója: ▶ rendes, ▶▶▶ gyors
+		fast.focus_mode = Control.FOCUS_NONE
+		fast.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		fast.pressed.connect(func() -> void:
+			_auto_speed = 3.0 if _auto_speed < 2.0 else 1.0
+			fast.text = "▶" if _auto_speed < 2.0 else "▶▶▶")
+		h.add_child(fast)
+		var stop := UI.button(L.t("Átveszem"), true)
+		stop.focus_mode = Control.FOCUS_NONE
+		stop.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		stop.pressed.connect(_auto_stop)
+		h.add_child(stop)
+		_auto_bar.add_child(h)
+		add_child(_auto_bar)
+	_auto_catch.visible = true
+	_auto_bar.visible = true
+	_auto_lbl.text = L.t(AUTO_NAMES[kind])
+	_tutor_update()
+	_refresh()
+	_auto_loop()
+
+
+## Tanács a géptől: megmutatja, mit lépne most az Okos gép, és miért. Nem lép helyetted.
+var _hint_lbl: Label
+
+func _hint() -> void:
+	if world.over() or _auto != "" or _overlay != null:
+		return
+	var ag = Agent.new(world, world.seed_v + world.round_i)
+	ag.offers = _offers
+	var a: Dictionary = ag.policy("okos")
+	var why := L.t(str(a.get("miert", "")))
+	if "%s" in why:
+		why = why % str(a.get("mivel", ""))
+	if _hint_lbl == null:
+		_hint_lbl = UI.label("", 17, UI.TEXT, true, false)
+		_hint_lbl.add_theme_stylebox_override("normal", _flat(Color(0.03, 0.05, 0.11, 0.96), UI.CYAN, 2, 10))
+		_hint_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_hint_lbl.position = Vector2(340, 716)
+		_hint_lbl.z_index = 21
+		add_child(_hint_lbl)
+	_hint_lbl.text = "%s: %s" % [L.t("Az Okos gép ezt lépné"), why]
+	_hint_lbl.reset_size()
+	_hint_lbl.modulate.a = 1.0
+	_hint_lbl.visible = true
+	var gid := str(a.get("group", ""))
+	if gid != "" and _group_cards.has(gid):
+		_flash_ids = [gid]
+		_close()
+	var tw := _hint_lbl.create_tween()
+	tw.tween_interval(6.0)
+	tw.tween_property(_hint_lbl, "modulate:a", 0.0, 0.6)
+
+
+func _auto_stop() -> void:
+	if _auto == "":
+		return
+	_auto = ""
+	_auto_run += 1
+	if _auto_bar != null:
+		_auto_bar.visible = false
+		_auto_catch.visible = false
+	if world != null and _menu != null:
+		_clock = 0.0
+		_tutor_update()
+		_refresh()
+
+
+func _auto_wait(t: float) -> void:
+	await get_tree().create_timer(0.02 if _auto_fast else t / _auto_speed).timeout
+
+
+## A gép következő lépése. A „Saját AI” kérdezi a nyelvi modellt; ha az nem ad szabályos lépést, az Okos gép lép helyette.
+func _auto_decide() -> Dictionary:
+	return _agent.policy(_auto if _auto in Agent.KINDS else "okos")
+
+
+func _auto_loop() -> void:
+	_auto_run += 1
+	var run := _auto_run
+	var game := world.game_id
+	while _auto != "" and run == _auto_run and world.game_id == game and is_inside_tree():
+		if _busy or _intro != null:
+			await get_tree().create_timer(0.2).timeout
+			continue
+		if _overlay != null:               # nyitva maradt ablak (hírek, döntés): a gép elolvassa, aztán továbblép
+			var seen: Control = _overlay
+			await _auto_wait(AUTO_READ)
+			if _auto == "" or run != _auto_run or world.game_id != game or not is_inside_tree():
+				return
+			if world.over():
+				break
+			if _overlay == seen:
+				_close()
+			continue
+		if world.over():
+			break
+		_agent.offers = _offers
+		var a: Dictionary = await _auto_decide()
+		if _auto == "" or run != _auto_run or world.game_id != game or not is_inside_tree():
+			return
+		if a.is_empty():
+			a = {"type": "end_round", "miert": "Most nincs jó lépésem. Jöhet a következő öt év."}
+		var why := L.t(str(a.get("miert", "")))
+		if "%s" in why:
+			why = why % str(a.get("mivel", ""))
+		if a.has("szoveg"):                # a nyelvi modell saját mondata
+			why = str(a["szoveg"])
+		_auto_lbl.text = "%s: %s" % [L.t(AUTO_NAMES[_auto]), why]
+		var gid := str(a.get("group", ""))
+		if gid != "" and _group_cards.has(gid):
+			_pulse(gid, true, UI.CYAN)
+		await _auto_wait(AUTO_THINK)
+		if _auto == "" or run != _auto_run or world.game_id != game or not is_inside_tree():
+			return
+		if _busy or _overlay != null:
+			continue
+		if a["type"] == "end_round":
+			await _advance()
+		else:
+			_agent.offers = _offers
+			if not _agent.apply(a):
+				_auto_lbl.text = "%s: %s" % [L.t(AUTO_NAMES[_auto]), L.t("Ez a lépés nem szabályos. Jöhet a következő öt év.")]
+				await _auto_wait(AUTO_THINK)
+				if _auto == "" or run != _auto_run or world.game_id != game or not is_inside_tree():
+					return
+				if world.summit_due:
+					world.skip_summit()
+				elif not world.dilemma.is_empty():
+					world.resolve_dilemma(0)
+				else:
+					await _advance()
+			else:
+				match str(a["type"]):
+					"research":
+						_sound("kartya")
+						_float_text(_theme_name(Cards.theme_of(str(a["card"]))), (_btns["kartyak"] as Control).global_position + Vector2(80, 0), _theme_color(Cards.theme_of(str(a["card"]))))
+					"negotiate", "methane", "summit", "refute":
+						_sound("egyezseg")
+					_:
+						_sound("kartya")
+				if gid != "":
+					_flash_ids = [gid]
+			_refresh()
+			_save()
+			if _overlay == null:
+				_close()                   # felvillantja az érintett csoportot
+		await _auto_wait(0.7)
+	if _auto != "" and run == _auto_run and world.game_id == game and is_inside_tree():
+		_auto_stop()
+		if world.over():
+			_open_end()
+
+
+## A gépek ugyanezen a Földön (ugyanaz a Föld-kód, fokozat és kihívás): mérce a saját eredményedhez.
+## A véletlen események a lépésektől is függnek, ezért a gépek játéka nem pontosan ugyanaz a történet.
+func _add_ladder(body: VBoxContainer, mine: float) -> void:
+	var rows: Array = [[L.t("Te") if not world.ai else L.t("Ez a játék"), mine, true]]
+	for kind in Agent.KINDS:
+		var steps_n: int = world.max_steps + (1 if world.challenge >= 5 else 0)
+		rows.append([L.t(AUTO_NAMES[kind]), float(Agent.play(kind, world.seed_v, steps_n, world.challenge)["T"]), false])
+	rows.sort_custom(func(a: Array, b: Array) -> bool: return float(a[1]) < float(b[1]))
+	body.add_child(UI.label(L.t("Ugyanezen a Földön"), 19, UI.GOLD, true, false))
+	var h := HFlowContainer.new()
+	h.add_theme_constant_override("h_separation", 10)
+	h.add_theme_constant_override("v_separation", 8)
+	for i in rows.size():
+		var r: Array = rows[i]
+		var col: Color = UI.GREEN if r[2] else UI.SOFT
+		var l := UI.label("%d. %s  +%s °C" % [i + 1, str(r[0]), L.num(float(r[1]), 2)], 16, col, bool(r[2]), false)
+		l.add_theme_stylebox_override("normal", _flat(Color(col, 0.10), Color(col, 0.7 if r[2] else 0.3), 1, 8))
+		h.add_child(l)
+	body.add_child(h)
+
 # --- telik az idő -------------------------------------------------------------
 ## Nagy, áttetsző évszám a Föld fölött, amíg az évek peregnek.
 func _year_label() -> Label:
@@ -2734,6 +2993,9 @@ func _open_end() -> void:
 	for bd in BADGES:
 		if bd[0] in fin["uj"]:
 			body.add_child(UI.label("★ " + L.t("Új jelvény: %s") % L.t(bd[1]), 17, UI.GOLD, true))
+	if world.ai:
+		body.add_child(UI.label(L.t("Ebben a játékban gép is lépett, ezért nem számít bele a gyűjteményedbe."), 15, UI.SOFT))
+	_add_ladder(body, tt)
 	if not world.naplo.is_empty():       # a játék története egy képen, rögtön az eredmény alatt
 		_add_story(body)
 	body.add_child(UI.label(L.t("A legmelegebb év: +%s °C. Küszöbét átlépő rendszer: %d a %d-ből.") % [L.num(float(r["csucs"]), 2), int(r["billenes"]), world.tips.size()], 17, UI.TEXT))
@@ -2747,8 +3009,10 @@ func _open_end() -> void:
 	body.add_child(UI.label(L.t("Föld-kód: %d. Ha egy barátod ezt írja be a menüben, ugyanezt a Földet kapja.") % world.seed_v, 14, UI.SOFT))
 	var end_row := UI.hbox(12)
 	end_row.add_child(_go(L.t("Új játék, új Föld") + " →", func() -> void: _pick_game()))
+	var again_code: int = world.seed_v
+	end_row.add_child(_go(L.t("Ugyanez a Föld újra"), func() -> void: _pick_game(again_code), false))
 	var saved_lbl := UI.label("", 14, UI.SOFT)
-	saved_lbl.custom_minimum_size = Vector2(430, 0)
+	saved_lbl.custom_minimum_size = Vector2(250, 0)
 	end_row.add_child(_go(L.t("Kép mentése"), func() -> void:
 		var msg: String = await _save_picture()
 		if is_instance_valid(saved_lbl):       # mentés közben bezárhatták az ablakot
@@ -3041,6 +3305,30 @@ func _monkey(seed_n: int, seconds: float) -> void:
 			b.pressed.emit()
 		clicks += 1
 	print("MAJOM kész mag=%d kattintás=%d legtovább=%d. kör befejezett=%d lépés=%d kihívás=%d" % [seed_n, clicks, top_round, games, world.max_steps, world.challenge])
+	get_tree().quit()
+
+
+## Gépi próbajáték (godot -- --gepjatek [--gep=kezdo|atlagos|okos|sajat]): a gép valós felületen végigjátszik egy játékot.
+func _auto_test(kind: String) -> void:
+	world.new_game(2026)
+	_refresh()
+	var wait := func(t: float) -> void: await get_tree().create_timer(t).timeout
+	await wait.call(1.0)
+	_open_auto()
+	await wait.call(0.5)
+	await _shot("g1_ablak.png")
+	_auto_start(kind)
+	await wait.call(1.0)
+	await _shot("g2_indoklas.png")
+	await wait.call(6.0)
+	await _shot("g3_lepes_utan.png")
+	_auto_fast = true
+	var t0 := Time.get_ticks_msec()
+	while _auto != "" and Time.get_ticks_msec() - t0 < 240000:
+		await wait.call(0.5)
+	await wait.call(4.0)
+	await _shot("g4_vege.png")
+	print("GEPJATEK kész gep=%s vege=%s ablak=%s T=%.2f gepi=%s" % [kind, str(world.over()), str(_overlay != null), float(world.st["T"]), str(world.ai)])
 	get_tree().quit()
 
 
