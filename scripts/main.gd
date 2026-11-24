@@ -465,6 +465,8 @@ func _ready() -> void:
 	if _dry and "--orszagok" in args:      # próba: AI-országok bekapcsolva (csak a memóriában), ha fut a saját AI
 		L.set_setting("orszag_ai", true)
 		_own_probe()
+	elif not _dry and bool(L.get_setting("orszag_ai", false)):      # ha a játékos bekapcsolva hagyta, induláskor megkeressük a saját AI-t
+		_own_probe()
 	if _test or "--intro-kepek" in args or "--elojatek" in args or "--majom" in args or "--gepjatek" in args:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)   # az ellenőrző futások ablakban mennek
 	var bg := TextureRect.new()
