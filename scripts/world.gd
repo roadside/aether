@@ -18,7 +18,7 @@ const SUMMIT_YEARS := 5                        # ennyi évvel hozza előbbre a c
 const METHANE_CUT := 0.30                      # a Globális Metánvállalás mértéke: −30% (10 év alatt)
 const METHANE_YEARS := 10
 const CDR_YEARS := 20                          # a kivonás ennyi év alatt fut fel (a modell korábbi szabálya)
-const SAVE_VERSION := 11                       # ha a szabályok vagy az adatok változnak, a régi mentés helyett új játék indul
+const SAVE_VERSION := 12                       # ha a szabályok vagy az adatok változnak, a régi mentés helyett új játék indul
 const WAVER_CHANCE := 0.30                     # körönként ekkora eséllyel inog meg egy csoport (játékszabály)
 ## CO2-kivonási programok: kártya -> [a fenntartható sáv alja, teteje] GtCO2/év 2050-re
 ## (Fuss és mtsai 2018, Environ. Res. Lett. 13 063002; az archívum ellenőrzött idézetei szerint).
@@ -128,6 +128,7 @@ func new_game(seed_value: int = -1, steps_n: int = STEPS, challenge_n: int = 0) 
 		d["metan"] = 0          # a metánvállalás éve (0 = nincs)
 		d["felkeszult"] = false # felkészült a bajra: nem inog meg
 		d["megsporolt"] = 0.0   # ennyi CO2-t nem bocsátott ki eddig a „ha semmi sem változik” úthoz képest (milliárd tonna)
+		d["maradek"] = 0        # az év, amikor a maradék kiváltása elindult (0 = még nem)
 		d["nulla"] = 0          # az év, amikor elérte a nulla kibocsátást (0 = még nem)
 		d["inog"] = false       # elbizonytalanodott: ha a kör végéig nem erősíted meg, megingik
 		d["hasznalt"] = []      # az ennél a csoportnál már kijátszott kártyák
@@ -187,11 +188,50 @@ static func fraction(g: Dictionary, y: int) -> float:
 	return float(g["f0"]) * clampf(float(int(g["cel"]) - y) / float(int(g["cel"]) - y0), 0.0, 1.0)
 
 
+## Maradék kibocsátás (játékszabály; alapja: Davis és mtsai 2018, Science, eaas9793: a cement, az acél, a repülés,
+## a távolsági szállítás kibocsátását a legnehezebb megszüntetni). A vállalt cél a kibocsátás 94%-át viszi nullára;
+## a maradék 6% (ez az arány játékszabály, a forrás nem ad egységes számot) addig megmarad, amíg ágazati
+## kártyával ki nem váltod. Onnan tíz év alatt tűnik el.
+const RESIDUAL := 0.06
+const RESIDUAL_YEARS := 10
+const RESIDUAL_CARDS := ["cement", "zold_acel", "repules", "szintetikus_kerozin", "hajozas", "teherauto", "hidrogen", "zold_ammonia",
+	"kerodzok_metan", "tragya", "mutragya", "korforgasos", "kevesebb_igeny"]
+
+## A csoport teljes kibocsátása a maihoz képest: a cél szerinti rész és a maradék együtt.
+static func emission(g: Dictionary, y: int) -> float:
+	var k := int(g.get("maradek", 0))
+	var left := 1.0 if k == 0 else clampf(1.0 - float(y - k) / RESIDUAL_YEARS, 0.0, 1.0)
+	return (1.0 - RESIDUAL) * fraction(g, y) + RESIDUAL * float(g.get("f_alap", 1.0)) * left
+
+
+func residual_cards(g: Dictionary) -> Array:
+	var out: Array = []
+	for id in hand:
+		if id in RESIDUAL_CARDS and not (id in g["hasznalt"]):
+			out.append(id)
+	return out
+
+
+## A maradék kiváltása kérhető, ha a csoport már vállalt célt, és megnyílt a III. korszak.
+func can_residual(g: Dictionary) -> bool:
+	return int(g["cel"]) > 0 and int(g.get("maradek", 0)) == 0 and max_era() >= 3 and not over()
+
+
+func cut_residual(g: Dictionary, card_id: String) -> bool:
+	if steps <= 0 or not can_residual(g) or not (card_id in residual_cards(g)):
+		return false
+	g["maradek"] = year() - 1
+	_spend(g, card_id)
+	steps -= 1
+	naplo.append({"ev": year(), "fajta": "maradek", "csoport": g["id"]})
+	return true
+
+
 func _avg_fraction(y: int) -> float:
 	var s := 0.0
 	var w := 0.0
 	for g in groups:
-		s += float(g["co2_resz"]) * fraction(g, y)
+		s += float(g["co2_resz"]) * emission(g, y)
 		w += float(g["co2_resz"])
 	return s / w if w > 0.0 else 1.0
 
@@ -202,7 +242,7 @@ func drivers(y: int) -> Dictionary:
 	var joined := 0.0
 	var w := 0.0
 	for g in groups:
-		f += float(g["co2_resz"]) * fraction(g, y)
+		f += float(g["co2_resz"]) * emission(g, y)
 		w += float(g["ch4_resz"])
 		if int(g["metan"]) > 0:
 			var r := clampf(float(y - int(g["metan"])) / METHANE_YEARS, 0.0, 1.0)
@@ -640,7 +680,7 @@ func advance() -> void:
 		base_history.append([y, float(_base["T"])])
 		cdr_total += float(drivers(y)["cdr"])
 		for g in groups:
-			g["megsporolt"] = float(g.get("megsporolt", 0.0)) + (1.0 - fraction(g, y)) * float(g["co2_resz"]) * M.E_CO2_NOW
+			g["megsporolt"] = float(g.get("megsporolt", 0.0)) + (1.0 - emission(g, y)) * float(g["co2_resz"]) * M.E_CO2_NOW
 		for g in groups:              # jó hír: egy csoport elérte a nullát
 			if int(g["cel"]) > 0 and int(g.get("nulla", 0)) == 0 and fraction(g, y) <= 0.0:
 				g["nulla"] = y

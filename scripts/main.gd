@@ -517,7 +517,11 @@ func _ready() -> void:
 		_walkthrough()
 		return
 	if "--minijatek" in args:      # próba: a Jégfurat minijáték magától lefut, képek az öntesztmappába
-		var mi = (load("res://scripts/mini_ice.gd") as GDScript).new()
+		var mwhich := "jegfurat"
+		for a in args:
+			if str(a).begins_with("--mini="):
+				mwhich = str(a).substr(7)
+		var mi = (load(str(MINI[mwhich][1])) as GDScript).new()
 		mi.auto = true
 		add_child(mi)
 		var mdir := OS.get_user_data_dir().path_join("aether_onteszt")
@@ -527,9 +531,9 @@ func _ready() -> void:
 			await get_tree().create_timer(5.6).timeout
 			k += 1
 			if mi.done_t < 0.0:
-				get_viewport().get_texture().get_image().save_png(mdir.path_join("mini_jeg_%d.png" % k))
-		get_viewport().get_texture().get_image().save_png(mdir.path_join("mini_jeg_vege.png"))
-		print("MINIJATEK kész: pontok=%d ma=%.1f mélység=%.2f" % [mi.pts.size(), mi.today, mi.depth])
+				get_viewport().get_texture().get_image().save_png(mdir.path_join("mini_%s_%d.png" % [mwhich, k]))
+		get_viewport().get_texture().get_image().save_png(mdir.path_join("mini_%s_vege.png" % mwhich))
+		print("MINIJATEK kész: %s" % mwhich)
 		get_tree().quit()
 		return
 	if "--elojatek" in args:
@@ -880,7 +884,7 @@ func _fill_group(g: Dictionary) -> void:
 	var bar := ProgressBar.new()
 	bar.show_percentage = false
 	bar.max_value = 1.0
-	bar.value = World.fraction(g, world.year() - 1)
+	bar.value = World.emission(g, world.year() - 1)
 	bar.custom_minimum_size = Vector2(0, 8)
 	bar.add_theme_stylebox_override("background", _flat(Color(1, 1, 1, 0.08), Color.TRANSPARENT, 0, 0))
 	bar.add_theme_stylebox_override("fill", _flat(Color(col, 0.9), Color.TRANSPARENT, 0, 0))
@@ -915,9 +919,11 @@ func _fill_group(g: Dictionary) -> void:
 			pct.text = "%d%%" % roundi(x * 100.0), shown, target, 1.3)
 		btw.tween_callback(func() -> void: pct.add_theme_color_override("font_color", UI.SOFT))
 	if not return_bar:
-		_bar_shown[key] = World.fraction(g, world.year() - 1)
+		_bar_shown[key] = World.emission(g, world.year() - 1)
 	if int(g.get("nulla", 0)) > 0:
 		v.add_child(_lbl("★ " + L.t("Nulla kibocsátás %d óta") % int(g["nulla"]), 16, UI.GREEN, true))
+		if int(g.get("maradek", 0)) == 0:
+			v.add_child(_lbl(L.t("A maradék még hátravan."), 14, UI.GOLD))
 	elif int(g["cel"]) > 0:
 		v.add_child(_lbl(L.rag(L.t("Nulla kibocsátás %d-re") % int(g["cel"])), 16, UI.GREEN, true))
 	else:
@@ -1967,7 +1973,7 @@ func _do_research(id: String, th: String) -> void:
 
 
 ## Minijátékok: kártya -> [név, a jelenet szkriptje]. A minijáték valódi adatból rajzol; a menete játékszabály.
-const MINI := {"jegfurat": ["Jégfurat", "res://scripts/mini_ice.gd"]}
+const MINI := {"jegfurat": ["Jégfurat", "res://scripts/mini_ice.gd"], "halozat_osszekotes": ["Áramhálózat", "res://scripts/mini_grid.gd"], "repules": ["Kondenzcsík-kerülő", "res://scripts/mini_flight.gd"], "sztratoszfera": ["Nap vagy CO2?", "res://scripts/mini_sun.gd"], "metan_szivargas": ["Metánvadász", "res://scripts/mini_methane.gd"], "tengeri_hohullam": ["Melegrekord a tengeren", "res://scripts/mini_sea.gd"], "viharar": ["Gátőr", "res://scripts/mini_dike.gd"]}
 
 func _open_mini(id: String) -> void:
 	var mi = (load(str(MINI[id][1])) as GDScript).new()
@@ -2120,6 +2126,8 @@ func _open_group(g: Dictionary) -> void:
 		asks.append({"fajta": "metan", "kell": world.methane_needed(g)})
 	if not g.get("felkeszult", false) and danger == "" and _ramp(2):
 		asks.append({"fajta": "felkeszules", "kell": 1})
+	if world.can_residual(g):
+		asks.append({"fajta": "maradek", "kell": 1})
 	if asks.is_empty():
 		body.add_child(UI.label(L.t("Tőlük már nincs mit kérned."), 17, UI.SOFT))
 		return
@@ -2155,7 +2163,7 @@ func _open_group(g: Dictionary) -> void:
 			seen.append(short)
 	for a in asks:
 		var txt: String = (L.rag(L.t("Nulla kibocsátás %d-re") % int(a["cel"]))) if a["fajta"] == "cel" else (L.t("Metán: −30% tíz év alatt") if a["fajta"] == "metan" \
-			else (L.t("Megerősítés") if a["fajta"] == "megerosites" else L.t("Felkészülés a bajra")))
+			else (L.t("Megerősítés") if a["fajta"] == "megerosites" else (L.t("A maradék kiváltása") if a["fajta"] == "maradek" else L.t("Felkészülés a bajra"))))
 		var b := UI.button("%s · %s" % [txt, L.t("%d kártya") % int(a["kell"])])
 		if a["fajta"] in ["cel", "metan"]:
 			var dts := ("%.3f" if dec == 3 else "%.2f") % float(cooling[a])
@@ -2224,6 +2232,15 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 		if not any:
 			cp.add_child(UI.label(L.t("Ehhez Tenger és part, Egészség vagy Élelem kártya kell."), 15, UI.MUTE))
 		area.add_child(UI.card_root(cp))
+	elif ask["fajta"] == "maradek":
+		var cm := UI.card(UI.GOLD)
+		cm.add_child(UI.label(L.t("A cél után is marad kibocsátás: a cement, az acél, a repülés és a hajózás a legnehezebb. Mutasd meg, mivel váltható ki!"), 16, UI.SOFT))
+		for id in world.residual_cards(g):
+			add_card.call(cm, id)
+			any = true
+		if not any:
+			cm.add_child(UI.label(L.t("Ehhez cementről, acélról, repülésről, hajózásról vagy állattartásról szóló kártya kell."), 15, UI.MUTE))
+		area.add_child(UI.card_root(cm))
 	elif ask["fajta"] == "metan":
 		var c := UI.card(UI.GREEN)
 		c.add_child(UI.label(L.t("A metán rövid ideig marad a levegőben, de erősen melegít. Mutasd meg, hol lehet gyorsan csökkenteni!"), 16, UI.SOFT))
@@ -2290,6 +2307,8 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 		if ask["fajta"] == "megerosites":
 			ask["kartya"] = picked[0]
 			done = world.reassure(g, picked[0])
+		elif ask["fajta"] == "maradek":
+			done = world.cut_residual(g, picked[0])
 		elif ask["fajta"] == "felkeszules":
 			done = world.prepare(g, picked[0])
 		elif ask["fajta"] == "metan":
@@ -2371,6 +2390,10 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 		burst.position = Vector2(800, 120)
 		burst.z_index = 12
 		add_child(burst)
+	if ask["fajta"] == "maradek":
+		body.add_child(UI.label(L.t("%s a maradék kibocsátását is megszünteti: tíz év alatt.") % L.field(g, "nev"), 22, UI.TEXT, true))
+		_sticky(body, _go(L.t("Rendben"), _close))
+		return
 	if ask["fajta"] == "felkeszules":
 		body.add_child(UI.label(L.t("%s felkészült a bajra. Megbízik benned, és többé nem inog meg.") % L.field(g, "nev"), 22, UI.TEXT, true))
 		_sticky(body, _go(L.t("Rendben"), _close))
@@ -2771,6 +2794,7 @@ func _move_line(a: Dictionary) -> String:
 		"refute": return "Refute the myth spreading in %s" % gn
 		"cdr": return "Start CO2 removal: %s" % str(a["id"])
 		"grow_cdr": return "Expand CO2 removal: %s" % str(a["id"])
+		"residual": return "Ask %s to also end their hard-to-cut residual emissions (cement, steel, aviation)" % gn
 		"summit": return "Climate summit: show the card '%s' (%d groups bring their target 5 years forward, free)" % [Cards.text(str(a["card"]), "Kérdés", true), int(a["listeners"])]
 		"skip_summit": return "Climate summit: show nothing"
 		"dilemma":
@@ -3162,7 +3186,7 @@ func _share_text() -> String:
 				kind[r] = 3
 			"cel", "metan", "csucs", "onkent":
 				kind[r] = maxi(kind[r], 2)
-			"felkeszules", "kivonas", "cafolat":
+			"felkeszules", "kivonas", "cafolat", "maradek":
 				kind[r] = maxi(kind[r], 1)
 	var row := ""
 	for k in kind:
@@ -3764,6 +3788,9 @@ func _add_story(body: VBoxContainer) -> void:
 				line = L.rag(L.t("%s vállalta: nulla kibocsátás %d-re.") % [L.field(world.group(e["csoport"]), "nev"), int(e["cel"])])
 			"metan":
 				line = L.t("%s vállalta: 30%%-kal kevesebb metán tíz év alatt.") % L.field(world.group(e["csoport"]), "nev")
+			"maradek":
+				line = L.t("%s a maradék kibocsátását is megszünteti.") % L.field(world.group(e["csoport"]), "nev")
+				mark = UI.GREEN
 			"felkeszules":
 				line = L.t("%s felkészült a bajra.") % L.field(world.group(e["csoport"]), "nev")
 			"kivonas":
