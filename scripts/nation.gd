@@ -246,6 +246,26 @@ static func parse(w, g: Dictionary, target: int, content: String) -> Dictionary:
 	return _pick(options(w, g, target), content)
 
 
+## Klímacsúcs: aki már vállalt célt, és a kártya az ő aggodalmára felel, maga dönt, előbbre hozza-e öt évvel.
+static func summit_options(g: Dictionary) -> Array:
+	var now := int(g["cel"])
+	return [{"dontes": "accept", "cel": now - 5, "en": "Bring your promise forward by five years, to zero emissions by %d.%s" % [now - 5, _vs(g, now - 5)]},
+		{"dontes": "keep", "cel": now, "en": "Keep your promise as it is, at %d." % now}]
+
+
+static func prompt_summit(w, g: Dictionary, card: String, en: bool = true) -> Array:
+	var l := _brief(w, g)
+	l.append("THE CLIMATE SUMMIT")
+	l.append("At a world climate summit the mediator showed this evidence to every party at once, and asks those who have already promised to bring their promise forward by five years:")
+	_evidence(l, [card])
+	_menu(l, summit_options(g))
+	return [{"role": "system", "content": _system(w, g, _reply(en))}, {"role": "user", "content": "\n".join(l)}]
+
+
+static func parse_summit(g: Dictionary, content: String) -> Dictionary:
+	return _pick(summit_options(g), content)
+
+
 static func prompt_round(w, g: Dictionary, en: bool = true) -> Array:
 	var l := _brief(w, g)
 	l.append("YOUR OWN MOVE")

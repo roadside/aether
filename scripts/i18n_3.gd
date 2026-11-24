@@ -358,4 +358,5 @@ const EN := {
 	"Kulcs törlése": "Delete key",
 	"Kapcsolódom…": "Connecting…",
 	"Nem sikerült kapcsolódni. Nézd meg a kulcsot és az internetet!": "Could not connect. Check the key and the internet!",
+	"%s nem változtatott a célján.": "%s did not change its target.",
 }

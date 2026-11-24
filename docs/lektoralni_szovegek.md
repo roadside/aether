@@ -574,3 +574,7 @@ Gazdasági és politikai mutatók az adatlapokon (GDP/fő USD 2025 · olaj- és 
 - Nem sikerült kapcsolódni. Nézd meg a kulcsot és az internetet!
 
 A négy választógomb felirata név, nem fordítjuk: Ollama, Claude, ChatGPT, Gemini.
+
+### Klímacsúcs AI-országokkal (a %s helyére a csoport neve kerül; alatta idézőjelben a vezetés saját mondata áll, azt a modell írja)
+
+- %s nem változtatott a célján.

@@ -147,7 +147,7 @@ func apply(a: Dictionary) -> bool:
 		"summit":
 			if not w.summit_due or w.summit_listeners(str(a.get("card", ""))).is_empty():
 				return false
-			w.summit(str(a["card"]))
+			w.summit(str(a["card"]), a.get("staying", []))
 			return true
 		"skip_summit":
 			if not w.summit_due:

@@ -2785,6 +2785,27 @@ func _nation_decide(g: Dictionary, target: int, cards: Array, methane: bool = fa
 	return out
 
 
+## Klímacsúcs AI-országokkal: minden figyelő csoport vezetése maga dönt. Vissza: {"staying": [azonosítók], "said": {azonosító: mondat}}.
+## Ha a modell nem ad szabályos választ, az alapszabály él (előbbre hozzák).
+func _nation_summit(card: String, status: Label = null) -> Dictionary:
+	var out := {"staying": [], "said": {}}
+	world.ai = true
+	for g in world.summit_listeners(card):
+		if status != null and is_instance_valid(status):
+			status.text = L.t("%s vezetői gondolkodnak…") % L.field(g, "nev")
+		var nd: Dictionary = Nation.parse_summit(g, await _own_chat(Nation.prompt_summit(world, g, card, L.is_en()), 45.0))
+		if nd.is_empty():
+			_nat["hiba"] += 1
+			continue
+		_nat[nd["dontes"]] = int(_nat.get(nd["dontes"], 0)) + 1
+		if _dry:
+			print("ORSZAG_CSUCS %s %s" % [str(g["id"]), str(nd["dontes"])])
+		out["said"][g["id"]] = str(nd["szoveg"])
+		if nd["dontes"] == "keep":
+			out["staying"].append(g["id"])
+	return out
+
+
 ## Kör végén egy AI-ország (körönként más) magától is léphet. Vissza: hírek a körváltás ablakába.
 func _nation_round() -> Array:
 	var g: Dictionary = world.groups[world.round_i % world.groups.size()]
@@ -2987,6 +3008,10 @@ func _auto_loop() -> void:
 					_sound("megingas")
 				_auto_lbl.text = "%s: %s" % [L.field(ng, "nev"), str(nd["szoveg"]) if str(nd["szoveg"]) != "" else (L.t("%s most nemet mondott.") % L.field(ng, "nev"))]
 				await _auto_wait(AUTO_THINK)
+				if _auto == "" or run != _auto_run or world.game_id != game or not is_inside_tree():
+					return
+			if a["type"] == "summit" and _nation_on():
+				a["staying"] = (await _nation_summit(str(a["card"])))["staying"]
 				if _auto == "" or run != _auto_run or world.game_id != game or not is_inside_tree():
 					return
 			if refused:
@@ -3396,7 +3421,17 @@ func _open_summit() -> void:
 
 func _do_summit(id: String) -> void:
 	var before := float(world.forecast()["kozep"][-1][1])
-	var who := world.summit(id)
+	var ns := {"staying": [], "said": {}}
+	var asked: Array = world.summit_listeners(id).map(func(g: Dictionary) -> String: return str(g["id"]))
+	if _nation_on():
+		var wait_body := _open(L.t("Klímacsúcs"), UI.GOLD)
+		var st := UI.label("", 20, UI.GOLD, true)
+		wait_body.add_child(st)
+		var game0 := world.game_id
+		ns = await _nation_summit(id, st)
+		if world.game_id != game0 or not world.summit_due:
+			return
+	var who := world.summit(id, ns["staying"])
 	_flash_ids = who.duplicate()
 	_refresh()
 	_save()
@@ -3405,6 +3440,14 @@ func _do_summit(id: String) -> void:
 	for gid in who:
 		var g := world.group(gid)
 		body.add_child(UI.label(L.rag(L.t("%s előbbre hozta a célját: nulla kibocsátás %d-re.") % [L.field(g, "nev"), int(g["cel"])]), 20, UI.TEXT, true))
+		if str(ns["said"].get(gid, "")) != "":
+			body.add_child(UI.label(_quote(str(ns["said"][gid])), 16, Color(str(g["szin"])).lightened(0.25)))
+	for gid in asked:
+		if gid in ns["staying"]:
+			var sg := world.group(gid)
+			body.add_child(UI.label(L.t("%s nem változtatott a célján.") % L.field(sg, "nev"), 20, UI.GOLD, true))
+			if str(ns["said"].get(gid, "")) != "":
+				body.add_child(UI.label(_quote(str(ns["said"][gid])), 16, Color(str(sg["szin"])).lightened(0.25)))
 	body.add_child(UI.label(L.t("Várható melegedés 2100-ban: +%s → +%s °C") % [L.num(before, 2), L.num(float(world.forecast()["kozep"][-1][1]), 2)], 20, UI.GREEN, true))
 	_sticky(body, _go(L.t("Rendben"), _close))
 

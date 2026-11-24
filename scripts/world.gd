@@ -475,12 +475,15 @@ func summit_listeners(card_id: String) -> Array:
 			and fraction(g, y - 1) > 0.0 and int(g["cel"]) - SUMMIT_YEARS > y)
 
 
-func summit(card_id: String) -> Array:
+## A `staying` azoknak a csoportoknak az azonosítója, amelyek (AI-országként) úgy döntöttek, hogy nem változtatnak.
+func summit(card_id: String, staying: Array = []) -> Array:
 	var out: Array = []
 	if not summit_due or not (card_id in hand):
 		return out
 	var y := year()
 	for g in summit_listeners(card_id):
+		if g["id"] in staying:
+			continue
 		g["f0"] = fraction(g, y - 1)
 		g["y0"] = y - 1
 		g["cel"] = int(g["cel"]) - SUMMIT_YEARS
