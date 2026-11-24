@@ -610,7 +610,7 @@ A CO2-kivonás ablakában és a naplóban:
 - %s ezer éve: %s ppm
 - ezer éve
 - 800 ezer évig a levegő CO2-tartalma %s és %s ppm között maradt.
-- %d-ben: %s ppm.
+- %d-ben: %s ppm volt.
 - Forrás: %s
 - NOAA Global Monitoring Laboratory (2026); EPA (2022) – Our World in Data feldolgozásában
 
@@ -653,7 +653,7 @@ A CO2-kivonás ablakában és a naplóban:
 - Kábel nélkül: %s TWh hiány egy év alatt.
 - A te %d kábeleddel: %s TWh, %s%%-kal kevesebb.
 - Ha minden kábel megépülne: %s%%-kal kevesebb.
-- Egy európai tanulmány szerint a legjobb hálózat kábeleinek 44%-ával már a megtakarítás 85%-a elérhető.
+- Egy európai kutatás szerint az optimális hálózat kábeleinek mindössze 44%-ával már a lehetséges megtakarítás 85%-a elérhető.
 - Forrás: %s. Tanulmány: %s
 
 ### Minijáték: Kondenzcsík-kerülő (a „repules” kártyához)
@@ -663,7 +663,6 @@ A CO2-kivonás ablakában és a naplóban:
 - Repülés: %d / %d    Magasságváltás: %d
 - A tartós kondenzcsíkjaid hossza %s%%-a annak, ami egyenes útvonalon keletkezett volna.
 - A valóságban a légi közlekedés melegítő hatásának %s%%-a nem a CO₂-kibocsátásból származik – ennek a legnagyobb részét a kondenzcsíkok adják.
-- Egy japán vizsgálat szerint a járatok %s%%-ának kitérítése akár %s%%-kal csökkenthetné a csíkok hatását, csak %s%%-kal több üzemanyaggal.
 - Egy japán kutatás szerint %s%% járat útvonalának módosításával akár 59%-kal is csökkenthetné a csíkok hatását, mindössze 0,014%-kal több üzemanyagköltséggel.
 - A repülés melegítő hatása 2018-ban (mW/m²)
 - Összesen: %s mW/m²
@@ -673,7 +672,7 @@ A CO2-kivonás ablakában és a naplóban:
 
 ### Minijáték: Nap vagy CO2? (a „sztratoszfera” kártyához)
 
-- Nap vagy CO₂?
+- Nap vagy CO2?
 - Ha a Nap melegítené a Földet, akkor a levegő minden rétege melegedne. Mit mértek 1995 után? Csökkent, nőtt vagy nem változott a Nap ereje? Tippelj!
 - A Nap ereje
 - A felszín hőmérséklete
@@ -686,14 +685,14 @@ A CO2-kivonás ablakában és a naplóban:
 - A Nap ereje 1980 óta nem nőtt: 11 évente hullámzik, kb. 1 W/m²-t.
 - A felszín közben évtizedenként kb. 0,2 °C-kal melegedett.
 - A magasban, a sztratoszférában viszont hűlt a levegő. Ezt a CO2 okozza: lent csapdába ejti a hőt, fent több hőt sugároz ki a világűrbe.
-- Tanulság: a jelenlegi felmelegedést a CO₂ okozza, nem a Nap.
+- Tanulság: a jelenlegi felmelegedést a CO2 okozza, nem a Nap.
 - Találat: %d / 3
 - sztratoszféra
 - felszín
 
 ### Minijáték: Metánvadász (a „metan_szivargas” kártyához; a %s és %d helyére szám kerül)
 
-- A műhold végigpásztázza a gázmezőt. Ahol felhő jelenik meg, ott nagy a szivárgás: kattints rá, és küldj oda egy javítócsapatot!
+- A műhold végigpásztázza a gázmezőt. Ahol felhő jelenik meg, ott nagy a szivárgás: kattints a kútra amiből szivárog, és küldj oda egy javítócsapatot!
 - Csapat: %d    Idő: %d mp
 - Kicsi szivárgás
 - Nagy szivárgás megszüntetve!
@@ -747,7 +746,7 @@ A CO2-kivonás ablakában és a naplóban:
 - A Föld AI most nem válaszolt, ezért az alapszabály döntött.
 - A csoportok vezetőit is játszhatja a Föld AI. Csak a 2026-ig ismert, valós adataikat kapja meg, és nemet is mondhat. Így akkor is ő felel, ha te játszol.
 
-## 18. rész – még nem lektorált (2026-11-24, 23:55)
+## 18. Új szövegek (2026-11-25, 00:10, lektorálva)
 
 ### Minijáték: Erdőnyomozó (az „erdoirtas_okai” kártyához; a %d és %s helyére szám kerül)
 
@@ -782,7 +781,7 @@ A CO2-kivonás ablakában és a naplóban:
 
 ### Minijáték: Áramhálózat – új, egyszerűbb játék (a 17. rész Áramhálózat-szövegeiből csak a cím, a tanulmány mondata és a forrás maradt)
 
-- Nézd a piros hónapokat: ott kevés a szél- és napáram. Melyik ország termel sokat éppen akkor? Kattints rá, és kösd össze vele!
+- Nézd a piros hónapokat: ekkor kevés a szél- és napenergia. Melyik ország termel sokat pont ilyenkor? Kattints rá, és kapcsold össze vele!
 - Kivel kötöd össze?
 - igény
 - Az oszlopok a szél- és napáramot mutatják az igényhez mérve (Ember, 2024).
@@ -791,13 +790,13 @@ A CO2-kivonás ablakában és a naplóban:
 - Jó választás! Összekötve %s%%-kal kevesebb a hiány.
 - Összekötve %s%%-kal kevesebb a hiány. Többet segített volna: %s (%s%%).
 - Jó választás: %d / %d
-- A kábel akkor segít sokat, ha a két országban máskor fúj a szél és máskor süt a nap.
+- Egy összeköttetés akkor segít sokat, ha a két országban máskor fúj a szél és máskor süt a nap.
 
 ### Minijáték: Melegrekord a tengeren – új játékmenet: tippelni kell, hány rekord született (a 17. részből a szóközös „elkapás” szövegei kimaradtak)
 
 - A görbe az óceán felszínének hőmérséklete. A sárga pöttyök melegrekordok. Szerinted hány új rekord született %d és %d között?
 - És %d után, egészen %d-ig? Tippelj!
-- Egy új rekord sem született: a régi csúcs %d évig állt.
+- Nem született új rekord: a régi csúcs %d évig tartott.
 - %d új melegrekord született.
 - Nem ennyi volt.
 

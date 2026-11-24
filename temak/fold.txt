@@ -335,13 +335,13 @@ Röviden: Igen. Napokig vagy hetekig szokatlanul meleg lehet a tenger. Ilyenkor 
 Ha kikutatod:
 Mire jó?: Ha előre jelzik a tengeri hőhullámot, a halászok és a part menti emberek felkészülhetnek, a tengeri élőhelyeket pedig jobban lehet védeni.
 Mi a gond vele?: A tengeri hőhullám a víz alatt zajlik, ezért nehezebb észrevenni, mint a szárazföldit. A régi mérések ritkábbak voltak.
-Mennyire bizonyított?: Mérések szerint 1925 és 2016 között a tengeri hőhullámok 34%-kal gyakoribbak és 17%-kal hosszabbak lettek, így évente 54%-kal több a tengeri hőhullámos nap. Ezt főleg a tenger átlagos melegedése okozza.
+Mennyire bizonyított?: Mérések szerint 1925 és 2016 között a tengeri hőhullámok 34%-kal gyakoribbak és 17%-kal hosszabbak lettek, így évente 54%-kal több a tengeri hőhullámos nap. Ezt főleg a tenger átlagos melegedése okozza, ami az élővilág pusztulását vetíti előre.
 Kérdés angolul: Are there heatwaves in the sea too?
 Röviden angolul: Yes. The sea can stay unusually warm for days or weeks. Corals, kelp forests and fish die off then.
 Ha kikutatod angolul:
 Mire jó? angolul: If marine heatwaves are forecast, fishers and coastal people can prepare, and sea habitats can be better protected.
 Mi a gond vele? angolul: Marine heatwaves happen under water, so they are harder to notice than heatwaves on land. Older measurements were sparse.
-Mennyire bizonyított? angolul: Measurements show that from 1925 to 2016 marine heatwaves became 34% more frequent and 17% longer, giving 54% more marine heatwave days each year. This is mainly caused by the overall warming of the ocean.
+Mennyire bizonyított? angolul: Measurements show that from 1925 to 2016 marine heatwaves became 34% more frequent and 17% longer, giving 54% more marine heatwave days each year. This is mainly caused by the overall warming of the ocean, which foreshadows the die-off of marine life.
 Forrás: Longer and more frequent marine heatwaves over the past century (2018) – https://doi.org/10.1038/s41467-018-03732-9
 Forrás: Marine heatwaves under global warming (2018) – https://doi.org/10.1038/s41586-018-0383-9
 Lektorálva: igen

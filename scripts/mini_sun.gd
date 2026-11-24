@@ -50,7 +50,7 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	focus_mode = Control.FOCUS_ALL
 	_load()
-	var title := UI.heading(L.t("Nap vagy CO₂?"), 34)
+	var title := UI.heading(L.t("Nap vagy CO2?"), 34)
 	title.position = Vector2(60, 28)
 	add_child(title)
 	_info = UI.label(L.t(QUESTIONS[0]), 18, UI.SOFT)
@@ -186,7 +186,7 @@ func _finish() -> void:
 	_btns.visible = false
 	_info.visible = false
 	_end.visible = true
-	_end.add_child(UI.label(L.t("Tanulság: a jelenlegi felmelegedést a CO₂ okozza, nem a Nap."), 22, UI.GOLD, true))
+	_end.add_child(UI.label(L.t("Tanulság: a jelenlegi felmelegedést a CO2 okozza, nem a Nap."), 22, UI.GOLD, true))
 	_end.add_child(UI.label(L.t("Forrás: %s") % source, 13, UI.MUTE))
 	_next_btn.visible = true
 

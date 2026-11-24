@@ -261,7 +261,7 @@ func _process(delta: float) -> void:
 			var hit := real == _guess
 			if hit:
 				hits += 1
-			var line := L.t("Egy új rekord sem született: a régi csúcs %d évig állt.") % _gap if real == 0 else L.t("%d új melegrekord született.") % real
+			var line := L.t("Nem született új rekord: a régi csúcs %d évig tartott.") % _gap if real == 0 else L.t("%d új melegrekord született.") % real
 			_say.text = (L.t("Eltaláltad!") if hit else L.t("Nem ennyi volt.")) + " " + line
 			_say.add_theme_color_override("font_color", UI.GREEN if hit else UI.TEXT)
 			_say.visible = true
@@ -292,7 +292,7 @@ func _finish() -> void:
 	_end.visible = true
 	_end.add_child(UI.label(L.t("%d óta %d új melegrekord született, ebből %d 1980 után.") % [years[0], records.size(), late], 22, UI.CYAN, true))
 	_end.add_child(UI.label(L.t("Minél melegebb az alaphőmérséklet, annál könnyebben jön létre tengeri hőhullám."), 19, UI.TEXT))
-	_end.add_child(UI.label(L.t("Mérések szerint 1925 és 2016 között a tengeri hőhullámok 34%-kal gyakoribbak és 17%-kal hosszabbak lettek, így évente 54%-kal több a tengeri hőhullámos nap. Ezt főleg a tenger átlagos melegedése okozza."), 19, UI.TEXT))
+	_end.add_child(UI.label(L.t("Mérések szerint 1925 és 2016 között a tengeri hőhullámok 34%-kal gyakoribbak és 17%-kal hosszabbak lettek, így évente 54%-kal több a tengeri hőhullámos nap. Ezt főleg a tenger átlagos melegedése okozza, ami az élővilág pusztulását vetíti előre."), 19, UI.TEXT))
 	_end.add_child(UI.label(L.t("Forrás: %s") % (source + "; " + STUDY), 13, UI.MUTE))
 	_next_btn.visible = true
 

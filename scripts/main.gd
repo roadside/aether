@@ -1990,7 +1990,7 @@ func _do_research(id: String, th: String) -> void:
 
 
 ## Minijátékok: kártya -> [név, a jelenet szkriptje]. A minijáték valódi adatból rajzol; a menete játékszabály.
-const MINI := {"jegfurat": ["Jégfurat", "res://scripts/mini_ice.gd"], "halozat_osszekotes": ["Áramhálózat", "res://scripts/mini_grid.gd"], "repules": ["Kondenzcsík-kerülő", "res://scripts/mini_flight.gd"], "sztratoszfera": ["Nap vagy CO₂?", "res://scripts/mini_sun.gd"], "metan_szivargas": ["Metánvadász", "res://scripts/mini_methane.gd"], "tengeri_hohullam": ["Melegrekord a tengeren", "res://scripts/mini_sea.gd"], "viharar": ["Gátőr", "res://scripts/mini_dike.gd"], "erdoirtas_okai": ["Erdőnyomozó", "res://scripts/mini_forest.gd"]}
+const MINI := {"jegfurat": ["Jégfurat", "res://scripts/mini_ice.gd"], "halozat_osszekotes": ["Áramhálózat", "res://scripts/mini_grid.gd"], "repules": ["Kondenzcsík-kerülő", "res://scripts/mini_flight.gd"], "sztratoszfera": ["Nap vagy CO2?", "res://scripts/mini_sun.gd"], "metan_szivargas": ["Metánvadász", "res://scripts/mini_methane.gd"], "tengeri_hohullam": ["Melegrekord a tengeren", "res://scripts/mini_sea.gd"], "viharar": ["Gátőr", "res://scripts/mini_dike.gd"], "erdoirtas_okai": ["Erdőnyomozó", "res://scripts/mini_forest.gd"]}
 
 var _mini_on := false
 

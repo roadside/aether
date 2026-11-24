@@ -51,7 +51,7 @@ func _ready() -> void:
 	var title := UI.heading(L.t("Metánvadász"), 34)
 	title.position = Vector2(60, 28)
 	add_child(title)
-	_info = UI.label(L.t("A műhold végigpásztázza a gázmezőt. Ahol felhő jelenik meg, ott nagy a szivárgás: kattints rá, és küldj oda egy javítócsapatot!"), 18, UI.SOFT)
+	_info = UI.label(L.t("A műhold végigpásztázza a gázmezőt. Ahol felhő jelenik meg, ott nagy a szivárgás: kattints a kútra amiből szivárog, és küldj oda egy javítócsapatot!"), 18, UI.SOFT)
 	_info.position = Vector2(60, 84)
 	_info.size = Vector2(980, 60)
 	add_child(_info)

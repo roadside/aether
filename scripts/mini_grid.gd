@@ -52,7 +52,7 @@ func _ready() -> void:
 	var title := UI.heading(L.t("Áramhálózat"), 34)
 	title.position = Vector2(60, 28)
 	add_child(title)
-	_info = UI.label(L.t("Nézd a piros hónapokat: ott kevés a szél- és napáram. Melyik ország termel sokat éppen akkor? Kattints rá, és kösd össze vele!"), 18, UI.SOFT)
+	_info = UI.label(L.t("Nézd a piros hónapokat: ekkor kevés a szél- és napenergia. Melyik ország termel sokat pont ilyenkor? Kattints rá, és kapcsold össze vele!"), 18, UI.SOFT)
 	_info.position = Vector2(60, 84)
 	_info.size = Vector2(1200, 60)
 	add_child(_info)
@@ -234,10 +234,10 @@ func _finish() -> void:
 	_say.visible = false
 	_end.visible = true
 	_end.add_child(UI.label(L.t("Jó választás: %d / %d") % [good, ROUNDS.size()], 22, UI.CYAN, true))
-	_end.add_child(UI.label(L.t("A kábel akkor segít sokat, ha a két országban máskor fúj a szél és máskor süt a nap."), 20, UI.GOLD, true))
+	_end.add_child(UI.label(L.t("Egy összeköttetés akkor segít sokat, ha a két országban máskor fúj a szél és máskor süt a nap."), 20, UI.GOLD, true))
 	for bp in best_pairs:
 		_end.add_child(UI.label("%s + %s: −%s%%" % [bp[0], bp[1], L.num(float(bp[2]), 0)], 19, UI.TEXT))
-	_end.add_child(UI.label(L.t("Egy európai tanulmány szerint a legjobb hálózat kábeleinek 44%-ával már a megtakarítás 85%-a elérhető."), 18, UI.TEXT))
+	_end.add_child(UI.label(L.t("Egy európai kutatás szerint az optimális hálózat kábeleinek mindössze 44%-ával már a lehetséges megtakarítás 85%-a elérhető."), 18, UI.TEXT))
 	_end.add_child(UI.label(L.t("Forrás: %s. Tanulmány: %s") % [source, study], 13, UI.MUTE))
 	_next_btn.visible = true
 

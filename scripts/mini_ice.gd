@@ -200,7 +200,7 @@ func _finish() -> void:
 	_read.text = ""
 	_end.visible = true
 	_end.add_child(UI.label(L.t("800 ezer évig a levegő CO2-tartalma %s és %s ppm között maradt.") % [L.num(pre_min, 0), L.num(pre_max, 0)], 19, UI.TEXT, true))
-	_end.add_child(UI.label(L.t("%d-ben: %s ppm.") % [today_year, L.num(today, 0)], 24, UI.EMBER, true))
+	_end.add_child(UI.label(L.t("%d-ben: %s ppm volt.") % [today_year, L.num(today, 0)], 24, UI.EMBER, true))
 	_end.add_child(UI.label(L.t("Forrás: %s") % source, 14, UI.MUTE))
 	var b := UI.button(L.t("Tovább") + " →", true)
 	b.pressed.connect(func() -> void: finished.emit(true))
