@@ -1547,7 +1547,7 @@ const BADGES := [
 	["kuszob", "Egy küszöb sem", "Játssz végig egy játékot úgy, hogy egy billenőpont küszöbét sem lépitek át."],
 	["kivonas", "Tisztító", "Indíts el legalább három CO2-kivonást egy játékban."],
 	["felkeszult", "Senki sem marad magára", "Segíts mind a hat csoportnak felkészülni a bajra."],
-	["nehez", "Nehéz Föld", "Maradj +2 °C alatt egy átlagnál érzékenyebb Földön."],
+	["nehez", "Nehéz Föld", "Maradj +2 °C alatt egy átlagosnál érzékenyebb Földön."],
 	["mester", "Mester", "Maradj +2 °C alatt nehéz fokozaton."],
 	["huvos", "Hűvös Föld", "Maradj 2100-ban +1,6 °C alatt."],
 	["szilard", "Egy megingás sem", "Játssz végig egy játékot úgy, hogy egy csoport sem tolja későbbre a célját."],

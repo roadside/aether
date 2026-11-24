@@ -131,7 +131,7 @@ const EN := {
 	"Merész cél": "Bold target", "Érd el, hogy egy csoport tizenöt év alatt vállalja a nulla kibocsátást.": "Get a group to promise zero emissions within fifteen years.",
 	"Egy küszöb sem": "No threshold crossed", "Játssz végig egy játékot úgy, hogy egy billenőpont küszöbét sem lépitek át.": "Finish a game without crossing the threshold of any tipping point.",
 	"Tisztító": "Cleaner", "Indíts el legalább három CO2-kivonást egy játékban.": "Start at least three kinds of CO2 removal in one game.",
-	"Nehéz Föld": "Tough Earth", "Maradj +2 °C alatt egy átlagnál érzékenyebb Földön.": "Stay below +2 °C on an Earth that is more sensitive than average.",
+	"Nehéz Föld": "Tough Earth", "Maradj +2 °C alatt egy átlagosnál érzékenyebb Földön.": "Stay below +2 °C on an Earth that is more sensitive than average.",
 	"Gyűjtő": "Collector", "Kutass ki ötven különböző kártyát.": "Research fifty different cards.",
 	"Mindenhez értesz": "All-rounder", "Legyen kártyád mind a nyolc témakörből a gyűjteményben.": "Have a card from all eight topics in your collection.",
 	"A valóságban nem csatlakoztak a Globális Metánvállaláshoz, ezért nehezebb meggyőzni őket.": "In reality they have not joined the Global Methane Pledge, so they are harder to convince.",

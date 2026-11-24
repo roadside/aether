@@ -197,7 +197,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Tisztító
 - Indíts el legalább három CO2-kivonást egy játékban.
 - Nehéz Föld
-- Maradj +2 °C alatt egy átlagnál érzékenyebb Földön.
+- Maradj +2 °C alatt egy átlagosnál érzékenyebb Földön.
 - Gyűjtő
 - Kutass ki ötven különböző kártyát.
 - Mindenhez értesz
@@ -579,7 +579,7 @@ A négy választógomb felirata név, nem fordítjuk: Ollama, Claude, ChatGPT, G
 
 - %s nem változtatott a célján.
 
-## 14. Új szövegek (2026-11-24, 20:45 után) – még nem lektorált
+## 14. Új szövegek (2026-11-24, 20:45 után)
 
 ### Megingás AI-országokkal (hírek és napló; a %s a csoport neve, a %d az évszám; alatta a vezetés saját mondata áll)
 
