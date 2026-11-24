@@ -520,9 +520,12 @@ func _ready() -> void:
 		return
 	if "--minijatek" in args:      # próba: a Jégfurat minijáték magától lefut, képek az öntesztmappába
 		var mwhich := "jegfurat"
+		var mstep := 5.6      # ennyi másodpercenként készül kép (--kepido=)
 		for a in args:
 			if str(a).begins_with("--mini="):
 				mwhich = str(a).substr(7)
+			elif str(a).begins_with("--kepido="):
+				mstep = maxf(float(str(a).substr(9)), 0.5)
 		if "--gyujtemenybol" in args:      # próba: a Gyűjtemény ablakából indítva az ablak eltűnik-e
 			_open_collection()
 			_open_mini(mwhich)
@@ -540,7 +543,7 @@ func _ready() -> void:
 		DirAccess.make_dir_recursive_absolute(mdir)
 		var k := 0
 		while mi.done_t < 4.0 and k < 60:
-			await get_tree().create_timer(5.6).timeout
+			await get_tree().create_timer(mstep).timeout
 			k += 1
 			if mi.done_t < 0.0:
 				get_viewport().get_texture().get_image().save_png(mdir.path_join("mini_%s_%d.png" % [mwhich, k]))
