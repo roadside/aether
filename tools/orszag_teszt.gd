@@ -31,7 +31,7 @@ func _init() -> void:
 		and Nation.parse(w, g, t0, "{\"choice\":\"C\"}").is_empty() and Nation.parse(w, g, t0, "nem json").is_empty() \
 		and o.size() == 5 and str(o[1]["dontes"]) == "later" and int(o[1]["cel"]) > int(o[0]["cel"]) \
 		and Nation.parse(w, g, int(w.targets_for(g)[-1]), "{\"choice\":\"b\",\"statement\":\"Kell még idő.\"}").get("szoveg", "") == "Kell még idő." \
-		and Nation.parse_round(w, g, "{\"choice\":\"A\",\"reason\":9}").get("dontes", "") == "keep" and Nation.parse_round(w, g, "{\"choice\":\"C\"}").is_empty()
+		and Nation.parse_round(w, g, "{\"choice\":\"A\",\"reason\":9}").get("dontes", "") == "keep" and Nation.parse_round(w, g, "{\"choice\":\"F\"}").is_empty() and int(Nation.parse_round(w, g, "{\"choice\":\"C\"}").get("cel", 0)) == int(w.targets_for(g)[1])
 	# 4. nem: elvisz egy lépést, a cél nem változik; önkéntes vállalás: a legkönnyebb fokozat; halasztás: +5 év
 	var s0: int = w.steps
 	var no: bool = w.rebuff(g, t0) and w.steps == s0 - 1 and int(g["cel"]) == 0

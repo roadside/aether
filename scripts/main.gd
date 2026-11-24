@@ -2620,7 +2620,7 @@ func _nation_round() -> Array:
 		return []
 	var t := 0
 	if out["dontes"] == "earlier":
-		t = world.volunteer(g)
+		t = world.volunteer(g, int(out.get("cel", 0)))
 	elif out["dontes"] == "delay":
 		t = world.postpone(g)
 	_nat[out["dontes"]] = int(_nat.get(out["dontes"], 0)) + 1

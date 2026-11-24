@@ -394,11 +394,15 @@ func rebuff(g: Dictionary, target: int) -> bool:
 
 
 ## AI-országok saját lépése (játékszabály): a vezetés magától vállalja a következő fokozatot. Vissza: az új célév, vagy 0.
-func volunteer(g: Dictionary) -> int:
+func volunteer(g: Dictionary, target: int = 0) -> int:
 	var ts := targets_for(g)
 	if ts.is_empty() or over():
 		return 0
 	var t := int(ts[0])
+	if target > 0:
+		if not ts.has(target):
+			return 0
+		t = target
 	var y := year()
 	g["f0"] = fraction(g, y - 1) if int(g["cel"]) > 0 else float(g["f0"])
 	g["fok"] = stage_of(t)

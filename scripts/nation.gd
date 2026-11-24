@@ -126,12 +126,12 @@ static func options(w, g: Dictionary, target: int) -> Array:
 	return out
 
 
-## Kör végi saját lépés: marad, magától vállalja a következő fokozatot, vagy öt évvel elhalaszt.
+## Kör végi saját lépés: marad, magától vállal egy vállalható évet (bármelyiket), vagy öt évvel elhalaszt.
 static func round_options(w, g: Dictionary) -> Array:
 	var out: Array = [{"dontes": "keep", "en": "Change nothing."}]
 	var ts: Array = w.targets_for(g)
-	if not ts.is_empty():
-		out.append({"dontes": "earlier", "en": ("On your own, bring your promise forward to zero emissions by %d." if int(g.get("cel", 0)) > 0 else "On your own, make a first promise: zero emissions by %d.") % int(ts[0])})
+	for t in ts:
+		out.append({"dontes": "earlier", "cel": int(t), "en": ("On your own, bring your promise forward to zero emissions by %d." if int(g.get("cel", 0)) > 0 else "On your own, promise zero emissions by %d.") % int(t)})
 	if int(g.get("cel", 0)) > 0 and int(g["cel"]) < 2090:
 		out.append({"dontes": "delay", "en": "Postpone your promise by five years, to %d." % mini(int(g["cel"]) + 5, 2090)})
 	return out
@@ -154,7 +154,7 @@ static func _brief(w, g: Dictionary) -> Array:
 		l.append("- %s (%s)" % [str(f["szoveg_en"]), str(f["link"])])
 	l.append("Your real public climate pledge as of 2026: %s." % str(d.get("nyilvanos_cel_en", "none")))
 	l.append("In these talks every party starts with no promise on the table. You have promised here so far: %s." % _talks(g))
-	l.append("A promise here that is not earlier than your real public pledge is consistent with your real record.")
+	l.append("A promise here that is not earlier than your real public pledge is consistent with your real record. A promise here with a later year than your real public pledge is weaker than what you have really pledged.")
 	l.append("YOUR PEOPLE")
 	for r in d.get("kozvelemeny", []):
 		l.append("- %s: %d%% supported stronger climate action by their country (UNDP Peoples' Climate Vote 2024)." % [str(r["orszag_en"]), int(r["ertek"])])
