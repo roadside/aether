@@ -135,7 +135,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Nulla kibocsátás %d-re
 - Növényi energia CO2-tárolással
 - Tőlük már nincs mit kérned.
-- Valódi: a klímamodell számai, a csoportok kibocsátása, a kártyák forrásai. Játékszabály: a tárgyalás, az aggodalmak mondatai, a jövő hírei.
+- Valódi: a klímamodell számai, a csoportok kibocsátása, a kártyák forrásai.
 - Válassz %d kártyát (%d/%d)
 - Válassz témakört. Három valódi kérdést kapsz, egyet kutathatsz ki: ebből lesz bizonyíték-kártyád.
 - az átlagnál kevésbé érzékeny
@@ -211,7 +211,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - három
 - négy
 - öt
-- A Földed +1,7 °C alatt maradt. 2026-ból indulva ennél sokkal jobbat már alig lehet elérni.
+- A Földed +1,7 °C alatt maradt. 2026-ból indulva ennél sokkal jobbat már aligha lehet elérni.
 - Kiváló Föld
 - Maradj 2100-ban +1,7 °C alatt.
 - Érd el, hogy egy csoport tizenöt év alatt vállalja a nulla kibocsátást.
@@ -226,10 +226,10 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Bizonytalan
 - Erősítsd meg őket
 - Megerősítés
-- Elbizonytalanodtak. Ha a kör végéig nem erősíted meg őket, megingnak, és későbbre tolják a céljukat.
+- Elbizonytalanodtak. Ha a kör végéig nem erősíted meg őket, meginognak, és későbbre tolják a céljukat.
 - Nem erősítetted meg őket időben.
 - %s elbizonytalanodott.
-- Erősítsd meg őket egy hozzájuk illő kártyával, különben öt év múlva megingnak!
+- Erősítsd meg őket egy hozzájuk illő kártyával, különben öt év múlva meginognak!
 - A te történeted
 - %s felkészült a bajra.
 - A mai Föld
@@ -245,7 +245,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - nulla alatt
 - Klímacsúcs
 - Mutass meg egy kártyát az egész világnak! Aki már vállalt célt, és a kártya az ő aggodalmára felel, öt évvel előbbre hozza a vállalását. Nem kerül semmibe.
-- Most nincs olyan kártyád, amire figyelnének.
+- Most nincs olyan kártyád, amire felfigyelnének.
 - Most nem mutatok semmit
 - %s előbbre hozta a célját: nulla kibocsátás %d-re.
 - Klímacsúcs: %d csoport hozta előbbre a célját.
@@ -290,12 +290,12 @@ Mindegyiket a megadott forrásból ellenőriztük. A kártyán csak akkor jeleni
 - **villanyauto:** A világ 59 térségéből 53-ban már a mai áramtermelés mellett is kevesebb kibocsátással jár a villanyautó, mint a benzines vagy dízel autó; ez a közlekedési és fűtési igény 95%-a. (Knobloch és mtsai 2020) – https://doi.org/10.1038/s41893-020-0488-7
 - **hoszivattyu:** A hőszivattyú a világ 59 térségéből 53-ban már ma kevesebb kibocsátással fűt, mint a gáz- vagy olajkazán. (Knobloch és mtsai 2020) – https://doi.org/10.1038/s41893-020-0488-7
 - **zold_acel:** Az acélgyártás évente kb. 2,6 milliárd tonna CO2-t bocsát ki közvetlenül, az energiaszektor kibocsátásának 7%-át. (IEA 2020) – https://www.iea.org/reports/iron-and-steel-technology-roadmap
-- **cement:** A cementgyártás vegyi folyamata (a mészkő bontása) 2016-ban 1,45 milliárd tonna CO2-t engedett ki, a fosszilis kibocsátás kb. 4%-át. Ez akkor is keletkezik, ha a hőt tiszta energia adja. (Andrew 2018) – https://doi.org/10.5194/essd-10-195-2018
-- **metan_gaz:** Az olaj-, gáz- és szénágazat metánkibocsátásának kb. 70%-a ma már létező technikával elkerülhető, sokszor olcsón. (IEA 2025) – https://www.iea.org/reports/global-methane-tracker-2025/key-findings
+- **cement:** A cementgyártás vegyi folyamata (a mészkő bontása) 2016-ban 1,45 milliárd tonna CO2-t engedett ki, a fosszilis kibocsátás kb. 4%-át. Ez akkor is létrejön, ha a hőt tiszta energia adja. (Andrew 2018) – https://doi.org/10.5194/essd-10-195-2018
+- **metan_gaz:** Az olaj-, gáz- és szénágazat metánkibocsátásának kb. 70%-a ma már létező technológiával elkerülhető lenne, sokszor olcsóbban. (IEA 2025) – https://www.iea.org/reports/global-methane-tracker-2025/key-findings
 - **hoseg_halal:** 1991 és 2018 között a nyári hőség okozta halálesetek 37%-a az ember okozta melegedés miatt történt (43 ország adatai). (Vicedo-Cabrera és mtsai 2021) – https://doi.org/10.1038/s41558-021-01058-x
 - **legszennyezes:** A szén, olaj és gáz égetéséből származó légszennyezés évente kb. 5,1 millió ember korai halálát okozza; ezek elkerülhetők lennének. (Lelieveld és mtsai 2023) – https://doi.org/10.1136/bmj-2023-077784
 - **termes:** Alkalmazkodás nélkül minden egyes fok melegedés átlagosan 6%-kal csökkenti a búza, 7,4%-kal a kukorica, 3,2%-kal a rizs és 3,1%-kal a szója termését. (Zhao és mtsai 2017) – https://doi.org/10.1073/pnas.1701762114
-- **amazonas:** Az Amazonas esőerdejének pusztulása a kutatók becslése szerint kb. 3,5 fok melegedésnél válik valószínűvé, de már 2 foknál is lehetséges. (Armstrong McKay és mtsai 2022) – https://doi.org/10.1126/science.abn7950
+- **amazonas:** Az Amazonas esőerdejének pusztulása a kutatók becslése szerint kb. 3,5 fok melegedésnél válik valószínűvé, de már 2 foknál is elkezdődhet. (Armstrong McKay és mtsai 2022) – https://doi.org/10.1126/science.abn7950
 
 ## 9. Új szövegek (2026-11-23, 20 óra után)
 
@@ -315,7 +315,7 @@ Csak ezek újak. Küldetések, döntési helyzetek, tudáspróba, a Kockázatos 
 - Küldetésteljesítő
 - Teljesítsd mind a három küldetést egy játékban.
 - Kockázatos ötletek
-- Tárgyalásra nem jó. Megtudod belőle, miért kockázatos mesterségesen hűteni a Földet.
+- Tárgyalásra nem használható. Megtudod belőle, miért kockázatos mesterségesen hűteni a Földet.
 - Óvatos tudós
 - Kutass ki három kockázatos ötletet.
 - Kép mentése
@@ -342,8 +342,8 @@ Csak ezek újak: a telő idő és a Földön felvillanó pillanatok szövegei.
 - Most figyelnek rád!
 - Új felfedezés!
 - +1 lépés
-- Telő idő: be
-- Telő idő: ki
+- Idő: be
+- Idő: ki
 - Az évek maguktól telnek. Amíg olvasol, az idő áll. Ha a Földön felvillan valami, kattints rá gyorsan!
 
 ## 11. Új szövegek (2026-11-23 éjjel)
@@ -356,8 +356,8 @@ Csak ezek újak. Ami nincs itt, az nem változott.
 - Áradás fenyeget
 - Erdőtűz fenyeget
 - Készítsd fel őket
-- Készítsd fel őket a kör végéig, különben a mentés elvisz egy lépésedet.
-- Nem voltak felkészülve. A mentés miatt most eggyel kevesebb lépésed van.
+- Készítsd fel őket a kör végéig, különben a kárenyhítés eggyel csökkenti a lépéseidet.
+- Nem voltak felkészülve. A kárenyhítés miatt most eggyel kevesebb lépésed van.
 
 ### Lendület és segítő csoport
 - Lendület! Két megállapodás egy körben: +1 lépés.
@@ -391,7 +391,7 @@ Csak ezek újak. Ami nincs itt, az nem változott.
 ### Billenőpontok veszélysávja
 - veszélysávban
 - Veszélysávba értünk: %s
-- A küszöb rejtve van: senki sem tudja, pontosan mikor lépjük át.
+- A kritikus határ láthatatlan: senki sem tudja előre, mikor lépjük át.
 
 ### Terjedő tévhitek
 A négy tévhit mondata (idézőjelben jelennek meg):
@@ -486,7 +486,7 @@ Csak ezek újak. Ami nincs itt, az nem változott. A lektorálásod négy javít
 ### Tanács és saját AI
 - Tanács a géptől
 - Az Okos gép ezt lépné
-- A gépeden futó nyelvi modell (Ollama) dönt a lépésekről, és a saját szavaival indokol. Ha nem ad szabályos lépést, az Okos gép lép helyette.
+- A gépeden futó nyelvi modell dönt a lépésekről, és a saját szavaival indokol. Ha nem ad szabályos lépést, az Okos gép lép helyette.
 - Keresem a gépeden futó AI-t…
 - Most nem fut AI ezen a gépen. Indítsd el az Ollamát, aztán nyisd meg újra ezt az ablakot!
 - Megvan: %s
@@ -565,7 +565,7 @@ Gazdasági és politikai mutatók az adatlapokon (GDP/fő USD 2025 · olaj- és 
 
 ### Saját AI: Claude, ChatGPT, Gemini (az „AI játszik” ablak; a %s helyére a szolgáltató neve kerül)
 
-- %s dönt a lépésekről, és a saját szavaival indokol. Ehhez saját kulcs kell a szolgáltatótól, és a használatért ő pénzt kérhet.
+- %s dönt a lépésekről, és a saját szavaival indokol. Ehhez saját kulcs kell a szolgáltatótól, és a használata pénzbe kerülhet.
 - A játék csak a játék állását és az országok adatait küldi el neki, rólad semmit. A kulcs csak ezen a gépen marad.
 - Ide másold a kulcsot
 - Kulcs mentése

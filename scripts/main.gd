@@ -1067,10 +1067,10 @@ func _build_menu() -> void:
 		L.set_setting("hangok", not _sounds_on())
 		snd.text = L.t("Hangok: be") if _sounds_on() else L.t("Hangok: ki"))
 	v.add_child(snd)
-	var tim := UI.button(L.t("Telő idő: be") if _time_on() else L.t("Telő idő: ki"))
+	var tim := UI.button(L.t("Idő: be") if _time_on() else L.t("Idő: ki"))
 	tim.pressed.connect(func() -> void:
 		L.set_setting("elo_ido", not _time_on())
-		tim.text = L.t("Telő idő: be") if _time_on() else L.t("Telő idő: ki")
+		tim.text = L.t("Idő: be") if _time_on() else L.t("Idő: ki")
 		_clear_moment()
 		_refresh())
 	v.add_child(tim)
@@ -1862,7 +1862,7 @@ func _open_research(theme: String = "") -> void:
 		v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		v.add_child(_lbl(_theme_name(th), 20, col, true))
 		if th in Cards.NO_TALK:
-			v.add_child(_lbl(L.t("Tárgyalásra nem jó. Megtudod belőle, miért kockázatos mesterségesen hűteni a Földet."), 14, UI.SOFT))
+			v.add_child(_lbl(L.t("Tárgyalásra nem használható. Megtudod belőle, miért kockázatos mesterségesen hűteni a Földet."), 14, UI.SOFT))
 		else:
 			v.add_child(_lbl(L.t("Akit ez aggaszt: %s") % ", ".join(who) if not who.is_empty() else "", 14, UI.SOFT))
 		var shaky_who: Array = []
@@ -2034,7 +2034,7 @@ func _open_group(g: Dictionary) -> void:
 	if danger != "":
 		var dr := UI.hbox(10)
 		dr.add_child(Icons.rect(danger, UI.EMBER, 30))
-		var dl := UI.label("%s. %s" % [L.t(THREAT[danger]), L.t("Készítsd fel őket a kör végéig, különben a mentés elvisz egy lépésedet.")], 17, UI.EMBER, true)
+		var dl := UI.label("%s. %s" % [L.t(THREAT[danger]), L.t("Készítsd fel őket a kör végéig, különben a kárenyhítés eggyel csökkenti a lépéseidet.")], 17, UI.EMBER, true)
 		dl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		dr.add_child(dl)
 		body.add_child(dr)
@@ -2185,7 +2185,7 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 		area.add_child(UI.card_root(c))
 	else:
 		if ask["fajta"] == "megerosites":
-			area.add_child(UI.label(L.t("Elbizonytalanodtak. Ha a kör végéig nem erősíted meg őket, megingnak, és későbbre tolják a céljukat."), 16, UI.GOLD))
+			area.add_child(UI.label(L.t("Elbizonytalanodtak. Ha a kör végéig nem erősíted meg őket, meginognak, és későbbre tolják a céljukat."), 16, UI.GOLD))
 		area.add_child(UI.label(L.t("Amitől tartanak:"), 17, UI.GOLD, true, false))
 		var usable := world.usable(g)
 		# előre az az aggodalom kerül, amelyikre van kártyád: a bejelölhető sor görgetés nélkül látszik
@@ -2635,9 +2635,9 @@ func _add_own_ai(body: VBoxContainer) -> void:
 		row.add_child(b)
 	c.add_child(row)
 	if p == "ollama":
-		c.add_child(UI.label(L.t("A gépeden futó nyelvi modell (Ollama) dönt a lépésekről, és a saját szavaival indokol. Ha nem ad szabályos lépést, az Okos gép lép helyette."), 16, UI.SOFT))
+		c.add_child(UI.label(L.t("A gépeden futó nyelvi modell dönt a lépésekről, és a saját szavaival indokol. Ha nem ad szabályos lépést, az Okos gép lép helyette."), 16, UI.SOFT))
 	else:
-		c.add_child(UI.label(L.t("%s dönt a lépésekről, és a saját szavaival indokol. Ehhez saját kulcs kell a szolgáltatótól, és a használatért ő pénzt kérhet.") % str(AI_NAMES[p]), 16, UI.SOFT))
+		c.add_child(UI.label(L.t("%s dönt a lépésekről, és a saját szavaival indokol. Ehhez saját kulcs kell a szolgáltatótól, és a használata pénzbe kerülhet.") % str(AI_NAMES[p]), 16, UI.SOFT))
 		c.add_child(UI.label(L.t("A játék csak a játék állását és az országok adatait küldi el neki, rólad semmit. A kulcs csak ezen a gépen marad."), 15, UI.MUTE))
 		if _ai_key(p) == "":
 			var key_row := UI.hbox(6)
@@ -3275,7 +3275,7 @@ func _open_news(y0: int, t0: float) -> void:
 	if not bands.is_empty():
 		var cw := UI.card(UI.GOLD)
 		cw.add_child(UI.label("⚠ " + L.t("Veszélysávba értünk: %s") % ", ".join(bands), 18, UI.GOLD, true))
-		cw.add_child(UI.label(L.t("A küszöb rejtve van: senki sem tudja, pontosan mikor lépjük át."), 16, UI.SOFT))
+		cw.add_child(UI.label(L.t("A kritikus határ láthatatlan: senki sem tudja előre, mikor lépjük át."), 16, UI.SOFT))
 		body.add_child(UI.card_root(cw))
 		quiet = false
 	for n in world.news:
@@ -3311,7 +3311,7 @@ func _open_news(y0: int, t0: float) -> void:
 			"inog":
 				var c5 := UI.card(UI.GOLD)
 				c5.add_child(UI.label("⚠ " + L.t("%s elbizonytalanodott.") % L.field(world.group(n["csoport"]), "nev"), 18, UI.GOLD, true))
-				c5.add_child(UI.label(L.t("Erősítsd meg őket egy hozzájuk illő kártyával, különben öt év múlva megingnak!"), 16, UI.SOFT))
+				c5.add_child(UI.label(L.t("Erősítsd meg őket egy hozzájuk illő kártyával, különben öt év múlva meginognak!"), 16, UI.SOFT))
 				body.add_child(UI.card_root(c5))
 			"kitartott":
 				var c3 := UI.card(UI.GREEN)
@@ -3335,7 +3335,7 @@ func _open_news(y0: int, t0: float) -> void:
 				if world.group(n["csoport"]).get("felkeszult", false):
 					c4.add_child(UI.label(L.t("Felkészültek rá, ezért kisebb volt a baj."), 16, UI.GREEN))
 				elif n.get("lepes", false):
-					c4.add_child(UI.label(L.t("Nem voltak felkészülve. A mentés miatt most eggyel kevesebb lépésed van."), 16, UI.EMBER, true))
+					c4.add_child(UI.label(L.t("Nem voltak felkészülve. A kárenyhítés miatt most eggyel kevesebb lépésed van."), 16, UI.EMBER, true))
 					lost = true
 				c4.add_child(UI.label(L.t("A baj után jobban figyelnek rád: most eggyel kevesebb kártyával is meggyőzheted őket."), 16, UI.SOFT))
 				body.add_child(UI.card_root(c4o))
@@ -3357,7 +3357,7 @@ func _open_news(y0: int, t0: float) -> void:
 		r9.add_child(Icons.rect(str(world.threat["mi"]), UI.EMBER, 36))
 		r9.add_child(UI.label("⚠ %s: %s" % [L.t(THREAT[world.threat["mi"]]), L.field(tg, "nev")], 18, UI.EMBER, true))
 		c9.add_child(r9)
-		c9.add_child(UI.label(L.t("Készítsd fel őket a kör végéig, különben a mentés elvisz egy lépésedet."), 16, UI.SOFT))
+		c9.add_child(UI.label(L.t("Készítsd fel őket a kör végéig, különben a kárenyhítés eggyel csökkenti a lépéseidet."), 16, UI.SOFT))
 		body.add_child(UI.card_root(c9))
 	if lost and not _test:        # megrázkódik az ablak, ha a baj felkészületlenül ért
 		var ov := _overlay
@@ -3452,7 +3452,7 @@ func _open_summit() -> void:
 		c.add_child(_go(Cards.text(id, "Kérdés", L.is_en()) + " →", _do_summit.bind(id), false))
 		body.add_child(UI.card_root(c))
 	if rows.is_empty():
-		body.add_child(UI.label(L.t("Most nincs olyan kártyád, amire figyelnének."), 17, UI.GOLD))
+		body.add_child(UI.label(L.t("Most nincs olyan kártyád, amire felfigyelnének."), 17, UI.GOLD))
 	body.add_child(_go(L.t("Most nem mutatok semmit"), func() -> void:
 		world.skip_summit()
 		_save()
@@ -3555,7 +3555,7 @@ func _open_end() -> void:
 				add_child(burst)
 				if i == 0:
 					_sound("lendulet")).set_delay(1.0 + 0.5 * i)
-	var verdict := "A Földed +1,7 °C alatt maradt. 2026-ból indulva ennél sokkal jobbat már alig lehet elérni." if tt < 1.7 \
+	var verdict := "A Földed +1,7 °C alatt maradt. 2026-ból indulva ennél sokkal jobbat már aligha lehet elérni." if tt < 1.7 \
 		else ("A Földed +2 °C alatt maradt. A Párizsi Megállapodás ennél többet kér: jóval +2 °C alatt megállni, lehetőleg +1,5 °C-nál." if tt < 2.0 \
 		else "A Földed +2 °C fölé melegedett. A következő játékban lépj hamarabb!")
 	body.add_child(UI.label(L.t(verdict), 19, UI.GREEN if tt < 2.0 else UI.EMBER, true))
@@ -3792,7 +3792,7 @@ func _open_help() -> void:
 		h.add_child(UI.label(row[0], 22, UI.GOLD, true, false))
 		h.add_child(UI.label(L.t(row[1]), 18, UI.TEXT))
 		body.add_child(h)
-	body.add_child(UI.label(L.t("Valódi: a klímamodell számai, a csoportok kibocsátása, a kártyák forrásai. Játékszabály: a tárgyalás, az aggodalmak mondatai, a jövő hírei."), 15, UI.MUTE))
+	body.add_child(UI.label(L.t("Valódi: a klímamodell számai, a csoportok kibocsátása, a kártyák forrásai."), 15, UI.MUTE))
 	var hb := UI.hbox(12)
 	hb.add_child(_go(L.t("Kezdjük!"), _close))
 	hb.add_child(_go(L.t("Új játék vezetéssel"), func() -> void:       # az első kör lépésről lépésre, újra
