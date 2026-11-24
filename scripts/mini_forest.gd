@@ -43,7 +43,7 @@ var _shapes: Array = []       # az aktuális kép elemei
 
 
 func _ready() -> void:
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	focus_mode = Control.FOCUS_ALL
 	_load()
@@ -169,7 +169,7 @@ func _finish() -> void:
 	_end.add_child(UI.label(L.t("A legnagyobb ok az állandó mezőgazdaság (%s%%). Ez végleges: az erdő helyén szántó, legelő vagy ültetvény lesz.") % L.num(100.0 * float(sums[ia]) / total, 0), 18, UI.TEXT))
 	_end.add_child(UI.label(L.t("Fakitermelés és váltogató művelés után gyakran visszanő az erdő."), 18, UI.TEXT))
 	_end.add_child(UI.label(L.t("Az adatsor utolsó évében (%d) a tűz %s millió hektárt pusztított el, többet, mint bármelyik korábbi évben.") % [int(last[0]), L.num(float(last[it + 1]), 1)], 18, UI.EMBER, true))
-	_end.add_child(UI.label(L.t("Adat: %s") % source, 13, UI.MUTE))
+	_end.add_child(UI.label(L.t("Forrás: %s") % source, 13, UI.MUTE))
 	var b := UI.button(L.t("Tovább") + " →", true)
 	b.pressed.connect(func() -> void: finished.emit(true))
 	b.position = Vector2(1390, 30)

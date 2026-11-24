@@ -310,6 +310,8 @@ func _tutor_update(ctx: String = "") -> void:
 
 
 func _clock_runs() -> bool:
+	if _mini_on:                   # minijáték közben áll az idő, és nem villan fel semmi a Földön
+		return false
 	if _clock_force:
 		return true
 	if _auto != "":                # amíg a gép játszik, az óra áll: a gép a saját tempójában lép
@@ -1502,7 +1504,7 @@ func _close() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _intro != null:
+	if _intro != null or _mini_on:
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_ESCAPE and _auto != "":
@@ -1988,22 +1990,29 @@ func _do_research(id: String, th: String) -> void:
 
 
 ## Minijátékok: kártya -> [név, a jelenet szkriptje]. A minijáték valódi adatból rajzol; a menete játékszabály.
-const MINI := {"jegfurat": ["Jégfurat", "res://scripts/mini_ice.gd"], "halozat_osszekotes": ["Áramhálózat", "res://scripts/mini_grid.gd"], "repules": ["Kondenzcsík-kerülő", "res://scripts/mini_flight.gd"], "sztratoszfera": ["Nap vagy CO2?", "res://scripts/mini_sun.gd"], "metan_szivargas": ["Metánvadász", "res://scripts/mini_methane.gd"], "tengeri_hohullam": ["Melegrekord a tengeren", "res://scripts/mini_sea.gd"], "viharar": ["Gátőr", "res://scripts/mini_dike.gd"], "erdoirtas_okai": ["Erdőnyomozó", "res://scripts/mini_forest.gd"]}
+const MINI := {"jegfurat": ["Jégfurat", "res://scripts/mini_ice.gd"], "halozat_osszekotes": ["Áramhálózat", "res://scripts/mini_grid.gd"], "repules": ["Kondenzcsík-kerülő", "res://scripts/mini_flight.gd"], "sztratoszfera": ["Nap vagy CO₂?", "res://scripts/mini_sun.gd"], "metan_szivargas": ["Metánvadász", "res://scripts/mini_methane.gd"], "tengeri_hohullam": ["Melegrekord a tengeren", "res://scripts/mini_sea.gd"], "viharar": ["Gátőr", "res://scripts/mini_dike.gd"], "erdoirtas_okai": ["Erdőnyomozó", "res://scripts/mini_forest.gd"]}
+
+var _mini_on := false
 
 func _open_mini(id: String) -> void:
+	if _mini_on:
+		return
+	_mini_on = true
 	var mi = (load(str(MINI[id][1])) as GDScript).new()
 	mi.z_index = 50      # minden ablak fölé kerül
 	var hidden: Array = []
-	for n in [_overlay, _dim, _close_x]:      # amíg a minijáték tart, a mögötte lévő ablak eltűnik
+	for n in [_overlay, _dim, _close_x, _moment_node]:      # amíg a minijáték tart, a mögötte lévő ablak eltűnik
 		if n != null and is_instance_valid(n) and n.visible:
 			n.visible = false
 			hidden.append(n)
 	add_child(mi)
+	(mi as Control).set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)      # teljes képernyő: minden kattintás a minijátéké
 	await mi.finished
 	mi.queue_free()
 	for n in hidden:
 		if is_instance_valid(n):
 			n.visible = true
+	_mini_on = false
 
 
 func _open_card(id: String, fresh: bool = false) -> void:
@@ -2258,7 +2267,7 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 		area.add_child(UI.card_root(cp))
 	elif ask["fajta"] == "maradek":
 		var cm := UI.card(UI.GOLD)
-		cm.add_child(UI.label(L.t("A cél után is marad kibocsátás: a cement, az acél, a repülés és a hajózás a legnehezebb. Mutasd meg, mivel váltható ki!"), 16, UI.SOFT))
+		cm.add_child(UI.label(L.t("A cél után is marad kibocsátás: a cement, az acél, a repülés és a hajózás kibocsátását a legnehezebb megoldani. Mutasd meg, mivel váltható ki!"), 16, UI.SOFT))
 		for id in world.residual_cards(g):
 			add_card.call(cm, id)
 			any = true

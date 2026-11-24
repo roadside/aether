@@ -43,7 +43,7 @@ var _msg_pos := Vector2.ZERO
 
 
 func _ready() -> void:
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	focus_mode = Control.FOCUS_ALL
 	_load()
@@ -51,7 +51,7 @@ func _ready() -> void:
 	var title := UI.heading(L.t("Metánvadász"), 34)
 	title.position = Vector2(60, 28)
 	add_child(title)
-	_info = UI.label(L.t("A műhold végigpásztázza a gázmezőt. Ahol felhő jelenik meg, ott nagy a szivárgás: kattints rá, és küldj oda javítócsapatot!"), 18, UI.SOFT)
+	_info = UI.label(L.t("A műhold végigpásztázza a gázmezőt. Ahol felhő jelenik meg, ott nagy a szivárgás: kattints rá, és küldj oda egy javítócsapatot!"), 18, UI.SOFT)
 	_info.position = Vector2(60, 84)
 	_info.size = Vector2(980, 60)
 	add_child(_info)
@@ -154,7 +154,7 @@ func _fix(i: int) -> void:
 	fixed_n += 1
 	if not bool(s["seen"]):
 		wasted += 1
-	_msg = L.t("Kicsi szivárgás") if float(s["rel"]) < 0.2 else L.t("Nagy szivárgás elzárva!")
+	_msg = L.t("Kicsi szivárgás") if float(s["rel"]) < 0.2 else L.t("Nagy szivárgás megszüntetve!")
 	_msg_t = _t
 	_msg_pos = s["pos"]
 	_update_read()
@@ -203,11 +203,11 @@ func _finish() -> void:
 	var m: Dictionary = facts.get("muhold", {})
 	var u: Dictionary = facts.get("usa_2015", {})
 	_end.visible = true
-	_end.add_child(UI.label(L.t("A kutak %s%%-át javítottad, és ezzel a szivárgás %s%%-át állítottad meg.") % [L.num(100.0 * fixed_n / SITES, 0), L.num(100.0 * fixed_e / maxf(total, 0.001), 0)], 22, UI.CYAN, true))
-	_end.add_child(UI.label(L.t("Kevés nagy szivárgás adja a metán nagy részét. Ezeket érdemes először megtalálni."), 19, UI.TEXT))
-	_end.add_child(UI.label(L.t("A valóságban: műholdas mérések szerint (%s) néhány száz óriási szivárgás adta az olaj- és gázipari metán %s–%s%%-át, évi kb. %s millió tonnát. A javításuk nagyrészt olcsó.") % [str(m.get("evek", "")), L.num(float(m.get("oriasi_szivargasok_aranya_min", 0)), 0), L.num(float(m.get("oriasi_szivargasok_aranya_max", 0)), 0), L.num(float(m.get("oriasi_szivargasok_millio_tonna_ev", 0)), 0)], 19, UI.TEXT, true))
+	_end.add_child(UI.label(L.t("A kutak %s%%-át javítottad ki, amivel a szivárgás %s%%-át szüntetted meg.") % [L.num(100.0 * fixed_n / SITES, 0), L.num(100.0 * fixed_e / maxf(total, 0.001), 0)], 22, UI.CYAN, true))
+	_end.add_child(UI.label(L.t("A kevés nagyobb szivárgás adja a légkörbe kerülő metán nagy részét. Ezeket érdemes először megtalálni."), 19, UI.TEXT))
+	_end.add_child(UI.label(L.t("A valóságban: műholdas mérések szerint (%s) néhány száz óriási szivárgás adta az olaj- és gázipari metán %s–%s%%-át, évi kb. %s millió tonnát. A javításuk nagyrészt olcsó lenne.") % [str(m.get("evek", "")), L.num(float(m.get("oriasi_szivargasok_aranya_min", 0)), 0), L.num(float(m.get("oriasi_szivargasok_aranya_max", 0)), 0), L.num(float(m.get("oriasi_szivargasok_millio_tonna_ev", 0)), 0)], 19, UI.TEXT, true))
 	_end.add_child(UI.label(L.t("Az USA-ban 2015-ben az olaj- és gázágazat kb. %s%%-kal több metánt engedett ki, mint a hivatalos becslés.") % L.num(float(u.get("tobblet_szazalek", 0)), 0), 19, UI.TEXT))
-	_end.add_child(UI.label(L.t("Adat: %s") % source, 13, UI.MUTE))
+	_end.add_child(UI.label(L.t("Forrás: %s") % source, 13, UI.MUTE))
 	var b := UI.button(L.t("Tovább") + " →", true)
 	b.pressed.connect(func() -> void: finished.emit(true))
 	b.position = Vector2(1390, 30)

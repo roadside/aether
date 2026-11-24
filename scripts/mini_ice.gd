@@ -54,7 +54,7 @@ var _stars: Array = []
 
 
 func _ready() -> void:
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	focus_mode = Control.FOCUS_ALL
 	_load()
@@ -201,7 +201,7 @@ func _finish() -> void:
 	_end.visible = true
 	_end.add_child(UI.label(L.t("800 ezer évig a levegő CO2-tartalma %s és %s ppm között maradt.") % [L.num(pre_min, 0), L.num(pre_max, 0)], 19, UI.TEXT, true))
 	_end.add_child(UI.label(L.t("%d-ben: %s ppm.") % [today_year, L.num(today, 0)], 24, UI.EMBER, true))
-	_end.add_child(UI.label(L.t("Adat: %s") % source, 14, UI.MUTE))
+	_end.add_child(UI.label(L.t("Forrás: %s") % source, 14, UI.MUTE))
 	var b := UI.button(L.t("Tovább") + " →", true)
 	b.pressed.connect(func() -> void: finished.emit(true))
 	b.position = Vector2(1390, 30)

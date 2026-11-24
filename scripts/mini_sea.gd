@@ -1,8 +1,8 @@
 extends Control
 ## Minijáték: Melegrekord a tengeren. Az óceán felszínének valódi évi hőmérséklete rajzolódik ki
-## 1900-tól 2024-ig (adatok/tengerfelszin_ho.json: NOAA NCEI, a forrás a fájlban). A játékos akkor
-## nyomja meg a szóközt, amikor a görbe új rekordot dönt; a végén látszik, mikor sűrűsödtek a rekordok.
-## Játékszabály: az évek sebessége és az, hogy mennyi ideig „kapható el” egy rekord.
+## 1900-tól 2024-ig (adatok/tengerfelszin_ho.json: NOAA NCEI, a forrás a fájlban). A játékos kétszer tippel:
+## hány új melegrekord született egy időszakban; utána a görbe kirajzolja, mi történt valójában.
+## Játékszabály: a két időszak határa, a választható tippek és a kirajzolás sebessége.
 ## A zátony rajza jelkép: a korallok fakulása a görbét követi, nem egy mért zátonyt mutat.
 
 signal finished(done: bool)
@@ -11,8 +11,12 @@ const L := preload("res://scripts/i18n.gd")
 const UI := preload("res://scripts/ui.gd")
 const W := 1600.0
 const H := 900.0
-const YEAR_SECONDS := 0.42        # játékszabály: ennyi ideig tart egy év
-const CATCH_YEARS := 2.6          # játékszabály: ennyi évig kapható el egy rekord
+const YEAR_SECONDS := 0.14        # játékszabály: ennyi ideig tart egy év a kirajzoláskor
+const SPLITS := [1950, 1980, 2024]                 # játékszabály: a két tipp időszakai
+const OPTIONS := [[0, 4, 9], [2, 6, 11]]           # játékszabály: a választható tippek
+const QUESTIONS := [
+	"A görbe az óceán felszínének hőmérséklete. A sárga pöttyök melegrekordok. Szerinted hány új rekord született %d és %d között?",
+	"És %d után, egészen %d-ig? Tippelj!"]
 const CX0 := 150.0
 const CX1 := 1500.0
 const CY0 := 175.0
@@ -27,7 +31,15 @@ var years: Array = []
 var vals: Array = []
 var records: Array = []           # [{k, caught}] az első év utáni rekordok
 var source := ""
-var caught := 0
+var hits := 0
+var round_i := 0
+var _guess := -1
+var _target := 0.0
+var _wait := 0.0
+var _gap := 0                    # ennyi évig állt a leghosszabb ideig álló rekord
+var _btns: HBoxContainer
+var _say: Label
+var _next_btn: Button
 var _pos := 0.0                   # hol tart a görbe (évindex, törttel)
 var _t := 0.0
 var _flash := -9.0
@@ -43,7 +55,7 @@ var _end: VBoxContainer
 
 
 func _ready() -> void:
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	focus_mode = Control.FOCUS_ALL
 	_load()
@@ -51,10 +63,28 @@ func _ready() -> void:
 	var title := UI.heading(L.t("Melegrekord a tengeren"), 34)
 	title.position = Vector2(60, 28)
 	add_child(title)
-	_info = UI.label(L.t("Nyomd meg a szóközt vagy kattints, amikor a görbe átlépi az eddigi rekordot!"), 18, UI.SOFT)
-	_info.position = Vector2(60, 84)
+	_info = UI.label("", 18, UI.SOFT)
+	_info.position = Vector2(60, 80)
 	_info.size = Vector2(1000, 50)
 	add_child(_info)
+	_say = UI.label("", 20, UI.TEXT, true)
+	_say.position = Vector2(60, 84)
+	_say.size = Vector2(1000, 50)
+	_say.visible = false
+	add_child(_say)
+	_btns = UI.hbox(14)
+	_btns.position = Vector2(1080, 88)
+	add_child(_btns)
+	for i in 3:
+		var ob := UI.button("0", true)
+		ob.custom_minimum_size = Vector2(70, 0)
+		ob.pressed.connect(_choose.bind(i))
+		_btns.add_child(ob)
+	_next_btn = UI.button(L.t("Tovább") + " →", true)
+	_next_btn.position = Vector2(1390, 30)
+	_next_btn.visible = false
+	_next_btn.pressed.connect(_next)
+	add_child(_next_btn)
 	_read = UI.label("", 20, UI.CYAN, true, false)
 	_read.position = Vector2(1120, 40)
 	add_child(_read)
@@ -66,6 +96,14 @@ func _ready() -> void:
 	_end.size = Vector2(1300, 300)
 	_end.visible = false
 	add_child(_end)
+	_pos = float(years.find(int(SPLITS[0])))
+	_target = _pos
+	var prev_y := int(years[0])
+	for r in records:      # a leghosszabb szünet két rekord között
+		var ry := int(years[int(r["k"])])
+		_gap = maxi(_gap, ry - prev_y)
+		prev_y = ry
+	_ask()
 	_update_read()
 	grab_focus()
 
@@ -138,39 +176,66 @@ func _record_before(k: int) -> float:
 
 
 func _update_read() -> void:
-	var k := mini(int(floor(_pos)), years.size() - 1)
-	if k < 0:
-		return
+	var k := clampi(int(floor(_pos)), 0, years.size() - 1)
 	_read.text = "%d    %s °C" % [years[k], ("+" if float(vals[k]) >= 0.0 else "") + L.num(float(vals[k]), 2)]
 
 
-func _press() -> void:
-	if done_t >= 0.0:
-		return
+## Hány új rekord született a két évszám között (a második is beleszámít)?
+func _records_between(y0: int, y1: int) -> int:
+	var n := 0
 	for r in records:
-		var k := int(r["k"])
-		if not bool(r["caught"]) and _pos >= k - 0.5 and _pos <= k + CATCH_YEARS:
-			r["caught"] = true
-			caught += 1
-			_flash = _t
-			return
-	_miss = _t
+		var y := int(years[int(r["k"])])
+		if y > y0 and y <= y1:
+			n += 1
+	return n
+
+
+func _answer() -> int:
+	return _records_between(int(SPLITS[round_i]), int(SPLITS[round_i + 1]))
+
+
+func _ask() -> void:
+	_info.text = L.t(QUESTIONS[round_i]) % [int(SPLITS[round_i]), int(SPLITS[round_i + 1])]
+	_info.visible = true
+	var opts: Array = OPTIONS[round_i]
+	for i in 3:
+		(_btns.get_child(i) as Button).text = str(opts[i])
+	_btns.visible = true
+	_say.visible = false
+	_next_btn.visible = false
+	_guess = -1
+
+
+func _choose(i: int) -> void:
+	if done_t >= 0.0 or _guess >= 0 or round_i >= 2:
+		return
+	_guess = int(OPTIONS[round_i][i])
+	_btns.visible = false
+	_target = float(years.find(int(SPLITS[round_i + 1])))
+
+
+func _next() -> void:
+	if done_t >= 0.0:
+		finished.emit(true)
+		return
+	if _guess < 0 or _pos < _target:
+		return
+	round_i += 1
+	if round_i >= 2:
+		_finish()
+	else:
+		_ask()
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
-	if event is InputEventKey and not event.echo and event.pressed:
-		if event.keycode == KEY_ESCAPE:
-			get_viewport().set_input_as_handled()
-			finished.emit(done_t >= 0.0)
-		elif event.keycode in [KEY_SPACE, KEY_ENTER]:
-			get_viewport().set_input_as_handled()
-			_press()
+	if event is InputEventKey and not event.echo and event.pressed and event.keycode == KEY_ESCAPE:
+		get_viewport().set_input_as_handled()
+		finished.emit(done_t >= 0.0)
 
 
 func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+	if event is InputEventMouseButton:
 		accept_event()
-		_press()
 
 
 func _process(delta: float) -> void:
@@ -179,16 +244,36 @@ func _process(delta: float) -> void:
 		done_t += delta
 		queue_redraw()
 		return
-	if _t > 2.0:      # rövid felkészülés az elején
-		_pos += delta / YEAR_SECONDS
-	if auto:
-		for r in records:
-			if not bool(r["caught"]) and _pos >= int(r["k"]) + 0.6:
-				_press()
-				break
+	if _guess < 0:
+		if auto:
+			_wait += delta
+			if _wait > 2.0:
+				_wait = 0.0
+				_choose((OPTIONS[round_i] as Array).find(_answer()) if (OPTIONS[round_i] as Array).has(_answer()) else 0)
+	elif _pos < _target:
+		var before := int(floor(_pos))
+		_pos = minf(_target, _pos + delta / YEAR_SECONDS)
+		for r in records:      # új rekord: felvillan a felirat
+			if int(r["k"]) > before and int(r["k"]) <= int(floor(_pos)):
+				_flash = _t
+		if _pos >= _target:
+			var real := _answer()
+			var hit := real == _guess
+			if hit:
+				hits += 1
+			var line := L.t("Egy új rekord sem született: a régi csúcs %d évig állt.") % _gap if real == 0 else L.t("%d új melegrekord született.") % real
+			_say.text = (L.t("Eltaláltad!") if hit else L.t("Nem ennyi volt.")) + " " + line
+			_say.add_theme_color_override("font_color", UI.GREEN if hit else UI.TEXT)
+			_say.visible = true
+			_info.visible = false
+			_next_btn.visible = true
+			_wait = 0.0
+	elif auto:
+		_wait += delta
+		if _wait > 2.5:
+			_wait = 0.0
+			_next()
 	_update_read()
-	if _pos >= years.size() - 1 + CATCH_YEARS:
-		_finish()
 	queue_redraw()
 
 
@@ -198,20 +283,18 @@ func _finish() -> void:
 	done_t = 0.0
 	_pos = float(years.size() - 1)
 	_info.visible = false
+	_say.visible = false
+	_btns.visible = false
 	var late := 0
 	for r in records:
 		if int(years[int(r["k"])]) >= 1980:
 			late += 1
 	_end.visible = true
-	_end.add_child(UI.label(L.t("%d rekordot kaptál el a %d-ből.") % [caught, records.size()], 22, UI.CYAN, true))
-	_end.add_child(UI.label(L.t("%d óta %d új melegrekord született, ebből %d 1980 után.") % [years[0], records.size(), late], 20, UI.TEXT, true))
-	_end.add_child(UI.label(L.t("Minél melegebb az alap, annál könnyebben jön egy tengeri hőhullám."), 19, UI.TEXT))
+	_end.add_child(UI.label(L.t("%d óta %d új melegrekord született, ebből %d 1980 után.") % [years[0], records.size(), late], 22, UI.CYAN, true))
+	_end.add_child(UI.label(L.t("Minél melegebb az alaphőmérséklet, annál könnyebben jön létre tengeri hőhullám."), 19, UI.TEXT))
 	_end.add_child(UI.label(L.t("Mérések szerint 1925 és 2016 között a tengeri hőhullámok 34%-kal gyakoribbak és 17%-kal hosszabbak lettek, így évente 54%-kal több a tengeri hőhullámos nap. Ezt főleg a tenger átlagos melegedése okozza."), 19, UI.TEXT))
-	_end.add_child(UI.label(L.t("Adat: %s") % (source + "; " + STUDY), 13, UI.MUTE))
-	var b := UI.button(L.t("Tovább") + " →", true)
-	b.pressed.connect(func() -> void: finished.emit(true))
-	b.position = Vector2(1390, 30)
-	add_child(b)
+	_end.add_child(UI.label(L.t("Forrás: %s") % (source + "; " + STUDY), 13, UI.MUTE))
+	_next_btn.visible = true
 
 
 func _px(k: float) -> float:
@@ -322,14 +405,9 @@ func _draw() -> void:
 		if k > last:
 			continue
 		var p := Vector2(_px(float(k)), _py(float(vals[k])))
-		if bool(r["caught"]):
-			draw_circle(p, 8.0, UI.GOLD)
-		else:
-			draw_arc(p, 8.0, 0.0, TAU, 16, Color(UI.GOLD, 0.9 if _pos <= k + CATCH_YEARS and done_t < 0.0 else 0.45), 2.0)
+		draw_circle(p, 8.0, UI.GOLD)
 	if _t - _flash < 0.8:
 		draw_string(font, tip + Vector2(-130.0, -22.0), L.t("Új rekord!"), HORIZONTAL_ALIGNMENT_CENTER, 260, 20, Color(UI.GOLD, 1.0 - (_t - _flash) / 0.8))
-	elif _t - _miss < 0.6 and done_t < 0.0:
-		draw_string(font, tip + Vector2(-130.0, -22.0), L.t("Még nem rekord."), HORIZONTAL_ALIGNMENT_CENTER, 260, 16, Color(UI.SOFT, 1.0 - (_t - _miss) / 0.6))
 	if done_t >= 0.0:
 		draw_rect(Rect2(120, 530, 1360, 200), Color(0.043, 0.063, 0.114, 0.9 * clampf(done_t / 0.8, 0.0, 1.0)))
 	else:

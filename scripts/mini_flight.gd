@@ -49,7 +49,7 @@ var _clouds: Array = []
 
 
 func _ready() -> void:
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	focus_mode = Control.FOCUS_ALL
 	_load()
@@ -231,10 +231,10 @@ func _finish() -> void:
 	_read.visible = false
 	var share := 100.0 * in_patch / maxf(baseline, 1.0)
 	_end.visible = true
-	_end.add_child(UI.label(L.t("A tartós csíkjaid hossza annak %s%%-a, amennyi egyenes repüléssel lett volna.") % L.num(share, 0), 20, UI.CYAN, true))
-	_end.add_child(UI.label(L.t("A valóságban a repülés melegítő hatásának %s%%-a nem a CO2-ből jön; a legnagyobb rész a kondenzcsíkoké.") % L.num(non_co2 * 100.0, 0), 19, UI.TEXT, true))
+	_end.add_child(UI.label(L.t("A kitéréseiddel %s%%-kal kevesebb tartós kondenzcsíkot húztál, mint ha egyenesen repültél volna.") % L.num(clampf(100.0 - share, 0.0, 100.0), 0), 20, UI.CYAN, true))
+	_end.add_child(UI.label(L.t("A valóságban a légi közlekedés melegítő hatásának %s%%-a nem a CO₂-kibocsátásból származik – ennek a legnagyobb részét a kondenzcsíkok adják.") % L.num(non_co2 * 100.0, 0), 19, UI.TEXT, true))
 	_end.add_child(UI.label(L.t("Egy japán vizsgálat szerint a járatok %s%%-ának kitérítése akár %s%%-kal csökkenthetné a csíkok hatását, csak %s%%-kal több üzemanyaggal.") % [L.num(float(teoh.get("kiteritett_jaratok", 0.0)), 1), L.num(float(teoh.get("csik_hatas_csokkenes", 0.0)), 0), L.num(float(teoh.get("plusz_uzemanyag_szazalek", 0.0)), 3)], 19, UI.TEXT))
-	_end.add_child(UI.label(L.t("Adat: %s; %s") % [source, source2], 13, UI.MUTE))
+	_end.add_child(UI.label(L.t("Forrás: %s; %s") % [source, source2], 13, UI.MUTE))
 	var b := UI.button(L.t("Tovább") + " →", true)
 	b.pressed.connect(func() -> void: finished.emit(true))
 	b.position = Vector2(1390, 30)

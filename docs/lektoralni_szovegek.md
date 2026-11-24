@@ -611,17 +611,17 @@ A CO2-kivonás ablakában és a naplóban:
 - ezer éve
 - 800 ezer évig a levegő CO2-tartalma %s és %s ppm között maradt.
 - %d-ben: %s ppm.
-- Adat: %s
+- Forrás: %s
 - NOAA Global Monitoring Laboratory (2026); EPA (2022) – Our World in Data feldolgozásában
 
-## 17. rész – még nem lektorált (2026-11-24, 22:30)
+## 17. Új szövegek (2026-11-24, 23:03, lektorálva)
 
 ### Jégfurat: megállók (amíg a fúró hűl, megjelenik, mi volt akkor a Földön; a %s helyére szám kerül)
 
 - %s ezer éve
-- Véget ért az utolsó hideg szakasz, és a Föld gyorsan melegedni kezdett. Ekkor kezdődött a mi korunk, a holocén.
+- Véget ért az utolsó jégkorszak, és a Föld gyorsan melegedni kezdett. Ekkor kezdődött a mi korunk, a holocén.
 - A jégkorszak csúcsán hatalmas jégtakarók borították Észak-Amerikát és Észak-Európát. A jégtakarók nagyjából 26 500 évvel ezelőtt érték el a legnagyobb méretüket, és kb. 7000 évig ekkorák is maradtak.
-- Az előző meleg időszakban a tenger szintje 6–9 méterrel magasabb volt a mainál, mert a sarki jég egy része elolvadt.
+- Az előző meleg időszakban a tenger szintje 6–9 méterrel volt magasabb a mainál, mert a sarki jég egy része elolvadt.
 - Marokkóban élt az egyik legkorábbi ismert Homo sapiens, vagyis a mi fajunk. Az arcuk már hasonlított a miénkre.
 - Spanyolországban olyan emberek éltek, akiknek az arca már a neandervölgyiekére kezdett hasonlítani.
 - A Föld mágneses tere megfordult: ami addig északot mutatott, délre fordult. Ez volt az utolsó ilyen fordulat.
@@ -629,7 +629,7 @@ A CO2-kivonás ablakában és a naplóban:
 ### Maradék kibocsátás (új kérés a tárgyalásban 2061-től; a %s helyére a csoport neve kerül)
 
 - A maradék kiváltása
-- A cél után is marad kibocsátás: a cement, az acél, a repülés és a hajózás a legnehezebb. Mutasd meg, mivel váltható ki!
+- A cél után is marad kibocsátás: a cement, az acél, a repülés és a hajózás kibocsátását a legnehezebb megoldani. Mutasd meg, mivel váltható ki!
 - Ehhez cementről, acélról, repülésről, hajózásról vagy állattartásról szóló kártya kell.
 - %s a maradék kibocsátását is megszünteti: tíz év alatt.
 - %s a maradék kibocsátását is megszünteti.
@@ -654,26 +654,27 @@ A CO2-kivonás ablakában és a naplóban:
 - A te %d kábeleddel: %s TWh, %s%%-kal kevesebb.
 - Ha minden kábel megépülne: %s%%-kal kevesebb.
 - Egy európai tanulmány szerint a legjobb hálózat kábeleinek 44%-ával már a megtakarítás 85%-a elérhető.
-- Adat: %s. Tanulmány: %s
+- Forrás: %s. Tanulmány: %s
 
 ### Minijáték: Kondenzcsík-kerülő (a „repules” kártyához)
 
 - Kondenzcsík-kerülő
 - Fel és le nyíllal válts magasságot! A kék, párás rétegben a csík nem tűnik el, hanem felhővé terül, és melegít.
 - Repülés: %d / %d    Magasságváltás: %d
-- A tartós csíkjaid hossza annak %s%%-a, amennyi egyenes repüléssel lett volna.
-- A valóságban a repülés melegítő hatásának %s%%-a nem a CO2-ből jön; a legnagyobb rész a kondenzcsíkoké.
+- A tartós kondenzcsíkjaid hossza %s%%-a annak, ami egyenes útvonalon keletkezett volna.
+- A valóságban a légi közlekedés melegítő hatásának %s%%-a nem a CO₂-kibocsátásból származik – ennek a legnagyobb részét a kondenzcsíkok adják.
 - Egy japán vizsgálat szerint a járatok %s%%-ának kitérítése akár %s%%-kal csökkenthetné a csíkok hatását, csak %s%%-kal több üzemanyaggal.
+- Egy japán kutatás szerint %s%% járat útvonalának módosításával akár 59%-kal is csökkenthetné a csíkok hatását, mindössze 0,014%-kal több üzemanyagköltséggel.
 - A repülés melegítő hatása 2018-ban (mW/m²)
 - Összesen: %s mW/m²
-- Adat: %s; %s
+- Forrás: %s; %s
 
 - A kondenzcsíkos ábra sorai: Kondenzcsík és fátyolfelhő; Nitrogén-oxidok; Vízgőz a sztratoszférában; Korom; Szulfát (hűt)
 
 ### Minijáték: Nap vagy CO2? (a „sztratoszfera” kártyához)
 
-- Nap vagy CO2?
-- Ha a Nap melegítene, a levegő minden rétege melegedne. Mit mértek 1995 után? Tippelj!
+- Nap vagy CO₂?
+- Ha a Nap melegítené a Földet, akkor a levegő minden rétege melegedne. Mit mértek 1995 után? Csökkent, nőtt vagy nem változott a Nap ereje? Tippelj!
 - A Nap ereje
 - A felszín hőmérséklete
 - A sztratoszféra hőmérséklete
@@ -685,21 +686,21 @@ A CO2-kivonás ablakában és a naplóban:
 - A Nap ereje 1980 óta nem nőtt: 11 évente hullámzik, kb. 1 W/m²-t.
 - A felszín közben évtizedenként kb. 0,2 °C-kal melegedett.
 - A magasban, a sztratoszférában viszont hűlt a levegő. Ezt a CO2 okozza: lent csapdába ejti a hőt, fent több hőt sugároz ki a világűrbe.
-- Tanulság: a melegedés ujjlenyomata a CO2-é, nem a Napé.
+- Tanulság: a jelenlegi felmelegedést a CO₂ okozza, nem a Nap.
 - Találat: %d / 3
 - sztratoszféra
 - felszín
 
 ### Minijáték: Metánvadász (a „metan_szivargas” kártyához; a %s és %d helyére szám kerül)
 
-- A műhold végigpásztázza a gázmezőt. Ahol felhő jelenik meg, ott nagy a szivárgás: kattints rá, és küldj oda javítócsapatot!
+- A műhold végigpásztázza a gázmezőt. Ahol felhő jelenik meg, ott nagy a szivárgás: kattints rá, és küldj oda egy javítócsapatot!
 - Csapat: %d    Idő: %d mp
 - Kicsi szivárgás
-- Nagy szivárgás elzárva!
+- Nagy szivárgás megszüntetve!
 - A felhők mérete jelkép. A kis szivárgásokat a műhold nem látja.
-- A kutak %s%%-át javítottad, és ezzel a szivárgás %s%%-át állítottad meg.
-- Kevés nagy szivárgás adja a metán nagy részét. Ezeket érdemes először megtalálni.
-- A valóságban: műholdas mérések szerint (%s) néhány száz óriási szivárgás adta az olaj- és gázipari metán %s–%s%%-át, évi kb. %s millió tonnát. A javításuk nagyrészt olcsó.
+- A kutak %s%%-át javítottad ki, amivel a szivárgás %s%%-át szüntetted meg.
+- A kevés nagyobb szivárgás adja a légkörbe kerülő metán nagy részét. Ezeket érdemes először megtalálni.
+- A valóságban: műholdas mérések szerint (%s) néhány száz óriási szivárgás adta az olaj- és gázipari metán %s–%s%%-át, évi kb. %s millió tonnát. A javításuk nagyrészt olcsó lenne.
 - Az USA-ban 2015-ben az olaj- és gázágazat kb. %s%%-kal több metánt engedett ki, mint a hivatalos becslés.
 
 ### Minijáték: Melegrekord a tengeren (a „tengeri_hohullam” kártyához; a %d helyére szám kerül)
@@ -708,7 +709,7 @@ A CO2-kivonás ablakában és a naplóban:
 - Nyomd meg a szóközt vagy kattints, amikor a görbe átlépi az eddigi rekordot!
 - %d rekordot kaptál el a %d-ből.
 - %d óta %d új melegrekord született, ebből %d 1980 után.
-- Minél melegebb az alap, annál könnyebben jön egy tengeri hőhullám.
+- Minél melegebb az alaphőmérséklet, annál könnyebben jön létre tengeri hőhullám.
 - Az óceán felszíne: eltérés a 20. századi átlagtól (°C)
 - eddigi rekord
 - Új rekord!
@@ -723,7 +724,7 @@ A CO2-kivonás ablakában és a naplóban:
 - Nézd, hogyan emelkedik a tenger! Ha egy vihar hulláma magasabb a gátnál, elönti a várost. Szóközzel vagy a gombbal emelheted a gátat.
 - Gát emelése
 - %d    Tenger: %s cm    Gát: %s cm    Emelés: %d
-- 2020 van. Hogyan folytatja a világ?
+- 2020 van. Hogyan folytatta szerinted a világ?
 - Gyorsan csökkentjük a kibocsátást
 - Egyre több szenet, olajat és gázt égetünk
 - Elöntötte a víz!
@@ -734,9 +735,19 @@ A CO2-kivonás ablakában és a naplóban:
 - Ennyiszer öntötte el a víz a városodat: %d
 - A városod száraz maradt.
 - A tenger 1901 és 2018 között kb. %s cm-t emelkedett, és egyre gyorsabban: 2006 és 2018 között évente kb. %s mm-t.
-- 2100-ra: alacsony kibocsátással %s–%s cm, nagyon magassal %s–%s cm (az 1995–2014-es szinthez képest).
-- A régen százévente egyszer előforduló magas vízállás 2100-ra a mérőhelyek több mint felén legalább évente előfordul.
+- 2100-ra: alacsony kibocsátással %s–%s cm, nagyon magassal %s–%s cm lesz az emelkedés mértéke (az 1995–2014-es szinthez képest).
+- A régen százévente egyszer előforduló magas vízállás 2100-ra a mérőhelyek több mint felén legalább évente egyszer elő fog fordulni.
 - A gát időt ad, de a tenger 2100 után is emelkedik. A kibocsátás csökkentése lassítja.
+
+### Átnevezés: „Saját AI” helyett „Föld AI” (Zoltán kérése, 21:29). Ezekben a már lektorált szövegekben csak a név változott:
+
+- Föld AI
+- Föld AI beállítása
+- a Föld AI most nem adott szabályos lépést
+- A Föld AI most nem válaszolt, ezért az alapszabály döntött.
+- A csoportok vezetőit is játszhatja a Föld AI. Csak a 2026-ig ismert, valós adataikat kapja meg, és nemet is mondhat. Így akkor is ő felel, ha te játszol.
+
+## 18. rész – még nem lektorált (2026-11-24, 23:55)
 
 ### Minijáték: Erdőnyomozó (az „erdoirtas_okai” kártyához; a %d és %s helyére szám kerül)
 
@@ -760,14 +771,50 @@ A CO2-kivonás ablakában és a naplóban:
 - Faborítás-vesztés okai évente (millió hektár)
 - Az okok nevei: Települések, utak; Bányászat, energiaipar; Más természeti zavar (földcsuszamlás, rovarkár); Váltogató földművelés; Fakitermelés; Állandó mezőgazdaság; Erdőtűz
 
+### Minijáték: Nap vagy CO2? – új kérdések a 2. és a 3. grafikonhoz
+
+- És a felszín hőmérséklete? Csökkent, nőtt vagy nem változott 1995 után? Tippelj!
+- És fent, a sztratoszférában? Ott csökkent, nőtt vagy nem változott a hőmérséklet 1995 után? Tippelj!
+
+### Minijáték: Kondenzcsík-kerülő – új eredménymondat (a régi „A tartós kondenzcsíkjaid hossza %s%%-a annak…” helyett)
+
+- A kitéréseiddel %s%%-kal kevesebb tartós kondenzcsíkot húztál, mint ha egyenesen repültél volna.
+
+### Minijáték: Áramhálózat – új, egyszerűbb játék (a 17. rész Áramhálózat-szövegeiből csak a cím, a tanulmány mondata és a forrás maradt)
+
+- Nézd a piros hónapokat: ott kevés a szél- és napáram. Melyik ország termel sokat éppen akkor? Kattints rá, és kösd össze vele!
+- Kivel kötöd össze?
+- igény
+- Az oszlopok a szél- és napáramot mutatják az igényhez mérve (Ember, 2024).
+- Összekötve: %s + %s
+- −%s%% hiány
+- Jó választás! Összekötve %s%%-kal kevesebb a hiány.
+- Összekötve %s%%-kal kevesebb a hiány. Többet segített volna: %s (%s%%).
+- Jó választás: %d / %d
+- A kábel akkor segít sokat, ha a két országban máskor fúj a szél és máskor süt a nap.
+
+### Minijáték: Melegrekord a tengeren – új játékmenet: tippelni kell, hány rekord született (a 17. részből a szóközös „elkapás” szövegei kimaradtak)
+
+- A görbe az óceán felszínének hőmérséklete. A sárga pöttyök melegrekordok. Szerinted hány új rekord született %d és %d között?
+- És %d után, egészen %d-ig? Tippelj!
+- Egy új rekord sem született: a régi csúcs %d évig állt.
+- %d új melegrekord született.
+- Nem ennyi volt.
+
+### Minijáték: Gátőr – új játékmenet: közeledő viharok, érmék, gátemelés vagy homokzsák, hat ház (a 17. rész mondatai közül a választás és a végső tanulságok maradtak)
+
+- Először nézd, hogyan emelkedett a tenger 1900 óta! 2020-tól jönnek a viharok: védd meg a város hat házát.
+- Ötévente kapsz egy érmét. A gátemelés tartós, de drága; a homokzsák olcsó, de csak egy viharra jó. Figyeld, mekkora a közeledő hullám!
+- Gát emelése: +%d cm (%d érme)
+- Homokzsák erre a viharra: +%d cm (%d érme)
+- %d    Tenger: %s cm    Gát: %s cm    Érme: %d    Ház: %d
+- Vihar közeleg! Hullám: +%s cm. A víz eléri: %s cm, a gát: %s cm.
+- vihar: +%s cm
+- A gát kitartott!
+- Megmaradt házak: %d / %d
+- Gyors kibocsátáscsökkentéssel: %d ház. Egyre több fosszilis energiával: %d ház.
+- Próbáld ki a másik úton is!
+
 ### Gyűjtemény
 
 - Minijátékok
-
-### Átnevezés: „Saját AI” helyett „Föld AI” (Zoltán kérése, 21:29). Ezekben a már lektorált szövegekben csak a név változott:
-
-- Föld AI
-- Föld AI beállítása
-- a Föld AI most nem adott szabályos lépést
-- A Föld AI most nem válaszolt, ezért az alapszabály döntött.
-- A csoportok vezetőit is játszhatja a Föld AI. Csak a 2026-ig ismert, valós adataikat kapja meg, és nemet is mondhat. Így akkor is ő felel, ha te játszol.

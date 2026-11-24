@@ -1,5 +1,5 @@
 extends Control
-## Minijáték: Nap vagy CO2? Három valódi mérési sor (a Nap ereje, a felszín és a sztratoszféra
+## Minijáték: Nap vagy CO₂? Három valódi mérési sor (a Nap ereje, a felszín és a sztratoszféra
 ## hőmérséklete, 1980–2023; adatok/nap_vagy_co2.json, a források a fájlban). A játékos az első
 ## évek alapján megtippeli, merre megy tovább a görbe, aztán megjelenik, amit valóban mértek.
 ## Játékszabály: a tippelés és a három kör. A bal oldali légkör-rajz jelkép (a színek a mért irányt
@@ -19,6 +19,10 @@ const CY0 := 250.0
 const CH := 150.0                 # egy grafikon magassága
 const CGAP := 52.0
 const FLAT := 0.05                # ennél kisebb évtizedes trend: „nem változik”
+const QUESTIONS := [
+	"Ha a Nap melegítené a Földet, akkor a levegő minden rétege melegedne. Mit mértek 1995 után? Csökkent, nőtt vagy nem változott a Nap ereje? Tippelj!",
+	"És a felszín hőmérséklete? Csökkent, nőtt vagy nem változott 1995 után? Tippelj!",
+	"És fent, a sztratoszférában? Ott csökkent, nőtt vagy nem változott a hőmérséklet 1995 után? Tippelj!"]
 const WARM := Color("#ec8559")
 const COOL := Color("#6fb6ea")
 
@@ -37,18 +41,19 @@ var _t := 0.0
 var _info: Label
 var _say: Label
 var _btns: HBoxContainer
+var _next_btn: Button
 var _end: VBoxContainer
 
 
 func _ready() -> void:
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	focus_mode = Control.FOCUS_ALL
 	_load()
-	var title := UI.heading(L.t("Nap vagy CO2?"), 34)
+	var title := UI.heading(L.t("Nap vagy CO₂?"), 34)
 	title.position = Vector2(60, 28)
 	add_child(title)
-	_info = UI.label(L.t("Ha a Nap melegítene, a levegő minden rétege melegedne. Mit mértek 1995 után? Tippelj!"), 18, UI.SOFT)
+	_info = UI.label(L.t(QUESTIONS[0]), 18, UI.SOFT)
 	_info.position = Vector2(60, 84)
 	_info.size = Vector2(1000, 50)
 	add_child(_info)
@@ -65,6 +70,11 @@ func _ready() -> void:
 	_say.size = Vector2(CX1 - CX0, 80)
 	_say.visible = false
 	add_child(_say)
+	_next_btn = UI.button(L.t("Tovább") + " →", true)
+	_next_btn.position = Vector2(1390, 30)
+	_next_btn.visible = false
+	_next_btn.pressed.connect(_next)
+	add_child(_next_btn)
 	var hint := UI.label(L.t("Esc: átugrás"), 14, UI.MUTE, false, false)
 	hint.position = Vector2(1460, 870)
 	add_child(hint)
@@ -107,7 +117,6 @@ func _choose(g: int) -> void:
 		return
 	_guess[round_i] = g
 	_btns.visible = false
-	_info.visible = false
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -138,28 +147,35 @@ func _process(delta: float) -> void:
 				_say.text = (L.t("Eltaláltad!") if good else L.t("Nem ezt mérték.")) + " " + str(series[round_i]["say"])
 				_say.add_theme_color_override("font_color", UI.GREEN if good else UI.TEXT)
 				_say.visible = true
+				_next_btn.visible = true
 				_wait = 0.0
-		else:
+		elif auto:      # a játékos a Tovább gombbal lép, amikor elolvasta; csak a próbafutás lép magától
 			_wait += delta
-			if _wait > (2.4 if auto else 5.0):
+			if _wait > 2.4:
 				_next()
 	queue_redraw()
 
 
-func _gui_input(event: InputEvent) -> void:      # a mondat után kattintással is tovább lehet lépni
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
 		accept_event()
-		if done_t < 0.0 and round_i < 3 and float(_rev[round_i]) >= 1.0 and _wait > 0.6:
-			_next()
 
 
 func _next() -> void:
+	if done_t >= 0.0:
+		finished.emit(true)
+		return
+	if round_i >= 3 or float(_rev[round_i]) < 1.0:
+		return
 	_wait = 0.0
 	_say.visible = false
+	_next_btn.visible = false
 	round_i += 1
 	if round_i >= 3:
 		_finish()
 	else:
+		_info.text = L.t(QUESTIONS[round_i])
+		_info.visible = true
 		_btns.visible = true
 
 
@@ -168,14 +184,12 @@ func _finish() -> void:
 		return
 	done_t = 0.0
 	_btns.visible = false
+	_info.visible = false
 	_end.visible = true
-	_end.add_child(UI.label(L.t("Tanulság: a melegedés ujjlenyomata a CO2-é, nem a Napé."), 22, UI.GOLD, true))
+	_end.add_child(UI.label(L.t("Tanulság: a jelenlegi felmelegedést a CO₂ okozza, nem a Nap."), 22, UI.GOLD, true))
 	_end.add_child(UI.label(L.t("Találat: %d / 3") % hits, 18, UI.CYAN, true))
-	_end.add_child(UI.label(L.t("Adat: %s") % source, 13, UI.MUTE))
-	var b := UI.button(L.t("Tovább") + " →", true)
-	b.pressed.connect(func() -> void: finished.emit(true))
-	b.position = Vector2(1390, 30)
-	add_child(b)
+	_end.add_child(UI.label(L.t("Forrás: %s") % source, 13, UI.MUTE))
+	_next_btn.visible = true
 
 
 func _chart_y(i: int) -> float:
@@ -268,10 +282,10 @@ func _draw() -> void:
 		var vals: Array = s["vals"]
 		var y0 := _chart_y(i)
 		var active := done_t < 0.0 and i == round_i
-		var seen := i < round_i or done_t >= 0.0 or (i == round_i and float(_rev[i]) > 0.0)
-		draw_rect(Rect2(CX0, y0, CX1 - CX0, CH), Color(0.09, 0.13, 0.22, 1.0 if active or seen else 0.5))
+		var seen := done_t >= 0.0
+		draw_rect(Rect2(CX0, y0, CX1 - CX0, CH), Color(0.09, 0.13, 0.22, 1.0 if active or seen else 0.35))
 		draw_rect(Rect2(CX0, y0, CX1 - CX0, CH), Color(s["col"], 0.9) if active else UI.EDGE, false, 2.0 if active else 1.0)
-		var dim := 1.0 if active or seen else 0.45
+		var dim := 1.0 if active or seen else 0.28
 		draw_string(font, Vector2(CX0 + 4.0, y0 - 10.0), "%s (%s)" % [s["name"], s["unit"]], HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color(s["col"], dim))
 		var lo: float = vals.min()
 		var hi: float = vals.max()
