@@ -41,6 +41,9 @@ var _end: VBoxContainer
 var eras: Array = []          # megállók: mi volt akkor a Földön (adatok/jegfurat_korok.json, forrással)
 var _auto_rest := false
 var _era := -1                # a most mutatott megálló
+var _era_next := 0            # a következő, még nem mutatott megálló (a jelentől a múlt felé)
+var _era_on := false          # ennél a megállásnál van-e mit mutatni
+var _was_resting := false
 var _era_a := 0.0
 var _era_box: VBoxContainer
 var _era_text: Label
@@ -169,20 +172,21 @@ func _process(delta: float) -> void:
 			_finish()
 	else:
 		heat = maxf(0.0, heat - delta / COOL)
-	# megálláskor (hűl vagy beragadt a fúró) megjelenik, mi volt akkor a Földön: a legutóbb átfúrt megálló
+	# megálláskor (hűl vagy beragadt a fúró) megjelenik, mi volt akkor a Földön. Minden megálló új szöveget ad,
+	# a jelentől a múlt felé haladva: mindig a következő, még nem látott kor jön, ha a fúró már átért rajta.
 	var resting := done_t < 0.0 and depth > 0.0 and (stuck > 0.0 or not (_hold or auto and not _auto_rest))
-	if resting:
-		var pick := -1
-		for i in eras.size():
-			if float(eras[i]["ezer_eve"]) * 1000.0 <= depth * oldest:
-				pick = i
-		if pick != _era and pick >= 0:
-			_era = pick
-			var e: Dictionary = eras[pick]
+	if resting and not _was_resting:
+		_era_on = false
+		if _era_next < eras.size() and float(eras[_era_next]["ezer_eve"]) * 1000.0 <= depth * oldest:
+			_era = _era_next
+			_era_next += 1
+			_era_on = true
+			var e: Dictionary = eras[_era]
 			_era_age.text = L.t("%s ezer éve") % L.num(float(e["ezer_eve"]), 1 if fmod(float(e["ezer_eve"]), 1.0) > 0.0 else 0)
 			_era_text.text = str(e["en"] if L.is_en() else e["hu"])
 			_era_src.text = str(e["forras"])
-	_era_a = move_toward(_era_a, 1.0 if resting and _era >= 0 else 0.0, delta * 2.5)
+	_was_resting = resting
+	_era_a = move_toward(_era_a, 1.0 if resting and _era_on else 0.0, delta * 2.5)
 	_era_box.modulate.a = _era_a
 	if done_t < 0.0:
 		var age := depth * oldest
