@@ -24,8 +24,15 @@ static func init() -> void:
 		lang = "hu" if OS.get_locale_language() == "hu" else "en"
 
 
+## Ellenőrző futásban (dry) a beállítások csak a memóriában változnak, a fájl érintetlen marad.
+static var dry := false
+static var _mem := {}
+
+
 static func set_lang(l: String) -> void:
 	lang = l
+	if dry:
+		return
 	var cfg := ConfigFile.new()
 	cfg.load(SETTINGS)
 	cfg.set_value("jatek", "nyelv", l)
@@ -34,6 +41,8 @@ static func set_lang(l: String) -> void:
 
 ## Egyéb beállítások ugyanabban a fájlban (pl. a választott AI).
 static func get_setting(key: String, default: Variant = "") -> Variant:
+	if dry and _mem.has(key):
+		return _mem[key]
 	var cfg := ConfigFile.new()
 	if cfg.load(SETTINGS) != OK:
 		return default
@@ -41,6 +50,9 @@ static func get_setting(key: String, default: Variant = "") -> Variant:
 
 
 static func set_setting(key: String, value: Variant) -> void:
+	if dry:
+		_mem[key] = value
+		return
 	var cfg := ConfigFile.new()
 	cfg.load(SETTINGS)
 	cfg.set_value("jatek", key, value)

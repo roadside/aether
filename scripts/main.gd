@@ -457,6 +457,7 @@ func _ready() -> void:
 	var args := OS.get_cmdline_user_args()
 	_test = "--onteszt" in args or "--bejaras" in args
 	_dry = (_test and not ("--eles" in args)) or "--elojatek" in args or "--majom" in args
+	L.dry = _dry
 	if _test or "--intro-kepek" in args or "--elojatek" in args or "--majom" in args:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)   # az ellenőrző futások ablakban mennek
 	var bg := TextureRect.new()
