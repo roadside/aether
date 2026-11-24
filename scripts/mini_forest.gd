@@ -34,6 +34,7 @@ var _answer := ""             # az utolsó válasz (feedback alatt)
 var _answer_t := -10.0
 var _t := 0.0
 var _auto_t := 0.0
+var _next_btn: Button
 var _info: Label
 var _read: Label
 var _hint: Label
@@ -72,6 +73,11 @@ func _ready() -> void:
 		var cid := str(c["id"])
 		b.pressed.connect(func() -> void: _pick(cid))
 		_buttons.add_child(b)
+	_next_btn = UI.button(L.t("Tovább") + " →", true)
+	_next_btn.position = Vector2(800, 800)
+	_next_btn.visible = false
+	_next_btn.pressed.connect(_next)
+	add_child(_next_btn)
 	var hint := UI.label(L.t("Esc: átugrás"), 14, UI.MUTE, false, false)
 	hint.position = Vector2(1460, 870)
 	add_child(hint)
@@ -105,7 +111,7 @@ func _update_read() -> void:
 
 
 func _pick(id: String) -> void:
-	if done_t >= 0.0 or _t - _answer_t < 1.6:
+	if done_t >= 0.0 or _answer != "":
 		return
 	var right := str(QUIZ[round_i])
 	if id == right:
@@ -115,6 +121,9 @@ func _pick(id: String) -> void:
 		_hint.text = L.t("Nem egészen.") + " " + L.t(str(HINTS[right]))
 	_answer = id
 	_answer_t = _t
+	_next_btn.visible = true
+	for b in _buttons.get_children():
+		(b as Button).disabled = true
 	_update_read()
 
 
@@ -122,27 +131,40 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if event is InputEventKey and not event.echo and event.pressed and event.keycode == KEY_ESCAPE:
 		get_viewport().set_input_as_handled()
 		finished.emit(done_t >= 0.0)
+	elif event is InputEventKey and not event.echo and event.pressed and event.keycode in [KEY_SPACE, KEY_ENTER] and _answer != "" and done_t < 0.0:
+		get_viewport().set_input_as_handled()
+		_next()
 
 
 func _process(delta: float) -> void:
 	_t += delta
 	if done_t >= 0.0:
 		done_t += delta
-	elif _answer != "" and _t - _answer_t >= 1.6:      # a válasz után következő kép
-		_answer = ""
-		_hint.text = ""
-		round_i += 1
-		if round_i >= QUIZ.size():
-			_finish()
-		else:
-			_make_tile()
-			_update_read()
+	elif auto and _answer != "" and _t - _answer_t >= 1.6:
+		_next()
 	elif auto and _answer == "":
 		_auto_t += delta
 		if _auto_t >= 2.2:
 			_auto_t = 0.0
 			_pick(str(QUIZ[round_i]))
 	queue_redraw()
+
+
+## A válasz és a magyarázat után a játékos lép tovább a következő képre.
+func _next() -> void:
+	if _answer == "" or done_t >= 0.0:
+		return
+	_answer = ""
+	_hint.text = ""
+	_next_btn.visible = false
+	for b in _buttons.get_children():
+		(b as Button).disabled = false
+	round_i += 1
+	if round_i >= QUIZ.size():
+		_finish()
+	else:
+		_make_tile()
+		_update_read()
 
 
 func _finish() -> void:
