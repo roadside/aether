@@ -2461,7 +2461,7 @@ func _open_cdr() -> void:
 # --- AI játszik ----------------------------------------------------------------
 ## A játékot gép is játszhatja: minden lépése előtt kiírja, miért lép úgy, és bármikor visszavehető tőle az irányítás.
 ## A beépített gépek rögzített szabályokat követnek (scripts/agent.gd); a „Saját AI” a játékos gépén futó nyelvi modell.
-const AUTO_NAMES := {"kezdo": "Kezdő gép", "atlagos": "Átlagos gép", "okos": "Okos gép", "sajat": "Saját AI"}
+const AUTO_NAMES := {"kezdo": "Kezdő gép", "atlagos": "Átlagos gép", "okos": "Okos gép", "sajat": "Föld AI"}
 const AUTO_INFO := {"kezdo": "Mindig a legkönnyebb célt kéri.", "atlagos": "Véletlen sorrendben halad, metáncsökkentést is kér.",
 	"okos": "A legnagyobb kibocsátókkal kezd, és a legmerészebb célt kéri."}
 const TOPIC_EN := {"aram": "electricity", "munka": "industry and transport", "elelem": "food", "part": "sea and coast", "egeszseg": "health",
@@ -2747,7 +2747,7 @@ func _add_own_ai(body: VBoxContainer) -> void:
 				L.set_setting("ai_modell_" + p, _own_model)
 				status.text = L.t("Megvan: %s") % _own_model)
 			c.add_child(pick)
-		c.add_child(UI.label(L.t("A csoportok vezetőit is játszhatja a saját AI. Csak a 2026-ig ismert, valós adataikat kapja meg, és nemet is mondhat. Így akkor is ő felel, ha te játszol."), 16, UI.SOFT))
+		c.add_child(UI.label(L.t("A csoportok vezetőit is játszhatja a Föld AI. Csak a 2026-ig ismert, valós adataikat kapja meg, és nemet is mondhat. Így akkor is ő felel, ha te játszol."), 16, UI.SOFT))
 		var nat := UI.button("")
 		var show_nat := func() -> void:
 			nat.text = L.t("AI-országok: bekapcsolva") if bool(L.get_setting("orszag_ai", false)) else L.t("AI-országok: kikapcsolva")
@@ -2824,7 +2824,7 @@ func _own_decide() -> Dictionary:
 					return a
 	_own_fail += 1
 	var fb: Dictionary = _agent.policy("okos")
-	fb["nev"] = "%s (%s)" % [L.t("Okos gép"), L.t("a saját AI most nem adott szabályos lépést")]
+	fb["nev"] = "%s (%s)" % [L.t("Okos gép"), L.t("a Föld AI most nem adott szabályos lépést")]
 	return fb
 
 
@@ -2846,7 +2846,7 @@ func _nation_decide(g: Dictionary, target: int, cards: Array, methane: bool = fa
 		out = Nation.parse(world, g, target, await _own_chat(Nation.prompt(world, g, target, cards, L.is_en())))
 	if out.is_empty():                 # a modell nem adott szabályos választ: az alapjáték szabálya dönt (elfogadják)
 		_nat["hiba"] += 1
-		return {"dontes": "accept", "cel": target, "szoveg": L.t("A saját AI most nem válaszolt, ezért az alapszabály döntött.")}
+		return {"dontes": "accept", "cel": target, "szoveg": L.t("A Föld AI most nem válaszolt, ezért az alapszabály döntött.")}
 	_nat[out["dontes"]] += 1
 	if _dry:
 		print("ORSZAG %s %s %d" % [str(g["id"]), str(out["dontes"]), int(out["cel"])])

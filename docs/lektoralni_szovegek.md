@@ -450,7 +450,7 @@ Csak ezek újak. Ami nincs itt, az nem változott. A lektorálásod négy javít
 - Kezdő gép
 - Átlagos gép
 - Okos gép
-- Saját AI
+- Föld AI
 - Mindig a legkönnyebb célt kéri.
 - Véletlen sorrendben halad, metáncsökkentést is kér.
 - A legnagyobb kibocsátókkal kezd, és a legmerészebb célt kéri.
@@ -483,7 +483,7 @@ Csak ezek újak. Ami nincs itt, az nem változott. A lektorálásod négy javít
 - Kutatok, hogy legyen mivel érvelnem.
 - Most nincs jó lépésem. Jöhet a következő öt év.
 
-### Tanács és saját AI
+### Tanács és Föld AI
 - Tanács a géptől
 - Az Okos gép ezt lépné
 - A gépeden futó nyelvi modell dönt a lépésekről, és a saját szavaival indokol. Ha nem ad szabályos lépést, az Okos gép lép helyette.
@@ -491,7 +491,7 @@ Csak ezek újak. Ami nincs itt, az nem változott. A lektorálásod négy javít
 - Most nem fut AI ezen a gépen. Indítsd el az Ollamát, aztán nyisd meg újra ezt az ablakot!
 - Megvan: %s
 - Ezt a lépést választottam.
-- a saját AI most nem adott szabályos lépést
+- a Föld AI most nem adott szabályos lépést
 - gondolkodik…
 
 ### Megosztás (záróképernyő)
@@ -501,11 +501,11 @@ Csak ezek újak. Ami nincs itt, az nem változott. A lektorálásod négy javít
 
 ### AI-országok
 - %s vezetői gondolkodnak…
-- A saját AI most nem válaszolt, ezért az alapszabály döntött.
+- A Föld AI most nem válaszolt, ezért az alapszabály döntött.
 - Közhangulat: az emberek %d%-a kér erősebb klímavédelmet.
 - %s most nemet mondott.
 - A lépésed elfogyott, a kártyáid megmaradtak.
-- A csoportok vezetőit is játszhatja a saját AI. Csak a 2026-ig ismert, valós adataikat kapja meg, és nemet is mondhat. Így akkor is ő felel, ha te játszol.
+- A csoportok vezetőit is játszhatja a Föld AI. Csak a 2026-ig ismert, valós adataikat kapja meg, és nemet is mondhat. Így akkor is ő felel, ha te játszol.
 - AI-országok: bekapcsolva
 - AI-országok: kikapcsolva
 - A vezetők tanácskoznak…
@@ -563,7 +563,7 @@ Gazdasági és politikai mutatók az adatlapokon (GDP/fő USD 2025 · olaj- és 
 
 ## 13. Új szövegek (2026-11-24, 20:00 után)
 
-### Saját AI: Claude, ChatGPT, Gemini (az „AI játszik” ablak; a %s helyére a szolgáltató neve kerül)
+### Föld AI: Claude, ChatGPT, Gemini (az „AI játszik” ablak; a %s helyére a szolgáltató neve kerül)
 
 - %s dönt a lépésekről, és a saját szavaival indokol. Ehhez saját kulcs kell a szolgáltatótól, és a használata pénzbe kerülhet.
 - A játék csak a játék állását és az országok adatait küldi el neki, rólad semmit. A kulcs csak ezen a gépen marad.
@@ -585,7 +585,7 @@ A négy választógomb felirata név, nem fordítjuk: Ollama, Claude, ChatGPT, G
 
 - %s kitartott a célja mellett: %d.
 
-### Saját AI felhőből: hibaüzenetek (az „AI játszik” ablakban, ha a kapcsolódás nem sikerül)
+### Föld AI felhőből: hibaüzenetek (az „AI játszik” ablakban, ha a kapcsolódás nem sikerül)
 
 - A szolgáltató nem fogadta el ezt a kulcsot.
 - A szolgáltató most nem enged több kérést. Próbáld meg később!
@@ -625,3 +625,11 @@ A CO2-kivonás ablakában és a naplóban:
 - Marokkóban élt az egyik legkorábbi ismert Homo sapiens, vagyis a mi fajunk. Az arcuk már hasonlított a miénkre.
 - Spanyolországban olyan emberek éltek, akiknek az arca már a neandervölgyiekére kezdett hasonlítani.
 - A Föld mágneses tere megfordult: ami addig északot mutatott, délre fordult. Ez volt az utolsó ilyen fordulat.
+
+### Átnevezés: „Saját AI” helyett „Föld AI” (Zoltán kérése, 21:29). Ezekben a már lektorált szövegekben csak a név változott:
+
+- Föld AI
+- Föld AI beállítása
+- a Föld AI most nem adott szabályos lépést
+- A Föld AI most nem válaszolt, ezért az alapszabály döntött.
+- A csoportok vezetőit is játszhatja a Föld AI. Csak a 2026-ig ismert, valós adataikat kapja meg, és nemet is mondhat. Így akkor is ő felel, ha te játszol.

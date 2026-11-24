@@ -24,7 +24,7 @@ const EN := {
 	"A klímamodell szerint. Arany: a te utad, a sávval, amin belül a Föld járhat. Piros: ha semmi sem változik. Fehér: ami eddig történt.": "According to the climate model. Gold: your path, with the band the Earth may stay within. Red: if nothing changes. White: what has happened so far.",
 	"a tenger %d cm-rel magasabb": "the sea is %d cm higher",
 	"a tenger +%d cm": "sea +%d cm",
-	"Saját AI beállítása": "Set up your own AI",
+	"Föld AI beállítása": "Set up Earth AI",
 	# archívum és tanulás olvasással
 	"Idén már eleget tanultál és kutattál. Jövőre folytathatod!": "You have learned and researched enough this year. Continue next year!",
 	"Az AETHER archívumából: ezt a kutatást egy AI már elvégezte (%s), a játék ellenőrizte.": "From the AETHER archive: an AI already did this research (%s) and the game verified it.",
