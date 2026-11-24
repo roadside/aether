@@ -2071,6 +2071,13 @@ func _open_group(g: Dictionary) -> void:
 		b.toggle_mode = true
 		b.button_group = bg
 		b.focus_mode = Control.FOCUS_NONE
+		var sel := _flat(Color("#2b6b5e"), UI.CYAN, 2, 10)      # a kiválasztott kérés jól látszik
+		sel.content_margin_left = 16
+		sel.content_margin_right = 16
+		b.add_theme_stylebox_override("pressed", sel)
+		b.add_theme_stylebox_override("hover_pressed", sel)
+		b.add_theme_color_override("font_pressed_color", Color.WHITE)
+		b.add_theme_color_override("font_hover_pressed_color", Color.WHITE)
 		b.toggled.connect(func(on: bool) -> void:
 			if on:
 				pc.set_paths(world.path(g), world.path(g, int(a["cel"])) if a["fajta"] == "cel" else [])
@@ -2083,7 +2090,7 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 	UI.clear(area)
 	var need := int(ask["kell"])
 	var picked: Array = []
-	var status := UI.label("", 16, UI.SOFT)
+	var status := UI.label("", 16, UI.SOFT, false, false)
 	var ok := UI.button(L.t("Ezzel érvelek"), true)
 	ok.focus_mode = Control.FOCUS_NONE
 	ok.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
@@ -2109,7 +2116,11 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 	top.add_child(ok)
 	status.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	top.add_child(status)
-	area.add_child(top)
+	# a gomb az ablak alján mindig látszik: a kártyák bejelölése után nem kell visszagörgetni
+	if area.has_meta("alul") and is_instance_valid(area.get_meta("alul")):
+		(area.get_meta("alul") as Node).free()
+	area.set_meta("alul", top)
+	_sticky(area.get_parent() as VBoxContainer, top)
 	_fit.call_deferred()
 	var any := false
 	if ask["fajta"] == "felkeszules":
