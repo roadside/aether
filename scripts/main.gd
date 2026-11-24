@@ -2313,7 +2313,24 @@ func _open_cdr() -> void:
 		elif id in world.hand:
 			c.add_child(UI.label(L.t("Erre a körre elfogytak a lépéseid. Jöhet a következő öt év."), 15, UI.GOLD))
 		else:
-			c.add_child(UI.label(L.t("Előbb kutasd ki: %s") % Cards.text(id, "Kérdés", L.is_en()), 15, UI.MUTE))
+			var th := Cards.theme_of(id)
+			var need := L.t("Előbb kutasd ki: %s") % Cards.text(id, "Kérdés", L.is_en())
+			if world.steps > 0 and not world.over() and id in Cards.open_in(th, world.max_era(), world.hand):
+				# egy kattintás a kérdéshez: a témakör három kérdése közé ez biztosan bekerül
+				var rb := UI.text_link(need + " →", "", 15)
+				for cn in rb.pressed.get_connections():
+					rb.pressed.disconnect(cn["callable"])
+				rb.pressed.connect(func() -> void:
+					var offers: Array = _offers[th] if _offers.has(th) else world.research_offers(th)
+					if not (id in offers):
+						if offers.size() >= 3:
+							offers.pop_back()
+						offers.push_front(id)
+					_offers[th] = offers
+					_research_theme(th))
+				c.add_child(rb)
+			else:
+				c.add_child(UI.label(need, 15, UI.MUTE))
 		body.add_child(UI.card_root(c))
 
 
@@ -3266,6 +3283,15 @@ func _selftest() -> void:
 	await _shot("10_kartyaim.png")
 	_open_cdr()
 	await _shot("11_kivonas.png")
+	var cdr_link := _find_button(_overlay, L.t("Előbb kutasd ki: %s").split("%")[0])      # a hiányzó kártya egy kattintással kikutatható
+	if cdr_link != null:
+		var rng_state: int = world.rng.state
+		var offers_before := _offers.duplicate(true)
+		cdr_link.pressed.emit()
+		await _shot("11_kivonas_kerdes.png")
+		print("KIVONAS kerdes=", _find_button(_overlay, L.t("Ezt kutatom ki")) != null, " felkinalva=", _offers.values().any(func(o: Array) -> bool: return o.any(func(id: String) -> bool: return World.CDR.has(id))))
+		_offers = offers_before
+		world.rng.state = rng_state
 	_open_collection()
 	await _shot("11b_gyujtemeny.png")
 	_pick_game()
