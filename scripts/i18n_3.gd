@@ -348,4 +348,7 @@ const EN := {
 	"A vezetők tanácskoznak…": "The leaders are conferring…",
 	"%s magától vállalta: nulla kibocsátás %d-re.": "%s promised on its own: zero emissions by %d.",
 	"%s elhalasztotta a célját: %d.": "%s postponed its target: %d.",
+	"Eredmény másolása": "Copy result",
+	"Kimásolva. Beillesztheted bárhová.": "Copied. You can paste it anywhere.",
+	"Föld-kód: %d": "Earth code: %d",
 }

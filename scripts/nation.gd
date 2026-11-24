@@ -10,9 +10,8 @@ const Cards := preload("res://scripts/cards.gd")
 
 const EVIDENCE := 0.02      # bemutatott bizonyítékonként (Dechezleprêtre és mtsai 2025), legfeljebb 5 kártyáig
 const DISASTER := 0.03      # friss szélsőséges időjárás, csak az utóbbi öt évben (Konisky és mtsai 2016)
-const MYTH := -0.05         # terjedő tévhit
-const LEADER_YES := 0.03    # a vezetés nyilvános vállalása (Brulle és mtsai 2012)
-const LEADER_NO := -0.03    # a vezetés friss nyilvános elutasítása, legfeljebb kétszer
+const MYTH := -0.05         # terjedő tévhit: hamis jelzés a nyilvánosságban (Brulle és mtsai 2012: az elit és a média jelzései hatnak)
+const THERMOSTAT := -0.02   # vállalt fokozatonként: aki már kapott erősebb klímavédelmet, kevésbé kér még többet (Wlezien 1995)
 
 static var _data: Dictionary = {}
 
@@ -44,21 +43,17 @@ static func mood(w, g: Dictionary) -> float:
 	var m := base_mood(str(g["id"]))
 	m += EVIDENCE * minf((g.get("hasznalt", []) as Array).size(), 5.0)
 	if int(g.get("cel", 0)) > 0:
-		m += LEADER_YES
+		m += THERMOSTAT * int(g.get("fok", 1))
 	if str(w.myth.get("csoport", "")) == str(g["id"]):
 		m += MYTH
-	var no := 0
 	var hit := false
 	for e in w.naplo:
 		if str(e.get("csoport", "")) != str(g["id"]) or int(e["ev"]) < w.year() - 5:
 			continue
 		if e["fajta"] == "baj":
 			hit = true
-		elif e["fajta"] == "nem":
-			no += 1
 	if hit:
 		m += DISASTER
-	m += LEADER_NO * mini(no, 2)
 	return clampf(m, 0.05, 0.98)
 
 
@@ -104,13 +99,18 @@ static func _brief(w, g: Dictionary) -> Array:
 	var l: Array = ["WHO YOU ARE", str(d.get("berendezkedes_en", nm)), "Leaders: " + _leaders(d), "SOURCED FACTS ABOUT YOU"]
 	for f in g.get("tenyek", []):
 		l.append("- %s (%s)" % [str(f.get("szoveg_en", f["szoveg"])), str(f.get("forras_en", f["forras"]))])
+	for m in d.get("mutatok", []):
+		var row := "- %s: GDP per person about %d US dollars (World Bank, 2025); oil and gas rents %s%% of GDP (World Bank, 2021); %s%% of electricity from fossil fuels (Ember, 2026)" % [str(m["orszag_en"]), int(m["gdp_fo_usd"]), str(m["olaj_gaz_jaradek"]), str(m["fosszilis_aram"])]
+		if m.get("valasztasi_demokracia") != null:
+			row += "; electoral democracy index %s on a scale from 0 to 1 (V-Dem, 2025)" % str(m["valasztasi_demokracia"])
+		l.append(row)
 	for f in d.get("tovabbi_tenyek", []):
 		l.append("- %s (%s)" % [str(f["szoveg_en"]), str(f["link"])])
 	l.append("Your real public climate pledge as of 2026: %s." % str(d.get("nyilvanos_cel_en", "none")))
 	l.append("In these talks you have promised so far: %s." % _talks(g))
 	l.append("YOUR PEOPLE")
 	for r in d.get("kozvelemeny", []):
-		l.append("- %s: %d%% wanted their country to strengthen its climate commitments (UNDP Peoples' Climate Vote 2024)." % [str(r["orszag_en"]), int(r["ertek"])])
+		l.append("- %s: %d%% supported stronger climate action by their country (UNDP Peoples' Climate Vote 2024)." % [str(r["orszag_en"]), int(r["ertek"])])
 	l.append("- Worldwide, 89% demand more political action on climate (Andre et al. 2024, Nature Climate Change).")
 	l.append("- Estimated share of your people who want stronger climate action now, in these talks: %d%%." % int(round(mood(w, g) * 100.0)))
 	var ev: Array = []

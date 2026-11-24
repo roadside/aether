@@ -2,8 +2,8 @@
  "megjegyzes": "Az AI-országok adatlapja. Minden adat 2026-ig tartó, valós és ellenőrizhető; a forrás és a link mellette áll. A nyelvi modell ezt kapja meg a saját csoportjáról; a többi csoportról csak a vezetők nevét és a nyilvánosan vállalt klímacélt. Jövőkép vagy beállítottság nincs megadva.",
  "ellenorizve": "2026-11-24",
  "kozvelemeny": {
-  "kerdes": "Az emberek hány százaléka szeretné, hogy az országa erősítse a klímavállalásait?",
-  "kerdes_en": "Share of people who want their country to strengthen its climate commitments",
+  "kerdes": "Az emberek hány százaléka kér erősebb klímavédelmet az országától?",
+  "kerdes_en": "Share of people who support stronger climate action by their country",
   "forras": "UNDP – Peoples' Climate Vote 2024 (2024-06-20)",
   "link": "https://www.undp.org/press-releases/80-percent-people-globally-want-stronger-climate-action-governments-according-un-development-programme-survey",
   "megjegyzes": "A közlemény csak ezeket az országokat nevezi meg; ahol egy csoportból több ország szerepel, a kezdő hangulat ezek egyszerű átlaga (játékszabály)."
@@ -20,19 +20,19 @@
    "id": "konisky2016",
    "hivatkozas": "Konisky, D., Hughes, L., Kaylor, C. (2016): Extreme weather events and climate change concern. Climatic Change 134(4), 533–547.",
    "link": "https://doi.org/10.1007/s10584-015-1555-3",
-   "allitas": "A szélsőséges időjárás megélése kissé növeli az aggodalmat, de csak a friss események hatnak.",
+   "allitas": "A szélsőséges időjárás megélése kissé növeli az aggodalmat, de csak a friss események hatnak. (Egyéni szinten mért, kis hatás; Brulle és mtsai az összesített közvéleményben nem találtak ilyet, ezért a játékban ez a legkisebb és leghamarabb elmúló hatások egyike.)",
    "hasznalat": "Szabály: a csoportot ért baj után egy körig nő a hangulat."
   },
   {
    "id": "brulle2012",
    "hivatkozas": "Brulle, R., Carmichael, J., Jenkins, J. C. (2012): Shifting public opinion on climate change: an empirical assessment of factors influencing concern over climate change in the U.S., 2002–2010. Climatic Change 114(2), 169–188.",
    "link": "https://doi.org/10.1007/s10584-012-0403-y",
-   "allitas": "A közvélemény aggodalmára a vezetők megszólalásai és a gazdaság helyzete hat a legerősebben.",
-   "hasznalat": "Szabály: a vezetés nyilvános vállalása növeli, nyilvános elutasítása csökkenti a hangulatot."
+   "allitas": "Az Egyesült Államokban 2002 és 2010 között a közvélemény aggodalmára a politikai elit jelzései és a gazdaság helyzete hatott a legerősebben; a szélsőséges időjárásnak az összesített közvéleményre nem volt kimutatható hatása.",
+   "hasznalat": "Szabály: a terjedő tévhit (hamis jelzés a nyilvánosságban) csökkenti a hangulatot."
   },
   {
    "id": "scruggs2012",
-   "hivatkozas": "Scruggs, L., Benegal, S. (2012): Declining public concern about climate change: Can we blame the great recession? Global Environmental Change.",
+   "hivatkozas": "Scruggs, L., Benegal, S. (2012): Declining public concern about climate change: Can we blame the great recession? Global Environmental Change 22(2), 505–515.",
    "link": "https://doi.org/10.1016/j.gloenvcha.2012.01.002",
    "allitas": "A gazdasági bizonytalanság (munkanélküliség) idején csökken a klíma miatti aggodalom, és a munkaerőpiac javulásával visszatér.",
    "hasznalat": "Nincs beépítve: a játékban nincs gazdasági modell. Ezt a README kimondja."
@@ -41,8 +41,15 @@
    "id": "dechezlepretre2025",
    "hivatkozas": "Dechezleprêtre, A., Fabre, A., Kruse, T., Planterose, B., Sanchez Chico, A., Stantcheva, S. (2025): Fighting Climate Change: International Attitudes toward Climate Policies. American Economic Review 115(4), 1258–1300.",
    "link": "https://doi.org/10.1257/aer.20230501",
-   "allitas": "20 ország, 40 000 megkérdezett: ha az emberek megértik, hogyan működik egy klímaintézkedés, jobban támogatják.",
+   "allitas": "20 ország, 40 000 megkérdezett: az a tájékoztatás növeli a klímaintézkedések támogatását, amely elmagyarázza, hogyan működnek.",
    "hasznalat": "Szabály: minden bizonyíték, amelyet a csoportnak bemutattál, kissé növeli a hangulatot."
+  },
+  {
+   "id": "wlezien1995",
+   "hivatkozas": "Wlezien, C. (1995): The Public as Thermostat: Dynamics of Preferences for Spending. American Journal of Political Science 39(4), 981–1000.",
+   "link": "https://doi.org/10.2307/2111666",
+   "allitas": "A közvélemény termosztátként működik: ha a politika többet tesz, csökken az igény a még többre; ha nem tesz, nő. (A DOI-t a saját gépen futó segéd ellenőrizte.)",
+   "hasznalat": "Szabály: minden vállalt fokozat kissé csökkenti azok arányát, akik még erősebb klímavédelmet kérnek."
   }
  ],
  "csoportok": {
@@ -90,6 +97,15 @@
      "forras": "Európai Bizottság – Eurobarométer 2025",
      "link": "https://climate.ec.europa.eu/citizens/citizen-support-climate-action_en"
     }
+   ],
+   "mutatok": [
+    {
+     "orszag_en": "European Union",
+     "gdp_fo_usd": 47089,
+     "olaj_gaz_jaradek": 0.0,
+     "fosszilis_aram": 29.0,
+     "valasztasi_demokracia": null
+    }
    ]
   },
   "usa": {
@@ -125,6 +141,15 @@
      "forras": "UNDP – Peoples' Climate Vote 2024 (2024-06-20)",
      "link": "https://www.undp.org/press-releases/80-percent-people-globally-want-stronger-climate-action-governments-according-un-development-programme-survey"
     }
+   ],
+   "mutatok": [
+    {
+     "orszag_en": "United States",
+     "gdp_fo_usd": 90027,
+     "olaj_gaz_jaradek": 1.0,
+     "fosszilis_aram": 57.0,
+     "valasztasi_demokracia": 0.73
+    }
    ]
   },
   "kina": {
@@ -154,6 +179,15 @@
      "forras": "Kína Külügyminisztériuma, 2025-09-25",
      "link": "https://www.mfa.gov.cn/eng/xw/zyxw/202509/t20250925_11716503.html"
     }
+   ],
+   "mutatok": [
+    {
+     "orszag_en": "China",
+     "gdp_fo_usd": 13862,
+     "olaj_gaz_jaradek": 0.5,
+     "fosszilis_aram": 58.4,
+     "valasztasi_demokracia": 0.07
+    }
    ]
   },
   "india": {
@@ -182,6 +216,15 @@
      "szoveg_en": "India's pledge for 2031-2035 (cabinet, March 2026): emissions intensity of GDP 47% below the 2005 level by 2035, and 60% of installed electric power capacity from non-fossil sources.",
      "forras": "India miniszterelnöki hivatala, 2026-03-25",
      "link": "https://www.pmindia.gov.in/en/news_updates/cabinet-approves-indias-nationally-determined-contribution-2031-2035-to-be-communicated-to-the-united-nations-framework-convention-on-climate-change/"
+    }
+   ],
+   "mutatok": [
+    {
+     "orszag_en": "India",
+     "gdp_fo_usd": 2703,
+     "olaj_gaz_jaradek": 0.4,
+     "fosszilis_aram": 73.4,
+     "valasztasi_demokracia": 0.38
     }
    ]
   },
@@ -224,6 +267,15 @@
      "forras": "UNDP – Peoples' Climate Vote 2024 (2024-06-20)",
      "link": "https://www.undp.org/press-releases/80-percent-people-globally-want-stronger-climate-action-governments-according-un-development-programme-survey"
     }
+   ],
+   "mutatok": [
+    {
+     "orszag_en": "Sub-Saharan Africa",
+     "gdp_fo_usd": 1673,
+     "olaj_gaz_jaradek": 4.3,
+     "fosszilis_aram": 74.5,
+     "valasztasi_demokracia": 0.37
+    }
    ]
   },
   "olaj": {
@@ -257,7 +309,55 @@
      "ertek": 88
     }
    ],
-   "tovabbi_tenyek": []
+   "tovabbi_tenyek": [],
+   "mutatok": [
+    {
+     "orszag_en": "Russia",
+     "gdp_fo_usd": 17547,
+     "olaj_gaz_jaradek": 15.6,
+     "fosszilis_aram": 64.3,
+     "valasztasi_demokracia": 0.17
+    },
+    {
+     "orszag_en": "Saudi Arabia",
+     "gdp_fo_usd": 34537,
+     "olaj_gaz_jaradek": 25.4,
+     "fosszilis_aram": 97.8,
+     "valasztasi_demokracia": 0.02
+    },
+    {
+     "orszag_en": "Iran",
+     "gdp_fo_usd": 3924,
+     "olaj_gaz_jaradek": 27.1,
+     "fosszilis_aram": 94.3,
+     "valasztasi_demokracia": 0.16
+    }
+   ]
   }
+ },
+ "mutatok": {
+  "megjegyzes": "A saját gépen futó segéd gyűjtötte 2026-11-24-én a megadott nyílt adatbázisokból; a felhőből nem ellenőriztem újra. A CO2/fő értékek egyeznek a csoportok.json már ellenőrzött számaival.",
+  "forrasok": [
+   {
+    "mi": "GDP egy főre, USD, 2025",
+    "forras": "Világbank NY.GDP.PCAP.CD",
+    "link": "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD"
+   },
+   {
+    "mi": "olaj- és gázjáradék a GDP %-ában, 2021",
+    "forras": "Világbank NY.GDP.PETR.RT.ZS + NY.GDP.NGAS.RT.ZS",
+    "link": "https://data.worldbank.org/indicator/NY.GDP.PETR.RT.ZS"
+   },
+   {
+    "mi": "fosszilis áram aránya, %",
+    "forras": "Ember 2026 (Our World in Data)",
+    "link": "https://ourworldindata.org/electricity-mix"
+   },
+   {
+    "mi": "választási demokrácia indexe, 0–1, 2025",
+    "forras": "V-Dem 2026 (Our World in Data)",
+    "link": "https://ourworldindata.org/grapher/electoral-democracy-index"
+   }
+  ]
  }
 }

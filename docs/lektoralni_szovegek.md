@@ -494,6 +494,11 @@ Csak ezek újak. Ami nincs itt, az nem változott. A lektorálásod négy javít
 - a saját AI most nem adott szabályos lépést
 - gondolkodik…
 
+### Megosztás (záró képernyő)
+- Eredmény másolása
+- Kimásolva. Beillesztheted bárhová.
+- Föld-kód: %d
+
 ### AI-országok
 - %s vezetői gondolkodnak…
 - A saját AI most nem válaszolt, ezért az alapszabály döntött.
@@ -520,14 +525,16 @@ A közhangulat kezdőértéke: UNDP – Peoples' Climate Vote 2024 (2024-06-20) 
 A közhangulat változásának iránya ezekből a cikkekből jön (a mérték játékszabály):
 - Andre, P., Boneva, T., Chopra, F., Falk, A. (2024): Globally representative evidence on the actual and perceived support for climate action. Nature Climate Change 14, 253–259. https://doi.org/10.1038/s41558-024-01925-3 – 125 ország, közel 130 000 megkérdezett: 69% adná jövedelme 1%-át, 89% több politikai cselekvést kér; az emberek alábecsülik, mennyien gondolják ugyanezt.
   A játékban: Háttér: a többség mindenütt több cselekvést kér. A modell megkapja a világátlagot.
-- Konisky, D., Hughes, L., Kaylor, C. (2016): Extreme weather events and climate change concern. Climatic Change 134(4), 533–547. https://doi.org/10.1007/s10584-015-1555-3 – A szélsőséges időjárás megélése kissé növeli az aggodalmat, de csak a friss események hatnak.
+- Konisky, D., Hughes, L., Kaylor, C. (2016): Extreme weather events and climate change concern. Climatic Change 134(4), 533–547. https://doi.org/10.1007/s10584-015-1555-3 – A szélsőséges időjárás megélése kissé növeli az aggodalmat, de csak a friss események hatnak. (Egyéni szinten mért, kis hatás; Brulle és mtsai az összesített közvéleményben nem találtak ilyet, ezért a játékban ez a legkisebb és leghamarabb elmúló hatások egyike.)
   A játékban: Szabály: a csoportot ért baj után egy körig nő a hangulat.
-- Brulle, R., Carmichael, J., Jenkins, J. C. (2012): Shifting public opinion on climate change: an empirical assessment of factors influencing concern over climate change in the U.S., 2002–2010. Climatic Change 114(2), 169–188. https://doi.org/10.1007/s10584-012-0403-y – A közvélemény aggodalmára a vezetők megszólalásai és a gazdaság helyzete hat a legerősebben.
-  A játékban: Szabály: a vezetés nyilvános vállalása növeli, nyilvános elutasítása csökkenti a hangulatot.
-- Scruggs, L., Benegal, S. (2012): Declining public concern about climate change: Can we blame the great recession? Global Environmental Change. https://doi.org/10.1016/j.gloenvcha.2012.01.002 – A gazdasági bizonytalanság (munkanélküliség) idején csökken a klíma miatti aggodalom, és a munkaerőpiac javulásával visszatér.
+- Brulle, R., Carmichael, J., Jenkins, J. C. (2012): Shifting public opinion on climate change: an empirical assessment of factors influencing concern over climate change in the U.S., 2002–2010. Climatic Change 114(2), 169–188. https://doi.org/10.1007/s10584-012-0403-y – Az Egyesült Államokban 2002 és 2010 között a közvélemény aggodalmára a politikai elit jelzései és a gazdaság helyzete hatott a legerősebben; a szélsőséges időjárásnak az összesített közvéleményre nem volt kimutatható hatása.
+  A játékban: Szabály: a terjedő tévhit (hamis jelzés a nyilvánosságban) csökkenti a hangulatot.
+- Scruggs, L., Benegal, S. (2012): Declining public concern about climate change: Can we blame the great recession? Global Environmental Change 22(2), 505–515. https://doi.org/10.1016/j.gloenvcha.2012.01.002 – A gazdasági bizonytalanság (munkanélküliség) idején csökken a klíma miatti aggodalom, és a munkaerőpiac javulásával visszatér.
   A játékban: Nincs beépítve: a játékban nincs gazdasági modell. Ezt a README kimondja.
-- Dechezleprêtre, A., Fabre, A., Kruse, T., Planterose, B., Sanchez Chico, A., Stantcheva, S. (2025): Fighting Climate Change: International Attitudes toward Climate Policies. American Economic Review 115(4), 1258–1300. https://doi.org/10.1257/aer.20230501 – 20 ország, 40 000 megkérdezett: ha az emberek megértik, hogyan működik egy klímaintézkedés, jobban támogatják.
+- Dechezleprêtre, A., Fabre, A., Kruse, T., Planterose, B., Sanchez Chico, A., Stantcheva, S. (2025): Fighting Climate Change: International Attitudes toward Climate Policies. American Economic Review 115(4), 1258–1300. https://doi.org/10.1257/aer.20230501 – 20 ország, 40 000 megkérdezett: az a tájékoztatás növeli a klímaintézkedések támogatását, amely elmagyarázza, hogyan működnek.
   A játékban: Szabály: minden bizonyíték, amelyet a csoportnak bemutattál, kissé növeli a hangulatot.
+- Wlezien, C. (1995): The Public as Thermostat: Dynamics of Preferences for Spending. American Journal of Political Science 39(4), 981–1000. https://doi.org/10.2307/2111666 – A közvélemény termosztátként működik: ha a politika többet tesz, csökken az igény a még többre; ha nem tesz, nő. (A DOI-t a saját gépen futó segéd ellenőrizte.)
+  A játékban: Szabály: minden vállalt fokozat kissé csökkenti azok arányát, akik még erősebb klímavédelmet kérnek.
 
 További ellenőrzött tények az adatlapokon (csak a nyelvi modell kapja meg angolul; a magyar mondat a te ellenőrzésedhez van itt):
 - europa: 2026 februárjában az Európai Parlament megszavazta a kötelező 2040-es célt: 90%-kal kevesebb nettó kibocsátás, mint 1990-ben (413 igen, 226 nem). (Európai Parlament, 2026-02-10) – https://www.europarl.europa.eu/news/en/press-room/20260205IPR33620/eu-climate-law-a-2040-emissions-reduction-target-of-90-for-the-eu
@@ -538,3 +545,13 @@ További ellenőrzött tények az adatlapokon (csak a nyelvi modell kapja meg an
 - india: India 2035-re vállalta: a gazdaság kibocsátás-intenzitása 47%-kal a 2005-ös alatt, az erőművi kapacitás 60%-a nem fosszilis. (India miniszterelnöki hivatala, 2026-03-25) – https://www.pmindia.gov.in/en/news_updates/cabinet-approves-indias-nationally-determined-contribution-2031-2035-to-be-communicated-to-the-united-nations-framework-convention-on-climate-change/
 - afrika: 38 afrikai országban az emberek 43%-a hallott az éghajlatváltozásról, és tudja, hogy részben az ember okozza. Közülük 80% szerint rontja az életet, 73% a saját kormányától is cselekvést vár, 83% szerint a gazdag országoknak azonnal lépniük kell. (Afrobarometer, 10. kör (2024/2025), 38 ország – 2025-11-20) – https://www.afrobarometer.org/articles/africans-demand-immediate-climate-action-from-rich-nations-and-stronger-measures-from-their-own-governments-new-afrobarometer-pan-africa-profile-reveals/
 - afrika: Nigériában az emberek 89%-a támogatja a gyors átállást a fosszilis energiáról. (UNDP – Peoples' Climate Vote 2024 (2024-06-20)) – https://www.undp.org/press-releases/80-percent-people-globally-want-stronger-climate-action-governments-according-un-development-programme-survey
+
+Gazdasági és politikai mutatók az adatlapokon (GDP/fő USD 2025 · olaj- és gázjáradék a GDP %-ában 2021 · fosszilis áram % · választási demokrácia 0–1; forrás: Világbank, Ember, V-Dem):
+- European Union: 47089 · 0.0 · 29.0 · –
+- United States: 90027 · 1.0 · 57.0 · 0.73
+- China: 13862 · 0.5 · 58.4 · 0.07
+- India: 2703 · 0.4 · 73.4 · 0.38
+- Sub-Saharan Africa: 1673 · 4.3 · 74.5 · 0.37
+- Russia: 17547 · 15.6 · 64.3 · 0.17
+- Saudi Arabia: 34537 · 25.4 · 97.8 · 0.02
+- Iran: 3924 · 27.1 · 94.3 · 0.16

@@ -2448,6 +2448,34 @@ func _http_json(url: String, payload: Variant = null, timeout_s: float = 90.0) -
 	return JSON.parse_string((res[3] as PackedByteArray).get_string_from_utf8())
 
 
+## Egy kérdés a saját AI-nak. Vissza: a válasz szövege (a gondolkodó modellek <think> része nélkül, csak a JSON-rész), vagy "".
+## Először a gondolkodás kikapcsolásával kérdez (a gondolkodó modellek így sokkal gyorsabbak); ha a kiszolgáló
+## ezt nem fogadja el, még egyszer megkérdezi nélküle.
+var _own_think_off := true
+
+
+func _own_chat(messages: Array, timeout_s: float = 90.0) -> String:
+	var payload := {"model": _own_model, "stream": false, "format": "json", "options": {"temperature": 0.2}, "messages": messages}
+	var reply: Variant = null
+	if _own_think_off:
+		var p2 := payload.duplicate()
+		p2["think"] = false
+		reply = await _http_json(_own_url() + "/api/chat", p2, timeout_s)
+		if reply == null:
+			_own_think_off = false
+	if reply == null:
+		reply = await _http_json(_own_url() + "/api/chat", payload, timeout_s)
+	if typeof(reply) != TYPE_DICTIONARY or typeof(reply.get("message")) != TYPE_DICTIONARY:
+		return ""
+	var text := str(reply["message"].get("content", ""))
+	var cut := text.rfind("</think>")
+	if cut >= 0:
+		text = text.substr(cut + 8)
+	var a := text.find("{")
+	var b := text.rfind("}")
+	return text.substr(a, b - a + 1) if a >= 0 and b > a else text
+
+
 func _own_probe() -> String:
 	var tags: Variant = await _http_json(_own_url() + "/api/tags", null, 4.0)
 	_own_model = ""
@@ -2540,10 +2568,9 @@ func _own_decide() -> Dictionary:
 		await _own_probe()
 	var acts: Array = _agent.actions()
 	if _own_model != "" and not acts.is_empty():
-		var reply: Variant = await _http_json(_own_url() + "/api/chat", {"model": _own_model, "stream": false, "format": "json",
-			"options": {"temperature": 0.2}, "messages": _own_prompt(acts)})
-		if typeof(reply) == TYPE_DICTIONARY and typeof(reply.get("message")) == TYPE_DICTIONARY:
-			var ans: Variant = JSON.parse_string(str(reply["message"].get("content", "")))
+		var content: String = await _own_chat(_own_prompt(acts))
+		if content != "":
+			var ans: Variant = JSON.parse_string(content)
 			if typeof(ans) == TYPE_DICTIONARY and str(ans.get("move", "")).is_valid_float():
 				var n := int(float(str(ans["move"])))
 				if n >= 1 and n <= acts.size():
@@ -2569,11 +2596,7 @@ func _nation_on() -> bool:
 
 func _nation_decide(g: Dictionary, target: int, cards: Array) -> Dictionary:
 	world.ai = true
-	var reply: Variant = await _http_json(_own_url() + "/api/chat", {"model": _own_model, "stream": false, "format": "json",
-		"options": {"temperature": 0.2}, "messages": Nation.prompt(world, g, target, cards, L.is_en())})
-	var out := {}
-	if typeof(reply) == TYPE_DICTIONARY and typeof(reply.get("message")) == TYPE_DICTIONARY:
-		out = Nation.parse(world, g, target, str(reply["message"].get("content", "")))
+	var out: Dictionary = Nation.parse(world, g, target, await _own_chat(Nation.prompt(world, g, target, cards, L.is_en())))
 	if out.is_empty():                 # a modell nem adott szabályos választ: az alapjáték szabálya dönt (elfogadják)
 		_nat["hiba"] += 1
 		return {"dontes": "accept", "cel": target, "szoveg": L.t("A saját AI most nem válaszolt, ezért az alapszabály döntött.")}
@@ -2589,11 +2612,7 @@ func _nation_round() -> Array:
 	if World.fraction(g, world.year()) <= 0.0:
 		return []
 	world.ai = true
-	var reply: Variant = await _http_json(_own_url() + "/api/chat", {"model": _own_model, "stream": false, "format": "json",
-		"options": {"temperature": 0.2}, "messages": Nation.prompt_round(world, g, L.is_en())}, 45.0)
-	var out := {}
-	if typeof(reply) == TYPE_DICTIONARY and typeof(reply.get("message")) == TYPE_DICTIONARY:
-		out = Nation.parse_round(str(reply["message"].get("content", "")))
+	var out: Dictionary = Nation.parse_round(await _own_chat(Nation.prompt_round(world, g, L.is_en()), 45.0))
 	if out.is_empty():
 		_nat["hiba"] += 1
 		return []
@@ -2822,6 +2841,32 @@ func _auto_loop() -> void:
 		_auto_stop()
 		if world.over():
 			_open_end()
+
+
+## Megosztható eredmény: három sor szöveg a vágólapra. Körönként egy négyzet a játék naplójából:
+## zöld = vállalás, sárga = felkészülés, CO2-kivonás vagy cáfolat, piros = átlépett billenőpont, fehér = egyik sem.
+## A lépéseket nem árulja el, így más is kipróbálhatja ugyanezt a Földet.
+func _share_text() -> String:
+	var kind: Array = []
+	kind.resize(World.ROUNDS)
+	kind.fill(0)
+	for e in world.naplo:
+		var r := clampi(int((int(e["ev"]) - 2026) / World.ROUND_YEARS), 0, World.ROUNDS - 1)
+		match str(e["fajta"]):
+			"billenes":
+				kind[r] = 3
+			"cel", "metan", "csucs", "onkent":
+				kind[r] = maxi(kind[r], 2)
+			"felkeszules", "kivonas", "cafolat":
+				kind[r] = maxi(kind[r], 1)
+	var row := ""
+	for k in kind:
+		row += ["⬜", "🟨", "🟩", "🟥"][int(k)]
+	var line := "🌍 2100: +%s °C" % L.num(float(world.st["T"]), 2)
+	if not world.ai:
+		var steps_n: int = world.max_steps + (1 if world.challenge >= 5 else 0)
+		line += " · %s: +%s °C" % [L.t("Okos gép"), L.num(float(Agent.play("okos", world.seed_v, steps_n, world.challenge)["T"]), 2)]
+	return "AETHER · %s\n%s\n%s" % [L.t("Föld-kód: %d") % world.seed_v, line, row]
 
 
 ## A gépek ugyanezen a Földön (ugyanaz a Föld-kód, fokozat és kihívás): mérce a saját eredményedhez.
@@ -3278,13 +3323,21 @@ func _open_end() -> void:
 	var again_code: int = world.seed_v
 	end_row.add_child(_go(L.t("Ugyanez a Föld újra"), func() -> void: _pick_game(again_code), false))
 	var saved_lbl := UI.label("", 14, UI.SOFT)
-	saved_lbl.custom_minimum_size = Vector2(250, 0)
+	saved_lbl.visible = false
 	end_row.add_child(_go(L.t("Kép mentése"), func() -> void:
 		var msg: String = await _save_picture()
 		if is_instance_valid(saved_lbl):       # mentés közben bezárhatták az ablakot
-			saved_lbl.text = msg, false))
-	end_row.add_child(saved_lbl)
-	_sticky(body, end_row)
+			saved_lbl.text = msg
+			saved_lbl.visible = true, false))
+	end_row.add_child(_go(L.t("Eredmény másolása"), func() -> void:
+		DisplayServer.clipboard_set(_share_text())
+		if is_instance_valid(saved_lbl):
+			saved_lbl.text = L.t("Kimásolva. Beillesztheted bárhová.")
+			saved_lbl.visible = true, false))
+	var end_box := UI.vbox(4)
+	end_box.add_child(saved_lbl)
+	end_box.add_child(end_row)
+	_sticky(body, end_box)
 	if world.hajto.size() >= M.END_YEAR - M.START_YEAR:
 		var wp = PathChart.new()
 		wp.custom_minimum_size = Vector2(560, 96)
@@ -3617,6 +3670,7 @@ func _auto_test(kind: String) -> void:
 		await wait.call(0.5)
 	await wait.call(4.0)
 	await _shot("g4_vege.png")
+	print("MEGOSZTAS " + _share_text().replace("\n", " | "))
 	print("GEPJATEK kész gep=%s vege=%s ablak=%s T=%.2f gepi=%s sajat_jo=%d sajat_hiba=%d orszag=%s" % [kind, str(world.over()), str(_overlay != null), float(world.st["T"]), str(world.ai), _own_ok, _own_fail, JSON.stringify(_nat)])
 	get_tree().quit()
 

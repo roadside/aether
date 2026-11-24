@@ -183,7 +183,11 @@ func policy(kind: String) -> Dictionary:
 		var d: Dictionary = w.dilemma
 		var c := 0
 		if d["fajta"] == "kviz":
-			c = (d["valasz"] as Array).find(d["id"]) if kind == "okos" else rng.randi_range(0, 2)
+			# Az okos gép a saját kártyáit olvassa el: a kérdés mondata a kártyán álló kulcsszám, a kezében lévő kártyán megtalálja.
+			# Ha a kártya nincs a kezében (vagy nincs rajta kulcsszám), ő is csak tippel.
+			c = rng.randi_range(0, 2)
+			if kind == "okos" and str(d["id"]) in w.hand and not Cards.key_number(str(d["id"])).is_empty():
+				c = (d["valasz"] as Array).find(d["id"])
 		elif d["fajta"] == "tamogatas":
 			c = 1 if kind == "okos" and int(w.group(str(d["a"])).get("cel", 0)) > 0 else 0
 		else:

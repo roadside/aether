@@ -31,8 +31,13 @@ def main():
         for _ in range(times):
             t0 = time.time()
             try:
-                rep = post("/api/chat", {"model": model, "stream": False, "format": "json", "options": {"temperature": 0.2}, "messages": a["uzenetek"]})
-                ans = json.loads(rep["message"]["content"])
+                rep = post("/api/chat", {"model": model, "stream": False, "format": "json", "think": False, "options": {"temperature": 0.2}, "messages": a["uzenetek"]})
+                text = rep["message"]["content"]          # ugyanúgy tisztítjuk, mint a játék: gondolatmenet le, csak a JSON-rész
+                if "</think>" in text:
+                    text = text[text.rfind("</think>") + 8:]
+                if "{" in text and "}" in text:
+                    text = text[text.find("{"):text.rfind("}") + 1]
+                ans = json.loads(text)
                 dec = str(ans.get("decision", "?"))
                 text = str(ans.get("statement", ""))
                 extra = (" " + str(ans.get("year"))) if dec == "later" else ""
