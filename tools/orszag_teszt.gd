@@ -21,16 +21,17 @@ func _init() -> void:
 	var t0 := int(w.targets_for(g)[0])
 	var msg: Array = Nation.prompt(w, g, t0, [], true)
 	var user := str(msg[1]["content"])
-	var others := user.substr(user.find("WHAT YOU KNOW ABOUT THE OTHERS"))
+	var others := user.substr(user.find("WHAT YOU KNOW ABOUT THE OTHERS"), user.find("THE REQUEST") - user.find("WHAT YOU KNOW ABOUT THE OTHERS"))
 	var secret := not ("GDP" in others) and not ("electricity" in others) and not ("tonnes" in others) and ("Narendra Modi" in others)
 	var own := ("GDP per person" in user.substr(0, user.find("WHAT YOU KNOW"))) and ("no assigned attitude" in str(msg[0]["content"]))
 	# 3. válaszok értelmezése
-	var later: Array = Nation.later_targets(w, g, int(w.targets_for(g)[-1]))
-	var parse: bool = Nation.parse(w, g, t0, "{\"decision\":\"accept\",\"statement\":\"ok\"}").get("dontes", "") == "accept" \
-		and Nation.parse(w, g, t0, "nem json").is_empty() \
-		and Nation.parse(w, g, t0, "{\"decision\":\"later\",\"year\":1999}").is_empty() \
-		and Nation.parse(w, g, int(w.targets_for(g)[-1]), "{\"decision\":\"later\",\"year\":%d}" % int(later[0])).get("cel", 0) == int(later[0]) \
-		and Nation.parse_round("{\"decision\":\"delay\"}").get("dontes", "") == "delay" and Nation.parse_round("{\"decision\":\"x\"}").is_empty()
+	var o: Array = Nation.options(w, g, int(w.targets_for(g)[-1]))        # a legmerészebb kérés: van későbbi év is
+	var parse: bool = Nation.parse(w, g, t0, "{\"choice\":\"A\",\"reason\":1}").get("dontes", "") == "accept" \
+		and Nation.parse(w, g, t0, "{\"choice\":\"B\",\"reason\":4}").get("dontes", "") == "refuse" \
+		and Nation.parse(w, g, t0, "{\"choice\":\"C\"}").is_empty() and Nation.parse(w, g, t0, "nem json").is_empty() \
+		and o.size() == 5 and str(o[1]["dontes"]) == "later" and int(o[1]["cel"]) > int(o[0]["cel"]) \
+		and Nation.parse(w, g, int(w.targets_for(g)[-1]), "{\"choice\":\"b\",\"reason\":8}").get("szoveg", "") == "Több időre van szükségünk." \
+		and Nation.parse_round(w, g, "{\"choice\":\"A\",\"reason\":9}").get("dontes", "") == "keep" and Nation.parse_round(w, g, "{\"choice\":\"C\"}").is_empty()
 	# 4. nem: elvisz egy lépést, a cél nem változik; önkéntes vállalás: a legkönnyebb fokozat; halasztás: +5 év
 	var s0: int = w.steps
 	var no: bool = w.rebuff(g, t0) and w.steps == s0 - 1 and int(g["cel"]) == 0

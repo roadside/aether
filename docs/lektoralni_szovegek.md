@@ -512,6 +512,17 @@ Csak ezek újak. Ami nincs itt, az nem változott. A lektorálásod négy javít
 - %s magától vállalta: nulla kibocsátás %d-re.
 - %s elhalasztotta a célját: %d.
 
+### Az AI-országok indokai (a nyelvi modell ezek közül választ; a saját mondata nem kerül a képernyőre)
+- A népünk ezt kéri tőlünk.
+- A bizonyítékod a mi aggodalmunkra felel.
+- Ez illik a terveinkhez.
+- A gazdaságunk még a szénre, az olajra és a gázra épül.
+- Az embereinknek előbb áram, élelem és munka kell.
+- Előbb azok lépjenek, akik többet bocsátottak ki.
+- Most nem kötjük magunkat nemzetközi vállaláshoz.
+- Több időre van szükségünk.
+- Nálunk most semmi sem változott.
+
 ### Források az AI-országokhoz (nem a képernyőre kerülnek, a README és az adatfájl hivatkozza őket)
 
 A közhangulat kezdőértéke: UNDP – Peoples' Climate Vote 2024 (2024-06-20) – https://www.undp.org/press-releases/80-percent-people-globally-want-stronger-climate-action-governments-according-un-development-programme-survey

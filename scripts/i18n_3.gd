@@ -351,4 +351,13 @@ const EN := {
 	"Eredmény másolása": "Copy result",
 	"Kimásolva. Beillesztheted bárhová.": "Copied. You can paste it anywhere.",
 	"Föld-kód: %d": "Earth code: %d",
+	"A népünk ezt kéri tőlünk.": "Our people ask this of us.",
+	"A bizonyítékod a mi aggodalmunkra felel.": "Your evidence answers our concern.",
+	"Ez illik a terveinkhez.": "This fits our plans.",
+	"A gazdaságunk még a szénre, az olajra és a gázra épül.": "Our economy still runs on coal, oil and gas.",
+	"Az embereinknek előbb áram, élelem és munka kell.": "Our people first need electricity, food and jobs.",
+	"Előbb azok lépjenek, akik többet bocsátottak ki.": "Those who emitted more should act first.",
+	"Most nem kötjük magunkat nemzetközi vállaláshoz.": "We will not bind ourselves to international pledges now.",
+	"Több időre van szükségünk.": "We need more time.",
+	"Nálunk most semmi sem változott.": "Nothing has changed for us.",
 }

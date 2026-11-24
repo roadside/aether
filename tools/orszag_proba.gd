@@ -17,6 +17,8 @@ func _init() -> void:
 			if not open.is_empty() and cards.size() < 2:
 				cards.append(open[0])
 		var ts: Array = w.targets_for(g)
-		print("ORSZAGKERES " + JSON.stringify({"csoport": g["id"], "fajta": "keres", "cel": int(ts[0]), "hangulat": Nation.mood(w, g), "uzenetek": Nation.prompt(w, g, int(ts[0]), cards, en)}))
-		print("ORSZAGKERES " + JSON.stringify({"csoport": g["id"], "fajta": "sajat_lepes", "hangulat": Nation.mood(w, g), "uzenetek": Nation.prompt_round(w, g, en)}))
+		var t := int(ts[1])          # a második fokozat (30 év): így van későbbi vállalható év is
+		var lines := func(opts: Array) -> Array: return opts.map(func(o: Dictionary) -> String: return str(o["en"]))
+		print("ORSZAGKERES " + JSON.stringify({"csoport": g["id"], "fajta": "keres", "cel": t, "hangulat": Nation.mood(w, g), "lehetosegek": lines.call(Nation.options(w, g, t)), "uzenetek": Nation.prompt(w, g, t, cards, en)}))
+		print("ORSZAGKERES " + JSON.stringify({"csoport": g["id"], "fajta": "sajat_lepes", "hangulat": Nation.mood(w, g), "lehetosegek": lines.call(Nation.round_options(w, g)), "uzenetek": Nation.prompt_round(w, g, en)}))
 	quit()

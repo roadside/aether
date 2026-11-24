@@ -38,9 +38,12 @@ def main():
                 if "{" in text and "}" in text:
                     text = text[text.find("{"):text.rfind("}") + 1]
                 ans = json.loads(text)
-                dec = str(ans.get("decision", "?"))
-                text = str(ans.get("statement", ""))
-                extra = (" " + str(ans.get("year"))) if dec == "later" else ""
+                k = "ABCDEF".find(str(ans.get("choice", "?")).strip().upper()[:1])
+                dec = a["lehetosegek"][k] if 0 <= k < len(a["lehetosegek"]) else "SZABÁLYTALAN választás: %r" % ans.get("choice")
+                if not (0 <= k < len(a["lehetosegek"])):
+                    bad += 1
+                text = "indok %s | valós helyzet a modell szerint: %s" % (ans.get("reason"), ans.get("real_record"))
+                extra = ""
             except Exception as e:  # szabálytalan válasz: a játék ilyenkor az alapszabály szerint dönt
                 bad += 1
                 dec, text, extra = "SZABÁLYTALAN", str(e)[:80], ""

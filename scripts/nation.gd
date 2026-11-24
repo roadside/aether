@@ -87,8 +87,65 @@ static func _system(w, g: Dictionary, reply: String) -> String:
 		+ "Reply with JSON only: " + reply
 
 
-static func _statement(en: bool) -> String:
-	return "\"statement\": \"<one short sentence in %s that a 13-year-old understands>\"}" % ("English" if en else "Hungarian")
+## Az indokok rögzített listája: a képernyőre csak ezek a (lektorált) magyar mondatok kerülnek, a modell saját szövege nem.
+const REASONS := [
+	["A népünk ezt kéri tőlünk.", "Our people ask for it."],
+	["A bizonyítékod a mi aggodalmunkra felel.", "The evidence shown answers our concern."],
+	["Ez illik a terveinkhez.", "It fits plans we already have."],
+	["A gazdaságunk még a szénre, az olajra és a gázra épül.", "Our economy still depends on coal, oil and gas."],
+	["Az embereinknek előbb áram, élelem és munka kell.", "Our people first need electricity, food and jobs."],
+	["Előbb azok lépjenek, akik többet bocsátottak ki.", "Those who emitted more should act first."],
+	["Most nem kötjük magunkat nemzetközi vállaláshoz.", "We do not bind ourselves to international pledges now."],
+	["Több időre van szükségünk.", "We need more time."],
+	["Nálunk most semmi sem változott.", "Nothing has changed for us."],
+]
+const LETTERS := "ABCDEF"
+const REPLY := "{\"real_record\": \"<one English sentence: what your real leadership had actually decided on this question by 2026>\", " \
+	+ "\"choice\": \"<the letter of one option>\", \"reason\": <the number of one reason>}. Your choice must fit your real record."
+
+
+static func _menu(l: Array, opts: Array) -> void:
+	l.append("YOUR OPTIONS")
+	for i in opts.size():
+		l.append("%s. %s" % [LETTERS[i], str(opts[i]["en"])])
+	l.append("REASONS (pick the one closest to your real situation)")
+	for i in REASONS.size():
+		l.append("%d. %s" % [i + 1, str(REASONS[i][1])])
+	l.append("A promise made here is public, and you will be held to it.")
+
+
+static func _pick(opts: Array, content: String) -> Dictionary:
+	var ans: Variant = json(content)
+	if typeof(ans) != TYPE_DICTIONARY:
+		return {}
+	var k := LETTERS.find(str(ans.get("choice", "")).strip_edges().to_upper().left(1))
+	if k < 0 or k >= opts.size() or str(ans.get("choice", "")).strip_edges() == "":
+		return {}
+	var out: Dictionary = (opts[k] as Dictionary).duplicate()
+	out.erase("en")
+	var r := int(float(str(ans.get("reason", "0")))) if str(ans.get("reason", "")).is_valid_float() else 0
+	out["szoveg"] = str(REASONS[r - 1][0]) if r >= 1 and r <= REASONS.size() else ""
+	return out
+
+
+## A kérésre adható válaszok: a kért év, minden későbbi vállalható év, vagy semmi.
+static func options(w, g: Dictionary, target: int) -> Array:
+	var out: Array = [{"dontes": "accept", "cel": target, "en": "Promise zero emissions by %d, as asked." % target}]
+	for t in later_targets(w, g, target):
+		out.append({"dontes": "later", "cel": int(t), "en": "Promise zero emissions by %d instead (later than asked)." % int(t)})
+	out.append({"dontes": "refuse", "cel": target, "en": "Make no new promise now."})
+	return out
+
+
+## Kör végi saját lépés: marad, magától vállalja a következő fokozatot, vagy öt évvel elhalaszt.
+static func round_options(w, g: Dictionary) -> Array:
+	var out: Array = [{"dontes": "keep", "en": "Change nothing."}]
+	var ts: Array = w.targets_for(g)
+	if not ts.is_empty():
+		out.append({"dontes": "earlier", "en": ("On your own, bring your promise forward to zero emissions by %d." if int(g.get("cel", 0)) > 0 else "On your own, make a first promise: zero emissions by %d.") % int(ts[0])})
+	if int(g.get("cel", 0)) > 0 and int(g["cel"]) < 2090:
+		out.append({"dontes": "delay", "en": "Postpone your promise by five years, to %d." % mini(int(g["cel"]) + 5, 2090)})
+	return out
 
 
 ## Amit a vezetés magáról, a népéről és a többiekről tud.
@@ -134,8 +191,7 @@ static func _brief(w, g: Dictionary) -> Array:
 	return l
 
 
-static func prompt(w, g: Dictionary, target: int, cards: Array, en: bool) -> Array:
-	var sys := _system(w, g, "{\"decision\": \"accept\" or \"later\" or \"refuse\", \"year\": <the year you accept, only with \"later\">, " + _statement(en))
+static func prompt(w, g: Dictionary, target: int, cards: Array, _en: bool = true) -> Array:
 	var l := _brief(w, g)
 	l.append("THE REQUEST")
 	l.append("The mediator asks you to promise zero emissions by %d. Evidence they showed you:" % target)
@@ -144,12 +200,8 @@ static func prompt(w, g: Dictionary, target: int, cards: Array, en: bool) -> Arr
 		for k in ["Mire jó?", "Mi a gond vele?"]:
 			if Cards.text(str(c), k, true) != "":
 				l.append("  %s" % Cards.text(str(c), k, true))
-	var later := later_targets(w, g, target)
-	if later.is_empty():
-		l.append("You may accept or refuse.")
-	else:
-		l.append("You may accept, refuse, or accept a later year instead: %s." % ", ".join(later.map(func(t: int) -> String: return str(t))))
-	return [{"role": "system", "content": sys}, {"role": "user", "content": "\n".join(l)}]
+	_menu(l, options(w, g, target))
+	return [{"role": "system", "content": _system(w, g, REPLY)}, {"role": "user", "content": "\n".join(l)}]
 
 
 ## JSON olvasása hibaüzenet nélkül (a nyelvi modell válasza gyakran nem szabályos JSON; ez nem a játék hibája).
@@ -158,43 +210,18 @@ static func json(content: String) -> Variant:
 	return j.data if j.parse(content) == OK else null
 
 
-## A modell válaszából döntés: {"dontes": "accept"|"later"|"refuse", "cel": év, "szoveg": mondat}; üres, ha nem szabályos.
+## A modell válaszából döntés: {"dontes": "accept"|"later"|"refuse", "cel": év, "szoveg": az indok magyar kulcsa}; üres, ha nem szabályos.
 static func parse(w, g: Dictionary, target: int, content: String) -> Dictionary:
-	var ans: Variant = json(content)
-	if typeof(ans) != TYPE_DICTIONARY:
-		return {}
-	var dec := str(ans.get("decision", "")).to_lower().strip_edges()
-	if not (dec in ["accept", "later", "refuse"]):
-		return {}
-	var out := {"dontes": dec, "cel": target, "szoveg": str(ans.get("statement", "")).strip_edges().replace("\n", " ").left(160)}
-	if dec == "later":
-		var y := int(float(str(ans.get("year", "0")))) if str(ans.get("year", "")).is_valid_float() else 0
-		if not (y in later_targets(w, g, target)):
-			return {}
-		out["cel"] = y
-	return out
+	return _pick(options(w, g, target), content)
 
 
-## Kör végi saját lépés: a vezetés maradhat, magától előbbre hozhatja a célját, vagy öt évvel elhalaszthatja.
-static func prompt_round(w, g: Dictionary, en: bool) -> Array:
-	var sys := _system(w, g, "{\"decision\": \"keep\" or \"earlier\" or \"delay\", " + _statement(en))
+static func prompt_round(w, g: Dictionary, _en: bool = true) -> Array:
 	var l := _brief(w, g)
 	l.append("YOUR OWN MOVE")
-	l.append("Five years are about to pass. Nobody is asking you anything now. You may:")
-	l.append("- \"keep\": change nothing.")
-	var ts: Array = w.targets_for(g)
-	if not ts.is_empty():
-		l.append("- \"earlier\": on your own, promise zero emissions by %d." % int(ts[0]))
-	if int(g.get("cel", 0)) > 0 and int(g["cel"]) < 2090:
-		l.append("- \"delay\": postpone your promise by five years, to %d." % mini(int(g["cel"]) + 5, 2090))
-	return [{"role": "system", "content": sys}, {"role": "user", "content": "\n".join(l)}]
+	l.append("Five years are about to pass. Nobody is asking you anything now.")
+	_menu(l, round_options(w, g))
+	return [{"role": "system", "content": _system(w, g, REPLY)}, {"role": "user", "content": "\n".join(l)}]
 
 
-static func parse_round(content: String) -> Dictionary:
-	var ans: Variant = json(content)
-	if typeof(ans) != TYPE_DICTIONARY:
-		return {}
-	var dec := str(ans.get("decision", "")).to_lower().strip_edges()
-	if not (dec in ["keep", "earlier", "delay"]):
-		return {}
-	return {"dontes": dec, "szoveg": str(ans.get("statement", "")).strip_edges().replace("\n", " ").left(160)}
+static func parse_round(w, g: Dictionary, content: String) -> Dictionary:
+	return _pick(round_options(w, g), content)
