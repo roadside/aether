@@ -98,6 +98,8 @@ func actions() -> Array:
 				out.append({"type": "prepare", "group": g["id"], "card": w.prepare_cards(g)[0]})
 		for id in w.cdr_available():
 			out.append({"type": "cdr", "id": id})
+		for id in w.cdr_growable():
+			out.append({"type": "grow_cdr", "id": id})
 		for th in themes():
 			for id in offers_for(th):
 				out.append({"type": "research", "theme": th, "card": id, "question": Cards.text(id, "Kérdés", L.is_en())})
@@ -144,6 +146,8 @@ func apply(a: Dictionary) -> bool:
 			return not w.myth.is_empty() and w.refute(w.group(str(w.myth["csoport"])))
 		"cdr":
 			return w.start_cdr(str(a.get("id", "")))
+		"grow_cdr":
+			return w.grow_cdr(str(a.get("id", "")))
 		"summit":
 			if not w.summit_due or w.summit_listeners(str(a.get("card", ""))).is_empty():
 				return false
@@ -232,6 +236,8 @@ func policy(kind: String) -> Dictionary:
 	if kind == "okos":
 		for id in w.cdr_available():
 			return {"type": "cdr", "id": id, "miert": "Megvan a kártyám hozzá: elindítom a CO2-kivonást."}
+		for id in w.cdr_growable():
+			return {"type": "grow_cdr", "id": id, "miert": "Tíz éve fut: bővítem a CO2-kivonást."}
 		for g in order:
 			if not g.get("felkeszult", false) and int(g["cel"]) > 0 and not w.prepare_cards(g).is_empty():
 				return {"type": "prepare", "group": g["id"], "card": w.prepare_cards(g)[0], "miert": "Felkészítem őket, hogy ne inogjanak meg: %s", "mivel": L.field(g, "nev")}

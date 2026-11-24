@@ -161,6 +161,10 @@ static func own_music_places() -> Array:
 	return places
 
 
+## A nyitány zenéjének hangereje. Zoltán kérése (2026-11-24): 10%-kal hangosabb, azaz -4,0 helyett -3,2 dB (20·log10(1,1) = 0,83 dB).
+const MUSIC_DB := -3.2
+
+
 func _start_music() -> void:
 	var stream: AudioStream = null
 	for full in own_music_places():        # a játékos saját zenefájlja, ha van (nem része a játéknak)
@@ -175,7 +179,7 @@ func _start_music() -> void:
 		return
 	_music = AudioStreamPlayer.new()
 	_music.stream = stream
-	_music.volume_db = -4.0
+	_music.volume_db = MUSIC_DB
 	main.add_child(_music)
 	_music.play()
 
@@ -192,7 +196,7 @@ func _continue_music() -> void:
 	_music2.volume_db = -30.0
 	main.add_child(_music2)
 	_music2.play(CONT_FROM)
-	_music2.create_tween().tween_property(_music2, "volume_db", -4.0, 3.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	_music2.create_tween().tween_property(_music2, "volume_db", MUSIC_DB, 3.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 
 ## Átugráskor gyorsan (2 mp), a bevezető természetes végén lassan (END_FADE) halkul el,
@@ -303,12 +307,10 @@ func _play_full() -> void:
 	var g = main.globe
 	main.load_anomaly_quietly()
 	g.scale = Vector2.ONE * 0.04
-	# Előhang, még zene nélkül: a cím és három mondat (kb. 27 mp)
-	_locked = true
-	_hint.visible = false
-	if not await _prologue(): return
+	# Előhang, még zene nélkül: a cím és három mondat (kb. 27 mp). Zoltán kérése (2026-11-24): a logó után rögtön átugorható.
 	_locked = false
 	_hint.visible = true
+	if not await _prologue(): return
 	_start_music()
 	# 0. Nyitány: a handpan-játékos az erdőben (11 mp)
 	_set_mode("jatekos")

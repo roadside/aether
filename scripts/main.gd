@@ -1185,10 +1185,25 @@ func _pick_game(code: int = -1, level: int = -1) -> void:
 		body.add_child(_go("%s · %s" % [L.t(row[0]), L.t("%d lépés körönként") % shown], func() -> void: _new_game(code, n, lv), n == 4))
 
 
+## Az alacsonyabb szinteken (sikeres játékban) felhasznált kártyák: a magasabb szinten már nem jelennek meg.
+## Az alapjátékban (0. szint) nincs tiltás. Játékszabály.
+func _level_used(level: int) -> Array:
+	var out: Array = []
+	var d: Variant = L.get_setting("szint_kartyak", {})
+	if typeof(d) == TYPE_DICTIONARY:
+		for k in d:
+			if int(str(k)) < level and typeof(d[k]) == TYPE_ARRAY:
+				for id in d[k]:
+					if not (id in out):
+						out.append(id)
+	return out
+
+
 func _new_game(code: int = -1, steps_n: int = World.STEPS, level: int = 0) -> void:
 	_auto_stop()
 	_close()
 	world.new_game(code, steps_n, level)
+	world.banned = _level_used(level)
 	world.gentle = not _test and not bool(L.get_setting("tanulo_kesz", false))      # az első játék szelídebb
 	_offers = {}
 	_clock = 0.0
@@ -1600,6 +1615,12 @@ func _finish_game(r: Dictionary) -> Dictionary:
 	var dd := Time.get_date_dict_from_system()
 	past.push_front({"ev": int(dd["year"]), "ho": int(dd["month"]), "nap": int(dd["day"]), "T": t, "lepes": world.max_steps + (1 if world.challenge >= World.CHALLENGE_MAX else 0), "mag": world.seed_v})
 	L.set_setting("foldek", past.slice(0, 12))
+	if t < 2.0 and not world.ai:      # a sikeres szint kártyái a következő szinteken már nem jönnek
+		var lu: Variant = L.get_setting("szint_kartyak", {})
+		if typeof(lu) != TYPE_DICTIONARY:
+			lu = {}
+		lu[str(world.challenge)] = world.used_cards()
+		L.set_setting("szint_kartyak", lu)
 	if t < 2.0 and world.challenge >= _level_max() and world.challenge < World.CHALLENGE_MAX:
 		L.set_setting("lepcso", world.challenge + 1)
 		_end_info["lepcso"] = world.challenge + 1
@@ -2367,7 +2388,15 @@ func _open_cdr() -> void:
 		c.add_child(UI.label(L.t("Évi %s–%s milliárd tonna CO2 (Fuss és mtsai 2018)") % [L.num_short(rng[0], 1), L.num_short(rng[1], 1)], 15, UI.SOFT))
 		var running: bool = world.cdr.any(func(x: Dictionary) -> bool: return x["id"] == id)
 		if running:
-			c.add_child(UI.label(L.t("Már fut."), 15, UI.GREEN, true))
+			var grown: bool = world.cdr.any(func(x: Dictionary) -> bool: return x["id"] == id and x.has("gt2"))
+			c.add_child(UI.label(L.t("Bővítve: évi %s milliárd tonna.") % L.num_short((float(rng[0]) + float(rng[1])) * 0.5, 2) if grown else L.t("Már fut."), 15, UI.GREEN, true))
+			if id in world.cdr_growable() and world.steps > 0 and not world.over():
+				c.add_child(_go(L.t("Bővítem") + " →", func() -> void:
+					if world.grow_cdr(id):
+						_refresh()
+						_open_cdr()))
+			elif not grown and not (id in world.cdr_growable()):
+				c.add_child(UI.label(L.t("Tíz év után bővítheted."), 15, UI.MUTE))
 		elif id in world.hand and world.steps > 0 and not world.over():
 			c.add_child(_go(L.t("Elindítom") + " →", func() -> void:
 				if world.start_cdr(id):
@@ -2710,6 +2739,7 @@ func _move_line(a: Dictionary) -> String:
 		"reassure": return "Reassure %s, who has become unsure (otherwise they delay their target)" % gn
 		"refute": return "Refute the myth spreading in %s" % gn
 		"cdr": return "Start CO2 removal: %s" % str(a["id"])
+		"grow_cdr": return "Expand CO2 removal: %s" % str(a["id"])
 		"summit": return "Climate summit: show the card '%s' (%d groups bring their target 5 years forward, free)" % [Cards.text(str(a["card"]), "Kérdés", true), int(a["listeners"])]
 		"skip_summit": return "Climate summit: show nothing"
 		"dilemma":
@@ -3706,7 +3736,7 @@ func _add_story(body: VBoxContainer) -> void:
 			"felkeszules":
 				line = L.t("%s felkészült a bajra.") % L.field(world.group(e["csoport"]), "nev")
 			"kivonas":
-				line = "%s: %s" % [L.t("CO2-kivonás"), L.t(CDR_NAME[e["id"]])]
+				line = "%s: %s" % [L.t("Bővített CO2-kivonás") if e.get("bov", false) else L.t("CO2-kivonás"), L.t(CDR_NAME[e["id"]])]
 				mark = UI.GREEN
 			"nulla":
 				line = (L.t("%s elérte a nulla kibocsátást (%d).") % [L.field(world.group(e["csoport"]), "nev"), int(e["ev"])]).replace(" (%d)" % int(e["ev"]), "")

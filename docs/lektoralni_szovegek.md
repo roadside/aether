@@ -589,3 +589,13 @@ A négy választógomb felirata név, nem fordítjuk: Ollama, Claude, ChatGPT, G
 
 - A szolgáltató nem fogadta el ezt a kulcsot.
 - A szolgáltató most nem enged több kérést. Próbáld meg később!
+
+## 15. rész – még nem lektorált (2026-11-24 este)
+
+A CO2-kivonás ablakában és a naplóban:
+
+- Bővítem
+- Tíz év után bővítheted.
+- Bővítve: évi %s milliárd tonna.
+- Bővített CO2-kivonás
+- Tíz éve fut: bővítem a CO2-kivonást. (ezt az Okos gép mondja, ha tanácsot kérsz tőle)

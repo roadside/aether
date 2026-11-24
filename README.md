@@ -6,7 +6,7 @@ Klímajáték 12 éves kortól. Te vagy a világ klímatudósa: kutatsz, a bizon
 
 - 2026-tól 2100-ig tizenöt kör, egy kör öt év, körönként négy lépés (könnyű fokozaton öt, nehéz fokozaton három).
 - **Kutatás:** témakört választasz, három valódi kérdésből egyet kutatsz ki. Ebből bizonyíték-kártya lesz, valódi tudományos forrásokkal.
-- **Tárgyalás:** minden országcsoport mástól tart. Olyan kártyával győzheted meg, amely az ő aggodalmára felel.
+- **Tárgyalás:** minden országcsoport mástól tart. Olyan kártyával győzheted meg, amely az ő aggodalmára felel. Egy kártyával csak egy csoportot győzhetsz meg.
 - **Felkészülés:** egy csoportnak segíthetsz felkészülni a hőségre, az áradásra és az aszályra. Aki felkészült, többé nem inog meg.
 - **Idő:** a Föld és a görbe megmutatja, mit értél el. Minden játékban más a Föld: az érzékenysége és a billenőpontjai rejtve vannak.
 - **Vége:** két Föld egymás mellett. A tiéd, és az, amelyik akkor lett volna, ha semmi sem változik.
@@ -50,6 +50,9 @@ Játékszabály (nem a valóság leírása):
 - Ha egy meggyőzhető csoport kártyájára mutatsz, a görbén szaggatott vonal jelenik meg a csoport színével: ez ugyanannak a klímamodellnek a középértéke arra az esetre, ha a csoport most a legjobb elérhető célt vállalná (a kártyán álló „−0,40 °C” ennek a végpontja).
 - Ha még van lépésed, a „Következő 5 év” gomb első megnyomása csak szól, a második vált kört (játékszabály: véletlen kattintás ne vigyen el egy kört). Az óra lejárta ettől függetlenül továbblép.
 - A tárgyalás menete, az aggodalmak és a megállapodáskor elhangzó válaszok mondatai, hogy hány kártya kell egy vállaláshoz. A kérhető célok a mostani évtől számítanak (40, 30, 20 vagy 15 év alatt nulla kibocsátás); a gyorsabb cél több kártyába kerül.
+- Egy kártya csak egy csoportnál hat: amivel egy csoporttal megállapodtál (cél vagy metán), azzal másik csoportot már nem győzhetsz meg. A megerősítés, a felkészítés és a klímacsúcs csak annál a csoportnál számít elhasználtnak, amelyik hallotta.
+- Szintenként új kártyák: amit egy sikeres játékban egy szinten felhasználtál, az a magasabb szinteken már nem kutatható. Az alapjátékban nincs ilyen tiltás, ott a kérdések mindig véletlenül jönnek. Ha egy témakörben elfogynak az új kártyák, a régiek visszajöhetnek (mérés: `tools/szint_teszt.gd`).
+- A CO2-kivonás bővítése: ami legalább tíz éve fut, azt egy lépésért egyszer a Fuss és mtsai 2018 szerinti sáv közepéig bővítheted (a többlet is húsz év alatt fut fel). A sáv valódi; hogy a közepéig mehetsz, és hogy mikor, az játékszabály. Ettől a játék végén is marad tennivaló (mérés: `tools/keso_teszt.gd`).
 - A klímacsúcs (2041 és 2066): egy kártyát az egész világnak megmutathatsz; akinek az aggodalmára felel, és már vállalt célt, öt évvel előbbre hozza.
 - A három fokozat (körönként öt, négy vagy három lépés) és „A mai Föld” (aznap mindenki ugyanazt a Földet kapja).
 - A rangok (a több játékon át kikutatott kártyák száma szerint) és a záró képernyő összesítése: ki mennyi CO2-t nem bocsátott ki a „ha semmi sem változik” úthoz képest (a modell szerint).

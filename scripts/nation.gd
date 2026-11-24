@@ -41,7 +41,7 @@ static func base_mood(id: String) -> float:
 ## A közhangulat most: az emberek mekkora része kér erősebb klímavédelmet (0–1).
 static func mood(w, g: Dictionary) -> float:
 	var m := base_mood(str(g["id"]))
-	m += EVIDENCE * minf((g.get("hasznalt", []) as Array).size(), 5.0)
+	m += EVIDENCE * minf((g.get("hasznalt", []) as Array).size() - (g.get("mashol", []) as Array).size(), 5.0)
 	if int(g.get("cel", 0)) > 0:
 		m += THERMOSTAT * int(g.get("fok", 1))
 	if str(w.myth.get("csoport", "")) == str(g["id"]):

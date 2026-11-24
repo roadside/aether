@@ -36,6 +36,7 @@ var groups: Array = []
 var rest_share := 0.0            # a világ többi részének CO2-részesedése: a hat csoport átlagát követi (játékszabály)
 var rest_ch4 := 0.0
 var hand: Array = []             # kikutatott kártyák azonosítói
+var banned: Array = []           # az alacsonyabb kihívás-szinteken már felhasznált kártyák: itt nem kutathatók (játékszabály)
 var cdr: Array = []              # [{"id", "gt", "ev"}]
 var tips: Array = []             # billenőpontok: {"id", ..., "kuszob", "ev" (átlépés éve vagy 0)}
 var history: Array = []          # [[év, T]] a megtörtént évek
@@ -213,6 +214,8 @@ func drivers(y: int) -> Dictionary:
 	var rem := 0.0
 	for c in cdr:
 		rem += float(c["gt"]) * clampf(float(y - int(c["ev"])) / CDR_YEARS, 0.0, 1.0)
+		if c.has("gt2"):      # bővítés: a többlet a bővítés évétől ugyanúgy húsz év alatt fut fel
+			rem += float(c["gt2"]) * clampf(float(y - int(c["ev2"])) / CDR_YEARS, 0.0, 1.0)
 	return {"co2": M.E_CO2_NOW * f, "cdr": rem, "ch4": ch4}
 
 
@@ -252,13 +255,27 @@ func max_era() -> int:
 
 ## Kutatás: három kérdés a témakörből (a megnyílt korszakig), ebből választasz egyet.
 func research_offers(theme: String) -> Array:
-	var pool := Cards.open_in(theme, max_era(), hand)
+	var pool := Cards.open_in(theme, max_era(), hand + banned)
+	if pool.size() < 3:      # ha a témakör új kártyái elfogytak, a korábbi szinteken használtak is visszajöhetnek, hogy mindig legyen miből választani
+		for id in Cards.open_in(theme, max_era(), hand + pool):
+			if pool.size() < 3:
+				pool.append(id)
 	var out: Array = []
 	if theme == "ketseg" and not myth.is_empty() and not (str(myth["kartya"]) in hand):     # a terjedő tévhit cáfolata mindig kikutatható
 		out.append(str(myth["kartya"]))
 		pool.erase(str(myth["kartya"]))
 	while out.size() < 3 and not pool.is_empty():
 		out.append(pool.pop_at(rng.randi_range(0, pool.size() - 1)))
+	return out
+
+
+## A játékban felhasznált kártyák: amit a játékos bármelyik csoportnál kijátszott.
+func used_cards() -> Array:
+	var out: Array = []
+	for g in groups:
+		for id in g["hasznalt"]:
+			if not (id in out) and not (id in (g.get("mashol", []) as Array)):
+				out.append(id)
 	return out
 
 
@@ -376,6 +393,19 @@ func usable(g: Dictionary) -> Array:
 	return out
 
 
+## Egy kártya csak egy csoportnál hat (Zoltán döntése, 2026-11-24): amivel megállapodtál valakivel (cél vagy metán),
+## azt a többi csoport is hallottnak veszi. A megerősítés, a felkészítés és a klímacsúcs csak annál számít, aki hallotta.
+const CARD_ONCE := true
+
+
+func _spend(g: Dictionary, id: String) -> void:
+	for h in (groups if CARD_ONCE else [g]):
+		if not (id in h["hasznalt"]):
+			h["hasznalt"].append(id)
+			if not is_same(h, g):   # ő nem látta a kártyát: a közhangulatába nem számít bele (nation.gd)
+				h["mashol"] = (h.get("mashol", []) as Array) + [id]
+
+
 func negotiate(g: Dictionary, target: int, played: Array) -> bool:
 	if steps <= 0 or not (target in targets_for(g)) or played.size() < cards_needed(g, target):
 		return false
@@ -390,7 +420,7 @@ func negotiate(g: Dictionary, target: int, played: Array) -> bool:
 	g["konnyebb"] = false
 	g["inog"] = false          # az új egyezség meg is erősíti őket
 	for id in played:
-		g["hasznalt"].append(id)
+		_spend(g, id)
 	steps -= 1
 	_momentum()
 	naplo.append({"ev": y, "fajta": "cel", "csoport": g["id"], "cel": target})
@@ -544,7 +574,7 @@ func pledge_methane(g: Dictionary, played: Variant) -> bool:
 			return false
 	g["metan"] = year() - 1
 	for id in ids:
-		g["hasznalt"].append(id)
+		_spend(g, id)
 	steps -= 1
 	_momentum()
 	naplo.append({"ev": year(), "fajta": "metan", "csoport": g["id"]})
@@ -566,6 +596,30 @@ func start_cdr(id: String) -> bool:
 	cdr.append({"id": id, "gt": float(CDR[id][0]), "ev": year() - 1})
 	steps -= 1
 	naplo.append({"ev": year(), "fajta": "kivonas", "id": id})
+	return true
+
+
+## Bővítés (játékszabály): ami legalább tíz éve fut, azt egyszer a fenntartható sáv közepéig lehet bővíteni.
+## A sáv maga valódi (Fuss és mtsai 2018); a tetejéig nem megyünk, mert a programok egymás elől veszik el a földet.
+const CDR_GROW_AFTER := 10
+
+func cdr_growable() -> Array:
+	var out: Array = []
+	for c in cdr:
+		if not c.has("gt2") and year() - 1 - int(c["ev"]) >= CDR_GROW_AFTER:
+			out.append(str(c["id"]))
+	return out
+
+
+func grow_cdr(id: String) -> bool:
+	if steps <= 0 or over() or not (id in cdr_growable()):
+		return false
+	for c in cdr:
+		if c["id"] == id:
+			c["gt2"] = (float(CDR[id][0]) + float(CDR[id][1])) * 0.5 - float(CDR[id][0])
+			c["ev2"] = year() - 1
+	steps -= 1
+	naplo.append({"ev": year(), "fajta": "kivonas", "id": id, "bov": true})
 	return true
 
 
@@ -865,7 +919,7 @@ func what_if(delay: int) -> float:
 func to_dict() -> Dictionary:
 	return {"v": SAVE_VERSION, "mag": seed_v, "jatek": game_id, "sens": sens, "st": st, "alap": _base, "kor": round_i, "lepes": steps, "max_lepes": max_steps, "csoportok": groups, "kez": hand,
 		"kivonas": cdr, "billenes": tips, "mult": history, "alap_mult": base_history, "hirek": news, "naplo": naplo, "hajto": hajto, "kuldetes": missions, "csucs": summit_due, "dontes": dilemma, "vilag_nulla": net_zero_year, "kivont": cdr_total, "rng": str(rng.state),
-		"veszely": threat, "sorozat": streak, "kihivas": challenge, "tevhit": myth, "tevhitek": myths_seen, "szelid": gentle, "gep": ai}
+		"veszely": threat, "sorozat": streak, "kihivas": challenge, "tevhit": myth, "tevhitek": myths_seen, "szelid": gentle, "gep": ai, "tiltott": banned}
 
 
 func from_dict(d: Dictionary) -> bool:
@@ -875,6 +929,7 @@ func from_dict(d: Dictionary) -> bool:
 	seed_v = int(d["mag"]); game_id = int(d.get("jatek", 0)); sens = float(d["sens"]); st = d["st"]; _base = d["alap"]; round_i = int(d["kor"]); steps = int(d["lepes"]); max_steps = int(d.get("max_lepes", STEPS))
 	groups = d["csoportok"]; hand = d["kez"]; cdr = d["kivonas"]; tips = d["billenes"]; history = d["mult"]; base_history = d["alap_mult"]
 	news = d.get("hirek", [])
+	banned = d.get("tiltott", [])
 	summit_due = bool(d.get("csucs", false))
 	dilemma = d.get("dontes", {})
 	net_zero_year = int(d.get("vilag_nulla", 0))

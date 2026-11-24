@@ -362,4 +362,9 @@ const EN := {
 	"%s kitartott a célja mellett: %d.": "%s stood by its target: %d.",
 	"A szolgáltató nem fogadta el ezt a kulcsot.": "The provider did not accept this key.",
 	"A szolgáltató most nem enged több kérést. Próbáld meg később!": "The provider is not allowing more requests right now. Try again later!",
+	"Bővítem": "Expand",
+	"Tíz év után bővítheted.": "You can expand it after ten years.",
+	"Bővítve: évi %s milliárd tonna.": "Expanded: %s billion tonnes a year.",
+	"Bővített CO2-kivonás": "Expanded CO2 removal",
+	"Tíz éve fut: bővítem a CO2-kivonást.": "It has run for ten years: I expand the CO2 removal.",
 }
