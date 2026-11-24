@@ -460,7 +460,7 @@ func _ready() -> void:
 	get_tree().node_added.connect(_on_node_added)
 	var args := OS.get_cmdline_user_args()
 	_test = "--onteszt" in args or "--bejaras" in args
-	_dry = (_test and not ("--eles" in args)) or "--elojatek" in args or "--majom" in args or "--gepjatek" in args
+	_dry = (_test and not ("--eles" in args)) or "--elojatek" in args or "--majom" in args or "--gepjatek" in args or "--minijatek" in args
 	L.dry = _dry
 	for a in args:
 		if _dry and a.begins_with("--aicim="):      # próba: felhős szolgáltató ál-kiszolgálóval
@@ -475,7 +475,7 @@ func _ready() -> void:
 		_own_probe()
 	elif not _dry and bool(L.get_setting("orszag_ai", false)):      # ha a játékos bekapcsolva hagyta, induláskor megkeressük a saját AI-t
 		_own_probe()
-	if _test or "--intro-kepek" in args or "--elojatek" in args or "--majom" in args or "--gepjatek" in args:
+	if _test or "--intro-kepek" in args or "--elojatek" in args or "--majom" in args or "--gepjatek" in args or "--minijatek" in args:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)   # az ellenőrző futások ablakban mennek
 	var bg := TextureRect.new()
 	bg.texture = load("res://assets/nebula_bg.png")
@@ -515,6 +515,22 @@ func _ready() -> void:
 	_refresh()
 	if "--bejaras" in args:
 		_walkthrough()
+		return
+	if "--minijatek" in args:      # próba: a Jégfurat minijáték magától lefut, képek az öntesztmappába
+		var mi = (load("res://scripts/mini_ice.gd") as GDScript).new()
+		mi.auto = true
+		add_child(mi)
+		var mdir := OS.get_user_data_dir().path_join("aether_onteszt")
+		DirAccess.make_dir_recursive_absolute(mdir)
+		var k := 0
+		while mi.done_t < 4.0 and k < 40:
+			await get_tree().create_timer(6.0).timeout
+			k += 1
+			if mi.done_t < 0.0:
+				get_viewport().get_texture().get_image().save_png(mdir.path_join("mini_jeg_%d.png" % k))
+		get_viewport().get_texture().get_image().save_png(mdir.path_join("mini_jeg_vege.png"))
+		print("MINIJATEK kész: pontok=%d ma=%.1f mélység=%.2f" % [mi.pts.size(), mi.today, mi.depth])
+		get_tree().quit()
 		return
 	if "--elojatek" in args:
 		_live_play()
@@ -1947,6 +1963,16 @@ func _do_research(id: String, th: String) -> void:
 		_open_card(id, true)
 
 
+## Minijátékok: kártya -> [név, a jelenet szkriptje]. A minijáték valódi adatból rajzol; a menete játékszabály.
+const MINI := {"jegfurat": ["Jégfurat", "res://scripts/mini_ice.gd"]}
+
+func _open_mini(id: String) -> void:
+	var mi = (load(str(MINI[id][1])) as GDScript).new()
+	add_child(mi)
+	await mi.finished
+	mi.queue_free()
+
+
 func _open_card(id: String, fresh: bool = false) -> void:
 	var th := Cards.theme_of(id)
 	var body := _open(L.t("Új bizonyíték-kártya") if fresh else L.t("Bizonyíték-kártya"), _theme_color(th) if th != "" else UI.GOLD)
@@ -1965,6 +1991,8 @@ func _open_card(id: String, fresh: bool = false) -> void:
 	ql.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	qrow.add_child(ql)
 	body.add_child(qrow)
+	if MINI.has(id) and not _test:      # a kártyához tartozó minijáték: kihagyható, jutalom nincs (csak a tudás)
+		body.add_child(_go("▶ " + L.t("Minijáték: %s") % L.t(str(MINI[id][0])), _open_mini.bind(id), false))
 	var chips := UI.hbox(8)
 	if th != "":
 		chips.add_child(Icons.rect(th, _theme_color(th), 36))

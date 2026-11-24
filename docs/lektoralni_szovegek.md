@@ -590,7 +590,7 @@ A négy választógomb felirata név, nem fordítjuk: Ollama, Claude, ChatGPT, G
 - A szolgáltató nem fogadta el ezt a kulcsot.
 - A szolgáltató most nem enged több kérést. Próbáld meg később!
 
-## 15. rész – még nem lektorált (2026-11-24 este)
+## 15. Új szövegek (2026-11-24 este, lektorálva)
 
 A CO2-kivonás ablakában és a naplóban:
 
@@ -598,4 +598,18 @@ A CO2-kivonás ablakában és a naplóban:
 - Tíz év után bővítheted.
 - Bővítve: évi %s milliárd tonna.
 - Bővített CO2-kivonás
-- Tíz éve fut: bővítem a CO2-kivonást. (ezt az Okos gép mondja, ha tanácsot kérsz tőle)
+- Tíz éve fut: bővítem a CO2-kivonást.
+
+## 16. rész – még nem lektorált (2026-11-24, 21:10)
+
+### Minijáték: Jégfurat (a %s helyére szám kerül, a %d helyére évszám)
+
+- Minijáték: %s
+- Jégfurat
+- Tartsd nyomva a szóközt, és fúrj le a jégbe! Ha a fúró felforrósodik, engedd el.
+- %s ezer éve: %s ppm
+- ezer éve
+- 800 ezer évig a levegő CO2-tartalma %s és %s ppm között maradt.
+- %d-ben: %s ppm.
+- Adat: %s
+- NOAA Global Monitoring Laboratory (2026); EPA (2022) – Our World in Data feldolgozásában
