@@ -225,7 +225,7 @@ static func methane_record(g: Dictionary) -> String:
 static func prompt_methane(w, g: Dictionary, cards: Array, en: bool = true) -> Array:
 	var l := _brief(w, g)
 	l.append("THE REQUEST")
-	l.append("The mediator asks you to promise a 30% cut in your methane emissions. " + methane_record(g) + " Evidence they showed you:")
+	l.append("The mediator asks you to promise a 30% cut in your methane emissions. This comes in addition to any promise about zero emissions, not instead of it. " + methane_record(g) + " Evidence they showed you:")
 	_evidence(l, cards)
 	_menu(l, methane_options())
 	return [{"role": "system", "content": _system(w, g, _reply(en))}, {"role": "user", "content": "\n".join(l)}]
@@ -264,6 +264,26 @@ static func prompt_summit(w, g: Dictionary, card: String, en: bool = true) -> Ar
 
 static func parse_summit(g: Dictionary, content: String) -> Dictionary:
 	return _pick(summit_options(g), content)
+
+
+## Megingás: az elbizonytalanodott vezetés maga dönt, kitart-e, vagy tíz évvel későbbre tolja a célját (a játékszabály szerinti visszalépés).
+static func waver_options(g: Dictionary) -> Array:
+	var now := int(g["cel"])
+	var later := mini(now + 10, maxi(now, 2090))
+	return [{"dontes": "hold", "cel": now, "en": "Stand by your promise of zero emissions by %d." % now},
+		{"dontes": "delay", "cel": later, "en": "Push your promise back to %d.%s" % [later, _vs(g, later)]}]
+
+
+static func prompt_waver(w, g: Dictionary, en: bool = true) -> Array:
+	var l := _brief(w, g)
+	l.append("DOUBTS AT HOME")
+	l.append("In the last five years doubts about your promise have grown at home, and the mediator has not come back to you with new evidence. Five years are about to pass.")
+	_menu(l, waver_options(g))
+	return [{"role": "system", "content": _system(w, g, _reply(en))}, {"role": "user", "content": "\n".join(l)}]
+
+
+static func parse_waver(g: Dictionary, content: String) -> Dictionary:
+	return _pick(waver_options(g), content)
 
 
 static func prompt_round(w, g: Dictionary, en: bool = true) -> Array:

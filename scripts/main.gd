@@ -2630,7 +2630,7 @@ func _add_own_ai(body: VBoxContainer) -> void:
 	if p == "ollama":
 		c.add_child(UI.label(L.t("A gépeden futó nyelvi modell (Ollama) dönt a lépésekről, és a saját szavaival indokol. Ha nem ad szabályos lépést, az Okos gép lép helyette."), 16, UI.SOFT))
 	else:
-		c.add_child(UI.label(L.t("A %s dönt a lépésekről, és a saját szavaival indokol. Ehhez saját kulcs kell a szolgáltatótól, és a használatért ő pénzt kérhet.") % str(AI_NAMES[p]), 16, UI.SOFT))
+		c.add_child(UI.label(L.t("%s dönt a lépésekről, és a saját szavaival indokol. Ehhez saját kulcs kell a szolgáltatótól, és a használatért ő pénzt kérhet.") % str(AI_NAMES[p]), 16, UI.SOFT))
 		c.add_child(UI.label(L.t("A játék csak a játék állását és az országok adatait küldi el neki, rólad semmit. A kulcs csak ezen a gépen marad."), 15, UI.MUTE))
 		if _ai_key(p) == "":
 			var key_row := UI.hbox(6)
@@ -2665,7 +2665,7 @@ func _add_own_ai(body: VBoxContainer) -> void:
 	if not is_instance_valid(status):
 		return
 	if model == "":
-		status.text = L.t("Most nem fut AI ezen a gépen. Indítsd el az Ollamát, aztán nyisd meg újra ezt az ablakot!") if p == "ollama" else L.t("Nem sikerült kapcsolódni. Nézd meg a kulcsot és az internetet!")
+		status.text = L.t("Most nem fut AI ezen a gépen. Indítsd el az Ollamát, aztán nyisd meg újra ezt az ablakot!") if p == "ollama" else L.t("Nem sikerült kapcsolódni. Ellenőrizd a kulcsot és az internetkapcsolatot!")
 	else:
 		status.text = L.t("Megvan: %s") % model
 		go.disabled = false
@@ -2807,15 +2807,35 @@ func _nation_summit(card: String, status: Label = null) -> Dictionary:
 
 
 ## Kör végén egy AI-ország (körönként más) magától is léphet. Vissza: hírek a körváltás ablakába.
+var _waver_said := {}
+
+
 func _nation_round() -> Array:
-	var g: Dictionary = world.groups[world.round_i % world.groups.size()]
-	if World.fraction(g, world.year()) <= 0.0:
-		return []
+	var news: Array = []
+	_waver_said = {}
 	world.ai = true
+	var doubted: Array = []
+	for wg in world.groups:          # az elbizonytalanodott vezetés maga dönt: kitart, vagy visszalép (ha nem felel szabályosan, az alapszabály él)
+		if wg.get("inog", false) and int(wg["cel"]) > 0 and not wg.get("felkeszult", false) and World.fraction(wg, world.year()) > 0.0:
+			doubted.append(wg["id"])
+			var wd: Dictionary = Nation.parse_waver(wg, await _own_chat(Nation.prompt_waver(world, wg, L.is_en()), 45.0))
+			if wd.is_empty():
+				_nat["hiba"] += 1
+				continue
+			_nat[wd["dontes"]] = int(_nat.get(wd["dontes"], 0)) + 1
+			if _dry:
+				print("ORSZAG_INOG %s %s" % [str(wg["id"]), str(wd["dontes"])])
+			if wd["dontes"] == "hold" and world.hold(wg):
+				news.append({"fajta": "kitart", "csoport": wg["id"], "cel": int(wg["cel"]), "szoveg": wd["szoveg"]})
+			else:
+				_waver_said[wg["id"]] = str(wd["szoveg"])
+	var g: Dictionary = world.groups[world.round_i % world.groups.size()]
+	if World.fraction(g, world.year()) <= 0.0 or g["id"] in doubted:
+		return news
 	var out: Dictionary = Nation.parse_round(world, g, await _own_chat(Nation.prompt_round(world, g, L.is_en()), 45.0))
 	if out.is_empty():
 		_nat["hiba"] += 1
-		return []
+		return news
 	var t := 0
 	if out["dontes"] == "earlier":
 		t = world.volunteer(g, int(out.get("cel", 0)))
@@ -2825,8 +2845,9 @@ func _nation_round() -> Array:
 	if _dry:
 		print("ORSZAG_KOR %s %s %d" % [str(g["id"]), str(out["dontes"]), t])
 	if t == 0:
-		return []
-	return [{"fajta": "onkent" if out["dontes"] == "earlier" else "halaszt", "csoport": g["id"], "cel": t, "szoveg": out["szoveg"]}]
+		return news
+	news.append({"fajta": "onkent" if out["dontes"] == "earlier" else "halaszt", "csoport": g["id"], "cel": t, "szoveg": out["szoveg"]})
+	return news
 
 
 func _mood_line(g: Dictionary) -> String:
@@ -3248,10 +3269,10 @@ func _open_news(y0: int, t0: float) -> void:
 				c.add_child(UI.label(L.t("Átlépte a küszöbértéket: %s (%d)") % [L.field(tp, "nev"), int(n["ev"])], 19, UI.EMBER, true))
 				c.add_child(UI.label(L.t("Ha a melegedés tartósan e fölött marad, a változás lassan, de megállíthatatlanul végbemegy. A küszöböt a tudomány csak sávként ismeri (%s és %s °C között); a játék ebből sorsolt egyet.") % [L.num(float(tp["also"]), 1), L.num(float(tp["felso"]), 1)], 16, UI.TEXT))
 				body.add_child(UI.card_root(c))
-			"onkent", "halaszt":
-				var own_ok: bool = n["fajta"] == "onkent"
+			"onkent", "halaszt", "kitart":
+				var own_ok: bool = n["fajta"] != "halaszt"
 				var c9 := UI.card(UI.GREEN if own_ok else UI.GOLD)
-				c9.add_child(UI.label(L.rag(L.t("%s magától vállalta: nulla kibocsátás %d-re." if own_ok else "%s elhalasztotta a célját: %d.") % [L.field(world.group(n["csoport"]), "nev"), int(n["cel"])]), 18, UI.GREEN if own_ok else UI.GOLD, true))
+				c9.add_child(UI.label(L.rag(L.t("%s kitartott a célja mellett: %d." if n["fajta"] == "kitart" else ("%s magától vállalta: nulla kibocsátás %d-re." if own_ok else "%s elhalasztotta a célját: %d.")) % [L.field(world.group(n["csoport"]), "nev"), int(n["cel"])]), 18, UI.GREEN if own_ok else UI.GOLD, true))
 				if str(n.get("szoveg", "")) != "":
 					c9.add_child(UI.label(_quote(str(n["szoveg"])), 16, UI.SOFT))
 				body.add_child(UI.card_root(c9))
@@ -3259,6 +3280,8 @@ func _open_news(y0: int, t0: float) -> void:
 				var c2 := UI.card(UI.GOLD)
 				c2.add_child(UI.label(L.rag(L.t("%s megingott: a célját %d-re tolta.") % [L.field(world.group(n["csoport"]), "nev"), int(n["cel"])]), 18, UI.GOLD, true))
 				c2.add_child(UI.label(L.t("Nem erősítetted meg őket időben."), 16, UI.SOFT))
+				if str(_waver_said.get(n["csoport"], "")) != "":
+					c2.add_child(UI.label(_quote(str(_waver_said[n["csoport"]])), 16, UI.SOFT))
 				body.add_child(UI.card_root(c2))
 			"nulla":
 				var c6 := UI.card(UI.GREEN)
@@ -3691,6 +3714,10 @@ func _add_story(body: VBoxContainer) -> void:
 				lane = 2
 			"onkent":
 				line = L.rag(L.t("%s magától vállalta: nulla kibocsátás %d-re.") % [L.field(world.group(e["csoport"]), "nev"), int(e["cel"])])
+				lc = UI.GREEN
+				lane = 1
+			"kitart":
+				line = L.rag(L.t("%s kitartott a célja mellett: %d.") % [L.field(world.group(e["csoport"]), "nev"), int(e["cel"])])
 				lc = UI.GREEN
 				lane = 1
 			"halaszt":

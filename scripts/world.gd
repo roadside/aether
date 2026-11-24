@@ -393,6 +393,15 @@ func rebuff(g: Dictionary, target: int) -> bool:
 	return true
 
 
+## AI-országok: az elbizonytalanodott vezetés úgy dönt, hogy kitart a célja mellett (nem lép vissza a kör végén).
+func hold(g: Dictionary) -> bool:
+	if not g.get("inog", false) or over():
+		return false
+	g["inog"] = false
+	naplo.append({"ev": year(), "fajta": "kitart", "csoport": g["id"], "cel": g["cel"]})
+	return true
+
+
 ## AI-országok saját lépése (játékszabály): a vezetés magától vállalja a következő fokozatot. Vissza: az új célév, vagy 0.
 func volunteer(g: Dictionary, target: int = 0) -> int:
 	var ts := targets_for(g)
