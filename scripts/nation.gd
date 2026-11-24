@@ -195,13 +195,44 @@ static func prompt(w, g: Dictionary, target: int, cards: Array, en: bool = true)
 	var l := _brief(w, g)
 	l.append("THE REQUEST")
 	l.append("The mediator asks you to promise zero emissions by %d. Evidence they showed you:" % target)
+	_evidence(l, cards)
+	_menu(l, options(w, g, target))
+	return [{"role": "system", "content": _system(w, g, _reply(en))}, {"role": "user", "content": "\n".join(l)}]
+
+
+static func _evidence(l: Array, cards: Array) -> void:
 	for c in cards:
 		l.append("- %s %s" % [Cards.text(str(c), "Kérdés", true), Cards.text(str(c), "Röviden", true)])
 		for k in ["Mire jó?", "Mi a gond vele?"]:
 			if Cards.text(str(c), k, true) != "":
 				l.append("  %s" % Cards.text(str(c), k, true))
-	_menu(l, options(w, g, target))
+
+
+## Metánvállalás: a vezetés elfogadja vagy nem. A valós helyzet a csoportok adatfájljából jön (Global Methane Pledge résztvevői).
+static func methane_options() -> Array:
+	return [{"dontes": "accept", "cel": 0, "en": "Promise to cut your methane emissions by 30%."},
+		{"dontes": "refuse", "cel": 0, "en": "Make no methane promise now."}]
+
+
+static func methane_record(g: Dictionary) -> String:
+	var src := " (globalmethanepledge.org, participants checked on 2026-11-23)"
+	match str(g["id"]):
+		"afrika": return "Africa has no single position on the Global Methane Pledge; Nigeria has joined it" + src + "."
+		"olaj": return "Russia has not joined the Global Methane Pledge" + src + "."
+	return "As of 2026 you %s the Global Methane Pledge%s." % ["have joined" if bool(g.get("metan_valodi", true)) else "have not joined", src]
+
+
+static func prompt_methane(w, g: Dictionary, cards: Array, en: bool = true) -> Array:
+	var l := _brief(w, g)
+	l.append("THE REQUEST")
+	l.append("The mediator asks you to promise a 30% cut in your methane emissions. " + methane_record(g) + " Evidence they showed you:")
+	_evidence(l, cards)
+	_menu(l, methane_options())
 	return [{"role": "system", "content": _system(w, g, _reply(en))}, {"role": "user", "content": "\n".join(l)}]
+
+
+static func parse_methane(content: String) -> Dictionary:
+	return _pick(methane_options(), content)
 
 
 ## JSON olvasása hibaüzenet nélkül (a nyelvi modell válasza gyakran nem szabályos JSON; ez nem a játék hibája).

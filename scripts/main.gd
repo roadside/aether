@@ -2213,22 +2213,24 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 	ok.pressed.connect(func() -> void:
 		var done := false
 		var before := float(world.forecast()["kozep"][-1][1])
-		if ask["fajta"] == "cel" and _nation_on():       # AI-országok: a vezetés maga dönt
+		if ask["fajta"] in ["cel", "metan"] and _nation_on():       # AI-országok: a vezetés maga dönt
+			var met: bool = ask["fajta"] == "metan"
 			ok.disabled = true
 			ok.text = L.t("%s vezetői gondolkodnak…") % L.field(g, "nev")
 			var game0 := world.game_id
-			var nd: Dictionary = await _nation_decide(g, int(ask["cel"]), picked)
+			var nd: Dictionary = await _nation_decide(g, 0 if met else int(ask["cel"]), picked, met)
 			if world.game_id != game0:
 				return
 			if nd["dontes"] == "refuse":
-				world.rebuff(g, int(ask["cel"]))
+				world.rebuff(g, 0 if met else int(ask["cel"]))
 				_refresh()
 				_save()
 				_nation_no(g, nd)
 				return
-			ask["cel"] = int(nd["cel"])
-			while picked.size() > world.cards_needed(g, int(ask["cel"])):
-				picked.pop_back()
+			if not met:
+				ask["cel"] = int(nd["cel"])
+				while picked.size() > world.cards_needed(g, int(ask["cel"])):
+					picked.pop_back()
 			_nation_said = str(nd["szoveg"])
 		if ask["fajta"] == "megerosites":
 			ask["kartya"] = picked[0]
@@ -2767,9 +2769,13 @@ func _nation_on() -> bool:
 	return bool(L.get_setting("orszag_ai", false)) and _own_model != ""
 
 
-func _nation_decide(g: Dictionary, target: int, cards: Array) -> Dictionary:
+func _nation_decide(g: Dictionary, target: int, cards: Array, methane: bool = false) -> Dictionary:
 	world.ai = true
-	var out: Dictionary = Nation.parse(world, g, target, await _own_chat(Nation.prompt(world, g, target, cards, L.is_en())))
+	var out: Dictionary
+	if methane:
+		out = Nation.parse_methane(await _own_chat(Nation.prompt_methane(world, g, cards, L.is_en())))
+	else:
+		out = Nation.parse(world, g, target, await _own_chat(Nation.prompt(world, g, target, cards, L.is_en())))
 	if out.is_empty():                 # a modell nem adott szabályos választ: az alapjáték szabálya dönt (elfogadják)
 		_nat["hiba"] += 1
 		return {"dontes": "accept", "cel": target, "szoveg": L.t("A saját AI most nem válaszolt, ezért az alapszabály döntött.")}
@@ -2965,14 +2971,16 @@ func _auto_loop() -> void:
 		else:
 			_agent.offers = _offers
 			var refused := false
-			if a["type"] == "negotiate" and _nation_on():
+			if a["type"] in ["negotiate", "methane"] and _nation_on():
 				var ng: Dictionary = world.group(gid)
-				var nt := int(a["target"])
-				var nd: Dictionary = await _nation_decide(ng, nt, world.usable(ng).slice(0, world.cards_needed(ng, nt)))
+				var met: bool = a["type"] == "methane"
+				var nt := 0 if met else int(a["target"])
+				var nd: Dictionary = await _nation_decide(ng, nt, world.methane_cards(ng).slice(0, world.methane_needed(ng)) if met else world.usable(ng).slice(0, world.cards_needed(ng, nt)), met)
 				if _auto == "" or run != _auto_run or world.game_id != game or not is_inside_tree():
 					return
-				a["target"] = int(nd["cel"])
-				a.erase("cards")
+				if not met:
+					a["target"] = int(nd["cel"])
+					a.erase("cards")
 				refused = nd["dontes"] == "refuse"
 				if refused:
 					world.rebuff(ng, nt)

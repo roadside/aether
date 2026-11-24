@@ -20,5 +20,6 @@ func _init() -> void:
 		var t := int(ts[1])          # a második fokozat (30 év): így van későbbi vállalható év is
 		var lines := func(opts: Array) -> Array: return opts.map(func(o: Dictionary) -> String: return str(o["en"]))
 		print("ORSZAGKERES " + JSON.stringify({"csoport": g["id"], "fajta": "keres", "cel": t, "hangulat": Nation.mood(w, g), "lehetosegek": lines.call(Nation.options(w, g, t)), "uzenetek": Nation.prompt(w, g, t, cards, en)}))
+		print("ORSZAGKERES " + JSON.stringify({"csoport": g["id"], "fajta": "metan", "hangulat": Nation.mood(w, g), "lehetosegek": lines.call(Nation.methane_options()), "uzenetek": Nation.prompt_methane(w, g, [], en)}))
 		print("ORSZAGKERES " + JSON.stringify({"csoport": g["id"], "fajta": "sajat_lepes", "hangulat": Nation.mood(w, g), "lehetosegek": lines.call(Nation.round_options(w, g)), "uzenetek": Nation.prompt_round(w, g, en)}))
 	quit()
