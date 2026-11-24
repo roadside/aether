@@ -54,6 +54,7 @@ var streak_bonus := false        # a legutóbbi megállapodás lendületből lé
 var myth: Dictionary = {}         # terjedő tévhit: {"csoport", "kartya"} – a kártya a cáfolata (játékszabály)
 var gentle := false              # az első játék: a nehezítések később és ritkábban jönnek (a felület állítja be)
 var myths_seen: Array = []        # ebben a játékban már előkerült tévhitek (kártyaazonosítók)
+var ai := false                  # ebben a játékban gép is lépett (ilyenkor a játék nem számít bele a gyűjteménybe és a jelvényekbe)
 var challenge := 0               # kihívás-lépcső: 0–5, szintenként egy új nehezítés (játékszabály)
 var data: Dictionary = {}
 
@@ -81,6 +82,7 @@ func new_game(seed_value: int = -1, steps_n: int = STEPS, challenge_n: int = 0) 
 	myth = {}
 	myths_seen = []
 	gentle = false
+	ai = false
 	streak = 0
 	streak_bonus = false
 	data = read_json("res://adatok/csoportok.json")
@@ -797,7 +799,7 @@ func what_if(delay: int) -> float:
 func to_dict() -> Dictionary:
 	return {"v": SAVE_VERSION, "mag": seed_v, "jatek": game_id, "sens": sens, "st": st, "alap": _base, "kor": round_i, "lepes": steps, "max_lepes": max_steps, "csoportok": groups, "kez": hand,
 		"kivonas": cdr, "billenes": tips, "mult": history, "alap_mult": base_history, "hirek": news, "naplo": naplo, "hajto": hajto, "kuldetes": missions, "csucs": summit_due, "dontes": dilemma, "vilag_nulla": net_zero_year, "kivont": cdr_total, "rng": str(rng.state),
-		"veszely": threat, "sorozat": streak, "kihivas": challenge, "tevhit": myth, "tevhitek": myths_seen, "szelid": gentle}
+		"veszely": threat, "sorozat": streak, "kihivas": challenge, "tevhit": myth, "tevhitek": myths_seen, "szelid": gentle, "gep": ai}
 
 
 func from_dict(d: Dictionary) -> bool:
@@ -818,6 +820,7 @@ func from_dict(d: Dictionary) -> bool:
 	myth = d.get("tevhit", {})
 	myths_seen = d.get("tevhitek", [])
 	gentle = bool(d.get("szelid", false))
+	ai = bool(d.get("gep", false))
 	streak = int(d.get("sorozat", 0))
 	streak_bonus = false
 	challenge = int(d.get("kihivas", 0))
