@@ -2224,7 +2224,8 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 			if world.game_id != game0:
 				return
 			if nd["dontes"] == "refuse":
-				world.rebuff(g, 0 if met else int(ask["cel"]))
+				if world.rebuff(g, 0 if met else int(ask["cel"])):
+					_said_log(str(nd["szoveg"]))
 				_refresh()
 				_save()
 				_nation_no(g, nd)
@@ -2812,6 +2813,12 @@ func _nation_summit(card: String, status: Label = null) -> Dictionary:
 	return out
 
 
+## A vezetés saját mondata a napló utolsó bejegyzéséhez kerül, így a játék végi történetben is olvasható.
+func _said_log(text: String) -> void:
+	if text != "" and not world.naplo.is_empty():
+		world.naplo[-1]["szo"] = text
+
+
 ## Kör végén egy AI-ország (körönként más) magától is léphet. Vissza: hírek a körváltás ablakába.
 var _waver_said := {}
 
@@ -2832,6 +2839,7 @@ func _nation_round() -> Array:
 			if _dry:
 				print("ORSZAG_INOG %s %s" % [str(wg["id"]), str(wd["dontes"])])
 			if wd["dontes"] == "hold" and world.hold(wg):
+				_said_log(str(wd["szoveg"]))
 				news.append({"fajta": "kitart", "csoport": wg["id"], "cel": int(wg["cel"]), "szoveg": wd["szoveg"]})
 			else:
 				_waver_said[wg["id"]] = str(wd["szoveg"])
@@ -2847,6 +2855,8 @@ func _nation_round() -> Array:
 		t = world.volunteer(g, int(out.get("cel", 0)))
 	elif out["dontes"] == "delay":
 		t = world.postpone(g)
+	if t != 0:
+		_said_log(str(out["szoveg"]))
 	_nat[out["dontes"]] = int(_nat.get(out["dontes"], 0)) + 1
 	if _dry:
 		print("ORSZAG_KOR %s %s %d" % [str(g["id"]), str(out["dontes"]), t])
@@ -3031,7 +3041,8 @@ func _auto_loop() -> void:
 					a.erase("cards")
 				refused = nd["dontes"] == "refuse"
 				if refused:
-					world.rebuff(ng, nt)
+					if world.rebuff(ng, nt):
+						_said_log(str(nd["szoveg"]))
 					_sound("megingas")
 				_auto_lbl.text = "%s: %s" % [L.field(ng, "nev"), str(nd["szoveg"]) if str(nd["szoveg"]) != "" else (L.t("%s most nemet mondott.") % L.field(ng, "nev"))]
 				await _auto_wait(AUTO_THINK)
@@ -3746,6 +3757,8 @@ func _add_story(body: VBoxContainer) -> void:
 					lc = UI.EMBER
 					lane = 2
 					mark = Color("#ff6a4a")
+		if line != "" and str(e.get("szo", "")) != "":
+			line += " " + _quote(str(e["szo"]))
 		if line != "":
 			lines.append({"ev": int(e["ev"]), "szoveg": line, "szin": lc, "jel": mark, "sav": lane})
 	var sl := StoryLine.new()
