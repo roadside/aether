@@ -330,4 +330,11 @@ const EN := {
 	"Most nincs jó lépésem. Jöhet a következő öt év.": "I have no good move now. On to the next five years.",
 	"Tanács a géptől": "Advice from the machine",
 	"Az Okos gép ezt lépné": "The Smart machine would do this",
+	"A gépeden futó nyelvi modell (Ollama) dönt a lépésekről, és a saját szavaival indokol. Ha nem ad szabályos lépést, az Okos gép lép helyette.": "A language model running on your computer (Ollama) decides the moves and explains them in its own words. If it gives no legal move, the Smart machine moves instead.",
+	"Keresem a gépeden futó AI-t…": "Looking for an AI running on your computer…",
+	"Most nem fut AI ezen a gépen. Indítsd el az Ollamát, aztán nyisd meg újra ezt az ablakot!": "No AI is running on this computer now. Start Ollama, then open this window again!",
+	"Megvan: %s": "Found: %s",
+	"Ezt a lépést választottam.": "I chose this move.",
+	"a saját AI most nem adott szabályos lépést": "your own AI gave no legal move this time",
+	"gondolkodik…": "thinking…",
 }

@@ -2365,6 +2365,8 @@ func _open_cdr() -> void:
 const AUTO_NAMES := {"kezdo": "Kezdő gép", "atlagos": "Átlagos gép", "okos": "Okos gép", "sajat": "Saját AI"}
 const AUTO_INFO := {"kezdo": "Mindig a legkönnyebb célt kéri.", "atlagos": "Véletlen sorrendben halad, metáncsökkentést is kér.",
 	"okos": "A legnagyobb kibocsátókkal kezd, és a legmerészebb célt kéri."}
+const TOPIC_EN := {"aram": "electricity", "munka": "industry and transport", "elelem": "food", "part": "sea and coast", "egeszseg": "health",
+	"ketseg": "how do we know", "olaj": "oil and gas", "erdo": "forest and land", "kockazat": "risky ideas"}
 const AUTO_THINK := 1.7            # ennyi ideig látszik az indoklás, mielőtt a gép lép
 const AUTO_READ := 3.2             # ennyi ideig marad nyitva egy ablak (hírek), mielőtt a gép továbblép
 
@@ -2394,8 +2396,131 @@ func _open_auto() -> void:
 	body.add_child(UI.label(L.t("A gép által játszott játék nem számít bele a gyűjteményedbe és a jelvényeidbe."), 14, UI.MUTE))
 
 
-func _add_own_ai(_body: VBoxContainer) -> void:
-	pass
+## Saját AI: a játékos gépén futó nyelvi modell (Ollama). A kérés csak a beállított címre megy (alapból ez a gép).
+var _own_model := ""
+var _own_fail := 0                 # hányszor nem adott szabályos lépést (a próba kiírja)
+var _own_ok := 0
+
+
+func _own_url() -> String:
+	return str(L.get_setting("ai_cim", "http://127.0.0.1:11434")).trim_suffix("/")
+
+
+func _http_json(url: String, payload: Variant = null, timeout_s: float = 90.0) -> Variant:
+	var req := HTTPRequest.new()
+	req.timeout = timeout_s
+	add_child(req)
+	var err := req.request(url, ["Content-Type: application/json"], HTTPClient.METHOD_GET if payload == null else HTTPClient.METHOD_POST,
+		"" if payload == null else JSON.stringify(payload))
+	if err != OK:
+		req.queue_free()
+		return null
+	var res: Array = await req.request_completed
+	req.queue_free()
+	if int(res[0]) != HTTPRequest.RESULT_SUCCESS or int(res[1]) != 200:
+		return null
+	return JSON.parse_string((res[3] as PackedByteArray).get_string_from_utf8())
+
+
+func _own_probe() -> String:
+	var tags: Variant = await _http_json(_own_url() + "/api/tags", null, 4.0)
+	_own_model = ""
+	if typeof(tags) == TYPE_DICTIONARY and typeof(tags.get("models")) == TYPE_ARRAY:
+		var want := str(L.get_setting("ai_modell", ""))
+		for m in tags["models"]:
+			var nm := str((m as Dictionary).get("name", ""))
+			if _own_model == "" or nm == want:
+				_own_model = nm
+	return _own_model
+
+
+func _add_own_ai(body: VBoxContainer) -> void:
+	var c := UI.card(UI.GOLD)
+	c.add_child(UI.label(L.t("A gépeden futó nyelvi modell (Ollama) dönt a lépésekről, és a saját szavaival indokol. Ha nem ad szabályos lépést, az Okos gép lép helyette."), 16, UI.SOFT))
+	var status := UI.label(L.t("Keresem a gépeden futó AI-t…"), 15, UI.MUTE)
+	c.add_child(status)
+	var go := _go(L.t(AUTO_NAMES["sajat"]) + " →", _auto_start.bind("sajat"), false)
+	go.disabled = true
+	c.add_child(go)
+	body.add_child(UI.card_root(c))
+	var model: String = await _own_probe()
+	if not is_instance_valid(status):
+		return
+	if model == "":
+		status.text = L.t("Most nem fut AI ezen a gépen. Indítsd el az Ollamát, aztán nyisd meg újra ezt az ablakot!")
+	else:
+		status.text = L.t("Megvan: %s") % model
+		go.disabled = false
+
+
+## A lépés egy sorban, a nyelvi modellnek (nem a képernyőre kerül, ezért angolul: a modellek így értik a legjobban).
+func _move_line(a: Dictionary) -> String:
+	var g: Dictionary = world.group(str(a.get("group", ""))) if a.has("group") else {}
+	var gn := str(g.get("nev_en", g.get("nev", ""))) if not g.is_empty() else ""
+	match str(a["type"]):
+		"research": return "Research (costs 1 move): %s [topic: %s]" % [Cards.text(str(a["card"]), "Kérdés", true), str(TOPIC_EN.get(str(a["theme"]), a["theme"]))]
+		"negotiate": return "Ask %s for zero emissions by %d (uses %d card(s), changes 2100 warming by %.2f C)" % [gn, int(a["target"]), int(a["cards_needed"]), float(a["cooling"])]
+		"methane": return "Ask %s for a 30%% methane cut (changes 2100 warming by %.2f C)" % [gn, float(a["cooling"])]
+		"prepare": return "Help %s prepare for disasters (they will never waver again)" % gn
+		"reassure": return "Reassure %s, who has become unsure (otherwise they delay their target)" % gn
+		"refute": return "Refute the myth spreading in %s" % gn
+		"cdr": return "Start CO2 removal: %s" % str(a["id"])
+		"summit": return "Climate summit: show the card '%s' (%d groups bring their target 5 years forward, free)" % [Cards.text(str(a["card"]), "Kérdés", true), int(a["listeners"])]
+		"skip_summit": return "Climate summit: show nothing"
+		"dilemma":
+			var d: Dictionary = world.dilemma
+			if d.get("fajta", "") == "kviz":
+				return "Quiz answer: the card '%s'" % Cards.text(str(d["valasz"][int(a["choice"])]), "Kérdés", true)
+			if d.get("fajta", "") == "tamogatas":
+				return "Grant: one extra move this round" if int(a["choice"]) == 0 else "Grant: one group becomes prepared at once"
+			return "Visit %s (they need one card fewer now)" % str(world.group(str(d["a" if int(a["choice"]) == 0 else "b"])).get("nev_en", ""))
+		"end_round": return "End the round: five years pass"
+	return str(a["type"])
+
+
+func _own_prompt(acts: Array) -> Array:
+	var ob: Dictionary = _agent.observe(false)
+	var lines: Array = ["Year %d, round %d of 15. Moves left this round: %d." % [int(ob["year"]), int(ob["round"]), int(ob["steps"])],
+		"Warming now: +%.2f C. Forecast for 2100 with today's promises: +%.2f C (range %.1f to %.1f)." % [float(ob["warming_now"]), float(ob["forecast_2100"]["mid"]), float(ob["forecast_2100"]["low"]), float(ob["forecast_2100"]["high"])],
+		"You hold %d evidence cards. Groups:" % (ob["hand"] as Array).size()]
+	for g in world.groups:
+		lines.append("- %s: %d%% of world CO2, %s%s%s, convinced only by cards on: %s; cards of yours that speak to them: %d" % [str(g.get("nev_en", g["nev"])), int(round(float(g["co2_resz"]) * 100.0)),
+			("promised zero by %d" % int(g["cel"])) if int(g["cel"]) > 0 else "no promise yet", ", UNSURE" if g.get("inog", false) else "",
+			", prepared" if g.get("felkeszult", false) else "", ", ".join((g["felelmek"] as Array).map(func(th: String) -> String: return str(TOPIC_EN.get(th, th)))), world.usable(g).size()])
+	if world.dilemma.get("fajta", "") == "kviz":
+		var k := Cards.key_number(str(world.dilemma["id"]))
+		lines.append("Quiz: which of your cards says this? \"%s\"" % str(k.get("en", k.get("hu", ""))))
+	lines.append("Legal moves:")
+	for i in acts.size():
+		lines.append("%d. %s" % [i + 1, _move_line(acts[i])])
+	var lang := "English" if L.is_en() else "Hungarian"
+	var sys := "You play AETHER, a climate strategy game. Goal: keep global warming in 2100 as low as possible (well below 2 C). " \
+		+ "Each round is five years. Research gives evidence cards; cards convince country groups to promise zero emissions; earlier targets and bigger emitters matter most. " \
+		+ "Pick exactly one of the numbered legal moves. Reply with JSON only: {\"move\": <number>, \"why\": \"<one short sentence in %s for a 13-year-old>\"}" % lang
+	return [{"role": "system", "content": sys}, {"role": "user", "content": "\n".join(lines)}]
+
+
+func _own_decide() -> Dictionary:
+	if _own_model == "":
+		await _own_probe()
+	var acts: Array = _agent.actions()
+	if _own_model != "" and not acts.is_empty():
+		var reply: Variant = await _http_json(_own_url() + "/api/chat", {"model": _own_model, "stream": false, "format": "json",
+			"options": {"temperature": 0.2}, "messages": _own_prompt(acts)})
+		if typeof(reply) == TYPE_DICTIONARY and typeof(reply.get("message")) == TYPE_DICTIONARY:
+			var ans: Variant = JSON.parse_string(str(reply["message"].get("content", "")))
+			if typeof(ans) == TYPE_DICTIONARY and str(ans.get("move", "")).is_valid_float():
+				var n := int(float(str(ans["move"])))
+				if n >= 1 and n <= acts.size():
+					var a: Dictionary = (acts[n - 1] as Dictionary).duplicate()
+					var why := str(ans.get("why", "")).strip_edges().replace("\n", " ")
+					a["szoveg"] = why.left(150) if why != "" else L.t("Ezt a lépést választottam.")
+					_own_ok += 1
+					return a
+	_own_fail += 1
+	var fb: Dictionary = _agent.policy("okos")
+	fb["nev"] = "%s (%s)" % [L.t("Okos gép"), L.t("a saját AI most nem adott szabályos lépést")]
+	return fb
 
 
 func _auto_start(kind: String) -> void:
@@ -2494,6 +2619,9 @@ func _auto_wait(t: float) -> void:
 
 ## A gép következő lépése. A „Saját AI” kérdezi a nyelvi modellt; ha az nem ad szabályos lépést, az Okos gép lép helyette.
 func _auto_decide() -> Dictionary:
+	if _auto == "sajat":
+		_auto_lbl.text = "%s: %s" % [L.t(AUTO_NAMES[_auto]), L.t("gondolkodik…")]
+		return await _own_decide()
 	return _agent.policy(_auto if _auto in Agent.KINDS else "okos")
 
 
@@ -2528,7 +2656,7 @@ func _auto_loop() -> void:
 			why = why % str(a.get("mivel", ""))
 		if a.has("szoveg"):                # a nyelvi modell saját mondata
 			why = str(a["szoveg"])
-		_auto_lbl.text = "%s: %s" % [L.t(AUTO_NAMES[_auto]), why]
+		_auto_lbl.text = "%s: %s" % [str(a.get("nev", L.t(AUTO_NAMES[_auto]))), why]
 		var gid := str(a.get("group", ""))
 		if gid != "" and _group_cards.has(gid):
 			_pulse(gid, true, UI.CYAN)
@@ -3328,7 +3456,7 @@ func _auto_test(kind: String) -> void:
 		await wait.call(0.5)
 	await wait.call(4.0)
 	await _shot("g4_vege.png")
-	print("GEPJATEK kész gep=%s vege=%s ablak=%s T=%.2f gepi=%s" % [kind, str(world.over()), str(_overlay != null), float(world.st["T"]), str(world.ai)])
+	print("GEPJATEK kész gep=%s vege=%s ablak=%s T=%.2f gepi=%s sajat_jo=%d sajat_hiba=%d" % [kind, str(world.over()), str(_overlay != null), float(world.st["T"]), str(world.ai), _own_ok, _own_fail])
 	get_tree().quit()
 
 
