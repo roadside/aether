@@ -8,6 +8,7 @@ const Globe := preload("res://scripts/globe.gd")
 const Intro := preload("res://scripts/intro.gd")
 const World := preload("res://scripts/world.gd")
 const Cards := preload("res://scripts/cards.gd")
+const Nation := preload("res://scripts/nation.gd")
 const Agent := preload("res://scripts/agent.gd")
 const M := preload("res://scripts/model.gd")
 const Chart := preload("res://scripts/curve.gd")
@@ -461,6 +462,9 @@ func _ready() -> void:
 	_test = "--onteszt" in args or "--bejaras" in args
 	_dry = (_test and not ("--eles" in args)) or "--elojatek" in args or "--majom" in args or "--gepjatek" in args
 	L.dry = _dry
+	if _dry and "--orszagok" in args:      # próba: AI-országok bekapcsolva (csak a memóriában), ha fut a saját AI
+		L.set_setting("orszag_ai", true)
+		_own_probe()
 	if _test or "--intro-kepek" in args or "--elojatek" in args or "--majom" in args or "--gepjatek" in args:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)   # az ellenőrző futások ablakban mennek
 	var bg := TextureRect.new()
@@ -1545,7 +1549,7 @@ const BADGES := [
 	["kuldetes", "Küldetésteljesítő", "Teljesítsd mind a három küldetést egy játékban."],
 	["tevhit", "Tévhitvadász", "Cáfolj meg három tévhitet egy játékban."],
 	["vedo", "Időben szóltál", "Készíts fel három csoportot, mielőtt lecsap rájuk a baj."],
-	["lepcso", "A lépcső teteje", "Maradj +2 °C alatt az ötödik kihíváson."],
+	["lepcso", "A lépcső teteje", "Maradj +2 °C alatt az ötödik kihívásnál."],
 ]
 var _end_info: Dictionary = {}
 
@@ -2007,6 +2011,8 @@ func _open_group(g: Dictionary) -> void:
 		body.add_child(UI.text_link("%s (%s)" % [L.field(f, "szoveg"), L.field(f, "forras")], str(f.get("link", "")), 15))
 	if int(g["cel"]) > 0:
 		body.add_child(UI.label(L.rag(L.t("A játékban eddig: nulla kibocsátás %d-re.") % int(g["cel"])), 17, UI.GREEN, true))
+	if _nation_on():
+		body.add_child(UI.text_link(_mood_line(g), str(Nation.data().get("kozvelemeny", {}).get("link", "")), 15))
 	if world.over():
 		return
 	if world.steps <= 0:
@@ -2169,7 +2175,7 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 		area.add_child(UI.card_root(c))
 	else:
 		if ask["fajta"] == "megerosites":
-			area.add_child(UI.label(L.t("Elbizonytalanodtak. Ha a kör végéig nem erősíted meg őket, meginognak, és későbbre tolják a céljukat."), 16, UI.GOLD))
+			area.add_child(UI.label(L.t("Elbizonytalanodtak. Ha a kör végéig nem erősíted meg őket, megingnak, és későbbre tolják a céljukat."), 16, UI.GOLD))
 		area.add_child(UI.label(L.t("Amitől tartanak:"), 17, UI.GOLD, true, false))
 		var usable := world.usable(g)
 		# előre az az aggodalom kerül, amelyikre van kártyád: a bejelölhető sor görgetés nélkül látszik
@@ -2199,6 +2205,23 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 	ok.pressed.connect(func() -> void:
 		var done := false
 		var before := float(world.forecast()["kozep"][-1][1])
+		if ask["fajta"] == "cel" and _nation_on():       # AI-országok: a vezetés maga dönt
+			ok.disabled = true
+			ok.text = L.t("%s vezetői gondolkodnak…") % L.field(g, "nev")
+			var game0 := world.game_id
+			var nd: Dictionary = await _nation_decide(g, int(ask["cel"]), picked)
+			if world.game_id != game0:
+				return
+			if nd["dontes"] == "refuse":
+				world.rebuff(g, int(ask["cel"]))
+				_refresh()
+				_save()
+				_nation_no(g, nd)
+				return
+			ask["cel"] = int(nd["cel"])
+			while picked.size() > world.cards_needed(g, int(ask["cel"])):
+				picked.pop_back()
+			_nation_said = str(nd["szoveg"])
 		if ask["fajta"] == "megerosites":
 			ask["kartya"] = picked[0]
 			done = world.reassure(g, picked[0])
@@ -2294,8 +2317,11 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 		pic.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		body.add_child(pic)
 	body.add_child(UI.label(txt, 22, UI.TEXT, true))
-	if REPLY.has(str(ask.get("tema", ""))):
+	if _nation_said != "" and ask["fajta"] == "cel":       # az AI-ország saját mondata
+		body.add_child(UI.label(_quote(_nation_said), 18, Color(str(g["szin"])).lightened(0.25)))
+	elif REPLY.has(str(ask.get("tema", ""))):
 		body.add_child(UI.label(_quote(L.t(REPLY[ask["tema"]])), 18, Color(str(g["szin"])).lightened(0.25)))
+	_nation_said = ""
 	var fc := world.forecast()
 	var after := float(fc["kozep"][-1][1])
 	if before > 0.0:
@@ -2451,6 +2477,15 @@ func _add_own_ai(body: VBoxContainer) -> void:
 	else:
 		status.text = L.t("Megvan: %s") % model
 		go.disabled = false
+		c.add_child(UI.label(L.t("A csoportok vezetőit is játszhatja a saját AI. Csak a 2026-ig ismert, valós adataikat kapja meg, és nemet is mondhat. Így akkor is ő felel, ha te játszol."), 16, UI.SOFT))
+		var nat := UI.button("")
+		var show_nat := func() -> void:
+			nat.text = L.t("AI-országok: bekapcsolva") if bool(L.get_setting("orszag_ai", false)) else L.t("AI-országok: kikapcsolva")
+		show_nat.call()
+		nat.pressed.connect(func() -> void:
+			L.set_setting("orszag_ai", not bool(L.get_setting("orszag_ai", false)))
+			show_nat.call())
+		c.add_child(nat)
 
 
 ## A lépés egy sorban, a nyelvi modellnek (nem a képernyőre kerül, ezért angolul: a modellek így értik a legjobban).
@@ -2521,6 +2556,74 @@ func _own_decide() -> Dictionary:
 	var fb: Dictionary = _agent.policy("okos")
 	fb["nev"] = "%s (%s)" % [L.t("Okos gép"), L.t("a saját AI most nem adott szabályos lépést")]
 	return fb
+
+
+## AI-országok: a csoportok vezetőit is a saját AI játssza (scripts/nation.gd). Csak akkor él, ha fut a saját AI.
+var _nation_said := ""
+var _nat := {"accept": 0, "later": 0, "refuse": 0, "hiba": 0}
+
+
+func _nation_on() -> bool:
+	return bool(L.get_setting("orszag_ai", false)) and _own_model != ""
+
+
+func _nation_decide(g: Dictionary, target: int, cards: Array) -> Dictionary:
+	world.ai = true
+	var reply: Variant = await _http_json(_own_url() + "/api/chat", {"model": _own_model, "stream": false, "format": "json",
+		"options": {"temperature": 0.2}, "messages": Nation.prompt(world, g, target, cards, L.is_en())})
+	var out := {}
+	if typeof(reply) == TYPE_DICTIONARY and typeof(reply.get("message")) == TYPE_DICTIONARY:
+		out = Nation.parse(world, g, target, str(reply["message"].get("content", "")))
+	if out.is_empty():                 # a modell nem adott szabályos választ: az alapjáték szabálya dönt (elfogadják)
+		_nat["hiba"] += 1
+		return {"dontes": "accept", "cel": target, "szoveg": L.t("A saját AI most nem válaszolt, ezért az alapszabály döntött.")}
+	_nat[out["dontes"]] += 1
+	if _dry:
+		print("ORSZAG %s %s %d" % [str(g["id"]), str(out["dontes"]), int(out["cel"])])
+	return out
+
+
+## Kör végén egy AI-ország (körönként más) magától is léphet. Vissza: hírek a körváltás ablakába.
+func _nation_round() -> Array:
+	var g: Dictionary = world.groups[world.round_i % world.groups.size()]
+	if World.fraction(g, world.year()) <= 0.0:
+		return []
+	world.ai = true
+	var reply: Variant = await _http_json(_own_url() + "/api/chat", {"model": _own_model, "stream": false, "format": "json",
+		"options": {"temperature": 0.2}, "messages": Nation.prompt_round(world, g, L.is_en())}, 45.0)
+	var out := {}
+	if typeof(reply) == TYPE_DICTIONARY and typeof(reply.get("message")) == TYPE_DICTIONARY:
+		out = Nation.parse_round(str(reply["message"].get("content", "")))
+	if out.is_empty():
+		_nat["hiba"] += 1
+		return []
+	var t := 0
+	if out["dontes"] == "earlier":
+		t = world.volunteer(g)
+	elif out["dontes"] == "delay":
+		t = world.postpone(g)
+	_nat[out["dontes"]] = int(_nat.get(out["dontes"], 0)) + 1
+	if _dry:
+		print("ORSZAG_KOR %s %s %d" % [str(g["id"]), str(out["dontes"]), t])
+	if t == 0:
+		return []
+	return [{"fajta": "onkent" if out["dontes"] == "earlier" else "halaszt", "csoport": g["id"], "cel": t, "szoveg": out["szoveg"]}]
+
+
+func _mood_line(g: Dictionary) -> String:
+	return L.t("Közhangulat: az emberek %d%%-a kér erősebb klímavédelmet.") % int(round(Nation.mood(world, g) * 100.0))
+
+
+func _nation_no(g: Dictionary, nd: Dictionary) -> void:
+	_flash_ids = [g["id"]]
+	_sound("megingas")
+	var body := _open(L.field(g, "nev"), UI.GOLD)
+	body.add_child(UI.label(L.t("%s most nemet mondott.") % L.field(g, "nev"), 22, UI.GOLD, true))
+	if str(nd["szoveg"]) != "":
+		body.add_child(UI.label(_quote(str(nd["szoveg"])), 18, Color(str(g["szin"])).lightened(0.25)))
+	body.add_child(UI.label(_mood_line(g), 16, UI.SOFT))
+	body.add_child(UI.label(L.t("A lépésed elfogyott, a kártyáid megmaradtak."), 15, UI.MUTE))
+	body.add_child(_go(L.t("Rendben"), _close))
 
 
 func _auto_start(kind: String) -> void:
@@ -2669,7 +2772,26 @@ func _auto_loop() -> void:
 			await _advance()
 		else:
 			_agent.offers = _offers
-			if not _agent.apply(a):
+			var refused := false
+			if a["type"] == "negotiate" and _nation_on():
+				var ng: Dictionary = world.group(gid)
+				var nt := int(a["target"])
+				var nd: Dictionary = await _nation_decide(ng, nt, world.usable(ng).slice(0, world.cards_needed(ng, nt)))
+				if _auto == "" or run != _auto_run or world.game_id != game or not is_inside_tree():
+					return
+				a["target"] = int(nd["cel"])
+				a.erase("cards")
+				refused = nd["dontes"] == "refuse"
+				if refused:
+					world.rebuff(ng, nt)
+					_sound("megingas")
+				_auto_lbl.text = "%s: %s" % [L.field(ng, "nev"), str(nd["szoveg"]) if str(nd["szoveg"]) != "" else (L.t("%s most nemet mondott.") % L.field(ng, "nev"))]
+				await _auto_wait(AUTO_THINK)
+				if _auto == "" or run != _auto_run or world.game_id != game or not is_inside_tree():
+					return
+			if refused:
+				pass
+			elif not _agent.apply(a):
 				_auto_lbl.text = "%s: %s" % [L.t(AUTO_NAMES[_auto]), L.t("Ez a lépés nem szabályos. Jöhet a következő öt év.")]
 				await _auto_wait(AUTO_THINK)
 				if _auto == "" or run != _auto_run or world.game_id != game or not is_inside_tree():
@@ -2788,7 +2910,16 @@ func _advance() -> void:
 	if _tutor_on():              # az első kör végén a vezetés véget ér
 		if not _dry:
 			L.set_setting("tanulo_kesz", true)
+	var own_news: Array = []
+	if _nation_on() and world.round_i < World.ROUNDS - 1:
+		var game0 := world.game_id
+		(_btns["ido"] as Button).text = L.t("A vezetők tanácskoznak…")
+		own_news = await _nation_round()
+		if world.game_id != game0:
+			_busy = false
+			return
 	world.advance()
+	world.news.append_array(own_news)
 	_offers = {}
 	_clock = 0.0
 	_plan_moments()
@@ -2866,6 +2997,13 @@ func _open_news(y0: int, t0: float) -> void:
 				c.add_child(UI.label(L.t("Átlépte a küszöbértéket: %s (%d)") % [L.field(tp, "nev"), int(n["ev"])], 19, UI.EMBER, true))
 				c.add_child(UI.label(L.t("Ha a melegedés tartósan e fölött marad, a változás lassan, de megállíthatatlanul végbemegy. A küszöböt a tudomány csak sávként ismeri (%s és %s °C között); a játék ebből sorsolt egyet.") % [L.num(float(tp["also"]), 1), L.num(float(tp["felso"]), 1)], 16, UI.TEXT))
 				body.add_child(UI.card_root(c))
+			"onkent", "halaszt":
+				var own_ok: bool = n["fajta"] == "onkent"
+				var c9 := UI.card(UI.GREEN if own_ok else UI.GOLD)
+				c9.add_child(UI.label(L.rag(L.t("%s magától vállalta: nulla kibocsátás %d-re." if own_ok else "%s elhalasztotta a célját: %d.") % [L.field(world.group(n["csoport"]), "nev"), int(n["cel"])]), 18, UI.GREEN if own_ok else UI.GOLD, true))
+				if str(n.get("szoveg", "")) != "":
+					c9.add_child(UI.label(_quote(str(n["szoveg"])), 16, UI.SOFT))
+				body.add_child(UI.card_root(c9))
 			"visszalepett":
 				var c2 := UI.card(UI.GOLD)
 				c2.add_child(UI.label(L.rag(L.t("%s megingott: a célját %d-re tolta.") % [L.field(world.group(n["csoport"]), "nev"), int(n["cel"])]), 18, UI.GOLD, true))
@@ -2882,7 +3020,7 @@ func _open_news(y0: int, t0: float) -> void:
 			"inog":
 				var c5 := UI.card(UI.GOLD)
 				c5.add_child(UI.label("⚠ " + L.t("%s elbizonytalanodott.") % L.field(world.group(n["csoport"]), "nev"), 18, UI.GOLD, true))
-				c5.add_child(UI.label(L.t("Erősítsd meg őket egy hozzájuk illő kártyával, különben öt év múlva meginognak!"), 16, UI.SOFT))
+				c5.add_child(UI.label(L.t("Erősítsd meg őket egy hozzájuk illő kártyával, különben öt év múlva megingnak!"), 16, UI.SOFT))
 				body.add_child(UI.card_root(c5))
 			"kitartott":
 				var c3 := UI.card(UI.GREEN)
@@ -2918,7 +3056,7 @@ func _open_news(y0: int, t0: float) -> void:
 				body.add_child(UI.card_root(cm))
 			"segit":
 				var c8 := UI.card(UI.GREEN)
-				c8.add_child(UI.label(L.t("%s tiszta technikát ad át. %s most könnyebben meggyőzhető.") % [L.field(world.group(n["csoport"]), "nev"), L.field(world.group(n["kinek"]), "nev")], 18, UI.GREEN, true))
+				c8.add_child(UI.label(L.t("%s tiszta technológiát ad át. %s most könnyebben meggyőzhető.") % [L.field(world.group(n["csoport"]), "nev"), L.field(world.group(n["kinek"]), "nev")], 18, UI.GREEN, true))
 				body.add_child(UI.card_root(c8))
 				_flash_ids = [n["csoport"], n["kinek"]]
 	if not world.threat.is_empty() and not world.over():      # a következő baj már látszik: van idő felkészülni
@@ -3270,6 +3408,18 @@ func _add_story(body: VBoxContainer) -> void:
 				lc = UI.GOLD
 				lane = 2
 				mark = UI.GOLD
+			"nem":
+				line = L.t("%s most nemet mondott.") % L.field(world.group(e["csoport"]), "nev")
+				lc = UI.GOLD
+				lane = 2
+			"onkent":
+				line = L.rag(L.t("%s magától vállalta: nulla kibocsátás %d-re.") % [L.field(world.group(e["csoport"]), "nev"), int(e["cel"])])
+				lc = UI.GREEN
+				lane = 1
+			"halaszt":
+				line = L.rag(L.t("%s elhalasztotta a célját: %d.") % [L.field(world.group(e["csoport"]), "nev"), int(e["cel"])])
+				lc = UI.GOLD
+				lane = 2
 			"cafolat":
 				line = "%s %s" % [L.t("Megcáfoltad:"), _quote(L.t(MYTH.get(str(e.get("kartya", "")), "")))]
 				lc = MYTH_COLOR
@@ -3439,6 +3589,17 @@ func _monkey(seed_n: int, seconds: float) -> void:
 ## Gépi próbajáték (godot -- --gepjatek [--gep=kezdo|atlagos|okos|sajat]): a gép valós felületen végigjátszik egy játékot.
 func _auto_test(kind: String) -> void:
 	world.new_game(2026)
+	if "--orszagok" in OS.get_cmdline_user_args():
+		await _own_probe()
+		var tg: Dictionary = world.group("kina")
+		_open_group(tg)
+		await get_tree().create_timer(0.4).timeout
+		await _shot("g5_hangulat.png")
+		_close()
+		_nation_no(tg, {"dontes": "refuse", "szoveg": "Próbamondat: most nem tudjuk ezt vállalni."})
+		await get_tree().create_timer(0.4).timeout
+		await _shot("g6_nem.png")
+		_close()
 	_refresh()
 	var wait := func(t: float) -> void: await get_tree().create_timer(t).timeout
 	await wait.call(1.0)
@@ -3456,7 +3617,7 @@ func _auto_test(kind: String) -> void:
 		await wait.call(0.5)
 	await wait.call(4.0)
 	await _shot("g4_vege.png")
-	print("GEPJATEK kész gep=%s vege=%s ablak=%s T=%.2f gepi=%s sajat_jo=%d sajat_hiba=%d" % [kind, str(world.over()), str(_overlay != null), float(world.st["T"]), str(world.ai), _own_ok, _own_fail])
+	print("GEPJATEK kész gep=%s vege=%s ablak=%s T=%.2f gepi=%s sajat_jo=%d sajat_hiba=%d orszag=%s" % [kind, str(world.over()), str(_overlay != null), float(world.st["T"]), str(world.ai), _own_ok, _own_fail, JSON.stringify(_nat)])
 	get_tree().quit()
 
 

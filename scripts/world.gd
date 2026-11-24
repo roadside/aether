@@ -384,6 +384,43 @@ func negotiate(g: Dictionary, target: int, played: Array) -> bool:
 	return true
 
 
+## AI-országok: a csoport vezetése nemet mondott. A lépés elfogy, a kártyák megmaradnak (játékszabály).
+func rebuff(g: Dictionary, target: int) -> bool:
+	if steps <= 0 or over():
+		return false
+	steps -= 1
+	naplo.append({"ev": year(), "fajta": "nem", "csoport": g["id"], "cel": target})
+	return true
+
+
+## AI-országok saját lépése (játékszabály): a vezetés magától vállalja a következő fokozatot. Vissza: az új célév, vagy 0.
+func volunteer(g: Dictionary) -> int:
+	var ts := targets_for(g)
+	if ts.is_empty() or over():
+		return 0
+	var t := int(ts[0])
+	var y := year()
+	g["f0"] = fraction(g, y - 1) if int(g["cel"]) > 0 else float(g["f0"])
+	g["fok"] = stage_of(t)
+	g["y0"] = y - 1
+	g["cel"] = t
+	g["inog"] = false
+	naplo.append({"ev": y, "fajta": "onkent", "csoport": g["id"], "cel": t})
+	return t
+
+
+## AI-országok saját lépése (játékszabály): a vezetés öt évvel későbbre tolja a célját (legfeljebb 2090-ig). Vissza: az új célév, vagy 0.
+func postpone(g: Dictionary) -> int:
+	if over() or int(g["cel"]) <= 0 or int(g["cel"]) >= 2090 or fraction(g, year()) <= 0.0:
+		return 0
+	var y := year()
+	g["f0"] = fraction(g, y - 1)
+	g["y0"] = y - 1
+	g["cel"] = mini(int(g["cel"]) + 5, 2090)
+	naplo.append({"ev": y, "fajta": "halaszt", "csoport": g["id"], "cel": g["cel"]})
+	return int(g["cel"])
+
+
 ## Lendület (játékszabály): egy körön belül minden második megállapodás visszaad egy lépést.
 func _momentum() -> void:
 	streak += 1
