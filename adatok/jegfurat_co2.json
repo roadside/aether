@@ -7,7 +7,7 @@
 "link": "https://ourworldindata.org/grapher/co2-long-term-concentration",
 "licenc": "Our World in Data, CC BY 4.0",
 "tudomanyos_alap": "Lüthi és mtsai 2008, Nature 453:379 – https://doi.org/10.1038/nature06949",
-"megjegyzes": "Letöltve 2026-11-24-én Zoltán gépén; a felhőbe üzenetben került át, a pontokat a PC-n lévő fájllal össze kell vetni. A kulcs értékei a nyers adatsor szélső értékei (nem a 4000 éves átlagoké).",
+"megjegyzes": "Letöltve 2026-11-24-én Zoltán gépén; a felhőbe üzenetben került át; a 237 pont a PC-n lévő letöltött fájllal összevetve, eltérés nélkül (2026-11-24). A kulcs értékei a nyers adatsor szélső értékei (nem a 4000 éves átlagoké).",
 "kulcs": {
 "jegkorszak_min": 173.7,
 "ipar_elotti_max": 298.6,
