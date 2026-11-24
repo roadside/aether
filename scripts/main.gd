@@ -2716,7 +2716,10 @@ func _open_end() -> void:
 	end_row.add_child(_go(L.t("Új játék, új Föld") + " →", func() -> void: _pick_game()))
 	var saved_lbl := UI.label("", 14, UI.SOFT)
 	saved_lbl.custom_minimum_size = Vector2(430, 0)
-	end_row.add_child(_go(L.t("Kép mentése"), func() -> void: saved_lbl.text = await _save_picture(), false))
+	end_row.add_child(_go(L.t("Kép mentése"), func() -> void:
+		var msg: String = await _save_picture()
+		if is_instance_valid(saved_lbl):       # mentés közben bezárhatták az ablakot
+			saved_lbl.text = msg, false))
 	end_row.add_child(saved_lbl)
 	_sticky(body, end_row)
 	if world.hajto.size() >= M.END_YEAR - M.START_YEAR:
@@ -2953,7 +2956,11 @@ func _monkey(seed_n: int, seconds: float) -> void:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_n
 	_monkey_calm = seed_n % 2 == 0
-	world.new_game(2026 + seed_n)
+	world.new_game(2026 + seed_n, 3 + (seed_n / 12) % 3, (seed_n / 2) % 6)      # a mag a fokozatot és a kihívást is váltogatja
+	if seed_n % 5 == 0:            # minden ötödik mag: első játék vezetéssel, szelíd kezdéssel
+		world.gentle = true
+		_tutor_force = true
+		_ramp_game = world.game_id
 	_refresh()
 	var t_end := Time.get_ticks_msec() + int(seconds * 1000.0)
 	var clicks := 0
@@ -3000,7 +3007,7 @@ func _monkey(seed_n: int, seconds: float) -> void:
 		else:
 			b.pressed.emit()
 		clicks += 1
-	print("MAJOM kész mag=%d kattintás=%d legtovább=%d. kör befejezett=%d" % [seed_n, clicks, top_round, games])
+	print("MAJOM kész mag=%d kattintás=%d legtovább=%d. kör befejezett=%d lépés=%d kihívás=%d" % [seed_n, clicks, top_round, games, world.max_steps, world.challenge])
 	get_tree().quit()
 
 
