@@ -1147,7 +1147,8 @@ func _pick_game(code: int = -1, level: int = -1) -> void:
 			body.add_child(UI.label("%d. %s" % [i, L.t(LEVELS[i])], 16, UI.SOFT))
 	for row in [["Könnyű", 5], ["Közepes", 4], ["Nehéz", 3]]:
 		var n: int = row[1]
-		body.add_child(_go("%s · %s" % [L.t(row[0]), L.t("%d lépés körönként") % n], func() -> void: _new_game(code, n, lv), n == 4))
+		var shown := n - (1 if lv >= 5 else 0)        # az 5. kihívás elvesz egy lépést: a gomb a valódi számot írja
+		body.add_child(_go("%s · %s" % [L.t(row[0]), L.t("%d lépés körönként") % shown], func() -> void: _new_game(code, n, lv), n == 4))
 
 
 func _new_game(code: int = -1, steps_n: int = World.STEPS, level: int = 0) -> void:
