@@ -736,7 +736,7 @@ A CO2-kivonás ablakában és a naplóban:
 - A tenger 1901 és 2018 között kb. %s cm-t emelkedett, és egyre gyorsabban: 2006 és 2018 között évente kb. %s mm-t.
 - 2100-ra: alacsony kibocsátással %s–%s cm, nagyon magassal %s–%s cm lesz az emelkedés mértéke (az 1995–2014-es szinthez képest).
 - A régen százévente egyszer előforduló magas vízállás 2100-ra a mérőhelyek több mint felén legalább évente egyszer elő fog fordulni.
-- A gát időt ad, de a tenger 2100 után is emelkedik. A kibocsátás csökkentése lassítja.
+- A gát időt ad, de a tenger 2100 után is emelkedni fog. A kibocsátás csökkentése lassítja ezt.
 
 ### Átnevezés: „Saját AI” helyett „Föld AI” (Zoltán kérése, 21:29). Ezekben a már lektorált szövegekben csak a név változott:
 

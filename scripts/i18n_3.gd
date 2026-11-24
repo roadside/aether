@@ -463,7 +463,7 @@ const EN := {
 	"A tenger 1901 és 2018 között kb. %s cm-t emelkedett, és egyre gyorsabban: 2006 és 2018 között évente kb. %s mm-t.": "The sea rose about %s cm between 1901 and 2018, and ever faster: about %s mm a year between 2006 and 2018.",
 	"2100-ra: alacsony kibocsátással %s–%s cm, nagyon magassal %s–%s cm lesz az emelkedés mértéke (az 1995–2014-es szinthez képest).": "By 2100: %s–%s cm with low emissions, %s–%s cm with very high emissions (compared with 1995–2014).",
 	"A régen százévente egyszer előforduló magas vízállás 2100-ra a mérőhelyek több mint felén legalább évente egyszer elő fog fordulni.": "By 2100, high water that used to come once a century will come at least once a year at more than half of the measuring stations.",
-	"A gát időt ad, de a tenger 2100 után is emelkedik. A kibocsátás csökkentése lassítja.": "A dyke buys time, but the sea keeps rising after 2100. Cutting emissions slows it down.",
+	"A gát időt ad, de a tenger 2100 után is emelkedni fog. A kibocsátás csökkentése lassítja ezt.": "A dyke buys time, but the sea keeps rising after 2100. Cutting emissions slows it down.",
 	"Minijátékok": "Minigames",
 	"Erdőnyomozó": "Forest detective",
 	"Ez egy műholdkép egy erdőről. Mi tüntette el a fákat? Válaszd ki!": "This is a satellite view of a forest. What made the trees disappear? Choose!",

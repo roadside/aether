@@ -301,7 +301,7 @@ func _finish() -> void:
 	_end.add_child(UI.label(L.t("A tenger 1901 és 2018 között kb. %s cm-t emelkedett, és egyre gyorsabban: 2006 és 2018 között évente kb. %s mm-t.") % [L.num(float(ipcc.get("emelkedes_1901_2018_m", 0.0)) * 100.0, 0), L.num(float(rate.get("2006-2018", 0.0)), 1)], 17, UI.TEXT))
 	_end.add_child(UI.label(L.t("2100-ra: alacsony kibocsátással %s–%s cm, nagyon magassal %s–%s cm lesz az emelkedés mértéke (az 1995–2014-es szinthez képest).") % [L.num(float(r0[0]) * 100.0, 0), L.num(float(r0[1]) * 100.0, 0), L.num(float(r1[0]) * 100.0, 0), L.num(float(r1[1]) * 100.0, 0)], 17, UI.TEXT, true))
 	_end.add_child(UI.label(L.t("A régen százévente egyszer előforduló magas vízállás 2100-ra a mérőhelyek több mint felén legalább évente egyszer elő fog fordulni."), 17, UI.TEXT))
-	_end.add_child(UI.label(L.t("A gát időt ad, de a tenger 2100 után is emelkedik. A kibocsátás csökkentése lassítja."), 17, UI.GOLD, true))
+	_end.add_child(UI.label(L.t("A gát időt ad, de a tenger 2100 után is emelkedni fog. A kibocsátás csökkentése lassítja ezt."), 17, UI.GOLD, true))
 	_end.add_child(UI.label(L.t("Forrás: %s; %s") % [source, source2], 12, UI.MUTE))
 	var row := UI.hbox(16)
 	if results.size() < 2:
