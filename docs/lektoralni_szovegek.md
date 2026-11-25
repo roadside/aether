@@ -824,3 +824,12 @@ A CO2-kivonás ablakában és a naplóban:
 ### Gyűjtemény
 
 - Minijátékok
+
+## 19. Változás (2026-11-25, 19:00) – új szöveg nincs, nincs mit lektorálni
+
+Zoltán kérésére minden AI-rész kikerült a játékból: az „AI játszik” és a „Tanács a géptől” menüpont, a Föld AI (Ollama, Claude, ChatGPT, Gemini, kulcsok) és az AI-országok. Ezeket a részeket már nem kell nézned, a szövegeik nincsenek a játékban:
+
+- 12. rész: „AI játszik (menü)” (kivéve: Kezdő gép, Átlagos gép, Okos gép, Ugyanezen a Földön, Te, Ugyanez a Föld újra – ezek a záróképernyőn maradtak), „A gép indoklásai”, „Tanács és Föld AI”, „AI-országok”.
+- 13. rész: „Föld AI: Claude, ChatGPT, Gemini”, „Klímacsúcs AI-országokkal”.
+- 14. rész: „Megingás AI-országokkal”, „Föld AI felhőből: hibaüzenetek”.
+- 17. rész vége: „Átnevezés: Saját AI helyett Föld AI”.

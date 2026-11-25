@@ -3,8 +3,8 @@ extends RefCounted
 ##   observe()  – az állapot (amit a játékos is lát; a Föld rejtett érzékenysége és a küszöbök nincsenek benne),
 ##   actions()  – a most szabályos lépések listája,
 ##   apply(a)   – egy lépés végrehajtása (csak szabályos lépést fogad el),
-##   policy(k)  – a beépített, szabályalapú gépek lépése indoklással ("kezdo", "atlagos", "okos").
-## Ugyanezt használja a játékbeli „AI játszik” mód, a külső híd (tools/ugynok_hid.gd) és a gépek ranglistája.
+##   policy(k)  – a beépített, szabályalapú gépek lépése ("kezdo", "atlagos", "okos").
+## Ugyanezt használja a külső híd (tools/ugynok_hid.gd) és a gépek ranglistája a játék végén.
 ## A beépített gépek nem tanuló rendszerek: rögzített szabályokat követnek (játékszabály, nem mesterséges intelligencia).
 
 const World := preload("res://scripts/world.gd")
@@ -155,7 +155,7 @@ func apply(a: Dictionary) -> bool:
 		"summit":
 			if not w.summit_due or w.summit_listeners(str(a.get("card", ""))).is_empty():
 				return false
-			w.summit(str(a["card"]), a.get("staying", []))
+			w.summit(str(a["card"]))
 			return true
 		"skip_summit":
 			if not w.summit_due:
@@ -175,7 +175,7 @@ func apply(a: Dictionary) -> bool:
 
 
 # --- beépített gépek ------------------------------------------------------------
-## Vissza: a lépés, benne "miert" (a mondat magyar kulcsa) és "mivel" (a mondatba illő név, ha kell).
+## Vissza: a lépés.
 func policy(kind: String) -> Dictionary:
 	if w.over():
 		return {}
@@ -185,8 +185,8 @@ func policy(kind: String) -> Dictionary:
 			if w.summit_listeners(id).size() > (w.summit_listeners(best).size() if best != "" else 0):
 				best = id
 		if kind != "kezdo" and best != "":
-			return {"type": "summit", "card": best, "miert": "Klímacsúcs: azt a kártyát mutatom meg, amelyik a legtöbb csoportnak szól."}
-		return {"type": "skip_summit", "miert": "A klímacsúcson most nem mutatok kártyát."}
+			return {"type": "summit", "card": best}
+		return {"type": "skip_summit"}
 	if not w.dilemma.is_empty():
 		var d: Dictionary = w.dilemma
 		var c := 0
@@ -202,9 +202,9 @@ func policy(kind: String) -> Dictionary:
 			var ga: Dictionary = w.group(str(d["a"]))
 			var gb: Dictionary = w.group(str(d["b"]))
 			c = 0 if kind != "okos" or float(ga["co2_resz"]) >= float(gb["co2_resz"]) else 1
-		return {"type": "dilemma", "choice": c, "miert": "Döntök a két lehetőség közül." if d["fajta"] != "kviz" else "Válaszolok a tudáspróbára."}
+		return {"type": "dilemma", "choice": c}
 	if w.steps <= 0:
-		return {"type": "end_round", "miert": "Elfogytak a lépéseim. Jöhet a következő öt év."}
+		return {"type": "end_round"}
 	var order: Array = w.groups.duplicate()
 	if kind == "okos":
 		order.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return float(a["co2_resz"]) > float(b["co2_resz"]))
@@ -217,65 +217,60 @@ func policy(kind: String) -> Dictionary:
 	if kind == "okos" and not w.myth.is_empty():
 		var mg: Dictionary = w.group(str(w.myth["csoport"]))
 		if str(w.myth["kartya"]) in w.hand:
-			return {"type": "refute", "group": mg["id"], "miert": "Tévhit terjed. Megcáfolom: %s", "mivel": L.field(mg, "nev")}
+			return {"type": "refute", "group": mg["id"]}
 		if str(w.myth["kartya"]) in offers_for("ketseg"):
-			return {"type": "research", "theme": "ketseg", "card": str(w.myth["kartya"]), "miert": "Tévhit terjed. Kikutatom a cáfolatát."}
+			return {"type": "research", "theme": "ketseg", "card": str(w.myth["kartya"])}
 	if kind != "kezdo":
 		for g in order:
 			if g.get("inog", false) and not w.usable(g).is_empty() and (kind == "okos" or rng.randf() < 0.5):
-				return {"type": "reassure", "group": g["id"], "card": w.usable(g)[0], "miert": "Elbizonytalanodtak. Megerősítem őket: %s", "mivel": L.field(g, "nev")}
+				return {"type": "reassure", "group": g["id"], "card": w.usable(g)[0]}
 	if kind == "okos" and not w.threat.is_empty():
 		var tg: Dictionary = w.group(str(w.threat["csoport"]))
 		if not tg.is_empty() and not tg.get("felkeszult", false) and not w.prepare_cards(tg).is_empty():
-			return {"type": "prepare", "group": tg["id"], "card": w.prepare_cards(tg)[0], "miert": "Baj fenyeget. Felkészítem őket: %s", "mivel": L.field(tg, "nev")}
+			return {"type": "prepare", "group": tg["id"], "card": w.prepare_cards(tg)[0]}
 	for g in order:
 		var n: int = w.usable(g).size()
 		var ok: Array = w.targets_for(g).filter(func(t: int) -> bool: return n >= w.cards_needed(g, t))
 		if not ok.is_empty():
 			var t: int = ok[0] if kind == "kezdo" else (ok[rng.randi_range(0, ok.size() - 1)] if kind == "atlagos" else ok[ok.size() - 1])
-			return {"type": "negotiate", "group": g["id"], "target": t,
-				"miert": "Van hozzájuk illő kártyám. Tárgyalok: %s" if kind != "okos" else "A legnagyobb kibocsátóval kezdem, akit meg tudok győzni: %s", "mivel": L.field(g, "nev")}
+			return {"type": "negotiate", "group": g["id"], "target": t}
 		if kind != "kezdo" and int(g["metan"]) == 0 and w.methane_cards(g).size() >= w.methane_needed(g):
-			return {"type": "methane", "group": g["id"], "miert": "A metán gyorsan hat. Metáncsökkentést kérek: %s", "mivel": L.field(g, "nev")}
+			return {"type": "methane", "group": g["id"]}
 	if kind != "kezdo":
 		for g in order:
 			if w.can_residual(g) and not w.residual_cards(g).is_empty():
-				return {"type": "residual", "group": g["id"], "card": w.residual_cards(g)[0], "miert": "A cél után is marad kibocsátás. Ezt váltom ki: %s", "mivel": L.field(g, "nev")}
+				return {"type": "residual", "group": g["id"], "card": w.residual_cards(g)[0]}
 	if kind == "okos":
 		for id in w.cdr_available():
-			return {"type": "cdr", "id": id, "miert": "Megvan a kártyám hozzá: elindítom a CO2-kivonást."}
+			return {"type": "cdr", "id": id}
 		for id in w.cdr_growable():
-			return {"type": "grow_cdr", "id": id, "miert": "Tíz éve fut: bővítem a CO2-kivonást."}
+			return {"type": "grow_cdr", "id": id}
 		for g in order:
 			if not g.get("felkeszult", false) and int(g["cel"]) > 0 and not w.prepare_cards(g).is_empty():
-				return {"type": "prepare", "group": g["id"], "card": w.prepare_cards(g)[0], "miert": "Felkészítem őket, hogy ne inogjanak meg: %s", "mivel": L.field(g, "nev")}
+				return {"type": "prepare", "group": g["id"], "card": w.prepare_cards(g)[0]}
 	if kind != "kezdo" and w.steps > 0:      # ha valakinél már kérhető a maradék kiváltása, de nincs hozzá kártya, azt kutatja
 		for g in order:
 			if w.can_residual(g) and w.residual_cards(g).is_empty():
 				for th in ["munka", "elelem"]:
 					for id in offers_for(th):
 						if id in w.RESIDUAL_CARDS:
-							return {"type": "research", "theme": th, "card": id, "miert": "A maradék kibocsátáshoz kutatok: %s", "mivel": L.field(g, "nev")}
+							return {"type": "research", "theme": th, "card": id}
 				break
 	var ths: Array = Cards.talk_themes()
-	var who := ""
 	if kind == "okos":
 		ths = []
 		for g in order:
 			if not w.targets_for(g).is_empty() and ths.is_empty():
 				ths = (g["felelmek"] as Array).duplicate()
-				who = L.field(g, "nev")
 		if ths.is_empty():
 			ths = Cards.talk_themes()
 	for i in 6:                                   # néhány témakört megpróbál, hátha valahol van új kérdés
 		var th: String = ths[rng.randi_range(0, ths.size() - 1)]
 		var of := offers_for(th)
 		if not of.is_empty():
-			if who != "":
-				return {"type": "research", "theme": th, "card": of[0], "miert": "Az ő aggodalmukhoz kutatok: %s", "mivel": who}
-			return {"type": "research", "theme": th, "card": of[0], "miert": "Kutatok, hogy legyen mivel érvelnem."}
+			return {"type": "research", "theme": th, "card": of[0]}
 		ths = Cards.talk_themes() if i >= 2 else ths
-	return {"type": "end_round", "miert": "Most nincs jó lépésem. Jöhet a következő öt év."}
+	return {"type": "end_round"}
 
 
 ## Egy teljes játék a megadott géppel (ablak nélkül): a ranglistához és a mérésekhez.

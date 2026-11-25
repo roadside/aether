@@ -314,7 +314,7 @@ func used_cards() -> Array:
 	var out: Array = []
 	for g in groups:
 		for id in g["hasznalt"]:
-			if not (id in out) and not (id in (g.get("mashol", []) as Array)):
+			if not (id in out):
 				out.append(id)
 	return out
 
@@ -356,12 +356,6 @@ func stage_of(target: int) -> int:
 		if int(sp) >= target - (year() - 1):
 			n += 1
 	return n
-
-
-## Vállalhatja-e a csoport magától ezt a köztes évet (AI-országok: a valós, nyilvános célév)? A fokozatok határai között kell lennie.
-func own_year_ok(g: Dictionary, target: int) -> bool:
-	var gap := target - (year() - 1)
-	return gap >= int(SPEEDS[-1]) and gap <= int(SPEEDS[0]) and fraction(g, year() - 1) > 0.0 and (int(g["cel"]) == 0 or target < int(g["cel"]))
 
 
 ## A kézben lévő kártyák, amelyek ennek a csoportnak egy aggodalmára felelnek, és még nem hallották.
@@ -442,8 +436,6 @@ func _spend(g: Dictionary, id: String) -> void:
 	for h in (groups if CARD_ONCE else [g]):
 		if not (id in h["hasznalt"]):
 			h["hasznalt"].append(id)
-			if not is_same(h, g):   # ő nem látta a kártyát: a közhangulatába nem számít bele (nation.gd)
-				h["mashol"] = (h.get("mashol", []) as Array) + [id]
 
 
 func negotiate(g: Dictionary, target: int, played: Array) -> bool:
@@ -465,56 +457,6 @@ func negotiate(g: Dictionary, target: int, played: Array) -> bool:
 	_momentum()
 	naplo.append({"ev": y, "fajta": "cel", "csoport": g["id"], "cel": target})
 	return true
-
-
-## AI-országok: a csoport vezetése nemet mondott. A lépés elfogy, a kártyák megmaradnak (játékszabály).
-func rebuff(g: Dictionary, target: int) -> bool:
-	if steps <= 0 or over():
-		return false
-	steps -= 1
-	naplo.append({"ev": year(), "fajta": "nem", "csoport": g["id"], "cel": target})
-	return true
-
-
-## AI-országok: az elbizonytalanodott vezetés úgy dönt, hogy kitart a célja mellett (nem lép vissza a kör végén).
-func hold(g: Dictionary) -> bool:
-	if not g.get("inog", false) or over():
-		return false
-	g["inog"] = false
-	naplo.append({"ev": year(), "fajta": "kitart", "csoport": g["id"], "cel": g["cel"]})
-	return true
-
-
-## AI-országok saját lépése (játékszabály): a vezetés magától vállalja a következő fokozatot. Vissza: az új célév, vagy 0.
-func volunteer(g: Dictionary, target: int = 0) -> int:
-	var ts := targets_for(g)
-	if over() or (ts.is_empty() and not (target > 0 and own_year_ok(g, target))):
-		return 0
-	var t := int(ts[0]) if not ts.is_empty() else target
-	if target > 0:
-		if not ts.has(target) and not own_year_ok(g, target):
-			return 0
-		t = target
-	var y := year()
-	g["f0"] = fraction(g, y - 1) if int(g["cel"]) > 0 else float(g["f0"])
-	g["fok"] = stage_of(t)
-	g["y0"] = y - 1
-	g["cel"] = t
-	g["inog"] = false
-	naplo.append({"ev": y, "fajta": "onkent", "csoport": g["id"], "cel": t})
-	return t
-
-
-## AI-országok saját lépése (játékszabály): a vezetés öt évvel későbbre tolja a célját (legfeljebb 2090-ig). Vissza: az új célév, vagy 0.
-func postpone(g: Dictionary) -> int:
-	if over() or int(g["cel"]) <= 0 or int(g["cel"]) >= 2090 or fraction(g, year()) <= 0.0:
-		return 0
-	var y := year()
-	g["f0"] = fraction(g, y - 1)
-	g["y0"] = y - 1
-	g["cel"] = mini(int(g["cel"]) + 5, 2090)
-	naplo.append({"ev": y, "fajta": "halaszt", "csoport": g["id"], "cel": g["cel"]})
-	return int(g["cel"])
 
 
 ## Lendület (játékszabály): egy körön belül minden második megállapodás visszaad egy lépést.
@@ -567,15 +509,12 @@ func summit_listeners(card_id: String) -> Array:
 			and fraction(g, y - 1) > 0.0 and int(g["cel"]) - SUMMIT_YEARS > y)
 
 
-## A `staying` azoknak a csoportoknak az azonosítója, amelyek (AI-országként) úgy döntöttek, hogy nem változtatnak.
-func summit(card_id: String, staying: Array = []) -> Array:
+func summit(card_id: String) -> Array:
 	var out: Array = []
 	if not summit_due or not (card_id in hand):
 		return out
 	var y := year()
 	for g in summit_listeners(card_id):
-		if g["id"] in staying:
-			continue
 		g["f0"] = fraction(g, y - 1)
 		g["y0"] = y - 1
 		g["cel"] = int(g["cel"]) - SUMMIT_YEARS
