@@ -867,7 +867,7 @@ Kikerült a játékból: a Gyűjteményből a „Befejezett játékok…”, a �
 - „Az erdő és a föld biztosít megélhetést számunkra. Ki fizeti meg, ha érintetlenül hagyjuk?”
 - Itt minden VALÓDI: a klímamodell számai, a csoportok kibocsátása, a kártyák forrásai.
 
-## 22. Új szövegek (2026-11-26, 23:00) – vulkánkitörés – lektorálva (egy mondat függőben)
+## 22. Új szövegek (2026-11-26, 23:00) – vulkánkitörés – lektorálva
 
 Játékonként egyszer, váratlanul jön. A hírek ablakában:
 
@@ -878,7 +878,7 @@ Játékonként egyszer, váratlanul jön. A hírek ablakában:
 
 A következő kör híreiben:
 
-- A vulkáni pára kihullott a levegőből. A CO2 maradt, és a melegedés folytatódik.
+- A vulkáni por kihullott a levegőből. A CO2 maradt, és a melegedés folytatódik.
 
 Forrás a számhoz: NASA GISTEMP v4 – https://data.giss.nasa.gov/gistemp/ (1991: +0,41 °C, 1992: +0,22 °C, 1995: +0,44 °C az 1951–1980-as átlaghoz képest).
 
@@ -890,10 +890,10 @@ Hír a kör elején (első meglepetés):
 - Világjárvány!
 - Kiürültek az utak, a földön vesztegelnek a repülők. A világ kibocsátása egy évre hirtelen lecsökkent.
 - Zöld újrakezdés: ebben a körben minden csoport öt évvel korábbra vállalja a nulla kibocsátást, mint ahogy kérted.
-- Így történt 2020-ban is: a napi CO2 kibocsátás tavaszra kb. 17%-kal esett, a levegő CO2-tartalma mégis 411,7-ről 414,2 ppm-re nőtt.
+- Így történt 2020-ban is: a napi CO2-kibocsátás tavaszra kb. 17%-kal esett, a levegő CO2-tartalma mégis 411,7-ről 414,2 ppm-re nőtt.
 
 Hír a következő kör elején:
-- A CO2 kibocsátás lecsökkent, de a levegő CO2-tartalma tovább nőtt. A CO2 felhalmozódik: csak a tartós nulla kibocsátás állítja meg.
+- A CO2-kibocsátás lecsökkent, de a levegő CO2-tartalma tovább nőtt. A CO2 felhalmozódik: csak a tartós nulla kibocsátás állítja meg.
 
 Hír a kör elején (második meglepetés):
 - Áttörés!
