@@ -1656,10 +1656,9 @@ func _open_collection() -> void:
 		all_n += Cards.TAGS[th].size()
 	body.add_child(UI.label(L.t("Rangod: %s") % L.t(_rank(c.size())), 22, UI.GOLD, true))
 	body.add_child(UI.label(L.t("Kikutatott kártyák: %d / %d") % [c.size(), all_n], 19, UI.TEXT, true))
-	for r in RANKS:
-		if int(r[0]) > c.size():
-			body.add_child(UI.label(L.t("A következő rang: %s (%d kártyától)") % [L.t(r[1]), int(r[0])], 15, UI.SOFT))
-			break
+	var coll_gap := Control.new()      # kis hely a „Kikutatott kártyák” alatt (Zoltán kérése)
+	coll_gap.custom_minimum_size = Vector2(0, 10)
+	body.add_child(coll_gap)
 	if _daily_streak() >= 2:
 		body.add_child(UI.label(L.t("A mai Föld: %d napja játszod egymás után.") % _daily_streak(), 17, UI.GREEN))
 	# jelvények: érmek egy sorban; alattuk az egér alatti (vagy a következő megszerezhető) jelvény neve és feltétele

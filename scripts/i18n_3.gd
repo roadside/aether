@@ -169,7 +169,6 @@ const EN := {
 	"%s milliárd tonna": "%s billion tonnes",
 	"Rangod: %s": "Your rank: %s",
 	"Új rang: %s": "New rank: %s",
-	"A következő rang: %s (%d kártyától)": "Next rank: %s (from %d cards)",
 	"Gyakornok": "Trainee", "Kutató": "Researcher", "Vezető kutató": "Lead researcher", "Professzor": "Professor", "A Föld őre": "Guardian of the Earth",
 	"Felkészültek rá, ezért kisebb volt a baj.": "They were prepared, so the damage was smaller.",
 	"Hűvös Föld": "Cool Earth", "Tartsd 2100-ig +1,6 °C alatt a globális felmelegedést.": "Keep global warming below +1.6 °C until 2100.",
