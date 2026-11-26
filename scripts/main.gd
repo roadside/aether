@@ -1802,10 +1802,17 @@ func _start_music() -> void:
 		if _playlist.is_empty():
 			return
 		_track = 1 if _playlist.size() > 2 else 0      # a nyitány után előbb az alapzene jön, a saját zene később tér vissza
+		_playlist.append_array(Intro.own_tracks())    # a játékos további saját zenéi: útvonalak, csak lejátszáskor töltjük be
 		_music = AudioStreamPlayer.new()
 		_music.finished.connect(func() -> void:
 			if _music_on():
-				_track = (_track + 1) % _playlist.size()
+				if _playlist.size() > 3:      # van további saját zene: véletlen sorrend, ugyanaz nem jön kétszer egymás után
+					var nxt := _track
+					while nxt == _track:
+						nxt = randi() % _playlist.size()
+					_track = nxt
+				else:
+					_track = (_track + 1) % _playlist.size()
 				_play_track(2.0))
 		add_child(_music)
 	_play_track(4.0)
@@ -1817,10 +1824,19 @@ var _music_tw: Tween
 func _play_track(fade_in: float) -> void:
 	if _music_tw != null:
 		_music_tw.kill()
-	_music.stream = _playlist[_track]
+	var st: AudioStream = null
+	for k in _playlist.size():      # a saját zenét most töltjük be; ha egy fájl nem játszható le, a következő jön
+		var e: Variant = _playlist[_track]
+		st = Intro.load_track(str(e)) if e is String else (e as AudioStream)
+		if st != null:
+			break
+		_track = (_track + 1) % _playlist.size()
+	if st == null:
+		return
+	_music.stream = st
 	_music.volume_db = -40.0
 	_music.play()
-	var length: float = (_playlist[_track] as AudioStream).get_length()
+	var length: float = st.get_length()
 	_music_tw = create_tween()
 	_music_tw.tween_property(_music, "volume_db", -17.0, fade_in)
 	if length > fade_in + 6.0:

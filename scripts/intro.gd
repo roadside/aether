@@ -161,8 +161,38 @@ static func own_music_places() -> Array:
 	return places
 
 
-## A nyitány zenéjének hangereje. Zoltán kérése (2026-11-24): 10%-kal hangosabb, azaz -4,0 helyett -3,2 dB (20·log10(1,1) = 0,83 dB).
-const MUSIC_DB := -3.2
+## A nyitány zenéjének hangereje. Zoltán kérése (2026-11-24): 10%-kal hangosabb, azaz -4,0 helyett -3,2 dB (20·log10(1,1) = 0,83 dB);
+## 2026-11-26: még 15%-kal hangosabb, azaz -2,0 dB (20·log10(1,15) = 1,21 dB).
+const MUSIC_DB := -2.0
+
+
+## A játékos saját zenéi a sajat_zene mappákból (ogg, mp3, wav; az intro.wav nélkül): teljes útvonalak.
+## Ezek a fájlok nem részei a játéknak, és nem kerülnek fel a GitHubra. A FLAC-ot a Godot nem tudja lejátszani.
+static func own_tracks() -> Array:
+	var out: Array = []
+	var seen: Array = []
+	for place in own_music_places():
+		var dir_path: String = str(place).get_base_dir()
+		var d := DirAccess.open(dir_path)
+		if d == null:
+			continue
+		for f in d.get_files():
+			var low := f.to_lower()
+			if low != "intro.wav" and low.get_extension() in ["ogg", "mp3", "wav"] and not (low in seen):
+				seen.append(low)
+				out.append(dir_path.path_join(f))
+	return out
+
+
+static func load_track(full: String) -> AudioStream:
+	match full.to_lower().get_extension():
+		"ogg":
+			return AudioStreamOggVorbis.load_from_file(full)
+		"mp3":
+			return AudioStreamMP3.load_from_file(full)
+		"wav":
+			return AudioStreamWAV.load_from_file(full)
+	return null
 
 
 func _start_music() -> void:
