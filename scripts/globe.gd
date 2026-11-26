@@ -50,6 +50,8 @@ static func sea_rise_of(meters_now: float, meters_then: float) -> float:
 ## clean: a városfény a narancsos mai energiától a tiszta, hideg fényig (0 = ma, 1 = nulla kibocsátás);
 ## regrow: nettó CO2-kivonásnál (negatív kibocsátás) a növényzet visszazöldül (0–1).
 var smog := 0.0
+var ash := 0.0                       # vulkáni fátyol célértéke (0–1); a kép lassan közelít hozzá
+var _ash_shown := 0.0
 var clean := 0.0
 var regrow := 0.0
 ## A nettó kivonás léptéke: ha a világ a mai kibocsátás ennyiszeresét vonja ki évente, teljes a zöldülés.
@@ -211,6 +213,8 @@ func _process(delta: float) -> void:
 	_mat.set_shader_parameter("heat", heat)
 	_mat.set_shader_parameter("sea_rise", sea_rise)
 	_mat.set_shader_parameter("smog", smog)
+	_ash_shown = move_toward(_ash_shown, ash, delta * 0.6)
+	_mat.set_shader_parameter("ash", _ash_shown)
 	_mat.set_shader_parameter("clean", clean)
 	_mat.set_shader_parameter("regrow", regrow)
 	_mat.set_shader_parameter("anomaly_mix", anomaly_mix)

@@ -423,4 +423,9 @@ const EN := {
 	"Kicsi szivárgás: +%s%%": "Small leak: +%s%%",
 	"%d javítócsapattal a szivárgás %s%%-át szüntetted meg.": "With %d repair crews you stopped %s%% of the leaking.",
 	"Ha a %d legnagyobbat választod, %s%% lett volna. A kutak csak %s%%-a ez!": "Had you picked the %d biggest, it would have been %s%%. That is only %s%% of the wells!",
+	"Vulkánkitörés!": "Volcanic eruption!",
+	"Hamu és kénes pára borítja az eget. A Föld egy-két évre lehűl.": "Ash and sulphur haze cover the sky. The Earth cools for a year or two.",
+	"Sokan azt hiszik, vége a melegedésnek. Ebben a körben minden csoportnak eggyel több kártya kell.": "Many believe the warming is over. This round every group needs one more card.",
+	"Így történt 1991-ben is, a Pinatubo kitörése után: a Föld kb. 0,2 °C-kal lehűlt, de 1995-re újra ugyanolyan meleg lett (NASA GISTEMP).": "It happened in 1991 too, after Pinatubo erupted: the Earth cooled by about 0.2 °C, but by 1995 it was just as warm again (NASA GISTEMP).",
+	"A vulkáni pára kihullott a levegőből. A CO2 maradt, és a melegedés folytatódik.": "The volcanic haze has fallen out of the air. The CO2 stayed, and the warming continues.",
 }

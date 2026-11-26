@@ -1240,6 +1240,7 @@ func _refresh() -> void:
 	globe.heat = clampf((t - M.T_START) / 2.0, 0.0, 1.5)
 	globe.set_plan_look({"smog": clampf(ratio, 0.0, 1.0), "clean": clampf(1.0 - ratio, 0.0, 1.0), "regrow": clampf(-ratio / 0.25, 0.0, 1.0)})
 	globe.sea_rise = clampf((t - M.T_START) / 2.0, 0.0, 1.0)
+	globe.ash = 1.0 if world.volcano_now() else 0.0
 	var marks: Array = []
 	for g in world.groups:
 		var shaky: bool = g.get("inog", false) and not world.over()
@@ -2593,6 +2594,16 @@ func _advance() -> void:
 			await get_tree().create_timer(1.3).timeout
 			if world.game_id != game:
 				break
+	# vulkánkitörés: a Föld odafordul, felvillan, aztán szürke fátyol borul rá
+	if world.volcano_now() and not _test and world.game_id == game:
+		globe.look_at_event({"lat": 15.0, "lon": 120.0})
+		_sound("katasztrofa")
+		await get_tree().create_timer(0.6).timeout
+		for k in 3:
+			globe.flash(15.0, 120.0, UI.EMBER)
+			await get_tree().create_timer(0.35).timeout
+		globe.ash = 1.0
+		await get_tree().create_timer(1.6).timeout
 	_busy = false
 	_bar_hold = true
 	_refresh()
@@ -2672,6 +2683,17 @@ func _open_news(y0: int, t0: float) -> void:
 					lost = true
 				c4.add_child(UI.label(L.t("A baj után jobban figyelnek rád: most eggyel kevesebb kártyával is meggyőzheted őket."), 16, UI.SOFT))
 				body.add_child(UI.card_root(c4o))
+			"vulkan":
+				var cv := UI.card(UI.EMBER)
+				cv.add_child(UI.label("⚠ " + L.t("Vulkánkitörés!"), 22, UI.EMBER, true))
+				cv.add_child(UI.label(L.t("Hamu és kénes pára borítja az eget. A Föld egy-két évre lehűl."), 18, UI.TEXT, true))
+				cv.add_child(UI.label(L.t("Sokan azt hiszik, vége a melegedésnek. Ebben a körben minden csoportnak eggyel több kártya kell."), 16, UI.GOLD))
+				cv.add_child(UI.label(L.t("Így történt 1991-ben is, a Pinatubo kitörése után: a Föld kb. 0,2 °C-kal lehűlt, de 1995-re újra ugyanolyan meleg lett (NASA GISTEMP)."), 15, UI.SOFT))
+				body.add_child(UI.card_root(cv))
+			"vulkan_vege":
+				var cv2 := UI.card(UI.GOLD)
+				cv2.add_child(UI.label(L.t("A vulkáni pára kihullott a levegőből. A CO2 maradt, és a melegedés folytatódik."), 18, UI.GOLD, true))
+				body.add_child(UI.card_root(cv2))
 			"tevhit":
 				var cm := UI.card(MYTH_COLOR)
 				cm.add_child(UI.label("⚠ %s: %s" % [L.t("Tévhit terjed"), L.field(world.group(n["csoport"]), "nev")], 18, MYTH_COLOR, true))
@@ -3049,6 +3071,11 @@ func _add_story(body: VBoxContainer) -> void:
 				lc = UI.GREEN if e.get("vedve", false) else UI.EMBER
 				lane = 2
 				mark = lc
+			"vulkan":
+				line = L.t("Vulkánkitörés!")
+				lc = UI.EMBER
+				lane = 2
+				mark = UI.EMBER
 			"billenes":
 				var tp2: Array = world.tips.filter(func(x: Dictionary) -> bool: return x["id"] == e["id"])
 				if not tp2.is_empty():
@@ -3401,6 +3428,15 @@ func _selftest() -> void:
 	world.threat = {"csoport": world.groups[2]["id"], "mi": "tuz"}
 	_open_news(2026, 1.41)
 	await _shot("7b_hir_kepjelek.png")
+	world.news = [{"fajta": "vulkan"}]       # a vulkánkitörés híre és a szürke fátyol képe
+	world.threat = {}
+	_open_news(2026, 1.41)
+	await _shot("7d_vulkan_hir.png")
+	_close()
+	globe.ash = 1.0
+	await get_tree().create_timer(2.2).timeout
+	await _shot("7e_vulkan_fold.png")
+	globe.ash = 0.0
 	world.news = real_news
 	world.threat = real_threat
 	_close()

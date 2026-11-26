@@ -341,8 +341,24 @@ func targets_for(g: Dictionary) -> Array:
 
 
 ## Hány kártya kell a célhoz: fokozatonként egy (40 → 30 → 20 → 15 év); katasztrófa után eggyel kevesebb (legalább 1).
+## Vulkánkitörés (játékszabály): játékonként egyszer, a Föld-magból sorsolt kör elején kitör egy nagy vulkán.
+## A kénes pára egy-két évre lehűti a Földet: a görbén átmeneti visszaesés látszik (a nagysága a valódi mintát követi:
+## a Pinatubo 1991-es kitörése után a globális átlag 1991-ről 1992-re kb. 0,2 °C-ot esett, 1995-re visszatért – NASA GISTEMP v4).
+## A melegedés hosszú távú menetét nem változtatja meg. Abban a körben minden csoportnak eggyel több kártya kell.
+const VOLCANO_DIP := [0.2, 0.1]
+
+func volcano_round() -> int:
+	var r := RandomNumberGenerator.new()
+	r.seed = seed_v * 7919 + 13
+	return r.randi_range(3, 10)
+
+
+func volcano_now() -> bool:
+	return not over() and round_i == volcano_round()
+
+
 func cards_needed(g: Dictionary, target: int) -> int:
-	var n := maxi(1, stage_of(target) - int(g["fok"])) + (1 if g.get("makacs", false) else 0) + (1 if myth_on(g) else 0)
+	var n := maxi(1, stage_of(target) - int(g["fok"])) + (1 if g.get("makacs", false) else 0) + (1 if myth_on(g) else 0) + (1 if volcano_now() else 0)
 	return maxi(1, n - 1) if g["konnyebb"] else n
 
 
@@ -615,8 +631,9 @@ func advance() -> void:
 		hajto.append([float(dy["co2"]), float(dy["cdr"]), float(dy["ch4"])])
 		M.step(st, dy, p)
 		M.step(_base, {}, p)
-		history.append([y, float(st["T"])])
-		base_history.append([y, float(_base["T"])])
+		var dip: float = float(VOLCANO_DIP[i]) if (round_i == volcano_round() and i < VOLCANO_DIP.size()) else 0.0      # a kitörés utáni két év
+		history.append([y, float(st["T"]) - dip])
+		base_history.append([y, float(_base["T"]) - dip])
 		cdr_total += float(drivers(y)["cdr"])
 		for g in groups:
 			g["megsporolt"] = float(g.get("megsporolt", 0.0)) + (1.0 - emission(g, y)) * float(g["co2_resz"]) * M.E_CO2_NOW
@@ -642,6 +659,11 @@ func advance() -> void:
 		return
 	summit_due = round_i in SUMMIT_ROUNDS
 	_roll_dilemma()
+	if round_i == volcano_round():
+		news.append({"fajta": "vulkan"})
+		naplo.append({"ev": year(), "fajta": "vulkan"})
+	elif round_i == volcano_round() + 1:
+		news.append({"fajta": "vulkan_vege"})
 	# megingás (játékszabály): aki az előző kör végén elbizonytalanodott, és nem erősítetted meg, visszalép:
 	# tíz évvel későbbre tolja a célját (legfeljebb 2090-ig, hogy a vállalás valódi maradjon), és egy fokozattal visszaesik
 	var just_wavered: Array = []

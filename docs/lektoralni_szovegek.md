@@ -866,3 +866,18 @@ Kikerült a játékból: a Gyűjteményből a „Befejezett játékok…”, a �
 - „Az olaj és a gáz a fő bevételi forrásunk. Mit tehetünk úgy, hogy ne menjünk tönkre?”
 - „Az erdő és a föld biztosít megélhetést számunkra. Ki fizeti meg, ha érintetlenül hagyjuk?”
 - Itt minden VALÓDI: a klímamodell számai, a csoportok kibocsátása, a kártyák forrásai.
+
+## 22. Új szövegek (2026-11-26, 23:00) – vulkánkitörés – még nem lektorált
+
+Játékonként egyszer, váratlanul jön. A hírek ablakában:
+
+- Vulkánkitörés!
+- Hamu és kénes pára borítja az eget. A Föld egy-két évre lehűl.
+- Sokan azt hiszik, vége a melegedésnek. Ebben a körben minden csoportnak eggyel több kártya kell.
+- Így történt 1991-ben is, a Pinatubo kitörése után: a Föld kb. 0,2 °C-kal lehűlt, de 1995-re újra ugyanolyan meleg lett (NASA GISTEMP).
+
+A következő kör híreiben:
+
+- A vulkáni pára kihullott a levegőből. A CO2 maradt, és a melegedés folytatódik.
+
+Forrás a számhoz: NASA GISTEMP v4 – https://data.giss.nasa.gov/gistemp/ (1991: +0,41 °C, 1992: +0,22 °C, 1995: +0,44 °C az 1951–1980-as átlaghoz képest).

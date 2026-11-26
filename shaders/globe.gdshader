@@ -23,6 +23,7 @@ uniform sampler2D low_map : filter_linear, repeat_enable;   // alacsony partvid�
 uniform float sea_rise = 0.0;          // 0–1: a veszélyeztetett alacsony partok kiemelésének erőssége
 uniform float heat = 0.0;              // melegedés szemléltetése: 0 = ma, 1 = kb. +2 °C a mához képest
 // A terved hatása (SZEMLÉLTETÉS a modell nettó CO2-sorából, lásd globe.gd clean_of):
+uniform float ash = 0.0;               // 0–1: vulkáni fátyol az egész Föld fölött (szürkés, tompa fény)
 uniform float smog = 0.0;              // 0 = nincs pára; 1 = a mai kibocsátás: barnás pára a sűrűn lakott vidékek fölött
 uniform float clean = 0.0;             // 0 = mai energia (meleg, narancsos városfény); 1 = nulla kibocsátás (tiszta, hideg fény)
 uniform float regrow = 0.0;            // 0–1: nettó CO2-kivonás – a növényzet visszazöldül
@@ -192,6 +193,12 @@ void fragment() {
 			float hz = clamp(smog, 0.0, 1.0) * (smoothstep(0.02, 0.22, lights) * 0.42 + 0.05);
 			vec3 haze_col = vec3(0.66, 0.58, 0.46) * (0.25 + light * 0.95);
 			col = mix(col, haze_col, hz * step(-0.05, ndl));
+		}
+
+		// Vulkáni fátyol: a kénes pára az egész gömböt szürkésre tompítja (csak szemléltetés)
+		if (ash > 0.0) {
+			vec3 ash_col = vec3(0.60, 0.56, 0.52) * (0.22 + light * 0.75);
+			col = mix(col, ash_col, clamp(ash, 0.0, 1.0) * 0.5);
 		}
 
 		// napcsillogás a vízen

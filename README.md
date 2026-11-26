@@ -63,6 +63,7 @@ Játékszabály (nem a valóság leírása):
 - A billenőpontok rejtett küszöbe: a tudományos sávból sorsoljuk, a mai melegedés fölötti részéből. A küszöb átlépése egyelőre nem hat vissza a hőmérsékletre.
 - A csoportok részesedése a teljes mai kibocsátásra vonatkozik (a földhasználatét is arányosan osztjuk szét).
 - A világ többi része a hat csoport átlagát követi.
+- Vulkánkitörés: játékonként egyszer, sorsolt kör elején. Kitalált esemény, valódi mintára: a Pinatubo 1991-es kitörése után a globális átlaghőmérséklet 1991-ről 1992-re kb. 0,2 °C-ot esett, és 1995-re visszatért (NASA GISTEMP v4, `adatok/nap_vagy_co2.json`). A görbén a visszaesés (0,2 és 0,1 °C a következő két évben) szemléltetés, a modell hosszú távú menetét nem változtatja meg. Játékszabály: abban a körben minden csoportnak eggyel több kártya kell. A Föld szürke fátyla szemléltetés.
 - A küldetések (játékonként három, a Föld-kódból sorsolva) és a döntési helyzetek a körök elején (támogatás, meghívás): a játék kitalált helyzetei.
 - A tudáspróba: a kérdés mondata a kártya lektorált kulcsszáma; a jó válasz eggyel több lépést ad.
 - A „Kockázatos ötletek” témakör (a Föld mesterséges hűtése): ezek a kártyák tárgyalásra nem használhatók, mert egy csoport aggodalmára sem felelnek. A szövegük ugyanúgy a lektorált témákból jön.
