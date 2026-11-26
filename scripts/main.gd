@@ -24,7 +24,7 @@ const WORRY := {
 	"munka": "A gyáraink, az autóink és a fűtésünk szénnel, olajjal, gázzal működnek. Mivel váltjuk ki ezeket?",
 	"elelem": "Előbb az embereknek kell enniük. Nem kockáztathatjuk a termést.",
 	"part": "A tenger már most is emelkedik nálunk. Mit ér nekünk egy távoli ígéret?",
-	"egeszseg": "A városainkban már most betegít a hőség és a füst. Segít ez rajtuk?",
+	"egeszseg": "A városainkban a hőség és a füst már most szedi áldozatait. Segít ez rajtuk?",
 	"ketseg": "Biztos, hogy az ember okozza? És számít egyáltalán, amit mi teszünk?",
 	"olaj": "Az olaj és a gáz a bevételünk. Mit tehetünk úgy, hogy ne menjünk tönkre?",
 	"erdo": "Az erdő és a föld adja a megélhetésünket. Ki fizeti meg, ha érintetlenül hagyjuk?",
@@ -871,7 +871,7 @@ func _fill_group(g: Dictionary) -> void:
 	(_group_cards[g["id"]]["taj"] as TextureRect).texture = _land_tex(g)
 	var name_l := UI.label(L.field(g, "nev"), 20, col, true, false)
 	v.add_child(name_l)
-	v.add_child(_lbl(L.t("A világ CO2-kibocsátásának %s%%-a") % L.num_short(float(g["co2_resz"]) * 100.0, 0), 13, UI.MUTE))
+	v.add_child(_lbl(L.t("Innen jön a világ CO2-kibocsátásának %s%%-a") % L.num_short(float(g["co2_resz"]) * 100.0, 0), 13, UI.MUTE))
 	# a mostani kibocsátásuk a maihoz képest
 	var bar := ProgressBar.new()
 	bar.show_percentage = false
@@ -2035,7 +2035,7 @@ func _open_group(g: Dictionary) -> void:
 	big_land.texture = _land_tex(g)
 	big_land.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	top_row.add_child(big_land)
-	var top_l := UI.label(L.t("A világ CO2-kibocsátásának %s%%-a") % L.num_short(float(g["co2_resz"]) * 100.0, 0), 16, UI.SOFT)
+	var top_l := UI.label(L.t("Innen jön a világ CO2-kibocsátásának %s%%-a") % L.num_short(float(g["co2_resz"]) * 100.0, 0), 16, UI.SOFT)
 	top_l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	top_l.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	top_row.add_child(top_l)

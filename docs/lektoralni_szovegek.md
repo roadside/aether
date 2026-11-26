@@ -17,7 +17,7 @@ Minden szöveg új (2026-11-23). A kutatási kártyák szövege a már lektorál
 - „A gyáraink, az autóink és a fűtésünk szénnel, olajjal, gázzal működnek. Mivel váltjuk ki ezeket?”
 - „Előbb az embereknek kell enniük. Nem kockáztathatjuk a termést.”
 - „A tenger már most is emelkedik nálunk. Mit ér nekünk egy távoli ígéret?”
-- „A városainkban már most betegít a hőség és a füst. Segít ez rajtuk?”
+- „A városainkban a hőség és a füst már most szedi áldozatait. Segít ez rajtuk?”
 - „Biztos, hogy az ember okozza? És számít egyáltalán, amit mi teszünk?”
 - „Az olaj és a gáz a bevételünk. Mit tehetünk úgy, hogy ne menjünk tönkre?”
 - „Az erdő és a föld adja a megélhetésünket. Ki fizeti meg, ha érintetlenül hagyjuk?”
@@ -27,23 +27,23 @@ Minden szöveg új (2026-11-23). A kutatási kártyák szövege a már lektorál
 **Európa**
 - Egy emberre évi 5,4 tonna CO2 jut (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
 - Az 1750 óta kibocsátott CO2 20,4%-a innen származik (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
-- Az áram 47,7%-a megújuló forrásból származik (Ember 2026) – https://ourworldindata.org/electricity-mix
+- Az áram 47,7%-át megújuló forrásból állítják elő (Ember 2026) – https://ourworldindata.org/electricity-mix
 - A valóságban törvényben vállalt nulla kibocsátást 2050-re (EU 2021/1119) – https://eur-lex.europa.eu/eli/reg/2021/1119/oj
 
 **Egyesült Államok**
 - Egy emberre évi 14,5 tonna CO2 jut (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
 - Az 1750 óta kibocsátott CO2 23,3%-a innen származik (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
-- Az áram 16,3%-a szénből származik (Ember 2026) – https://ourworldindata.org/electricity-mix
+- Az áram 16,3%-át szénből állítják elő (Ember 2026) – https://ourworldindata.org/electricity-mix
 - A valóságban 2025-ben visszavonta a nulla kibocsátási célját (Net Zero Tracker) – https://zerotracker.net/
 
 **Kína**
 - Egy emberre évi 8,8 tonna CO2 jut (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
-- Az áram 54,3%-a szénből, 37,0%-a megújuló forrásból származik (Ember 2026) – https://ourworldindata.org/electricity-mix
+- Az áram 54,3%-át szénből, 37,0%-át megújuló forrásból állítják elő (Ember 2026) – https://ourworldindata.org/electricity-mix
 - A valóságban 2060 előttre ígért nulla kibocsátást (Kína hosszú távú stratégiája, 2021) – https://unfccc.int/sites/default/files/resource/China%E2%80%99s%20Mid-Century%20Long-Term%20Low%20Greenhouse%20Gas%20Emission%20Development%20Strategy.pdf
 
 **India**
 - Egy emberre évi 2,2 tonna CO2 jut (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
-- Az áram 70,8%-a szénből származik (Ember 2026) – https://ourworldindata.org/electricity-mix
+- Az áram 70,8%-át szénből állítják elő (Ember 2026) – https://ourworldindata.org/electricity-mix
 - A valóságban 2070-re ígért nulla kibocsátást (India hosszú távú stratégiája, 2022) – https://unfccc.int/sites/default/files/resource/India_LTLEDS.pdf
 
 **Afrika**
@@ -93,7 +93,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - A hőmérsékleti sáv azért ilyen széles, mert nem tudjuk pontosan, mennyire érzékeny a Föld.
 - A tenger kb. %s cm-rel magasabb
 - A valóságban %d-re ígért nulla kibocsátást.
-- A világ CO2-kibocsátásának %s%-a
+- Innen jön a világ CO2-kibocsátásának %s%-a
 - Akit ez aggaszt: %s
 - Amitől tartanak:
 - Bioszén
