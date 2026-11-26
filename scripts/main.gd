@@ -1155,14 +1155,7 @@ func _show_menu(on: bool) -> void:
 	_menu_catch.visible = on
 
 
-func _reset_game() -> void:
-	if _reset_btn.text != L.t("Biztos? Kattints még egyszer!"):
-		_reset_btn.text = L.t("Biztos? Kattints még egyszer!")
-		get_tree().create_timer(3.0).timeout.connect(func() -> void:
-			if is_instance_valid(_reset_btn):
-				_reset_btn.text = L.t("Új játék"))
-		return
-	_reset_btn.text = L.t("Új játék")
+func _reset_game() -> void:      # megerősítés nélkül: az ablak bezárható, a játék csak a fokozat választásakor indul újra
 	_show_menu(false)
 	_pick_game()
 
@@ -1172,30 +1165,13 @@ var _level_force := -1         # az önteszt képeihez
 
 ## Kihívás-lépcső (játékszabály): ha +2 °C alatt végzel a legmagasabb elért szinten, megnyílik a következő.
 func _level_max() -> int:
-	return clampi(int(L.get_setting("lepcso", 0)) if _level_force < 0 else _level_force, 0, World.CHALLENGE_MAX)
+	return 0      # a kihívás-lépcső kikerült a játékból (Zoltán kérése, 2026-11-26): mindig az alapjáték indul
 
 
 func _pick_game(code: int = -1, level: int = -1) -> void:
 	var top := _level_max()
 	var lv := top if level < 0 else clampi(level, 0, top)
 	var body := _open(L.t("Új játék"), UI.CYAN)
-	if top > 0:
-		var lrow := UI.hbox(8)
-		var ll := UI.label(L.t("Kihívás:"), 18, UI.GOLD, true, false)
-		ll.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-		lrow.add_child(ll)
-		for i in top + 1:
-			var lb := UI.button(L.t("Alap") if i == 0 else str(i), i == lv)
-			lb.focus_mode = Control.FOCUS_NONE
-			lb.custom_minimum_size = Vector2(52, 0)
-			lb.pressed.connect(func() -> void: _pick_game(code, i))
-			lrow.add_child(lb)
-		body.add_child(lrow)
-		for i in range(1, lv + 1):
-			body.add_child(UI.label("%d. %s" % [i, L.t(LEVELS[i])], 16, UI.SOFT))
-		var lgap := Control.new()
-		lgap.custom_minimum_size = Vector2(0, 8)
-		body.add_child(lgap)
 	# három kártya egy sorban: név, a lépések pöttyei, alatta a szám (a pöttyök ugyanazok, mint a főoldal tetején)
 	var drow := UI.hbox(14)
 	for row in [["Könnyű", 5, UI.GREEN], ["Közepes", 4, UI.GOLD], ["Nehéz", 3, UI.EMBER]]:
@@ -1225,6 +1201,7 @@ func _pick_game(code: int = -1, level: int = -1) -> void:
 		db.add_child(dv)
 		db.pressed.connect(func() -> void: _new_game(code, n, lv))
 		drow.add_child(db)
+	drow.alignment = BoxContainer.ALIGNMENT_CENTER
 	body.add_child(drow)
 
 
@@ -1616,7 +1593,6 @@ const BADGES := [
 	["kuldetes", "Küldetésteljesítő", "Teljesítsd mind a három küldetést egy játékban."],
 	["tevhit", "Tévhitvadász", "Cáfolj meg három tévhitet egy játékban."],
 	["vedo", "Időben szóltál", "Készíts fel három csoportot, mielőtt utoléri őket a baj."],
-	["lepcso", "A lépcső teteje", "Tartsd +2 °C alatt a globális felmelegedést az ötödik kihívásnál."],
 ]
 var _end_info: Dictionary = {}
 
@@ -1663,9 +1639,6 @@ func _finish_game(r: Dictionary) -> Dictionary:
 			lu = {}
 		lu[str(world.challenge)] = world.used_cards()
 		L.set_setting("szint_kartyak", lu)
-	if t < 2.0 and world.challenge >= _level_max() and world.challenge < World.CHALLENGE_MAX:
-		L.set_setting("lepcso", world.challenge + 1)
-		_end_info["lepcso"] = world.challenge + 1
 	var best := float(L.get_setting("legjobb", 0.0))
 	if best <= 0.0 or t < best - 0.004:
 		L.set_setting("legjobb", t)
@@ -2985,9 +2958,6 @@ func _open_end() -> void:
 	var fin := _finish_game(r)
 	if fin["rekord"]:
 		body.add_child(UI.label(L.t("Új rekord! Ez az eddigi legjobb Földed."), 19, UI.GOLD, true))
-	if int(fin.get("lepcso", 0)) > 0:
-		body.add_child(UI.label("★ " + L.t("Új kihívás nyílt meg: %d. szint") % int(fin["lepcso"]), 19, UI.GOLD, true))
-		body.add_child(UI.label(L.t(LEVELS[int(fin["lepcso"])]), 16, UI.SOFT))
 	for bd in BADGES:
 		if bd[0] in fin["uj"]:
 			body.add_child(UI.label("★ " + L.t("Új jelvény: %s") % L.t(bd[1]), 17, UI.GOLD, true))
@@ -3279,7 +3249,7 @@ func _monkey(seed_n: int, seconds: float) -> void:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_n
 	_monkey_calm = seed_n % 2 == 0
-	world.new_game(2026 + seed_n, 3 + (seed_n / 12) % 3, (seed_n / 2) % 6)      # a mag a fokozatot és a kihívást is váltogatja
+	world.new_game(2026 + seed_n, 3 + (seed_n / 12) % 3, 0)      # a mag a fokozatot és a kihívást is váltogatja
 	if seed_n % 5 == 0:            # minden ötödik mag: első játék vezetéssel, szelíd kezdéssel
 		world.gentle = true
 		_tutor_force = true
