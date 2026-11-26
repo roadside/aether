@@ -2022,6 +2022,14 @@ func _open_card(id: String, fresh: bool = false) -> void:
 			continue
 		body.add_child(UI.label(L.t("Miért jó?" if pair[0] == "Mire jó?" else pair[0]), 16, pair[1], true, false))   # a mező neve a témafájlban marad
 		body.add_child(UI.label(txt, 17, UI.TEXT))
+	var src_line := MarginContainer.new()      # vonal a források fölött, alatta és fölötte kis hellyel (Zoltán kérése)
+	src_line.add_theme_constant_override("margin_top", 12)
+	src_line.add_theme_constant_override("margin_bottom", 8)
+	var src_rule := ColorRect.new()
+	src_rule.color = Color(UI.GOLD, 0.45)
+	src_rule.custom_minimum_size = Vector2(0, 2)
+	src_line.add_child(src_rule)
+	body.add_child(src_line)
 	body.add_child(UI.label(L.t("Források"), 16, UI.GOLD, true, false))
 	for s in Cards.card(id).get("forrasok", []):
 		body.add_child(UI.text_link(str(s["cim"]), str(s["link"]), 15))
