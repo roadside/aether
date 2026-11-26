@@ -72,7 +72,7 @@ Játékszabály (nem a valóság leírása):
 
 ## Futtatás
 
-Godot 4.7-tel nyisd meg a `project.godot` fájlt. A nyitány zenéje a `sajat_zene/intro.wav`, ha ott van (nem része a tárolónak); különben a beépített handpan szól.
+Godot 4.7-tel nyisd meg a `project.godot` fájlt. Saját zene helyben megadható (nem része a tárolónak); különben a beépített handpan és alapzene szól.
 
 Ellenőrzés: `godot --path . -- --onteszt --hu` végigjátszik egy játékot, és képeket ment; `godot --path . -- --bejaras` hat teljes játékot játszik végig minden ablakot megnyitva (hibakeresés); `godot --path . -- --elojatek --hu` valós időben, kattintásokkal játszik két kört (óra, vezetés, önálló körváltás); `godot --path . -- --majom --mag=2 --mp=200` valós időben, találomra nyomkodja a gombokat (rejtett hibák keresése; a naplóban nem lehet SCRIPT ERROR); `godot --headless -s tools/egyensuly_teszt.gd -- 100 4` száz Földön méri a nehézséget; `godot --headless -s tools/jatek_teszt.gd` a szabályokat, `tools/modell_teszt.gd` a klímamodellt ellenőrzi. `godot --headless -s tools/ugynok_teszt.gd -- 30` a három gépet méri.
 

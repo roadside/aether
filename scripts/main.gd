@@ -1784,31 +1784,35 @@ func _music_on() -> bool:
 ## Játék közben: a játékos saját zenéje (ha van), utána a két halk, kódból készült alapzene, és így tovább.
 var _playlist: Array = []
 var _track := 0
+var _own_long := false      # vannak saját hosszú zenék (adatok/01s.lon …)
+var _own_first := true
 
 func _start_music() -> void:
 	if _dry or not _music_on() or (_music != null and _music.playing):
 		return
 	if _music == null:
-		for full in Intro.own_music_places():        # a játékos saját zenefájlja, ha van (nem része a játéknak)
-			if FileAccess.file_exists(full):
-				var own: AudioStream = AudioStreamWAV.load_from_file(full)
-				if own != null:
-					_playlist.append(own)
-					break
-		for name in ["alapzene", "alapzene2"]:      # a két kódból készült alapzene felváltva
-			var amb: AudioStream = load("res://assets/hang/%s.wav" % name)
-			if amb != null:
-				_playlist.append(amb)
+		_playlist = Intro.own_tracks()      # a saját hosszú zenék (útvonalak, csak lejátszáskor töltjük be); ha vannak, csak ezek szólnak
+		_own_long = not _playlist.is_empty()
+		if not _own_long:
+			for full in Intro.own_music_places():        # a nyitány saját zenéje, ha van
+				if FileAccess.file_exists(full):
+					var own: AudioStream = Intro.load_track(full)
+					if own != null:
+						_playlist.append(own)
+						break
+			for name in ["alapzene", "alapzene2"]:      # a két kódból készült alapzene felváltva
+				var amb: AudioStream = load("res://assets/hang/%s.wav" % name)
+				if amb != null:
+					_playlist.append(amb)
 		if _playlist.is_empty():
 			return
-		_track = 1 if _playlist.size() > 2 else 0      # a nyitány után előbb az alapzene jön, a saját zene később tér vissza
-		_playlist.append_array(Intro.own_tracks())    # a játékos további saját zenéi: útvonalak, csak lejátszáskor töltjük be
+		_track = randi() % _playlist.size() if _own_long else (1 if _playlist.size() > 2 else 0)      # saját zene nélkül: a nyitány után előbb az alapzene
 		_music = AudioStreamPlayer.new()
 		_music.finished.connect(func() -> void:
 			if _music_on():
-				if _playlist.size() > 3:      # van további saját zene: véletlen sorrend, ugyanaz nem jön kétszer egymás után
+				if _own_long:      # saját zene: véletlen sorrend, ugyanaz nem jön kétszer egymás után (ha több van)
 					var nxt := _track
-					while nxt == _track:
+					while nxt == _track and _playlist.size() > 1:
 						nxt = randi() % _playlist.size()
 					_track = nxt
 				else:
@@ -1835,8 +1839,13 @@ func _play_track(fade_in: float) -> void:
 		return
 	_music.stream = st
 	_music.volume_db = -40.0
-	_music.play()
 	var length: float = st.get_length()
+	var from := 0.0
+	if _own_long and _own_first and length > 600.0:      # hosszú, több számból álló fájl: az első indításkor véletlen helyről szól
+		from = randf() * length * 0.85
+	_own_first = false
+	_music.play(from)
+	length -= from
 	_music_tw = create_tween()
 	_music_tw.tween_property(_music, "volume_db", -17.0, fade_in)
 	if length > fade_in + 6.0:

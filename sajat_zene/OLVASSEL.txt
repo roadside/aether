@@ -1,4 +1,0 @@
-A saját zenefájlok helye. Ez a mappa a zenével nem kerül fel a GitHubra.
-intro.wav: a nyitány zenéje.
-Minden más .ogg, .mp3 vagy .wav fájl: játék közben véletlen sorrendben szól, ha a zene be van kapcsolva.
-A .flac fájlokat a játék motorja nem tudja lejátszani: előbb át kell alakítani őket .ogg-ra.

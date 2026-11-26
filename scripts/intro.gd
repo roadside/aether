@@ -16,8 +16,8 @@ extends Control
 ##   47–52      hívás: a játékos helyén fény gyúl, fényívek futnak a világ sok pontjára
 ##   52–57,5    a görbe elágazik: „A jövő még nincs megírva.” (a jövő vonalai jelképek)
 ##   57,5–65,5  a Föld, a cím halványan a csillagok között, az utolsó dallam alatt
-## Zene: ha a játékos gépén ott van a saját zenefájl (sajat_zene/intro.wav a projektmappában,
-## vagy user://sajat_zene/intro.wav), azt játssza; ez a fájl NEM része a játéknak és nem kerül
+## Zene: ha a játékos gépén ott van a saját zenefájl (adatok/00s.lon a projektmappában vagy az exe mellett,
+## vagy user://adatok/00s.lon; valójában wav), azt játssza; ez a fájl NEM része a tárolónak és nem kerül
 ## fel a GitHubra (más szerző jogvédett felvétele lehet). Ha nincs, a saját, kódból előállított
 ## handpan dallam szól (tools/intro_zene_handpan.py). A zene a végén lágyan elhalkul.
 
@@ -40,7 +40,7 @@ const PRELUDE := 11.0          # a handpan-játékos nyitány hossza
 const CONT_BEFORE := 5.0
 const CONT_FROM := 12.0
 const END_FADE := 9.0
-const OWN_MUSIC := ["res://sajat_zene/intro.wav", "user://sajat_zene/intro.wav"]
+const OWN_MUSIC := ["res://adatok/00s.lon", "user://adatok/00s.lon"]
 ## A nyitány ütései (mp) a saját zenefájl első 11 másodpercéből kimérve: [idő, kéz (0 bal, 1 jobb), hangmező]
 const HITS := [[3.09, 1, 0], [3.36, 0, 3], [4.18, 1, 2], [4.46, 0, 1], [5.07, 1, 4], [5.61, 0, 5], [5.90, 1, 0],
 	[6.17, 0, 3], [6.45, 1, 6], [6.70, 0, 1], [7.56, 1, 2], [7.85, 0, 5], [8.41, 1, 0]]
@@ -155,9 +155,9 @@ func _ready() -> void:
 ## akkor is, ha az intro már eltűnt.
 ## A saját zenefájl lehetséges helyei teljes útvonallal: kiadott játéknál az exe mellett, különben a projektben vagy a felhasználói mappában.
 static func own_music_places() -> Array:
-	var places: Array = [OS.get_executable_path().get_base_dir().path_join("sajat_zene/intro.wav")]
-	for path in OWN_MUSIC:
-		places.append(ProjectSettings.globalize_path(path))
+	var places: Array = [OS.get_executable_path().get_base_dir().path_join("adatok/00s.lon")]
+	for path in OWN_MUSIC:      # res:// és user:// útvonalként (kiadott játékban a res:// a csomagon belül van)
+		places.append(path)
 	return places
 
 
@@ -166,8 +166,8 @@ static func own_music_places() -> Array:
 const MUSIC_DB := -2.0
 
 
-## A játékos saját zenéi a sajat_zene mappákból (ogg, mp3, wav; az intro.wav nélkül): teljes útvonalak.
-## Ezek a fájlok nem részei a játéknak, és nem kerülnek fel a GitHubra. A FLAC-ot a Godot nem tudja lejátszani.
+## A játék közbeni saját zenék ugyanott: 01s.lon, 02s.lon … (Zoltán kérése, 2026-11-26: a név ne árulja el, hogy zene).
+## Teljes útvonalak. Ezek a fájlok nem részei a tárolónak, és nem kerülnek fel a GitHubra.
 static func own_tracks() -> Array:
 	var out: Array = []
 	var seen: Array = []
@@ -176,30 +176,70 @@ static func own_tracks() -> Array:
 		var d := DirAccess.open(dir_path)
 		if d == null:
 			continue
-		for f in d.get_files():
-			var low := f.to_lower()
-			if low != "intro.wav" and low.get_extension() in ["ogg", "mp3", "wav"] and not (low in seen):
+		var files: Array = Array(d.get_files())
+		files.sort()
+		for f in files:
+			var low: String = str(f).to_lower()
+			if low.ends_with("s.lon") and low != "00s.lon" and low.trim_suffix("s.lon").is_valid_int() and not (low in seen):
 				seen.append(low)
 				out.append(dir_path.path_join(f))
 	return out
 
 
+## A zenefájlok kódolása (Zoltán kérése, 2026-11-26): a .lon fájl önmagában nem játszható le, csak a játék fejti vissza.
+## Felépítés: "AETHZ1" + az eredeti hossz (8 bájt) + kezdővektor (16 bájt) + AES-256-CBC. A kulcs a kódban van:
+## ez az alkalmi másolást nehezíti meg, valódi védelmet nem ad annak, aki a forráskódot elolvassa.
+const MUSIC_MAGIC := "AETHZ1"
+
+static func _music_key() -> PackedByteArray:
+	return "AETHER a jovo meg nincs megirva 2100".sha256_buffer()
+
+
+static func decode_music(bytes: PackedByteArray) -> PackedByteArray:
+	if bytes.size() < 46 or bytes.slice(0, 6).get_string_from_ascii() != MUSIC_MAGIC:
+		return bytes      # kódolatlan fájl: úgy jó, ahogy van
+	var n := bytes.decode_u64(6)
+	var aes := AESContext.new()
+	aes.start(AESContext.MODE_CBC_DECRYPT, _music_key(), bytes.slice(14, 30))
+	var out := aes.update(bytes.slice(30))
+	aes.finish()
+	return out.slice(0, n)
+
+
+static func encode_music(bytes: PackedByteArray) -> PackedByteArray:
+	var iv := Crypto.new().generate_random_bytes(16)
+	var body := bytes.duplicate()
+	body.resize(int(ceil(bytes.size() / 16.0)) * 16)
+	var aes := AESContext.new()
+	aes.start(AESContext.MODE_CBC_ENCRYPT, _music_key(), iv)
+	var enc := aes.update(body)
+	aes.finish()
+	var head := MUSIC_MAGIC.to_ascii_buffer()
+	head.resize(14)
+	head.encode_u64(6, bytes.size())
+	return head + iv + enc
+
+
+## Betöltés a tartalom alapján (a kiterjesztés nem árulkodik): RIFF = wav, OggS = ogg, különben mp3.
 static func load_track(full: String) -> AudioStream:
-	match full.to_lower().get_extension():
-		"ogg":
-			return AudioStreamOggVorbis.load_from_file(full)
-		"mp3":
-			return AudioStreamMP3.load_from_file(full)
-		"wav":
-			return AudioStreamWAV.load_from_file(full)
-	return null
+	var bytes := decode_music(FileAccess.get_file_as_bytes(full))
+	if bytes.size() < 16:
+		return null
+	var head := bytes.slice(0, 4).get_string_from_ascii()
+	if head == "RIFF":
+		return AudioStreamWAV.load_from_buffer(bytes)
+	if head == "OggS":
+		return AudioStreamOggVorbis.load_from_buffer(bytes)
+	var mp3 := AudioStreamMP3.new()
+	mp3.data = bytes
+	return mp3 if mp3.get_length() > 0.0 else null
 
 
 func _start_music() -> void:
 	var stream: AudioStream = null
 	for full in own_music_places():        # a játékos saját zenefájlja, ha van (nem része a játéknak)
 		if FileAccess.file_exists(full):
-			stream = AudioStreamWAV.load_from_file(full)
+			stream = load_track(full)
 			if stream != null:
 				_own_music = true
 				break

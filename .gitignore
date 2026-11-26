@@ -2,13 +2,7 @@
 *.tmp
 __pycache__/
 # a játékos saját zenéje: nem része a játéknak, soha nem kerül a tárolóba
-sajat_zene/*.wav
-sajat_zene/*.mp3
-sajat_zene/*.ogg
 kiadas/
 .claude/settings.local.json
-sajat_zene/*.import
-# a sajat_zene mappa minden más fájlja helyben marad (saját zenék: soha nem kerülnek a repóba)
-sajat_zene/*
-!sajat_zene/.gdignore
-!sajat_zene/OLVASSEL.txt
+# zenék álnéven: alapból nem kerülnek a tárolóba; csak a KÓDOLT változat mehet fel, kézzel (git add -f), Zoltán engedélyével
+*.lon
