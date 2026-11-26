@@ -557,3 +557,81 @@ Forrás: The design space for long-duration energy storage in decarbonized power
 Lektorálva: igen
 --- technikai ---
 Keresés: long-duration energy storage cost targets wind solar baseload
+
+# ----- Új témák (2026-11-26, Zoltán lektorálta) -----
+
+=== elakadt_vagyon ===
+Korszak: III. (Átalakulás)
+Kérdés: Mi lesz az olaj- és gázmezőkbe fektetett pénzzel, ha kevesebb kell belőlük?
+Röviden: Ha a világnak kevesebb szénre, olajra és gázra lesz szüksége, a már kiépített kutak és bányák egy része feleslegessé válik, a beléjük fektetett pénz pedig elveszhet.
+Ha kikutatod:
+Mire jó?: Ha egy ország ezt időben felismeri, nem költ olyan új kutakra, amelyek sosem térülnek meg, és máshová irányíthatja a tőkét.
+Mi a gond vele?: A veszteség nem egyenlően oszlik el: a fosszilis energiahordozókat exportáló országok veszítenek, a vásárlók viszont nyerhetnek a helyzeten.
+Mennyire bizonyított?: Egy világgazdasági modell szerint a feleslegessé váló fosszilis vagyon 1–4 ezermilliárd dollárnyi veszteséget jelenthet. Ennek egy része az egyre olcsóbb tiszta technológiák miatt új klímavédelmi szabályok nélkül is bekövetkezik. A vesztesek között lehet Oroszország, az Egyesült Államok és Kanada, a nyertesek között pedig az importra szoruló Kína és az Európai Unió.
+Kérdés angolul: What happens to the money invested in oil and gas fields if less is needed?
+Röviden angolul: If the world needs less coal, oil and gas, some wells and mines already built become useless. The money put into them can be lost.
+Ha kikutatod angolul:
+Mire jó? angolul: If a country knows this in time, it does not spend on new wells that will never pay off, and can invest elsewhere.
+Mi a gond vele? angolul: The loss is not shared equally: countries selling fossil fuels lose, buyers can gain.
+Mennyire bizonyított? angolul: A world economic model finds that fossil assets becoming useless could mean a loss of 1–4 trillion dollars. Part of this happens even without new climate rules, because clean technology is getting cheaper. Losers could include Russia, the United States and Canada; winners include importers such as China and the European Union.
+Forrás: Macroeconomic impact of stranded fossil fuel assets (2018) – https://doi.org/10.1038/s41558-018-0182-1
+Lektorálva: igen
+--- technikai ---
+Keresés: stranded fossil fuel assets macroeconomic impact
+
+=== fosszilis_tamogatas ===
+Korszak: III. (Átalakulás)
+Kérdés: Sokat segít, ha az államok nem támogatják tovább az olcsó benzint és gázt?
+Röviden: Sok ország piaci ár alatt adja az üzemanyagot és a fosszilis alapú áramot. Sokan remélik, hogy e támogatások kivezetése jelentősen csökkentené a kibocsátást.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, mennyit ér valójában ez a lépés, nem fűzünk hozzá túlzott reményeket, és más eszközöket is bevetünk mellette.
+Mi a gond vele?: Ahol megszűnik a támogatás, az olcsóbb szén átveheti a megdráguló olaj és gáz helyét, ami végső soron akár növelheti is a kibocsátást.
+Mennyire bizonyított?: Egy nemzetközi modellvizsgálat szerint a támogatások megszüntetése meglepően kevéssé fogná vissza a világ energiaigényét és CO2-kibocsátását, és 2030-ig a megújuló energia arányát sem növelné. A legnagyobb csökkenés az olajat és gázt exportáló országokban következne be.
+Kérdés angolul: Does it help much if states stop subsidising cheap petrol and gas?
+Röviden angolul: Many countries sell fuel and fossil electricity below market price. Many hope that ending this would cut emissions a lot.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know what this step is worth, we do not expect too much from it, and can choose other tools alongside it.
+Mi a gond vele? angolul: Where subsidies end, coal can take the place of more expensive oil and gas, which can even raise emissions.
+Mennyire bizonyított? angolul: An international modelling study finds that removing subsidies would cut world energy demand and CO2 emissions surprisingly little, and would not raise the share of renewable energy by 2030. The biggest cuts would be in oil- and gas-exporting countries.
+Forrás: Limited emission reductions from fuel subsidy removal except in energy-exporting regions (2018) – https://doi.org/10.1038/nature25467
+Lektorálva: igen
+--- technikai ---
+Keresés: fossil fuel subsidy removal emissions
+
+=== olajmezo_kibocsatas ===
+Korszak: III. (Átalakulás)
+Kérdés: Mennyi kibocsátással jár már maga az olaj kitermelése is?
+Röviden: Mielőtt a benzin a tankba kerül, a kőolajat a felszínre kell hozni, el kell szállítani és meg kell finomítani. Már ez a folyamat is rengeteg energiát emészt fel.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, melyik olajmező szennyez a legjobban, ott lehet a leghamarabb csökkenteni a kibocsátást.
+Mi a gond vele?: Nincs egységes mérési módszer, és sok olajmezőről kevés a nyilvános adat.
+Mennyire bizonyított?: A kőolaj kitermelése, szállítása és finomítása a benzin és a gázolaj teljes életciklus-kibocsátásának körülbelül 15–40%-át teszi ki. A kutatók a világ összes nagy, működő olajmezőjére kiszámították, mekkora kibocsátással jár maga a kitermelés.
+Kérdés angolul: How much do emissions come just from getting oil out of the ground?
+Röviden angolul: Before petrol reaches the tank, oil must be brought up, transported and refined. This also uses a lot of energy.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know which oil fields pollute most, emissions can be cut there first.
+Mi a gond vele? angolul: There is no single measuring method, and little public data exists for many oil fields.
+Mennyire bizonyított? angolul: Producing, transporting and refining crude oil accounts for about 15–40% of the total emissions of petrol and diesel. The researchers calculated the emissions of production for all major active oil fields in the world.
+Forrás: Global carbon intensity of crude oil production (2018) – https://doi.org/10.1126/science.aar6859
+Lektorálva: igen
+--- technikai ---
+Keresés: crude oil production carbon intensity oil fields
+
+=== energia_munkahely ===
+Korszak: III. (Átalakulás)
+Kérdés: Elvesznek a munkahelyek, ha bezárnak a szén-, olaj- és gázbányák?
+Röviden: Sokan tartanak attól, hogy a fosszilis energia kivezetése munkanélküliséget hoz. Ugyanakkor új munkahelyek is születnek a napelemek és a szélerőművek gyártásában és telepítésében.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, hol jönnek létre új állások, a bányászokat és az olajiparban dolgozókat időben át lehet képezni.
+Mi a gond vele?: A régi munkahelyek a bányákban és az olajmezőkön szűnnek meg, az újak viszont főként a gyárakban születnek, ezért sokaknak új szakmát kell tanulniuk.
+Mennyire bizonyított?: 50 ország adatai alapján, ha a világ jóval 2 °C alatt tartja a felmelegedést, az energiaágazatban dolgozók száma a mai 18 millióról 2050-re 26 millióra nőhet, míg a jelenlegi szakpolitikák mellett csak 21 millióra. A fosszilis kitermelés munkahelyei gyorsan fogynak, de a nap- és szélenergia – különösen a gyártás terén – bőven pótolja őket.
+Kérdés angolul: Will jobs be lost if coal, oil and gas mines close?
+Röviden angolul: Many fear that the end of fossil energy will bring unemployment. But new work is created in making and building solar panels and wind turbines.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know where new work will be, miners and oil workers can be retrained in time.
+Mi a gond vele? angolul: Old jobs disappear in mines and oil fields, while new ones appear mainly in factories, so many people will need to learn a new trade.
+Mennyire bizonyított? angolul: Based on data from 50 countries, if the world keeps warming well below 2 °C, energy sector jobs could grow from 18 million today to 26 million by 2050, compared with only 21 million under current policies. Fossil extraction jobs fall quickly, but solar and wind, especially manufacturing, make up for them.
+Forrás: Meeting well-below 2°C target would increase energy sector jobs globally (2021) – https://doi.org/10.1016/j.oneear.2021.06.005
+Lektorálva: igen
+--- technikai ---
+Keresés: energy sector jobs well below 2 degrees fossil fuel employment

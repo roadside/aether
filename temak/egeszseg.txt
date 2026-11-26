@@ -381,3 +381,24 @@ Forrás: Higher temperatures increase suicide rates in the United States and Mex
 Lektorálva: igen
 --- technikai ---
 Keresés: temperature mental health climate change empirical|heat suicide rates
+
+# ----- Új témák (2026-11-26, Zoltán lektorálta) -----
+
+=== szalmonella ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Több lesz az ételmérgezés a melegben?
+Röviden: Melegben a baktériumok gyorsabban szaporodnak az ételekben, ezért nyáron gyakoribb a szalmonella okozta ételmérgezés.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, hogy a hőség növeli a kockázatot, jobban odafigyelhetünk a hűtésre és a konyhai higiéniára, különösen nyáron.
+Mi a gond vele?: A hatás nem mindenkinél egyforma: a legerősebb összefüggést a 15–64 évesek körében, valamint a szalmonella egyik leggyakoribb típusánál figyelték meg.
+Mennyire bizonyított?: Tíz európai ország adatai szerint 6 °C fölött minden egyes foknyi melegedéssel egyenletesen nő a szalmonellás megbetegedések száma. A legerősebb hatása a megbetegedést megelőző hét hőmérsékletének volt, ezért a kutatók szerint az élelmiszerek megfelelő kezelése a legfontosabb.
+Kérdés angolul: Will heat bring more food poisoning?
+Röviden angolul: In the heat, bacteria multiply faster in food. That is why salmonella food poisoning is more common in summer.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know heat raises the risk, we can pay more attention to cooling and kitchen hygiene, especially in summer.
+Mi a gond vele? angolul: The effect is not the same for everyone: it was strongest among people aged 15–64 and for one common type of salmonella.
+Mennyire bizonyított? angolul: Data from ten European countries show that above 6 °C, salmonella cases rise steadily with every degree. The temperature in the week before the illness mattered most, so the researchers say handling food well is key.
+Forrás: The effect of temperature on food poisoning: a time-series analysis of salmonellosis in ten European countries (2004) – https://doi.org/10.1017/s0950268804001992
+Lektorálva: igen
+--- technikai ---
+Keresés: temperature salmonellosis food poisoning Europe

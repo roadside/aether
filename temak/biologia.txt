@@ -341,3 +341,157 @@ Forrás: IPCC AR6 WG1 – Climate Change 2021: The Physical Science Basis (2021)
 Lektorálva: igen
 --- technikai ---
 Keresés: tropical forest carbon sink saturation Amazon Africa
+
+# ----- Új témák (2026-11-26, Zoltán lektorálta) -----
+
+=== hal_fogas ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Kevesebb halat ad a melegedő tenger?
+Röviden: A halak a számukra ideális hőmérsékletű vizet keresik. Ahogy melegszik a tenger, egyes halállományok zsugorodnak, mások viszont gyarapodnak.
+Ha kikutatod:
+Mire jó?: Ha a halászat alkalmazkodik a változáshoz, nem halásszák túl a gyengülő állományokat, így hosszabb távon is marad élelem.
+Mi a gond vele?: Nem minden faj és tenger egyforma: van, ahol több hal lesz, máshol viszont sokkal kevesebb.
+Mennyire bizonyított?: 124 faj 235 állományának vizsgálata szerint 1930 és 2010 között a felmelegedés miatt 4,1%-kal csökkent a fenntartható módon kifogható hal mennyisége. Öt tengeri térségben a visszaesés elérte a 15–35%-ot is.
+Kérdés angolul: Does the warming sea give fewer fish?
+Röviden angolul: Fish seek water at the temperature that suits them. As the sea warms, some fish stocks shrink while others grow.
+Ha kikutatod angolul:
+Mire jó? angolul: If fisheries take the change into account, weakening stocks are not overfished, and there is food for longer.
+Mi a gond vele? angolul: Not all species and seas are alike: some places will have more fish, others far fewer.
+Mennyire bizonyított? angolul: A study of 235 stocks of 124 species found that warming cut the amount of fish that can be caught sustainably by 4.1% between 1930 and 2010. In five sea regions the drop was 15–35%.
+Forrás: Impacts of historical warming on marine fisheries production (2019) – https://doi.org/10.1126/science.aau1758
+Lektorálva: igen
+--- technikai ---
+Keresés: warming marine fisheries maximum sustainable yield
+
+=== erdo_hutes ===
+Korszak: I. (Felismerés)
+Kérdés: Csak a szén megkötésével hűtenek az erdők?
+Röviden: Az erdők nemcsak elnyelik a szén-dioxidot, hanem párologtatnak és árnyékolnak is. Ez önmagában is hűti a környezetüket.
+Ha kikutatod:
+Mire jó?: Ha ezt is figyelembe vesszük, látszik, hogy a trópusi erdők védelme még többet ér, mint amennyit pusztán a megkötött szén alapján gondolnánk.
+Mi a gond vele?: Messze északon, a havas tájakon a sötét lombkorona több napfényt nyel el, mint a fehér hó, ezért ott az erdő melegítő hatású is lehet.
+Mennyire bizonyított?: Egy átfogó elemzés szerint a trópusi erdőirtás mind a CO2-kibocsátás, mind a párolgás kiesése miatt erősen melegít. A trópusoktól nagyjából az északi szélesség 30–40. fokáig az erdők helyben és globálisan is hűtenek. Az 50. szélességi fok fölött az erdőirtás összességében hűtheti a bolygót, mert a hó több fényt ver vissza. Helyi szinten azonban az erdő mindenhol mérsékli a szélsőséges hőmérsékleteket.
+Kérdés angolul: Do forests cool the Earth only by storing carbon?
+Röviden angolul: Forests not only absorb CO2, they also evaporate water and give shade. This alone cools the surroundings.
+Ha kikutatod angolul:
+Mire jó? angolul: If we count this too, protecting tropical forests is worth even more than the stored carbon suggests.
+Mi a gond vele? angolul: Far north, in snowy landscapes, dark forest absorbs more sunlight than white snow, so there forests can also warm.
+Mennyire bizonyított? angolul: A review finds that tropical deforestation warms strongly, through both CO2 and lost evaporation. From the tropics to about 30–40° north, standing forests cool both locally and globally. Above 50° north, deforestation can cool overall, because snow reflects more light. Locally, however, forests reduce extreme temperatures everywhere.
+Forrás: The Unseen Effects of Deforestation: Biophysical Effects on Climate (2022) – https://doi.org/10.3389/ffgc.2022.756115
+Lektorálva: igen
+--- technikai ---
+Keresés: biophysical effects deforestation climate latitude
+
+=== erdo_eso ===
+Korszak: I. (Felismerés)
+Kérdés: Az erdő hozza az esőt?
+Röviden: A fák a talajból felszívott vizet a leveleiken keresztül visszajuttatják a levegőbe. A szél ezt a nedvességet továbbviszi, és távolabb eső formájában hullik alá.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, hogy az erdők a távolabbi földeknek is esőt adnak, az erdővédelemmel a mezőgazdaságot és az ivóvízkészleteket is óvjuk.
+Mi a gond vele?: Ha kivágják az erdőt, a szélirányba eső területeken is kevesebb csapadék hullhat, akár több száz kilométeres távolságban is.
+Mennyire bizonyított?: Műholdas mérések szerint a trópusi szárazföldek több mint 60%-án az a légtömeg, amely előzőleg néhány napig sűrű növényzet fölött haladt át, legalább kétszer annyi esőt hoz, mint a gyér növényzet fölül érkező levegő. A jelenlegi ütemű erdőirtás folytatódásával az Amazonas-medencében 2050-re az esős évszakban 12%-kal, a száraz évszakban pedig 21%-kal kevesebb eső eshet.
+Kérdés angolul: Do forests bring the rain?
+Röviden angolul: Trees return water drawn from the soil to the air through their leaves. The wind carries this moisture onward, and it falls as rain farther away.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know that forests give rain to more distant land too, protecting them also protects farming and drinking water.
+Mi a gond vele? angolul: If the forest is cut down, downwind regions can get less rain too, even hundreds of kilometres away.
+Mennyire bizonyított? angolul: Satellite measurements show that over more than 60% of tropical land, air that passed over dense vegetation in the previous few days brings at least twice as much rain as air that came over sparse vegetation. If current clearing continues, the Amazon basin could get 12% less rain in the wet season and 21% less in the dry season by 2050.
+Forrás: Observations of increased tropical rainfall preceded by air passage over forests (2012) – https://doi.org/10.1038/nature11390
+Lektorálva: igen
+--- technikai ---
+Keresés: forests tropical rainfall moisture recycling
+
+=== import_erdoirtas ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Az erdőirtásért azok is felelősek, akik a termékeit megveszik?
+Röviden: A trópusokon kivágott erdők helyén megtermelt marhahús, szója és pálmaolaj nagy részét külföldre szállítják. Így az erdőirtás jelentős része a távoli vásárlók igényei miatt történik.
+Ha kikutatod:
+Mire jó?: Ha a felvásárló országok is számolnak ezzel, szigorúbb szabályozással és tudatosabb vásárlással visszaszoríthatják az erdőirtást.
+Mi a gond vele?: Ma ezt a kibocsátást annál az országnál könyvelik el, ahol az erdőt kivágták, nem pedig a vásárlónál. A kutatók szerint a fogyasztói oldalon is el kellene számolni vele.
+Mennyire bizonyított?: 2010 és 2014 között a trópusi erdőirtásból származó kibocsátás 29–39%-át a nemzetközi kereskedelem hajtotta. Ez jóval magasabb arány, mint a fosszilis kibocsátások esetében. Az uniós országokban az élelmiszer-fogyasztás szénlábnyomának mintegy 15%-a erdőirtásból ered.
+Kérdés angolul: Are buyers of its products also responsible for deforestation?
+Röviden angolul: Much of the beef, soy and palm oil grown on cleared tropical land is shipped to other countries. So part of deforestation happens because of distant buyers.
+Ha kikutatod angolul:
+Mire jó? angolul: If buying countries take this into account, rules and careful shopping can reduce deforestation.
+Mi a gond vele? angolul: Today these emissions are counted in the country where the forest was cleared, not the buyer's. The researchers say they should be counted on the buyer's side too.
+Mennyire bizonyított? angolul: Between 2010 and 2014, 29–39% of emissions from tropical deforestation were driven by international trade. That is a much bigger share than for fossil emissions. In EU countries, about 15% of the carbon footprint of food comes from deforestation.
+Forrás: Agricultural and forestry trade drives large share of tropical deforestation emissions (2019) – https://doi.org/10.1016/j.gloenvcha.2019.03.002
+Lektorálva: igen
+--- technikai ---
+Keresés: deforestation emissions embodied in trade
+
+=== oslakos_fold ===
+Korszak: III. (Átalakulás)
+Kérdés: Megvédi az erdőt, ha az ott élő őslakosok hivatalosan is megkapják a földjüket?
+Röviden: Sok erdőben évszázadok óta őslakos közösségek élnek, de a föld papíron nem az övék. Ha hivatalos tulajdonjogot kapnak, ki tudják tiltani a fakitermelőket és az erdőirtókat.
+Ha kikutatod:
+Mire jó?: Olcsó és igazságos módja az erdővédelemnek: azok vigyáznak a területre, akik ott élnek és belőle tartják fenn magukat.
+Mi a gond vele?: A hatást egyelőre csak a tulajdonjog megadását övező két évben vizsgálták, a hosszabb távú eredmények kevésbé ismertek.
+Mennyire bizonyított?: A perui Amazonas-vidéken az 1970-es évek közepe óta több mint 1200 őslakos közösség kapott tulajdonjogot összesen mintegy 11 millió hektárnyi földre. Műholdképek szerint a tulajdonjog bejegyzése körüli két évben több mint háromnegyedével csökkent az erdőirtás, és körülbelül kétharmadával mérséklődött az erdőkárosítás.
+Kérdés angolul: Does it protect the forest if Indigenous people living there get legal title to their land?
+Röviden angolul: Many forests have been home to Indigenous communities for centuries, but on paper the land is not theirs. With legal title, they can keep out clearers.
+Ha kikutatod angolul:
+Mire jó? angolul: It is a cheap and fair way to protect forests: those who live there and live from it look after it.
+Mi a gond vele? angolul: The effect was measured only in the two years around titling; the longer-term effect is less well known.
+Mennyire bizonyított? angolul: In the Peruvian Amazon, more than 1,200 Indigenous communities with about 11 million hectares have received land title since the mid-1970s. Satellite images show that in the two years around titling, forest clearing fell by more than three-quarters and forest damage by about two-thirds.
+Forrás: Titling indigenous communities protects forests in the Peruvian Amazon (2017) – https://doi.org/10.1073/pnas.1603290114
+Lektorálva: igen
+--- technikai ---
+Keresés: indigenous land titling deforestation Amazon
+
+=== erdo_degradacio ===
+Korszak: I. (Felismerés)
+Kérdés: Csak az számít, ha teljesen kivágják az erdőt?
+Röviden: Az erdő akkor is sérül, ha nem vágják ki teljesen: például ha kiszedik a legértékesebb fákat, leég az aljnövényzet, vagy utak szabdalják fel a területet. Ezt erdőleromlásnak (degradációnak) nevezzük.
+Ha kikutatod:
+Mire jó?: Ha a sérült erdőket is számba vesszük, pontosabban látjuk, mennyi szén vész el valójában, és hol van szükség védelemre.
+Mi a gond vele?: A károsodott erdőkről sokáig kevés adat állt rendelkezésre, ezért kimaradtak a számításokból.
+Mennyire bizonyított?: A brazil Amazonas-vidéken 1992 és 2014 között 337 427 km² erdő károsodott, miközben 308 311 km²-t vágtak ki teljesen. A sérült erdők területe tehát már meghaladja a tarra vágott területekét.
+Kérdés angolul: Does it only matter if a forest is cut down completely?
+Röviden angolul: A forest is harmed even if it is not fully cleared: when the best trees are taken, the undergrowth burns, or roads cut it up. This is called forest degradation.
+Ha kikutatod angolul:
+Mire jó? angolul: If damaged forest is measured too, we see how much carbon is really lost, and where protection is needed.
+Mi a gond vele? angolul: For a long time there was little data on damaged forest, so it was left out of the calculations.
+Mennyire bizonyított? angolul: In the Brazilian Amazon, 337,427 km² of forest was degraded between 1992 and 2014, while 308,311 km² was cleared. So the area of damaged forest is now larger than the cleared area.
+Forrás: Long-term forest degradation surpasses deforestation in the Brazilian Amazon (2020) – https://doi.org/10.1126/science.abb3021
+Lektorálva: igen
+--- technikai ---
+Keresés: forest degradation Amazon area deforestation
+
+=== erdo_zavarok ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Egyre több kárt tesz a vihar, a tűz és a szú az európai erdőkben?
+Röviden: Az erdőket viharok döntik ki, tüzek emésztik fel, és kártevők – például szúbogarak – pusztítják. A melegebb, szárazabb időjárásban ezek a károk egyre gyakoribbá válhatnak.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, mi fenyegeti az erdőket, ellenállóbb, vegyes fajösszetételű erdőket telepíthetünk, és időben megkezdhetjük a védekezést.
+Mi a gond vele?: Sok kisebb kárt nem jelentenek be, így a valós pusztítás mértéke nagyobb a hivatalosan nyilvántartottnál.
+Mennyire bizonyított?: 34 európai ország 1950 és 2019 közötti adatai szerint a természetes erdőkárok egyértelműen megszaporodtak: átlagosan évi 43,8 millió m³ fa károsodott. Az utolsó 20 évben ez az éves fakitermelés 16%-át tette ki. A károk 46%-át a szél, 24%-át a tűz, 17%-át pedig a szúbogarak okozták, és ez utóbbiak részesedése az elmúlt két évtizedben megduplázódott.
+Kérdés angolul: Are storms, fire and bark beetles doing more and more damage in European forests?
+Röviden angolul: Forests are blown down by storms, burned by fires and destroyed by insects such as bark beetles. In warmer, drier weather this damage can become more frequent.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know what threatens the forest, more resilient mixed forests can be planted and protection can start in time.
+Mi a gond vele? angolul: Much smaller damage goes unreported, so the real damage is greater than recorded.
+Mennyire bizonyított? angolul: Data from 34 European countries for 1950–2019 show a clear rise in natural forest damage: on average 43.8 million m³ of timber was damaged per year. In the last 20 years this equalled 16% of the annual harvest. Wind caused 46% of the damage, fire 24% and bark beetles 17%, and the beetles' share doubled in the last 20 years.
+Forrás: Significant increase in natural disturbance impacts on European forests since 1950 (2022) – https://doi.org/10.1111/gcb.16531
+Lektorálva: igen
+--- technikai ---
+Keresés: natural disturbances European forests wind fire bark beetle
+
+=== gyep_nem_erdo ===
+Korszak: IV. (Helyreállítás)
+Kérdés: Mindenhová jó, ha fát ültetünk?
+Röviden: A faültetés jó ötletnek tűnik, de nem minden táj volt eredetileg erdő. A füves puszták és a szavannák ősi, fajgazdag élőhelyek, sajátos növény- és állatvilággal.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, hol terült el valóban erdő, oda ültetünk fát, ahová való, és nem tesszük tönkre az értékes füves élőhelyeket.
+Mi a gond vele?: A térképek sokszor nem tesznek különbséget a természetes füves táj és a kivágott erdő helye között, ezért rossz helyre tervezhetnek erdősítést.
+Mennyire bizonyított?: Kutatók szerint nemzetközi szervezetek egyik térképe 9 millió km² ősi füves tájat jelölt ki erdősítésre alkalmas területként. Ha ezeket a gyepeket és szavannákat beerdősítenék, az súlyosan károsítaná az élővilágot és mindazokat a javakat, amelyeket ezek a tájak az emberiségnek nyújtanak.
+Kérdés angolul: Is it good to plant trees everywhere?
+Röviden angolul: Tree planting sounds like a good idea, but not every landscape was forest. Grasslands and savannas are ancient, rich habitats with their own plants and animals.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know where forest really grew, we plant trees where they belong and do not destroy grassy habitats.
+Mi a gond vele? angolul: Maps often do not tell natural grassland apart from cleared forest, so forests may be planned in the wrong place.
+Mennyire bizonyított? angolul: Researchers found that a map by international organisations marked 9 million km² of ancient grassy landscapes as suitable for forest restoration. Planting forests on these grasslands and savannas would seriously harm wildlife and everything these landscapes give people.
+Forrás: Where Tree Planting and Forest Expansion are Bad for Biodiversity and Ecosystem Services (2015) – https://doi.org/10.1093/biosci/biv118
+Lektorálva: igen
+--- technikai ---
+Keresés: tree planting grassy biomes biodiversity

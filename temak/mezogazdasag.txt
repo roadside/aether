@@ -294,3 +294,24 @@ Forrás: Options for keeping the food system within environmental limits (2018) 
 Lektorálva: igen
 --- technikai ---
 Keresés: food environmental impact variation producers life cycle
+
+# ----- Új témák (2026-11-26, Zoltán lektorálta) -----
+
+=== co2_tapanyag ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Kevésbé lesz tápláló a gabona a sok CO2 miatt?
+Röviden: A növények a levegő szén-dioxidjából építkeznek. Ha több a CO2, gyorsabban nőnek, de a magjukban kevesebb fontos tápanyag halmozódik fel.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, melyik növény érzékeny erre, olyan fajtákat nemesíthetünk, amelyekben megmarad a cink és a vas.
+Mi a gond vele?: Világszerte körülbelül 2 milliárd ember szenved cink- és vashiányban, és ők főként gabonát és hüvelyeseket esznek. Számukra a csökkenő tápanyagtartalom különösen ártalmas.
+Mennyire bizonyított?: Szabadföldi kísérletekben a század közepére várható CO2-szint mellett a búzához és a rizshez hasonló (úgynevezett C3-as) gabonákban és a hüvelyesekben kevesebb lett a cink és a vas, a nem hüvelyes C3-as növényekben pedig a fehérje is. A kukoricához hasonló (C4-es) növényeket ez kevésbé érintette.
+Kérdés angolul: Will grain become less nutritious because of more CO2?
+Röviden angolul: Plants build themselves from CO2 in the air. With more CO2 they grow faster, but their seeds can hold fewer important nutrients.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know which crops are sensitive, varieties can be bred that keep their zinc and iron.
+Mi a gond vele? angolul: About 2 billion people worldwide lack zinc and iron, and they eat mostly grains and legumes. Lower nutrient content harms them most.
+Mennyire bizonyított? angolul: In field experiments at the CO2 level expected by mid-century, wheat- and rice-like (so-called C3) grains and legumes had less zinc and iron, and non-legume C3 crops also had less protein. Maize-like (C4) crops were less affected.
+Forrás: Increasing CO2 threatens human nutrition (2014) – https://doi.org/10.1038/nature13179
+Lektorálva: igen
+--- technikai ---
+Keresés: elevated CO2 crop zinc iron protein nutrition
