@@ -357,8 +357,50 @@ func volcano_now() -> bool:
 	return not over() and round_i == volcano_round()
 
 
+## Világjárvány (játékszabály): játékonként egyszer, sorsolt kör elején. A kör első évében a világ CO2-kibocsátása 5%-kal kisebb
+## (a valódi minta: 2020-ban az éves kibocsátás kb. 4–7%-kal esett – Le Quéré és mtsai 2020, Nature Climate Change,
+## doi:10.1038/s41558-020-0797-x). A melegedés ettől alig változik, mert a CO2 felhalmozódik.
+## „Zöld újrakezdés”: aki ebben a körben célt vállal, öt évvel korábbit vállal.
+## Áttörés (játékszabály): játékonként egyszer; abban és a következő körben minden csoportnak eggyel kevesebb kártya kell
+## (a valódi minta: a megújulók ára gyorsabban esett, mint a modellek várták – Way és mtsai 2022, Joule, doi:10.1016/j.joule.2022.08.009).
+const PANDEMIC_CUT := 0.05
+const RESTART_YEARS := 5
+var _sr_seed := -1
+var _sr: Array = [0, 0]
+
+func surprise_rounds() -> Array:      # [világjárvány köre, áttörés első köre] – a Föld-magból, a vulkántól eltérő körökben
+	if _sr_seed == seed_v:
+		return _sr
+	var v := volcano_round()
+	var r := RandomNumberGenerator.new()
+	r.seed = seed_v * 104729 + 71
+	var cp: Array = range(2, 8).filter(func(k: int) -> bool: return k != v and k != v + 1)
+	var p: int = cp[r.randi_range(0, cp.size() - 1)]
+	var cb: Array = range(2, 12).filter(func(k: int) -> bool: return not (k in [v, v + 1, p, p + 1]) and not (k + 1 in [v, p]))
+	var b: int = cb[r.randi_range(0, cb.size() - 1)]
+	_sr = [p, b]
+	_sr_seed = seed_v
+	return _sr
+
+
+func pandemic_now() -> bool:
+	return not over() and round_i == int(surprise_rounds()[0])
+
+
+func breakthrough_now() -> bool:
+	var b := int(surprise_rounds()[1])
+	return not over() and (round_i == b or round_i == b + 1)
+
+
+## A ténylegesen vállalt célév: világjárvány körében öt évvel korábbi („Zöld újrakezdés”).
+func goal_year(target: int) -> int:
+	return target - RESTART_YEARS if pandemic_now() else target
+
+
 func cards_needed(g: Dictionary, target: int) -> int:
 	var n := maxi(1, stage_of(target) - int(g["fok"])) + (1 if g.get("makacs", false) else 0) + (1 if myth_on(g) else 0) + (1 if volcano_now() else 0)
+	if breakthrough_now():
+		n = maxi(1, n - 1)
 	return maxi(1, n - 1) if g["konnyebb"] else n
 
 
@@ -385,7 +427,7 @@ func preview(g: Dictionary, target: int, methane: bool = false) -> float:
 	else:
 		g["f0"] = fraction(g, y - 1) if int(g["cel"]) > 0 else float(g["f0"])
 		g["y0"] = y - 1
-		g["cel"] = target
+		g["cel"] = goal_year(target)
 	var after := float(forecast()["kozep"][-1][1])
 	for k in keep:
 		g[k] = keep[k]
@@ -398,7 +440,7 @@ func preview_path(g: Dictionary, target: int) -> Array:
 	var y := year()
 	g["f0"] = fraction(g, y - 1) if int(g["cel"]) > 0 else float(g["f0"])
 	g["y0"] = y - 1
-	g["cel"] = target
+	g["cel"] = goal_year(target)
 	var rows: Array = forecast()["kozep"]
 	for k in keep:
 		g[k] = keep[k]
@@ -413,7 +455,7 @@ func path(g: Dictionary, target: int = 0) -> Array:
 	if target > 0:
 		g["f0"] = fraction(g, y - 1) if int(g["cel"]) > 0 else float(g["f0"])
 		g["y0"] = y - 1
-		g["cel"] = target
+		g["cel"] = goal_year(target)
 	var out: Array = []
 	for yy in range(mini(y - 1, 2100), 2101):
 		out.append([yy, fraction(g, yy)])
@@ -464,14 +506,14 @@ func negotiate(g: Dictionary, target: int, played: Array) -> bool:
 	g["f0"] = fraction(g, y - 1) if int(g["cel"]) > 0 else float(g["f0"])
 	g["fok"] = stage_of(target)
 	g["y0"] = y - 1
-	g["cel"] = target
+	g["cel"] = goal_year(target)
 	g["konnyebb"] = false
 	g["inog"] = false          # az új egyezség meg is erősíti őket
 	for id in played:
 		_spend(g, id)
 	steps -= 1
 	_momentum()
-	naplo.append({"ev": y, "fajta": "cel", "csoport": g["id"], "cel": target})
+	naplo.append({"ev": y, "fajta": "cel", "csoport": g["id"], "cel": int(g["cel"])})
 	return true
 
 
@@ -628,9 +670,12 @@ func advance() -> void:
 	for i in ROUND_YEARS:
 		var y := int(st["ev"]) + 1
 		var dy := drivers(y)
+		var pand: bool = i == 0 and round_i == int(surprise_rounds()[0])      # világjárvány: egy évig 5%-kal kisebb kibocsátás
+		if pand:
+			dy["co2"] = float(dy["co2"]) * (1.0 - PANDEMIC_CUT)
 		hajto.append([float(dy["co2"]), float(dy["cdr"]), float(dy["ch4"])])
 		M.step(st, dy, p)
-		M.step(_base, {}, p)
+		M.step(_base, {"co2": M.E_CO2_NOW * (1.0 - PANDEMIC_CUT)} if pand else {}, p)
 		var dip: float = float(VOLCANO_DIP[i]) if (round_i == volcano_round() and i < VOLCANO_DIP.size()) else 0.0      # a kitörés utáni két év
 		history.append([y, float(st["T"]) - dip])
 		base_history.append([y, float(_base["T"]) - dip])
@@ -664,6 +709,15 @@ func advance() -> void:
 		naplo.append({"ev": year(), "fajta": "vulkan"})
 	elif round_i == volcano_round() + 1:
 		news.append({"fajta": "vulkan_vege"})
+	var sr := surprise_rounds()
+	if round_i == int(sr[0]):
+		news.append({"fajta": "jarvany"})
+		naplo.append({"ev": year(), "fajta": "jarvany"})
+	elif round_i == int(sr[0]) + 1 and float(st["netto"]) > 0.0:
+		news.append({"fajta": "jarvany_vege"})
+	if round_i == int(sr[1]):
+		news.append({"fajta": "attores"})
+		naplo.append({"ev": year(), "fajta": "attores"})
 	# megingás (játékszabály): aki az előző kör végén elbizonytalanodott, és nem erősítetted meg, visszalép:
 	# tíz évvel későbbre tolja a célját (legfeljebb 2090-ig, hogy a vállalás valódi maradjon), és egy fokozattal visszaesik
 	var just_wavered: Array = []

@@ -867,13 +867,13 @@ Kikerült a játékból: a Gyűjteményből a „Befejezett játékok…”, a �
 - „Az erdő és a föld biztosít megélhetést számunkra. Ki fizeti meg, ha érintetlenül hagyjuk?”
 - Itt minden VALÓDI: a klímamodell számai, a csoportok kibocsátása, a kártyák forrásai.
 
-## 22. Új szövegek (2026-11-26, 23:00) – vulkánkitörés – még nem lektorált
+## 22. Új szövegek (2026-11-26, 23:00) – vulkánkitörés – lektorálva (egy mondat függőben)
 
 Játékonként egyszer, váratlanul jön. A hírek ablakában:
 
 - Vulkánkitörés!
 - Hamu és kénes pára borítja az eget. A Föld egy-két évre lehűl.
-- Sokan azt hiszik, vége a melegedésnek. Ebben a körben minden csoportnak eggyel több kártya kell.
+- Sokan azt hiszik, hogy vége a melegedésnek. Ebben a körben minden csoportnak eggyel több kártya kell.
 - Így történt 1991-ben is, a Pinatubo kitörése után: a Föld kb. 0,2 °C-kal lehűlt, de 1995-re újra ugyanolyan meleg lett (NASA GISTEMP).
 
 A következő kör híreiben:
@@ -881,3 +881,25 @@ A következő kör híreiben:
 - A vulkáni pára kihullott a levegőből. A CO2 maradt, és a melegedés folytatódik.
 
 Forrás a számhoz: NASA GISTEMP v4 – https://data.giss.nasa.gov/gistemp/ (1991: +0,41 °C, 1992: +0,22 °C, 1995: +0,44 °C az 1951–1980-as átlaghoz képest).
+
+## 23. Új szövegek (2026-11-26, 23:30) – két új meglepetés – még nem lektorált
+
+Vigyázat: ez a rész elárulja a két meglepetést. Ha előbb játszani szeretnél, csak utána olvasd el.
+
+Hír a kör elején (első meglepetés):
+- Világjárvány!
+- Kiürültek az utak, leálltak a repülők. A világ kibocsátása egy évre hirtelen lezuhant.
+- Zöld újrakezdés: aki ebben a körben célt vállal, öt évvel korábbit vállal.
+- Így történt 2020-ban is: a napi kibocsátás tavaszra kb. 17%-kal esett, a levegő CO2-tartalma mégis 411,7-ről 414,2 ppm-re nőtt.
+
+Hír a következő kör elején:
+- A kibocsátás lezuhant, de a levegő CO2-tartalma tovább nőtt. A CO2 felhalmozódik: csak a tartós nulla kibocsátás állítja meg.
+
+Hír a kör elején (második meglepetés):
+- Áttörés!
+- Váratlanul gyorsan olcsóbb lett a napelem, a szélerőmű és az akkumulátor.
+- Két körön át minden csoportnak eggyel kevesebb kártya kell.
+- A szakértők rendre alábecsülték, milyen gyorsan lesz olcsóbb a tiszta energia (Way és mtsai, 2022).
+
+A tárgyalás ablakában:
+- Áttörés: most eggyel kevesebb kártya kell.

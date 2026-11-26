@@ -1047,16 +1047,32 @@ func _build_menu() -> void:
 	add_child(_menu)
 	var v := UI.vbox(8)
 	_menu.add_child(v)
-	var help := UI.button(L.t("Hogyan játssz?"))
+	var top_row := UI.hbox(4)
+	for lc in ["hu", "en"]:
+		var fl: Button = preload("res://scripts/flag.gd").new()
+		fl.code = lc
+		fl.active = L.is_en() == (lc == "en")
+		fl.tooltip_text = "Magyar" if lc == "hu" else "English"
+		fl.pressed.connect(func() -> void:
+			if L.is_en() != (lc == "en"):
+				L.set_lang(lc)
+				get_tree().reload_current_scene())
+		top_row.add_child(fl)
+	var top_gap := Control.new()
+	top_gap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	top_row.add_child(top_gap)
+	var help := UI.button("?")
+	help.custom_minimum_size = Vector2(46, 42)
+	help.tooltip_text = L.t("Hogyan játssz?")
+	help.add_theme_font_size_override("font_size", 22)
 	help.pressed.connect(func() -> void:
 		_show_menu(false)
 		_open_help())
-	v.add_child(help)
-	var lang := UI.button("English" if not L.is_en() else "Magyar")
-	lang.pressed.connect(func() -> void:
-		L.set_lang("hu" if L.is_en() else "en")
-		get_tree().reload_current_scene())
-	v.add_child(lang)
+	top_row.add_child(help)
+	v.add_child(top_row)
+	_reset_btn = UI.button(L.t("Új játék"))
+	_reset_btn.pressed.connect(_reset_game)
+	v.add_child(_reset_btn)
 	var story := UI.button(L.t("A te történeted"))
 	story.pressed.connect(func() -> void:
 		_show_menu(false)
@@ -1082,18 +1098,6 @@ func _build_menu() -> void:
 		_clear_moment()
 		_refresh())
 	v.add_child(tim)
-	_reset_btn = UI.button(L.t("Új játék"))
-	_reset_btn.pressed.connect(_reset_game)
-	v.add_child(_reset_btn)
-	var daily := UI.button(L.t("A mai Föld"))
-	var day_best: Variant = L.get_setting("napi_legjobb", {})
-	if typeof(day_best) == TYPE_DICTIONARY and day_best.has(str(_daily_code())):     # a mai legjobb eredményed
-		daily.text += " · +%s °C" % L.num(float(day_best[str(_daily_code())]), 2)
-	daily.tooltip_text = L.t("Ma mindenki ugyanezt a Földet kapja.")
-	daily.pressed.connect(func() -> void:
-		_show_menu(false)
-		_pick_game(_daily_code()))
-	v.add_child(daily)
 	var quit := UI.button(L.t("Kilépés a játékból"))
 	quit.pressed.connect(func() -> void:
 		_save()
@@ -1102,6 +1106,7 @@ func _build_menu() -> void:
 	for b in v.get_children():
 		if b is Button:
 			(b as Button).focus_mode = Control.FOCUS_NONE
+	help.focus_mode = Control.FOCUS_NONE
 
 
 ## A mai nap Föld-kódja (ééhhnn): aznap mindenki ugyanazt a Földet kapja.
@@ -1172,6 +1177,19 @@ func _pick_game(code: int = -1, level: int = -1) -> void:
 		var n: int = row[1]
 		var shown := n - (1 if lv >= 5 else 0)        # az 5. kihívás elvesz egy lépést: a gomb a valódi számot írja
 		body.add_child(_go("%s · %s" % [L.t(row[0]), L.t("%d lépés körönként") % shown], func() -> void: _new_game(code, n, lv), n == 4))
+	# a mai Föld: aznap mindenki ugyanazt a Földet kapja (a „Napi Föld” jelvényhez)
+	var daily := UI.button(L.t("A mai Föld"), code == _daily_code())
+	var day_best: Variant = L.get_setting("napi_legjobb", {})
+	if typeof(day_best) == TYPE_DICTIONARY and day_best.has(str(_daily_code())):     # a mai legjobb eredményed
+		daily.text += " · +%s °C" % L.num(float(day_best[str(_daily_code())]), 2)
+	daily.tooltip_text = L.t("Ma mindenki ugyanezt a Földet kapja.")
+	daily.focus_mode = Control.FOCUS_NONE
+	daily.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	daily.pressed.connect(func() -> void: _pick_game(-1 if code == _daily_code() else _daily_code(), lv))
+	var dgap := Control.new()
+	dgap.custom_minimum_size = Vector2(0, 8)
+	body.add_child(dgap)
+	body.add_child(daily)
 
 
 ## Az alacsonyabb szinteken (sikeres játékban) felhasznált kártyák: a magasabb szinten már nem jelennek meg.
@@ -1241,6 +1259,8 @@ func _refresh() -> void:
 	globe.set_plan_look({"smog": clampf(ratio, 0.0, 1.0), "clean": clampf(1.0 - ratio, 0.0, 1.0), "regrow": clampf(-ratio / 0.25, 0.0, 1.0)})
 	globe.sea_rise = clampf((t - M.T_START) / 2.0, 0.0, 1.0)
 	globe.ash = 1.0 if world.volcano_now() else 0.0
+	if world.pandemic_now():      # szemléltetés: a lezárások alatt kitisztul a levegő a városok fölött
+		globe.smog *= 0.25
 	var marks: Array = []
 	for g in world.groups:
 		var shaky: bool = g.get("inog", false) and not world.over()
@@ -2091,6 +2111,10 @@ func _open_group(g: Dictionary) -> void:
 		body.add_child(UI.label(L.t("Makacs csoport: eggyel több kártya kell nekik."), 15, UI.GOLD))
 	if g.get("inog", false):
 		asks.append({"fajta": "megerosites", "kell": 1})
+	if world.pandemic_now() and not targets.is_empty():
+		body.add_child(UI.label(L.t("Zöld újrakezdés: aki ebben a körben célt vállal, öt évvel korábbit vállal."), 15, UI.GOLD))
+	elif world.breakthrough_now() and not targets.is_empty():
+		body.add_child(UI.label(L.t("Áttörés: most eggyel kevesebb kártya kell."), 15, UI.GOLD))
 	for t in targets:
 		asks.append({"fajta": "cel", "cel": t, "kell": world.cards_needed(g, t)})
 	if int(g["metan"]) == 0 and _ramp(2):
@@ -2604,6 +2628,17 @@ func _advance() -> void:
 			await get_tree().create_timer(0.35).timeout
 		globe.ash = 1.0
 		await get_tree().create_timer(1.6).timeout
+	# világjárvány: a pára eltűnik a városok fölül; áttörés: arany felvillanások minden csoportnál
+	if world.pandemic_now() and not _test and world.game_id == game:
+		_sound("veszely")
+		globe.smog = 0.0
+		await get_tree().create_timer(1.8).timeout
+	if world.breakthrough_now() and world.round_i == int(world.surprise_rounds()[1]) and not _test and world.game_id == game:
+		_sound("jo_hir")
+		for k in 2:
+			for bg in world.groups:
+				globe.flash(float(bg["lat"]), float(bg["lon"]), UI.GOLD)
+				await get_tree().create_timer(0.18).timeout
 	_busy = false
 	_bar_hold = true
 	_refresh()
@@ -2687,13 +2722,31 @@ func _open_news(y0: int, t0: float) -> void:
 				var cv := UI.card(UI.EMBER)
 				cv.add_child(UI.label("⚠ " + L.t("Vulkánkitörés!"), 22, UI.EMBER, true))
 				cv.add_child(UI.label(L.t("Hamu és kénes pára borítja az eget. A Föld egy-két évre lehűl."), 18, UI.TEXT, true))
-				cv.add_child(UI.label(L.t("Sokan azt hiszik, vége a melegedésnek. Ebben a körben minden csoportnak eggyel több kártya kell."), 16, UI.GOLD))
+				cv.add_child(UI.label(L.t("Sokan azt hiszik, hogy vége a melegedésnek. Ebben a körben minden csoportnak eggyel több kártya kell."), 16, UI.GOLD))
 				cv.add_child(UI.label(L.t("Így történt 1991-ben is, a Pinatubo kitörése után: a Föld kb. 0,2 °C-kal lehűlt, de 1995-re újra ugyanolyan meleg lett (NASA GISTEMP)."), 15, UI.SOFT))
 				body.add_child(UI.card_root(cv))
 			"vulkan_vege":
 				var cv2 := UI.card(UI.GOLD)
 				cv2.add_child(UI.label(L.t("A vulkáni pára kihullott a levegőből. A CO2 maradt, és a melegedés folytatódik."), 18, UI.GOLD, true))
 				body.add_child(UI.card_root(cv2))
+			"jarvany":
+				var cj := UI.card(UI.EMBER)
+				cj.add_child(UI.label("⚠ " + L.t("Világjárvány!"), 22, UI.EMBER, true))
+				cj.add_child(UI.label(L.t("Kiürültek az utak, leálltak a repülők. A világ kibocsátása egy évre hirtelen lezuhant."), 18, UI.TEXT, true))
+				cj.add_child(UI.label(L.t("Zöld újrakezdés: aki ebben a körben célt vállal, öt évvel korábbit vállal."), 16, UI.GOLD))
+				cj.add_child(UI.label(L.t("Így történt 2020-ban is: a napi kibocsátás tavaszra kb. 17%-kal esett, a levegő CO2-tartalma mégis 411,7-ről 414,2 ppm-re nőtt."), 15, UI.SOFT))
+				body.add_child(UI.card_root(cj))
+			"jarvany_vege":
+				var cj2 := UI.card(UI.GOLD)
+				cj2.add_child(UI.label(L.t("A kibocsátás lezuhant, de a levegő CO2-tartalma tovább nőtt. A CO2 felhalmozódik: csak a tartós nulla kibocsátás állítja meg."), 18, UI.GOLD, true))
+				body.add_child(UI.card_root(cj2))
+			"attores":
+				var ca := UI.card(UI.GREEN)
+				ca.add_child(UI.label("★ " + L.t("Áttörés!"), 22, UI.GREEN, true))
+				ca.add_child(UI.label(L.t("Váratlanul gyorsan olcsóbb lett a napelem, a szélerőmű és az akkumulátor."), 18, UI.TEXT, true))
+				ca.add_child(UI.label(L.t("Két körön át minden csoportnak eggyel kevesebb kártya kell."), 16, UI.GOLD))
+				ca.add_child(UI.label(L.t("A szakértők rendre alábecsülték, milyen gyorsan lesz olcsóbb a tiszta energia (Way és mtsai, 2022)."), 15, UI.SOFT))
+				body.add_child(UI.card_root(ca))
 			"tevhit":
 				var cm := UI.card(MYTH_COLOR)
 				cm.add_child(UI.label("⚠ %s: %s" % [L.t("Tévhit terjed"), L.field(world.group(n["csoport"]), "nev")], 18, MYTH_COLOR, true))
@@ -3076,6 +3129,16 @@ func _add_story(body: VBoxContainer) -> void:
 				lc = UI.EMBER
 				lane = 2
 				mark = UI.EMBER
+			"jarvany":
+				line = L.t("Világjárvány!")
+				lc = UI.EMBER
+				lane = 2
+				mark = UI.EMBER
+			"attores":
+				line = L.t("Áttörés!")
+				lc = UI.GREEN
+				lane = 2
+				mark = UI.GREEN
 			"billenes":
 				var tp2: Array = world.tips.filter(func(x: Dictionary) -> bool: return x["id"] == e["id"])
 				if not tp2.is_empty():
@@ -3171,7 +3234,7 @@ func _monkey_buttons(n: Node, out: Array) -> void:
 			continue
 		if c is BaseButton and not (c as BaseButton).disabled and (c as Control).is_visible_in_tree():
 			var txt := str(c.get("text")) if c is Button else ""
-			if txt != L.t("Kilépés a játékból") and not (c as Control).tooltip_text.begins_with("http") and not (_monkey_calm and txt in [L.t("Menü"), "English", "Magyar"]):
+			if txt != L.t("Kilépés a játékból") and not (c as Control).tooltip_text.begins_with("http") and not (_monkey_calm and (txt in [L.t("Menü")] or (c as Control).tooltip_text in ["English", "Magyar"])):
 				out.append(c)
 		_monkey_buttons(c, out)
 
@@ -3428,6 +3491,11 @@ func _selftest() -> void:
 	world.threat = {"csoport": world.groups[2]["id"], "mi": "tuz"}
 	_open_news(2026, 1.41)
 	await _shot("7b_hir_kepjelek.png")
+	world.news = [{"fajta": "jarvany"}, {"fajta": "jarvany_vege"}, {"fajta": "attores"}]
+	world.threat = {}
+	_open_news(2026, 1.41)
+	await _shot("7f_jarvany_attores.png")
+	_close()
 	world.news = [{"fajta": "vulkan"}]       # a vulkánkitörés híre és a szürke fátyol képe
 	world.threat = {}
 	_open_news(2026, 1.41)
