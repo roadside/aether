@@ -882,18 +882,18 @@ A következő kör híreiben:
 
 Forrás a számhoz: NASA GISTEMP v4 – https://data.giss.nasa.gov/gistemp/ (1991: +0,41 °C, 1992: +0,22 °C, 1995: +0,44 °C az 1951–1980-as átlaghoz képest).
 
-## 23. Új szövegek (2026-11-26, 23:30) – két új meglepetés – még nem lektorált
+## 23. Új szövegek (2026-11-26, 23:30) – két új meglepetés – lektorálva
 
 Vigyázat: ez a rész elárulja a két meglepetést. Ha előbb játszani szeretnél, csak utána olvasd el.
 
 Hír a kör elején (első meglepetés):
 - Világjárvány!
-- Kiürültek az utak, leálltak a repülők. A világ kibocsátása egy évre hirtelen lezuhant.
-- Zöld újrakezdés: aki ebben a körben célt vállal, öt évvel korábbit vállal.
-- Így történt 2020-ban is: a napi kibocsátás tavaszra kb. 17%-kal esett, a levegő CO2-tartalma mégis 411,7-ről 414,2 ppm-re nőtt.
+- Kiürültek az utak, a földön vesztegelnek a repülők. A világ kibocsátása egy évre hirtelen lecsökkent.
+- Zöld újrakezdés: ebben a körben minden csoport öt évvel korábbra vállalja a nulla kibocsátást, mint ahogy kérted.
+- Így történt 2020-ban is: a napi CO2 kibocsátás tavaszra kb. 17%-kal esett, a levegő CO2-tartalma mégis 411,7-ről 414,2 ppm-re nőtt.
 
 Hír a következő kör elején:
-- A kibocsátás lezuhant, de a levegő CO2-tartalma tovább nőtt. A CO2 felhalmozódik: csak a tartós nulla kibocsátás állítja meg.
+- A CO2 kibocsátás lecsökkent, de a levegő CO2-tartalma tovább nőtt. A CO2 felhalmozódik: csak a tartós nulla kibocsátás állítja meg.
 
 Hír a kör elején (második meglepetés):
 - Áttörés!
@@ -904,7 +904,7 @@ Hír a kör elején (második meglepetés):
 A tárgyalás ablakában:
 - Áttörés: most eggyel kevesebb kártya kell.
 
-## 24. Új szövegek (2026-11-26, 23:10) – Új játék ablak – még nem lektorált
+## 24. Új szövegek (2026-11-26, 23:10) – Új játék ablak – lektorálva
 
 - Alap (a kihívás 0. szintjének gombja)
 - Gyorsabban telnek az évek: egy kör 90 helyett 75 másodpercig tart. (a „Gyorsabban telik az idő.” helyett)

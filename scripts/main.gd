@@ -2142,7 +2142,7 @@ func _open_group(g: Dictionary) -> void:
 	if g.get("inog", false):
 		asks.append({"fajta": "megerosites", "kell": 1})
 	if world.pandemic_now() and not targets.is_empty():
-		body.add_child(UI.label(L.t("Zöld újrakezdés: aki ebben a körben célt vállal, öt évvel korábbit vállal."), 15, UI.GOLD))
+		body.add_child(UI.label(L.t("Zöld újrakezdés: ebben a körben minden csoport öt évvel korábbra vállalja a nulla kibocsátást, mint ahogy kérted."), 15, UI.GOLD))
 	elif world.breakthrough_now() and not targets.is_empty():
 		body.add_child(UI.label(L.t("Áttörés: most eggyel kevesebb kártya kell."), 15, UI.GOLD))
 	for t in targets:
@@ -2762,13 +2762,13 @@ func _open_news(y0: int, t0: float) -> void:
 			"jarvany":
 				var cj := UI.card(UI.EMBER)
 				cj.add_child(UI.label("⚠ " + L.t("Világjárvány!"), 22, UI.EMBER, true))
-				cj.add_child(UI.label(L.t("Kiürültek az utak, leálltak a repülők. A világ kibocsátása egy évre hirtelen lezuhant."), 18, UI.TEXT, true))
-				cj.add_child(UI.label(L.t("Zöld újrakezdés: aki ebben a körben célt vállal, öt évvel korábbit vállal."), 16, UI.GOLD))
-				cj.add_child(UI.label(L.t("Így történt 2020-ban is: a napi kibocsátás tavaszra kb. 17%-kal esett, a levegő CO2-tartalma mégis 411,7-ről 414,2 ppm-re nőtt."), 15, UI.SOFT))
+				cj.add_child(UI.label(L.t("Kiürültek az utak, a földön vesztegelnek a repülők. A világ kibocsátása egy évre hirtelen lecsökkent."), 18, UI.TEXT, true))
+				cj.add_child(UI.label(L.t("Zöld újrakezdés: ebben a körben minden csoport öt évvel korábbra vállalja a nulla kibocsátást, mint ahogy kérted."), 16, UI.GOLD))
+				cj.add_child(UI.label(L.t("Így történt 2020-ban is: a napi CO2 kibocsátás tavaszra kb. 17%-kal esett, a levegő CO2-tartalma mégis 411,7-ről 414,2 ppm-re nőtt."), 15, UI.SOFT))
 				body.add_child(UI.card_root(cj))
 			"jarvany_vege":
 				var cj2 := UI.card(UI.GOLD)
-				cj2.add_child(UI.label(L.t("A kibocsátás lezuhant, de a levegő CO2-tartalma tovább nőtt. A CO2 felhalmozódik: csak a tartós nulla kibocsátás állítja meg."), 18, UI.GOLD, true))
+				cj2.add_child(UI.label(L.t("A CO2 kibocsátás lecsökkent, de a levegő CO2-tartalma tovább nőtt. A CO2 felhalmozódik: csak a tartós nulla kibocsátás állítja meg."), 18, UI.GOLD, true))
 				body.add_child(UI.card_root(cj2))
 			"attores":
 				var ca := UI.card(UI.GREEN)
