@@ -438,4 +438,6 @@ const EN := {
 	"Két körön át minden csoportnak eggyel kevesebb kártya kell.": "For two rounds every group needs one card fewer.",
 	"A szakértők rendre alábecsülték, milyen gyorsan lesz olcsóbb a tiszta energia (Way és mtsai, 2022).": "Experts kept underestimating how fast clean energy would get cheaper (Way et al., 2022).",
 	"Áttörés: most eggyel kevesebb kártya kell.": "Breakthrough: one card fewer is needed now.",
+	"Alap": "Base",
+	"Gyorsabban telnek az évek: egy kör 90 helyett 75 másodpercig tart.": "The years pass faster: a round lasts 75 seconds instead of 90.",
 }

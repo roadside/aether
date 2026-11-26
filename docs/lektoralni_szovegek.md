@@ -903,3 +903,10 @@ Hír a kör elején (második meglepetés):
 
 A tárgyalás ablakában:
 - Áttörés: most eggyel kevesebb kártya kell.
+
+## 24. Új szövegek (2026-11-26, 23:10) – Új játék ablak – még nem lektorált
+
+- Alap (a kihívás 0. szintjének gombja)
+- Gyorsabban telnek az évek: egy kör 90 helyett 75 másodpercig tart. (a „Gyorsabban telik az idő.” helyett)
+
+Kikerült: „A mai Föld”, „Ma mindenki ugyanezt a Földet kapja.”, a „Napi Föld” jelvény és a „A mai Föld: %d napja játszod egymás után.” sor.

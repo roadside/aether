@@ -45,7 +45,7 @@ const THREAT := {"hoseg": "Hőhullám fenyeget", "aszaly": "Aszály fenyeget", "
 const MYTH := {"napaktivitas": "A Nap okozza a melegedést, nem az ember.", "kozmikus": "A világűrből jövő sugárzás okozza a melegedést.",
 	"tcre": "A levegőben túl kevés a CO2 ahhoz, hogy számítson.", "felhok": "A felhők majd megállítják a melegedést."}
 const MYTH_COLOR := Color("#b9a2ff")
-const LEVELS := ["", "Gyorsabban telik az idő.", "Érzékenyebb a Föld.", "Egy csoport makacsabb.", "A csoportok könnyebben elbizonytalanodnak.", "Eggyel kevesebb lépésed van."]
+const LEVELS := ["", "Gyorsabban telnek az évek: egy kör 90 helyett 75 másodpercig tart.", "Érzékenyebb a Föld.", "Egy csoport makacsabb.", "A csoportok könnyebben elbizonytalanodnak.", "Eggyel kevesebb lépésed van."]
 const CDR_NAME := {"erdo": "Erdősítés", "bioszen": "Bioszén", "kozet": "Kőzetmállasztás", "levegoszures": "CO2-szűrés a levegőből", "novenyi_energia": "Növényi energia CO2-tárolással"}
 
 var world: World
@@ -1085,12 +1085,17 @@ func _build_menu() -> void:
 	v.add_child(coll)
 	var mus := UI.button(L.t("Zene: be") if _music_on() else L.t("Zene: ki"))
 	mus.pressed.connect(_toggle_music.bind(mus))
-	v.add_child(mus)
+	var snd_row := UI.hbox(8)
+	v.add_child(snd_row)
+	snd_row.add_child(mus)
 	var snd := UI.button(L.t("Hangok: be") if _sounds_on() else L.t("Hangok: ki"))
 	snd.pressed.connect(func() -> void:
 		L.set_setting("hangok", not _sounds_on())
 		snd.text = L.t("Hangok: be") if _sounds_on() else L.t("Hangok: ki"))
-	v.add_child(snd)
+	snd_row.add_child(snd)
+	for sb2 in [mus, snd]:
+		sb2.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		sb2.focus_mode = Control.FOCUS_NONE
 	var tim := UI.button(L.t("Idő: be") if _time_on() else L.t("Idő: ki"))
 	tim.pressed.connect(func() -> void:
 		L.set_setting("elo_ido", not _time_on())
@@ -1098,7 +1103,19 @@ func _build_menu() -> void:
 		_clear_moment()
 		_refresh())
 	v.add_child(tim)
+	var quit_gap := Control.new()      # hely a kilépés fölött, és más szín, hogy kitűnjön (Zoltán kérése)
+	quit_gap.custom_minimum_size = Vector2(0, 14)
+	v.add_child(quit_gap)
 	var quit := UI.button(L.t("Kilépés a játékból"))
+	for qs in ["normal", "hover", "pressed"]:
+		var qb := StyleBoxFlat.new()
+		qb.bg_color = Color("#3a1f24") if qs == "normal" else Color("#55282e")
+		qb.border_color = UI.EMBER
+		qb.set_border_width_all(2)
+		qb.set_content_margin_all(10)
+		quit.add_theme_stylebox_override(qs, qb)
+	quit.add_theme_color_override("font_color", UI.EMBER)
+	quit.add_theme_color_override("font_hover_color", Color.WHITE)
 	quit.pressed.connect(func() -> void:
 		_save()
 		get_tree().quit())
@@ -1165,7 +1182,7 @@ func _pick_game(code: int = -1, level: int = -1) -> void:
 		ll.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		lrow.add_child(ll)
 		for i in top + 1:
-			var lb := UI.button(str(i), i == lv)
+			var lb := UI.button(L.t("Alap") if i == 0 else str(i), i == lv)
 			lb.focus_mode = Control.FOCUS_NONE
 			lb.custom_minimum_size = Vector2(52, 0)
 			lb.pressed.connect(func() -> void: _pick_game(code, i))
@@ -1173,23 +1190,39 @@ func _pick_game(code: int = -1, level: int = -1) -> void:
 		body.add_child(lrow)
 		for i in range(1, lv + 1):
 			body.add_child(UI.label("%d. %s" % [i, L.t(LEVELS[i])], 16, UI.SOFT))
-	for row in [["Könnyű", 5], ["Közepes", 4], ["Nehéz", 3]]:
+		var lgap := Control.new()
+		lgap.custom_minimum_size = Vector2(0, 8)
+		body.add_child(lgap)
+	# három kártya egy sorban: név, a lépések pöttyei, alatta a szám (a pöttyök ugyanazok, mint a főoldal tetején)
+	var drow := UI.hbox(14)
+	for row in [["Könnyű", 5, UI.GREEN], ["Közepes", 4, UI.GOLD], ["Nehéz", 3, UI.EMBER]]:
 		var n: int = row[1]
-		var shown := n - (1 if lv >= 5 else 0)        # az 5. kihívás elvesz egy lépést: a gomb a valódi számot írja
-		body.add_child(_go("%s · %s" % [L.t(row[0]), L.t("%d lépés körönként") % shown], func() -> void: _new_game(code, n, lv), n == 4))
-	# a mai Föld: aznap mindenki ugyanazt a Földet kapja (a „Napi Föld” jelvényhez)
-	var daily := UI.button(L.t("A mai Föld"), code == _daily_code())
-	var day_best: Variant = L.get_setting("napi_legjobb", {})
-	if typeof(day_best) == TYPE_DICTIONARY and day_best.has(str(_daily_code())):     # a mai legjobb eredményed
-		daily.text += " · +%s °C" % L.num(float(day_best[str(_daily_code())]), 2)
-	daily.tooltip_text = L.t("Ma mindenki ugyanezt a Földet kapja.")
-	daily.focus_mode = Control.FOCUS_NONE
-	daily.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
-	daily.pressed.connect(func() -> void: _pick_game(-1 if code == _daily_code() else _daily_code(), lv))
-	var dgap := Control.new()
-	dgap.custom_minimum_size = Vector2(0, 8)
-	body.add_child(dgap)
-	body.add_child(daily)
+		var col: Color = row[2]
+		var shown := n - (1 if lv >= 5 else 0)        # az 5. kihívás elvesz egy lépést: a kártya a valódi számot írja
+		var db := Button.new()
+		db.focus_mode = Control.FOCUS_NONE
+		db.custom_minimum_size = Vector2(230, 150)
+		for st_name in ["normal", "hover", "pressed"]:
+			var sb := StyleBoxFlat.new()
+			sb.bg_color = Color("#1a2644") if st_name == "normal" else Color("#24345c")
+			sb.border_color = col if st_name != "normal" else col.darkened(0.35)
+			sb.set_border_width_all(2)
+			sb.border_width_top = 6
+			sb.set_corner_radius_all(10)
+			db.add_theme_stylebox_override(st_name, sb)
+		var dv := UI.vbox(6)
+		dv.set_anchors_preset(Control.PRESET_FULL_RECT)
+		dv.alignment = BoxContainer.ALIGNMENT_CENTER
+		dv.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		for part in [[L.t(row[0]), 24, col], ["●".repeat(shown), 26, UI.TEXT], [L.t("%d lépés körönként") % shown, 16, UI.SOFT]]:
+			var pl := UI.label(str(part[0]), int(part[1]), part[2], true, false)
+			pl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			pl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			dv.add_child(pl)
+		db.add_child(dv)
+		db.pressed.connect(func() -> void: _new_game(code, n, lv))
+		drow.add_child(db)
+	body.add_child(drow)
 
 
 ## Az alacsonyabb szinteken (sikeres játékban) felhasznált kártyák: a magasabb szinten már nem jelennek meg.
@@ -1574,7 +1607,6 @@ const BADGES := [
 	["huvos", "Hűvös Föld", "Tartsd 2100-ig +1,6 °C alatt a globális felmelegedést."],
 	["szilard", "Egy megingás sem", "Játssz végig egy játékot úgy, hogy egyetlen csoport sem tolja későbbre a célját."],
 	["gyors", "Gyors kezdés", "Érd el, hogy 2040 előtt mind a hat csoport vállaljon célt."],
-	["napi", "Napi Föld", "Játssz végig egy játékot „A mai Föld” gombbal."],
 	["gyujto", "Gyűjtő", "Kutass ki ötven különböző kártyát."],
 	["tudos", "Mindenhez értesz", "Legyen kártyád mind a nyolc témakörből a gyűjteményben."],
 	["ovatos", "Óvatos tudós", "Kutass ki három kockázatos ötletet."],
@@ -1680,8 +1712,6 @@ func _open_collection() -> void:
 	var coll_gap := Control.new()      # kis hely a „Kikutatott kártyák” alatt (Zoltán kérése)
 	coll_gap.custom_minimum_size = Vector2(0, 10)
 	body.add_child(coll_gap)
-	if _daily_streak() >= 2:
-		body.add_child(UI.label(L.t("A mai Föld: %d napja játszod egymás után.") % _daily_streak(), 17, UI.GREEN))
 	# jelvények: érmek egy sorban; alattuk az egér alatti (vagy a következő megszerezhető) jelvény neve és feltétele
 	var have := _badges()
 	body.add_child(UI.label(L.t("Jelvények: %d / %d") % [have.size(), BADGES.size()], 19, UI.GOLD, true, false))
