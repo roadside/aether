@@ -2182,8 +2182,11 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 	# a gomb az ablak alján mindig látszik: a kártyák bejelölése után nem kell visszagörgetni
 	if area.has_meta("alul") and is_instance_valid(area.get_meta("alul")):
 		(area.get_meta("alul") as Node).free()
-	area.set_meta("alul", top)
-	_sticky(area.get_parent() as VBoxContainer, top)
+	var bar := MarginContainer.new()      # kis hely az „Ezzel érvelek” gomb fölött (Zoltán kérése)
+	bar.add_theme_constant_override("margin_top", 12)
+	bar.add_child(top)
+	area.set_meta("alul", bar)
+	_sticky(area.get_parent() as VBoxContainer, bar)
 	_fit.call_deferred()
 	var any := false
 	if ask["fajta"] == "felkeszules":
@@ -2218,6 +2221,9 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 	else:
 		if ask["fajta"] == "megerosites":
 			area.add_child(UI.label(L.t("Elbizonytalanodtak. Ha a kör végéig nem erősíted meg őket, meginognak, és későbbre tolják a céljukat."), 16, UI.GOLD))
+		var fear_gap := Control.new()      # kis hely az „Amitől tartanak:” fölött (Zoltán kérése)
+		fear_gap.custom_minimum_size = Vector2(0, 10)
+		area.add_child(fear_gap)
 		area.add_child(UI.label(L.t("Amitől tartanak:"), 17, UI.GOLD, true, false))
 		var usable := world.usable(g)
 		# előre az az aggodalom kerül, amelyikre van kártyád: a bejelölhető sor görgetés nélkül látszik
