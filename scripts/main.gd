@@ -2168,7 +2168,8 @@ func _open_group(g: Dictionary) -> void:
 	pc.set_paths(world.path(g), [])
 	head_row.add_child(pc)
 	body.add_child(head_row)
-	var ask_row := HFlowContainer.new()
+	var ask_row := GridContainer.new()      # két oszlop, egyforma széles panelek (Zoltán kérése)
+	ask_row.columns = 2
 	ask_row.add_theme_constant_override("h_separation", 10)
 	ask_row.add_theme_constant_override("v_separation", 10)
 	body.add_child(ask_row)
@@ -2197,6 +2198,7 @@ func _open_group(g: Dictionary) -> void:
 		b.toggle_mode = true
 		b.button_group = bg
 		b.focus_mode = Control.FOCUS_NONE
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		var sel := _flat(Color("#2b6b5e"), UI.CYAN, 2, 10)      # a kiválasztott kérés jól látszik
 		sel.content_margin_left = 16
 		sel.content_margin_right = 16
