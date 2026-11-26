@@ -21,7 +21,7 @@ const SAVE := "user://jatek.json"
 ## Az aggodalmak mondatai (játékszabály: a csoportok hangja, nem idézet).
 const WORRY := {
 	"aram": "Ha bezárjuk a szénerőműveket, miből lesz elég és megfizethető áram?",
-	"munka": "A gyáraink, az autóink és a fűtésünk szénnel, olajjal, gázzal működik. Mivel váltjuk ki ezeket?",
+	"munka": "A gyáraink, az autóink és a fűtésünk szénnel, olajjal, gázzal működnek. Mivel váltjuk ki ezeket?",
 	"elelem": "Előbb az embereknek kell enniük. Nem kockáztathatjuk a termést.",
 	"part": "A tenger már most is emelkedik nálunk. Mit ér nekünk egy távoli ígéret?",
 	"egeszseg": "A városainkban már most betegít a hőség és a füst. Segít ez rajtuk?",

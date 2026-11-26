@@ -94,7 +94,7 @@ const EN := {
 	"Ha a melegedés tartósan e fölött marad, a változás lassan, de megállíthatatlanul végbemegy. A küszöböt a tudomány csak sávként ismeri (%s és %s °C között); a játék ebből sorsolt egyet.": "If warming stays above this for long, the change will happen slowly but unstoppably. Science knows the threshold only as a range (between %s and %s °C); the game picked one at random from it.",
 	"A legmelegebb év: +%s °C. Küszöbét átlépő rendszer: %d a %d-ből.": "Warmest year: +%s °C. Systems past their threshold: %d of %d.",
 	"küszöb átlépve:": "threshold crossed:",
-	"A gyáraink, az autóink és a fűtésünk szénnel, olajjal, gázzal működik. Mivel váltjuk ki ezeket?": "Our factories, cars and heating run on coal, oil and gas. What do we replace them with?",
+	"A gyáraink, az autóink és a fűtésünk szénnel, olajjal, gázzal működnek. Mivel váltjuk ki ezeket?": "Our factories, cars and heating run on coal, oil and gas. What do we replace them with?",
 	"Az olaj és a gáz a bevételünk. Mit tehetünk úgy, hogy ne menjünk tönkre?": "Oil and gas are our income. What can we do without going bankrupt?",
 	"Ipar és közlekedés": "Industry and transport",
 	"Meggyőzheted őket": "You can convince them",

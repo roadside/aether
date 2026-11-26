@@ -14,7 +14,7 @@ Minden szöveg új (2026-11-23). A kutatási kártyák szövege a már lektorál
 ## 2. Az országcsoportok aggodalmai (játékszabály, nem idézet)
 
 - „Ha bezárjuk a szénerőműveket, miből lesz elég és megfizethető áram?”
-- „A gyáraink, az autóink és a fűtésünk szénnel, olajjal, gázzal működik. Mivel váltjuk ki ezeket?”
+- „A gyáraink, az autóink és a fűtésünk szénnel, olajjal, gázzal működnek. Mivel váltjuk ki ezeket?”
 - „Előbb az embereknek kell enniük. Nem kockáztathatjuk a termést.”
 - „A tenger már most is emelkedik nálunk. Mit ér nekünk egy távoli ígéret?”
 - „A városainkban már most betegít a hőség és a füst. Segít ez rajtuk?”
@@ -291,7 +291,7 @@ Mindegyiket a megadott forrásból ellenőriztük. A kártyán csak akkor jeleni
 - **hoszivattyu:** A hőszivattyú a világ 59 térségéből 53-ban már ma kevesebb kibocsátással fűt, mint a gáz- vagy olajkazán. (Knobloch és mtsai 2020) – https://doi.org/10.1038/s41893-020-0488-7
 - **zold_acel:** Az acélgyártás évente kb. 2,6 milliárd tonna CO2-t bocsát ki közvetlenül, ami az energiaszektor kibocsátásának 7%-a. (IEA 2020) – https://www.iea.org/reports/iron-and-steel-technology-roadmap
 - **cement:** A cementgyártás vegyi folyamata (a mészkő bontása) 2016-ban 1,45 milliárd tonna CO2-t engedett a légkörbe, ami a fosszilis kibocsátás kb. 4%-a. Ez akkor is létrejön, ha a hőt tiszta energia adja. (Andrew 2018) – https://doi.org/10.5194/essd-10-195-2018
-- **metan_gaz:** Az olaj-, gáz- és szénágazat metánkibocsátásának kb. 70%-a ma már létező technológiával elkerülhető lenne, sokszor akár nyereségesen is. (IEA 2025) – https://www.iea.org/reports/global-methane-tracker-2025/key-findings
+- **metan_gaz:** Az olaj-, gáz- és szénágazat metánkibocsátásának kb. 70%-a ma már létező technológiával elkerülhető lenne, sokszor alacsony költséggel. (IEA 2025) – https://www.iea.org/reports/global-methane-tracker-2025/key-findings
 - **hoseg_halal:** 1991 és 2018 között a nyári hőség okozta halálesetek 37%-a az ember okozta felmelegedés miatt történt (43 ország adatai alapján). (Vicedo-Cabrera és mtsai 2021) – https://doi.org/10.1038/s41558-021-01058-x
 - **legszennyezes:** A szén, az olaj és a gáz égetéséből származó légszennyezés évente kb. 5,1 millió ember korai halálát okozza; ezek elkerülhetők lennének. (Lelieveld és mtsai 2023) – https://doi.org/10.1136/bmj-2023-077784
 - **termes:** Alkalmazkodás nélkül minden egyes foknyi melegedés átlagosan 6%-kal csökkenti a búza, 7,4%-kal a kukorica, 3,2%-kal a rizs és 3,1%-kal a szója termését. (Zhao és mtsai 2017) – https://doi.org/10.1073/pnas.1701762114
