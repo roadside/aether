@@ -8,3 +8,7 @@ sajat_zene/*.ogg
 kiadas/
 .claude/settings.local.json
 sajat_zene/*.import
+# a sajat_zene mappa minden más fájlja helyben marad (saját zenék: soha nem kerülnek a repóba)
+sajat_zene/*
+!sajat_zene/.gdignore
+!sajat_zene/OLVASSEL.txt
