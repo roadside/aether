@@ -21,13 +21,13 @@ const SAVE := "user://jatek.json"
 ## Az aggodalmak mondatai (játékszabály: a csoportok hangja, nem idézet).
 const WORRY := {
 	"aram": "Ha bezárjuk a szénerőműveket, miből lesz elég és megfizethető áram?",
-	"munka": "A gyáraink, az autóink és a fűtésünk szénnel, olajjal, gázzal mennek. Mivel váltjuk ki?",
+	"munka": "A gyáraink, az autóink és a fűtésünk szénnel, olajjal, gázzal működik. Mivel váltjuk ki ezeket?",
 	"elelem": "Előbb az embereknek kell enniük. Nem kockáztathatjuk a termést.",
-	"part": "A tenger már most emelkedik nálunk. Mit ér nekünk egy távoli ígéret?",
+	"part": "A tenger már most is emelkedik nálunk. Mit ér nekünk egy távoli ígéret?",
 	"egeszseg": "A városainkban már most betegít a hőség és a füst. Segít ez rajtuk?",
-	"ketseg": "Biztos, hogy az ember okozza? És számít, amit mi teszünk?",
+	"ketseg": "Biztos, hogy az ember okozza? És számít egyáltalán, amit mi teszünk?",
 	"olaj": "Az olaj és a gáz a bevételünk. Mit tehetünk úgy, hogy ne menjünk tönkre?",
-	"erdo": "Az erdő és a föld ad megélhetést. Ki fizeti meg, ha érintetlenül hagyjuk?",
+	"erdo": "Az erdő és a föld adja a megélhetésünket. Ki fizeti meg, ha érintetlenül hagyjuk?",
 }
 ## Amit a csoport a megállapodáskor mond: arra az aggodalmára felel, amelyikre a kártyád válaszolt (játékszabály).
 const REPLY := {
@@ -1547,7 +1547,7 @@ const BADGES := [
 	["nehez", "Nehéz Föld", "Tartsd 2100-ig +2 °C alatt a globális felmelegedést egy átlagnál érzékenyebb Földön."],
 	["mester", "Mester", "Tartsd +2 °C alatt a globális felmelegedést nehéz fokozaton."],
 	["huvos", "Hűvös Föld", "Tartsd 2100-ig +1,6 °C alatt a globális felmelegedést."],
-	["szilard", "Egy megingás sem", "Játssz végig egy játékot úgy, hogy egy csoport sem tolja későbbre a célját."],
+	["szilard", "Egy megingás sem", "Játssz végig egy játékot úgy, hogy egyetlen csoport sem tolja későbbre a célját."],
 	["gyors", "Gyors kezdés", "Érd el, hogy 2040 előtt mind a hat csoport vállaljon célt."],
 	["napi", "Napi Föld", "Játssz végig egy játékot „A mai Föld” gombbal."],
 	["gyujto", "Gyűjtő", "Kutass ki ötven különböző kártyát."],
@@ -1816,7 +1816,7 @@ func _open_research(theme: String = "") -> void:
 		return
 	var body := _open(L.t("Miről kutatsz?"))
 	_tutor_update("temak")
-	body.add_child(UI.label(L.t("Válassz témakört. Három valódi kérdést kapsz, egyet kutathatsz ki: ebből lesz bizonyíték-kártyád."), 17, UI.SOFT))
+	body.add_child(UI.label(L.t("Válassz témakört! Három valódi kérdést kapsz, egyet kutathatsz ki: ebből lesz a bizonyíték-kártyád."), 17, UI.SOFT))
 	var grid := GridContainer.new()
 	grid.columns = 2
 	grid.add_theme_constant_override("h_separation", 14)
@@ -2365,7 +2365,7 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 		body.add_child(UI.label("★ " + L.t("Lendület! Két megállapodás egy körben: +1 lépés."), 19, UI.GOLD, true))
 		_bonus_float = true
 	elif world.streak % 2 == 1 and world.steps > 0:
-		body.add_child(UI.label(L.t("Még egy megállapodás ebben a körben, és kapsz egy lépést."), 16, UI.GOLD))
+		body.add_child(UI.label(L.t("Még egy megállapodás ebben a körben, és kapsz egy plusz lépést."), 16, UI.GOLD))
 	body.add_child(UI.label(L.t("2100-ban: +%s és +%s °C között") % [L.num(minf(float(fc["also"][-1][1]), float(fc["felso"][-1][1])), 1), L.num(maxf(float(fc["also"][-1][1]), float(fc["felso"][-1][1])), 1)], 17, UI.SOFT))
 	body.add_child(UI.label(L.t("A hőmérsékleti sáv azért ilyen széles, mert nem tudjuk pontosan, mennyire érzékeny a Föld."), 15, UI.MUTE))
 	_sticky(body, _go(L.t("Rendben"), _close))
@@ -2374,7 +2374,7 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 # --- CO2-kivonás --------------------------------------------------------------
 func _open_cdr() -> void:
 	var body := _open(L.t("CO2-kivonás"), UI.GREEN)
-	body.add_child(UI.label(L.t("Ha megvan a hozzá tartozó kártya, elindíthatod. Húsz év alatt fut fel, és óvatosan, a fenntartható sáv aljával számolunk."), 17, UI.SOFT))
+	body.add_child(UI.label(L.t("Ha megvan a hozzá tartozó kártya, elindíthatod. Húsz év alatt fut fel, és óvatosan, a fenntartható sáv alsó határával számolunk."), 17, UI.SOFT))
 	for id in World.CDR:
 		var c := UI.card(UI.GREEN)
 		var rng: Array = World.CDR[id]
@@ -2754,7 +2754,7 @@ func _do_dilemma(choice: int) -> void:
 
 func _open_summit() -> void:
 	var body := _open("%s %d" % [L.t("Klímacsúcs"), world.year()], UI.GOLD)
-	body.add_child(UI.label(L.t("Mutass meg egy kártyát az egész világnak! Aki már vállalt célt, és a kártya az ő aggodalmára felel, öt évvel előbbre hozza a vállalását. Nem kerül semmibe."), 17, UI.SOFT))
+	body.add_child(UI.label(L.t("Mutass meg egy kártyát az egész világnak! Aki már vállalt célt, és a kártya az ő aggodalmára felel, öt évvel előrehozza a vállalását. Nem kerül semmibe."), 17, UI.SOFT))
 	var rows: Array = []
 	for id in world.hand:
 		var ls := world.summit_listeners(id)
@@ -2789,7 +2789,7 @@ func _do_summit(id: String) -> void:
 	var body := _open(L.t("Klímacsúcs"), UI.GREEN)
 	for gid in who:
 		var g := world.group(gid)
-		body.add_child(UI.label(L.rag(L.t("%s előbbre hozta a célját: nulla kibocsátás %d-re.") % [L.field(g, "nev"), int(g["cel"])]), 20, UI.TEXT, true))
+		body.add_child(UI.label(L.rag(L.t("%s előrehozta a célját: nulla kibocsátás %d-re.") % [L.field(g, "nev"), int(g["cel"])]), 20, UI.TEXT, true))
 	body.add_child(UI.label(L.t("Várható melegedés 2100-ban: +%s → +%s °C") % [L.num(before, 2), L.num(float(world.forecast()["kozep"][-1][1]), 2)], 20, UI.GREEN, true))
 	_sticky(body, _go(L.t("Rendben"), _close))
 
@@ -2880,7 +2880,7 @@ func _open_end() -> void:
 	var s := float(r["sens"])
 	var kind := L.t("átlagos") if absf(s) < 0.25 else (L.t("az átlagnál érzékenyebb") if s > 0 else L.t("az átlagnál kevésbé érzékeny"))
 	body.add_child(UI.label(L.t("Ez a Föld %s volt. Ezt előre senki sem tudhatta, ahogy a valódi Földnél sem tudjuk pontosan.") % kind, 16, UI.SOFT))
-	body.add_child(UI.label(L.t("A hőmérsékletet egyszerű klímamodell számolta. Irányt és nagyságrendet mutat, nem előrejelzés."), 14, UI.MUTE))
+	body.add_child(UI.label(L.t("A hőmérsékletet egy egyszerű klímamodell számolta. Irányt és nagyságrendet mutat, nem pontos előrejelzést."), 14, UI.MUTE))
 	var end_row := UI.hbox(12)
 	end_row.add_child(_go(L.t("Új játék, új Föld") + " →", func() -> void: _pick_game()))
 	var again_code: int = world.seed_v
@@ -2947,7 +2947,7 @@ const MISSION_TEXT := {
 	"tema": "Kutass ki öt kártyát ebből a témakörből: %s",
 	"felkeszul3": "Segíts három csoportnak felkészülni a váratlan helyzetekre.",
 	"nulla2065": "Legalább egy csoport érje el a nulla kibocsátást 2065-ig.",
-	"csucs3": "Egy klímacsúcson legalább három csoport hozza előbbre a célját.",
+	"csucs3": "Egy klímacsúcson legalább három csoport hozza előre a célját.",
 	"kartya20": "Gyűjts húsz kártyát ebben a játékban.",
 	"lendulet2": "Szerezz kétszer lendületet: két megállapodás egy körben.",
 }
@@ -3020,7 +3020,7 @@ func _add_story(body: VBoxContainer) -> void:
 				lane = 1
 				mark = UI.GOLD
 			"csucs":
-				line = L.t("Klímacsúcs: %d csoport hozta előbbre a célját.") % int(e.get("db", 0))
+				line = L.t("Klímacsúcs: %d csoport hozta előre a célját.") % int(e.get("db", 0))
 				mark = UI.GOLD
 			"visszalepett":
 				line = L.rag(L.t("%s megingott: a célját %d-re tolta.") % [L.field(world.group(e["csoport"]), "nev"), int(e["cel"])])
@@ -3069,10 +3069,10 @@ func _open_help() -> void:
 	for row in [
 			["1.", "Te vagy a világ klímatudósa. 2026-ból indulsz; egy kör öt év, így 2100-ig tizenöt köröd van."],
 			["2.", L.t("Körönként %s lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal.") % L.t(str({2: "két", 3: "három", 4: "négy", 5: "öt"}.get(world.max_steps, str(world.max_steps))))],
-			["3.", "Kattints egy országcsoportra, és győzd meg a kártyáiddal. Minden csoport mástól tart, ezért más kártyára van szüksége."],
+			["3.", "Kattints egy országcsoportra, és győzd meg őket a kártyáiddal! Minden csoport mástól tart, ezért más-más kártyára van szüksége."],
 			["4.", "Lépj korán: minden év késés számít. Akit egyszer meggyőztél, attól később merészebb célt is kérhetsz."],
 			["5.", "A cél: 2100-ban jóval +2 °C alatt maradni, minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is."],
-			["6.", "A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett billenőpontok. Ne várj sokáig!"],
+			["6.", "A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett billenőpontok is. Ne várj sokáig!"],
 			["7.", "Az évek maguktól telnek. Amíg olvasol, az idő áll. Ha a Földön felvillan valami, kattints rá gyorsan!"]]:
 		var h := UI.hbox(12)
 		h.add_child(UI.label(row[0], 22, UI.GOLD, true, false))

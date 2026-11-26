@@ -1,59 +1,59 @@
 # Új AETHER – lektorált magyar szövegek
 
-Minden szöveg új (2026-11-23). A kutatási kártyák szövege a már lektorált témákból jön, azokhoz nem nyúltam.
+Minden szöveg új (2026-11-23). A kutatási kártyák szövege a már lektorált témákból származik, azokhoz nem nyúltam.
 
 ## 1. Hogyan játssz?
 
 - Te vagy a világ klímatudósa. 2026-ból indulsz; egy kör öt év, így 2100-ig tizenöt köröd van.
 - Körönként három lépésed van. Kutass: minden kutatás egy bizonyíték-kártyát ad valódi tudományos forrásokkal.
-- Kattints egy országcsoportra, és győzd meg a kártyáiddal. Minden csoport mástól tart, ezért más kártyára van szüksége.
+- Kattints egy országcsoportra, és győzd meg őket a kártyáiddal! Minden csoport mástól tart, ezért más-más kártyára van szüksége.
 - Ha elfogytak a lépéseid, jön a következő öt év. A Föld és a görbe megmutatja, mit értél el.
 - A cél: 2100-ban jóval +2 °C alatt maradni, minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is.
-- A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett billenőpontok. Ne várj sokáig!
+- A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett billenőpontok is. Ne várj sokáig!
 
 ## 2. Az országcsoportok aggodalmai (játékszabály, nem idézet)
 
 - „Ha bezárjuk a szénerőműveket, miből lesz elég és megfizethető áram?”
-- „A gyáraink, az autóink és a fűtésünk szénnel, olajjal, gázzal mennek. Mivel váltjuk ki?”
+- „A gyáraink, az autóink és a fűtésünk szénnel, olajjal, gázzal működik. Mivel váltjuk ki ezeket?”
 - „Előbb az embereknek kell enniük. Nem kockáztathatjuk a termést.”
-- „A tenger már most emelkedik nálunk. Mit ér nekünk egy távoli ígéret?”
+- „A tenger már most is emelkedik nálunk. Mit ér nekünk egy távoli ígéret?”
 - „A városainkban már most betegít a hőség és a füst. Segít ez rajtuk?”
-- „Biztos, hogy az ember okozza? És számít, amit mi teszünk?”
+- „Biztos, hogy az ember okozza? És számít egyáltalán, amit mi teszünk?”
 - „Az olaj és a gáz a bevételünk. Mit tehetünk úgy, hogy ne menjünk tönkre?”
-- „Az erdő és a föld ad megélhetést. Ki fizeti meg, ha érintetlenül hagyjuk?”
+- „Az erdő és a föld adja a megélhetésünket. Ki fizeti meg, ha érintetlenül hagyjuk?”
 
 ## 3. Tények az országcsoportokról (forrással)
 
 **Európa**
 - Egy emberre évi 5,4 tonna CO2 jut (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
-- Az 1750 óta kibocsátott CO2 20,4%-a innen jött (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
-- Az áram 47,7%-a megújuló forrásból jön (Ember 2026) – https://ourworldindata.org/electricity-mix
-- A valóságban 2050-re vállalt nulla kibocsátást, törvényben (EU 2021/1119) – https://eur-lex.europa.eu/eli/reg/2021/1119/oj
+- Az 1750 óta kibocsátott CO2 20,4%-a innen származik (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
+- Az áram 47,7%-a megújuló forrásból származik (Ember 2026) – https://ourworldindata.org/electricity-mix
+- A valóságban törvényben vállalt nulla kibocsátást 2050-re (EU 2021/1119) – https://eur-lex.europa.eu/eli/reg/2021/1119/oj
 
 **Egyesült Államok**
 - Egy emberre évi 14,5 tonna CO2 jut (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
-- Az 1750 óta kibocsátott CO2 23,3%-a innen jött (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
-- Az áram 16,3%-a szénből jön (Ember 2026) – https://ourworldindata.org/electricity-mix
+- Az 1750 óta kibocsátott CO2 23,3%-a innen származik (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
+- Az áram 16,3%-a szénből származik (Ember 2026) – https://ourworldindata.org/electricity-mix
 - A valóságban 2025-ben visszavonta a nulla kibocsátási célját (Net Zero Tracker) – https://zerotracker.net/
 
 **Kína**
 - Egy emberre évi 8,8 tonna CO2 jut (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
-- Az áram 54,3%-a szénből, 37,0%-a megújulóból jön (Ember 2026) – https://ourworldindata.org/electricity-mix
+- Az áram 54,3%-a szénből, 37,0%-a megújuló forrásból származik (Ember 2026) – https://ourworldindata.org/electricity-mix
 - A valóságban 2060 előttre ígért nulla kibocsátást (Kína hosszú távú stratégiája, 2021) – https://unfccc.int/sites/default/files/resource/China%E2%80%99s%20Mid-Century%20Long-Term%20Low%20Greenhouse%20Gas%20Emission%20Development%20Strategy.pdf
 
 **India**
 - Egy emberre évi 2,2 tonna CO2 jut (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
-- Az áram 70,8%-a szénből jön (Ember 2026) – https://ourworldindata.org/electricity-mix
+- Az áram 70,8%-a szénből származik (Ember 2026) – https://ourworldindata.org/electricity-mix
 - A valóságban 2070-re ígért nulla kibocsátást (India hosszú távú stratégiája, 2022) – https://unfccc.int/sites/default/files/resource/India_LTLEDS.pdf
 
 **Afrika**
 - Egy emberre évi 1,0 tonna CO2 jut (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
-- Az 1750 óta kibocsátott CO2 3,0%-a innen jött (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
+- Az 1750 óta kibocsátott CO2 3,0%-a innen származik (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
 - A Szaharától délre az emberek 55,1%-ának van árama (Világbank 2024) – https://data.worldbank.org/indicator/EG.ELC.ACCS.ZS
 
 **Olajországok**
 - Szaúd-Arábiában egy emberre évi 18,5 tonna CO2 jut (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
-- Irak gazdaságának 42,8%-a az olajból jön (Világbank 2021) – https://data.worldbank.org/indicator/NY.GDP.PETR.RT.ZS
+- Irak gazdaságának 42,8%-a az olajból származik (Világbank 2021) – https://data.worldbank.org/indicator/NY.GDP.PETR.RT.ZS
 - A valóságban Oroszország és Szaúd-Arábia 2060-ra ígért nulla kibocsátást (Climate Watch) – https://www.climatewatchdata.org/net-zero-tracker
 
 ## 4. Billenőpontok nevei (Armstrong McKay és mtsai 2022, Science 377, eabn7950)
@@ -87,7 +87,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - A Föld melegedése: +%s → +%s °C
 - A baj után jobban figyelnek rád: most eggyel kevesebb kártyával is meggyőzheted őket.
 - A bizonyítékod miatt kitartottak: %s
-- A hőmérsékletet egyszerű klímamodell számolta. Irányt és nagyságrendet mutat, nem előrejelzés.
+- A hőmérsékletet egy egyszerű klímamodell számolta. Irányt és nagyságrendet mutat, nem pontos előrejelzést.
 - A játékban eddig: nulla kibocsátás %d-re.
 - A metán rövid ideig marad a levegőben, de erősen melegít. Mutasd meg, hol lehet gyorsan csökkenteni!
 - A hőmérsékleti sáv azért ilyen széles, mert nem tudjuk pontosan, mennyire érzékeny a Föld.
@@ -112,7 +112,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Ezzel a kártyával CO2-kivonást indíthatsz.
 - Ezzel érvelek
 - Források
-- Ha megvan a hozzá tartozó kártya, elindíthatod. Húsz év alatt fut fel, és óvatosan, a fenntartható sáv aljával számolunk.
+- Ha megvan a hozzá tartozó kártya, elindíthatod. Húsz év alatt fut fel, és óvatosan, a fenntartható sáv alsó határával számolunk.
 - Itt most nincs új kérdés
 - Kutatás: %s
 - Kártyáim
@@ -137,7 +137,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Tőlük már nincs mit kérned.
 - Valódi: a klímamodell számai, a csoportok kibocsátása, a kártyák forrásai.
 - Válassz %d kártyát (%d/%d)
-- Válassz témakört. Három valódi kérdést kapsz, egyet kutathatsz ki: ebből lesz bizonyíték-kártyád.
+- Válassz témakört! Három valódi kérdést kapsz, egyet kutathatsz ki: ebből lesz a bizonyíték-kártyád.
 - az átlagnál kevésbé érzékeny
 - az átlagnál érzékenyebb
 - átlagos
@@ -193,7 +193,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Mind a hat csoport vállaljon metáncsökkentést.
 - Merész cél
 - Egy küszöb sem
-- Játssz végig egy játékot úgy, hogy egy billenőpont küszöbét sem lépitek át.
+- Játssz végig egy játékot úgy, hogy egyetlen billenőpont küszöbét sem lépitek át.
 - Tisztító
 - Indíts el legalább három CO2-kivonást egy játékban.
 - Nehéz Föld
@@ -244,11 +244,11 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Maradj +2 °C alatt nehéz fokozaton.
 - nulla alatt
 - Klímacsúcs
-- Mutass meg egy kártyát az egész világnak! Aki már vállalt célt, és a kártya az ő aggodalmára felel, öt évvel előbbre hozza a vállalását. Nem kerül semmibe.
+- Mutass meg egy kártyát az egész világnak! Aki már vállalt célt, és a kártya az ő aggodalmára felel, öt évvel előrehozza a vállalását. Nem kerül semmibe.
 - Most nincs olyan kártyád, amire felfigyelnének.
 - Most nem mutatok semmit
-- %s előbbre hozta a célját: nulla kibocsátás %d-re.
-- Klímacsúcs: %d csoport hozta előbbre a célját.
+- %s előrehozta a célját: nulla kibocsátás %d-re.
+- Klímacsúcs: %d csoport hozta előre a célját.
 - Korábbi Földjeid
 - %s elérte a nulla kibocsátást (%d).
 - A világ már több CO2-t von ki, mint amennyit kibocsát (%d).
@@ -269,7 +269,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Hűvös Föld
 - Maradj 2100-ban +1,6 °C alatt.
 - Egy megingás sem
-- Játssz végig egy játékot úgy, hogy egy csoport sem tolja későbbre a célját.
+- Játssz végig egy játékot úgy, hogy egyetlen csoport sem tolja későbbre a célját.
 - Gyors kezdés
 - Érd el, hogy 2040 előtt mind a hat csoport vállaljon célt.
 - Napi Föld
@@ -284,18 +284,18 @@ A %d és %s jelek helyére szám vagy név kerül.
 
 Mindegyiket a megadott forrásból ellenőriztük. A kártyán csak akkor jelenik meg, ha jóváhagytad.
 
-- **napelem:** A napelemes áram teljes életciklusa alatt (gyártás, szállítás, bontás) kb. 45 g CO2 jut egy kilowattórára, a szénerőművi áramnál kb. 1000 g. (Hsu és mtsai 2012; szén: Whitaker és mtsai 2012) – https://doi.org/10.1111/j.1530-9290.2011.00439.x
-- **szelenergia:** A szélerőművek áramának teljes életciklusa kb. 11 g CO2 kilowattóránként. (Dolan és Heath 2012) – https://doi.org/10.1111/j.1530-9290.2012.00464.x
-- **atomenergia:** Az atomerőművi áram teljes életciklusa (bányászat, építés, üzem, bontás) kb. 12 g CO2 kilowattóránként. (Warner és Heath 2012) – https://doi.org/10.1111/j.1530-9290.2012.00472.x
-- **villanyauto:** A világ 59 térségéből 53-ban már a mai áramtermelés mellett is kevesebb kibocsátással jár a villanyautó, mint a benzines vagy dízel autó; ez a közlekedési és fűtési igény 95%-a. (Knobloch és mtsai 2020) – https://doi.org/10.1038/s41893-020-0488-7
+- **napelem:** A napelemes áram teljes életciklusa alatt (gyártás, szállítás, bontás) kb. 45 g CO2 jut egy kilowattórára, a szénerőművi áramnál ez kb. 1000 g. (Hsu és mtsai 2012; szén: Whitaker és mtsai 2012) – https://doi.org/10.1111/j.1530-9290.2011.00439.x
+- **szelenergia:** A szélerőművek áramának teljes életciklusa alatt kb. 11 g CO2 jut egy kilowattórára. (Dolan és Heath 2012) – https://doi.org/10.1111/j.1530-9290.2012.00464.x
+- **atomenergia:** Az atomerőművi áram teljes életciklusa alatt (bányászat, építés, üzem, bontás) kb. 12 g CO2 jut egy kilowattórára. (Warner és Heath 2012) – https://doi.org/10.1111/j.1530-9290.2012.00472.x
+- **villanyauto:** A világ 59 térségéből 53-ban már a mai áramtermelés mellett is kevesebb kibocsátással jár a villanyautó, mint a benzines vagy dízel autó; ez a közlekedési és fűtési igény 95%-át fedi le. (Knobloch és mtsai 2020) – https://doi.org/10.1038/s41893-020-0488-7
 - **hoszivattyu:** A hőszivattyú a világ 59 térségéből 53-ban már ma kevesebb kibocsátással fűt, mint a gáz- vagy olajkazán. (Knobloch és mtsai 2020) – https://doi.org/10.1038/s41893-020-0488-7
-- **zold_acel:** Az acélgyártás évente kb. 2,6 milliárd tonna CO2-t bocsát ki közvetlenül, az energiaszektor kibocsátásának 7%-át. (IEA 2020) – https://www.iea.org/reports/iron-and-steel-technology-roadmap
-- **cement:** A cementgyártás vegyi folyamata (a mészkő bontása) 2016-ban 1,45 milliárd tonna CO2-t engedett ki, a fosszilis kibocsátás kb. 4%-át. Ez akkor is létrejön, ha a hőt tiszta energia adja. (Andrew 2018) – https://doi.org/10.5194/essd-10-195-2018
-- **metan_gaz:** Az olaj-, gáz- és szénágazat metánkibocsátásának kb. 70%-a ma már létező technológiával elkerülhető lenne, sokszor olcsóbban. (IEA 2025) – https://www.iea.org/reports/global-methane-tracker-2025/key-findings
-- **hoseg_halal:** 1991 és 2018 között a nyári hőség okozta halálesetek 37%-a az ember okozta melegedés miatt történt (43 ország adatai). (Vicedo-Cabrera és mtsai 2021) – https://doi.org/10.1038/s41558-021-01058-x
-- **legszennyezes:** A szén, olaj és gáz égetéséből származó légszennyezés évente kb. 5,1 millió ember korai halálát okozza; ezek elkerülhetők lennének. (Lelieveld és mtsai 2023) – https://doi.org/10.1136/bmj-2023-077784
-- **termes:** Alkalmazkodás nélkül minden egyes fok melegedés átlagosan 6%-kal csökkenti a búza, 7,4%-kal a kukorica, 3,2%-kal a rizs és 3,1%-kal a szója termését. (Zhao és mtsai 2017) – https://doi.org/10.1073/pnas.1701762114
-- **amazonas:** Az Amazonas esőerdejének pusztulása a kutatók becslése szerint kb. 3,5 fok melegedésnél válik valószínűvé, de már 2 foknál is elkezdődhet. (Armstrong McKay és mtsai 2022) – https://doi.org/10.1126/science.abn7950
+- **zold_acel:** Az acélgyártás évente kb. 2,6 milliárd tonna CO2-t bocsát ki közvetlenül, ami az energiaszektor kibocsátásának 7%-a. (IEA 2020) – https://www.iea.org/reports/iron-and-steel-technology-roadmap
+- **cement:** A cementgyártás vegyi folyamata (a mészkő bontása) 2016-ban 1,45 milliárd tonna CO2-t engedett a légkörbe, ami a fosszilis kibocsátás kb. 4%-a. Ez akkor is létrejön, ha a hőt tiszta energia adja. (Andrew 2018) – https://doi.org/10.5194/essd-10-195-2018
+- **metan_gaz:** Az olaj-, gáz- és szénágazat metánkibocsátásának kb. 70%-a ma már létező technológiával elkerülhető lenne, sokszor akár nyereségesen is. (IEA 2025) – https://www.iea.org/reports/global-methane-tracker-2025/key-findings
+- **hoseg_halal:** 1991 és 2018 között a nyári hőség okozta halálesetek 37%-a az ember okozta felmelegedés miatt történt (43 ország adatai alapján). (Vicedo-Cabrera és mtsai 2021) – https://doi.org/10.1038/s41558-021-01058-x
+- **legszennyezes:** A szén, az olaj és a gáz égetéséből származó légszennyezés évente kb. 5,1 millió ember korai halálát okozza; ezek elkerülhetők lennének. (Lelieveld és mtsai 2023) – https://doi.org/10.1136/bmj-2023-077784
+- **termes:** Alkalmazkodás nélkül minden egyes foknyi melegedés átlagosan 6%-kal csökkenti a búza, 7,4%-kal a kukorica, 3,2%-kal a rizs és 3,1%-kal a szója termését. (Zhao és mtsai 2017) – https://doi.org/10.1073/pnas.1701762114
+- **amazonas:** Az Amazonas esőerdejének pusztulása a kutatók becslése szerint kb. 3,5 fokos melegedésnél válik valószínűvé, de már 2 foknál is elkezdődhet. (Armstrong McKay és mtsai 2022) – https://doi.org/10.1126/science.abn7950
 
 ## 9. Új szövegek (2026-11-23, 20 óra után)
 
@@ -310,7 +310,7 @@ Csak ezek újak. Küldetések, döntési helyzetek, tudáspróba, a Kockázatos 
 - Kutass ki öt kártyát ebből a témakörből: %s
 - Segíts három csoportnak felkészülni a bajra.
 - Legalább egy csoport érje el a nulla kibocsátást 2065-ig.
-- Egy klímacsúcson legalább három csoport hozza előbbre a célját.
+- Egy klímacsúcson legalább három csoport hozza előre a célját.
 - Gyűjts húsz kártyát ebben a játékban.
 - Küldetésteljesítő
 - Teljesítsd mind a három küldetést egy játékban.
@@ -361,7 +361,7 @@ Csak ezek újak. Ami nincs itt, az nem változott.
 
 ### Lendület és segítő csoport
 - Lendület! Két megállapodás egy körben: +1 lépés.
-- Még egy megállapodás ebben a körben, és kapsz egy lépést.
+- Még egy megállapodás ebben a körben, és kapsz egy plusz lépést.
 - %s tiszta technológiát ad át. %s most könnyebben meggyőzhető.
 
 ### Kihívás-lépcső
@@ -662,7 +662,7 @@ A CO2-kivonás ablakában és a naplóban:
 - Fel és le nyíllal válts magasságot! A kék, párás rétegben a csík nem tűnik el, hanem felhővé terül, és melegít.
 - Repülés: %d / %d    Magasságváltás: %d
 - A tartós kondenzcsíkjaid hossza %s%%-a annak, ami egyenes útvonalon keletkezett volna.
-- A valóságban a légi közlekedés melegítő hatásának %s%%-a nem a CO₂-kibocsátásból származik – ennek a legnagyobb részét a kondenzcsíkok adják.
+- A valóságban a légi közlekedés melegítő hatásának %s%%-a nem a CO2-kibocsátásból származik – ennek a legnagyobb részét a kondenzcsíkok adják.
 - Egy japán kutatás szerint %s%% járat útvonalának módosításával akár 59%-kal is csökkenthetné a csíkok hatását, mindössze 0,014%-kal több üzemanyagköltséggel.
 - A repülés melegítő hatása 2018-ban (mW/m²)
 - Összesen: %s mW/m²
@@ -692,11 +692,11 @@ A CO2-kivonás ablakában és a naplóban:
 
 ### Minijáték: Metánvadász (a „metan_szivargas” kártyához; a %s és %d helyére szám kerül)
 
-- A műhold végigpásztázza a gázmezőt. Ahol felhő jelenik meg, ott nagy a szivárgás: kattints a kútra amiből szivárog, és küldj oda egy javítócsapatot!
+- A műhold végigpásztázza a gázmezőt. Ahol felhő jelenik meg, ott nagy a szivárgás: kattints a kútra, amiből szivárog, és küldj oda egy javítócsapatot!
 - Csapat: %d    Idő: %d mp
 - Kicsi szivárgás
 - Nagy szivárgás megszüntetve!
-- A felhők mérete jelkép. A kis szivárgásokat a műhold nem látja.
+- A felhők mérete jelképes. A kis szivárgásokat a műhold nem látja.
 - A kutak %s%%-át javítottad ki, amivel a szivárgás %s%%-át szüntetted meg.
 - A kevés nagyobb szivárgás adja a légkörbe kerülő metán nagy részét. Ezeket érdemes először megtalálni.
 - A valóságban: műholdas mérések szerint (%s) néhány száz óriási szivárgás adta az olaj- és gázipari metán %s–%s%%-át, évi kb. %s millió tonnát. A javításuk nagyrészt olcsó lenne.
@@ -713,7 +713,7 @@ A CO2-kivonás ablakában és a naplóban:
 - eddigi rekord
 - Új rekord!
 - Még nem rekord.
-- A korallok fakulása jelkép: a görbét követi.
+- A korallok fakulása jelképes: a görbét követi.
 
 (A „Melegrekord a tengeren” végén a „tengeri_hohullam” kártya már lektorált „Mennyire bizonyított?” mondata is megjelenik, változatlanul.)
 
@@ -852,7 +852,7 @@ Kikerült a játékból: a Gyűjteményből a „Befejezett játékok…”, a �
 - Készíts fel három csoportot, mielőtt utoléri őket a baj.
 - Tartsd +2 °C alatt a globális felmelegedést az ötödik kihívásnál.
 
-### Hozzáigazítva („a bajra” helyett „a váratlan helyzetekre”) – még nem lektorált
+### Hozzáigazítva („a bajra” helyett „a váratlan helyzetekre”) – lektorálva
 
 - %s felkészült a váratlan helyzetekre.
 - Segíts három csoportnak felkészülni a váratlan helyzetekre.

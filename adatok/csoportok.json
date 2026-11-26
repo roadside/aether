@@ -27,21 +27,21 @@
      "forras_en": "Global Carbon Budget 2026"
     },
     {
-     "szoveg": "Az 1750 óta kibocsátott CO2 20,4%-a innen jött",
+     "szoveg": "Az 1750 óta kibocsátott CO2 20,4%-a innen származik",
      "szoveg_en": "20.4% of all CO2 emitted since 1750 came from here",
      "forras": "Global Carbon Budget 2026",
      "link": "https://ourworldindata.org/co2-emissions",
      "forras_en": "Global Carbon Budget 2026"
     },
     {
-     "szoveg": "Az áram 47,7%-a megújuló forrásból jön",
+     "szoveg": "Az áram 47,7%-a megújuló forrásból származik",
      "szoveg_en": "47.7% of electricity comes from renewables",
      "forras": "Ember 2026",
      "link": "https://ourworldindata.org/electricity-mix",
      "forras_en": "Ember 2026"
     },
     {
-     "szoveg": "A valóságban 2050-re vállalt nulla kibocsátást, törvényben",
+     "szoveg": "A valóságban törvényben vállalt nulla kibocsátást 2050-re",
      "szoveg_en": "In reality it has promised zero emissions by 2050, by law",
      "forras": "EU 2021/1119",
      "link": "https://eur-lex.europa.eu/eli/reg/2021/1119/oj",
@@ -74,14 +74,14 @@
      "forras_en": "Global Carbon Budget 2026"
     },
     {
-     "szoveg": "Az 1750 óta kibocsátott CO2 23,3%-a innen jött",
+     "szoveg": "Az 1750 óta kibocsátott CO2 23,3%-a innen származik",
      "szoveg_en": "23.3% of all CO2 emitted since 1750 came from here",
      "forras": "Global Carbon Budget 2026",
      "link": "https://ourworldindata.org/co2-emissions",
      "forras_en": "Global Carbon Budget 2026"
     },
     {
-     "szoveg": "Az áram 16,3%-a szénből jön",
+     "szoveg": "Az áram 16,3%-a szénből származik",
      "szoveg_en": "16.3% of electricity comes from coal",
      "forras": "Ember 2026",
      "link": "https://ourworldindata.org/electricity-mix",
@@ -121,7 +121,7 @@
      "forras_en": "Global Carbon Budget 2026"
     },
     {
-     "szoveg": "Az áram 54,3%-a szénből, 37,0%-a megújulóból jön",
+     "szoveg": "Az áram 54,3%-a szénből, 37,0%-a megújuló forrásból származik",
      "szoveg_en": "54.3% of electricity comes from coal, 37.0% from renewables",
      "forras": "Ember 2026",
      "link": "https://ourworldindata.org/electricity-mix",
@@ -161,7 +161,7 @@
      "forras_en": "Global Carbon Budget 2026"
     },
     {
-     "szoveg": "Az áram 70,8%-a szénből jön",
+     "szoveg": "Az áram 70,8%-a szénből származik",
      "szoveg_en": "70.8% of electricity comes from coal",
      "forras": "Ember 2026",
      "link": "https://ourworldindata.org/electricity-mix",
@@ -201,7 +201,7 @@
      "forras_en": "Global Carbon Budget 2026"
     },
     {
-     "szoveg": "Az 1750 óta kibocsátott CO2 3,0%-a innen jött",
+     "szoveg": "Az 1750 óta kibocsátott CO2 3,0%-a innen származik",
      "szoveg_en": "3.0% of all CO2 emitted since 1750 came from here",
      "forras": "Global Carbon Budget 2026",
      "link": "https://ourworldindata.org/co2-emissions",
@@ -241,7 +241,7 @@
      "forras_en": "Global Carbon Budget 2026"
     },
     {
-     "szoveg": "Irak gazdaságának 42,8%-a az olajból jön",
+     "szoveg": "Irak gazdaságának 42,8%-a az olajból származik",
      "szoveg_en": "42.8% of Iraq's economy comes from oil",
      "forras": "Világbank 2021",
      "link": "https://data.worldbank.org/indicator/NY.GDP.PETR.RT.ZS",

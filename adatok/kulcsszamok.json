@@ -2,7 +2,7 @@
  "megjegyzes": "Kulcsszámok a kártyákra: egy-egy mondat, a kártya forrásából, kézzel ellenőrizve (2026-11-23; a második, 14 mondatos csomag a szerzői összefoglalókból szó szerinti idézettel ellenőrizve). A játék csak azt mutatja meg, amelyiknél a lektoralva értéke true (Zoltán lektorálta).",
  "szamok": {
   "napelem": {
-   "hu": "A napelemes áram teljes életciklusa alatt (gyártás, szállítás, bontás) kb. 45 g CO2 jut egy kilowattórára, a szénerőművi áramnál kb. 1000 g.",
+   "hu": "A napelemes áram teljes életciklusa alatt (gyártás, szállítás, bontás) kb. 45 g CO2 jut egy kilowattórára, a szénerőművi áramnál ez kb. 1000 g.",
    "en": "Over its whole life cycle, solar PV electricity causes about 45 g CO2 per kilowatt-hour; coal power about 1,000 g.",
    "forras": "Hsu és mtsai 2012; szén: Whitaker és mtsai 2012",
    "forras_en": "Hsu et al. 2012; coal: Whitaker et al. 2012",
@@ -10,7 +10,7 @@
    "lektoralva": true
   },
   "szelenergia": {
-   "hu": "A szélerőművek áramának teljes életciklusa kb. 11 g CO2 kilowattóránként.",
+   "hu": "A szélerőművek áramának teljes életciklusa alatt kb. 11 g CO2 jut egy kilowattórára.",
    "en": "Utility-scale wind power causes about 11 g CO2 per kilowatt-hour over its life cycle.",
    "forras": "Dolan és Heath 2012",
    "forras_en": "Dolan and Heath 2012",
@@ -18,7 +18,7 @@
    "lektoralva": true
   },
   "atomenergia": {
-   "hu": "Az atomerőművi áram teljes életciklusa (bányászat, építés, üzem, bontás) kb. 12 g CO2 kilowattóránként.",
+   "hu": "Az atomerőművi áram teljes életciklusa alatt (bányászat, építés, üzem, bontás) kb. 12 g CO2 jut egy kilowattórára.",
    "en": "Nuclear electricity causes about 12 g CO2 per kilowatt-hour over its full life cycle.",
    "forras": "Warner és Heath 2012",
    "forras_en": "Warner and Heath 2012",
@@ -26,7 +26,7 @@
    "lektoralva": true
   },
   "villanyauto": {
-   "hu": "A világ 59 térségéből 53-ban már a mai áramtermelés mellett is kevesebb kibocsátással jár a villanyautó, mint a benzines vagy dízel autó; ez a közlekedési és fűtési igény 95%-a.",
+   "hu": "A világ 59 térségéből 53-ban már a mai áramtermelés mellett is kevesebb kibocsátással jár a villanyautó, mint a benzines vagy dízel autó; ez a közlekedési és fűtési igény 95%-át fedi le.",
    "en": "Already with today's electricity, electric cars emit less than petrol or diesel cars in 53 of 59 world regions, covering 95% of transport and heating demand.",
    "forras": "Knobloch és mtsai 2020",
    "forras_en": "Knobloch et al. 2020",
@@ -42,7 +42,7 @@
    "lektoralva": true
   },
   "zold_acel": {
-   "hu": "Az acélgyártás évente kb. 2,6 milliárd tonna CO2-t bocsát ki közvetlenül, az energiaszektor kibocsátásának 7%-át.",
+   "hu": "Az acélgyártás évente kb. 2,6 milliárd tonna CO2-t bocsát ki közvetlenül, ami az energiaszektor kibocsátásának 7%-a.",
    "en": "Steelmaking directly emits about 2.6 billion tonnes of CO2 a year, 7% of energy-sector emissions.",
    "forras": "IEA 2020",
    "forras_en": "IEA 2020",
@@ -50,7 +50,7 @@
    "lektoralva": true
   },
   "cement": {
-   "hu": "A cementgyártás vegyi folyamata (a mészkő bontása) 2016-ban 1,45 milliárd tonna CO2-t engedett ki, a fosszilis kibocsátás kb. 4%-át. Ez akkor is létrejön, ha a hőt tiszta energia adja.",
+   "hu": "A cementgyártás vegyi folyamata (a mészkő bontása) 2016-ban 1,45 milliárd tonna CO2-t engedett a légkörbe, ami a fosszilis kibocsátás kb. 4%-a. Ez akkor is létrejön, ha a hőt tiszta energia adja.",
    "en": "The chemical process of cement making released 1.45 billion tonnes of CO2 in 2016, about 4% of fossil emissions, even if the heat comes from clean energy.",
    "forras": "Andrew 2018",
    "forras_en": "Andrew 2018",
@@ -66,7 +66,7 @@
    "lektoralva": true
   },
   "hoseg_halal": {
-   "hu": "1991 és 2018 között a nyári hőség okozta halálesetek 37%-a az ember okozta melegedés miatt történt (43 ország adatai).",
+   "hu": "1991 és 2018 között a nyári hőség okozta halálesetek 37%-a az ember okozta felmelegedés miatt történt (43 ország adatai alapján).",
    "en": "Between 1991 and 2018, 37% of warm-season heat-related deaths were due to human-caused warming (data from 43 countries).",
    "forras": "Vicedo-Cabrera és mtsai 2021",
    "forras_en": "Vicedo-Cabrera et al. 2021",
@@ -74,7 +74,7 @@
    "lektoralva": true
   },
   "legszennyezes": {
-   "hu": "A szén, olaj és gáz égetéséből származó légszennyezés évente kb. 5,1 millió ember korai halálát okozza; ezek elkerülhetők lennének.",
+   "hu": "A szén, az olaj és a gáz égetéséből származó légszennyezés évente kb. 5,1 millió ember korai halálát okozza; ezek elkerülhetők lennének.",
    "en": "Air pollution from burning coal, oil and gas causes about 5.1 million early deaths a year, which could be avoided.",
    "forras": "Lelieveld és mtsai 2023",
    "forras_en": "Lelieveld et al. 2023",
@@ -82,7 +82,7 @@
    "lektoralva": true
   },
   "termes": {
-   "hu": "Alkalmazkodás nélkül minden egyes fok melegedés átlagosan 6%-kal csökkenti a búza, 7,4%-kal a kukorica, 3,2%-kal a rizs és 3,1%-kal a szója termését.",
+   "hu": "Alkalmazkodás nélkül minden egyes foknyi melegedés átlagosan 6%-kal csökkenti a búza, 7,4%-kal a kukorica, 3,2%-kal a rizs és 3,1%-kal a szója termését.",
    "en": "Without adaptation, each degree of warming cuts global yields of wheat by 6.0%, maize by 7.4%, rice by 3.2% and soybean by 3.1%.",
    "forras": "Zhao és mtsai 2017",
    "forras_en": "Zhao et al. 2017",
@@ -90,7 +90,7 @@
    "lektoralva": true
   },
   "amazonas": {
-   "hu": "Az Amazonas esőerdejének pusztulása a kutatók becslése szerint kb. 3,5 fok melegedésnél válik valószínűvé, de már 2 foknál is elkezdődhet.",
+   "hu": "Az Amazonas esőerdejének pusztulása a kutatók becslése szerint kb. 3,5 fokos melegedésnél válik valószínűvé, de már 2 foknál is elkezdődhet.",
    "en": "The Amazon rainforest's dieback is estimated to become likely around 3.5 °C of warming, but it is possible from 2 °C.",
    "forras": "Armstrong McKay és mtsai 2022",
    "forras_en": "Armstrong McKay et al. 2022",

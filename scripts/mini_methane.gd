@@ -51,7 +51,7 @@ func _ready() -> void:
 	var title := UI.heading(L.t("Metánvadász"), 34)
 	title.position = Vector2(60, 28)
 	add_child(title)
-	_info = UI.label(L.t("A műhold végigpásztázza a gázmezőt. Ahol felhő jelenik meg, ott nagy a szivárgás: kattints a kútra amiből szivárog, és küldj oda egy javítócsapatot!"), 18, UI.SOFT)
+	_info = UI.label(L.t("A műhold végigpásztázza a gázmezőt. Ahol felhő jelenik meg, ott nagy a szivárgás: kattints a kútra, amiből szivárog, és küldj oda egy javítócsapatot!"), 18, UI.SOFT)
 	_info.position = Vector2(60, 84)
 	_info.size = Vector2(980, 60)
 	add_child(_info)
@@ -268,6 +268,6 @@ func _draw() -> void:
 		draw_rect(Rect2(sp + Vector2(12, -3), Vector2(22, 6)), Color(UI.CYAN, 0.8))
 		if _t - _msg_t < 1.2 and _msg != "":
 			draw_string(font, _msg_pos + Vector2(-170, -40), _msg, HORIZONTAL_ALIGNMENT_CENTER, 340, 17, UI.GOLD)
-		draw_string(font, Vector2(60, 850), L.t("A felhők mérete jelkép. A kis szivárgásokat a műhold nem látja."), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, UI.MUTE)
+		draw_string(font, Vector2(60, 850), L.t("A felhők mérete jelképes. A kis szivárgásokat a műhold nem látja."), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, UI.MUTE)
 	else:
 		draw_rect(Rect2(110, 270, 1380, 440), Color(0.043, 0.063, 0.114, 0.9 * clampf(done_t / 0.8, 0.0, 1.0)))

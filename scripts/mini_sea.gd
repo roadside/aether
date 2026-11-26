@@ -411,4 +411,4 @@ func _draw() -> void:
 	if done_t >= 0.0:
 		draw_rect(Rect2(120, 530, 1360, 200), Color(0.043, 0.063, 0.114, 0.9 * clampf(done_t / 0.8, 0.0, 1.0)))
 	else:
-		draw_string(font, Vector2(60, 880), L.t("A korallok fakulása jelkép: a görbét követi."), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color(1, 1, 1, 0.6))
+		draw_string(font, Vector2(60, 880), L.t("A korallok fakulása jelképes: a görbét követi."), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color(1, 1, 1, 0.6))
