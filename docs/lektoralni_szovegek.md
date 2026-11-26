@@ -19,8 +19,8 @@ Minden szöveg új (2026-11-23). A kutatási kártyák szövege a már lektorál
 - „A tenger már most is emelkedik nálunk. Mit ér nekünk egy távoli ígéret?”
 - „A városainkban a hőség és a füst már most szedi áldozatait. Segít ez rajtuk?”
 - „Biztos, hogy az ember okozza? És számít egyáltalán, amit mi teszünk?”
-- „Az olaj és a gáz a bevételünk. Mit tehetünk úgy, hogy ne menjünk tönkre?”
-- „Az erdő és a föld adja a megélhetésünket. Ki fizeti meg, ha érintetlenül hagyjuk?”
+- „Az olaj és a gáz a fő bevételi forrásunk. Mit tehetünk úgy, hogy ne menjünk tönkre?”
+- „Az erdő és a föld biztosít megélhetést számunkra. Ki fizeti meg, ha érintetlenül hagyjuk?”
 
 ## 3. Tények az országcsoportokról (forrással)
 
@@ -53,7 +53,7 @@ Minden szöveg új (2026-11-23). A kutatási kártyák szövege a már lektorál
 
 **Olajországok**
 - Szaúd-Arábiában egy emberre évi 18,5 tonna CO2 jut (Global Carbon Budget 2026) – https://ourworldindata.org/co2-emissions
-- Irak gazdaságának 42,8%-a az olajból származik (Világbank 2021) – https://data.worldbank.org/indicator/NY.GDP.PETR.RT.ZS
+- Irak GDP-jének 42,8%-a az olajból származik (Világbank 2021) – https://data.worldbank.org/indicator/NY.GDP.PETR.RT.ZS
 - A valóságban Oroszország és Szaúd-Arábia 2060-ra ígért nulla kibocsátást (Climate Watch) – https://www.climatewatchdata.org/net-zero-tracker
 
 ## 4. Billenőpontok nevei (Armstrong McKay és mtsai 2022, Science 377, eabn7950)

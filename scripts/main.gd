@@ -26,8 +26,8 @@ const WORRY := {
 	"part": "A tenger már most is emelkedik nálunk. Mit ér nekünk egy távoli ígéret?",
 	"egeszseg": "A városainkban a hőség és a füst már most szedi áldozatait. Segít ez rajtuk?",
 	"ketseg": "Biztos, hogy az ember okozza? És számít egyáltalán, amit mi teszünk?",
-	"olaj": "Az olaj és a gáz a bevételünk. Mit tehetünk úgy, hogy ne menjünk tönkre?",
-	"erdo": "Az erdő és a föld adja a megélhetésünket. Ki fizeti meg, ha érintetlenül hagyjuk?",
+	"olaj": "Az olaj és a gáz a fő bevételi forrásunk. Mit tehetünk úgy, hogy ne menjünk tönkre?",
+	"erdo": "Az erdő és a föld biztosít megélhetést számunkra. Ki fizeti meg, ha érintetlenül hagyjuk?",
 }
 ## Amit a csoport a megállapodáskor mond: arra az aggodalmára felel, amelyikre a kártyád válaszolt (játékszabály).
 const REPLY := {
