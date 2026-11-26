@@ -3092,7 +3092,10 @@ func _open_help() -> void:
 		h.add_child(UI.label(row[0], 22, UI.GOLD, true, false))
 		h.add_child(UI.label(L.t(row[1]), 18, UI.TEXT))
 		body.add_child(h)
-	body.add_child(UI.label(L.t("Valódi: a klímamodell számai, a csoportok kibocsátása, a kártyák forrásai."), 15, UI.MUTE))
+	body.add_child(UI.label(L.t("Itt minden VALÓDI: a klímamodell számai, a csoportok kibocsátása, a kártyák forrásai."), 15, UI.MUTE))
+	var help_gap := Control.new()      # több hely a gombok fölött (Zoltán kérése)
+	help_gap.custom_minimum_size = Vector2(0, 14)
+	body.add_child(help_gap)
 	var hb := UI.hbox(12)
 	hb.add_child(_go(L.t("Kezdjük!"), _close))
 	hb.add_child(_go(L.t("Új játék vezetéssel"), func() -> void:       # az első kör lépésről lépésre, újra

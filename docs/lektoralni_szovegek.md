@@ -135,7 +135,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Nulla kibocsátás %d-re
 - Növényi energia CO2-tárolással
 - Tőlük már nincs mit kérned.
-- Valódi: a klímamodell számai, a csoportok kibocsátása, a kártyák forrásai.
+- Itt minden VALÓDI: a klímamodell számai, a csoportok kibocsátása, a kártyák forrásai.
 - Válassz %d kártyát (%d/%d)
 - Válassz témakört! Három valódi kérdést kapsz, egyet kutathatsz ki: ebből lesz a bizonyíték-kártyád.
 - az átlagnál kevésbé érzékeny
@@ -857,3 +857,12 @@ Kikerült a játékból: a Gyűjteményből a „Befejezett játékok…”, a �
 - %s felkészült a váratlan helyzetekre.
 - Segíts három csoportnak felkészülni a váratlan helyzetekre.
 - Felkészítő program: %s azonnal felkészül a váratlan helyzetekre.
+## 21. Zoltán szövegcseréi (2026-11-26, 22:00–22:20) – az ő megfogalmazása, lektorálva
+
+- Innen jön a világ CO2-kibocsátásának %s%-a
+- Az áram …%-át megújuló forrásból / szénből állítják elő (négy mondat)
+- Irak GDP-jének 42,8%-a az olajból származik
+- „A városainkban a hőség és a füst már most szedi áldozatait. Segít ez rajtuk?”
+- „Az olaj és a gáz a fő bevételi forrásunk. Mit tehetünk úgy, hogy ne menjünk tönkre?”
+- „Az erdő és a föld biztosít megélhetést számunkra. Ki fizeti meg, ha érintetlenül hagyjuk?”
+- Itt minden VALÓDI: a klímamodell számai, a csoportok kibocsátása, a kártyák forrásai.

@@ -73,7 +73,7 @@ const EN := {
 	"Növényi energia CO2-tárolással": "Plant energy with CO2 storage",
 	"Te vagy a világ klímatudósa. 2026-ból indulsz; egy kör öt év, így 2100-ig tizenöt köröd van.": "You are the world's climate scientist. You start in 2026, each round is five years, and you have fifteen rounds until 2100.",
 	"Tőlük már nincs mit kérned.": "There is nothing more to ask of them.",
-	"Valódi: a klímamodell számai, a csoportok kibocsátása, a kártyák forrásai.": "Real: the climate model's numbers, the groups' emissions, the cards' sources.",
+	"Itt minden VALÓDI: a klímamodell számai, a csoportok kibocsátása, a kártyák forrásai.": "All of this is REAL: the climate model's numbers, the groups' emissions, the cards' sources.",
 	"Válassz %d kártyát (%d/%d)": "Cards to choose: %d (%d/%d)",
 	"Válassz témakört! Három valódi kérdést kapsz, egyet kutathatsz ki: ebből lesz a bizonyíték-kártyád.": "Choose a topic. You get three real questions and can research one: it becomes your evidence card.",
 	"az átlagnál kevésbé érzékeny": "less sensitive than average",
