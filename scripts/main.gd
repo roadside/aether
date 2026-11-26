@@ -2007,6 +2007,10 @@ func _open_hand() -> void:
 		var mine: Array = world.hand.filter(func(id: String) -> bool: return Cards.theme_of(id) == th)
 		if mine.is_empty():
 			continue
+		if body.get_child_count() > 0:      # hely a témakörök között, hogy ne folyjanak össze (Zoltán kérése)
+			var th_gap := Control.new()
+			th_gap.custom_minimum_size = Vector2(0, 14)
+			body.add_child(th_gap)
 		var th_row := UI.hbox(8)
 		th_row.add_child(Icons.rect(th, _theme_color(th), 24))
 		th_row.add_child(UI.label(_theme_name(th), 18, _theme_color(th), true, false))
