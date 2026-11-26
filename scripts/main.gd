@@ -871,6 +871,10 @@ func _fill_group(g: Dictionary) -> void:
 	(_group_cards[g["id"]]["taj"] as TextureRect).texture = _land_tex(g)
 	var name_l := UI.label(L.field(g, "nev"), 20, col, true, false)
 	v.add_child(name_l)
+	var pic_gap := Control.new()      # egy picivel több hely a jobb felső kép alatt (Zoltán kérése)
+	pic_gap.custom_minimum_size = Vector2(0, 6)
+	pic_gap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	v.add_child(pic_gap)
 	v.add_child(_lbl(L.t("Innen jön a világ CO2-kibocsátásának %s%%-a") % L.num_short(float(g["co2_resz"]) * 100.0, 0), 13, UI.MUTE))
 	# a mostani kibocsátásuk a maihoz képest
 	var bar := ProgressBar.new()
