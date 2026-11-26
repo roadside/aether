@@ -1090,25 +1090,6 @@ func _build_menu() -> void:
 		_show_menu(false)
 		_pick_game(_daily_code()))
 	v.add_child(daily)
-	var code_row := UI.hbox(6)
-	var code := LineEdit.new()
-	code.placeholder_text = L.t("Föld-kód")
-	code.max_length = 6
-	code.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	code.add_theme_font_size_override("font_size", 17)
-	code_row.add_child(code)
-	var code_go := UI.button("→")
-	code_go.focus_mode = Control.FOCUS_NONE
-	var play_code := func() -> void:
-		if code.text.strip_edges().is_valid_int() and int(code.text) >= 0:
-			var n := int(code.text)
-			code.text = ""
-			_show_menu(false)
-			_pick_game(n)
-	code_go.pressed.connect(play_code)
-	code.text_submitted.connect(func(_t: String) -> void: play_code.call())
-	code_row.add_child(code_go)
-	v.add_child(code_row)
 	var quit := UI.button(L.t("Kilépés a játékból"))
 	quit.pressed.connect(func() -> void:
 		_save()
@@ -1555,17 +1536,17 @@ func _rank(n: int) -> String:
 ## Jelvények: [azonosító, név, mit kell hozzá]. Több játékon át gyűlnek.
 const BADGES := [
 	["elso", "Első Föld", "Játssz végig egy játékot."],
-	["ketfok", "Két fok alatt", "Maradj 2100-ban +2 °C alatt."],
-	["masfel", "Kiváló Föld", "Maradj 2100-ban +1,7 °C alatt."],
+	["ketfok", "Két fok alatt", "Tartsd 2100-ig +2 °C alatt a globális felmelegedést."],
+	["masfel", "Kiváló Föld", "Tartsd 2100-ig +1,7 °C alatt a globális felmelegedést."],
 	["mindenki", "Mindenki vállalta", "A játék végére mind a hat csoport vállaljon nulla kibocsátást."],
 	["metan", "Metánvadász", "Mind a hat csoport vállaljon metáncsökkentést."],
 	["meresz", "Merész cél", "Érd el, hogy egy csoport tizenöt év alatt vállalja a nulla kibocsátást."],
-	["kuszob", "Egy küszöb sem", "Játssz végig egy játékot úgy, hogy egy billenőpont küszöbét sem lépitek át."],
+	["kuszob", "Egy küszöb sem", "Játssz végig egy játékot úgy, hogy egyetlen kritikus határértéket sem léptek át."],
 	["kivonas", "Tisztító", "Indíts el legalább három CO2-kivonást egy játékban."],
-	["felkeszult", "Senki sem marad magára", "Segíts mind a hat csoportnak felkészülni a bajra."],
-	["nehez", "Nehéz Föld", "Maradj +2 °C alatt egy átlagosnál érzékenyebb Földön."],
-	["mester", "Mester", "Maradj +2 °C alatt nehéz fokozaton."],
-	["huvos", "Hűvös Föld", "Maradj 2100-ban +1,6 °C alatt."],
+	["felkeszult", "Senki sem marad magára", "Segíts mind a hat csoportnak felkészülni a váratlan helyzetekre."],
+	["nehez", "Nehéz Föld", "Tartsd 2100-ig +2 °C alatt a globális felmelegedést egy átlagnál érzékenyebb Földön."],
+	["mester", "Mester", "Tartsd +2 °C alatt a globális felmelegedést nehéz fokozaton."],
+	["huvos", "Hűvös Föld", "Tartsd 2100-ig +1,6 °C alatt a globális felmelegedést."],
 	["szilard", "Egy megingás sem", "Játssz végig egy játékot úgy, hogy egy csoport sem tolja későbbre a célját."],
 	["gyors", "Gyors kezdés", "Érd el, hogy 2040 előtt mind a hat csoport vállaljon célt."],
 	["napi", "Napi Föld", "Játssz végig egy játékot „A mai Föld” gombbal."],
@@ -1574,8 +1555,8 @@ const BADGES := [
 	["ovatos", "Óvatos tudós", "Kutass ki három kockázatos ötletet."],
 	["kuldetes", "Küldetésteljesítő", "Teljesítsd mind a három küldetést egy játékban."],
 	["tevhit", "Tévhitvadász", "Cáfolj meg három tévhitet egy játékban."],
-	["vedo", "Időben szóltál", "Készíts fel három csoportot, mielőtt lecsap rájuk a baj."],
-	["lepcso", "A lépcső teteje", "Maradj +2 °C alatt az ötödik kihívásnál."],
+	["vedo", "Időben szóltál", "Készíts fel három csoportot, mielőtt utoléri őket a baj."],
+	["lepcso", "A lépcső teteje", "Tartsd +2 °C alatt a globális felmelegedést az ötödik kihívásnál."],
 ]
 var _end_info: Dictionary = {}
 
@@ -1670,27 +1651,13 @@ func _open_collection() -> void:
 	for th in Cards.THEMES:
 		all_n += Cards.TAGS[th].size()
 	body.add_child(UI.label(L.t("Rangod: %s") % L.t(_rank(c.size())), 22, UI.GOLD, true))
-	if not _dry:      # a minijátékok innen bármikor újrajátszhatók (amíg a kártyájuk nincs a játékban, csak innen érhetők el)
-		var mflow := HFlowContainer.new()
-		mflow.add_theme_constant_override("h_separation", 10)
-		mflow.add_theme_constant_override("v_separation", 8)
-		for mid in MINI:
-			mflow.add_child(_go("▶ " + L.t(str(MINI[mid][0])), _open_mini.bind(mid), false))
-		body.add_child(UI.label(L.t("Minijátékok"), 19, UI.TEXT, true))
-		body.add_child(mflow)
 	body.add_child(UI.label(L.t("Kikutatott kártyák: %d / %d") % [c.size(), all_n], 19, UI.TEXT, true))
 	for r in RANKS:
 		if int(r[0]) > c.size():
 			body.add_child(UI.label(L.t("A következő rang: %s (%d kártyától)") % [L.t(r[1]), int(r[0])], 15, UI.SOFT))
 			break
-	var games := int(L.get_setting("jatekok", 0))
-	if games > 0:
-		body.add_child(UI.label(L.t("Befejezett játékok: %d · A legjobb Földed: +%s °C") % [games, L.num(float(L.get_setting("legjobb", 0.0)), 2)], 17, UI.GREEN))
 	if _daily_streak() >= 2:
 		body.add_child(UI.label(L.t("A mai Föld: %d napja játszod egymás után.") % _daily_streak(), 17, UI.GREEN))
-	var mdone := int(L.get_setting("kuldetesek", 0))
-	if mdone > 0:
-		body.add_child(UI.label(L.t("Teljesített küldetések: %d") % mdone, 17, UI.GREEN))
 	# jelvények: érmek egy sorban; alattuk az egér alatti (vagy a következő megszerezhető) jelvény neve és feltétele
 	var have := _badges()
 	body.add_child(UI.label(L.t("Jelvények: %d / %d") % [have.size(), BADGES.size()], 19, UI.GOLD, true, false))
@@ -1731,6 +1698,9 @@ func _open_collection() -> void:
 		medals.add_child(m)
 	body.add_child(medals)
 	body.add_child(medal_lbl)
+	var theme_gap := Control.new()      # kis hely az első témakör (Áram) fölött (Zoltán kérése)
+	theme_gap.custom_minimum_size = Vector2(0, 14)
+	body.add_child(theme_gap)
 	for th in Cards.THEMES:
 		var mine: Array = Cards.TAGS[th].filter(func(id: String) -> bool: return id in c)
 		var head := UI.hbox(10)
@@ -1772,22 +1742,6 @@ func _open_collection() -> void:
 			flow.add_child(tile)
 		body.add_child(flow)
 		body.add_child(ask)
-	var past: Variant = L.get_setting("foldek", [])
-	if typeof(past) == TYPE_ARRAY and not past.is_empty():
-		body.add_child(UI.label(L.t("Korábbi Földjeid"), 19, UI.GOLD, true, false))
-		# két oszlop, az elsőben a legfrissebbek – így a jelvények is kiférnek alá
-		var cols := UI.hbox(24)
-		var half := ceili(past.size() / 2.0)
-		var colv: Array = [UI.vbox(4), UI.vbox(4)]
-		for cv in colv:
-			(cv as Control).custom_minimum_size = Vector2(416, 0)
-			cols.add_child(cv)
-		body.add_child(cols)
-		for i in past.size():
-			var e: Dictionary = past[i]
-			var date := ("%d-%02d-%02d" if L.is_en() else "%d. %02d. %02d.") % [int(e["ev"]), int(e["ho"]), int(e["nap"])]
-			var level: String = L.t({3: "Nehéz", 4: "Közepes", 5: "Könnyű"}.get(int(e.get("lepes", 4)), "Közepes"))
-			(colv[0 if i < half else 1] as Control).add_child(UI.label("%s  %s · +%s °C · %s · %s: %d" % [_stars(float(e["T"])), date, L.num(float(e["T"]), 2), level, L.t("Föld-kód"), int(e["mag"])], 15, UI.SOFT))
 
 
 # --- zene játék közben ----------------------------------------------------------
@@ -2172,7 +2126,7 @@ func _open_group(g: Dictionary) -> void:
 			seen.append(short)
 	for a in asks:
 		var txt: String = (L.rag(L.t("Nulla kibocsátás %d-re") % int(a["cel"]))) if a["fajta"] == "cel" else (L.t("Metán: −30% tíz év alatt") if a["fajta"] == "metan" \
-			else (L.t("Megerősítés") if a["fajta"] == "megerosites" else (L.t("A maradék kiváltása") if a["fajta"] == "maradek" else L.t("Felkészülés a bajra"))))
+			else (L.t("Megerősítés") if a["fajta"] == "megerosites" else (L.t("A maradék kiváltása") if a["fajta"] == "maradek" else L.t("Felkészülés a váratlan helyzetekre"))))
 		var b := UI.button("%s · %s" % [txt, L.t("%d kártya") % int(a["kell"])])
 		if a["fajta"] in ["cel", "metan"]:
 			var dts := ("%.3f" if dec == 3 else "%.2f") % float(cooling[a])
@@ -2384,7 +2338,7 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 		_sticky(body, _go(L.t("Rendben"), _close))
 		return
 	if ask["fajta"] == "felkeszules":
-		body.add_child(UI.label(L.t("%s felkészült a bajra. Megbízik benned, és többé nem inog meg.") % L.field(g, "nev"), 22, UI.TEXT, true))
+		body.add_child(UI.label(L.t("%s felkészült a váratlan helyzetekre. Megbízik benned, és többé nem inog meg.") % L.field(g, "nev"), 22, UI.TEXT, true))
 		_sticky(body, _go(L.t("Rendben"), _close))
 		return
 	var txt: String = (L.rag(L.t("%s vállalta: nulla kibocsátás %d-re.") % [L.field(g, "nev"), int(ask["cel"])])) if ask["fajta"] == "cel" \
@@ -2494,7 +2448,7 @@ func _share_text() -> String:
 	var line := "🌍 2100: +%s °C" % L.num(float(world.st["T"]), 2)
 	var steps_n: int = world.max_steps + (1 if world.challenge >= 5 else 0)
 	line += " · %s: +%s °C" % [L.t("Okos gép"), L.num(float(Agent.play("okos", world.seed_v, steps_n, world.challenge)["T"]), 2)]
-	return "AETHER · %s\n%s\n%s" % [L.t("Föld-kód: %d") % world.seed_v, line, row]
+	return "AETHER\n%s\n%s" % [line, row]
 
 
 ## A gépek ugyanezen a Földön (ugyanaz a Föld-kód, fokozat és kihívás): mérce a saját eredményedhez.
@@ -2770,7 +2724,7 @@ func _open_dilemma() -> void:
 	elif d["fajta"] == "tamogatas":
 		body.add_child(UI.label(L.t("Egy alapítvány támogatja a munkádat. Mire kéred?"), 18, UI.TEXT))
 		opts = [L.t("Több kutató: ebben a körben eggyel több lépésed van."),
-			L.t("Felkészítő program: %s azonnal felkészül a bajra.") % L.field(world.group(str(d["a"])), "nev")]
+			L.t("Felkészítő program: %s azonnal felkészül a váratlan helyzetekre.") % L.field(world.group(str(d["a"])), "nev")]
 	else:
 		body.add_child(UI.label(L.t("Két meghívást kaptál, de csak egy útra van időd. Akit meglátogatsz, azt most eggyel kevesebb kártyával is meggyőzheted."), 18, UI.TEXT))
 		opts = [L.field(world.group(str(d["a"])), "nev"), L.field(world.group(str(d["b"])), "nev")]
@@ -2927,7 +2881,6 @@ func _open_end() -> void:
 	var kind := L.t("átlagos") if absf(s) < 0.25 else (L.t("az átlagnál érzékenyebb") if s > 0 else L.t("az átlagnál kevésbé érzékeny"))
 	body.add_child(UI.label(L.t("Ez a Föld %s volt. Ezt előre senki sem tudhatta, ahogy a valódi Földnél sem tudjuk pontosan.") % kind, 16, UI.SOFT))
 	body.add_child(UI.label(L.t("A hőmérsékletet egyszerű klímamodell számolta. Irányt és nagyságrendet mutat, nem előrejelzés."), 14, UI.MUTE))
-	body.add_child(UI.label(L.t("Föld-kód: %d. Ha egy barátod ezt írja be a menüben, ugyanezt a Földet kapja.") % world.seed_v, 14, UI.SOFT))
 	var end_row := UI.hbox(12)
 	end_row.add_child(_go(L.t("Új játék, új Föld") + " →", func() -> void: _pick_game()))
 	var again_code: int = world.seed_v
@@ -2992,7 +2945,7 @@ const MISSION_TEXT := {
 	"metan3": "2050 végéig legalább három csoport vállaljon metáncsökkentést.",
 	"kivonas2": "Indíts el két CO2-kivonást.",
 	"tema": "Kutass ki öt kártyát ebből a témakörből: %s",
-	"felkeszul3": "Segíts három csoportnak felkészülni a bajra.",
+	"felkeszul3": "Segíts három csoportnak felkészülni a váratlan helyzetekre.",
 	"nulla2065": "Legalább egy csoport érje el a nulla kibocsátást 2065-ig.",
 	"csucs3": "Egy klímacsúcson legalább három csoport hozza előbbre a célját.",
 	"kartya20": "Gyűjts húsz kártyát ebben a játékban.",
@@ -3053,7 +3006,7 @@ func _add_story(body: VBoxContainer) -> void:
 				line = L.t("%s a maradék kibocsátását is megszünteti.") % L.field(world.group(e["csoport"]), "nev")
 				mark = UI.GREEN
 			"felkeszules":
-				line = L.t("%s felkészült a bajra.") % L.field(world.group(e["csoport"]), "nev")
+				line = L.t("%s felkészült a váratlan helyzetekre.") % L.field(world.group(e["csoport"]), "nev")
 			"kivonas":
 				line = "%s: %s" % [L.t("Bővített CO2-kivonás") if e.get("bov", false) else L.t("CO2-kivonás"), L.t(CDR_NAME[e["id"]])]
 				mark = UI.GREEN

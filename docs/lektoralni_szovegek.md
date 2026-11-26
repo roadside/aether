@@ -833,3 +833,27 @@ Zoltán kérésére minden AI-rész kikerült a játékból: az „AI játszik�
 - 13. rész: „Föld AI: Claude, ChatGPT, Gemini”, „Klímacsúcs AI-országokkal”.
 - 14. rész: „Megingás AI-országokkal”, „Föld AI felhőből: hibaüzenetek”.
 - 17. rész vége: „Átnevezés: Saját AI helyett Föld AI”.
+
+## 20. Változás (2026-11-26, 21:30) – Zoltán szövegcseréi; három hozzáigazított mondat még nem lektorált
+
+Kikerült a játékból: a Gyűjteményből a „Befejezett játékok…”, a „Teljesített küldetések…” sor, a „Korábbi Földjeid” rész és a „Minijátékok” lista (a minijátékok a kártyájukról indulnak); a Föld-kód (menü, záróképernyő, eredmény másolása).
+
+### Zoltán új szövegei (az ő megfogalmazása; a két pont nélküli mondat végére pont került)
+
+- Játssz végig egy játékot úgy, hogy egyetlen kritikus határértéket sem léptek át.
+- Tartsd 2100-ig +2 °C alatt a globális felmelegedést.
+- Tartsd 2100-ig +2 °C alatt a globális felmelegedést egy átlagnál érzékenyebb Földön.
+- Tartsd 2100-ig +1,7 °C alatt a globális felmelegedést.
+- Felkészülés a váratlan helyzetekre
+- %s felkészült a váratlan helyzetekre. Megbízik benned, és többé nem inog meg.
+- Segíts mind a hat csoportnak felkészülni a váratlan helyzetekre.
+- Tartsd +2 °C alatt a globális felmelegedést nehéz fokozaton.
+- Tartsd 2100-ig +1,6 °C alatt a globális felmelegedést.
+- Készíts fel három csoportot, mielőtt utoléri őket a baj.
+- Tartsd +2 °C alatt a globális felmelegedést az ötödik kihívásnál.
+
+### Hozzáigazítva („a bajra” helyett „a váratlan helyzetekre”) – még nem lektorált
+
+- %s felkészült a váratlan helyzetekre.
+- Segíts három csoportnak felkészülni a váratlan helyzetekre.
+- Felkészítő program: %s azonnal felkészül a váratlan helyzetekre.
