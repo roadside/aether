@@ -1032,8 +1032,11 @@ func _build_bottom() -> void:
 
 
 func _build_menu() -> void:
-	_menu_catch = Control.new()
-	_menu_catch.set_anchors_preset(Control.PRESET_FULL_RECT)
+	var dimmer := ColorRect.new()      # amíg a menü nyitva van, a kép többi része elsötétül (Zoltán kérése)
+	dimmer.color = Color(0.0, 0.0, 0.03, 0.62)
+	dimmer.z_index = 7
+	_menu_catch = dimmer
+	_menu_catch.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_menu_catch.visible = false
 	_menu_catch.gui_input.connect(func(ev: InputEvent) -> void:
 		if ev is InputEventMouseButton and ev.pressed:
