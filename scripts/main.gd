@@ -2016,6 +2016,9 @@ func _open_card(id: String, fresh: bool = false) -> void:
 		kc.add_child(UI.label(str(kn["en"]) if en and str(kn.get("en", "")) != "" else str(kn["hu"]), 19, UI.GOLD, true))
 		kc.add_child(UI.text_link(str(kn.get("forras_en", kn.get("forras", ""))) if en else str(kn.get("forras", "")), str(kn.get("link", "")), 14))
 		body.add_child(UI.card_root(kc))
+	var why_gap := Control.new()       # kis hely a „Miért jó?” fölött (Zoltán kérése)
+	why_gap.custom_minimum_size = Vector2(0, 10)
+	body.add_child(why_gap)
 	for pair in [["Mire jó?", UI.GREEN], ["Mi a gond vele?", UI.EMBER], ["Mennyire bizonyított?", UI.CYAN]]:
 		var txt := Cards.text(id, pair[0], en)
 		if txt == "":
