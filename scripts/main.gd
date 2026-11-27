@@ -1839,11 +1839,7 @@ func _open_collection() -> void:
 	medals.add_theme_constant_override("h_separation", 4)
 	medals.add_theme_constant_override("v_separation", 5)
 	var medal_lbl := UI.label(" ", 16, UI.SOFT, false, false)
-	var next_goal := " "
-	for row in BADGES:
-		if not (row[0] in have):
-			next_goal = "☆ %s – %s" % [L.t(row[1]), L.t(row[2])]
-			break
+	var next_goal := " "               # szöveg csak akkor látszik, ha az egér egy jelvényen áll (Zoltán kérése)
 	medal_lbl.text = next_goal
 	for row in BADGES:
 		var got_b: bool = row[0] in have
