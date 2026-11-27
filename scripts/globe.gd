@@ -21,9 +21,18 @@ var zoom := 1.0                      # görgővel nagyítható ("nagyító" kör
 @export var spin_speed := 0.0        # magától nem forog (egérrel forgatható); díszforgáshoz pl. 0.006
 var fixed_sun := false               # a Nap mindig a néző felől süt (játéktábla-nézet)
 @export var real_sun := true         # a Nap valódi helyzete a pontos idő alapján
-@export var cloud_speed := 0.0015
+@export var cloud_speed := 0.0035
 
 var spin := 0.12
+## Élő Föld: lassú ringás (a spin értékét nem írja át, csak a képet), repülők a csoportok között.
+var alive := true
+const SWAY := 0.018                  # fordulat (kb. 6,5 fok) jobbra-balra
+var _sway_k := 1.0                   # forgatás közben elhal, utána lassan visszatér
+
+
+func _spin_now() -> float:
+	return spin + (sin(time * 0.21) * SWAY * _sway_k if alive else 0.0)
+
 var cloud_drift := 0.0
 var time := 0.0
 var flashes: Array = []             # felvillanó gyűrűk: [{"lat", "lon", "color", "t0"}] (egyezségnél)
@@ -190,7 +199,7 @@ func _update_sun() -> void:
 ## A Nap iránya a képernyő terében (ugyanaz a vetítés, mint a jelölőknél).
 func _sun_dir() -> Vector3:
 	var lat := deg_to_rad(sun_lat)
-	var o := deg_to_rad(sun_lon) - spin * TAU
+	var o := deg_to_rad(sun_lon) - _spin_now() * TAU
 	var x := cos(lat) * sin(o)
 	var y2 := -sin(lat)
 	var z2 := cos(lat) * cos(o)
@@ -202,7 +211,8 @@ func _process(delta: float) -> void:
 	if not dragging:
 		spin += spin_speed * delta
 	cloud_drift += cloud_speed * delta
-	_mat.set_shader_parameter("spin", spin)
+	_sway_k = move_toward(_sway_k, 0.0 if (dragging or effect_running()) else 1.0, delta * (4.0 if dragging else 0.5))
+	_mat.set_shader_parameter("spin", _spin_now())
 	_mat.set_shader_parameter("tilt", tilt)
 	_mat.set_shader_parameter("zoom", zoom)
 	if fixed_sun:
@@ -340,7 +350,7 @@ func _make_custom_tooltip(for_text: String) -> Object:
 ## Földrajzi pont -> képernyőpont. Visszaad: Vector3(x, y, látható? 1 : 0)
 func project(lat_deg: float, lon_deg: float) -> Vector3:
 	var lat := deg_to_rad(lat_deg)
-	var o := deg_to_rad(lon_deg) - spin * TAU
+	var o := deg_to_rad(lon_deg) - _spin_now() * TAU
 	var x := cos(lat) * sin(o)
 	var y2 := -sin(lat)
 	var z2 := cos(lat) * cos(o)
@@ -377,6 +387,7 @@ func _draw() -> void:
 			var q := c + (Vector2(p.x, p.y) - c) * lift
 			var on := (i + int(time * 6.0)) % 6 < 3
 			draw_rect(Rect2(q.snapped(Vector2(px, px)), Vector2(px, px)), Color(0.39, 0.95, 0.89, 0.95 if on else 0.25))
+	_draw_planes(px)
 	# valós események: kis, pulzáló pixel-jelölők
 	var pulse := 0.6 + 0.4 * sin(time * 3.0)
 	for e in events:
@@ -880,3 +891,42 @@ func _turbine(b: Vector2, h: float, rot: float, fade: float, tone: float) -> voi
 		draw_colored_polygon(PackedVector2Array([blade[0], blade[3], blade[4], blade[5]]), Color(0.74 * tone, 0.79 * tone, 0.86 * tone, fade))
 	draw_circle(hub, maxf(h * 0.032, 2.5), Color(0.25, 0.3, 0.36, fade))
 	draw_circle(hub + Vector2(-0.5, -0.5), maxf(h * 0.018, 1.4), Color(1, 1, 1, fade))
+
+
+## Repülők a csoportok között (szemléltetés): apró fehér pont halvány csíkkal, a gömb fölé emelt íven.
+## A csík színe a kibocsátással változik: ma szürkésbarna, nulla kibocsátásnál tiszta, világos.
+func _draw_planes(px: float) -> void:
+	if not alive or effect_running():
+		return
+	var g: Array = stations.filter(func(s: Dictionary) -> bool: return s.has("id"))
+	if g.size() < 2:
+		return
+	var c := size * 0.5
+	var trail := Color(0.72, 0.62, 0.5).lerp(Color(0.8, 0.97, 1.0), clampf(clean, 0.0, 1.0))
+	var n := 0
+	for i in g.size():
+		for j in range(i + 1, g.size()):
+			n += 1
+			var va := _vec(float(g[i]["lat"]), float(g[i]["lon"]))
+			var vb := _vec(float(g[j]["lat"]), float(g[j]["lon"]))
+			var per := 26.0 + 14.0 * _h(n)
+			var u := fposmod(time / per + _h(n + 40.0), 1.0)
+			if n % 2 == 0:
+				u = 1.0 - u
+			var dir := -1.0 if n % 2 == 0 else 1.0
+			for k in 9:                                   # k = 0: a gép, utána a csík
+				var uk := u - dir * k * 0.012
+				if uk < 0.0 or uk > 1.0:
+					continue
+				var v := va.lerp(vb, uk).normalized()
+				var p := project(rad_to_deg(asin(v.y)), rad_to_deg(atan2(v.z, v.x)))
+				if p.z < 0.5:
+					continue
+				var q := (c + (Vector2(p.x, p.y) - c) * (1.0 + sin(uk * PI) * 0.07)).snapped(Vector2(px, px))
+				var edge := sin(uk * PI)                   # fel- és leszálláskor halvány
+				if k == 0:
+					draw_rect(Rect2(q - Vector2(px, px), Vector2(px, px) * 3.0), Color(0, 0, 0, 0.35 * edge))
+					draw_rect(Rect2(q, Vector2(px, px) * 1.0), Color(1, 1, 1, edge))
+					draw_rect(Rect2(q + Vector2(px, 0), Vector2(px, px)), Color(1, 1, 1, 0.8 * edge))
+				else:
+					draw_rect(Rect2(q, Vector2(px, px)), Color(trail, 0.6 * edge * (1.0 - k / 9.0)))

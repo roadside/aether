@@ -925,3 +925,18 @@ Három ideiglenes gomb a földgömb fölött, az új nagy animációk kipróbál
 - Vulkán
 - Járvány
 - Áttörés
+
+## 28. Új szövegek (2026-11-27, 18:10) – képeslapok a Földről – még nem lektorált
+
+A kör elején egy-két hely „képeslapot küld”: a hely valódi fotója és egy mondat arról, mi változott ott a játékban. A %s helyére a csoport vagy a billenőpont neve kerül (pl. „Európa”, „Grönland jégtakarója”), a számok helyére a játék adata.
+
+Csoportoknál:
+- %s: új vállalás. Nulla kibocsátás %d-ig. (pl. „Afrika: új vállalás. Nulla kibocsátás 2060-ig.”)
+- %s: megvan a nulla kibocsátás.
+- %s: a kibocsátás már csak a 2025-ös %d%-a. (pl. „Kína: a kibocsátás már csak a 2025-ös 64%-a.”)
+- %s: még nincs vállalás.
+
+Billenőpontoknál:
+- %s: egyelőre a küszöb alatt vagyunk.
+- %s: a melegedés elérte a veszélysávot.
+- %s: átléptük a küszöböt.

@@ -1498,6 +1498,153 @@ func _fit() -> void:
 var _sat: Satellite
 var _pop_next := false         # a következő ablak akkor is előugrik, ha ablakból nyílik (új kártya, megállapodás)
 var _bonus_float := false
+# --- képeslapok a Földről --------------------------------------------------------
+## Kör elején egy-két hely „képeslapot küld”: valódi fotó (assets/kepek) és egy mondat arról, mi változott ott
+## a játékban. A mondatok a játék állását írják le (vállalás, kibocsátás, küszöb), nem valós hírek.
+var _pc_queue: Array = []         # [{"lat", "lon", "kep", "szoveg"}]
+var _pc_goal: Dictionary = {}     # csoport -> a legutóbb látott célév (új vállalás felismeréséhez)
+var _pc_band: Dictionary = {}     # billenőpont -> már szóltunk, hogy veszélysávban van
+var _pc_game := -1
+var _pc_run := 0
+const PC_MAX := 2
+
+
+func _plan_postcards() -> void:
+	if _pc_game != world.game_id:
+		_pc_game = world.game_id
+		_pc_goal = {}
+		_pc_band = {}
+		if world.history.size() > World.ROUND_YEARS + 1:      # betöltött játék: a régi vállalások nem újak
+			for g0 in world.groups:
+				_pc_goal[g0["id"]] = int(g0["cel"])
+			for t0 in world.tips:
+				if float(world.st["T"]) >= float(t0["also"]):
+					_pc_band[t0["id"]] = true
+	var first: Array = []
+	var rest: Array = []
+	var t := float(world.st["T"])
+	for n in world.news:
+		if n["fajta"] == "billenes":
+			for tp in world.tips:
+				if tp["id"] == n["id"]:
+					first.append(_pc(tp, L.t("%s: átléptük a küszöböt.") % L.field(tp, "nev")))
+		elif n["fajta"] == "nulla":
+			var gz := world.group(n["csoport"])
+			first.append(_pc(gz, L.t("%s: megvan a nulla kibocsátás.") % L.field(gz, "nev")))
+	for g in world.groups:
+		var goal := int(g["cel"])
+		if goal > 0 and int(_pc_goal.get(g["id"], 0)) == 0:
+			first.append(_pc(g, L.t("%s: új vállalás. Nulla kibocsátás %d-ig.") % [L.field(g, "nev"), goal]))
+		elif goal == 0:
+			rest.append(_pc(g, L.t("%s: még nincs vállalás.") % L.field(g, "nev")))
+		elif int(g.get("nulla", 0)) == 0:
+			var pct := int(round(World.emission(g, world.year() - 1) * 100.0))
+			if pct < 100:
+				rest.append(_pc(g, L.t("%s: a kibocsátás már csak a 2025-ös %d%%-a.") % [L.field(g, "nev"), pct]))
+		_pc_goal[g["id"]] = goal
+	for tp in world.tips:
+		if int(tp["ev"]) > 0:
+			continue
+		if t >= float(tp["also"]):
+			if not _pc_band.has(tp["id"]):
+				_pc_band[tp["id"]] = true
+				first.append(_pc(tp, L.t("%s: a melegedés elérte a veszélysávot.") % L.field(tp, "nev")))
+		else:
+			rest.append(_pc(tp, L.t("%s: egyelőre a küszöb alatt vagyunk.") % L.field(tp, "nev")))
+	rest.shuffle()
+	_pc_queue = (first + rest).slice(0, PC_MAX)
+	if world.over():
+		_pc_queue = []
+
+
+func _pc(place: Dictionary, text: String) -> Dictionary:
+	return {"lat": float(place["lat"]), "lon": float(place["lon"]), "kep": str(place["id"]), "szoveg": text}
+
+
+## Egymás után megmutatja a sorban álló képeslapokat: a Föld odafordul, a lap a hely mellé csúszik, majd elhalványul.
+## Nem állítja meg a játékot, és nem fog el kattintást.
+func _play_postcards() -> void:
+	var queue := _pc_queue
+	_pc_queue = []
+	_pc_run += 1
+	var run := _pc_run
+	var game := world.game_id
+	for pc in queue:
+		if run != _pc_run or world.game_id != game or _busy or _menu.visible:
+			return
+		globe.look_at_event(pc)
+		await get_tree().create_timer(0.8).timeout
+		if run != _pc_run or world.game_id != game:
+			return
+		var card := _postcard(pc)
+		await get_tree().create_timer(0.2 if _test else 6.0).timeout
+		if is_instance_valid(card):
+			var out := card.create_tween()
+			out.tween_property(card, "modulate:a", 0.0, 0.6)
+			out.tween_callback(card.queue_free)
+		await get_tree().create_timer(0.1 if _test else 0.7).timeout
+
+
+func _postcard(pc: Dictionary) -> Control:
+	var p: Vector3 = globe.project(float(pc["lat"]), float(pc["lon"]))
+	var at: Vector2 = globe.position + Vector2(p.x, p.y)
+	globe.flash(float(pc["lat"]), float(pc["lon"]), Color("#f4efe2"))
+	var holder := Control.new()
+	holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	holder.z_index = 2
+	add_child(holder)
+	var panel := PanelContainer.new()
+	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color("#f4efe2")
+	sb.set_corner_radius_all(4)
+	sb.content_margin_left = 10
+	sb.content_margin_right = 10
+	sb.content_margin_top = 10
+	sb.content_margin_bottom = 12
+	sb.shadow_color = Color(0, 0, 0, 0.55)
+	sb.shadow_size = 14
+	sb.shadow_offset = Vector2(3, 5)
+	panel.add_theme_stylebox_override("panel", sb)
+	var v := UI.vbox(8)
+	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panel.add_child(v)
+	var tex: Texture2D = Globe.photo_of(str(pc["kep"]))
+	if tex != null:
+		var pic := TextureRect.new()
+		pic.texture = tex
+		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		pic.custom_minimum_size = Vector2(320, 200)
+		pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		v.add_child(pic)
+	var lab := UI.label(str(pc["szoveg"]), 17, Color("#2a2520"), true)
+	lab.custom_minimum_size = Vector2(320, 0)
+	lab.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	lab.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	v.add_child(lab)
+	holder.add_child(panel)
+	var w := 340.0
+	var h := 270.0 if tex != null else 70.0
+	var left := at.x > 800.0                       # a lap a hely túloldalára kerül, hogy ne takarja
+	var pos := Vector2(clampf(at.x - w - 46.0 if left else at.x + 46.0, 344.0, 1256.0 - w), clampf(at.y - h * 0.5, 112.0, 700.0 - h))
+	var line := Line2D.new()                        # vékony vonal köti a helyhez
+	line.width = 2.0
+	line.default_color = Color("#f4efe2")
+	line.points = PackedVector2Array([at, Vector2(pos.x + (w if left else 0.0), pos.y + h * 0.5)])
+	holder.add_child(line)
+	holder.move_child(line, 0)
+	panel.position = pos + Vector2(0, 26)
+	panel.pivot_offset = Vector2(w, h) * 0.5
+	panel.rotation = -0.035 if left else 0.035
+	holder.modulate.a = 0.0
+	var tw := holder.create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.set_parallel(true)
+	tw.tween_property(holder, "modulate:a", 1.0, 0.35)
+	tw.tween_property(panel, "position", pos, 0.5)
+	return holder
+
+
 var _flash_ids: Array = []        # akiknél az ablak bezárása után felvillanás jár (egyezség, megerősítés, csúcs)
 
 func _close() -> void:
@@ -1508,6 +1655,8 @@ func _close() -> void:
 	_dim = null
 	_close_x = null
 	_tutor_update()
+	if not _pc_queue.is_empty() and not _busy:
+		_play_postcards()
 	for gid in _flash_ids:
 		var g := world.group(gid)
 		if g.is_empty() or not _group_cards.has(gid):
@@ -2616,6 +2765,7 @@ func _advance() -> void:
 		if not _dry:
 			L.set_setting("tanulo_kesz", true)
 	world.advance()
+	_plan_postcards()
 	_offers = {}
 	_clock = 0.0
 	_plan_moments()
@@ -3547,6 +3697,12 @@ func _selftest() -> void:
 	await get_tree().create_timer(2.2).timeout
 	await _shot("7e_vulkan_fold.png")
 	globe.ash = 0.0
+	var pcard := _postcard(_pc(world.tips[0], L.t("%s: a melegedés elérte a veszélysávot.") % L.field(world.tips[0], "nev")))
+	var pcard2 := _postcard(_pc(world.groups[4], L.t("%s: új vállalás. Nulla kibocsátás %d-ig.") % [L.field(world.groups[4], "nev"), 2060]))
+	await get_tree().create_timer(0.8).timeout
+	await _shot("7h_kepeslap.png")
+	pcard.queue_free()
+	pcard2.queue_free()
 	var fx_spin: float = globe.spin
 	var fx_tilt: float = globe.tilt
 	for fk in ["vulkan", "jarvany", "attores"]:      # a három nagy animáció képe (két pillanat)

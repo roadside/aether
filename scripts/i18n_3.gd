@@ -443,4 +443,11 @@ const EN := {
 	"Vulkán": "Volcano",
 	"Járvány": "Pandemic",
 	"Áttörés": "Breakthrough",
+	"%s: átléptük a küszöböt.": "%s: the threshold has been crossed.",
+	"%s: megvan a nulla kibocsátás.": "%s: net zero reached.",
+	"%s: új vállalás. Nulla kibocsátás %d-ig.": "%s: new pledge. Net zero by %d.",
+	"%s: még nincs vállalás.": "%s: no pledge yet.",
+	"%s: a kibocsátás már csak a 2025-ös %d%%-a.": "%s: emissions are down to %d%% of the 2025 level.",
+	"%s: a melegedés elérte a veszélysávot.": "%s: warming has reached the danger zone.",
+	"%s: egyelőre a küszöb alatt vagyunk.": "%s: still below the threshold for now.",
 }
