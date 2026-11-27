@@ -587,6 +587,9 @@ func _today_caption() -> Array:
 func _load_data() -> void:
 	var path := pulse_path()
 	var d: Variant = Bridge.read_json(path)
+	if typeof(d) != TYPE_DICTIONARY or typeof(d.get("evente")) != TYPE_ARRAY:
+		# nincs letöltött adat a gépen: a játékkal szállított valódi éves sor (adatok/pulse_evente.json)
+		d = JSON.parse_string(FileAccess.get_file_as_string("res://adatok/pulse_evente.json"))
 	if typeof(d) == TYPE_DICTIONARY and typeof(d.get("ma")) == TYPE_DICTIONARY:
 		_today = d["ma"]
 		_today_rank = int(d.get("rang", 0)) if d.get("rang") != null else 0

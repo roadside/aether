@@ -31,6 +31,7 @@ Játékszabály (nem a valóság leírása):
 - A lendület: egy körön belül minden második megállapodás visszaad egy lépést.
 - A segítő csoport: aki elérte a nulla kibocsátást, egy másik csoportot könnyebben meggyőzhetővé tesz.
 - A terjedő tévhitek: négy gyakori tévhit egy-egy mondata (a Nap, a kozmikus sugárzás, a „túl kevés CO2”, a felhők). A cáfolat szövege a hozzá tartozó „Honnan tudjuk?” kártya lektorált „Mennyire bizonyított?” szövege. Az, hogy a tévhit melyik csoportnál terjed, és hogy amíg terjed, eggyel több kártya kell nekik, játékszabály.
+- A kezdővideó évszámlálója és melegedési csíkjai: `adatok/pulse_evente.json`, a Copernicus Climate Pulse (C3S/ECMWF, ERA5) éves globális eltérései 1940–2025, az 1991–2020-as átlaghoz képest (letöltve 2026-11-22-én).
 - A billenőpontok veszélysávja: a sáv határai valódi adatok (Armstrong McKay és mtsai 2022); az arany gyűrű és a „Veszélyben” hír csak jelzi, hogy a melegedés belépett a sávba.
 - A vezetett első kör: az első játék első körében egy sor mindig megmondja a következő mozdulatot, az idő még nem telik, és a lehetőségek körről körre nyílnak meg (küldetések a 2., metán és felkészülés a 3., CO2-kivonás a 4. körtől). Ebben a játékban a nehezítések is később jönnek: megingás a 4., előre látható baj a 3., tévhit az 5. körtől. A súgóból újra kérhető.
 - A témakörök képei (`scripts/theme_art.gd`), a Földön mozgó jelek, a műhold, a pergő évszám és a szikrák saját, kódból rajzolt képek és animációk, nem valós felvételek.
