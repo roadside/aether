@@ -422,6 +422,8 @@ func _float_text(text: String, at: Vector2, color: Color) -> void:
 func _process(delta: float) -> void:
 	if _sat != null:
 		_sat.visible = _intro == null
+	if _sheet_layer != null and is_instance_valid(_sheet_layer):
+		_sheet_layer.visible = _intro == null and not _mini_on
 	if world == null or _clock_bar == null or _menu == null:
 		return
 	(_clock_bar.get_parent() as Control).visible = (_time_on() and not world.over() and not _test) or _clock_force
@@ -1577,7 +1579,110 @@ func _pc_story(g: Dictionary, key: String) -> Dictionary:
 		return {}
 	var out := _pc(g, str(line["en"] if L.is_en() else line["hu"]))
 	out["alairas"] = "%s, %s" % [st["nev"], L.field(g, "nev")]
+	_sheet_add(str(g["id"]), {"ev": world.year(), "hu": str(line["hu"]), "en": str(line["en"])})
 	return out
+
+
+# --- lebegő történetlapok a földgömb négy sarkánál ---------------------------------
+## Akitől már jött képeslap, annak a története papírlapként lebeg a Föld mellett (legfeljebb négy: akik legutóbb
+## írtak). Kattintásra megnyílik a gyerek eddigi története. Kitalált szereplők, lásd adatok/tortenetek.json.
+var _sheet_log: Dictionary = {}       # csoport -> [{"ev", "hu", "en"}]
+var _sheet_order: Array = []          # csoportok, a legutóbb író a végén
+var _sheet_layer: Control = null
+const SHEET_AT := [Vector2(352, 150), Vector2(1128, 150), Vector2(352, 600), Vector2(1128, 600)]
+
+
+func _sheet_add(gid: String, row: Dictionary) -> void:
+	if not _sheet_log.has(gid):
+		_sheet_log[gid] = []
+	var rows: Array = _sheet_log[gid]
+	if not rows.is_empty() and str(rows[-1]["hu"]) == str(row["hu"]):
+		return
+	rows.append(row)
+	_sheet_order.erase(gid)
+	_sheet_order.append(gid)
+	_sheets_update()
+
+
+func _sheets_reset() -> void:
+	_sheet_log = {}
+	_sheet_order = []
+	_sheets_update()
+
+
+func _sheets_update() -> void:
+	if _sheet_layer == null or not is_instance_valid(_sheet_layer):
+		_sheet_layer = Control.new()
+		_sheet_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_sheet_layer.z_index = 1
+		add_child(_sheet_layer)
+	for c in _sheet_layer.get_children():
+		c.queue_free()
+	var shown: Array = _sheet_order.slice(maxi(0, _sheet_order.size() - 4))
+	shown.sort()                       # mindenki a saját helyén marad, amíg a négy között van
+	for i in shown.size():
+		var gid: String = shown[i]
+		var st := _story(gid)
+		var rows: Array = _sheet_log[gid]
+		var at: Vector2 = SHEET_AT[i]
+		var holder := Control.new()
+		holder.position = at
+		holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_sheet_layer.add_child(holder)
+		var paper := Button.new()
+		paper.focus_mode = Control.FOCUS_NONE
+		paper.size = Vector2(120, 84)
+		paper.pivot_offset = paper.size * 0.5
+		paper.rotation = [-0.06, 0.05, 0.05, -0.06][i]
+		paper.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		paper.clip_contents = true
+		for st_name in ["normal", "hover", "pressed"]:
+			var sb := StyleBoxFlat.new()
+			sb.bg_color = Color("#f4efe2") if st_name != "normal" else Color("#e6e0d0")
+			sb.set_corner_radius_all(3)
+			sb.shadow_color = Color(0, 0, 0, 0.45)
+			sb.shadow_size = 8
+			sb.shadow_offset = Vector2(2, 4)
+			paper.add_theme_stylebox_override(st_name, sb)
+		var last: Dictionary = rows[-1]
+		var txt := UI.label(str(last["en"] if L.is_en() else last["hu"]), 10, Color("#4a4238"), false, true)
+		txt.position = Vector2(8, 6)
+		txt.size = Vector2(104, 72)
+		txt.clip_text = true
+		txt.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		txt.max_lines_visible = 5
+		txt.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		paper.add_child(txt)
+		paper.pressed.connect(_open_sheet.bind(gid))
+		holder.add_child(paper)
+		var cap := UI.label(L.t("%s története") % str(st.get("nev", "")), 13, UI.SOFT, false, false)
+		cap.modulate.a = 0.55
+		cap.position = Vector2(0, 90)
+		cap.size = Vector2(120, 18)
+		cap.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		cap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		holder.add_child(cap)
+		holder.modulate.a = 0.82
+		if not _test:                  # finom lebegés
+			var tw := holder.create_tween().set_loops().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			tw.tween_property(holder, "position:y", at.y - 6.0, 2.2 + 0.3 * i)
+			tw.tween_property(holder, "position:y", at.y + 6.0, 2.2 + 0.3 * i)
+
+
+## A gyerek eddigi története: minden mondata, amit ebben a játékban írt, évszámmal.
+func _open_sheet(gid: String) -> void:
+	if _busy or _pc_big != null or not _sheet_log.has(gid):
+		return
+	var st := _story(gid)
+	var g := world.group(gid)
+	var body := _open(L.t("%s története") % str(st.get("nev", "")), Color(str(g.get("szin", "#f4efe2"))))
+	body.add_child(UI.label("%s, %s" % [st.get("nev", ""), L.field(g, "nev")], 15, UI.MUTE))
+	for row in _sheet_log[gid]:
+		var c := UI.card(Color("#f4efe2"))
+		c.add_child(UI.label(str(int(row["ev"])), 14, UI.GOLD, true, false))
+		c.add_child(UI.label(str(row["en"] if L.is_en() else row["hu"]), 18, UI.TEXT))
+		body.add_child(UI.card_root(c))
+	_sticky(body, _go(L.t("Rendben"), _close))
 
 var _pc_run := 0
 const PC_MAX := 2
@@ -1589,6 +1694,7 @@ func _plan_postcards() -> void:
 		_pc_goal = {}
 		_pc_band = {}
 		_pc_met = {}
+		_sheets_reset()
 		if world.history.size() > World.ROUND_YEARS + 1:      # betöltött játék: a régi vállalások nem újak
 			for g0 in world.groups:
 				_pc_goal[g0["id"]] = int(g0["cel"])
@@ -1655,6 +1761,7 @@ func _pc_intro() -> void:
 	_pc_band = {}
 	_pc_met = {}
 	_pc_queue = []
+	_sheets_reset()
 	if world.round_i != 0 or world.over():
 		return
 	var n := world.groups.size()
@@ -3931,6 +4038,15 @@ func _selftest() -> void:
 	await _shot("7h_kepeslap_nagy.png")
 	_pc_big_close()
 	pcard2.queue_free()
+	for sgi in [0, 1, 3, 4]:                         # a lebegő történetlapok képe
+		_pc_story(world.groups[sgi], "nincs").size()
+	await get_tree().create_timer(0.3).timeout
+	await _shot("7h_tortenetlapok.png")
+	_open_sheet(str(world.groups[4]["id"]))
+	await get_tree().create_timer(0.3).timeout
+	await _shot("7h_tortenet_ablak.png")
+	_close()
+	_sheets_reset()
 	var fx_spin: float = globe.spin
 	var fx_tilt: float = globe.tilt
 	for fk in ["vulkan", "jarvany", "attores"]:      # a három nagy animáció képe (két pillanat)

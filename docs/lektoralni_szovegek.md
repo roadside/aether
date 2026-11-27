@@ -1060,3 +1060,4 @@ A te döntéseid szerint átírva (nem kell újra lektorálni):
 
 Új szöveg – még nem lektorált (2026-11-27 20:05):
 - Jelölőnégyzet az Új játék ablakban, a három fokozat alatt: Segítség az első körben, lépésről lépésre
+- Halvány felirat a lebegő történetlap alatt és az ablak címe: %s története (például: Lili története; Zoltán szövege, 2026-11-27 20:50)

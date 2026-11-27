@@ -300,6 +300,7 @@ const EN := {
 	"%d-ben: %s ppm volt.": "In %d: %s ppm.",
 	"Forrás: %s": "Source: %s",
 	"Forrás:": "Source:",
+	"%s története": "%s's story",
 	"Fuss és mtsai 2018": "Fuss et al. 2018",
 	"Way és mtsai 2022": "Way et al. 2022",
 	"%s ezer éve": "%s thousand years ago",
