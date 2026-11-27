@@ -39,6 +39,8 @@ var obs := {}
 var ranges := {}
 var ipcc := {}
 var source := ""
+var source_link: Variant = ""      # a forrás linkje (szöveg vagy lista)
+var source2_link := ""
 var source2 := ""
 var year := float(Y_START)
 var path := -1
@@ -128,6 +130,7 @@ func _load() -> void:
 		return
 	var en := L.is_en()
 	source = str(j.get("forras_en" if en else "forras", ""))
+	source_link = j.get("link", "")
 	for p in j.get("meres", []):
 		obs[int(p[0])] = float(p[1])
 	var ip: Variant = j.get("ipcc", {})
@@ -135,6 +138,7 @@ func _load() -> void:
 		ipcc = ip
 		ranges = ip.get("m_2100", {})
 		source2 = str(ip.get("forras_en" if en else "forras", ""))
+		source2_link = str(ip.get("link", ""))
 
 
 func ok() -> bool:
@@ -302,7 +306,7 @@ func _finish() -> void:
 	_end.add_child(UI.label(L.t("2100-ra: alacsony kibocsátással %s–%s cm, nagyon magassal %s–%s cm lesz az emelkedés mértéke (az 1995–2014-es szinthez képest).") % [L.num(float(r0[0]) * 100.0, 0), L.num(float(r0[1]) * 100.0, 0), L.num(float(r1[0]) * 100.0, 0), L.num(float(r1[1]) * 100.0, 0)], 17, UI.TEXT, true))
 	_end.add_child(UI.label(L.t("A régen százévente egyszer előforduló magas vízállás 2100-ra a mérőhelyek több mint felén legalább évente egyszer elő fog fordulni."), 17, UI.TEXT))
 	_end.add_child(UI.label(L.t("A gát időt ad, de a tenger 2100 után is emelkedni fog. A kibocsátás csökkentése lassítja ezt."), 17, UI.GOLD, true))
-	_end.add_child(UI.label(L.t("Forrás: %s; %s") % [source, source2], 12, UI.MUTE))
+	_end.add_child(UI.sources(L.t("Forrás:"), UI.src_items(source, source_link) + [[source2, source2_link]], 12))
 	var row := UI.hbox(16)
 	if results.size() < 2:
 		_other_btn = UI.button(L.t("Próbáld ki a másik úton is!"), false)

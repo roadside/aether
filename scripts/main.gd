@@ -2803,11 +2803,8 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 			var tw := cl.create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 			tw.tween_interval(0.35)
 			tw.tween_method(func(x: float) -> void: cl.text = fmt % [L.num(before, 2), L.num(x, 2)], before, after, 1.1)
-	if world.streak_bonus:
-		body.add_child(UI.label("★ " + L.t("Lendület! Két megállapodás egy körben: +1 lépés."), 19, UI.GOLD, true))
+	if world.streak_bonus:       # a lendület plusz lépése szöveg nélkül: csak a felső pöttyöknél villan fel (Zoltán kérése)
 		_bonus_float = true
-	elif world.streak % 2 == 1 and world.steps > 0:
-		body.add_child(UI.label(L.t("Még egy megállapodás ebben a körben, és kapsz egy plusz lépést."), 16, UI.GOLD))
 	body.add_child(UI.label(L.t("2100-ban: +%s és +%s °C között") % [L.num(minf(float(fc["also"][-1][1]), float(fc["felso"][-1][1])), 1), L.num(maxf(float(fc["also"][-1][1]), float(fc["felso"][-1][1])), 1)], 17, UI.SOFT))
 	body.add_child(UI.label(L.t("A hőmérsékleti sáv azért ilyen széles, mert nem tudjuk pontosan, mennyire érzékeny a Föld."), 15, UI.MUTE))
 	_sticky(body, _go(L.t("Rendben"), _close))
@@ -2822,6 +2819,7 @@ func _open_cdr() -> void:
 		var rng: Array = World.CDR[id]
 		c.add_child(UI.label(L.t(CDR_NAME[id]), 19, UI.TEXT, true))
 		c.add_child(UI.label(L.t("Évi %s–%s milliárd tonna CO2 (Fuss és mtsai 2018)") % [L.num_short(rng[0], 1), L.num_short(rng[1], 1)], 15, UI.SOFT))
+		c.add_child(UI.sources(L.t("Forrás:"), [[L.t("Fuss és mtsai 2018"), "https://doi.org/10.1088/1748-9326/aabf9f"]], 13))
 		var running: bool = world.cdr.any(func(x: Dictionary) -> bool: return x["id"] == id)
 		if running:
 			var grown: bool = world.cdr.any(func(x: Dictionary) -> bool: return x["id"] == id and x.has("gt2"))
@@ -3100,6 +3098,7 @@ func _open_news(y0: int, t0: float) -> void:
 				cv.add_child(UI.label(L.t("Hamu és kénes pára borítja az eget. A Föld egy-két évre lehűl."), 18, UI.TEXT, true))
 				cv.add_child(UI.label(L.t("Sokan azt hiszik, hogy vége a melegedésnek. Ebben a körben minden csoportnak eggyel több kártya kell."), 16, UI.GOLD))
 				cv.add_child(UI.label(L.t("Így történt 1991-ben is, a Pinatubo kitörése után: a Föld kb. 0,2 °C-kal lehűlt, de 1995-re újra ugyanolyan meleg lett (NASA GISTEMP)."), 15, UI.SOFT))
+				cv.add_child(UI.sources(L.t("Forrás:"), [["NASA GISTEMP v4", "https://data.giss.nasa.gov/gistemp/"]], 13))
 				body.add_child(UI.card_root(cv))
 			"vulkan_vege":
 				var cv2 := UI.card(UI.GOLD)
@@ -3122,6 +3121,7 @@ func _open_news(y0: int, t0: float) -> void:
 				ca.add_child(UI.label(L.t("Váratlanul sokkal olcsóbb lett a napelem, a szélerőmű és az akkumulátor."), 18, UI.TEXT, true))
 				ca.add_child(UI.label(L.t("Két körön át minden csoportnak eggyel kevesebb kártya kell."), 16, UI.GOLD))
 				ca.add_child(UI.label(L.t("A szakértők rendre alábecsülték, milyen gyorsan lesz olcsóbb a tiszta energia (Way és mtsai, 2022)."), 15, UI.SOFT))
+				ca.add_child(UI.sources(L.t("Forrás:"), [[L.t("Way és mtsai 2022"), "https://doi.org/10.1016/j.joule.2022.08.009"]], 13))
 				body.add_child(UI.card_root(ca))
 			"tevhit":
 				var cm := UI.card(MYTH_COLOR)
@@ -3158,7 +3158,7 @@ func _open_news(y0: int, t0: float) -> void:
 			var kc := UI.card(_theme_color(Cards.theme_of(kid)))
 			kc.add_child(UI.label(L.t("A kártyáidból tudod:"), 14, UI.SOFT))
 			kc.add_child(UI.label(str(k["en"] if L.is_en() and str(k.get("en", "")) != "" else k["hu"]), 17, UI.GOLD, true))
-			kc.add_child(UI.label(str(k["forras_en"] if L.is_en() and str(k.get("forras_en", "")) != "" else k["forras"]), 13, UI.CYAN))
+			kc.add_child(UI.text_link(str(k["forras_en"] if L.is_en() and str(k.get("forras_en", "")) != "" else k["forras"]), str(k.get("link", "")), 13))
 			body.add_child(UI.card_root(kc))
 	var next_gap := Control.new()      # a Tovább gomb fölött mindig legyen hely (Zoltán kérése)
 	next_gap.custom_minimum_size = Vector2(0, 14)

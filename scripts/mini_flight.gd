@@ -30,6 +30,8 @@ var non_co2 := 0.0
 var growth := 0.0
 var teoh := {}
 var source := ""
+var source_link: Variant = ""      # a forrás linkje (szöveg vagy lista)
+var source2_link := ""
 var source2 := ""
 var flight := 0
 var level := START_LEVEL
@@ -85,6 +87,7 @@ func _load() -> void:
 		return
 	var en := L.is_en()
 	source = str(j.get("forras_en" if en else "forras", ""))
+	source_link = j.get("link", "")
 	net = float(j.get("netto", 0.0))
 	non_co2 = float(j.get("nem_co2_arany", 0.0))
 	growth = float(j.get("co2_novekedes_1960_2018", 0.0))
@@ -94,6 +97,7 @@ func _load() -> void:
 	if typeof(k) == TYPE_DICTIONARY:
 		teoh = k
 		source2 = str(k.get("forras_en" if en else "forras", ""))
+		source2_link = str(k.get("link", ""))
 
 
 func ok() -> bool:
@@ -234,7 +238,7 @@ func _finish() -> void:
 	_end.add_child(UI.label(L.t("A kitéréseiddel %s%%-kal kevesebb tartós kondenzcsíkot húztál, mint ha egyenesen repültél volna.") % L.num(clampf(100.0 - share, 0.0, 100.0), 0), 20, UI.CYAN, true))
 	_end.add_child(UI.label(L.t("A valóságban a légi közlekedés melegítő hatásának %s%%-a nem a CO2-kibocsátásból származik – ennek a legnagyobb részét a kondenzcsíkok adják.") % L.num(non_co2 * 100.0, 0), 19, UI.TEXT, true))
 	_end.add_child(UI.label(L.t("Egy japán kutatás szerint %s%% járat útvonalának módosításával akár 59%%-kal is csökkenthetné a csíkok hatását, mindössze 0,014%%-kal több üzemanyagköltséggel.") % L.num(float(teoh.get("kiteritett_jaratok", 0.0)), 1), 19, UI.TEXT))
-	_end.add_child(UI.label(L.t("Forrás: %s; %s") % [source, source2], 13, UI.MUTE))
+	_end.add_child(UI.sources(L.t("Forrás:"), UI.src_items(source, source_link) + [[source2, source2_link]], 13))
 	var b := UI.button(L.t("Tovább") + " →", true)
 	b.pressed.connect(func() -> void: finished.emit(true))
 	b.position = Vector2(1390, 30)

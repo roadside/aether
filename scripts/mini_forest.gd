@@ -28,6 +28,8 @@ var done_t := -1.0            # a befejezés óta eltelt idő; < 0 = még tart
 var causes: Array = []        # [{id, name}]
 var years: Array = []         # [év, 7 ok értéke Mha-ban]
 var source := ""
+var source_link: Variant = ""      # a forrás linkje (szöveg vagy lista)
+var source2_link := ""
 var round_i := 0
 var correct := 0
 var _answer := ""             # az utolsó válasz (feedback alatt)
@@ -105,6 +107,7 @@ func _load() -> void:
 		return
 	var en := L.is_en()
 	source = str(j.get("forras_en" if en else "forras", ""))
+	source_link = j.get("link", "")
 	for c in j.get("okok", []):
 		causes.append({"id": str(c["id"]), "name": str(c["en"] if en else c["hu"])})
 	years = j.get("evek", [])
@@ -201,7 +204,7 @@ func _finish() -> void:
 	_end.add_child(UI.label(L.t("A legnagyobb ok az állandó mezőgazdaság (%s%%). Ez végleges: az erdő helyén szántó, legelő vagy ültetvény lesz.") % L.num(100.0 * float(sums[ia]) / total, 0), 18, UI.TEXT))
 	_end.add_child(UI.label(L.t("Fakitermelés és váltogató művelés után gyakran visszanő az erdő."), 18, UI.TEXT))
 	_end.add_child(UI.label(L.t("Az adatsor utolsó évében (%d) a tűz %s millió hektárt pusztított el, többet, mint bármelyik korábbi évben.") % [int(last[0]), L.num(float(last[it + 1]), 1)], 18, UI.EMBER, true))
-	_end.add_child(UI.label(L.t("Forrás: %s") % source, 13, UI.MUTE))
+	_end.add_child(UI.sources(L.t("Forrás:"), UI.src_items(source, source_link), 13))
 	var b := UI.button(L.t("Tovább") + " →", true)
 	b.pressed.connect(func() -> void: finished.emit(true))
 	b.position = Vector2(1390, 30)

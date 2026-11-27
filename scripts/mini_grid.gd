@@ -29,6 +29,8 @@ var auto := false                # próbafutás: magától választ
 var done_t := -1.0               # a befejezés óta eltelt idő; < 0 = még tart
 var by_id := {}                  # ország -> {name, gen[12], wind[12], sun[12], dem[12], wind_share}
 var source := ""
+var source_link: Variant = ""      # a forrás linkje (szöveg vagy lista)
+var source2_link := ""
 var study := ""
 var round_i := 0
 var picked := -1                 # a választott jelölt (0..2), -1 = még nincs
@@ -83,6 +85,8 @@ func _load() -> void:
 	var en := L.is_en()
 	source = str(j.get("forras_en" if en else "forras", ""))
 	study = str(j.get("tanulmany_en" if en else "tanulmany", ""))
+	source_link = j.get("link", "")
+	source2_link = str(j.get("tanulmany_link", ""))
 	for c in j.get("orszagok", []):
 		var wind: Array = c["szel"]
 		var sun: Array = c["nap"]
@@ -238,7 +242,7 @@ func _finish() -> void:
 	for bp in best_pairs:
 		_end.add_child(UI.label("%s + %s: −%s%%" % [bp[0], bp[1], L.num(float(bp[2]), 0)], 19, UI.TEXT))
 	_end.add_child(UI.label(L.t("Egy európai kutatás szerint az optimális hálózat kábeleinek mindössze 44%-ával már a lehetséges megtakarítás 85%-a elérhető."), 18, UI.TEXT))
-	_end.add_child(UI.label(L.t("Forrás: %s. Tanulmány: %s") % [source, study], 13, UI.MUTE))
+	_end.add_child(UI.sources(L.t("Forrás:"), UI.src_items(source, source_link) + [[study, source2_link]], 13))
 	_next_btn.visible = true
 
 

@@ -23,6 +23,7 @@ const CY0 := 175.0
 const CY1 := 470.0
 const SEA_Y := 520.0
 const STUDY := "Longer and more frequent marine heatwaves over the past century (2018)"
+const STUDY_LINK := "https://doi.org/10.1038/s41467-018-03732-9"
 
 var data_path := "res://adatok/tengerfelszin_ho.json"
 var auto := false                 # próbafutás: magától elkapja a rekordokat
@@ -31,6 +32,8 @@ var years: Array = []
 var vals: Array = []
 var records: Array = []           # [{k, caught}] az első év utáni rekordok
 var source := ""
+var source_link: Variant = ""      # a forrás linkje (szöveg vagy lista)
+var source2_link := ""
 var hits := 0
 var round_i := 0
 var _guess := -1
@@ -113,6 +116,7 @@ func _load() -> void:
 	if typeof(j) != TYPE_DICTIONARY:
 		return
 	source = str(j.get("forras_en" if L.is_en() else "forras", ""))
+	source_link = j.get("link", "")
 	var best := -INF
 	for row in j.get("adatok", []):
 		var v := float(row[1])
@@ -293,7 +297,7 @@ func _finish() -> void:
 	_end.add_child(UI.label(L.t("%d óta %d új melegrekord született, ebből %d 1980 után.") % [years[0], records.size(), late], 22, UI.CYAN, true))
 	_end.add_child(UI.label(L.t("Minél melegebb az alaphőmérséklet, annál könnyebben jön létre tengeri hőhullám."), 19, UI.TEXT))
 	_end.add_child(UI.label(L.t("Mérések szerint 1925 és 2016 között a tengeri hőhullámok 34%-kal gyakoribbak és 17%-kal hosszabbak lettek, így évente 54%-kal több a tengeri hőhullámos nap. Ezt főleg a tenger átlagos melegedése okozza, ami az élővilág pusztulását vetíti előre."), 19, UI.TEXT))
-	_end.add_child(UI.label(L.t("Forrás: %s") % (source + "; " + STUDY), 13, UI.MUTE))
+	_end.add_child(UI.sources(L.t("Forrás:"), UI.src_items(source, source_link) + [[STUDY, STUDY_LINK]], 13))
 	_next_btn.visible = true
 
 

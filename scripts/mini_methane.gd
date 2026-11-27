@@ -29,6 +29,8 @@ var wasted := 0
 var crews := CREWS
 var facts := {}
 var source := ""
+var source_link: Variant = ""      # a forrás linkje (szöveg vagy lista)
+var source2_link := ""
 var _cut := 0.0               # ennél nagyobb szivárgást lát a műhold
 var _t := 0.0
 var _play_t := 0.0
@@ -76,6 +78,7 @@ func _load() -> void:
 		return
 	facts = j
 	source = str(j.get("forras_en" if L.is_en() else "forras", ""))
+	source_link = j.get("link", "")
 
 
 ## Játékszabály: a szivárgások mérete erősen egyenlőtlen (néhány nagy, sok kicsi), mert a mérések is ezt mutatják.
@@ -217,7 +220,7 @@ func _finish() -> void:
 	_end.add_child(UI.label(L.t("A kevés nagyobb szivárgás adja a légkörbe kerülő metán nagy részét. Ezeket érdemes először megtalálni."), 19, UI.TEXT))
 	_end.add_child(UI.label(L.t("A valóságban: műholdas mérések szerint (%s) néhány száz óriási szivárgás adta az olaj- és gázipari metán %s–%s%%-át, évi kb. %s millió tonnát. A javításuk nagyrészt olcsó lenne.") % [str(m.get("evek", "")), L.num(float(m.get("oriasi_szivargasok_aranya_min", 0)), 0), L.num(float(m.get("oriasi_szivargasok_aranya_max", 0)), 0), L.num(float(m.get("oriasi_szivargasok_millio_tonna_ev", 0)), 0)], 19, UI.TEXT, true))
 	_end.add_child(UI.label(L.t("Az USA-ban 2015-ben az olaj- és gázágazat kb. %s%%-kal több metánt engedett ki, mint a hivatalos becslés.") % L.num(float(u.get("tobblet_szazalek", 0)), 0), 19, UI.TEXT))
-	_end.add_child(UI.label(L.t("Forrás: %s") % source, 13, UI.MUTE))
+	_end.add_child(UI.sources(L.t("Forrás:"), UI.src_items(source, source_link), 13))
 	var b := UI.button(L.t("Tovább") + " →", true)
 	b.pressed.connect(func() -> void: finished.emit(true))
 	b.position = Vector2(1390, 30)

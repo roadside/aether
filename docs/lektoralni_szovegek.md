@@ -360,8 +360,8 @@ Csak ezek újak. Ami nincs itt, az nem változott.
 - Nem voltak felkészülve. A kárenyhítés miatt most eggyel kevesebb lépésed van.
 
 ### Lendület és segítő csoport
-- Lendület! Két megállapodás egy körben: +1 lépés.
-- Még egy megállapodás ebben a körben, és kapsz egy plusz lépést.
+- (törölve 2026-11-27, Zoltán kérése: „Lendület! Két megállapodás egy körben: +1 lépés.”)
+- (törölve 2026-11-27: „Még egy megállapodás ebben a körben, és kapsz egy plusz lépést.”)
 - %s tiszta technológiát ad át. %s most könnyebben meggyőzhető.
 
 ### Kihívás-lépcső

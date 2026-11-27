@@ -25,6 +25,8 @@ var pts: Array = []           # [kor (év), ppm], a legfiatalabbtól a legörege
 var today := 0.0              # a legfrissebb mért érték
 var today_year := 0
 var source := ""
+var source_link: Variant = ""      # a forrás linkje (szöveg vagy lista)
+var source2_link := ""
 var oldest := 800000.0
 var pre_min := 0.0
 var pre_max := 0.0
@@ -47,7 +49,7 @@ var _was_resting := false
 var _era_a := 0.0
 var _era_box: VBoxContainer
 var _era_text: Label
-var _era_src: Label
+var _era_src: Button
 var _era_age: Label
 var _bubbles: Array = []
 var _stars: Array = []
@@ -83,7 +85,12 @@ func _ready() -> void:
 	_era_box.modulate.a = 0.0
 	_era_age = UI.label("", 20, UI.GOLD, true, false)
 	_era_text = UI.label("", 18, UI.TEXT)
-	_era_src = UI.label("", 12, UI.MUTE)
+	_era_src = UI.text_link("", "", 12)      # a kor forrása: kattintható
+	_era_src.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	_era_src.focus_mode = Control.FOCUS_NONE
+	_era_src.pressed.connect(func() -> void:
+		if _era_src.tooltip_text != "":
+			OS.shell_open(_era_src.tooltip_text))
 	for l in [_era_age, _era_text, _era_src]:
 		l.custom_minimum_size.x = 600
 		_era_box.add_child(l)
@@ -104,6 +111,7 @@ func _load() -> void:
 	if typeof(j) != TYPE_DICTIONARY:
 		return
 	source = str(j.get("forras", ""))
+	source_link = j.get("link", "")
 	var all: Array = j.get("pontok", [])
 	var last_year := -1e9
 	for p in all:
@@ -185,6 +193,7 @@ func _process(delta: float) -> void:
 			_era_age.text = L.t("%s ezer éve") % L.num(float(e["ezer_eve"]), 1 if fmod(float(e["ezer_eve"]), 1.0) > 0.0 else 0)
 			_era_text.text = str(e["en"] if L.is_en() else e["hu"])
 			_era_src.text = str(e["forras"])
+			_era_src.tooltip_text = str(e.get("link", ""))
 	_was_resting = resting
 	_era_a = move_toward(_era_a, 1.0 if resting and _era_on else 0.0, delta * 2.5)
 	_era_box.modulate.a = _era_a
@@ -201,7 +210,7 @@ func _finish() -> void:
 	_end.visible = true
 	_end.add_child(UI.label(L.t("800 ezer évig a levegő CO2-tartalma %s és %s ppm között maradt.") % [L.num(pre_min, 0), L.num(pre_max, 0)], 19, UI.TEXT, true))
 	_end.add_child(UI.label(L.t("%d-ben: %s ppm volt.") % [today_year, L.num(today, 0)], 24, UI.EMBER, true))
-	_end.add_child(UI.label(L.t("Forrás: %s") % source, 14, UI.MUTE))
+	_end.add_child(UI.sources(L.t("Forrás:"), UI.src_items(source, source_link), 14))
 	var b := UI.button(L.t("Tovább") + " →", true)
 	b.pressed.connect(func() -> void: finished.emit(true))
 	b.position = Vector2(1390, 30)

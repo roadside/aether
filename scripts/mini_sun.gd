@@ -32,6 +32,8 @@ var done_t := -1.0                # a befejezés óta eltelt idő; < 0 = még ta
 var years: Array = []
 var series: Array = []            # [{name, unit, vals, trend, answer, say, col}]
 var source := ""
+var source_link: Variant = ""      # a forrás linkje (szöveg vagy lista)
+var source2_link := ""
 var round_i := 0
 var hits := 0
 var _guess: Array = [-9, -9, -9]
@@ -91,6 +93,7 @@ func _load() -> void:
 	if typeof(j) != TYPE_DICTIONARY:
 		return
 	source = str(j.get("forras_en" if L.is_en() else "forras", ""))
+	source_link = j.get("link", "")
 	var tr: Dictionary = j.get("trend_evtizedenkent_1980_2023", {})
 	var cols := [[], [], []]
 	for row in j.get("adatok", []):
@@ -187,7 +190,7 @@ func _finish() -> void:
 	_info.visible = false
 	_end.visible = true
 	_end.add_child(UI.label(L.t("Tanulság: a jelenlegi felmelegedést a CO2 okozza, nem a Nap."), 22, UI.GOLD, true))
-	_end.add_child(UI.label(L.t("Forrás: %s") % source, 13, UI.MUTE))
+	_end.add_child(UI.sources(L.t("Forrás:"), UI.src_items(source, source_link), 13))
 	_next_btn.visible = true
 
 

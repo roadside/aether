@@ -121,6 +121,37 @@ static func hu(x: float, decimals: int = 1) -> String:
 	return preload("res://scripts/i18n.gd").num(x, decimals)
 
 
+## Forrássor kattintható linkekkel: „Forrás:” + minden forrás külön link. items = [[szöveg, link], ...]
+static func sources(prefix: String, items: Array, size: int = 13) -> HFlowContainer:
+	load_fonts()
+	var flow := HFlowContainer.new()
+	flow.add_theme_constant_override("h_separation", 8)
+	flow.add_theme_constant_override("v_separation", 0)
+	flow.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	flow.add_child(label(prefix, size, MUTE, false, false))
+	for i in items.size():
+		var it: Array = items[i]
+		if str(it[0]) == "":
+			continue
+		var lb := text_link(str(it[0]) + (";" if i < items.size() - 1 else ""), str(it[1]), size)
+		lb.autowrap_mode = TextServer.AUTOWRAP_OFF
+		lb.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		lb.focus_mode = Control.FOCUS_NONE
+		flow.add_child(lb)
+	return flow
+
+
+## Egy adatfájl forrása linkpárokra bontva: ha több link van, a „; ”-vel tagolt szöveg részei sorban kapják őket.
+static func src_items(text: String, link: Variant) -> Array:
+	if typeof(link) == TYPE_ARRAY:
+		var parts := text.split("; ")
+		var out: Array = []
+		for i in parts.size():
+			out.append([parts[i], str(link[mini(i, link.size() - 1)]) if not link.is_empty() else ""])
+		return out
+	return [[text, str(link) if link != null else ""]]
+
+
 ## Egyszerű, kattintható szöveges link (nem gomb): ciánkék, balra, sort tör.
 static func text_link(text: String, url: String, size: int = 15) -> Button:
 	load_fonts()
