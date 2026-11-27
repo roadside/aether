@@ -530,7 +530,7 @@ func flash(lat: float, lon: float, color: Color) -> void:
 # ---------------------------------------------------------------------------------------------
 var fx: Dictionary = {}              # {"kind", "t0", "dur", "lat", "lon", "points"}
 var _fx_tw: Tween
-const FX_DUR := {"vulkan": 11.0, "jarvany": 9.0, "attores": 9.0}
+const FX_DUR := {"vulkan": 9.5, "jarvany": 9.0, "attores": 9.0}
 
 
 ## Elindít egy nagy animációt. kind: "vulkan" (lat, lon a kitörés helye), "jarvany", "attores"
@@ -599,12 +599,8 @@ func _fx_update() -> void:
 	_fx_mat.set_shader_parameter("fade", clampf((float(fx["dur"]) - a) / 1.4, 0.0, 1.0))
 	_fx_mat.set_shader_parameter("pixels", pixels)
 	_fx_mat.set_shader_parameter("rad", 0.5 * radius_ratio * zoom)
-	if kind == "vulkan":
-		var p := project(float(fx["lat"]), float(fx["lon"]))
-		var shake := Vector2(sin(a * 61.0), cos(a * 47.0)) * (0.0035 if a < 3.0 else 0.0008)
-		_fx_mat.set_shader_parameter("center", Vector2(p.x, p.y) / size + shake)
-		if p.z < 0.5:
-			_fx_rect.visible = false
+	if kind == "vulkan":                      # a tűzhányót kézzel rajzoljuk (_draw_volcano)
+		_fx_rect.visible = false
 		return
 	var arr := PackedVector3Array()
 	var pts: Array = fx["points"]
@@ -629,10 +625,106 @@ func _draw_fx() -> void:
 	var fade := clampf((dur - a) / 1.4, 0.0, 1.0)
 	var R := size.x * 0.5 * radius_ratio * zoom
 	match str(fx["kind"]):
+		"vulkan":
+			var p := project(float(fx["lat"]), float(fx["lon"]))
+			if p.z > 0.5:
+				_draw_volcano(Vector2(p.x, p.y), R, a, fade)
 		"jarvany":
 			_draw_pandemic(R, a, fade)
 		"attores":
 			_draw_breakthrough(R, a, fade)
+
+
+func _draw_volcano(c: Vector2, R: float, a: float, fade: float) -> void:
+	var w := R * 0.30
+	var h := R * 0.25
+	var grow := clampf(a / 0.9, 0.0, 1.0)
+	grow = 1.0 - (1.0 - grow) * (1.0 - grow)
+	c += Vector2(sin(a * 61.0), cos(a * 47.0)) * R * (0.007 if a < 3.0 else 0.002)
+	var top := c + Vector2(0, -h * grow)
+	var cr := w * 0.2
+	var er := clampf((a - 0.9) / 0.5, 0.0, 1.0)          # a kitörés ereje
+	# megperzselt föld és árnyék a hegy alatt: ettől ül a földön
+	_ellipse(c + Vector2(w * 0.25, R * 0.02), Vector2(w * 1.75, w * 0.30) * grow, Color(0, 0, 0, 0.30 * fade))
+	_ellipse(c + Vector2(0, R * 0.008), Vector2(w * 1.45, w * 0.24) * grow, Color(0.05, 0.035, 0.03, 0.55 * fade))
+	_ellipse(c, Vector2(w * 1.2, w * 0.17) * grow, Color(0.10, 0.075, 0.065, 0.9 * fade))
+	# izzás a kráter mögött
+	for i in 7:
+		draw_circle(top, R * (0.06 + 0.06 * i) * er * (1.0 + 0.07 * sin(a * 9.0 + i)), Color(1.0, 0.42, 0.08, 0.085 * fade))
+	# lökéshullám a kitörés pillanatában
+	var sh := (a - 0.9) / 1.4
+	if sh > 0.0 and sh < 1.0:
+		draw_arc(top, R * 0.9 * sh, 0.0, TAU, 72, Color(1.0, 0.85, 0.6, (1.0 - sh) * 0.7 * fade), 5.0)
+	# hamuoszlop: sok gomolygó felhő, a régebbiek magasabban és szélesebben
+	for i in 64:
+		var pa := a - 0.95 - i * 0.105
+		if pa <= 0.0:
+			continue
+		var rise := R * 0.80 * (1.0 - exp(-pa * 0.6))
+		var kh := rise / (R * 0.80)
+		var drift := R * 0.55 * kh * kh * (0.35 + _h(i)) + R * 0.03 * sin(pa * 1.7 + i)
+		var side := (_h(i + 20.0) - 0.5) * R * 0.16 * (0.3 + kh * 1.6)
+		var pr := R * (0.035 + 0.115 * (1.0 - exp(-pa * 0.55))) * (0.75 + 0.5 * _h(i + 7.0))
+		var pos := top + Vector2(drift + side, -rise)
+		var g := 0.20 + 0.26 * _h(i + 3.0)
+		var hot := clampf(1.0 - pa / 0.9, 0.0, 1.0)      # a kráter fölött még izzik
+		var col := Color(g + 0.5 * hot, g * 0.95 + 0.18 * hot, g * 0.92, 0.9 * fade)
+		draw_circle(pos, pr, col)
+		draw_circle(pos + Vector2(-pr * 0.28, -pr * 0.3), pr * 0.6, Color(col.r + 0.13, col.g + 0.12, col.b + 0.11, 0.55 * fade))
+		draw_circle(pos + Vector2(pr * 0.3, pr * 0.32), pr * 0.55, Color(col.r * 0.6, col.g * 0.6, col.b * 0.62, 0.4 * fade))
+	# villám a hamufelhőben
+	var lt := fposmod(a, 1.37)
+	if a > 2.6 and lt < 0.13:
+		var seed_i := floorf(a / 1.37) * 13.0
+		var q := top + Vector2(R * 0.12 * (_h(seed_i) - 0.3), -R * (0.42 + 0.2 * _h(seed_i + 1.0)))
+		var pts := PackedVector2Array([q])
+		for k in 6:
+			q += Vector2((_h(seed_i + k * 3.0 + 2.0) - 0.5) * R * 0.11, R * 0.055)
+			pts.append(q)
+		draw_polyline(pts, Color(0.75, 0.8, 1.0, 0.5 * fade), 7.0)
+		draw_polyline(pts, Color(1, 1, 1, fade), 2.5)
+	# a hegy
+	draw_colored_polygon(PackedVector2Array([c + Vector2(-w, 0), top + Vector2(-cr, 0), top + Vector2(cr, 0), c + Vector2(w, 0)]), Color(0.13, 0.10, 0.10, fade))
+	draw_colored_polygon(PackedVector2Array([c + Vector2(-w, 0), top + Vector2(-cr, 0), top + Vector2(cr * 0.1, 0), c + Vector2(-w * 0.1, 0)]), Color(0.23, 0.17, 0.15, fade))
+	draw_colored_polygon(PackedVector2Array([c + Vector2(-w * 0.55, 0), top + Vector2(-cr * 0.9, 0), top + Vector2(-cr * 0.4, 0), c + Vector2(-w * 0.42, 0)]), Color(0.30, 0.23, 0.20, 0.7 * fade))
+	# a hegy lába: ívelt talp és törmelék, hogy ne egyenes vonalban érjen véget
+	_ellipse(c, Vector2(w, w * 0.11) * grow, Color(0.13, 0.10, 0.10, fade))
+	_ellipse(c + Vector2(-w * 0.45, 0), Vector2(w * 0.55, w * 0.10) * grow, Color(0.23, 0.17, 0.15, fade))
+	for i in 9:
+		var rx := (_h(i + 70.0) - 0.5) * 2.3 * w
+		draw_circle(c + Vector2(rx, w * 0.10 * (0.5 + _h(i + 80.0))) , R * (0.008 + 0.012 * _h(i + 90.0)) * grow, Color(0.17, 0.13, 0.12, fade))
+	# lávafolyamok a hegyoldalon
+	for s in 5:
+		var prog := clampf((a - 1.3 - s * 0.45) / 3.2, 0.0, 1.0)
+		if prog <= 0.0:
+			continue
+		var dir := (float(s) - 2.0) / 2.0                 # -1 .. 1: melyik oldalon folyik
+		var pts := PackedVector2Array()
+		var n := 14
+		for k in n + 1:
+			var u := float(k) / n * prog
+			var x := dir * (cr * 0.7 + (w * 0.86 - cr * 0.7) * u) + sin(u * 9.0 + s * 2.3) * w * 0.035
+			pts.append(top + Vector2(x, h * grow * u))
+		var flick := 0.85 + 0.15 * sin(a * 7.0 + s)
+		draw_polyline(pts, Color(0.75, 0.12, 0.03, 0.9 * fade), R * 0.030)
+		draw_polyline(pts, Color(1.0, 0.45, 0.08, fade * flick), R * 0.018)
+		draw_polyline(pts, Color(1.0, 0.86, 0.4, fade * flick), R * 0.007)
+	# izzó kráter
+	_ellipse(top, Vector2(cr * 1.15, cr * 0.32), Color(1.0, 0.5, 0.1, er * fade))
+	_ellipse(top, Vector2(cr * 0.8, cr * 0.2), Color(1.0, 0.92, 0.55, er * fade))
+	# lávaszökőkút
+	if a > 0.9:
+		for i in 90:
+			var per := 1.0 + _h(i) * 0.9
+			var t := fposmod(a - 0.9 - _h(i + 50.0) * per, per)
+			var ang := -PI * 0.5 + (_h(i + 9.0) - 0.5) * 1.5
+			var sp := R * (0.55 + 0.75 * _h(i + 3.0))
+			var pos := top + Vector2(cos(ang), sin(ang)) * sp * t + Vector2(0, R * 1.0 * t * t)
+			var k := t / per
+			var col := Color(1.0, 0.95, 0.55).lerp(Color(0.9, 0.18, 0.04), k)
+			var pr := R * 0.013 * (1.25 - k) * (0.6 + 0.8 * _h(i + 5.0))
+			draw_circle(pos, pr * 2.2, Color(1.0, 0.4, 0.05, 0.18 * (1.0 - k) * fade))
+			draw_circle(pos, pr, Color(col, (1.0 - k * 0.7) * fade))
 
 
 func _ellipse(c: Vector2, r: Vector2, col: Color) -> void:
