@@ -309,7 +309,7 @@ func _tutor_update(ctx: String = "") -> void:
 
 
 func _clock_runs() -> bool:
-	if _mini_on:                   # minijáték közben áll az idő, és nem villan fel semmi a Földön
+	if _mini_on or _pc_big != null:                   # minijáték közben áll az idő, és nem villan fel semmi a Földön
 		return false
 	if _clock_force:
 		return true
@@ -1627,7 +1627,7 @@ func _pc(place: Dictionary, text: String) -> Dictionary:
 
 
 ## Egymás után megmutatja a sorban álló képeslapokat: a Föld odafordul, a lap a hely mellé csúszik, majd elhalványul.
-## Nem állítja meg a játékot, és nem fog el kattintást.
+## Nem állítja meg a játékot; a lapra kattintva nagyban megnyílik (_postcard_big), és addig áll az idő.
 func _play_postcards() -> void:
 	var queue := _pc_queue
 	_pc_queue = []
@@ -1643,6 +1643,12 @@ func _play_postcards() -> void:
 			return
 		var card := _postcard(pc)
 		await get_tree().create_timer(0.2 if _test else 6.0).timeout
+		while _pc_big != null:                     # amíg a nagy lap nyitva van, a sor vár
+			await get_tree().create_timer(0.2).timeout
+		if run != _pc_run or world.game_id != game:
+			if is_instance_valid(card):
+				card.queue_free()
+			return
 		if is_instance_valid(card):
 			var out := card.create_tween()
 			out.tween_property(card, "modulate:a", 0.0, 0.6)
@@ -1659,7 +1665,12 @@ func _postcard(pc: Dictionary) -> Control:
 	holder.z_index = 2
 	add_child(holder)
 	var panel := PanelContainer.new()
-	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panel.mouse_filter = Control.MOUSE_FILTER_STOP          # kattintásra nagyban megnyílik
+	panel.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	panel.gui_input.connect(func(ev: InputEvent) -> void:
+		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT and _pc_big == null:
+			holder.visible = false
+			_postcard_big(pc))
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = Color("#f4efe2")
 	sb.set_corner_radius_all(4)
@@ -1717,6 +1728,82 @@ func _postcard(pc: Dictionary) -> Control:
 	return holder
 
 
+var _pc_big: Control = null       # a kattintásra megnyitott nagy képeslap
+
+## A nagy képeslap: középen, nagy képpel és jól olvasható szöveggel. Addig marad, amíg a játékos be nem zárja
+## (kattintás bárhová vagy Esc). Közben áll az idő.
+func _postcard_big(pc: Dictionary) -> void:
+	if _pc_big != null:
+		return
+	var root := Control.new()
+	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	root.mouse_filter = Control.MOUSE_FILTER_STOP
+	root.z_index = 20
+	add_child(root)
+	_pc_big = root
+	var dim := ColorRect.new()
+	dim.color = Color(0, 0, 0, 0.6)
+	dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(dim)
+	var center := CenterContainer.new()
+	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(center)
+	var panel := PanelContainer.new()
+	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color("#f4efe2")
+	sb.set_corner_radius_all(6)
+	sb.content_margin_left = 22
+	sb.content_margin_right = 22
+	sb.content_margin_top = 22
+	sb.content_margin_bottom = 20
+	sb.shadow_color = Color(0, 0, 0, 0.6)
+	sb.shadow_size = 24
+	sb.shadow_offset = Vector2(4, 8)
+	panel.add_theme_stylebox_override("panel", sb)
+	var v := UI.vbox(14)
+	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panel.add_child(v)
+	var tex: Texture2D = Globe.photo_of(str(pc["kep"]))
+	if tex != null:
+		var pic := TextureRect.new()
+		pic.texture = tex
+		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		pic.custom_minimum_size = Vector2(760, 475)
+		pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		v.add_child(pic)
+	var lab := UI.label(str(pc["szoveg"]), 26, Color("#2a2520"), true)
+	lab.custom_minimum_size = Vector2(760, 0)
+	lab.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	lab.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	v.add_child(lab)
+	if str(pc.get("alairas", "")) != "":
+		var sig := UI.label("– " + str(pc["alairas"]), 20, Color("#6a5d4c"))
+		sig.autowrap_mode = TextServer.AUTOWRAP_OFF
+		sig.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		sig.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		v.add_child(sig)
+	center.add_child(panel)
+	var x := UI.label("✕", 30, Color("#f4efe2"), true, false)
+	x.position = Vector2(1540, 24)
+	x.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(x)
+	root.gui_input.connect(func(ev: InputEvent) -> void:
+		if ev is InputEventMouseButton and ev.pressed:
+			_pc_big_close())
+	root.modulate.a = 0.0
+	root.create_tween().tween_property(root, "modulate:a", 1.0, 0.2)
+
+
+func _pc_big_close() -> void:
+	if _pc_big != null and is_instance_valid(_pc_big):
+		_pc_big.queue_free()
+	_pc_big = null
+
+
 var _flash_ids: Array = []        # akiknél az ablak bezárása után felvillanás jár (egyezség, megerősítés, csúcs)
 
 func _close() -> void:
@@ -1750,6 +1837,11 @@ func _close() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _intro != null or _mini_on:
+		return
+	if _pc_big != null:
+		if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ESCAPE:
+			_pc_big_close()
+			get_viewport().set_input_as_handled()
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_ESCAPE and _overlay != null:
@@ -3782,6 +3874,18 @@ func _selftest() -> void:
 	await get_tree().create_timer(0.8).timeout
 	await _shot("7h_kepeslap.png")
 	pcard.queue_free()
+	for cch in pcard2.get_children():               # valódi kattintás a kis lapra: megnyílik-e a nagy?
+		if cch is PanelContainer:
+			var cev := InputEventMouseButton.new()
+			cev.button_index = MOUSE_BUTTON_LEFT
+			cev.pressed = true
+			cev.position = (cch as Control).get_global_rect().get_center()
+			cev.global_position = cev.position
+			get_viewport().push_input(cev)
+	await get_tree().create_timer(0.4).timeout
+	print("KEPESLAP kattintás: ", "megnyílt" if _pc_big != null else "NEM nyílt meg")
+	await _shot("7h_kepeslap_nagy.png")
+	_pc_big_close()
 	pcard2.queue_free()
 	var fx_spin: float = globe.spin
 	var fx_tilt: float = globe.tilt
