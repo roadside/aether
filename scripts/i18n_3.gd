@@ -246,7 +246,7 @@ const EN := {
 	"veszélyben": "in danger",
 	"Veszélyben: %s": "In danger: %s",
 	"A kritikus határ láthatatlan: senki sem tudja előre, mikor lépjük át.": "The threshold is hidden: nobody knows exactly when we will cross it.",
-	"Új játék vezetéssel": "New guided game",
+	"Segítség az első körben, lépésről lépésre": "Step-by-step help in the first round",
 	"A Nap okozza a melegedést, nem az ember.": "The Sun is causing the warming, not people.",
 	"A világűrből jövő sugárzás okozza a melegedést.": "Radiation from space is causing the warming.",
 	"A levegőben túl kevés a CO2 ahhoz, hogy számítson.": "There is too little CO2 in the air for it to matter.",

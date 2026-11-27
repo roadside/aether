@@ -704,11 +704,11 @@ func _build_top() -> void:
 	_stat(h, "kibocs", L.t("A világ CO2-kibocsátása"), UI.GREEN, false, L.t("A 2025-ös kibocsátáshoz képest; a kivont CO2-t levonjuk belőle."))
 	_stat(h, "lepes", L.t("Lépéseid"), UI.CYAN)
 	_dots = _stats["lepes"]
-	_music_credit = UI.label(L.t("Zene: Malte Marten"), 12, UI.MUTE, false, false)      # csak akkor látszik, ha az ő zenéje szól
-	_music_credit.position = Vector2(27, 60)
+	_music_credit = UI.label(L.t("Zene: Malte Marten"), 14, UI.MUTE, false, false)      # a Lépéseid után; csak akkor látszik, ha az ő zenéje szól
+	_music_credit.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 	_music_credit.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_music_credit.visible = false
-	add_child(_music_credit)
+	h.add_child(_music_credit)
 	var bar_bg := ColorRect.new()                 # a körből hátralévő idő sávja az évszám alatt
 	bar_bg.color = Color(1, 1, 1, 0.10)
 	bar_bg.position = Vector2(174, 68)
@@ -1197,6 +1197,21 @@ func _pick_game(code: int = -1, level: int = -1) -> void:
 	var lv := top if level < 0 else clampi(level, 0, top)
 	var body := _open(L.t("Új játék"), UI.CYAN)
 	# három kártya egy sorban: név, a lépések pöttyei, alatta a szám (a pöttyök ugyanazok, mint a főoldal tetején)
+	var guide := CheckBox.new()                    # vezetett első kör: az első játéknál bejelölve, később üres
+	guide.text = "  " + L.t("Segítség az első körben, lépésről lépésre")
+	guide.button_pressed = not bool(L.get_setting("tanulo_kesz", false))
+	guide.focus_mode = Control.FOCUS_NONE
+	guide.add_theme_font_size_override("font_size", 18)
+	guide.add_theme_color_override("font_color", UI.TEXT)
+	guide.add_theme_color_override("font_pressed_color", UI.TEXT)
+	guide.add_theme_color_override("font_hover_color", UI.TEXT)
+	guide.add_theme_color_override("font_hover_pressed_color", UI.TEXT)
+	guide.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	for st_name in ["normal", "hover", "pressed", "hover_pressed", "focus"]:      # keret nélkül, jól látható négyzettel
+		guide.add_theme_stylebox_override(st_name, StyleBoxEmpty.new())
+	guide.add_theme_icon_override("unchecked", _box_icon(false))
+	guide.add_theme_icon_override("checked", _box_icon(true))
+	guide.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	var drow := UI.hbox(14)
 	for row in [["Könnyű", 5, UI.GREEN], ["Közepes", 4, UI.GOLD], ["Nehéz", 3, UI.EMBER]]:
 		var n: int = row[1]
@@ -1223,10 +1238,32 @@ func _pick_game(code: int = -1, level: int = -1) -> void:
 			pl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			dv.add_child(pl)
 		db.add_child(dv)
-		db.pressed.connect(func() -> void: _new_game(code, n, lv))
+		db.pressed.connect(func() -> void:
+			if not _dry:
+				L.set_setting("tanulo_kesz", not guide.button_pressed)
+			_new_game(code, n, lv))
 		drow.add_child(db)
 	drow.alignment = BoxContainer.ALIGNMENT_CENTER
 	body.add_child(drow)
+	var guide_gap := Control.new()
+	guide_gap.custom_minimum_size = Vector2(0, 10)
+	body.add_child(guide_gap)
+	body.add_child(guide)
+
+
+## A jelölőnégyzet képe: világos keret, bejelölve ciánkék kitöltés.
+func _box_icon(on: bool) -> ImageTexture:
+	var n := 24
+	var img := Image.create(n, n, false, Image.FORMAT_RGBA8)
+	img.fill(Color(0, 0, 0, 0))
+	for y in n:
+		for x in n:
+			var edge: bool = x < 2 or y < 2 or x >= n - 2 or y >= n - 2
+			if edge:
+				img.set_pixel(x, y, UI.TEXT)
+			elif on and x >= 6 and y >= 6 and x < n - 6 and y < n - 6:
+				img.set_pixel(x, y, UI.CYAN)
+	return ImageTexture.create_from_image(img)
 
 
 ## Az alacsonyabb szinteken (sikeres játékban) felhasznált kártyák: a magasabb szinten már nem jelennek meg.
@@ -3513,10 +3550,6 @@ func _open_help() -> void:
 	body.add_child(help_gap)
 	var hb := UI.hbox(12)
 	hb.add_child(_go(L.t("Kezdjük!"), _close))
-	hb.add_child(_go(L.t("Új játék vezetéssel"), func() -> void:       # az első kör lépésről lépésre, újra
-		if not _dry:
-			L.set_setting("tanulo_kesz", false)
-		_pick_game(), false))
 	body.add_child(hb)
 
 
@@ -3963,6 +3996,10 @@ func _selftest() -> void:
 	await _shot("11b_gyujtemeny.png")
 	_pick_game()
 	await _shot("11c_uj_jatek.png")
+	var gcb := _find_check(_overlay)
+	if gcb != null:
+		gcb.button_pressed = true
+	await _shot("11c_uj_jatek_jelolve.png")
 	_open_missions()
 	await _shot("11g_kuldetesek.png")
 	_open_story()

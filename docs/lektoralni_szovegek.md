@@ -386,7 +386,7 @@ Csak ezek újak. Ami nincs itt, az nem változott.
 - Mostantól telik az idő. Figyeld a sávot az évszám alatt!
 - Új: metáncsökkentést és felkészülést is kérhetsz.
 - Új gomb: CO2-kivonás. Kártya kell hozzá.
-- Új játék vezetéssel (gomb a súgóban)
+- (törölve 2026-11-27: „Új játék vezetéssel” gomb a súgóban)
 
 ### Billenőpontok veszélysávja
 - veszélyben  (Zoltán, 2026-11-27 19:47; korábban: veszélysávban)
@@ -1057,3 +1057,6 @@ A te döntéseid szerint átírva (nem kell újra lektorálni):
 - Ehhez ilyen kártya kell: cement, acél, repülés, hajózás, teherautó, hidrogén, állattartás, műtrágya vagy körforgás.
 - Mondat elején a két többes számú csoportnév így áll: „Az olajországok csoportja” és „Az Egyesült Államok” (például: „Az olajországok csoportja elbizonytalanodott.”, „Az Egyesült Államok vállalta: nulla kibocsátás 2070-re.”).
 - „A te történeted” üres ablaka: Még nem történt semmi...  (Zoltán szövege, 2026-11-27 20:02; korábban: Még nem vállalt semmit)
+
+Új szöveg – még nem lektorált (2026-11-27 20:05):
+- Jelölőnégyzet az Új játék ablakban, a három fokozat alatt: Segítség az első körben, lépésről lépésre
