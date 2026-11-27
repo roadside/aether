@@ -590,20 +590,9 @@ func warming_text() -> String:
 	return "+%s °C" % L.num(float(world.st["T"]), 2)
 
 
-var _click: AudioStreamPlayer
-
-## Halk kattanás minden gombnyomásra (külön lejátszó, hogy ne vágja el a többi hangot).
-func _on_node_added(n: Node) -> void:
-	if n is BaseButton and not (n is CheckBox):
-		(n as BaseButton).pressed.connect(func() -> void:
-			if _dry or not _sounds_on():
-				return
-			if _click == null:
-				_click = AudioStreamPlayer.new()
-				_click.volume_db = -14.0
-				_click.stream = load("res://assets/hang/kattintas.wav")
-				add_child(_click)
-			_click.play())
+## Gombnyomásra nincs hang (Zoltán kérése, 2026-11-27: a kártyákra és országokra kattintás ne szóljon).
+func _on_node_added(_n: Node) -> void:
+	pass
 
 
 func _sounds_on() -> bool:
@@ -615,7 +604,7 @@ func _sound(name: String) -> void:
 		return
 	if _snd == null:
 		_snd = AudioStreamPlayer.new()
-		_snd.volume_db = -8.0
+		_snd.volume_db = -11.0
 		add_child(_snd)
 	_snd.stream = load("res://assets/hang/%s.wav" % name)
 	_snd.play()
@@ -875,7 +864,8 @@ func _fill_group(g: Dictionary) -> void:
 	pic_gap.custom_minimum_size = Vector2(0, 6)
 	pic_gap.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	v.add_child(pic_gap)
-	v.add_child(_lbl(L.t("Innen jön a világ CO2-kibocsátásának %s%%-a") % L.num_short(float(g["co2_resz"]) * 100.0, 0), 13, UI.MUTE))
+	var share_l := _lbl(L.t("Innen jön a világ CO2-kibocsátásának %s%%-a") % L.num_short(float(g["co2_resz"]) * 100.0, 0), 13, UI.MUTE)
+	v.add_child(share_l)
 	# a mostani kibocsátásuk a maihoz képest
 	var bar := ProgressBar.new()
 	bar.show_percentage = false
@@ -916,10 +906,15 @@ func _fill_group(g: Dictionary) -> void:
 		btw.tween_callback(func() -> void: pct.add_theme_color_override("font_color", UI.SOFT))
 	if not return_bar:
 		_bar_shown[key] = World.emission(g, world.year() - 1)
+	var rest_l: Label = null
+	var extras_l: Label = null
+	var extra_lines := 0      # a kártya magassága kötött: ha két vagy több kiegészítő sor van, a témacímkék nem férnek ki
 	if int(g.get("nulla", 0)) > 0:
 		v.add_child(_lbl("★ " + L.t("Nulla kibocsátás %d óta") % int(g["nulla"]), 16, UI.GREEN, true))
 		if int(g.get("maradek", 0)) == 0:
-			v.add_child(_lbl(L.t("A maradék még hátravan."), 14, UI.GOLD))
+			rest_l = _lbl(L.t("A maradék még hátravan."), 14, UI.GOLD)
+			v.add_child(rest_l)
+			extra_lines += 1
 	elif int(g["cel"]) > 0:
 		v.add_child(_lbl(L.rag(L.t("Nulla kibocsátás %d-re") % int(g["cel"])), 16, UI.GREEN, true))
 	else:
@@ -930,7 +925,9 @@ func _fill_group(g: Dictionary) -> void:
 	if g.get("felkeszult", false):
 		extras.append(L.t("Felkészült"))
 	if not extras.is_empty():
-		v.add_child(_lbl("✔ " + " · ✔ ".join(extras), 14, UI.GREEN))
+		extras_l = _lbl("✔ " + " · ✔ ".join(extras), 14, UI.GREEN)
+		v.add_child(extras_l)
+		extra_lines += 1
 	var n := world.usable(g).size()
 	var shaky: bool = g.get("inog", false) and not world.over()
 	var danger := _threat_on(g)
@@ -943,7 +940,16 @@ func _fill_group(g: Dictionary) -> void:
 		v.add_child(_lbl("⚠ " + L.t("Tévhit terjed"), 15, MYTH_COLOR, true))
 	_pulse(str(g["id"]), (danger != "" or shaky or mythy) and not world.over(), UI.EMBER if danger != "" else (MYTH_COLOR if mythy else UI.GOLD))
 	var fears := HFlowContainer.new()
-	fears.visible = int(shaky) + int(danger != "") + int(mythy) < 2
+	var crowd := extra_lines + int(shaky) + int(danger != "") + int(mythy)
+	fears.visible = crowd < 2
+	if crowd > 2 and rest_l != null:      # legfeljebb két sor fér ki az alsó sor fölött: előbb a maradék sora, aztán a pipás sor marad el
+		rest_l.visible = false
+		crowd -= 1
+	if crowd > 2 and extras_l != null:
+		extras_l.visible = false
+		crowd -= 1
+	if crowd > 2:      # három figyelmeztetés egyszerre (ritka): a részesedés sora ad helyet
+		share_l.visible = false
 	fears.add_theme_constant_override("h_separation", 3)
 	fears.add_theme_constant_override("v_separation", 4)
 	fears.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -1019,10 +1025,9 @@ func _build_bottom() -> void:
 	gap.custom_minimum_size = Vector2(190, 0)
 	h.add_child(gap)
 	var mb := UI.button(L.t("Küldetések"), false)
-	mb.custom_minimum_size = Vector2(176, 44)
+	mb.custom_minimum_size = Vector2(176, 54)      # ugyanolyan magas, mint a többi alsó gomb (Zoltán kérése)
 	mb.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	mb.focus_mode = Control.FOCUS_NONE
-	mb.add_theme_font_size_override("font_size", 16)
 	mb.pressed.connect(_open_missions)
 	gap.add_child(mb)
 	_mission_btn = mb
@@ -1960,7 +1965,6 @@ func _do_research(id: String, th: String) -> void:
 		_offers.erase(th)
 		_collect(id)
 		_refresh()
-		_sound("kartya")
 		_pop_next = true
 		_open_card(id, true)
 
@@ -2376,7 +2380,6 @@ func _persuade(g: Dictionary, picked: Array) -> void:
 		var tw := row.create_tween().set_parallel(true)
 		tw.tween_property(row, "modulate:a", 1.0, 0.2)
 		tw.tween_property(bar, "value", float(i + 1) / float(n), 0.45).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-		_sound("kartya")
 		await get_tree().create_timer(0.55).timeout
 		if _overlay == null:          # a játékos közben bezárta
 			break
@@ -2490,7 +2493,6 @@ func _open_cdr() -> void:
 
 # --- mérce: a beépített gépek ---------------------------------------------------
 ## A beépített gépek (scripts/agent.gd) rögzített szabályokat követnek; csak mérceként szerepelnek a játék végén.
-const AUTO_NAMES := {"kezdo": "Kezdő gép", "atlagos": "Átlagos gép", "okos": "Okos gép"}
 
 
 ## Megosztható eredmény: három sor szöveg a vágólapra. Körönként egy négyzet a játék naplójából:
@@ -2513,30 +2515,8 @@ func _share_text() -> String:
 	for k in kind:
 		row += ["⬜", "🟨", "🟩", "🟥"][int(k)]
 	var line := "🌍 2100: +%s °C" % L.num(float(world.st["T"]), 2)
-	var steps_n: int = world.max_steps + (1 if world.challenge >= 5 else 0)
-	line += " · %s: +%s °C" % [L.t("Okos gép"), L.num(float(Agent.play("okos", world.seed_v, steps_n, world.challenge)["T"]), 2)]
 	return "AETHER\n%s\n%s" % [line, row]
 
-
-## A gépek ugyanezen a Földön (ugyanaz a Föld-kód, fokozat és kihívás): mérce a saját eredményedhez.
-## A véletlen események a lépésektől is függnek, ezért a gépek játéka nem pontosan ugyanaz a történet.
-func _add_ladder(body: VBoxContainer, mine: float) -> void:
-	var rows: Array = [[L.t("Te"), mine, true]]
-	for kind in Agent.KINDS:
-		var steps_n: int = world.max_steps + (1 if world.challenge >= 5 else 0)
-		rows.append([L.t(AUTO_NAMES[kind]), float(Agent.play(kind, world.seed_v, steps_n, world.challenge)["T"]), false])
-	rows.sort_custom(func(a: Array, b: Array) -> bool: return float(a[1]) < float(b[1]))
-	body.add_child(UI.label(L.t("Ugyanezen a Földön"), 19, UI.GOLD, true, false))
-	var h := HFlowContainer.new()
-	h.add_theme_constant_override("h_separation", 10)
-	h.add_theme_constant_override("v_separation", 8)
-	for i in rows.size():
-		var r: Array = rows[i]
-		var col: Color = UI.GREEN if r[2] else UI.SOFT
-		var l := UI.label("%d. %s  +%s °C" % [i + 1, str(r[0]), L.num(float(r[1]), 2)], 16, col, bool(r[2]), false)
-		l.add_theme_stylebox_override("normal", _flat(Color(col, 0.10), Color(col, 0.7 if r[2] else 0.3), 1, 8))
-		h.add_child(l)
-	body.add_child(h)
 
 # --- telik az idő -------------------------------------------------------------
 ## Nagy, áttetsző évszám a Föld fölött, amíg az évek peregnek.
@@ -2918,6 +2898,13 @@ var _cheer_force := false        # az élő próba így a szikraesőt is lefutta
 var _end_opened := 0            # hányszor nyílt meg a záróképernyő (a véletlen próba képet ment róla)
 
 
+## Kis hely a záróképernyő részei között (Zoltán kérése).
+func _end_gap(body: Control) -> void:
+	var gap := Control.new()
+	gap.custom_minimum_size = Vector2(0, 12)
+	body.add_child(gap)
+
+
 func _open_end() -> void:
 	_end_opened += 1
 	var r := world.result()
@@ -2980,16 +2967,15 @@ func _open_end() -> void:
 	var verdict := "A Földed +1,7 °C alatt maradt. 2026-ból indulva ennél sokkal jobbat már aligha lehet elérni." if tt < 1.7 \
 		else ("A Földed +2 °C alatt maradt. A Párizsi Megállapodás ennél többet kér: jóval +2 °C alatt megállni, lehetőleg +1,5 °C-nál." if tt < 2.0 \
 		else "A Földed +2 °C fölé melegedett. A következő játékban lépj hamarabb!")
+	_end_gap(body)
 	body.add_child(UI.label(L.t(verdict), 19, UI.GREEN if tt < 2.0 else UI.EMBER, true))
 	var fin := _finish_game(r)
 	if fin["rekord"]:
 		body.add_child(UI.label(L.t("Új rekord! Ez az eddigi legjobb Földed."), 19, UI.GOLD, true))
-	for bd in BADGES:
-		if bd[0] in fin["uj"]:
-			body.add_child(UI.label("★ " + L.t("Új jelvény: %s") % L.t(bd[1]), 17, UI.GOLD, true))
-	_add_ladder(body, tt)
+	_end_gap(body)
 	if not world.naplo.is_empty():       # a játék története egy képen, rögtön az eredmény alatt
 		_add_story(body)
+	_end_gap(body)
 	body.add_child(UI.label(L.t("A legmelegebb év: +%s °C. Küszöbét átlépő rendszer: %d a %d-ből.") % [L.num(float(r["csucs"]), 2), int(r["billenes"]), world.tips.size()], 17, UI.TEXT))
 	var late := world.what_if(5)
 	if late > tt + 0.005:
@@ -2997,7 +2983,6 @@ func _open_end() -> void:
 	var s := float(r["sens"])
 	var kind := L.t("átlagos") if absf(s) < 0.25 else (L.t("az átlagnál érzékenyebb") if s > 0 else L.t("az átlagnál kevésbé érzékeny"))
 	body.add_child(UI.label(L.t("Ez a Föld %s volt. Ezt előre senki sem tudhatta, ahogy a valódi Földnél sem tudjuk pontosan.") % kind, 16, UI.SOFT))
-	body.add_child(UI.label(L.t("A hőmérsékletet egy egyszerű klímamodell számolta. Irányt és nagyságrendet mutat, nem pontos előrejelzést."), 14, UI.MUTE))
 	var end_row := UI.hbox(12)
 	end_row.add_child(_go(L.t("Új játék, új Föld") + " →", func() -> void: _pick_game()))
 	var again_code: int = world.seed_v
@@ -3009,29 +2994,14 @@ func _open_end() -> void:
 		if is_instance_valid(saved_lbl):       # mentés közben bezárhatták az ablakot
 			saved_lbl.text = msg
 			saved_lbl.visible = true, false))
-	end_row.add_child(_go(L.t("Eredmény másolása"), func() -> void:
-		DisplayServer.clipboard_set(_share_text())
-		if is_instance_valid(saved_lbl):
-			saved_lbl.text = L.t("Kimásolva. Beillesztheted bárhová.")
-			saved_lbl.visible = true, false))
 	var end_box := UI.vbox(4)
 	end_box.add_child(saved_lbl)
 	end_box.add_child(end_row)
 	_sticky(body, end_box)
-	if world.hajto.size() >= M.END_YEAR - M.START_YEAR:
-		var wp = PathChart.new()
-		wp.custom_minimum_size = Vector2(560, 96)
-		wp.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
-		wp.legend_now = "A világ CO2-kibocsátása"
-		var rows: Array = [[2026, 1.0]]
-		for i in world.hajto.size():
-			var hr: Array = world.hajto[i]
-			rows.append([M.START_YEAR + 1 + i, (float(hr[0]) - float(hr[1])) / M.E_CO2_NOW])
-		wp.set_paths(rows, [])
-		body.add_child(wp)
 	# ki mennyi CO2-t nem bocsátott ki (a modell szerint, a „ha semmi sem változik” úthoz képest)
 	var saved: Array = world.groups.filter(func(g: Dictionary) -> bool: return float(g.get("megsporolt", 0.0)) >= 0.5)
 	saved.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return float(a["megsporolt"]) > float(b["megsporolt"]))
+	_end_gap(body)
 	if not saved.is_empty():
 		body.add_child(UI.label(L.t("Ennyi CO2-t nem bocsátottak ki 2100-ig"), 19, UI.GOLD, true, false))
 		var top_v := float(saved[0]["megsporolt"])
@@ -3050,8 +3020,7 @@ func _open_end() -> void:
 			hb.add_child(barc)
 			hb.add_child(UI.label(L.t("%s milliárd tonna") % L.num_short(float(g["megsporolt"]), 0), 15, UI.SOFT, false, false))
 			body.add_child(hb)
-		if world.cdr_total >= 0.5:
-			body.add_child(UI.label("%s: %s" % [L.t("CO2-kivonás"), L.t("%s milliárd tonna") % L.num_short(world.cdr_total, 0)], 15, UI.GREEN, true))
+	_end_gap(body)
 	if not world.missions.is_empty():
 		body.add_child(UI.label("%s: %d/%d" % [L.t("Küldetések"), world.missions_done(), world.missions.size()], 19, UI.GOLD, true, false))
 		_add_missions(body)
@@ -3431,6 +3400,25 @@ func _selftest() -> void:
 	_tutor_force = true
 	_refresh()
 	await _shot("1_fooldal.png")
+	# a csoportkártyák legzsúfoltabb állapotai: semmi sem lóghat ki a keretből
+	var keep_groups: Array = world.groups.duplicate(true)
+	var keep_threat: Dictionary = world.threat
+	for gi in world.groups.size():
+		var tg: Dictionary = world.groups[gi]
+		tg["nulla"] = 2060
+		tg["metan"] = 2030
+		tg["felkeszult"] = gi % 2 == 0
+		tg["inog"] = gi >= 2
+	world.hand = ["napelem", "villanyauto", "tengerszint", "termes", "erdo", "metan_gaz", "hoseg_halal"]
+	world.myth = {"csoport": world.groups[3]["id"], "kartya": "napaktivitas"}
+	world.threat = {"csoport": world.groups[3]["id"], "mi": "tuz"}
+	_refresh()
+	await _shot("1a_zsufolt_kartyak.png")
+	world.groups = keep_groups
+	world.threat = keep_threat
+	world.hand = []
+	world.myth = {}
+	_refresh()
 	if "--idoproba" in OS.get_cmdline_user_args():      # az óra a kör végén magától lép tovább?
 		_clock_live = true
 		_clock = _round_s() - 3.0

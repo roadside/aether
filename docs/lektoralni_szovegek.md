@@ -914,3 +914,7 @@ Kikerült: „A mai Föld”, „Ma mindenki ugyanezt a Földet kapja.”, a „
 ## 25. Változás (2026-11-26, 23:25) – nincs új szöveg
 
 Kikerült a játékból a kihívás (Zoltán kérése): a „Kihívás:” sor, az „Alap” gomb, az öt szint mondatai (pl. „Gyorsabban telnek az évek: egy kör 90 helyett 75 másodpercig tart.”), az „Új kihívás nyílt meg: %d. szint” sor és „A lépcső teteje” jelvény.
+
+## 26. Változás (2026-11-27) – nincs új szöveg
+
+Kikerült (Zoltán kérése): a záróképernyőről az „Ugyanezen a Földön” összevetés a gépekkel („Te”, „Kezdő gép”, „Átlagos gép”, „Okos gép”), „A hőmérsékletet egy egyszerű klímamodell számolta. Irányt és nagyságrendet mutat, nem pontos előrejelzést.” mondat, a világ CO2-kibocsátásának grafikonja és a „CO2-kivonás: … milliárd tonna” sor; a tárgyalás ablakából a kis grafikon („a mostani útjuk”, „ha ezt vállalják”). A megosztható szövegből kikerült az „Okos gép” eredménye. Kikerült még a záróképernyőről az „Eredmény másolása” gomb („Kimásolva. Beillesztheted bárhová.”) és az „Új jelvény: …” sor.
