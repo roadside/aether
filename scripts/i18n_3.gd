@@ -439,6 +439,5 @@ const EN := {
 	"%s: átléptük a küszöböt.": "%s: the threshold has been crossed.",
 	"%s: a melegedés elérte a veszélysávot.": "%s: warming has reached the danger zone.",
 	"%s: egyelőre a küszöb alatt vagyunk.": "%s: still below the threshold for now.",
-	"kitalált szereplő": "fictional character",
 	"Képeslap 2100-ból": "A postcard from 2100",
 }

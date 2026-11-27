@@ -1489,7 +1489,6 @@ var _pc_goal: Dictionary = {}     # csoport -> a legutóbb látott célév (új 
 var _pc_band: Dictionary = {}     # billenőpont -> már szóltunk, hogy veszélysávban van
 var _pc_game := -1
 var _pc_met: Dictionary = {}      # csoport -> a szereplő már bemutatkozott ebben a játékban
-var _pc_lab: Dictionary = {}      # csoport -> a „kitalált szereplő” felirat már látszott ebben a futásban
 var _stories: Dictionary = {}     # adatok/tortenetek.json: kitalált szereplők csoportonként
 
 
@@ -1512,9 +1511,7 @@ func _pc_story(g: Dictionary, key: String) -> Dictionary:
 	if line.is_empty():
 		return {}
 	var out := _pc(g, str(line["en"] if L.is_en() else line["hu"]))
-	var label := first or not _pc_lab.has(g["id"])      # a „kitalált szereplő” felirat az első lapon, betöltött játékban is
-	_pc_lab[g["id"]] = true
-	out["alairas"] = "%s, %s" % [st["nev"], L.field(g, "nev")] + (" · " + L.t("kitalált szereplő") if label else "")
+	out["alairas"] = "%s, %s" % [st["nev"], L.field(g, "nev")]
 	return out
 
 var _pc_run := 0
@@ -1527,7 +1524,6 @@ func _plan_postcards() -> void:
 		_pc_goal = {}
 		_pc_band = {}
 		_pc_met = {}
-		_pc_lab = {}
 		if world.history.size() > World.ROUND_YEARS + 1:      # betöltött játék: a régi vállalások nem újak
 			for g0 in world.groups:
 				_pc_goal[g0["id"]] = int(g0["cel"])
@@ -3165,7 +3161,7 @@ func _open_end() -> void:
 		var kc := UI.card(Color("#f4efe2"))
 		kc.add_child(UI.label(L.t("Képeslap 2100-ból"), 15, UI.SOFT))
 		kc.add_child(UI.label(_quote(str(kl["en"] if L.is_en() else kl["hu"])), 18, UI.TEXT, true))
-		kc.add_child(UI.label("– %s, %s · %s" % [kid["nev"], L.field(kid_g, "nev"), L.t("kitalált szereplő")], 14, UI.SOFT))
+		kc.add_child(UI.label("– %s, %s" % [kid["nev"], L.field(kid_g, "nev")], 14, UI.SOFT))
 		body.add_child(UI.card_root(kc))
 	_end_gap(body)
 	body.add_child(UI.label(L.t(verdict), 19, UI.GREEN if tt < 2.0 else UI.EMBER, true))
