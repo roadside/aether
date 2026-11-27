@@ -26,12 +26,12 @@ const TAGS := {
 	"egeszseg": ["hoseg_halal", "legszennyezes", "munkakepesseg", "varosi_fak", "hoseg_riasztas", "feher_teto", "zoldteto", "erdotuz", "dengue", "malaria_hegyvidek", "pollen", "alvas", "klimaszorongas", "vibrio", "terhesseg_hoseg", "lelki_egeszseg", "szalmonella"],
 	"ketseg": ["tcre", "klimaerzekenyseg", "napaktivitas", "kozmikus", "felhok", "ocean_ho", "aeroszol", "amoc", "permafroszt", "ozon", "kondenzcsik", "konszenzus", "regi_modellek", "jegfurat", "attribucio", "sztratoszfera", "jegkorszak_ota"],
 	"olaj": ["metan_gaz", "metan_szen", "co2_tarolas", "levegoszures", "metan_muhold", "mof",
-		"metan_bontas", "novenyi_energia", "faklyazas", "foldben_marad", "elhagyott_kutak", "metan_szivargas", "olajallam_jovo", "elakadt_vagyon", "fosszilis_tamogatas", "olajmezo_kibocsatas", "energia_munkahely", "metan_vallalas", "bezart_banyak"],
+		"metan_bontas", "novenyi_energia", "faklyazas", "foldben_marad", "elhagyott_kutak", "metan_szivargas", "olajallam_jovo", "elakadt_vagyon", "fosszilis_tamogatas", "olajmezo_kibocsatas", "energia_munkahely", "metan_vallalas", "bezart_banyak", "lng_szivargas"],
 	"erdo": ["erdo", "erdo_magatol", "muhold_erdo", "amazonas", "lap", "bioszen", "kozet", "moszaterdo", "erdoirtas_okai", "erdo_nyelo", "erdo_hutes", "erdo_eso", "import_erdoirtas", "oslakos_fold", "erdo_degradacio", "erdo_zavarok", "gyep_nem_erdo"],
 	"kockazat": ["napernyo", "felho_fenyesites", "cirrus", "urbeli_arnyekolo", "vas_tenger", "ocean_lugositas"],
 }
 ## A metánról szóló kártyák: a metánvállaláshoz ezek egyike kell.
-const METHANE := ["metan_gaz", "metan_szen", "metan_rizs", "kerodzok_metan", "voros_alga", "tragya", "hulladek_metan", "metan_muhold", "biogaz", "metan_szivargas", "elhagyott_kutak", "metan_vallalas", "szennyviz_metan", "bezart_banyak", "tehen_nemesites", "viztarozo_metan"]
+const METHANE := ["metan_gaz", "metan_szen", "metan_rizs", "kerodzok_metan", "voros_alga", "tragya", "hulladek_metan", "metan_muhold", "biogaz", "metan_szivargas", "elhagyott_kutak", "metan_vallalas", "szennyviz_metan", "bezart_banyak", "tehen_nemesites", "viztarozo_metan", "lng_szivargas"]
 
 ## A tárgyalásra is használható témakörök.
 static func talk_themes() -> Array:

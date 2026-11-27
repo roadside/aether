@@ -349,3 +349,23 @@ Paraméter: kockazat_csokkentes_pct
 Wikipédia: cölöpépítmény
 Wikipédia angolul: stilt house
 Áttekintő cikkek keresése: building flood-proofing elevation review
+
+=== lng_szivargas ===
+Korszak: III. (Átalakulás)
+Kérdés: Szökik-e metán, amikor a földgázt hajón szállítják?
+Röviden: A földgázt nagyon lehűtve, folyékony formában óriási hajókon viszik át az óceánon. A hajók motorjai is ezt a gázt égetik.
+Ha kikutatod:
+Mire jó?: Ha a hajók motorjait jól működtetik, a motorokon átszökő, el nem égett metán a felére csökkenthető.
+Mi a gond vele?: Eddig még senki sem mérte meg egy teljes út során. A mérés szerint a motorok több metánt eresztenek ki, mint gondolták, főleg kis terhelésen.
+Mennyire bizonyított?: Az első teljes mérés egy USA–Belgium oda-vissza úton azt találta, hogy a hajó motorjain átlagosan a gáz 3,8%-a égés nélkül távozik. Ez a leszállított gáz kb. 0,1%-a. A jobban használt motorok metánszivárgása a felére csökkenthető.
+Kérdés angolul: Does methane escape when natural gas is shipped?
+Röviden angolul: Natural gas is chilled until it turns liquid and carried across the ocean on huge ships. The ships' engines burn this gas too.
+Ha kikutatod angolul:
+Mire jó? angolul: If the ships' engines are run well, the unburned methane slipping through them can be cut by half.
+Mi a gond vele? angolul: No one had measured it over a whole voyage before. The measurement showed the engines release more methane than thought, especially at low load.
+Mennyire bizonyított? angolul: The first full measurement, on a round trip between the US and Belgium, found that on average 3.8% of the gas passed through the ship's engines unburned. This is about 0.1% of the delivered gas. Better operation could halve the engines' methane slip.
+Forrás: Total Methane and CO2 Emissions from Liquefied Natural Gas Carrier Ships: The First Primary Measurements (2022) – https://doi.org/10.1021/acs.est.2c01383
+Lektorálva: igen
+--- technikai ---
+Keresés: LNG carrier ship methane slip measurements
+Megjegyzés: egyetlen hajó egyetlen útjának mérése; a kivonat maga kér további méréseket.
