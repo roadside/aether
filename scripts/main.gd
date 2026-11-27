@@ -704,11 +704,12 @@ func _build_top() -> void:
 	_stat(h, "kibocs", L.t("A világ CO2-kibocsátása"), UI.GREEN, false, L.t("A 2025-ös kibocsátáshoz képest; a kivont CO2-t levonjuk belőle."))
 	_stat(h, "lepes", L.t("Lépéseid"), UI.CYAN)
 	_dots = _stats["lepes"]
-	_music_credit = UI.label(L.t("Zene: Malte Marten"), 14, UI.MUTE, false, false)      # a Lépéseid után; csak akkor látszik, ha az ő zenéje szól
-	_music_credit.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	_music_credit = UI.label(L.t("Zene: Malte Marten"), 12, UI.MUTE, false, false)      # a logó alatt, halványan; csak akkor látszik, ha az ő zenéje szól
+	_music_credit.position = Vector2(27, 60)
+	_music_credit.modulate.a = 0.5
 	_music_credit.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_music_credit.visible = false
-	h.add_child(_music_credit)
+	add_child(_music_credit)
 	var bar_bg := ColorRect.new()                 # a körből hátralévő idő sávja az évszám alatt
 	bar_bg.color = Color(1, 1, 1, 0.10)
 	bar_bg.position = Vector2(174, 68)
@@ -2328,6 +2329,9 @@ func _research_theme(th: String) -> void:
 		c.add_child(UI.label(Cards.text(id, "Röviden", L.is_en()), 16, UI.SOFT))
 		c.add_child(_go(L.t("Ezt kutatom ki") + " →", _do_research.bind(id, th)))
 		body.add_child(UI.card_root(c))
+	var back_gap := Control.new()      # több hely a gomb fölött (Zoltán kérése)
+	back_gap.custom_minimum_size = Vector2(0, 14)
+	body.add_child(back_gap)
 	body.add_child(_go("← " + L.t("Másik témakör"), _open_research.bind(""), false))
 
 
