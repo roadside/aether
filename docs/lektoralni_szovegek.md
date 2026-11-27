@@ -196,7 +196,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Játssz végig egy játékot úgy, hogy egyetlen billenőpont küszöbét sem lépitek át.
 - Tisztító
 - Indíts el legalább három CO2-kivonást egy játékban.
-- Nehéz Föld
+- Érzékeny Föld
 - Maradj +2 °C alatt egy átlagosnál érzékenyebb Földön.
 - Gyűjtő
 - Kutass ki ötven különböző kártyát.
@@ -847,7 +847,7 @@ Kikerült a játékból: a Gyűjteményből a „Befejezett játékok…”, a �
 - Felkészülés a váratlan helyzetekre
 - %s felkészült a váratlan helyzetekre. Megbízik benned, és többé nem inog meg.
 - Segíts mind a hat csoportnak felkészülni a váratlan helyzetekre.
-- Tartsd +2 °C alatt a globális felmelegedést nehéz fokozaton.
+- Tartsd 2100-ig +2 °C alatt a globális felmelegedést nehéz fokozaton.
 - Tartsd 2100-ig +1,6 °C alatt a globális felmelegedést.
 - Készíts fel három csoportot, mielőtt utoléri őket a baj.
 - Tartsd +2 °C alatt a globális felmelegedést az ötödik kihívásnál.
@@ -1049,6 +1049,7 @@ A te döntéseid szerint átírva (nem kell újra lektorálni):
 - A szereplők csak a játék első körében (2026–2030) mutatkoznak be az életkorukkal; új játék elején ketten. Aki később ír először, bemutatkozás nélkül ír.
 - Amara „veszély”, „baj” és „felkészült” mondata bármilyen afrikai bajnál megjelenik.
 
+- Jelvények: a „Nehéz Föld” neve „Érzékeny Föld” lett; a „Mester” szövege: „Tartsd 2100-ig +2 °C alatt a globális felmelegedést nehéz fokozaton.”
 - A főképernyőn a cím alatt: „Zene: Malte Marten” (a te szavaiddal; csak akkor látszik, ha az ő zenéje szól).
 
 Új szövegek – még nem lektorált:
