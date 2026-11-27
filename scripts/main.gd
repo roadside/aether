@@ -1439,7 +1439,11 @@ func _mark_next() -> void:
 ## Az ablak alján mindig látszó gomb (hosszú, görgethető tartalomnál sem kell keresni).
 func _sticky(body: VBoxContainer, node: Control) -> void:
 	node.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
-	body.get_parent().get_parent().get_parent().add_child(node)
+	var outer: Node = body.get_parent().get_parent().get_parent()
+	var gap := Control.new()           # minden ablak alsó gombja fölött legyen hely (Zoltán kérése)
+	gap.custom_minimum_size = Vector2(0, 10)
+	outer.add_child(gap)
+	outer.add_child(node)
 
 
 func _open(title: String, accent: Color = UI.GOLD) -> VBoxContainer:
@@ -2766,6 +2770,9 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 		var b2 := _open(L.field(g, "nev"), UI.GREEN)
 		b2.add_child(UI.label(L.t("%s megingott, de kitartott.") % _gn(g), 22, UI.GREEN, true))
 		b2.add_child(UI.label(L.t("A bizonyítékod miatt kitartottak: %s") % Cards.text(ask["kartya"], "Kérdés", L.is_en()), 17, UI.SOFT))
+		var ok_gap := Control.new()      # hely a gomb fölött (Zoltán kérése)
+		ok_gap.custom_minimum_size = Vector2(0, 14)
+		b2.add_child(ok_gap)
 		b2.add_child(_go(L.t("Rendben"), _close))
 		return
 	var body := _open(L.t("Megállapodtatok!"), UI.GREEN)
