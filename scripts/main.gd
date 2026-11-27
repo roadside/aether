@@ -2164,9 +2164,6 @@ func _open_group(g: Dictionary) -> void:
 	head_v.add_child(UI.label(L.t("Mit kérsz tőlük?"), 19, UI.GOLD, true, false))
 	head_v.add_child(UI.label(L.t("A szám azt mutatja, mennyivel lenne hűvösebb 2100-ban."), 14, UI.MUTE))
 	head_row.add_child(head_v)
-	var pc = PathChart.new()
-	pc.set_paths(world.path(g), [])
-	head_row.add_child(pc)
 	body.add_child(head_row)
 	var ask_row := GridContainer.new()      # két oszlop, egyforma széles panelek (Zoltán kérése)
 	ask_row.columns = 2
@@ -2208,7 +2205,6 @@ func _open_group(g: Dictionary) -> void:
 		b.add_theme_color_override("font_hover_pressed_color", Color.WHITE)
 		b.toggled.connect(func(on: bool) -> void:
 			if on:
-				pc.set_paths(world.path(g), world.path(g, int(a["cel"])) if a["fajta"] == "cel" else [])
 				_fill_ask(area, g, a))
 		ask_row.add_child(b)
 	(ask_row.get_child(0) as Button).button_pressed = true
@@ -2817,6 +2813,9 @@ func _open_news(y0: int, t0: float) -> void:
 			kc.add_child(UI.label(str(k["en"] if L.is_en() and str(k.get("en", "")) != "" else k["hu"]), 17, UI.GOLD, true))
 			kc.add_child(UI.label(str(k["forras_en"] if L.is_en() and str(k.get("forras_en", "")) != "" else k["forras"]), 13, UI.CYAN))
 			body.add_child(UI.card_root(kc))
+	var next_gap := Control.new()      # a Tovább gomb fölött mindig legyen hely (Zoltán kérése)
+	next_gap.custom_minimum_size = Vector2(0, 14)
+	body.add_child(next_gap)
 	if world.over():
 		body.add_child(_go(L.t("Lássuk, mi lett a Földdel") + " →", _open_end))
 	elif world.summit_due:
