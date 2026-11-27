@@ -480,7 +480,7 @@ func _play_full() -> void:
 ## Előhang a zene előtt: 2 mp sötét, felfénylik a cím a jelentésével (7 mp),
 ## majd három mondat egymás után, mindegyik sötétből jön és sötétbe megy.
 const PRO_LINES := [
-	["A játékban minden adat, grafikon és hír valós.", 3.6],
+	["A játékban minden adat és forrás valós.", 3.6],
 	["Minden tudományos cikk forrásmegjelöléssel megtalálható, így bárki elolvashatja.", 4.8],
 	["Talán köztük van a megoldás...", 3.6],
 ]

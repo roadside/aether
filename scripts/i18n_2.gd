@@ -31,7 +31,7 @@ const EN := {
 	"Következő lépés": "Next step",
 	"Küldetés": "Mission",
 	"játékszabály": "game rule",
-	"A játékban minden adat, grafikon és hír valós.": "Every piece of data, every chart and every news item in this game is real.",
+	"A játékban minden adat és forrás valós.": "Every piece of data and every source in this game is real.",
 	"Minden tudományos cikk forrásmegjelöléssel megtalálható, így bárki elolvashatja.": "Every scientific paper is listed with its source, so anyone can read it.",
 	"Talán köztük van a megoldás...": "Maybe the solution is among them...",
 	"Kezdjük!": "Let's start!",

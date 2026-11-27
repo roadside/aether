@@ -9,7 +9,7 @@ Minden szöveg új (2026-11-23). A kutatási kártyák szövege a már lektorál
 - Kattints egy országcsoportra, és győzd meg őket a kártyáiddal! Minden csoport mástól tart, ezért más-más kártyára van szüksége.
 - Ha elfogytak a lépéseid, jön a következő öt év. A Föld és a görbe megmutatja, mit értél el.
 - A cél: 2100-ban jóval +2 °C alatt maradni, minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is.
-- A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett billenőpontok is. Ne várj sokáig!
+- A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett kritikus határok is. Ne várj sokáig!
 
 ## 2. Az országcsoportok aggodalmai (játékszabály, nem idézet)
 
@@ -152,17 +152,17 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Honnan tudjuk?
 - Olaj és gáz
 - Erdő és föld
-- Átlépte a küszöbértéket: %s (%d)
-- Ha a melegedés tartósan e fölött marad, a változás lassan, de megállíthatatlanul végbemegy. A küszöböt a tudomány csak sávként ismeri (%s és %s °C között); a játék ebből sorsolt egyet.
-- A legmelegebb év: +%s °C. Küszöbét átlépő rendszer: %d a %d-ből.
-- küszöb átlépve:
+- Átlépte a kritikus határt: %s (%d)
+- Ha a melegedés tartósan e fölött marad, a változás lassan, de megállíthatatlanul végbemegy. A kritikus határt a tudomány csak sávként ismeri (%s és %s °C között); a játék ebből sorsolt egyet.
+- A legmelegebb év: +%s °C. Kritikus határát átlépő rendszer: %d a %d-ből.
+- kritikus határ átlépve:
 - Ipar és közlekedés
 - Meggyőzheted őket
 - A Földed a +1,5 °C közelében maradt. Ennél jobbat a mai tudásunk szerint alig lehet elérni.
 - A Földed +2 °C alatt maradt. A Párizsi Megállapodás ennél többet kér: jóval +2 °C alatt megállni, lehetőleg +1,5 °C-nál.
 - A Földed +2 °C fölé melegedett. A következő játékban lépj hamarabb!
 - Várható melegedés 2100-ban: +%s → +%s °C
-- küszöb: %s–%s °C
+- kritikus határ: %s–%s °C
 - Végeredmény
 
 ## 6. Új szövegek (2026-11-23 este)
@@ -192,7 +192,7 @@ A %d és %s jelek helyére szám vagy név kerül.
 - Metánvadász
 - Mind a hat csoport vállaljon metáncsökkentést.
 - Merész cél
-- Egy küszöb sem
+- Egy kritikus határ sem
 - Játssz végig egy játékot úgy, hogy egyetlen billenőpont küszöbét sem lépitek át.
 - Tisztító
 - Indíts el legalább három CO2-kivonást egy játékban.
@@ -840,7 +840,7 @@ Kikerült a játékból: a Gyűjteményből a „Befejezett játékok…”, a �
 
 ### Zoltán új szövegei (az ő megfogalmazása; a két pont nélküli mondat végére pont került)
 
-- Játssz végig egy játékot úgy, hogy egyetlen kritikus határértéket sem léptek át.
+- Játssz végig egy játékot úgy, hogy egyetlen kritikus határt sem léptek át.
 - Tartsd 2100-ig +2 °C alatt a globális felmelegedést.
 - Tartsd 2100-ig +2 °C alatt a globális felmelegedést egy átlagnál érzékenyebb Földön.
 - Tartsd 2100-ig +1,7 °C alatt a globális felmelegedést.
@@ -933,9 +933,9 @@ A kör elején egy-két hely „képeslapot küld”: a hely valódi fotója és
 Csoportoknál a képeslapot a csoport kitalált szereplője írja, lásd a 30. szakaszt (a korábbi négy csoportmondat kikerült).
 
 Billenőpontoknál:
-- %s: egyelőre a küszöb alatt vagyunk.
+- %s: egyelőre a kritikus határ alatt vagyunk.
 - %s: a melegedés elérte a veszélysávot.
-- %s: átléptük a küszöböt.
+- %s: átléptük a kritikus határt.
 
 ## 29. Változás (2026-11-27, 18:05) – nincs új szöveg
 
@@ -1039,3 +1039,19 @@ A „kitalált szereplő” felirat Zoltán kérésére kikerült (2026-11-27, 1
 - Lecsapott a baj, de felkészültek: Nagy volt a hőség, de árnyékos utcák és hűvös terek vártak. Mindenki biztonságban volt.
 - 2100, a melegedés 2 °C alatt maradt (záróképernyő): Öreg vagyok már. A városunk napenergiából él, és a nyár még elviselhető.
 - 2100, a melegedés elérte a 2 °C-ot (záróképernyő): Öreg vagyok már. Nyaranta sokan elmennek a városból, mert nem bírják a hőséget.
+
+## 31. Változások az átnézés után (2026-11-27, 19:00)
+
+A te döntéseid szerint átírva (nem kell újra lektorálni):
+- Az előhang első mondata: „A játékban minden adat és forrás valós.”
+- Mindenhol „kritikus határ” áll (korábban: billenőpont, küszöb, küszöbérték, kritikus határérték). Érintett mondatok: a súgó 6. pontja, „Egy kritikus határ sem” jelvény és a leírása, „Átlépte a kritikus határt: …”, „A kritikus határt a tudomány csak sávként ismeri …”, „Kritikus határát átlépő rendszer: …”, „…: átléptük a kritikus határt.”, „…: egyelőre a kritikus határ alatt vagyunk.”, „kritikus határ: …–… °C”, „kritikus határ átlépve:”.
+- A „kitalált szereplő” felirat kikerült.
+- A szereplők csak a játék első körében (2026–2030) mutatkoznak be az életkorukkal; új játék elején ketten. Aki később ír először, bemutatkozás nélkül ír.
+- Amara „veszély”, „baj” és „felkészült” mondata bármilyen afrikai bajnál megjelenik.
+
+- A főképernyőn a cím alatt: „Zene: Malte Marten” (a te szavaiddal; csak akkor látszik, ha az ő zenéje szól).
+
+Új szövegek – még nem lektorált:
+- Ehhez metánról szóló kártya kell (Olaj és gáz, Élelem, Áram, Ipar és közlekedés).
+- Ehhez ilyen kártya kell: cement, acél, repülés, hajózás, teherautó, hidrogén, állattartás, műtrágya vagy körforgás.
+- Mondat elején a két többes számú csoportnév így áll: „Az olajországok csoportja” és „Az Egyesült Államok” (például: „Az olajországok csoportja elbizonytalanodott.”, „Az Egyesült Államok vállalta: nulla kibocsátás 2070-re.”).

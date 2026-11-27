@@ -704,6 +704,11 @@ func _build_top() -> void:
 	_stat(h, "kibocs", L.t("A világ CO2-kibocsátása"), UI.GREEN, false, L.t("A 2025-ös kibocsátáshoz képest; a kivont CO2-t levonjuk belőle."))
 	_stat(h, "lepes", L.t("Lépéseid"), UI.CYAN)
 	_dots = _stats["lepes"]
+	_music_credit = UI.label(L.t("Zene: Malte Marten"), 12, UI.MUTE, false, false)      # csak akkor látszik, ha az ő zenéje szól
+	_music_credit.position = Vector2(27, 60)
+	_music_credit.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_music_credit.visible = false
+	add_child(_music_credit)
 	var bar_bg := ColorRect.new()                 # a körből hátralévő idő sávja az évszám alatt
 	bar_bg.color = Color(1, 1, 1, 0.10)
 	bar_bg.position = Vector2(174, 68)
@@ -1248,6 +1253,9 @@ func _new_game(code: int = -1, steps_n: int = World.STEPS, level: int = 0) -> vo
 	_plan_moments()
 	globe.home()
 	_refresh()
+	_pc_intro()
+	if not _test and _intro == null:
+		_play_postcards()
 
 
 func _save() -> void:
@@ -1302,9 +1310,9 @@ func _refresh() -> void:
 			"label": ("⚠ " if shaky or danger != "" or mythy else "") + L.field(g, "nev"), "lat": g["lat"], "lon": g["lon"],
 			"color": UI.EMBER if danger != "" else (MYTH_COLOR if mythy else (UI.GOLD if shaky else Color(str(g["szin"]))))})
 	for tp in world.tips:
-		var rng_txt := L.t("küszöb: %s–%s °C") % [L.num(float(tp["also"]), 1), L.num(float(tp["felso"]), 1)]
+		var rng_txt := L.t("kritikus határ: %s–%s °C") % [L.num(float(tp["also"]), 1), L.num(float(tp["felso"]), 1)]
 		if int(tp["ev"]) > 0:
-			marks.append({"name": "%s\n%s %d · %s" % [L.field(tp, "nev"), L.t("küszöb átlépve:"), int(tp["ev"]), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": UI.EMBER, "small": true, "kep": tp["id"]})
+			marks.append({"name": "%s\n%s %d · %s" % [L.field(tp, "nev"), L.t("kritikus határ átlépve:"), int(tp["ev"]), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": UI.EMBER, "small": true, "kep": tp["id"]})
 		elif t >= float(tp["also"]):       # a melegedés már a küszöb sávjában jár: bármikor átléphetjük
 			marks.append({"name": "%s\n%s · %s" % [L.field(tp, "nev"), L.t("veszélysávban"), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": UI.GOLD, "small": true, "dim": true, "warn": true, "kep": tp["id"]})
 		else:
@@ -1500,12 +1508,27 @@ func _story(gid: String) -> Dictionary:
 	return st if typeof(st) == TYPE_DICTIONARY else {}
 
 
-## A csoport szereplőjének képeslapja az adott helyzethez. Először mindig bemutatkozik.
+## A csoport neve mondat elején, alanyként (az „Olajországok” és az „Egyesült Államok” névelővel, egyes számú állítmányhoz).
+const SENT_NAME := {"olaj": ["Az olajországok csoportja", "The oil exporters' group"], "usa": ["Az Egyesült Államok", "The United States"]}
+
+func _gn(g: Dictionary) -> String:
+	var pair: Array = SENT_NAME.get(str(g.get("id", "")), [])
+	return L.field(g, "nev") if pair.is_empty() else str(pair[1] if L.is_en() else pair[0])
+
+
+## Illik-e a baj fajtája a szereplő történetéhez ("*" = bármelyik baj).
+func _pc_fits(gid: String, kind: String) -> bool:
+	var tema := str(_story(gid).get("tema", ""))
+	return tema == "*" or (tema != "" and tema == kind)
+
+
+## A csoport szereplőjének képeslapja az adott helyzethez. Bemutatkozni csak az első körben mutatkozik be
+## (a mondatban életkor áll, ami csak 2026–2030-ban igaz; Zoltán döntése, 2026-11-27).
 func _pc_story(g: Dictionary, key: String) -> Dictionary:
 	var st := _story(str(g["id"]))
 	if st.is_empty():
 		return {}
-	var first := not _pc_met.has(g["id"])
+	var first := not _pc_met.has(g["id"]) and world.round_i == 0
 	_pc_met[g["id"]] = true
 	var line: Dictionary = Dictionary(st["sorok"]).get("bemutat" if first else key, {})
 	if line.is_empty():
@@ -1538,19 +1561,18 @@ func _plan_postcards() -> void:
 		if n["fajta"] == "billenes":
 			for tp in world.tips:
 				if tp["id"] == n["id"]:
-					first.append(_pc(tp, L.t("%s: átléptük a küszöböt.") % L.field(tp, "nev")))
+					first.append(_pc(tp, L.t("%s: átléptük a kritikus határt.") % L.field(tp, "nev")))
 		elif n["fajta"] == "nulla":
 			first.append(["nulla", world.group(n["csoport"])])
 		elif n["fajta"] == "katasztrofa":
 			var gk := world.group(n["csoport"])
-			var stk := _story(str(gk["id"]))
-			if str(stk.get("tema", "")) == str(n["mi"]):          # csak ha a baj illik a szereplő történetéhez
+			if _pc_fits(str(gk["id"]), str(n["mi"])):          # csak ha a baj illik a szereplő történetéhez
 				first.append(["felkeszult" if gk.get("felkeszult", false) else "baj", gk])
 	for g in world.groups:
 		var goal := int(g["cel"])
 		if goal > 0 and int(_pc_goal.get(g["id"], 0)) == 0:
 			first.append(["vallalt", g])
-		elif not world.threat.is_empty() and str(world.threat["csoport"]) == str(g["id"]) and str(_story(str(g["id"])).get("tema", "")) == str(world.threat["mi"]):
+		elif not world.threat.is_empty() and str(world.threat["csoport"]) == str(g["id"]) and _pc_fits(str(g["id"]), str(world.threat["mi"])):
 			rest.append(["veszely", g])
 		elif goal == 0:
 			rest.append(["nincs", g])
@@ -1565,7 +1587,7 @@ func _plan_postcards() -> void:
 				_pc_band[tp["id"]] = true
 				first.append(_pc(tp, L.t("%s: a melegedés elérte a veszélysávot.") % L.field(tp, "nev")))
 		else:
-			rest.append(_pc(tp, L.t("%s: egyelőre a küszöb alatt vagyunk.") % L.field(tp, "nev")))
+			rest.append(_pc(tp, L.t("%s: egyelőre a kritikus határ alatt vagyunk.") % L.field(tp, "nev")))
 	rest.shuffle()
 	var queue: Array = []
 	var told := {}                                  # egy körben egy szereplő csak egyszer ír
@@ -1582,6 +1604,22 @@ func _plan_postcards() -> void:
 	_pc_queue = queue
 	if world.over():
 		_pc_queue = []
+
+
+## Új játék elején két szereplő bemutatkozik (2026-ban igaz az életkoruk).
+func _pc_intro() -> void:
+	_pc_game = world.game_id
+	_pc_goal = {}
+	_pc_band = {}
+	_pc_met = {}
+	_pc_queue = []
+	if world.round_i != 0 or world.over():
+		return
+	var n := world.groups.size()
+	for k in PC_MAX:
+		var card := _pc_story(world.groups[(world.seed_v + k * 2) % n], "bemutat")
+		if not card.is_empty():
+			_pc_queue.append(card)
 
 
 func _pc(place: Dictionary, text: String) -> Dictionary:
@@ -1783,7 +1821,7 @@ const BADGES := [
 	["mindenki", "Mindenki vállalta", "A játék végére mind a hat csoport vállaljon nulla kibocsátást."],
 	["metan", "Metánvadász", "Mind a hat csoport vállaljon metáncsökkentést."],
 	["meresz", "Merész cél", "Érd el, hogy egy csoport tizenöt év alatt vállalja a nulla kibocsátást."],
-	["kuszob", "Egy küszöb sem", "Játssz végig egy játékot úgy, hogy egyetlen kritikus határértéket sem léptek át."],
+	["kuszob", "Egy kritikus határ sem", "Játssz végig egy játékot úgy, hogy egyetlen kritikus határt sem léptek át."],
 	["kivonas", "Tisztító", "Indíts el legalább három CO2-kivonást egy játékban."],
 	["felkeszult", "Senki sem marad magára", "Segíts mind a hat csoportnak felkészülni a váratlan helyzetekre."],
 	["nehez", "Nehéz Föld", "Tartsd 2100-ig +2 °C alatt a globális felmelegedést egy átlagnál érzékenyebb Földön."],
@@ -1983,6 +2021,8 @@ func _music_on() -> bool:
 ## Játék közben: a játékos saját zenéje (ha van), utána a két halk, kódból készült alapzene, és így tovább.
 var _playlist: Array = []
 var _track := 0
+var _music_credit: Label
+var _credit_force := false      # az önteszt képéhez
 var _own_long := false      # vannak saját hosszú zenék (adatok/01s.lon …)
 var _own_first := true
 
@@ -2025,6 +2065,7 @@ func _start_music() -> void:
 var _music_tw: Tween
 
 func _play_track(fade_in: float) -> void:
+	_credit_update()
 	if _music_tw != null:
 		_music_tw.kill()
 	var st: AudioStream = null
@@ -2059,6 +2100,13 @@ func _toggle_music(btn: Button) -> void:
 		_start_music()
 	elif _music != null:
 		_music.stop()
+	_credit_update()
+
+
+## A zene szerzőjének neve a főképernyőn: csak akkor, ha tényleg az ő zenéje szól (a saját zenefájlok megvannak, és a zene be van kapcsolva).
+func _credit_update() -> void:
+	if _music_credit != null:
+		_music_credit.visible = _own_long and _music_on() or _credit_force
 
 
 # --- kutatás ------------------------------------------------------------------
@@ -2461,7 +2509,7 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 			add_card.call(cm, id)
 			any = true
 		if not any:
-			cm.add_child(UI.label(L.t("Ehhez cementről, acélról, repülésről, hajózásról vagy állattartásról szóló kártya kell."), 15, UI.MUTE))
+			cm.add_child(UI.label(L.t("Ehhez ilyen kártya kell: cement, acél, repülés, hajózás, teherautó, hidrogén, állattartás, műtrágya vagy körforgás."), 15, UI.MUTE))
 		area.add_child(UI.card_root(cm))
 	elif ask["fajta"] == "metan":
 		var c := UI.card(UI.GREEN)
@@ -2472,7 +2520,7 @@ func _fill_ask(area: VBoxContainer, g: Dictionary, ask: Dictionary) -> void:
 			add_card.call(c, id)
 			any = true
 		if not any:
-			c.add_child(UI.label(L.t("Ehhez metánról szóló kártya kell (Olaj és gáz, Élelem, Áram)."), 15, UI.MUTE))
+			c.add_child(UI.label(L.t("Ehhez metánról szóló kártya kell (Olaj és gáz, Élelem, Áram, Ipar és közlekedés)."), 15, UI.MUTE))
 		area.add_child(UI.card_root(c))
 	else:
 		if ask["fajta"] == "megerosites":
@@ -2541,7 +2589,7 @@ func _refuted(g: Dictionary, card_id: String) -> void:
 	c.add_child(UI.label(Cards.text(card_id, "Kérdés", L.is_en()), 19, UI.TEXT, true))
 	c.add_child(UI.label(Cards.text(card_id, "Mennyire bizonyított?", L.is_en()), 17, UI.TEXT))
 	body.add_child(UI.card_root(c))
-	body.add_child(UI.label(L.t("%s most jobban bízik benned: eggyel kevesebb kártyával is meggyőzheted.") % L.field(g, "nev"), 17, UI.GREEN, true))
+	body.add_child(UI.label(L.t("%s most jobban bízik benned: eggyel kevesebb kártyával is meggyőzheted.") % _gn(g), 17, UI.GREEN, true))
 	_sticky(body, _go(L.t("Rendben"), _close))
 
 
@@ -2583,7 +2631,7 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 	_flash_ids = [g["id"]]
 	if ask["fajta"] == "megerosites":
 		var b2 := _open(L.field(g, "nev"), UI.GREEN)
-		b2.add_child(UI.label(L.t("%s megingott, de kitartott.") % L.field(g, "nev"), 22, UI.GREEN, true))
+		b2.add_child(UI.label(L.t("%s megingott, de kitartott.") % _gn(g), 22, UI.GREEN, true))
 		b2.add_child(UI.label(L.t("A bizonyítékod miatt kitartottak: %s") % Cards.text(ask["kartya"], "Kérdés", L.is_en()), 17, UI.SOFT))
 		b2.add_child(_go(L.t("Rendben"), _close))
 		return
@@ -2595,15 +2643,15 @@ func _agreed(g: Dictionary, ask: Dictionary, before: float = -1.0) -> void:
 		burst.z_index = 12
 		add_child(burst)
 	if ask["fajta"] == "maradek":
-		body.add_child(UI.label(L.t("%s a maradék kibocsátását is megszünteti: tíz év alatt.") % L.field(g, "nev"), 22, UI.TEXT, true))
+		body.add_child(UI.label(L.t("%s a maradék kibocsátását is megszünteti: tíz év alatt.") % _gn(g), 22, UI.TEXT, true))
 		_sticky(body, _go(L.t("Rendben"), _close))
 		return
 	if ask["fajta"] == "felkeszules":
-		body.add_child(UI.label(L.t("%s felkészült a váratlan helyzetekre. Megbízik benned, és többé nem inog meg.") % L.field(g, "nev"), 22, UI.TEXT, true))
+		body.add_child(UI.label(L.t("%s felkészült a váratlan helyzetekre. Megbízik benned, és többé nem inog meg.") % _gn(g), 22, UI.TEXT, true))
 		_sticky(body, _go(L.t("Rendben"), _close))
 		return
-	var txt: String = (L.rag(L.t("%s vállalta: nulla kibocsátás %d-re.") % [L.field(g, "nev"), int(ask["cel"])])) if ask["fajta"] == "cel" \
-		else (L.t("%s vállalta: 30%%-kal kevesebb metán tíz év alatt.") % L.field(g, "nev"))
+	var txt: String = (L.rag(L.t("%s vállalta: nulla kibocsátás %d-re.") % [_gn(g), int(ask["cel"])])) if ask["fajta"] == "cel" \
+		else (L.t("%s vállalta: 30%%-kal kevesebb metán tíz év alatt.") % _gn(g))
 	if ask["fajta"] == "cel":       # a tájban megjelennek a szélkerekek és a napelemek
 		var pic := Landscape.rect(str(g["id"]), 252, true)
 		pic.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
@@ -2866,17 +2914,17 @@ func _open_news(y0: int, t0: float) -> void:
 			"billenes":
 				var tp: Dictionary = world.tips.filter(func(x: Dictionary) -> bool: return x["id"] == n["id"])[0]
 				var c := UI.card(UI.EMBER)
-				c.add_child(UI.label(L.t("Átlépte a küszöbértéket: %s (%d)") % [L.field(tp, "nev"), int(n["ev"])], 19, UI.EMBER, true))
-				c.add_child(UI.label(L.t("Ha a melegedés tartósan e fölött marad, a változás lassan, de megállíthatatlanul végbemegy. A küszöböt a tudomány csak sávként ismeri (%s és %s °C között); a játék ebből sorsolt egyet.") % [L.num(float(tp["also"]), 1), L.num(float(tp["felso"]), 1)], 16, UI.TEXT))
+				c.add_child(UI.label(L.t("Átlépte a kritikus határt: %s (%d)") % [L.field(tp, "nev"), int(n["ev"])], 19, UI.EMBER, true))
+				c.add_child(UI.label(L.t("Ha a melegedés tartósan e fölött marad, a változás lassan, de megállíthatatlanul végbemegy. A kritikus határt a tudomány csak sávként ismeri (%s és %s °C között); a játék ebből sorsolt egyet.") % [L.num(float(tp["also"]), 1), L.num(float(tp["felso"]), 1)], 16, UI.TEXT))
 				body.add_child(UI.card_root(c))
 			"visszalepett":
 				var c2 := UI.card(UI.GOLD)
-				c2.add_child(UI.label(L.rag(L.t("%s megingott: a célját %d-re tolta.") % [L.field(world.group(n["csoport"]), "nev"), int(n["cel"])]), 18, UI.GOLD, true))
+				c2.add_child(UI.label(L.rag(L.t("%s megingott: a célját %d-re tolta.") % [_gn(world.group(n["csoport"])), int(n["cel"])]), 18, UI.GOLD, true))
 				c2.add_child(UI.label(L.t("Nem erősítetted meg őket időben."), 16, UI.SOFT))
 				body.add_child(UI.card_root(c2))
 			"nulla":
 				var c6 := UI.card(UI.GREEN)
-				c6.add_child(UI.label("★ " + L.t("%s elérte a nulla kibocsátást (%d).") % [L.field(world.group(n["csoport"]), "nev"), int(n["ev"])], 18, UI.GREEN, true))
+				c6.add_child(UI.label("★ " + L.t("%s elérte a nulla kibocsátást (%d).") % [_gn(world.group(n["csoport"])), int(n["ev"])], 18, UI.GREEN, true))
 				body.add_child(UI.card_root(c6))
 			"vilag_nulla":
 				var c7 := UI.card(UI.GREEN)
@@ -2884,12 +2932,12 @@ func _open_news(y0: int, t0: float) -> void:
 				body.add_child(UI.card_root(c7))
 			"inog":
 				var c5 := UI.card(UI.GOLD)
-				c5.add_child(UI.label("⚠ " + L.t("%s elbizonytalanodott.") % L.field(world.group(n["csoport"]), "nev"), 18, UI.GOLD, true))
+				c5.add_child(UI.label("⚠ " + L.t("%s elbizonytalanodott.") % _gn(world.group(n["csoport"])), 18, UI.GOLD, true))
 				c5.add_child(UI.label(L.t("Erősítsd meg őket egy hozzájuk illő kártyával, különben öt év múlva meginognak!"), 16, UI.SOFT))
 				body.add_child(UI.card_root(c5))
 			"kitartott":
 				var c3 := UI.card(UI.GREEN)
-				c3.add_child(UI.label(L.t("%s megingott, de kitartott.") % L.field(world.group(n["csoport"]), "nev"), 18, UI.GREEN, true))
+				c3.add_child(UI.label(L.t("%s megingott, de kitartott.") % _gn(world.group(n["csoport"])), 18, UI.GREEN, true))
 				c3.add_child(UI.label(L.t("A bizonyítékod miatt kitartottak: %s") % Cards.text(n["kartya"], "Kérdés", L.is_en()), 16, UI.SOFT))
 				body.add_child(UI.card_root(c3))
 			"katasztrofa":
@@ -2950,7 +2998,7 @@ func _open_news(y0: int, t0: float) -> void:
 				body.add_child(UI.card_root(cm))
 			"segit":
 				var c8 := UI.card(UI.GREEN)
-				c8.add_child(UI.label(L.t("%s tiszta technológiát ad át. %s most könnyebben meggyőzhető.") % [L.field(world.group(n["csoport"]), "nev"), L.field(world.group(n["kinek"]), "nev")], 18, UI.GREEN, true))
+				c8.add_child(UI.label(L.t("%s tiszta technológiát ad át. %s most könnyebben meggyőzhető.") % [_gn(world.group(n["csoport"])), _gn(world.group(n["kinek"]))], 18, UI.GREEN, true))
 				body.add_child(UI.card_root(c8))
 				_flash_ids = [n["csoport"], n["kinek"]]
 	if not world.threat.is_empty() and not world.over():      # a következő baj már látszik: van idő felkészülni
@@ -3075,7 +3123,7 @@ func _do_summit(id: String) -> void:
 	var body := _open(L.t("Klímacsúcs"), UI.GREEN)
 	for gid in who:
 		var g := world.group(gid)
-		body.add_child(UI.label(L.rag(L.t("%s előrehozta a célját: nulla kibocsátás %d-re.") % [L.field(g, "nev"), int(g["cel"])]), 20, UI.TEXT, true))
+		body.add_child(UI.label(L.rag(L.t("%s előrehozta a célját: nulla kibocsátás %d-re.") % [_gn(g), int(g["cel"])]), 20, UI.TEXT, true))
 	body.add_child(UI.label(L.t("Várható melegedés 2100-ban: +%s → +%s °C") % [L.num(before, 2), L.num(float(world.forecast()["kozep"][-1][1]), 2)], 20, UI.GREEN, true))
 	_sticky(body, _go(L.t("Rendben"), _close))
 
@@ -3172,7 +3220,7 @@ func _open_end() -> void:
 	if not world.naplo.is_empty():       # a játék története egy képen, rögtön az eredmény alatt
 		_add_story(body)
 	_end_gap(body)
-	body.add_child(UI.label(L.t("A legmelegebb év: +%s °C. Küszöbét átlépő rendszer: %d a %d-ből.") % [L.num(float(r["csucs"]), 2), int(r["billenes"]), world.tips.size()], 17, UI.TEXT))
+	body.add_child(UI.label(L.t("A legmelegebb év: +%s °C. Kritikus határát átlépő rendszer: %d a %d-ből.") % [L.num(float(r["csucs"]), 2), int(r["billenes"]), world.tips.size()], 17, UI.TEXT))
 	var late := world.what_if(5)
 	if late > tt + 0.005:
 		body.add_child(UI.label(L.t("Ha minden öt évvel később történik, a Földed +%s °C-ra melegszik. Minden év számít!") % L.num(late, 2), 17, UI.GOLD))
@@ -3273,19 +3321,19 @@ func _add_story(body: VBoxContainer) -> void:
 			mark = Color(str(world.group(e["csoport"])["szin"]))
 		match str(e["fajta"]):
 			"cel":
-				line = L.rag(L.t("%s vállalta: nulla kibocsátás %d-re.") % [L.field(world.group(e["csoport"]), "nev"), int(e["cel"])])
+				line = L.rag(L.t("%s vállalta: nulla kibocsátás %d-re.") % [_gn(world.group(e["csoport"])), int(e["cel"])])
 			"metan":
-				line = L.t("%s vállalta: 30%%-kal kevesebb metán tíz év alatt.") % L.field(world.group(e["csoport"]), "nev")
+				line = L.t("%s vállalta: 30%%-kal kevesebb metán tíz év alatt.") % _gn(world.group(e["csoport"]))
 			"maradek":
-				line = L.t("%s a maradék kibocsátását is megszünteti.") % L.field(world.group(e["csoport"]), "nev")
+				line = L.t("%s a maradék kibocsátását is megszünteti.") % _gn(world.group(e["csoport"]))
 				mark = UI.GREEN
 			"felkeszules":
-				line = L.t("%s felkészült a váratlan helyzetekre.") % L.field(world.group(e["csoport"]), "nev")
+				line = L.t("%s felkészült a váratlan helyzetekre.") % _gn(world.group(e["csoport"]))
 			"kivonas":
 				line = "%s: %s" % [L.t("Bővített CO2-kivonás") if e.get("bov", false) else L.t("CO2-kivonás"), L.t(CDR_NAME[e["id"]])]
 				mark = UI.GREEN
 			"nulla":
-				line = (L.t("%s elérte a nulla kibocsátást (%d).") % [L.field(world.group(e["csoport"]), "nev"), int(e["ev"])]).replace(" (%d)" % int(e["ev"]), "")
+				line = (L.t("%s elérte a nulla kibocsátást (%d).") % [_gn(world.group(e["csoport"])), int(e["ev"])]).replace(" (%d)" % int(e["ev"]), "")
 				lc = UI.GREEN
 				lane = 1
 			"vilag_nulla":
@@ -3297,7 +3345,7 @@ func _add_story(body: VBoxContainer) -> void:
 				line = L.t("Klímacsúcs: %d csoport hozta előre a célját.") % int(e.get("db", 0))
 				mark = UI.GOLD
 			"visszalepett":
-				line = L.rag(L.t("%s megingott: a célját %d-re tolta.") % [L.field(world.group(e["csoport"]), "nev"), int(e["cel"])])
+				line = L.rag(L.t("%s megingott: a célját %d-re tolta.") % [_gn(world.group(e["csoport"])), int(e["cel"])])
 				lc = UI.GOLD
 				lane = 2
 				mark = UI.GOLD
@@ -3328,7 +3376,7 @@ func _add_story(body: VBoxContainer) -> void:
 			"billenes":
 				var tp2: Array = world.tips.filter(func(x: Dictionary) -> bool: return x["id"] == e["id"])
 				if not tp2.is_empty():
-					line = L.t("küszöb átlépve:") + " " + L.field(tp2[0], "nev")
+					line = L.t("kritikus határ átlépve:") + " " + L.field(tp2[0], "nev")
 					lc = UI.EMBER
 					lane = 2
 					mark = Color("#ff6a4a")
@@ -3361,7 +3409,7 @@ func _open_help() -> void:
 			["3.", "Kattints egy országcsoportra, és győzd meg őket a kártyáiddal! Minden csoport mástól tart, ezért más-más kártyára van szüksége."],
 			["4.", "Lépj korán: minden év késés számít. Akit egyszer meggyőztél, attól később merészebb célt is kérhetsz."],
 			["5.", "A cél: 2100-ban jóval +2 °C alatt maradni, minél közelebb a +1,5 °C-hoz. Ez a Párizsi Megállapodás célja is."],
-			["6.", "A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett billenőpontok is. Ne várj sokáig!"],
+			["6.", "A Föld érzékenységét senki sem ismeri pontosan, és vannak rejtett kritikus határok is. Ne várj sokáig!"],
 			["7.", "Az évek maguktól telnek. Amíg olvasol, az idő áll. Ha a Földön felvillan valami, kattints rá gyorsan!"]]:
 		var h := UI.hbox(12)
 		h.add_child(UI.label(row[0], 22, UI.GOLD, true, false))
@@ -3587,7 +3635,11 @@ func _live_play() -> void:
 func _selftest() -> void:
 	_tutor_force = true
 	_refresh()
+	_credit_force = true
+	_credit_update()
 	await _shot("1_fooldal.png")
+	_credit_force = false
+	_credit_update()
 	# a csoportkártyák legzsúfoltabb állapotai: semmi sem lóghat ki a keretből
 	var keep_groups: Array = world.groups.duplicate(true)
 	var keep_threat: Dictionary = world.threat
