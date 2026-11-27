@@ -485,3 +485,44 @@ Forrás: IPCC AR6 WG3 – Climate Change 2022: Mitigation of Climate Change (202
 Lektorálva: igen
 --- technikai ---
 Keresés: demand-side mitigation solutions well-being
+
+=== metan_vallalas ===
+Korszak: I. (Felismerés)
+Kérdés: Mennyit hűtene, ha a világ gyorsan csökkentené a metánkibocsátást?
+Röviden: A metán sokkal erősebben melegít, mint a CO2, de csak kb. tíz évig marad a levegőben. Ha most csökkentjük, a hatás gyorsan látszik.
+Ha kikutatod:
+Mire jó?: A metán csökkentése fékezné a leggyorsabban a melegedést. Közben tisztább lesz a levegő, és több marad a termésből.
+Mi a gond vele?: A metán csökkentése csak lassítja a melegedést. Megállítani csak a CO2-kibocsátás nullára csökkentése tudja.
+Mennyire bizonyított?: Az ENSZ szerint az emberi eredetű metánkibocsátás ebben az évtizedben akár 45%-kal csökkenthető. Ez 2045-re majdnem 0,3 °C melegedést előzne meg. Évente 260 000 korai haláleset és 25 millió tonna terméskiesés is megelőzhető lenne. Egy másik vizsgálat szerint a lehetséges intézkedések fele ma nem jár többletköltséggel.
+Kérdés angolul: How much would it cool the Earth if the world cut methane fast?
+Röviden angolul: Methane warms far more strongly than CO2, but it stays in the air for only about ten years. If we cut it now, the effect shows quickly.
+Ha kikutatod angolul:
+Mire jó? angolul: Cutting methane would slow warming the fastest. It also makes the air cleaner and saves more of the harvest.
+Mi a gond vele? angolul: Cutting methane only slows warming. Only bringing CO2 emissions down to zero can stop it.
+Mennyire bizonyított? angolul: The UN finds that human-caused methane emissions could be cut by up to 45% this decade. That would avoid nearly 0.3 °C of warming by 2045. It could also prevent 260,000 early deaths and 25 million tonnes of crop losses every year. Another study finds that half of the available measures come at no net cost today.
+Forrás: Global Methane Assessment: Benefits and Costs of Mitigating Methane Emissions (UNEP/CCAC, 2021) – https://www.ccacoalition.org/resources/global-methane-assessment-full-report
+Forrás: Acting rapidly to deploy readily available methane mitigation measures by sector can immediately slow global warming (2021) – https://doi.org/10.1088/1748-9326/abf9c8
+Lektorálva: igen
+--- technikai ---
+Keresés: Global Methane Assessment methane mitigation near-term warming
+Megjegyzés: a játék metánvállalása 30%-os csökkentés tíz év alatt; az ENSZ-jelentés a 45%-os csökkentést számolja. A „kb. tíz évig marad” általános tudás (IPCC), a fenti forrásokból nem idézet.
+
+=== szennyviz_metan ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Melegít-e a városok szennyvize?
+Röviden: A csatornákban és a szennyvíztelepeken a szennyvízben élő apró élőlények metánt termelnek, ha nem jutnak elég levegőhöz.
+Ha kikutatod:
+Mire jó?: Ha a telepek felfogják a metánt, abból áramot és hőt termelhetnek, ahelyett hogy a levegőbe engednék.
+Mi a gond vele?: Telepenként nagyon eltér, mennyi metán szökik el, ezért sok helyen mérni kell, hogy tudjuk, hol érdemes elkezdeni.
+Mennyire bizonyított?: Egy összefoglaló vizsgálat szerint a telepek metánkibocsátása között tízezerszeres különbség is lehet. Az USA városainak szennyvíztelepei kb. kétszer annyi metánt bocsátanak ki, mint amennyit a hivatalos számítási módszer becsül.
+Kérdés angolul: Does city wastewater warm the planet?
+Röviden angolul: In sewers and wastewater plants, tiny living things in the water make methane when they don't get enough air.
+Ha kikutatod angolul:
+Mire jó? angolul: If plants capture the methane, they can make electricity and heat from it instead of releasing it into the air.
+Mi a gond vele? angolul: How much methane escapes varies hugely from plant to plant, so many sites must be measured to know where to start.
+Mennyire bizonyított? angolul: A review found that methane emissions can differ ten-thousand-fold between plants. US city wastewater plants emit about twice as much methane as the official calculation method estimates.
+Forrás: Methane Emissions from Municipal Wastewater Collection and Treatment Systems (2023) – https://doi.org/10.1021/acs.est.2c04388
+Lektorálva: igen
+--- technikai ---
+Keresés: municipal wastewater methane emissions underestimated
+Megjegyzés: a „tízezerszeres” a kivonat 0,01–110 g/m3 tartományából számolt kerekítés.

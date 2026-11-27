@@ -635,3 +635,41 @@ Forrás: Meeting well-below 2°C target would increase energy sector jobs global
 Lektorálva: igen
 --- technikai ---
 Keresés: energy sector jobs well below 2 degrees fossil fuel employment
+
+=== bezart_banyak ===
+Korszak: III. (Átalakulás)
+Kérdés: Szivárog-e metán a bezárt szénbányákból?
+Röviden: A szénben sok metán van. Ha egy bányát bezárnak, a föld alatti járatokból évtizedekig szivároghat fel a gáz.
+Ha kikutatod:
+Mire jó?: Ha a bezárt bányák metánját felfogják vagy elégetik, csökken a melegedés, és a gáz akár energiaként is hasznosítható.
+Mi a gond vele?: Ahogy egyre több szénbányát zárnak be, egyre több a szivárgó régi bánya. Ezek metánja akkor is a légkörbe kerül, ha már nem bányásznak.
+Mennyire bizonyított?: Egy világméretű vizsgálat szerint a bezárt bányák metánkibocsátása gyorsabban nő, mint a működőké: 2100-ra a működő mélybányáké négyszeresére, a bezártaké nyolcszorosára nőhet. A bezárt bányák metánja erős csökkentés mellett is az egész évszázadban szivárog.
+Kérdés angolul: Do closed coal mines leak methane?
+Röviden angolul: Coal holds a lot of methane. When a mine closes, gas can seep up from its tunnels for decades.
+Ha kikutatod angolul:
+Mire jó? angolul: If the methane from closed mines is captured or burned, warming slows, and the gas can even be used for energy.
+Mi a gond vele? angolul: As more coal mines close, there are more old mines leaking. Their methane still reaches the air even after mining stops.
+Mennyire bizonyított? angolul: A global study finds that methane from closed mines is growing faster than from working ones: by 2100, emissions from working underground mines could rise fourfold and from closed mines eightfold. Methane from closed mines keeps leaking all century, even with strong cuts.
+Forrás: Global methane emissions from coal mining to continue growing even with declining coal production (2020) – https://doi.org/10.1016/j.jclepro.2020.120489
+Lektorálva: igen
+--- technikai ---
+Keresés: abandoned coal mine methane emissions projections
+
+=== viztarozo_metan ===
+Korszak: II. (Alkalmazkodás)
+Kérdés: Melegítenek-e a gátak mögötti víztározók?
+Röviden: Ha egy völgyet gáttal elárasztanak, a víz alá kerülő növények és a tóba mosódó iszap a mélyben levegő nélkül elbomlik. Ebből metán lesz.
+Ha kikutatod:
+Mire jó?: Ha tudjuk, melyik tározó ereszt ki sok metánt, jobban eldönthető, hol érdemes új gátat építeni, és hol nem.
+Mi a gond vele?: A vízerőművet tiszta energiának tartjuk, pedig a tározó metánképződése ezt rontja. Tározónként nagyon eltér, mennyi szökik el.
+Mennyire bizonyított?: Egy világméretű összefoglaló szerint a víztározók felszíne évente kb. 0,8 milliárd tonna CO2-nek megfelelő üvegházgázt bocsát ki, és ennek a hatásnak a nagyobb része a metántól jön. A kibocsátás leginkább attól függ, mennyi tápanyag és élőlény van a tóban.
+Kérdés angolul: Do reservoirs behind dams warm the planet?
+Röviden angolul: When a valley is flooded by a dam, drowned plants and mud washed into the lake rot deep down without air. This makes methane.
+Ha kikutatod angolul:
+Mire jó? angolul: If we know which reservoirs release a lot of methane, it is easier to decide where a new dam makes sense and where it doesn't.
+Mi a gond vele? angolul: We think of hydropower as clean energy, but reservoir methane makes it less so. How much escapes varies a lot between reservoirs.
+Mennyire bizonyított? angolul: A global synthesis finds that reservoir surfaces release greenhouse gases equal to about 0.8 billion tonnes of CO2 a year, with most of the effect coming from methane. Emissions depend most on how many nutrients and living things there are in the lake.
+Forrás: Greenhouse Gas Emissions from Reservoir Water Surfaces: A New Global Synthesis (2016) – https://doi.org/10.1093/biosci/biw117
+Lektorálva: igen
+--- technikai ---
+Keresés: reservoir greenhouse gas emissions methane global synthesis

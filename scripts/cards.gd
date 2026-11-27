@@ -16,22 +16,22 @@ const THEMES := {
 const NO_TALK := ["kockazat"]
 const TAGS := {
 	"aram": ["napelem", "szelenergia", "tengeri_szel", "atomenergia", "vizi_tarolo", "litium_akku", "hotarolas", "geotermia", "led",
-		"napkollektor", "perovszkit", "natrium_akku", "szilard_akku", "fuzio", "urbeli_napelem", "biogaz", "eromu_hoseg", "agrovoltaik", "nap_alulbecsles", "halozat_osszekotes", "akku_olcsobodas", "legkondi", "napelem_ujra", "hosszu_tarolas"],
+		"napkollektor", "perovszkit", "natrium_akku", "szilard_akku", "fuzio", "urbeli_napelem", "biogaz", "eromu_hoseg", "agrovoltaik", "nap_alulbecsles", "halozat_osszekotes", "akku_olcsobodas", "legkondi", "napelem_ujra", "hosszu_tarolas", "viztarozo_metan"],
 	"munka": ["zold_acel", "cement", "ipari_hoszivattyu", "hidrogen", "gyari_co2", "akku_ujra", "muanyag", "fa_epulet", "zold_ammonia",
-		"uzemanyagcella", "villanyauto", "teherauto", "hajozas", "vasut", "hoszivattyu", "hoszigeteles", "kerekpar", "tavmunka", "szintetikus_kerozin", "hulladek_metan", "hutokozeg", "n2o_ipar", "repules", "kritikus_asvanyok", "korforgasos", "kevesebb_igeny"],
+		"uzemanyagcella", "villanyauto", "teherauto", "hajozas", "vasut", "hoszivattyu", "hoszigeteles", "kerekpar", "tavmunka", "szintetikus_kerozin", "hulladek_metan", "hutokozeg", "n2o_ipar", "repules", "kritikus_asvanyok", "korforgasos", "kevesebb_igeny", "szennyviz_metan"],
 	"elelem": ["termes", "kukorica", "ontozes", "etrend", "pazarlas", "mutragya", "agroerdeszet", "metan_rizs", "kerodzok_metan",
-		"voros_alga", "tragya", "beporzok", "aszaly", "talaj", "termeloi_kulonbseg", "co2_tapanyag", "hal_fogas"],
+		"voros_alga", "tragya", "beporzok", "aszaly", "talaj", "termeloi_kulonbseg", "co2_tapanyag", "hal_fogas", "tehen_nemesites"],
 	"part": ["tengerszint", "gronland", "antarktisz", "gatak", "vizes_part", "megemelt_haz", "mangrove", "korai_riasztas", "gleccser",
 		"felhoszakadas", "korall", "korall_ujra", "tengerifu", "ocean_savasodas", "tengeri_hohullam", "viharar", "atollok", "sos_viz"],
 	"egeszseg": ["hoseg_halal", "legszennyezes", "munkakepesseg", "varosi_fak", "hoseg_riasztas", "feher_teto", "zoldteto", "erdotuz", "dengue", "malaria_hegyvidek", "pollen", "alvas", "klimaszorongas", "vibrio", "terhesseg_hoseg", "lelki_egeszseg", "szalmonella"],
 	"ketseg": ["tcre", "klimaerzekenyseg", "napaktivitas", "kozmikus", "felhok", "ocean_ho", "aeroszol", "amoc", "permafroszt", "ozon", "kondenzcsik", "konszenzus", "regi_modellek", "jegfurat", "attribucio", "sztratoszfera", "jegkorszak_ota"],
 	"olaj": ["metan_gaz", "metan_szen", "co2_tarolas", "levegoszures", "metan_muhold", "mof",
-		"metan_bontas", "novenyi_energia", "faklyazas", "foldben_marad", "elhagyott_kutak", "metan_szivargas", "olajallam_jovo", "elakadt_vagyon", "fosszilis_tamogatas", "olajmezo_kibocsatas", "energia_munkahely"],
+		"metan_bontas", "novenyi_energia", "faklyazas", "foldben_marad", "elhagyott_kutak", "metan_szivargas", "olajallam_jovo", "elakadt_vagyon", "fosszilis_tamogatas", "olajmezo_kibocsatas", "energia_munkahely", "metan_vallalas", "bezart_banyak"],
 	"erdo": ["erdo", "erdo_magatol", "muhold_erdo", "amazonas", "lap", "bioszen", "kozet", "moszaterdo", "erdoirtas_okai", "erdo_nyelo", "erdo_hutes", "erdo_eso", "import_erdoirtas", "oslakos_fold", "erdo_degradacio", "erdo_zavarok", "gyep_nem_erdo"],
 	"kockazat": ["napernyo", "felho_fenyesites", "cirrus", "urbeli_arnyekolo", "vas_tenger", "ocean_lugositas"],
 }
 ## A metánról szóló kártyák: a metánvállaláshoz ezek egyike kell.
-const METHANE := ["metan_gaz", "metan_szen", "metan_rizs", "kerodzok_metan", "voros_alga", "tragya", "hulladek_metan", "metan_muhold", "biogaz", "metan_szivargas", "elhagyott_kutak"]
+const METHANE := ["metan_gaz", "metan_szen", "metan_rizs", "kerodzok_metan", "voros_alga", "tragya", "hulladek_metan", "metan_muhold", "biogaz", "metan_szivargas", "elhagyott_kutak", "metan_vallalas", "szennyviz_metan", "bezart_banyak", "tehen_nemesites", "viztarozo_metan"]
 
 ## A tárgyalásra is használható témakörök.
 static func talk_themes() -> Array:

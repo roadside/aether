@@ -495,3 +495,25 @@ Forrás: Where Tree Planting and Forest Expansion are Bad for Biodiversity and E
 Lektorálva: igen
 --- technikai ---
 Keresés: tree planting grassy biomes biodiversity
+
+=== tehen_nemesites ===
+Korszak: III. (Átalakulás)
+Kérdés: Lehet-e kevesebb metánt kibocsátó teheneket tenyészteni?
+Röviden: A tehén gyomrában élő apró élőlények metánt termelnek, amit a tehén kiböfög. Egyes tehenek kevesebbet termelnek, mint mások, és ez öröklődik.
+Ha kikutatod:
+Mire jó?: Ha a gazdák a kevesebb metánt kibocsátó teheneket szaporítják, a csorda metántermelése nemzedékről nemzedékre csökken, külön költség nélkül.
+Mi a gond vele?: A tenyésztés lassú, és a metánt nehéz közvetlenül megmérni minden tehénen. A gazdáknak ma nem éri meg, ezért kevesen csinálják.
+Mennyire bizonyított?: Egy holland vizsgálat 548 üsző adatai alapján kimutatta, hogy a metántermelés nagyrészt öröklődik. A szerzők szerint tenyésztéssel tíz év alatt elméletben 11–26%-kal csökkenthető a tehenek metánja. Egy négy európai országban végzett, 1000 tehenes vizsgálat azt találta, hogy a metánt termelő gyomorbaktériumok egy része is öröklődik.
+Kérdés angolul: Can we breed cows that give off less methane?
+Röviden angolul: Tiny living things in a cow's stomach make methane, which the cow burps out. Some cows make less than others, and this is inherited.
+Ha kikutatod angolul:
+Mire jó? angolul: If farmers breed the cows that give off less methane, the herd's methane falls generation by generation at no extra cost.
+Mi a gond vele? angolul: Breeding is slow, and methane is hard to measure directly on every cow. Today it doesn't pay farmers, so few do it.
+Mennyire bizonyított? angolul: A Dutch study of 548 heifers showed that methane production is largely inherited. The authors say breeding could in theory cut cows' methane by 11–26% in ten years. A 1,000-cow study in four European countries found that some of the methane-making stomach microbes are inherited too.
+Forrás: Genetic parameters for predicted methane production and potential for reducing enteric emissions through genomic selection (2011) – https://doi.org/10.3168/jds.2011-4439
+Forrás: A heritable subset of the core rumen microbiome dictates dairy cow productivity and emissions (2019) – https://doi.org/10.1126/sciadv.aav8391
+Forrás: Review: Genetic and genomic selection as a methane mitigation strategy in dairy cattle (2020) – https://doi.org/10.1017/S1751731120001561
+Lektorálva: igen
+--- technikai ---
+Keresés: breeding low methane dairy cattle genetic selection
+Megjegyzés: a holland vizsgálat a metánt a takarmányból becsülte, nem közvetlenül mérte (a kivonat ezt maga is bizonytalanságként említi). A 2020-as áttekintés szerint a metánnak ma nincs gazdasági értéke a gazdák számára.
