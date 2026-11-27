@@ -960,8 +960,8 @@ A „kitalált szereplő” felirat Zoltán kérésére kikerült (2026-11-27, 1
 - Csökken a kibocsátás: A városunkban napelemek kerültek a háztetőkre, és tisztább lett a levegő.
 - Elérték a nullát: Elértük a nullát! A gyümölcsös fái alatt ünnepeltünk, és most először nem aggódtunk.
 - Baj fenyeget: Megint hőségriasztás van. Délben senki sem dolgozik a gyümölcsösben.
-- Lecsapott a baj, nem készültek fel: A forróság mindent felperzselt. A gyümölcsös fele kiszáradt, sok idős ember lett beteg.
-- Lecsapott a baj, de felkészültek: Nagy volt a hőség, de hűsítő helyek nyíltak, és öntöztük a fákat. Megúsztuk.
+- Bekövetkezett a baj, de nem készültek rá: A forróság mindent felperzselt. A gyümölcsös fele kiszáradt, sok idős ember lett beteg.
+- Bekövetkezett a baj, de felkészültek: Nagy volt a hőség, de hűsítő helyek nyíltak, és öntöztük a fákat. Megúsztuk.
 - 2100, a melegedés 2 °C alatt maradt (záróképernyő): Idős néni lettem. Az unokáim ugyanazokról a fákról szedik a barackot, mint én.
 - 2100, a melegedés elérte a 2 °C-ot (záróképernyő): Idős néni lettem. A gyümölcsöst már csak a régi képeken látom, a hőség mindent elpusztított.
 
@@ -975,8 +975,8 @@ A „kitalált szereplő” felirat Zoltán kérésére kikerült (2026-11-27, 1
 - Csökken a kibocsátás: Szélkerekek épültek a völgyben, és egyre több villanyautó jár a városban.
 - Elérték a nullát: Elértük a nullát! Az egész város kint piknikezett az erdő szélén.
 - Baj fenyeget: Száraz a fenyves, nagy a tűzveszély. Az ajtó mellett mindig ott van a bepakolt túlélőcsomag.
-- Lecsapott a baj, nem készültek fel: Leégett az erdő a házunk mögött. El kellett menekülnünk, csak a kutyát hoztuk.
-- Lecsapott a baj, de felkészültek: Nagy tűz volt, de időben kivágtak egy sávot az erdőben, így a házunk és a fák nagy része megmaradt.
+- Bekövetkezett a baj, de nem készültek rá: Leégett az erdő a házunk mögött. El kellett menekülnünk, csak a kutyát hoztuk.
+- Bekövetkezett a baj, de felkészültek: Nagy tűz volt, de időben kivágtak egy sávot az erdőben, így a házunk és a fák nagy része megmaradt.
 - 2100, a melegedés 2 °C alatt maradt (záróképernyő): Öreg vagyok már. Az unokáimmal ugyanabban a zöld erdőben túrázom.
 - 2100, a melegedés elérte a 2 °C-ot (záróképernyő): Öreg vagyok már. A régi erdő helyén bozót nő, és egész nyár tűzveszély van.
 
@@ -990,8 +990,8 @@ A „kitalált szereplő” felirat Zoltán kérésére kikerült (2026-11-27, 1
 - Csökken a kibocsátás: Bezárt a régi szénerőmű. Ma este láttam a csillagokat az erkélyről!
 - Elérték a nullát: Elértük a nullát! A gyár udvarán nagy ünnepséget tartottak, az egész város ott volt.
 - Baj fenyeget: Hőség és szmog van. Bezártak az iskolák, mindenki otthon maradt a falak között.
-- Lecsapott a baj, nem készültek fel: Hetek óta tart a kánikula. Áramszünet van, a lift sem megy fel a huszadikra.
-- Lecsapott a baj, de felkészültek: Jött a kánikula, de a városban árnyas parkok és hűvös terek vártak. Kibírtuk.
+- Bekövetkezett a baj, de nem készültek rá: Hetek óta tart a kánikula. Áramszünet van, a lift sem megy fel a huszadikra.
+- Bekövetkezett a baj, de felkészültek: Jött a kánikula, de a városban árnyas parkok és hűvös terek vártak. Kibírtuk.
 - 2100, a melegedés 2 °C alatt maradt (záróképernyő): Idős néni lettem. A háztetőkön fák nőnek, és tiszta a levegő.
 - 2100, a melegedés elérte a 2 °C-ot (záróképernyő): Idős néni lettem. A nyár olyan forró, hogy napközben senki sem megy már ki az utcára.
 
@@ -1005,8 +1005,8 @@ A „kitalált szereplő” felirat Zoltán kérésére kikerült (2026-11-27, 1
 - Csökken a kibocsátás: A szivattyúnk már napelemmel megy, és olcsóbb, mint a dízel.
 - Elérték a nullát: Elértük a nullát! A falu ünnepet tartott, egész éjjel szólt a dob.
 - Baj fenyeget: Fülledt, párás hőség van. Ilyenkor az izzadság sem hűt, a földeken nem lehet dolgozni.
-- Lecsapott a baj, nem készültek fel: A hőségben nem tudtunk aratni, a termés egy része odalett. Nehéz év lesz.
-- Lecsapott a baj, de felkészültek: Jött a hőség, de időben szóltak, és a falu hűvös menhelyére mentünk. Kibírtuk.
+- Bekövetkezett a baj, de nem készültek rá: A hőségben nem tudtunk aratni, a termés egy része odalett. Nehéz év lesz.
+- Bekövetkezett a baj, de felkészültek: Jött a hőség, de időben szóltak, és a falu hűvös menhelyére mentünk. Kibírtuk.
 - 2100, a melegedés 2 °C alatt maradt (záróképernyő): Öreg vagyok már. Az unokáim ugyanott aratnak, ahol én gyerekként.
 - 2100, a melegedés elérte a 2 °C-ot (záróképernyő): Öreg vagyok már. A nyári hőség miatt sok család elköltözött a faluból.
 
@@ -1020,8 +1020,8 @@ A „kitalált szereplő” felirat Zoltán kérésére kikerült (2026-11-27, 1
 - Csökken a kibocsátás: A falu napelemes hűtőt kapott, így a hal nem romlik meg, amíg a piacra ér.
 - Elérték a nullát: Elértük a nullát! Egész éjjel táncoltunk a parton.
 - Baj fenyeget: Melegszik a tenger, a halak a hűvösebb vizek felé úsznak. A halászok aggódnak.
-- Lecsapott a baj, nem készültek fel: A hálók szinte üresen jönnek fel. Sokan a városba mennek munkát keresni.
-- Lecsapott a baj, de felkészültek: Kevesebb a hal, de a falu kagylót és tengeri moszatot is nevel. Megélünk.
+- Bekövetkezett a baj, de nem készültek rá: A hálók szinte üresen jönnek fel. Sokan a városba mennek munkát keresni.
+- Bekövetkezett a baj, de felkészültek: Kevesebb a hal, de a falu kagylót és tengeri moszatot is nevel. Megélünk.
 - 2100, a melegedés 2 °C alatt maradt (záróképernyő): Idős asszony lettem. A tenger még mindig ad halat számunkra, és az unokáim is halásznak.
 - 2100, a melegedés elérte a 2 °C-ot (záróképernyő): Idős asszony lettem. A halak elvándoroltak, és kevés család maradt a faluban.
 
@@ -1035,8 +1035,8 @@ A „kitalált szereplő” felirat Zoltán kérésére kikerült (2026-11-27, 1
 - Csökken a kibocsátás: A sivatagban óriási naperőmű épült. Sokan, akik a finomítóban dolgoztak, most ott keresik a kenyerüket.
 - Elérték a nullát: Elértük a nullát! A városban azt mondják, a napfény lett az új olajunk.
 - Baj fenyeget: Fülledt hőség van, este sem hűl le a levegő. Napközben senki sem dolgozhat a szabadban.
-- Lecsapott a baj, nem készültek fel: Napokig nem lehetett kimenni ebben a hőségben. A kórházakban sok beteg volt.
-- Lecsapott a baj, de felkészültek: Nagy volt a hőség, de árnyékos utcák és hűvös terek vártak. Mindenki biztonságban volt.
+- Bekövetkezett a baj, de nem készültek rá: Napokig nem lehetett kimenni ebben a hőségben. A kórházakban sok beteg volt.
+- Bekövetkezett a baj, de felkészültek: Nagy volt a hőség, de árnyékos utcák és hűvös terek vártak. Mindenki biztonságban volt.
 - 2100, a melegedés 2 °C alatt maradt (záróképernyő): Öreg vagyok már. A városunk napenergiából él, és a nyár még elviselhető.
 - 2100, a melegedés elérte a 2 °C-ot (záróképernyő): Öreg vagyok már. Nyaranta sokan elmennek a városból, mert nem bírják a hőséget.
 
@@ -1052,7 +1052,7 @@ A te döntéseid szerint átírva (nem kell újra lektorálni):
 - Jelvények: a „Nehéz Föld” neve „Érzékeny Föld” lett; a „Mester” szövege: „Tartsd 2100-ig +2 °C alatt a globális felmelegedést nehéz fokozaton.”
 - A főképernyőn a cím alatt: „Zene: Malte Marten” (a te szavaiddal; csak akkor látszik, ha az ő zenéje szól).
 
-Új szövegek – még nem lektorált:
+Új szövegek – lektorálva (Zoltán, 2026-11-27 19:00):
 - Ehhez metánról szóló kártya kell (Olaj és gáz, Élelem, Áram, Ipar és közlekedés).
 - Ehhez ilyen kártya kell: cement, acél, repülés, hajózás, teherautó, hidrogén, állattartás, műtrágya vagy körforgás.
 - Mondat elején a két többes számú csoportnév így áll: „Az olajországok csoportja” és „Az Egyesült Államok” (például: „Az olajországok csoportja elbizonytalanodott.”, „Az Egyesült Államok vállalta: nulla kibocsátás 2070-re.”).
