@@ -930,11 +930,7 @@ Három ideiglenes gomb a földgömb fölött, az új nagy animációk kipróbál
 
 A kör elején egy-két hely „képeslapot küld”: a hely valódi fotója és egy mondat arról, mi változott ott a játékban. A %s helyére a csoport vagy a billenőpont neve kerül (pl. „Európa”, „Grönland jégtakarója”), a számok helyére a játék adata.
 
-Csoportoknál:
-- %s: új vállalás. Nulla kibocsátás %d-ig. (pl. „Afrika: új vállalás. Nulla kibocsátás 2060-ig.”)
-- %s: megvan a nulla kibocsátás.
-- %s: a kibocsátás már csak a 2025-ös %d%-a. (pl. „Kína: a kibocsátás már csak a 2025-ös 64%-a.”)
-- %s: még nincs vállalás.
+Csoportoknál a képeslapot a csoport kitalált szereplője írja, lásd a 30. szakaszt (a korábbi négy csoportmondat kikerült).
 
 Billenőpontoknál:
 - %s: egyelőre a küszöb alatt vagyunk.
@@ -944,3 +940,101 @@ Billenőpontoknál:
 ## 29. Változás (2026-11-27, 18:05) – nincs új szöveg
 
 Kikerült (Zoltán kérése): a földgömb fölötti három próbagomb („Vulkán”, „Járvány”, „Áttörés”; az animációk a játékban maradnak) és a záróképernyő „Kép mentése” gombja. Kikerült a rang is: a „Rangod: %s” és az „Új rang: %s” sor, valamint a rangnevek (Gyakornok, Kutató, Vezető kutató, Professzor, A Föld őre).
+
+## 30. Új szövegek (2026-11-27, 18:25) – hat kitalált szereplő története – még nem lektorált
+
+Csoportonként egy kitalált gyerek, aki a játék során felnő; ő írja a csoport képeslapjait. A körülményeik valódi kutatásokra épülnek (a források az `adatok/tortenetek.json` fájlban), a mondataik a játék állását mesélik el. A baj-mondatok csak akkor jelennek meg, ha a baj fajtája illik a történethez (Lili, Mei, Arjun, Yusuf: hőhullám; Jamie: erdőtűz; Amaránál ezek a mondatok most nem jelennek meg).
+
+Két új felirat:
+- kitalált szereplő (az első képeslapon és a záróképernyőn az aláírás mellett)
+- Képeslap 2100-ból (a záróképernyőn)
+
+### Lili – Európa
+
+12 éves lány egy alföldi kisvárosból; nyaranta a nagymamája gyümölcsösében segít.
+
+- Bemutatkozás (az első képeslapja): Szia! Lili vagyok, 12 éves. Nyaranta a nagymamám gyümölcsösében segítek az Alföldön.
+- Még nincs vállalás: Itt még nem döntöttek semmiről. A gyümölcsösben minden nyár forróbb az előzőnél.
+- Új vállalás: Ma bejelentették a vállalást! A családom végre bízik abban, hogy a fák megmaradnak.
+- Csökken a kibocsátás: A városunkban napelemek kerültek a háztetőkre, és tisztább lett a levegő.
+- Elérték a nullát: Elértük a nullát! A gyümölcsös fái alatt ünnepeltünk, és most először nem aggódtunk.
+- Baj fenyeget: Megint hőségriasztás van. Délben senki sem dolgozik a gyümölcsösben.
+- Lecsapott a baj, nem készültek fel: A forróság mindent felperzselt. A gyümölcsös fele kiszáradt, sok idős ember lett beteg.
+- Lecsapott a baj, de felkészültek: Nagy volt a hőség, de hűsítő termek nyíltak, és öntöztük a fákat. Megúsztuk.
+- 2100, a melegedés 2 °C alatt maradt (záróképernyő): Idős néni lettem. Az unokáim ugyanazokról a fákról szedik a barackot, mint én.
+- 2100, a melegedés elérte a 2 °C-ot (záróképernyő): Idős néni lettem. A gyümölcsös nem bírta a hőséget, már csak régi képeken látom.
+
+### Jamie – Egyesült Államok
+
+13 éves gyerek egy erdei kisvárosból a nyugati hegyekben; az apja önkéntes tűzoltó.
+
+- Bemutatkozás (az első képeslapja): Szia! Jamie vagyok, 13 éves. Egy erdei kisvárosban élek a nyugati hegyekben.
+- Még nincs vállalás: Itt még nincs vállalás. Nyaranta egyre többször látunk füstöt a hegyek fölött.
+- Új vállalás: Bejelentették a vállalást! A tűzoltóságon ezt tartják az év legjobb hírének.
+- Csökken a kibocsátás: Szélkerekek épültek a völgyben, és egyre több villanyautó jár a városban.
+- Elérték a nullát: Elértük a nullát! Az egész város kint piknikezett az erdő szélén.
+- Baj fenyeget: Száraz a fenyves, nagy a tűzveszély. A menekülőcsomag bepakolva áll az ajtónál.
+- Lecsapott a baj, nem készültek fel: Leégett az erdő a házunk mögött. El kellett menekülnünk, csak a kutyát hoztuk.
+- Lecsapott a baj, de felkészültek: Volt tűz, de időben vágtak tűzpásztákat. A házunk és az erdő nagy része megmaradt.
+- 2100, a melegedés 2 °C alatt maradt (záróképernyő): Öreg vagyok már. Az unokáimmal ugyanabban a zöld erdőben túrázom.
+- 2100, a melegedés elérte a 2 °C-ot (záróképernyő): Öreg vagyok már. A régi erdő helyén bozót nő, és az egész nyár tűzszezon lett.
+
+### Mei – Kína
+
+12 éves lány egy nagyvárosból; az anyukája napelemgyárban dolgozik.
+
+- Bemutatkozás (az első képeslapja): Szia! Mei vagyok, 12 éves. Nagyvárosban élek, anyukám napelemgyárban dolgozik.
+- Még nincs vállalás: Még nincs vállalás. Reggelente sokszor szürke a levegő, sokan maszkban járnak.
+- Új vállalás: Bejelentették a vállalást! A napelemgyárban, ahol a családom dolgozik, új gyártósor indul.
+- Csökken a kibocsátás: Bezárt a régi szénerőmű. Ma este láttam a csillagokat az erkélyről!
+- Elérték a nullát: Elértük a nullát! A gyár udvarán nagy ünnepség volt, az egész város ott volt.
+- Baj fenyeget: Hőség és szmog van. Bezártak az iskolák, mindenki bent marad.
+- Lecsapott a baj, nem készültek fel: Hetek óta tart a kánikula. Áramszünet van, a lift sem megy fel a huszadikra.
+- Lecsapott a baj, de felkészültek: Jött a kánikula, de a városban árnyas parkok és hűvös terek vártak. Kibírtuk.
+- 2100, a melegedés 2 °C alatt maradt (záróképernyő): Idős néni lettem. A háztetőkön fák nőnek, és tiszta a levegő.
+- 2100, a melegedés elérte a 2 °C-ot (záróképernyő): Idős néni lettem. A nyár olyan forró, hogy napközben senki sem megy ki.
+
+### Arjun – India
+
+13 éves fiú; a családja búzát és rizst termeszt a Gangesz-síkságon.
+
+- Bemutatkozás (az első képeslapja): Szia! Arjun vagyok, 13 éves. A családunk búzát és rizst termeszt a Gangesz-síkságon.
+- Még nincs vállalás: Még nincs vállalás. A földeken hajnalban kezdünk, mert délre túl meleg lesz.
+- Új vállalás: Bejelentették a vállalást! A falu napelemes szivattyút kap az öntözéshez.
+- Csökken a kibocsátás: A szivattyúnk már napelemmel megy, és olcsóbb, mint a dízel.
+- Elérték a nullát: Elértük a nullát! A falu ünnepet tartott, egész éjjel szólt a dob.
+- Baj fenyeget: Fülledt, párás hőség jön. Ilyenkor az izzadás sem hűt, a földeken nem lehet dolgozni.
+- Lecsapott a baj, nem készültek fel: A hőségben nem tudtunk aratni, a termés egy része elveszett. Nehéz év lesz.
+- Lecsapott a baj, de felkészültek: Jött a hőség, de időben szóltak, és a falunak van hűvös menedéke. Kibírtuk.
+- 2100, a melegedés 2 °C alatt maradt (záróképernyő): Öreg vagyok már. Az unokáim ugyanott aratnak, ahol én gyerekként.
+- 2100, a melegedés elérte a 2 °C-ot (záróképernyő): Öreg vagyok már. A nyári hőség miatt sok család elköltözött a faluból.
+
+### Amara – Afrika
+
+11 éves lány egy ghánai tengerparti halászfaluból; a nagybátyja halász.
+
+- Bemutatkozás (az első képeslapja): Szia! Amara vagyok, 11 éves. Egy tengerparti halászfaluban élek Ghánában.
+- Még nincs vállalás: Még nincs vállalás. A falu csónakjai egyre kevesebb hallal jönnek haza.
+- Új vállalás: Bejelentették a vállalást! A halászok tapsoltak a parton.
+- Csökken a kibocsátás: A falu napelemes hűtőt kapott, így a hal nem romlik meg a piacig.
+- Elérték a nullát: Elértük a nullát! Egész éjjel táncoltunk a parton.
+- Baj fenyeget: Melegszik a tenger, a halak hűvösebb vizek felé húzódnak. A halászok aggódnak.
+- Lecsapott a baj, nem készültek fel: A hálók szinte üresen jönnek vissza. Sokan a városba mennek munkát keresni.
+- Lecsapott a baj, de felkészültek: Kevesebb a hal, de a falu kagylót és tengeri moszatot is nevel. Megélünk.
+- 2100, a melegedés 2 °C alatt maradt (záróképernyő): Idős asszony lettem. A tenger még mindig ad halat, az unokáim is halásznak.
+- 2100, a melegedés elérte a 2 °C-ot (záróképernyő): Idős asszony lettem. A halak elvándoroltak, és kevés család maradt a faluban.
+
+### Yusuf – Olajországok
+
+14 éves fiú egy öbölparti városból; az apja olajfinomítóban dolgozik.
+
+- Bemutatkozás (az első képeslapja): Szia! Yusuf vagyok, 14 éves. Öbölparti városban élek, apukám olajfinomítóban dolgozik.
+- Még nincs vállalás: Még nincs vállalás. Az olaj eltart minket, de a nyár egyre nehezebben bírható.
+- Új vállalás: Bejelentették a vállalást! A finomítóban sokan aggódnak, de naperőmű-tanfolyam is indul.
+- Csökken a kibocsátás: A sivatagban óriási naperőmű épült. Sokan, akik a finomítóban dolgoztak, most ott keresik a kenyerüket.
+- Elérték a nullát: Elértük a nullát! A városban azt mondják, a napfény lett az új olajunk.
+- Baj fenyeget: Fülledt hőség van, este sem hűl le. Napközben senki sem dolgozhat a szabadban.
+- Lecsapott a baj, nem készültek fel: Napokig nem lehetett kimenni a hőségben. A kórházakban sok beteg volt.
+- Lecsapott a baj, de felkészültek: Nagy volt a hőség, de árnyékolt utcák és hűvös terek vártak. Mindenki biztonságban volt.
+- 2100, a melegedés 2 °C alatt maradt (záróképernyő): Öreg vagyok már. A városunk napenergiából él, és a nyár még elviselhető.
+- 2100, a melegedés elérte a 2 °C-ot (záróképernyő): Öreg vagyok már. Nyaranta sokan elmennek a városból, mert nem bírják a hőséget.

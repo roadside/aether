@@ -1044,7 +1044,7 @@ func _build_bottom() -> void:
 
 func _build_menu() -> void:
 	var dimmer := ColorRect.new()      # amíg a menü nyitva van, a kép többi része elsötétül (Zoltán kérése)
-	dimmer.color = Color(0.0, 0.0, 0.03, 0.62)
+	dimmer.color = Color(0.0, 0.0, 0.03, 0.80)
 	dimmer.z_index = 7
 	_menu_catch = dimmer
 	_menu_catch.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -1480,6 +1480,32 @@ var _pc_queue: Array = []         # [{"lat", "lon", "kep", "szoveg"}]
 var _pc_goal: Dictionary = {}     # csoport -> a legutóbb látott célév (új vállalás felismeréséhez)
 var _pc_band: Dictionary = {}     # billenőpont -> már szóltunk, hogy veszélysávban van
 var _pc_game := -1
+var _pc_met: Dictionary = {}      # csoport -> a szereplő már bemutatkozott ebben a játékban
+var _stories: Dictionary = {}     # adatok/tortenetek.json: kitalált szereplők csoportonként
+
+
+func _story(gid: String) -> Dictionary:
+	if _stories.is_empty():
+		var d: Variant = World.read_json("res://adatok/tortenetek.json")
+		_stories = d if typeof(d) == TYPE_DICTIONARY else {"_": 1}
+	var st: Variant = _stories.get(gid, {})
+	return st if typeof(st) == TYPE_DICTIONARY else {}
+
+
+## A csoport szereplőjének képeslapja az adott helyzethez. Először mindig bemutatkozik.
+func _pc_story(g: Dictionary, key: String) -> Dictionary:
+	var st := _story(str(g["id"]))
+	if st.is_empty():
+		return {}
+	var first := not _pc_met.has(g["id"])
+	_pc_met[g["id"]] = true
+	var line: Dictionary = Dictionary(st["sorok"]).get("bemutat" if first else key, {})
+	if line.is_empty():
+		return {}
+	var out := _pc(g, str(line["en"] if L.is_en() else line["hu"]))
+	out["alairas"] = "%s, %s" % [st["nev"], L.field(g, "nev")] + (" · " + L.t("kitalált szereplő") if first else "")
+	return out
+
 var _pc_run := 0
 const PC_MAX := 2
 
@@ -1489,9 +1515,11 @@ func _plan_postcards() -> void:
 		_pc_game = world.game_id
 		_pc_goal = {}
 		_pc_band = {}
+		_pc_met = {}
 		if world.history.size() > World.ROUND_YEARS + 1:      # betöltött játék: a régi vállalások nem újak
 			for g0 in world.groups:
 				_pc_goal[g0["id"]] = int(g0["cel"])
+				_pc_met[g0["id"]] = true
 			for t0 in world.tips:
 				if float(world.st["T"]) >= float(t0["also"]):
 					_pc_band[t0["id"]] = true
@@ -1504,18 +1532,22 @@ func _plan_postcards() -> void:
 				if tp["id"] == n["id"]:
 					first.append(_pc(tp, L.t("%s: átléptük a küszöböt.") % L.field(tp, "nev")))
 		elif n["fajta"] == "nulla":
-			var gz := world.group(n["csoport"])
-			first.append(_pc(gz, L.t("%s: megvan a nulla kibocsátás.") % L.field(gz, "nev")))
+			first.append(_pc_story(world.group(n["csoport"]), "nulla"))
+		elif n["fajta"] == "katasztrofa":
+			var gk := world.group(n["csoport"])
+			var stk := _story(str(gk["id"]))
+			if str(stk.get("tema", "")) == str(n["mi"]):          # csak ha a baj illik a szereplő történetéhez
+				first.append(_pc_story(gk, "felkeszult" if gk.get("felkeszult", false) else "baj"))
 	for g in world.groups:
 		var goal := int(g["cel"])
 		if goal > 0 and int(_pc_goal.get(g["id"], 0)) == 0:
-			first.append(_pc(g, L.t("%s: új vállalás. Nulla kibocsátás %d-ig.") % [L.field(g, "nev"), goal]))
+			first.append(_pc_story(g, "vallalt"))
+		elif not world.threat.is_empty() and str(world.threat["csoport"]) == str(g["id"]) and str(_story(str(g["id"])).get("tema", "")) == str(world.threat["mi"]):
+			rest.append(["veszely", g])
 		elif goal == 0:
-			rest.append(_pc(g, L.t("%s: még nincs vállalás.") % L.field(g, "nev")))
-		elif int(g.get("nulla", 0)) == 0:
-			var pct := int(round(World.emission(g, world.year() - 1) * 100.0))
-			if pct < 100:
-				rest.append(_pc(g, L.t("%s: a kibocsátás már csak a 2025-ös %d%%-a.") % [L.field(g, "nev"), pct]))
+			rest.append(["nincs", g])
+		elif int(g.get("nulla", 0)) == 0 and World.emission(g, world.year() - 1) < 0.995:
+			rest.append(["csokken", g])
 		_pc_goal[g["id"]] = goal
 	for tp in world.tips:
 		if int(tp["ev"]) > 0:
@@ -1526,8 +1558,15 @@ func _plan_postcards() -> void:
 				first.append(_pc(tp, L.t("%s: a melegedés elérte a veszélysávot.") % L.field(tp, "nev")))
 		else:
 			rest.append(_pc(tp, L.t("%s: egyelőre a küszöb alatt vagyunk.") % L.field(tp, "nev")))
+	first = first.filter(func(x: Dictionary) -> bool: return not x.is_empty())
 	rest.shuffle()
-	_pc_queue = (first + rest).slice(0, PC_MAX)
+	for r in rest:                                  # a szereplők sorát csak akkor húzzuk elő, ha tényleg sorra kerül
+		if first.size() >= PC_MAX:
+			break
+		var card: Dictionary = _pc_story(r[1], str(r[0])) if typeof(r) == TYPE_ARRAY else r
+		if not card.is_empty():
+			first.append(card)
+	_pc_queue = first.slice(0, PC_MAX)
 	if world.over():
 		_pc_queue = []
 
@@ -1598,9 +1637,16 @@ func _postcard(pc: Dictionary) -> Control:
 	lab.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	lab.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	v.add_child(lab)
+	if str(pc.get("alairas", "")) != "":
+		var sig := UI.label("– " + str(pc["alairas"]), 14, Color("#6a5d4c"))
+		sig.autowrap_mode = TextServer.AUTOWRAP_OFF
+		sig.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		sig.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		v.add_child(sig)
 	holder.add_child(panel)
 	var w := 340.0
-	var h := 270.0 if tex != null else 70.0
+	var text_h: float = lab.get_theme_font("font").get_multiline_string_size(str(pc["szoveg"]), HORIZONTAL_ALIGNMENT_LEFT, 320.0, 17).y
+	var h: float = 22.0 + text_h + (208.0 if tex != null else 0.0) + (28.0 if str(pc.get("alairas", "")) != "" else 0.0)
 	var left := at.x > 800.0                       # a lap a hely túloldalára kerül, hogy ne takarja
 	var pos := Vector2(clampf(at.x - w - 46.0 if left else at.x + 46.0, 344.0, 1256.0 - w), clampf(at.y - h * 0.5, 112.0, 700.0 - h))
 	var line := Line2D.new()                        # vékony vonal köti a helyhez
@@ -3094,6 +3140,16 @@ func _open_end() -> void:
 	var verdict := "A Földed +1,7 °C alatt maradt. 2026-ból indulva ennél sokkal jobbat már aligha lehet elérni." if tt < 1.7 \
 		else ("A Földed +2 °C alatt maradt. A Párizsi Megállapodás ennél többet kér: jóval +2 °C alatt megállni, lehetőleg +1,5 °C-nál." if tt < 2.0 \
 		else "A Földed +2 °C fölé melegedett. A következő játékban lépj hamarabb!")
+	var kid_g: Dictionary = world.groups[world.seed_v % world.groups.size()]
+	var kid := _story(str(kid_g["id"]))
+	if not kid.is_empty():                         # képeslap 2100-ból: egy kitalált szereplő zárómondata
+		var kl: Dictionary = Dictionary(kid["sorok"])["veg_jo" if float(r["T"]) < 2.0 else "veg_rossz"]
+		_end_gap(body)
+		var kc := UI.card(Color("#f4efe2"))
+		kc.add_child(UI.label(L.t("Képeslap 2100-ból"), 15, UI.SOFT))
+		kc.add_child(UI.label(_quote(str(kl["en"] if L.is_en() else kl["hu"])), 18, UI.TEXT, true))
+		kc.add_child(UI.label("– %s, %s · %s" % [kid["nev"], L.field(kid_g, "nev"), L.t("kitalált szereplő")], 14, UI.SOFT))
+		body.add_child(UI.card_root(kc))
 	_end_gap(body)
 	body.add_child(UI.label(L.t(verdict), 19, UI.GREEN if tt < 2.0 else UI.EMBER, true))
 	var fin := _finish_game(r)
@@ -3656,7 +3712,8 @@ func _selftest() -> void:
 	globe.spin = view0[0]
 	globe.tilt = view0[1]
 	var pcard := _postcard(_pc(world.tips[0], L.t("%s: a melegedés elérte a veszélysávot.") % L.field(world.tips[0], "nev")))
-	var pcard2 := _postcard(_pc(world.groups[4], L.t("%s: új vállalás. Nulla kibocsátás %d-ig.") % [L.field(world.groups[4], "nev"), 2060]))
+	var pcard2 := _postcard(_pc_story(world.groups[4], "vallalt"))
+	_pc_met = {}
 	await get_tree().create_timer(0.8).timeout
 	await _shot("7h_kepeslap.png")
 	pcard.queue_free()
