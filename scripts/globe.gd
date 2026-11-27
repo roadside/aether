@@ -20,6 +20,10 @@ const ZOOM_MAX := 3.0
 var zoom := 1.0                      # görgővel nagyítható ("nagyító" kör a gömb helyén)
 @export var spin_speed := 0.0        # magától nem forog (egérrel forgatható); díszforgáshoz pl. 0.006
 var fixed_sun := false               # a Nap mindig a néző felől süt (játéktábla-nézet)
+## A Nap lassan körbejár (szemléltetés, nem a valódi idő): a nappal és az éjszaka határa végigvonul a gömbön,
+## az éjszakai oldalon kigyúlnak a városfények. A kép nagy része közben mindig nappal marad.
+var sun_orbit := false
+const SUN_PERIOD := 150.0            # másodperc egy körre
 @export var real_sun := true         # a Nap valódi helyzete a pontos idő alapján
 @export var cloud_speed := 0.0035
 
@@ -215,7 +219,11 @@ func _process(delta: float) -> void:
 	_mat.set_shader_parameter("spin", _spin_now())
 	_mat.set_shader_parameter("tilt", tilt)
 	_mat.set_shader_parameter("zoom", zoom)
-	if fixed_sun:
+	if sun_orbit:
+		var sa := time * TAU / SUN_PERIOD - 0.5
+		_mat.set_shader_parameter("sun_dir", Vector3(sin(sa) * 0.85, -0.22, 0.55 + 0.45 * cos(sa)).normalized())
+		_mat.set_shader_parameter("night_keep", 0.28)
+	elif fixed_sun:
 		_mat.set_shader_parameter("sun_dir", Vector3(-0.42, -0.3, 0.86).normalized())
 	elif real_sun:
 		_sun_timer -= delta
@@ -232,6 +240,7 @@ func _process(delta: float) -> void:
 	_mat.set_shader_parameter("clean", clean)
 	_mat.set_shader_parameter("regrow", regrow)
 	_mat.set_shader_parameter("anomaly_mix", anomaly_mix)
+	_storm_update()
 	_fx_update()
 	queue_redraw()
 
@@ -387,6 +396,7 @@ func _draw() -> void:
 			var q := c + (Vector2(p.x, p.y) - c) * lift
 			var on := (i + int(time * 6.0)) % 6 < 3
 			draw_rect(Rect2(q.snapped(Vector2(px, px)), Vector2(px, px)), Color(0.39, 0.95, 0.89, 0.95 if on else 0.25))
+	_draw_fires(px)
 	_draw_planes(px)
 	# valós események: kis, pulzáló pixel-jelölők
 	var pulse := 0.6 + 0.4 * sin(time * 3.0)
@@ -930,3 +940,61 @@ func _draw_planes(px: float) -> void:
 					draw_rect(Rect2(q + Vector2(px, 0), Vector2(px, px)), Color(1, 1, 1, 0.8 * edge))
 				else:
 					draw_rect(Rect2(q, Vector2(px, px)), Color(trail, 0.6 * edge * (1.0 - k / 9.0)))
+
+
+## Forgó trópusi vihar (szemléltetés): egyszerre egy, a valódi viharmedencék egyikében születik, nyugat felé és
+## a sark felé sodródik, majd elül. Melegebb Földön erősebbnek rajzoljuk (IPCC AR6: a legerősebb trópusi
+## ciklonok aránya a melegedéssel nő). Nem előrejelzés és nem valós vihar.
+const STORM_BASINS := [[14.0, -42.0], [13.0, 148.0], [-14.0, 78.0], [14.0, -108.0], [13.0, 89.0], [-15.0, 165.0]]
+const STORM_LIFE := 46.0
+const STORM_GAP := 9.0
+
+
+func _storm_update() -> void:
+	if not alive:
+		_mat.set_shader_parameter("storm", Vector4.ZERO)
+		return
+	var cyc := STORM_LIFE + STORM_GAP
+	var idx := int(time / cyc) % STORM_BASINS.size()
+	var u := fposmod(time, cyc) / STORM_LIFE
+	if u >= 1.0:
+		_mat.set_shader_parameter("storm", Vector4.ZERO)
+		return
+	var b: Array = STORM_BASINS[idx]
+	var sgn := signf(float(b[0]))
+	var lat := float(b[0]) + sgn * 13.0 * u * u
+	var lon := float(b[1]) - 30.0 * u
+	var power := sin(u * PI) * clampf(0.7 + 0.3 * heat, 0.7, 1.15)
+	# a shader szélessége fordított előjelű (lefelé nő), a hosszúság radiánban
+	_mat.set_shader_parameter("storm", Vector4(deg_to_rad(lon), deg_to_rad(lat), 0.17 + 0.03 * clampf(heat, 0.0, 1.5), clampf(power, 0.0, 1.0)))
+
+
+## Erdőtüzek (szemléltetés): tűzveszélyes vidékeken apró, lobogó lángok füsttel. Melegebb Földön több ég egyszerre
+## (IPCC AR6: a tűzveszélyes időjárás a melegedéssel gyakoribb). Nem valós tüzek.
+const FIRE_SPOTS := [[-10.0, -55.0], [62.0, 112.0], [-34.0, 148.0], [39.0, -121.0], [38.0, 22.0], [56.0, -112.0], [-9.0, 23.0], [0.0, 113.0], [-22.0, 132.0], [41.0, -7.0]]
+
+
+func _draw_fires(px: float) -> void:
+	if not alive or effect_running():
+		return
+	var active := 0.18 + 0.32 * clampf(heat, 0.0, 1.5)       # ekkora eséllyel ég egy folt egy időszakban
+	for i in FIRE_SPOTS.size():
+		var slot := floorf(time / 34.0 + _h(i + 300.0))
+		if _h(slot * 7.0 + i * 13.0) > active:
+			continue
+		var u := fposmod(time / 34.0 + _h(i + 300.0), 1.0)
+		var k := sin(u * PI)                                  # felerősödik, majd kialszik
+		var p := project(float(FIRE_SPOTS[i][0]), float(FIRE_SPOTS[i][1]))
+		if p.z < 0.5:
+			continue
+		var base := Vector2(p.x, p.y)
+		draw_circle(base, 9.0 * px * k, Color(1.0, 0.45, 0.1, 0.16 * k))
+		for j in 7:                                           # füst: jobbra fölfelé sodródik
+			var su := fposmod(time * 0.22 + j / 7.0, 1.0)
+			var sp := base + Vector2(su * 15.0 + sin(time + j) * 1.2, -su * 11.0 - 2.0) * px
+			draw_rect(Rect2(sp.snapped(Vector2(px, px)), Vector2(px, px) * (1.0 + su * 1.6)), Color(0.42, 0.4, 0.4, 0.55 * (1.0 - su) * k))
+		for j in 5:                                           # lángok
+			var hgt := 1 + int(2.6 * k * absf(sin(time * 8.0 + j * 1.9 + i)))
+			for m in hgt:
+				var fc := Color(1.0, 0.9, 0.35).lerp(Color(0.95, 0.28, 0.08), float(m) / 3.0)
+				draw_rect(Rect2((base + Vector2(j - 2, -m) * px).snapped(Vector2(px, px)), Vector2(px, px)), Color(fc, minf(1.0, k * 1.6)))

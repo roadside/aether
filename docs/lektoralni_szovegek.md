@@ -940,3 +940,7 @@ Billenőpontoknál:
 - %s: egyelőre a küszöb alatt vagyunk.
 - %s: a melegedés elérte a veszélysávot.
 - %s: átléptük a küszöböt.
+
+## 29. Változás (2026-11-27, 18:05) – nincs új szöveg
+
+Kikerült (Zoltán kérése): a földgömb fölötti három próbagomb („Vulkán”, „Járvány”, „Áttörés”; az animációk a játékban maradnak) és a záróképernyő „Kép mentése” gombja.

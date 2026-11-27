@@ -487,6 +487,7 @@ func _ready() -> void:
 	_sat = Satellite.new()
 	_sat.set_anchors_preset(Control.PRESET_FULL_RECT)
 	globe.fixed_sun = true
+	globe.sun_orbit = not _test          # a próbaképeken állandó a fény, hogy összevethetők legyenek
 	globe.station_clicked.connect(func(s: Dictionary) -> void:
 		if s.has("id") and _overlay == null:
 			_open_group(world.group(s["id"])))
@@ -495,7 +496,6 @@ func _ready() -> void:
 	add_child(_sat)
 
 	_build_top()
-	_build_fx_test()
 	_build_groups()
 	_build_bottom()
 	_build_menu()
@@ -681,31 +681,6 @@ func _stat(parent: Control, key: String, caption: String, color: Color, sub: boo
 ## A csoportok helye a nagy animációkhoz.
 func _fx_points() -> Array:
 	return world.groups.map(func(g: Dictionary) -> Dictionary: return {"lat": g["lat"], "lon": g["lon"]})
-
-
-## Három próbagomb a földgömb fölött: a váratlan események animációinak kipróbálásához (a játékot nem változtatják).
-func _build_fx_test() -> void:
-	var h := UI.hbox(10)
-	h.position = Vector2(620, 66)
-	h.custom_minimum_size = Vector2(360, 30)
-	h.alignment = BoxContainer.ALIGNMENT_CENTER
-	h.z_index = 3
-	add_child(h)
-	for kind in ["vulkan", "jarvany", "attores"]:
-		var b := Button.new()
-		b.text = L.t({"vulkan": "Vulkán", "jarvany": "Járvány", "attores": "Áttörés"}[kind])
-		b.add_theme_font_size_override("font_size", 15)
-		b.custom_minimum_size = Vector2(104, 30)
-		b.focus_mode = Control.FOCUS_NONE
-		b.pressed.connect(func() -> void:
-			if _busy or _overlay != null:
-				return
-			_sound({"vulkan": "katasztrofa", "jarvany": "veszely", "attores": "jo_hir"}[kind])
-			if kind == "vulkan":
-				globe.play_effect("vulkan", 15.0, 120.0)
-			else:
-				globe.play_effect(kind, 0.0, 0.0, _fx_points()))
-		h.add_child(b)
 
 
 func _build_top() -> void:
@@ -3162,15 +3137,7 @@ func _open_end() -> void:
 	end_row.add_child(_go(L.t("Új játék, új Föld") + " →", func() -> void: _pick_game()))
 	var again_code: int = world.seed_v
 	end_row.add_child(_go(L.t("Ugyanez a Föld újra"), func() -> void: _pick_game(again_code), false))
-	var saved_lbl := UI.label("", 14, UI.SOFT)
-	saved_lbl.visible = false
-	end_row.add_child(_go(L.t("Kép mentése"), func() -> void:
-		var msg: String = await _save_picture()
-		if is_instance_valid(saved_lbl):       # mentés közben bezárhatták az ablakot
-			saved_lbl.text = msg
-			saved_lbl.visible = true, false))
 	var end_box := UI.vbox(4)
-	end_box.add_child(saved_lbl)
 	end_box.add_child(end_row)
 	_sticky(body, end_box)
 	# ki mennyi CO2-t nem bocsátott ki (a modell szerint, a „ha semmi sem változik” úthoz képest)
@@ -3697,6 +3664,20 @@ func _selftest() -> void:
 	await get_tree().create_timer(2.2).timeout
 	await _shot("7e_vulkan_fold.png")
 	globe.ash = 0.0
+	globe.sun_orbit = true               # éjszakai oldal városfényekkel, vihar és tűz
+	var view0 := [globe.spin, globe.tilt]
+	globe.spin = -55.0 / 360.0
+	globe.tilt = 0.3
+	globe.time = 64.0
+	globe.heat = 1.2
+	await get_tree().create_timer(0.3).timeout
+	await _shot("7i_ejszaka.png")
+	globe.time = 20.0
+	await get_tree().create_timer(0.3).timeout
+	await _shot("7j_vihar.png")
+	globe.sun_orbit = false
+	globe.spin = view0[0]
+	globe.tilt = view0[1]
 	var pcard := _postcard(_pc(world.tips[0], L.t("%s: a melegedés elérte a veszélysávot.") % L.field(world.tips[0], "nev")))
 	var pcard2 := _postcard(_pc(world.groups[4], L.t("%s: új vállalás. Nulla kibocsátás %d-ig.") % [L.field(world.groups[4], "nev"), 2060]))
 	await get_tree().create_timer(0.8).timeout

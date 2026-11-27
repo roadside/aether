@@ -24,6 +24,8 @@ uniform float sea_rise = 0.0;          // 0–1: a veszélyeztetett alacsony par
 uniform float heat = 0.0;              // melegedés szemléltetése: 0 = ma, 1 = kb. +2 °C a mához képest
 // A terved hatása (SZEMLÉLTETÉS a modell nettó CO2-sorából, lásd globe.gd clean_of):
 uniform float ash = 0.0;               // 0–1: vulkáni fátyol az egész Föld fölött (szürkés, tompa fény)
+uniform vec4 storm = vec4(0.0);        // forgó vihar: (hosszúság rad, szélesség rad, sugár rad, erősség 0–1); szemléltetés
+uniform float night_keep = 0.12;       // az éjszakai oldalon ennyi marad a felszín fényéből
 uniform float smog = 0.0;              // 0 = nincs pára; 1 = a mai kibocsátás: barnás pára a sűrűn lakott vidékek fölött
 uniform float clean = 0.0;             // 0 = mai energia (meleg, narancsos városfény); 1 = nulla kibocsátás (tiszta, hideg fény)
 uniform float regrow = 0.0;            // 0–1: nettó CO2-kivonás – a növényzet visszazöldül
@@ -220,6 +222,21 @@ void fragment() {
 		if (cs > 0.55 && c <= 0.52) {
 			col *= 0.78;
 		}
+		// forgó trópusi vihar: két spirálkar, sűrű mag, kis szem a közepén
+		if (storm.w > 0.0) {
+			float dlon = (mod(lon - storm.x + PI, TAU) - PI) * cos(lat);
+			float dlat = lat - storm.y;
+			float sd = length(vec2(dlon, dlat)) / storm.z;
+			if (sd < 1.0) {
+				float turn = sign(storm.y) * TIME * 0.9;
+				float sang = atan(dlat, dlon) - turn + log(max(sd, 0.02)) * 2.6 * sign(storm.y);
+				float arms = smoothstep(0.1, 0.9, 0.5 + 0.5 * sin(sang * 2.0)) * (1.0 - sd) * 1.5;
+				float core = smoothstep(0.55, 0.12, sd);
+				float eye = smoothstep(0.045, 0.10, sd);
+				float hv = clamp(max(arms, core) * eye * (0.75 + 0.5 * fine), 0.0, 1.0) * storm.w;
+				c = max(c, 0.48 + 0.22 * hv);
+			}
+		}
 		float cv = clamp((c - 0.48) / 0.18, 0.0, 1.0);
 		// vastagabb felhő fehérebb, a vékony széle kékesebb és áttetszőbb
 		vec3 cloud_col = mix(vec3(0.70, 0.79, 0.90), vec3(0.94, 0.97, 1.0), cv) * max(0.1, light);
@@ -237,11 +254,13 @@ void fragment() {
 		// éjszakai oldal: városfények
 		float night = smoothstep(0.02, -0.12, ndl);
 		// éjjel a felszín szinte sötét (kékes árnyalat), csak a városfények világítanak
-		vec3 dark_side = col * 0.12 + vec3(0.01, 0.02, 0.05);
+		vec3 dark_side = col * night_keep + vec3(0.01, 0.02, 0.05);
 		// a városfény színe: mai energia (meleg, narancsos) → nulla kibocsátás (tiszta, hideg fehér)
 		vec3 city = texture(night_map, tex).rgb;
 		city = mix(city, vec3(dot(city, vec3(0.333))) * vec3(1.25, 1.50, 1.85), clamp(clean, 0.0, 1.0));
-		col = mix(col, dark_side + city * (1.0 - cv * 0.8), night);
+		// a városfények finoman pislákolnak
+		city *= 0.78 + 0.44 * fract(sin(dot(floor(tex * 900.0), vec2(12.9898, 78.233)) + floor(TIME * 2.5) * 3.7) * 43758.5453);
+		col = mix(col, dark_side + city * 1.25 * (1.0 - cv * 0.8), night);
 
 		// Mai hőmérséklet-eltérés (Copernicus Climate Pulse, ERA5): a színes térkép a felszínre
 		// kerül; az éjszakai oldal is látszik, csak kicsit sötétebb, hogy a gömb térbeli maradjon.
