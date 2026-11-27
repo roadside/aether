@@ -1314,7 +1314,7 @@ func _refresh() -> void:
 		if int(tp["ev"]) > 0:
 			marks.append({"name": "%s\n%s %d · %s" % [L.field(tp, "nev"), L.t("kritikus határ átlépve:"), int(tp["ev"]), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": UI.EMBER, "small": true, "kep": tp["id"]})
 		elif t >= float(tp["also"]):       # a melegedés már a küszöb sávjában jár: bármikor átléphetjük
-			marks.append({"name": "%s\n%s · %s" % [L.field(tp, "nev"), L.t("veszélysávban"), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": UI.GOLD, "small": true, "dim": true, "warn": true, "kep": tp["id"]})
+			marks.append({"name": "%s\n%s · %s" % [L.field(tp, "nev"), L.t("veszélyben"), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": UI.GOLD, "small": true, "dim": true, "warn": true, "kep": tp["id"]})
 		else:
 			marks.append({"name": "%s\n%s" % [L.field(tp, "nev"), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": Color(0.75, 0.82, 0.92), "small": true, "dim": true, "kep": tp["id"]})
 	globe.stations = marks

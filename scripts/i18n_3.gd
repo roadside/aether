@@ -242,7 +242,7 @@ const EN := {
 	"Kutass tovább, amíg van lépésed!": "Keep researching while you have moves!",
 	"Új: metáncsökkentést és felkészülést is kérhetsz.": "New: you can also ask for a methane cut and for preparation.",
 	"Új gomb: CO2-kivonás. Kártya kell hozzá.": "New button: CO2 removal. It needs a card.",
-	"veszélysávban": "in the danger range",
+	"veszélyben": "in danger",
 	"Veszélysávba értünk: %s": "We have entered the danger range: %s",
 	"A kritikus határ láthatatlan: senki sem tudja előre, mikor lépjük át.": "The threshold is hidden: nobody knows exactly when we will cross it.",
 	"Új játék vezetéssel": "New guided game",

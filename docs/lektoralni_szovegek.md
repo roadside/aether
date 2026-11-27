@@ -389,7 +389,7 @@ Csak ezek újak. Ami nincs itt, az nem változott.
 - Új játék vezetéssel (gomb a súgóban)
 
 ### Billenőpontok veszélysávja
-- veszélysávban
+- veszélyben  (Zoltán, 2026-11-27 19:47; korábban: veszélysávban)
 - Veszélysávba értünk: %s
 - A kritikus határ láthatatlan: senki sem tudja előre, mikor lépjük át.
 
