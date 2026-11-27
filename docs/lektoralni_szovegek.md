@@ -918,3 +918,10 @@ Kikerült a játékból a kihívás (Zoltán kérése): a „Kihívás:” sor, 
 ## 26. Változás (2026-11-27) – nincs új szöveg
 
 Kikerült (Zoltán kérése): a záróképernyőről az „Ugyanezen a Földön” összevetés a gépekkel („Te”, „Kezdő gép”, „Átlagos gép”, „Okos gép”), „A hőmérsékletet egy egyszerű klímamodell számolta. Irányt és nagyságrendet mutat, nem pontos előrejelzést.” mondat, a világ CO2-kibocsátásának grafikonja és a „CO2-kivonás: … milliárd tonna” sor; a tárgyalás ablakából a kis grafikon („a mostani útjuk”, „ha ezt vállalják”). A megosztható szövegből kikerült az „Okos gép” eredménye. Kikerült még a záróképernyőről az „Eredmény másolása” gomb („Kimásolva. Beillesztheted bárhová.”) és az „Új jelvény: …” sor.
+
+## 27. Új szövegek (2026-11-27, 16:55) – próbagombok a földgömb fölött – még nem lektorált
+
+Három ideiglenes gomb a földgömb fölött, az új nagy animációk kipróbálásához:
+- Vulkán
+- Járvány
+- Áttörés

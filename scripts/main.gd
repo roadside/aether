@@ -495,6 +495,7 @@ func _ready() -> void:
 	add_child(_sat)
 
 	_build_top()
+	_build_fx_test()
 	_build_groups()
 	_build_bottom()
 	_build_menu()
@@ -675,6 +676,36 @@ func _stat(parent: Control, key: String, caption: String, color: Color, sub: boo
 		v.add_child(s)
 		_stats[key + "_al"] = s
 	parent.add_child(v)
+
+
+## A csoportok helye a nagy animációkhoz.
+func _fx_points() -> Array:
+	return world.groups.map(func(g: Dictionary) -> Dictionary: return {"lat": g["lat"], "lon": g["lon"]})
+
+
+## Három próbagomb a földgömb fölött: a váratlan események animációinak kipróbálásához (a játékot nem változtatják).
+func _build_fx_test() -> void:
+	var h := UI.hbox(10)
+	h.position = Vector2(620, 66)
+	h.custom_minimum_size = Vector2(360, 30)
+	h.alignment = BoxContainer.ALIGNMENT_CENTER
+	h.z_index = 3
+	add_child(h)
+	for kind in ["vulkan", "jarvany", "attores"]:
+		var b := Button.new()
+		b.text = L.t({"vulkan": "Vulkán", "jarvany": "Járvány", "attores": "Áttörés"}[kind])
+		b.add_theme_font_size_override("font_size", 15)
+		b.custom_minimum_size = Vector2(104, 30)
+		b.focus_mode = Control.FOCUS_NONE
+		b.pressed.connect(func() -> void:
+			if _busy or _overlay != null:
+				return
+			_sound({"vulkan": "katasztrofa", "jarvany": "veszely", "attores": "jo_hir"}[kind])
+			if kind == "vulkan":
+				globe.play_effect("vulkan", 15.0, 120.0)
+			else:
+				globe.play_effect(kind, 0.0, 0.0, _fx_points()))
+		h.add_child(b)
 
 
 func _build_top() -> void:
@@ -1284,17 +1315,17 @@ func _refresh() -> void:
 		var shaky: bool = g.get("inog", false) and not world.over()
 		var danger := _threat_on(g)
 		var mythy := world.myth_on(g) and not world.over()
-		marks.append({"id": g["id"], "name": L.field(g, "nev") if danger == "" else "%s\n%s" % [L.field(g, "nev"), L.t(THREAT[danger])],
+		marks.append({"id": g["id"], "kep": g["id"], "name": L.field(g, "nev") if danger == "" else "%s\n%s" % [L.field(g, "nev"), L.t(THREAT[danger])],
 			"label": ("⚠ " if shaky or danger != "" or mythy else "") + L.field(g, "nev"), "lat": g["lat"], "lon": g["lon"],
 			"color": UI.EMBER if danger != "" else (MYTH_COLOR if mythy else (UI.GOLD if shaky else Color(str(g["szin"]))))})
 	for tp in world.tips:
 		var rng_txt := L.t("küszöb: %s–%s °C") % [L.num(float(tp["also"]), 1), L.num(float(tp["felso"]), 1)]
 		if int(tp["ev"]) > 0:
-			marks.append({"name": "%s\n%s %d · %s" % [L.field(tp, "nev"), L.t("küszöb átlépve:"), int(tp["ev"]), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": UI.EMBER, "small": true})
+			marks.append({"name": "%s\n%s %d · %s" % [L.field(tp, "nev"), L.t("küszöb átlépve:"), int(tp["ev"]), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": UI.EMBER, "small": true, "kep": tp["id"]})
 		elif t >= float(tp["also"]):       # a melegedés már a küszöb sávjában jár: bármikor átléphetjük
-			marks.append({"name": "%s\n%s · %s" % [L.field(tp, "nev"), L.t("veszélysávban"), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": UI.GOLD, "small": true, "dim": true, "warn": true})
+			marks.append({"name": "%s\n%s · %s" % [L.field(tp, "nev"), L.t("veszélysávban"), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": UI.GOLD, "small": true, "dim": true, "warn": true, "kep": tp["id"]})
 		else:
-			marks.append({"name": "%s\n%s" % [L.field(tp, "nev"), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": Color(0.75, 0.82, 0.92), "small": true, "dim": true})
+			marks.append({"name": "%s\n%s" % [L.field(tp, "nev"), rng_txt], "lat": tp["lat"], "lon": tp["lon"], "color": Color(0.75, 0.82, 0.92), "small": true, "dim": true, "kep": tp["id"]})
 	globe.stations = marks
 	var storms: Array = []
 	for g in world.groups:
@@ -2629,25 +2660,19 @@ func _advance() -> void:
 				break
 	# vulkánkitörés: a Föld odafordul, felvillan, aztán szürke fátyol borul rá
 	if world.volcano_now() and not _test and world.game_id == game:
-		globe.look_at_event({"lat": 15.0, "lon": 120.0})
 		_sound("katasztrofa")
-		await get_tree().create_timer(0.6).timeout
-		for k in 3:
-			globe.flash(15.0, 120.0, UI.EMBER)
-			await get_tree().create_timer(0.35).timeout
+		await get_tree().create_timer(globe.play_effect("vulkan", 15.0, 120.0) - 3.0).timeout
 		globe.ash = 1.0
-		await get_tree().create_timer(1.6).timeout
-	# világjárvány: a pára eltűnik a városok fölül; áttörés: arany felvillanások minden csoportnál
+		await get_tree().create_timer(3.0).timeout
+	# világjárvány: a vírus körbejárja a csoportokat, aztán kitisztul a levegő; áttörés: szélkerekek és napfény
 	if world.pandemic_now() and not _test and world.game_id == game:
 		_sound("veszely")
+		await get_tree().create_timer(globe.play_effect("jarvany", 0.0, 0.0, _fx_points()) - 3.0).timeout
 		globe.smog = 0.0
-		await get_tree().create_timer(1.8).timeout
+		await get_tree().create_timer(3.0).timeout
 	if world.breakthrough_now() and world.round_i == int(world.surprise_rounds()[1]) and not _test and world.game_id == game:
 		_sound("jo_hir")
-		for k in 2:
-			for bg in world.groups:
-				globe.flash(float(bg["lat"]), float(bg["lon"]), UI.GOLD)
-				await get_tree().create_timer(0.18).timeout
+		await get_tree().create_timer(globe.play_effect("attores", 0.0, 0.0, _fx_points())).timeout
 	_busy = false
 	_bar_hold = true
 	_refresh()
@@ -3522,6 +3547,19 @@ func _selftest() -> void:
 	await get_tree().create_timer(2.2).timeout
 	await _shot("7e_vulkan_fold.png")
 	globe.ash = 0.0
+	var fx_spin: float = globe.spin
+	var fx_tilt: float = globe.tilt
+	for fk in ["vulkan", "jarvany", "attores"]:      # a három nagy animáció képe (két pillanat)
+		globe.play_effect(fk, 15.0, 120.0, _fx_points())
+		await get_tree().create_timer(2.6).timeout
+		await _shot("7g_fx_%s_1.png" % fk)
+		await get_tree().create_timer(2.6).timeout
+		await _shot("7g_fx_%s_2.png" % fk)
+	globe.fx = {}
+	if globe._fx_tw != null:
+		globe._fx_tw.kill()
+	globe.spin = fx_spin
+	globe.tilt = fx_tilt
 	world.news = real_news
 	world.threat = real_threat
 	_close()
