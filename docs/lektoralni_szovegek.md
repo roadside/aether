@@ -897,7 +897,7 @@ Hír a következő kör elején:
 
 Hír a kör elején (második meglepetés):
 - Áttörés!
-- Váratlanul gyorsan olcsóbb lett a napelem, a szélerőmű és az akkumulátor.
+- Váratlanul sokkal olcsóbb lett a napelem, a szélerőmű és az akkumulátor.
 - Két körön át minden csoportnak eggyel kevesebb kártya kell.
 - A szakértők rendre alábecsülték, milyen gyorsan lesz olcsóbb a tiszta energia (Way és mtsai, 2022).
 
@@ -919,7 +919,7 @@ Kikerült a játékból a kihívás (Zoltán kérése): a „Kihívás:” sor, 
 
 Kikerült (Zoltán kérése): a záróképernyőről az „Ugyanezen a Földön” összevetés a gépekkel („Te”, „Kezdő gép”, „Átlagos gép”, „Okos gép”), „A hőmérsékletet egy egyszerű klímamodell számolta. Irányt és nagyságrendet mutat, nem pontos előrejelzést.” mondat, a világ CO2-kibocsátásának grafikonja és a „CO2-kivonás: … milliárd tonna” sor; a tárgyalás ablakából a kis grafikon („a mostani útjuk”, „ha ezt vállalják”). A megosztható szövegből kikerült az „Okos gép” eredménye. Kikerült még a záróképernyőről az „Eredmény másolása” gomb („Kimásolva. Beillesztheted bárhová.”) és az „Új jelvény: …” sor.
 
-## 27. Új szövegek (2026-11-27, 16:55) – próbagombok a földgömb fölött – még nem lektorált
+## 27. Új szövegek (2026-11-27, 16:55) – próbagombok a földgömb fölött – lektorálva
 
 Három ideiglenes gomb a földgömb fölött, az új nagy animációk kipróbálásához:
 - Vulkán

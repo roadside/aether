@@ -2777,7 +2777,7 @@ func _open_news(y0: int, t0: float) -> void:
 			"attores":
 				var ca := UI.card(UI.GREEN)
 				ca.add_child(UI.label("★ " + L.t("Áttörés!"), 22, UI.GREEN, true))
-				ca.add_child(UI.label(L.t("Váratlanul gyorsan olcsóbb lett a napelem, a szélerőmű és az akkumulátor."), 18, UI.TEXT, true))
+				ca.add_child(UI.label(L.t("Váratlanul sokkal olcsóbb lett a napelem, a szélerőmű és az akkumulátor."), 18, UI.TEXT, true))
 				ca.add_child(UI.label(L.t("Két körön át minden csoportnak eggyel kevesebb kártya kell."), 16, UI.GOLD))
 				ca.add_child(UI.label(L.t("A szakértők rendre alábecsülték, milyen gyorsan lesz olcsóbb a tiszta energia (Way és mtsai, 2022)."), 15, UI.SOFT))
 				body.add_child(UI.card_root(ca))

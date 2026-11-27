@@ -434,7 +434,7 @@ const EN := {
 	"Így történt 2020-ban is: a napi CO2-kibocsátás tavaszra kb. 17%-kal esett, a levegő CO2-tartalma mégis 411,7-ről 414,2 ppm-re nőtt.": "This also happened in 2020: daily emissions fell by about 17% by spring, yet the CO2 in the air still rose from 411.7 to 414.2 ppm.",
 	"A CO2-kibocsátás lecsökkent, de a levegő CO2-tartalma tovább nőtt. A CO2 felhalmozódik: csak a tartós nulla kibocsátás állítja meg.": "Emissions dropped, but the CO2 in the air kept rising. CO2 builds up: only lasting zero emissions stop it.",
 	"Áttörés!": "Breakthrough!",
-	"Váratlanul gyorsan olcsóbb lett a napelem, a szélerőmű és az akkumulátor.": "Solar panels, wind turbines and batteries became cheaper unexpectedly fast.",
+	"Váratlanul sokkal olcsóbb lett a napelem, a szélerőmű és az akkumulátor.": "Solar panels, wind turbines and batteries unexpectedly became much cheaper.",
 	"Két körön át minden csoportnak eggyel kevesebb kártya kell.": "For two rounds every group needs one card fewer.",
 	"A szakértők rendre alábecsülték, milyen gyorsan lesz olcsóbb a tiszta energia (Way és mtsai, 2022).": "Experts kept underestimating how fast clean energy would get cheaper (Way et al., 2022).",
 	"Áttörés: most eggyel kevesebb kártya kell.": "Breakthrough: one card fewer is needed now.",
