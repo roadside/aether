@@ -1,9 +1,346 @@
 {
-"_megjegyzes": "KITALÁLT szereplők: csoportonként egy gyerek, aki a játék során felnő. A mondataik a játék állását mesélik el, nem valós események. A körülményeik (mi fenyegeti a vidéket) a 'forrasok' alatti kutatásokra épülnek. 'tema': melyik fenyegetés illik a szereplő történetéhez ('' = egyik sem).",
-"europa":{"nev":"Lili","tema":"hoseg","ki_hu":"12 éves lány egy alföldi kisvárosból; nyaranta a nagymamája gyümölcsösében segít.","ki_en":"A 12-year-old girl from a small town on the Hungarian Great Plain who helps in her grandma's orchard.","sorok":{"bemutat":{"hu":"Szia! Lili vagyok, 12 éves. Nyaranta a nagymamám gyümölcsösében segítek az Alföldön.","en":"Hi! I'm Lili, 12. In summer I help in my grandma's orchard on the Great Plain."},"nincs":{"hu":"Itt még nem döntöttek semmiről. A gyümölcsösben minden nyár forróbb az előzőnél.","en":"Nothing has been decided here yet. Every summer in the orchard is hotter than the last."},"vallalt":{"hu":"Ma bejelentették a vállalást! A családom végre bízik abban, hogy a fák megmaradnak.","en":"The pledge was announced today! My family finally believes the trees will survive."},"csokken":{"hu":"A városunkban napelemek kerültek a háztetőkre, és tisztább lett a levegő.","en":"Solar panels went up on the roofs in our town, and the air got cleaner."},"nulla":{"hu":"Elértük a nullát! A gyümölcsös fái alatt ünnepeltünk, és most először nem aggódtunk.","en":"We reached zero! We celebrated under the orchard trees, and for once we weren't worried."},"veszely":{"hu":"Megint hőségriasztás van. Délben senki sem dolgozik a gyümölcsösben.","en":"Another heat alert. Nobody works in the orchard at noon."},"baj":{"hu":"A forróság mindent felperzselt. A gyümölcsös fele kiszáradt, sok idős ember lett beteg.","en":"The heat scorched everything. Half the orchard dried out, and many old people fell ill."},"felkeszult":{"hu":"Nagy volt a hőség, de hűsítő termek nyíltak, és öntöztük a fákat. Megúsztuk.","en":"The heat was fierce, but cooling rooms opened and we watered the trees. We got through it."},"veg_jo":{"hu":"Idős néni lettem. Az unokáim ugyanazokról a fákról szedik a barackot, mint én.","en":"I'm an old lady now. My grandchildren pick apricots from the same trees I did."},"veg_rossz":{"hu":"Idős néni lettem. A gyümölcsös nem bírta a hőséget, már csak régi képeken látom.","en":"I'm an old lady now. The orchard couldn't take the heat; I only see it in old photos."}},"forrasok":[{"cim":"Heat-related mortality in Europe during the summer of 2022","ev":2023,"doi":"https://doi.org/10.1038/s41591-023-02419-z","mire":"Az európai nyári hőség halálos veszélye, főleg az idősekre (2022 nyarán kb. 61 700 hőséggel összefüggő haláleset)."}]},
-"usa":{"nev":"Jamie","tema":"tuz","ki_hu":"13 éves gyerek egy erdei kisvárosból a nyugati hegyekben; az apja önkéntes tűzoltó.","ki_en":"A 13-year-old from a forest town in the western mountains whose dad is a volunteer firefighter.","sorok":{"bemutat":{"hu":"Szia! Jamie vagyok, 13 éves. Egy erdei kisvárosban élek a nyugati hegyekben.","en":"Hi! I'm Jamie, 13. I live in a small forest town in the western mountains."},"nincs":{"hu":"Itt még nincs vállalás. Nyaranta egyre többször látunk füstöt a hegyek fölött.","en":"No pledge here yet. In summer we see smoke over the mountains more and more often."},"vallalt":{"hu":"Bejelentették a vállalást! A tűzoltóságon ezt tartják az év legjobb hírének.","en":"The pledge was announced! At the fire station they call it the best news of the year."},"csokken":{"hu":"Szélkerekek épültek a völgyben, és egyre több villanyautó jár a városban.","en":"Wind turbines went up in the valley, and more and more electric cars drive through town."},"nulla":{"hu":"Elértük a nullát! Az egész város kint piknikezett az erdő szélén.","en":"We reached zero! The whole town had a picnic at the edge of the forest."},"veszely":{"hu":"Száraz a fenyves, nagy a tűzveszély. A menekülőcsomag bepakolva áll az ajtónál.","en":"The pine forest is dry and the fire risk is high. The emergency bag is packed by the door."},"baj":{"hu":"Leégett az erdő a házunk mögött. El kellett menekülnünk, csak a kutyát hoztuk.","en":"The forest behind our house burned. We had to flee and only took the dog."},"felkeszult":{"hu":"Volt tűz, de időben vágtak tűzpásztákat. A házunk és az erdő nagy része megmaradt.","en":"There was a fire, but firebreaks were cut in time. Our house and most of the forest survived."},"veg_jo":{"hu":"Öreg vagyok már. Az unokáimmal ugyanabban a zöld erdőben túrázom.","en":"I'm old now. I go hiking with my grandchildren in the same green forest."},"veg_rossz":{"hu":"Öreg vagyok már. A régi erdő helyén bozót nő, és az egész nyár tűzszezon lett.","en":"I'm old now. Scrub grows where the old forest was, and the whole summer is fire season."}},"forrasok":[{"cim":"Impact of anthropogenic climate change on wildfire across western US forests","ev":2016,"doi":"https://doi.org/10.1073/pnas.1607171113","mire":"Az USA nyugati erdeiben az emberi eredetű melegedés kiszárítja az erdőt; 1984–2015 között közel megduplázta a leégett erdőterületet."}]},
-"kina":{"nev":"Mei","tema":"hoseg","ki_hu":"12 éves lány egy nagyvárosból; az anyukája napelemgyárban dolgozik.","ki_en":"A 12-year-old girl from a big city whose mum works in a solar panel factory.","sorok":{"bemutat":{"hu":"Szia! Mei vagyok, 12 éves. Nagyvárosban élek, anyukám napelemgyárban dolgozik.","en":"Hi! I'm Mei, 12. I live in a big city, and my mum works in a solar panel factory."},"nincs":{"hu":"Még nincs vállalás. Reggelente sokszor szürke a levegő, sokan maszkban járnak.","en":"No pledge yet. The air is often grey in the morning, and many people wear masks."},"vallalt":{"hu":"Bejelentették a vállalást! A napelemgyárban, ahol a családom dolgozik, új gyártósor indul.","en":"The pledge was announced! The solar factory where my family works is starting a new line."},"csokken":{"hu":"Bezárt a régi szénerőmű. Ma este láttam a csillagokat az erkélyről!","en":"The old coal power plant closed. Tonight I saw the stars from our balcony!"},"nulla":{"hu":"Elértük a nullát! A gyár udvarán nagy ünnepség volt, az egész város ott volt.","en":"We reached zero! There was a big party in the factory yard, and the whole city came."},"veszely":{"hu":"Hőség és szmog van. Bezártak az iskolák, mindenki bent marad.","en":"It's hot and smoggy. Schools are closed, and everyone stays inside."},"baj":{"hu":"Hetek óta tart a kánikula. Áramszünet van, a lift sem megy fel a huszadikra.","en":"The heatwave has lasted for weeks. The power is out, and the lift won't go up to the 20th floor."},"felkeszult":{"hu":"Jött a kánikula, de a városban árnyas parkok és hűvös terek vártak. Kibírtuk.","en":"The heatwave came, but the city had shady parks and cool rooms. We made it through."},"veg_jo":{"hu":"Idős néni lettem. A háztetőkön fák nőnek, és tiszta a levegő.","en":"I'm an old lady now. Trees grow on the rooftops, and the air is clean."},"veg_rossz":{"hu":"Idős néni lettem. A nyár olyan forró, hogy napközben senki sem megy ki.","en":"I'm an old lady now. Summers are so hot that nobody goes out during the day."}},"forrasok":[{"cim":"Drivers of improved PM2.5 air quality in China from 2013 to 2017","ev":2019,"doi":"https://doi.org/10.1073/pnas.1907956116","mire":"Kína szigorú tisztalevegő-politikája (erőművek, ipar, régi üzemek bezárása) öt év alatt kb. harmadával csökkentette a szálló port."}]},
-"india":{"nev":"Arjun","tema":"hoseg","ki_hu":"13 éves fiú; a családja búzát és rizst termeszt a Gangesz-síkságon.","ki_en":"A 13-year-old boy whose family grows wheat and rice on the Ganges plain.","sorok":{"bemutat":{"hu":"Szia! Arjun vagyok, 13 éves. A családunk búzát és rizst termeszt a Gangesz-síkságon.","en":"Hi! I'm Arjun, 13. My family grows wheat and rice on the Ganges plain."},"nincs":{"hu":"Még nincs vállalás. A földeken hajnalban kezdünk, mert délre túl meleg lesz.","en":"No pledge yet. We start in the fields at dawn, because by noon it's too hot."},"vallalt":{"hu":"Bejelentették a vállalást! A falu napelemes szivattyút kap az öntözéshez.","en":"The pledge was announced! Our village is getting a solar pump for watering the fields."},"csokken":{"hu":"A szivattyúnk már napelemmel megy, és olcsóbb, mint a dízel.","en":"Our pump now runs on solar power, and it's cheaper than diesel."},"nulla":{"hu":"Elértük a nullát! A falu ünnepet tartott, egész éjjel szólt a dob.","en":"We reached zero! The village held a festival, and the drums played all night."},"veszely":{"hu":"Fülledt, párás hőség jön. Ilyenkor az izzadás sem hűt, a földeken nem lehet dolgozni.","en":"Sticky, humid heat is coming. Sweating doesn't cool you then, and no one can work in the fields."},"baj":{"hu":"A hőségben nem tudtunk aratni, a termés egy része elveszett. Nehéz év lesz.","en":"We couldn't harvest in the heat, and part of the crop was lost. It will be a hard year."},"felkeszult":{"hu":"Jött a hőség, de időben szóltak, és a falunak van hűvös menedéke. Kibírtuk.","en":"The heat came, but we were warned in time and the village has a cool shelter. We made it through."},"veg_jo":{"hu":"Öreg vagyok már. Az unokáim ugyanott aratnak, ahol én gyerekként.","en":"I'm old now. My grandchildren harvest where I did as a boy."},"veg_rossz":{"hu":"Öreg vagyok már. A nyári hőség miatt sok család elköltözött a faluból.","en":"I'm old now. Because of the summer heat, many families have left the village."}},"forrasok":[{"cim":"Deadly heat waves projected in the densely populated agricultural regions of South Asia","ev":2017,"doi":"https://doi.org/10.1126/sciadv.1603322","mire":"Csökkentés nélkül a Gangesz és az Indus sűrűn lakott mezőgazdasági vidékein a század végére a fülledt hőség megközelítheti az emberi tűrőképesség határát."}]},
-"afrika":{"nev":"Amara","tema":"","ki_hu":"11 éves lány egy ghánai tengerparti halászfaluból; a nagybátyja halász.","ki_en":"An 11-year-old girl from a fishing village on the coast of Ghana whose uncle is a fisherman.","sorok":{"bemutat":{"hu":"Szia! Amara vagyok, 11 éves. Egy tengerparti halászfaluban élek Ghánában.","en":"Hi! I'm Amara, 11. I live in a fishing village on the coast of Ghana."},"nincs":{"hu":"Még nincs vállalás. A falu csónakjai egyre kevesebb hallal jönnek haza.","en":"No pledge yet. The village boats come home with fewer and fewer fish."},"vallalt":{"hu":"Bejelentették a vállalást! A halászok tapsoltak a parton.","en":"The pledge was announced! The fishermen clapped on the beach."},"csokken":{"hu":"A falu napelemes hűtőt kapott, így a hal nem romlik meg a piacig.","en":"The village got a solar fridge, so the fish stays fresh until market."},"nulla":{"hu":"Elértük a nullát! Egész éjjel táncoltunk a parton.","en":"We reached zero! We danced on the beach all night."},"veszely":{"hu":"Melegszik a tenger, a halak hűvösebb vizek felé húzódnak. A halászok aggódnak.","en":"The sea is warming, and the fish are moving to cooler waters. The fishermen are worried."},"baj":{"hu":"A hálók szinte üresen jönnek vissza. Sokan a városba mennek munkát keresni.","en":"The nets come back almost empty. Many people are leaving for the city to find work."},"felkeszult":{"hu":"Kevesebb a hal, de a falu kagylót és tengeri moszatot is nevel. Megélünk.","en":"There are fewer fish, but the village also farms shellfish and seaweed. We get by."},"veg_jo":{"hu":"Idős asszony lettem. A tenger még mindig ad halat, az unokáim is halásznak.","en":"I'm an old woman now. The sea still gives us fish, and my grandchildren fish too."},"veg_rossz":{"hu":"Idős asszony lettem. A halak elvándoroltak, és kevés család maradt a faluban.","en":"I'm an old woman now. The fish have moved away, and few families are left in the village."}},"forrasok":[{"cim":"Large-scale redistribution of maximum fisheries catch potential in the global ocean under climate change","ev":2009,"doi":"https://doi.org/10.1111/j.1365-2486.2009.01995.x","mire":"A melegedés miatt a halak a sarkok felé vándorolnak; a trópusokon a lehetséges fogás akár 40%-kal csökkenhet 2055-ig, és ezek a vidékek a legsebezhetőbbek."}]},
-"olaj":{"nev":"Yusuf","tema":"hoseg","ki_hu":"14 éves fiú egy öbölparti városból; az apja olajfinomítóban dolgozik.","ki_en":"A 14-year-old boy from a city on the Persian Gulf whose dad works at an oil refinery.","sorok":{"bemutat":{"hu":"Szia! Yusuf vagyok, 14 éves. Öbölparti városban élek, apukám olajfinomítóban dolgozik.","en":"Hi! I'm Yusuf, 14. I live in a city on the Gulf, and my dad works at an oil refinery."},"nincs":{"hu":"Még nincs vállalás. Az olaj eltart minket, de a nyár egyre nehezebben bírható.","en":"No pledge yet. Oil feeds us, but each summer is harder to bear."},"vallalt":{"hu":"Bejelentették a vállalást! A finomítóban sokan aggódnak, de naperőmű-tanfolyam is indul.","en":"The pledge was announced! Many at the refinery are worried, but a solar power course is starting."},"csokken":{"hu":"A sivatagban óriási naperőmű épült. Sokan, akik a finomítóban dolgoztak, most ott keresik a kenyerüket.","en":"A huge solar plant was built in the desert. Many refinery workers now work there."},"nulla":{"hu":"Elértük a nullát! A városban azt mondják, a napfény lett az új olajunk.","en":"We reached zero! People in town say sunshine has become our new oil."},"veszely":{"hu":"Fülledt hőség van, este sem hűl le. Napközben senki sem dolgozhat a szabadban.","en":"It's sticky and hot, and it doesn't cool down at night. No one can work outside during the day."},"baj":{"hu":"Napokig nem lehetett kimenni a hőségben. A kórházakban sok beteg volt.","en":"For days it was too hot to go outside. The hospitals were full of sick people."},"felkeszult":{"hu":"Nagy volt a hőség, de árnyékolt utcák és hűvös terek vártak. Mindenki biztonságban volt.","en":"The heat was fierce, but shaded streets and cool rooms were ready. Everyone was safe."},"veg_jo":{"hu":"Öreg vagyok már. A városunk napenergiából él, és a nyár még elviselhető.","en":"I'm old now. Our city runs on solar power, and summers are still bearable."},"veg_rossz":{"hu":"Öreg vagyok már. Nyaranta sokan elmennek a városból, mert nem bírják a hőséget.","en":"I'm old now. Every summer many people leave the city because they can't bear the heat."}},"forrasok":[{"cim":"Future temperature in southwest Asia projected to exceed a threshold for human adaptability","ev":2015,"doi":"https://doi.org/10.1038/nclimate2833","mire":"Csökkentés nélkül a Perzsa-öböl vidékén a század végére a fülledt hőség meghaladhatja az emberi alkalmazkodás határát (a cím alapján; a kivonatot a tervezet készítője nem tudta letölteni)."},{"cim":"The emergence of heat and humidity too severe for human tolerance","ev":2020,"doi":"https://doi.org/10.1126/sciadv.aaw1838","mire":"Egyes szubtrópusi tengerparti helyeken már mértek az emberi tűrőképesség határát elérő fülledt hőséget, és a szélsőséges fülledt hőség 1979 óta több mint kétszer gyakoribb lett."}]}
+ "_megjegyzes": "KITALÁLT szereplők: csoportonként egy gyerek, aki a játék során felnő. A mondataik a játék állását mesélik el, nem valós események. A körülményeik (mi fenyegeti a vidéket) a 'forrasok' alatti kutatásokra épülnek. 'tema': melyik fenyegetés illik a szereplő történetéhez ('' = egyik sem).",
+ "europa": {
+  "nev": "Lili",
+  "tema": "hoseg",
+  "ki_hu": "12 éves lány egy alföldi kisvárosból; nyaranta a nagymamája gyümölcsösében segít.",
+  "ki_en": "A 12-year-old girl from a small town on the Hungarian Great Plain who helps in her grandma's orchard.",
+  "sorok": {
+   "bemutat": {
+    "hu": "Szia! Lili vagyok, 12 éves. Nyaranta a nagymamám gyümölcsösében segítek az Alföldön.",
+    "en": "Hi! I'm Lili, 12. In summer I help in my grandma's orchard on the Great Plain."
+   },
+   "nincs": {
+    "hu": "Itt még nem döntöttek semmiről. A gyümölcsösben minden nyár forróbb az előzőnél.",
+    "en": "Nothing has been decided here yet. Every summer in the orchard is hotter than the last."
+   },
+   "vallalt": {
+    "hu": "Ma bejelentették a vállalást! A családom végre bízik abban, hogy a fáink megmaradnak.",
+    "en": "The pledge was announced today! My family finally believes our trees will survive."
+   },
+   "csokken": {
+    "hu": "A városunkban napelemek kerültek a háztetőkre, és tisztább lett a levegő.",
+    "en": "Solar panels went up on the roofs in our town, and the air got cleaner."
+   },
+   "nulla": {
+    "hu": "Elértük a nullát! A gyümölcsös fái alatt ünnepeltünk, és most először nem aggódtunk.",
+    "en": "We reached zero! We celebrated under the orchard trees, and for once we weren't worried."
+   },
+   "veszely": {
+    "hu": "Megint hőségriasztás van. Délben senki sem dolgozik a gyümölcsösben.",
+    "en": "Another heat alert. Nobody works in the orchard at noon."
+   },
+   "baj": {
+    "hu": "A forróság mindent felperzselt. A gyümölcsös fele kiszáradt, sok idős ember lett beteg.",
+    "en": "The heat scorched everything. Half the orchard dried out, and many old people fell ill."
+   },
+   "felkeszult": {
+    "hu": "Nagy volt a hőség, de hűsítő helyek nyíltak, és öntöztük a fákat. Megúsztuk.",
+    "en": "The heat was fierce, but cooling places opened and we watered the trees. We got through it."
+   },
+   "veg_jo": {
+    "hu": "Idős néni lettem. Az unokáim ugyanazokról a fákról szedik a barackot, mint én.",
+    "en": "I'm an old lady now. My grandchildren pick apricots from the same trees I did."
+   },
+   "veg_rossz": {
+    "hu": "Idős néni lettem. A gyümölcsöst már csak a régi képeken látom, a hőség mindent elpusztított.",
+    "en": "I'm an old lady now. I only see the orchard in old photos; the heat destroyed everything."
+   }
+  },
+  "forrasok": [
+   {
+    "cim": "Heat-related mortality in Europe during the summer of 2022",
+    "ev": 2023,
+    "doi": "https://doi.org/10.1038/s41591-023-02419-z",
+    "mire": "Az európai nyári hőség halálos veszélye, főleg az idősekre (2022 nyarán kb. 61 700 hőséggel összefüggő haláleset volt)."
+   }
+  ]
+ },
+ "usa": {
+  "nev": "Jamie",
+  "tema": "tuz",
+  "ki_hu": "13 éves gyerek egy erdei kisvárosból a nyugati hegyekben; az apja önkéntes tűzoltó.",
+  "ki_en": "A 13-year-old from a forest town in the western mountains whose dad is a volunteer firefighter.",
+  "sorok": {
+   "bemutat": {
+    "hu": "Szia! Jamie vagyok, 13 éves. Egy erdei kisvárosban élek a nyugati hegyekben.",
+    "en": "Hi! I'm Jamie, 13. I live in a small forest town in the western mountains."
+   },
+   "nincs": {
+    "hu": "Itt még nincs vállalás. Nyaranta egyre többször látunk füstöt a hegyek fölött.",
+    "en": "No pledge here yet. In summer we see smoke over the mountains more and more often."
+   },
+   "vallalt": {
+    "hu": "Bejelentették a vállalást! A tűzoltóságon ezt tartják az év legjobb hírének.",
+    "en": "The pledge was announced! At the fire station they call it the best news of the year."
+   },
+   "csokken": {
+    "hu": "Szélkerekek épültek a völgyben, és egyre több villanyautó jár a városban.",
+    "en": "Wind turbines went up in the valley, and more and more electric cars drive through town."
+   },
+   "nulla": {
+    "hu": "Elértük a nullát! Az egész város kint piknikezett az erdő szélén.",
+    "en": "We reached zero! The whole town had a picnic at the edge of the forest."
+   },
+   "veszely": {
+    "hu": "Száraz a fenyves, nagy a tűzveszély. Az ajtó mellett mindig ott van a bepakolt túlélőcsomag.",
+    "en": "The pine forest is dry and the fire risk is high. A packed survival bag always sits by the door."
+   },
+   "baj": {
+    "hu": "Leégett az erdő a házunk mögött. El kellett menekülnünk, csak a kutyát hoztuk.",
+    "en": "The forest behind our house burned. We had to flee and only took the dog."
+   },
+   "felkeszult": {
+    "hu": "Nagy tűz volt, de időben kivágtak egy sávot az erdőben, így a házunk és a fák nagy része megmaradt.",
+    "en": "There was a big fire, but a strip of forest was cleared in time, so our house and most of the trees survived."
+   },
+   "veg_jo": {
+    "hu": "Öreg vagyok már. Az unokáimmal ugyanabban a zöld erdőben túrázom.",
+    "en": "I'm old now. I go hiking with my grandchildren in the same green forest."
+   },
+   "veg_rossz": {
+    "hu": "Öreg vagyok már. A régi erdő helyén bozót nő, és egész nyár tűzveszély van.",
+    "en": "I'm old now. Scrub grows where the old forest was, and all summer long there is a fire risk."
+   }
+  },
+  "forrasok": [
+   {
+    "cim": "Impact of anthropogenic climate change on wildfire across western US forests",
+    "ev": 2016,
+    "doi": "https://doi.org/10.1073/pnas.1607171113",
+    "mire": "Az USA nyugati erdeiben az emberi eredetű melegedés kiszárítja az erdőt; 1984–2015 között közel megduplázódott a leégett erdőterület."
+   }
+  ]
+ },
+ "kina": {
+  "nev": "Mei",
+  "tema": "hoseg",
+  "ki_hu": "12 éves lány egy nagyvárosból; az anyukája egy napelemgyárban dolgozik.",
+  "ki_en": "A 12-year-old girl from a big city whose mum works in a solar panel factory.",
+  "sorok": {
+   "bemutat": {
+    "hu": "Szia! Mei vagyok, 12 éves. Egy nagyvárosban élek, az anyukám pedig egy napelemgyárban dolgozik.",
+    "en": "Hi! I'm Mei, 12. I live in a big city, and my mum works in a solar panel factory."
+   },
+   "nincs": {
+    "hu": "Itt még nem döntöttek. Reggelente sokszor szürke a levegő, és sokan járnak maszkban.",
+    "en": "Nothing has been decided here yet. The air is often grey in the morning, and many people wear masks."
+   },
+   "vallalt": {
+    "hu": "Döntöttek! A napelemgyárban, ahol a családom dolgozik, új gyártósor indul.",
+    "en": "They've decided! The solar factory where my family works is starting a new line."
+   },
+   "csokken": {
+    "hu": "Bezárt a régi szénerőmű. Ma este láttam a csillagokat az erkélyről!",
+    "en": "The old coal power plant closed. Tonight I saw the stars from our balcony!"
+   },
+   "nulla": {
+    "hu": "Elértük a nullát! A gyár udvarán nagy ünnepséget tartottak, az egész város ott volt.",
+    "en": "We reached zero! They held a big party in the factory yard, and the whole city came."
+   },
+   "veszely": {
+    "hu": "Hőség és szmog van. Bezártak az iskolák, mindenki otthon maradt a falak között.",
+    "en": "It's hot and smoggy. Schools are closed, and everyone stayed at home indoors."
+   },
+   "baj": {
+    "hu": "Hetek óta tart a kánikula. Áramszünet van, a lift sem megy fel a huszadikra.",
+    "en": "The heatwave has lasted for weeks. The power is out, and the lift won't go up to the 20th floor."
+   },
+   "felkeszult": {
+    "hu": "Jött a kánikula, de a városban árnyas parkok és hűvös terek vártak. Kibírtuk.",
+    "en": "The heatwave came, but the city had shady parks and cool rooms. We made it through."
+   },
+   "veg_jo": {
+    "hu": "Idős néni lettem. A háztetőkön fák nőnek, és tiszta a levegő.",
+    "en": "I'm an old lady now. Trees grow on the rooftops, and the air is clean."
+   },
+   "veg_rossz": {
+    "hu": "Idős néni lettem. A nyár olyan forró, hogy napközben senki sem megy már ki az utcára.",
+    "en": "I'm an old lady now. Summers are so hot that nobody goes out into the street during the day any more."
+   }
+  },
+  "forrasok": [
+   {
+    "cim": "Drivers of improved PM2.5 air quality in China from 2013 to 2017",
+    "ev": 2019,
+    "doi": "https://doi.org/10.1073/pnas.1907956116",
+    "mire": "Kína szigorú tisztalevegő-politikája (erőművek, ipar, régi üzemek bezárása) öt év alatt kb. harmadával csökkentette a szálló port."
+   }
+  ]
+ },
+ "india": {
+  "nev": "Arjun",
+  "tema": "hoseg",
+  "ki_hu": "13 éves fiú; a családja búzát és rizst termeszt a Gangesz-síkságon.",
+  "ki_en": "A 13-year-old boy whose family grows wheat and rice on the Ganges plain.",
+  "sorok": {
+   "bemutat": {
+    "hu": "Szia! Arjun vagyok, 13 éves. A családunk búzát és rizst termeszt a Gangesz-síkságon.",
+    "en": "Hi! I'm Arjun, 13. My family grows wheat and rice on the Ganges plain."
+   },
+   "nincs": {
+    "hu": "Nem döntöttek még. A földeken hajnalban kezdjük a munkát, mert délre túl meleg lesz.",
+    "en": "Nothing has been decided yet. We start work in the fields at dawn, because by noon it's too hot."
+   },
+   "vallalt": {
+    "hu": "Bejelentették a vállalást! A falu napelemes szivattyút kap az öntözéshez.",
+    "en": "The pledge was announced! Our village is getting a solar pump for watering the fields."
+   },
+   "csokken": {
+    "hu": "A szivattyúnk már napelemmel megy, és olcsóbb, mint a dízel.",
+    "en": "Our pump now runs on solar power, and it's cheaper than diesel."
+   },
+   "nulla": {
+    "hu": "Elértük a nullát! A falu ünnepet tartott, egész éjjel szólt a dob.",
+    "en": "We reached zero! The village held a festival, and the drums played all night."
+   },
+   "veszely": {
+    "hu": "Fülledt, párás hőség van. Ilyenkor az izzadság sem hűt, a földeken nem lehet dolgozni.",
+    "en": "Sticky, humid heat is here. Sweat doesn't cool you then, and no one can work in the fields."
+   },
+   "baj": {
+    "hu": "A hőségben nem tudtunk aratni, a termés egy része odalett. Nehéz év lesz.",
+    "en": "We couldn't harvest in the heat, and part of the crop was lost. It will be a hard year."
+   },
+   "felkeszult": {
+    "hu": "Jött a hőség, de időben szóltak, és a falu hűvös menhelyére mentünk. Kibírtuk.",
+    "en": "The heat came, but we were warned in time and went to the village's cool shelter. We made it through."
+   },
+   "veg_jo": {
+    "hu": "Öreg vagyok már. Az unokáim ugyanott aratnak, ahol én gyerekként.",
+    "en": "I'm old now. My grandchildren harvest where I did as a boy."
+   },
+   "veg_rossz": {
+    "hu": "Öreg vagyok már. A nyári hőség miatt sok család elköltözött a faluból.",
+    "en": "I'm old now. Because of the summer heat, many families have left the village."
+   }
+  },
+  "forrasok": [
+   {
+    "cim": "Deadly heat waves projected in the densely populated agricultural regions of South Asia",
+    "ev": 2017,
+    "doi": "https://doi.org/10.1126/sciadv.1603322",
+    "mire": "Csökkentés nélkül a Gangesz és az Indus sűrűn lakott mezőgazdasági vidékein a század végére a fülledt hőség megközelítheti az emberi tűrőképesség határát."
+   }
+  ]
+ },
+ "afrika": {
+  "nev": "Amara",
+  "tema": "",
+  "ki_hu": "11 éves lány egy ghánai tengerparti halászfaluból; a nagybátyja halász.",
+  "ki_en": "An 11-year-old girl from a fishing village on the coast of Ghana whose uncle is a fisherman.",
+  "sorok": {
+   "bemutat": {
+    "hu": "Szia! Amara vagyok, 11 éves. Egy tengerparti halászfaluban élek Ghánában.",
+    "en": "Hi! I'm Amara, 11. I live in a fishing village on the coast of Ghana."
+   },
+   "nincs": {
+    "hu": "Még nincs megállapodás. A falu csónakjai egyre kevesebb hallal térnek haza.",
+    "en": "No agreement yet. The village boats come home with fewer and fewer fish."
+   },
+   "vallalt": {
+    "hu": "Bejelentették a vállalást! A halászok a parton tapsoltak.",
+    "en": "The pledge was announced! The fishermen clapped on the beach."
+   },
+   "csokken": {
+    "hu": "A falu napelemes hűtőt kapott, így a hal nem romlik meg míg a piacra ér.",
+    "en": "The village got a solar fridge, so the fish stays fresh until market."
+   },
+   "nulla": {
+    "hu": "Elértük a nullát! Egész éjjel táncoltunk a parton.",
+    "en": "We reached zero! We danced on the beach all night."
+   },
+   "veszely": {
+    "hu": "Melegszik a tenger, a halak a hűvösebb vizek felé úsznak. A halászok aggódnak.",
+    "en": "The sea is warming, and the fish are swimming to cooler waters. The fishermen are worried."
+   },
+   "baj": {
+    "hu": "A hálók szinte üresen jönnek fel. Sokan a városba mennek munkát keresni.",
+    "en": "The nets come up almost empty. Many people are leaving for the city to find work."
+   },
+   "felkeszult": {
+    "hu": "Kevesebb a hal, de a falu kagylót és tengeri moszatot is nevel. Megélünk.",
+    "en": "There are fewer fish, but the village also farms shellfish and seaweed. We get by."
+   },
+   "veg_jo": {
+    "hu": "Idős asszony lettem. A tenger még mindig ad halat számunkra, és az unokáim is halásznak.",
+    "en": "I'm an old woman now. The sea still gives us fish, and my grandchildren fish too."
+   },
+   "veg_rossz": {
+    "hu": "Idős asszony lettem. A halak elvándoroltak, és kevés család maradt a faluban.",
+    "en": "I'm an old woman now. The fish have moved away, and few families are left in the village."
+   }
+  },
+  "forrasok": [
+   {
+    "cim": "Large-scale redistribution of maximum fisheries catch potential in the global ocean under climate change",
+    "ev": 2009,
+    "doi": "https://doi.org/10.1111/j.1365-2486.2009.01995.x",
+    "mire": "A melegedés miatt a halak a sarkok felé vándorolnak; a trópusokon a lehetséges fogás akár 40%-kal csökkenhet 2055-ig, és ezek a vidékek a legsebezhetőbbek."
+   }
+  ]
+ },
+ "olaj": {
+  "nev": "Yusuf",
+  "tema": "hoseg",
+  "ki_hu": "14 éves fiú egy öbölparti városból; az apja egy olajfinomítóban dolgozik.",
+  "ki_en": "A 14-year-old boy from a city on the Persian Gulf whose dad works at an oil refinery.",
+  "sorok": {
+   "bemutat": {
+    "hu": "Szia! Yusuf vagyok, 14 éves. Egy öbölparti városban élek, az apukám egy olajfinomítóban dolgozik.",
+    "en": "Hi! I'm Yusuf, 14. I live in a city on the Gulf, and my dad works at an oil refinery."
+   },
+   "nincs": {
+    "hu": "Még nem döntöttek semmiről. Az olaj eltart minket, de a nyári meleg már alig bírható.",
+    "en": "Nothing has been decided yet. Oil feeds us, but the summer heat is already barely bearable."
+   },
+   "vallalt": {
+    "hu": "Bejelentették a vállalást! A finomítóban sokan aggódnak a munkájuk miatt, de naperőmű-tanfolyam indul.",
+    "en": "The pledge was announced! Many at the refinery worry about their jobs, but a solar power course is starting."
+   },
+   "csokken": {
+    "hu": "A sivatagban óriási naperőmű épült. Sokan, akik a finomítóban dolgoztak, most ott keresik a kenyerüket.",
+    "en": "A huge solar plant was built in the desert. Many refinery workers now work there."
+   },
+   "nulla": {
+    "hu": "Elértük a nullát! A városban azt mondják, a napfény lett az új olajunk.",
+    "en": "We reached zero! People in town say sunshine has become our new oil."
+   },
+   "veszely": {
+    "hu": "Fülledt hőség van, este sem hűl le a levegő. Napközben senki sem dolgozhat a szabadban.",
+    "en": "It's sticky and hot, and the air doesn't cool down at night. No one can work outside during the day."
+   },
+   "baj": {
+    "hu": "Napokig nem lehetett kimenni ebben a hőségben. A kórházakban sok beteg volt.",
+    "en": "For days it was too hot to go outside in this heat. The hospitals were full of sick people."
+   },
+   "felkeszult": {
+    "hu": "Nagy volt a hőség, de árnyékos utcák és hűvös terek vártak. Mindenki biztonságban volt.",
+    "en": "The heat was fierce, but shady streets and cool rooms were ready. Everyone was safe."
+   },
+   "veg_jo": {
+    "hu": "Öreg vagyok már. A városunk napenergiából él, és a nyár még elviselhető.",
+    "en": "I'm old now. Our city runs on solar power, and summers are still bearable."
+   },
+   "veg_rossz": {
+    "hu": "Öreg vagyok már. Nyaranta sokan elmennek a városból, mert nem bírják a hőséget.",
+    "en": "I'm old now. Every summer many people leave the city because they can't bear the heat."
+   }
+  },
+  "forrasok": [
+   {
+    "cim": "Future temperature in southwest Asia projected to exceed a threshold for human adaptability",
+    "ev": 2015,
+    "doi": "https://doi.org/10.1038/nclimate2833",
+    "mire": "Csökkentés nélkül a Perzsa-öböl vidékén a század végére a fülledt hőség meghaladhatja az emberi alkalmazkodás határát.",
+    "megjegyzes": "A cím alapján; a kivonatot a tervezet készítője nem tudta letölteni."
+   },
+   {
+    "cim": "The emergence of heat and humidity too severe for human tolerance",
+    "ev": 2020,
+    "doi": "https://doi.org/10.1126/sciadv.aaw1838",
+    "mire": "Egyes szubtrópusi tengerparti helyeken már mértek az emberi tűrőképesség határát elérő fülledt hőséget, és a szélsőséges fülledt hőség 1979 óta több mint kétszer gyakoribb lett."
+   }
+  ]
+ }
 }
