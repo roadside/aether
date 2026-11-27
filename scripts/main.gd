@@ -1712,23 +1712,8 @@ func _collect(id: String) -> void:
 		return
 	var c := _collection()
 	if not (id in c):
-		var before := _rank(c.size())
 		c.append(id)
 		L.set_setting("gyujtemeny", c)
-		if _rank(c.size()) != before:
-			_new_rank = _rank(c.size())
-
-
-## Rang a több játékon át kikutatott kártyák száma szerint (játékszabály): [ennyi kártyától, név].
-const RANKS := [[0, "Gyakornok"], [10, "Kutató"], [30, "Vezető kutató"], [60, "Professzor"], [90, "A Föld őre"]]
-var _new_rank := ""
-
-func _rank(n: int) -> String:
-	var out := ""
-	for r in RANKS:
-		if n >= int(r[0]):
-			out = r[1]
-	return out
 
 
 ## Jelvények: [azonosító, név, mit kell hozzá]. Több játékon át gyűlnek.
@@ -1843,7 +1828,6 @@ func _open_collection() -> void:
 	var all_n := 0
 	for th in Cards.THEMES:
 		all_n += Cards.TAGS[th].size()
-	body.add_child(UI.label(L.t("Rangod: %s") % L.t(_rank(c.size())), 22, UI.GOLD, true))
 	body.add_child(UI.label(L.t("Kikutatott kártyák: %d / %d") % [c.size(), all_n], 19, UI.TEXT, true))
 	var coll_gap := Control.new()      # kis hely a „Kikutatott kártyák” alatt (Zoltán kérése)
 	coll_gap.custom_minimum_size = Vector2(0, 10)
@@ -2155,9 +2139,6 @@ func _open_card(id: String, fresh: bool = false) -> void:
 	var body := _open(L.t("Új bizonyíték-kártya") if fresh else L.t("Bizonyíték-kártya"), _theme_color(th) if th != "" else UI.GOLD)
 	_tutor_update("kartya" if fresh else "")
 	var en := L.is_en()
-	if fresh and _new_rank != "":
-		body.add_child(UI.label("★ " + L.t("Új rang: %s") % L.t(_new_rank), 20, UI.GOLD, true))
-		_new_rank = ""
 	var qrow := UI.hbox(16)
 	if th != "":
 		var qa := ThemeArt.rect(th, 210)

@@ -54,7 +54,7 @@ Játékszabály (nem a valóság leírása):
 - Maradék kibocsátás: a vállalt cél a csoport kibocsátásának 94%-át viszi nullára, a maradék 6% megmarad, amíg egy ágazati kártyával (cement, acél, repülés, hajózás, teherszállítás, hidrogén, állattartás, műtrágya, körforgás) ki nem váltod; onnan tíz év alatt tűnik el. Kérhető 2061-től annál, aki már vállalt célt. Valódi alap: Davis és mtsai 2018 (Science, eaas9793) szerint ezeket az ágazatokat a legnehezebb kibocsátásmentessé tenni. A 6%, a tíz év és a kezdés éve játékszabály (a forrás nem ad egységes arányt).
 - A klímacsúcs (2041 és 2066): egy kártyát az egész világnak megmutathatsz; akinek az aggodalmára felel, és már vállalt célt, öt évvel előbbre hozza.
 - A három fokozat (körönként öt, négy vagy három lépés).
-- A rangok (a több játékon át kikutatott kártyák száma szerint) és a záró képernyő összesítése: ki mennyi CO2-t nem bocsátott ki a „ha semmi sem változik” úthoz képest (a modell szerint).
+- A záró képernyő összesítése: ki mennyi CO2-t nem bocsátott ki a „ha semmi sem változik” úthoz képest (a modell szerint).
 - A felkészülés hatása (a felkészült csoport nem inog meg), a jelvények és az értékelés határai (+1,7 és +2 °C).
 - A játék hangjai és alapzenéje kódból készülnek (`tools/jatek_hangok.py`), nem felvételek.
 - A megingás: egy vállalást tett csoport elbizonytalanodhat; ha öt éven belül nem erősíted meg egy hozzá illő kártyával, tíz évvel későbbre tolja a célját (legfeljebb 2090-ig). A jövő hírei (hőhullám, aszály, áradás, erdőtűz) szintén a játék részei.

@@ -943,4 +943,4 @@ Billenőpontoknál:
 
 ## 29. Változás (2026-11-27, 18:05) – nincs új szöveg
 
-Kikerült (Zoltán kérése): a földgömb fölötti három próbagomb („Vulkán”, „Járvány”, „Áttörés”; az animációk a játékban maradnak) és a záróképernyő „Kép mentése” gombja.
+Kikerült (Zoltán kérése): a földgömb fölötti három próbagomb („Vulkán”, „Járvány”, „Áttörés”; az animációk a játékban maradnak) és a záróképernyő „Kép mentése” gombja. Kikerült a rang is: a „Rangod: %s” és az „Új rang: %s” sor, valamint a rangnevek (Gyakornok, Kutató, Vezető kutató, Professzor, A Föld őre).
