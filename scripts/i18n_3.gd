@@ -67,6 +67,7 @@ const EN := {
 	"Már fut.": "Already running.",
 	"Másik témakör": "Another topic",
 	"Még nem vállalt semmit": "No promise yet",
+	"Még nem történt semmi...": "Nothing has happened yet...",
 	"Még nincs kártyád. Kutass, hogy legyen mivel érvelned!": "You have no cards yet. Do research so you have something to argue with!",
 	"Nincs hozzájuk illő kártyád": "None of your cards speak to them",
 	"Nulla kibocsátás %d-re": "Zero emissions by %d",

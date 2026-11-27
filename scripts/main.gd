@@ -3488,7 +3488,7 @@ var _story_live := false
 func _open_story() -> void:
 	var body := _open(L.t("A te történeted"), UI.GOLD)
 	if world.naplo.is_empty():
-		body.add_child(UI.label(L.t("Még nem vállalt semmit"), 17, UI.SOFT))
+		body.add_child(UI.label(L.t("Még nem történt semmi..."), 17, UI.SOFT))
 	else:
 		_add_story(body)
 

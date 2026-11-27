@@ -1056,3 +1056,4 @@ A te döntéseid szerint átírva (nem kell újra lektorálni):
 - Ehhez metánról szóló kártya kell (Olaj és gáz, Élelem, Áram, Ipar és közlekedés).
 - Ehhez ilyen kártya kell: cement, acél, repülés, hajózás, teherautó, hidrogén, állattartás, műtrágya vagy körforgás.
 - Mondat elején a két többes számú csoportnév így áll: „Az olajországok csoportja” és „Az Egyesült Államok” (például: „Az olajországok csoportja elbizonytalanodott.”, „Az Egyesült Államok vállalta: nulla kibocsátás 2070-re.”).
+- „A te történeted” üres ablaka: Még nem történt semmi...  (Zoltán szövege, 2026-11-27 20:02; korábban: Még nem vállalt semmit)
