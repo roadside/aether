@@ -1017,7 +1017,7 @@ A „kitalált szereplő” felirat Zoltán kérésére kikerült (2026-11-27, 1
 - Bemutatkozás (az első képeslapja): Szia! Amara vagyok, 11 éves. Egy tengerparti halászfaluban élek Ghánában.
 - Még nincs vállalás: Még nincs megállapodás. A falu csónakjai egyre kevesebb hallal térnek haza.
 - Új vállalás: Bejelentették a vállalást! A halászok a parton tapsoltak.
-- Csökken a kibocsátás: A falu napelemes hűtőt kapott, így a hal nem romlik meg míg a piacra ér.
+- Csökken a kibocsátás: A falu napelemes hűtőt kapott, így a hal nem romlik meg, amíg a piacra ér.
 - Elérték a nullát: Elértük a nullát! Egész éjjel táncoltunk a parton.
 - Baj fenyeget: Melegszik a tenger, a halak a hűvösebb vizek felé úsznak. A halászok aggódnak.
 - Lecsapott a baj, nem készültek fel: A hálók szinte üresen jönnek fel. Sokan a városba mennek munkát keresni.
