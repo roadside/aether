@@ -390,7 +390,7 @@ Csak ezek újak. Ami nincs itt, az nem változott.
 
 ### Billenőpontok veszélysávja
 - veszélyben  (Zoltán, 2026-11-27 19:47; korábban: veszélysávban)
-- Veszélysávba értünk: %s
+- Veszélyben: %s  (2026-11-27; korábban: Veszélysávba értünk: %s)
 - A kritikus határ láthatatlan: senki sem tudja előre, mikor lépjük át.
 
 ### Terjedő tévhitek
@@ -934,7 +934,7 @@ Csoportoknál a képeslapot a csoport kitalált szereplője írja, lásd a 30. s
 
 Billenőpontoknál:
 - %s: egyelőre a kritikus határ alatt vagyunk.
-- %s: a melegedés elérte a veszélysávot.
+- %s: veszélyben van.  (2026-11-27; korábban: %s: a melegedés elérte a veszélysávot.)
 - %s: átléptük a kritikus határt.
 
 ## 29. Változás (2026-11-27, 18:05) – nincs új szöveg

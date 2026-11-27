@@ -1585,7 +1585,7 @@ func _plan_postcards() -> void:
 		if t >= float(tp["also"]):
 			if not _pc_band.has(tp["id"]):
 				_pc_band[tp["id"]] = true
-				first.append(_pc(tp, L.t("%s: a melegedés elérte a veszélysávot.") % L.field(tp, "nev")))
+				first.append(_pc(tp, L.t("%s: veszélyben van.") % L.field(tp, "nev")))
 		else:
 			rest.append(_pc(tp, L.t("%s: egyelőre a kritikus határ alatt vagyunk.") % L.field(tp, "nev")))
 	rest.shuffle()
@@ -2905,7 +2905,7 @@ func _open_news(y0: int, t0: float) -> void:
 			bands.append(L.field(tp, "nev"))
 	if not bands.is_empty():
 		var cw := UI.card(UI.GOLD)
-		cw.add_child(UI.label("⚠ " + L.t("Veszélysávba értünk: %s") % ", ".join(bands), 18, UI.GOLD, true))
+		cw.add_child(UI.label("⚠ " + L.t("Veszélyben: %s") % ", ".join(bands), 18, UI.GOLD, true))
 		cw.add_child(UI.label(L.t("A kritikus határ láthatatlan: senki sem tudja előre, mikor lépjük át."), 16, UI.SOFT))
 		body.add_child(UI.card_root(cw))
 		quiet = false
@@ -3776,7 +3776,7 @@ func _selftest() -> void:
 	globe.sun_orbit = false
 	globe.spin = view0[0]
 	globe.tilt = view0[1]
-	var pcard := _postcard(_pc(world.tips[0], L.t("%s: a melegedés elérte a veszélysávot.") % L.field(world.tips[0], "nev")))
+	var pcard := _postcard(_pc(world.tips[0], L.t("%s: veszélyben van.") % L.field(world.tips[0], "nev")))
 	var pcard2 := _postcard(_pc_story(world.groups[4], "vallalt"))
 	_pc_met = {}
 	await get_tree().create_timer(0.8).timeout

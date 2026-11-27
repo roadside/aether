@@ -233,7 +233,7 @@ func _finish() -> void:
 	_end.visible = true
 	_end.add_child(UI.label(L.t("A kitéréseiddel %s%%-kal kevesebb tartós kondenzcsíkot húztál, mint ha egyenesen repültél volna.") % L.num(clampf(100.0 - share, 0.0, 100.0), 0), 20, UI.CYAN, true))
 	_end.add_child(UI.label(L.t("A valóságban a légi közlekedés melegítő hatásának %s%%-a nem a CO2-kibocsátásból származik – ennek a legnagyobb részét a kondenzcsíkok adják.") % L.num(non_co2 * 100.0, 0), 19, UI.TEXT, true))
-	_end.add_child(UI.label(L.t("Egy japán kutatás szerint %s%% járat útvonalának módosításával akár 59%-kal is csökkenthetné a csíkok hatását, mindössze 0,014%-kal több üzemanyagköltséggel.") % L.num(float(teoh.get("kiteritett_jaratok", 0.0)), 1), 19, UI.TEXT))
+	_end.add_child(UI.label(L.t("Egy japán kutatás szerint %s%% járat útvonalának módosításával akár 59%%-kal is csökkenthetné a csíkok hatását, mindössze 0,014%%-kal több üzemanyagköltséggel.") % L.num(float(teoh.get("kiteritett_jaratok", 0.0)), 1), 19, UI.TEXT))
 	_end.add_child(UI.label(L.t("Forrás: %s; %s") % [source, source2], 13, UI.MUTE))
 	var b := UI.button(L.t("Tovább") + " →", true)
 	b.pressed.connect(func() -> void: finished.emit(true))
