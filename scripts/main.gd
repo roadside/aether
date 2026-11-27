@@ -1016,7 +1016,10 @@ func _build_bottom() -> void:
 		var b := UI.button(row[1])
 		b.custom_minimum_size = Vector2(row[2], 54)
 		b.focus_mode = Control.FOCUS_NONE
-		b.pressed.connect(row[3])
+		var act: Callable = row[3]
+		b.pressed.connect(func() -> void:
+			if not _busy or row[0] == "ido":
+				act.call())
 		var col := UI.vbox(3)
 		col.alignment = BoxContainer.ALIGNMENT_END
 		var tag := UI.label(L.t("Következő lépés"), 13, UI.CYAN, false, false)
@@ -1034,7 +1037,9 @@ func _build_bottom() -> void:
 	mb.custom_minimum_size = Vector2(176, 54)      # ugyanolyan magas, mint a többi alsó gomb (Zoltán kérése)
 	mb.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	mb.focus_mode = Control.FOCUS_NONE
-	mb.pressed.connect(_open_missions)
+	mb.pressed.connect(func() -> void:
+		if not _busy:
+			_open_missions())
 	gap.add_child(mb)
 	_mission_btn = mb
 	_curve = Chart.new()
@@ -1081,7 +1086,8 @@ func _build_menu() -> void:
 	help.add_theme_font_size_override("font_size", 22)
 	help.pressed.connect(func() -> void:
 		_show_menu(false)
-		_open_help())
+		if not _busy:
+			_open_help())
 	top_row.add_child(help)
 	v.add_child(top_row)
 	_reset_btn = UI.button(L.t("Új játék"))
@@ -1090,12 +1096,14 @@ func _build_menu() -> void:
 	var story := UI.button(L.t("A te történeted"))
 	story.pressed.connect(func() -> void:
 		_show_menu(false)
-		_open_story())
+		if not _busy:
+			_open_story())
 	v.add_child(story)
 	var coll := UI.button(L.t("Gyűjtemény"))
 	coll.pressed.connect(func() -> void:
 		_show_menu(false)
-		_open_collection())
+		if not _busy:
+			_open_collection())
 	v.add_child(coll)
 	var mus := UI.button(L.t("Zene: be") if _music_on() else L.t("Zene: ki"))
 	mus.pressed.connect(_toggle_music.bind(mus))
@@ -1481,6 +1489,7 @@ var _pc_goal: Dictionary = {}     # csoport -> a legutóbb látott célév (új 
 var _pc_band: Dictionary = {}     # billenőpont -> már szóltunk, hogy veszélysávban van
 var _pc_game := -1
 var _pc_met: Dictionary = {}      # csoport -> a szereplő már bemutatkozott ebben a játékban
+var _pc_lab: Dictionary = {}      # csoport -> a „kitalált szereplő” felirat már látszott ebben a futásban
 var _stories: Dictionary = {}     # adatok/tortenetek.json: kitalált szereplők csoportonként
 
 
@@ -1503,7 +1512,9 @@ func _pc_story(g: Dictionary, key: String) -> Dictionary:
 	if line.is_empty():
 		return {}
 	var out := _pc(g, str(line["en"] if L.is_en() else line["hu"]))
-	out["alairas"] = "%s, %s" % [st["nev"], L.field(g, "nev")] + (" · " + L.t("kitalált szereplő") if first else "")
+	var label := first or not _pc_lab.has(g["id"])      # a „kitalált szereplő” felirat az első lapon, betöltött játékban is
+	_pc_lab[g["id"]] = true
+	out["alairas"] = "%s, %s" % [st["nev"], L.field(g, "nev")] + (" · " + L.t("kitalált szereplő") if label else "")
 	return out
 
 var _pc_run := 0
@@ -1516,6 +1527,7 @@ func _plan_postcards() -> void:
 		_pc_goal = {}
 		_pc_band = {}
 		_pc_met = {}
+		_pc_lab = {}
 		if world.history.size() > World.ROUND_YEARS + 1:      # betöltött játék: a régi vállalások nem újak
 			for g0 in world.groups:
 				_pc_goal[g0["id"]] = int(g0["cel"])
@@ -1532,16 +1544,16 @@ func _plan_postcards() -> void:
 				if tp["id"] == n["id"]:
 					first.append(_pc(tp, L.t("%s: átléptük a küszöböt.") % L.field(tp, "nev")))
 		elif n["fajta"] == "nulla":
-			first.append(_pc_story(world.group(n["csoport"]), "nulla"))
+			first.append(["nulla", world.group(n["csoport"])])
 		elif n["fajta"] == "katasztrofa":
 			var gk := world.group(n["csoport"])
 			var stk := _story(str(gk["id"]))
 			if str(stk.get("tema", "")) == str(n["mi"]):          # csak ha a baj illik a szereplő történetéhez
-				first.append(_pc_story(gk, "felkeszult" if gk.get("felkeszult", false) else "baj"))
+				first.append(["felkeszult" if gk.get("felkeszult", false) else "baj", gk])
 	for g in world.groups:
 		var goal := int(g["cel"])
 		if goal > 0 and int(_pc_goal.get(g["id"], 0)) == 0:
-			first.append(_pc_story(g, "vallalt"))
+			first.append(["vallalt", g])
 		elif not world.threat.is_empty() and str(world.threat["csoport"]) == str(g["id"]) and str(_story(str(g["id"])).get("tema", "")) == str(world.threat["mi"]):
 			rest.append(["veszely", g])
 		elif goal == 0:
@@ -1558,15 +1570,20 @@ func _plan_postcards() -> void:
 				first.append(_pc(tp, L.t("%s: a melegedés elérte a veszélysávot.") % L.field(tp, "nev")))
 		else:
 			rest.append(_pc(tp, L.t("%s: egyelőre a küszöb alatt vagyunk.") % L.field(tp, "nev")))
-	first = first.filter(func(x: Dictionary) -> bool: return not x.is_empty())
 	rest.shuffle()
-	for r in rest:                                  # a szereplők sorát csak akkor húzzuk elő, ha tényleg sorra kerül
-		if first.size() >= PC_MAX:
+	var queue: Array = []
+	var told := {}                                  # egy körben egy szereplő csak egyszer ír
+	for r in first + rest:                          # a szereplők sorát csak akkor húzzuk elő, ha tényleg sorra kerül
+		if queue.size() >= PC_MAX:
 			break
+		if typeof(r) == TYPE_ARRAY and told.has(r[1]["id"]):
+			continue
 		var card: Dictionary = _pc_story(r[1], str(r[0])) if typeof(r) == TYPE_ARRAY else r
 		if not card.is_empty():
-			first.append(card)
-	_pc_queue = first.slice(0, PC_MAX)
+			queue.append(card)
+			if typeof(r) == TYPE_ARRAY:
+				told[r[1]["id"]] = true
+	_pc_queue = queue
 	if world.over():
 		_pc_queue = []
 

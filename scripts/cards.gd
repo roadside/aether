@@ -31,7 +31,7 @@ const TAGS := {
 	"kockazat": ["napernyo", "felho_fenyesites", "cirrus", "urbeli_arnyekolo", "vas_tenger", "ocean_lugositas"],
 }
 ## A metánról szóló kártyák: a metánvállaláshoz ezek egyike kell.
-const METHANE := ["metan_gaz", "metan_szen", "metan_rizs", "kerodzok_metan", "voros_alga", "tragya", "hulladek_metan", "metan_muhold", "biogaz"]
+const METHANE := ["metan_gaz", "metan_szen", "metan_rizs", "kerodzok_metan", "voros_alga", "tragya", "hulladek_metan", "metan_muhold", "biogaz", "metan_szivargas", "elhagyott_kutak"]
 
 ## A tárgyalásra is használható témakörök.
 static func talk_themes() -> Array:
