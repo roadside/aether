@@ -3551,9 +3551,9 @@ func _selftest() -> void:
 	var fx_tilt: float = globe.tilt
 	for fk in ["vulkan", "jarvany", "attores"]:      # a három nagy animáció képe (két pillanat)
 		globe.play_effect(fk, 15.0, 120.0, _fx_points())
-		await get_tree().create_timer(2.6).timeout
+		await get_tree().create_timer(2.4).timeout
 		await _shot("7g_fx_%s_1.png" % fk)
-		await get_tree().create_timer(2.6).timeout
+		await get_tree().create_timer(3.6).timeout
 		await _shot("7g_fx_%s_2.png" % fk)
 	globe.fx = {}
 	if globe._fx_tw != null:
